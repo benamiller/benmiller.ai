@@ -1,31 +1,39 @@
-<html>
-  <head></head>
-<body>
-<h1>Ben Miller</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben Miller</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body data-theme="magenta">
+    <main class="terminal" aria-label="Interactive terminal profile">
+      <header class="terminal__header">
+        <h1>Ben Miller</h1>
+      </header>
 
-<h2>Experience</h2>
-<ul>
-<li>Canadian Tire - DevOps && Java Developer</li>
-</ul>
+      <section class="terminal__body" aria-live="polite">
+        <div id="terminal-output" class="output"></div>
 
-<h2>Formal Education</h2>
-<ul>
-<li>University of Illinois Urbana Champaign - Master's Degree - Computer Science</li>
-<li>Univesity of Victoria - Bachelor's Degree - Computer Science</li>
-<li>W.L. Seaton High School - Double Dogwood - French Immersion - Valedictorian</li>
-</ul>
+        <div class="input-row" aria-label="Command line">
+          <span class="input-prompt">$</span>
+          <span
+            id="terminal-input"
+            class="input-field"
+            contenteditable="true"
+            role="textbox"
+            aria-label="Terminal input"
+            spellcheck="false"
+            autocapitalize="off"
+            autofocus
+          ></span>
+        </div>
+      </section>
+    </main>
 
-<h2>Education</h2>
-
-<h2>Interests</h2>
-<ul>
-<li>ZigTensor</li>
-</ul>
-
-<h2>Social</h2>
-<ul>
-<li>X</li>
-</ul>
-
-</body>
+    <noscript>
+      <p class="no-script">This terminal mode requires JavaScript enabled.</p>
+    </noscript>
+  </body>
 </html>
