@@ -79,10 +79,10 @@ article header {
 }
 
 article h1 {
-  font-size: 2.1rem;
+  font-size: 2.15rem;
   font-weight: 600;
   letter-spacing: -0.03em;
-  line-height: 1.2;
+  line-height: 1.22;
   text-wrap: balance;
 }
 
@@ -99,7 +99,7 @@ article time {
 }
 
 .prose p + p {
-  margin-top: 1.15rem;
+  margin-top: 1.25rem;
 }
 
 .prose em {
