@@ -1,39 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ben Miller</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="/style.css">
   </head>
-  <body data-theme="magenta">
-    <main class="terminal" aria-label="Interactive terminal profile">
-      <header class="terminal__header">
-        <h1>Ben Miller</h1>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
       </header>
 
-      <section class="terminal__body" aria-live="polite">
-        <div id="terminal-output" class="output"></div>
-
-        <div class="input-row" aria-label="Command line">
-          <span class="input-prompt">$</span>
-          <span
-            id="terminal-input"
-            class="input-field"
-            contenteditable="true"
-            role="textbox"
-            aria-label="Terminal input"
-            spellcheck="false"
-            autocapitalize="off"
-            autofocus
-          ></span>
-        </div>
-      </section>
-    </main>
-
-    <noscript>
-      <p class="no-script">This terminal mode requires JavaScript enabled.</p>
-    </noscript>
+      <main>
+        <ol class="posts">
+          <li>
+            <a href="/posts/they-made-a-chip.html">
+              <span class="title">They made a chip. That's not the interesting part.</span>
+              <time class="date" datetime="2026-08-26">26 Aug 2026</time>
+            </a>
+          </li>
+        </ol>
+      </main>
+    </div>
   </body>
 </html>
