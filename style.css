@@ -93,8 +93,17 @@ article time {
   font-size: 0.95rem;
 }
 
+.prose {
+  font-size: 1.16rem;
+  line-height: 1.68;
+}
+
 .prose p + p {
-  margin-top: 1rem;
+  margin-top: 1.15rem;
+}
+
+.prose em {
+  font-style: italic;
 }
 
 .prose a {

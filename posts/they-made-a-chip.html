@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>They made a chip. That's not the interesting part. — Ben Miller</title>
+    <meta name="description" content="OpenAI walked through Jalapeño, its first inference ASIC. The chip is not the interesting part.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>They made a chip. That's not the interesting part.</h1>
+            <time datetime="2026-08-26">26 August 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Altman posted it the way this industry posts everything now: <em>we made a chip and it is fast.</em> Yesterday at Hot Chips, OpenAI walked through Jalapeño, its first inference ASIC, built with Broadcom. Nine months from design to tape-out. The models helped design the silicon that will run the next models. Codex wrote kernels that beat the human-expert versions on selected attention and MoE blocks.</p>
+            <p>The numbers they want remembered: 1.5x to 1.9x more work per watt than the comparison systems, 1.7x to 3.6x lower end-to-end latency, across GPT-OSS 120B, DeepSeek R1, and Kimi K2.5. Power-normalized InferenceX, measured in their lab, with SemiAnalysis in the room. It is still a lab result, not a 100-megawatt fleet.</p>
+            <p>The architecture argument is the real one. Inference is three different machines pretending to be one request: compute-bound prefill, a tiny draft model for speculation, then memory-bound decode with bursty MoE traffic. A heterogeneous GPU fleet pays idle power for the phases it isn't in. Jalapeño keeps the KV cache local and darkens the silicon it isn't using. One chip, three regimes.</p>
+            <p>Nvidia reports tonight. OpenAI will keep buying their chips for training. Nobody serious thinks GB300 is finished. What changed is that the biggest buyer of inference just became a vendor, and they did it on a timeline that used to belong to software.</p>
+            <p>Gen 2 is already in development. Deployment inside OpenAI starts by year end. The rest of us will feel it as cheaper tokens, or we won't. That's the test.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
