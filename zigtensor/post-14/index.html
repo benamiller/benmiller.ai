@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Strides, almost always hidden — Ben Miller</title>
+    <meta name="description" content="Strides become explicit when you need them and stay out of the way when you do not. This is HEAD.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+        <a class="nav-zigtensor" href="/zigtensor">ZigTensor</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>Strides, almost always hidden</h1>
+            <time datetime="2026-06-14">14 June 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Shape was already owned. Strides were the unfinished half. The 14th makes them explicit when a caller actually needs the layout, and hidden when they are just doing math. Tensor owns them. A few hours of broken intermediate states, a whoops, then “own strides.” That is HEAD.</p>
+            <p>The reason strides exist in a serious tensor library is reductions, broadcasts, views that do not copy. Axis sum was filed in April 2025 and never written. The layout is now ready for it. The op is not. Last push: 15 June 2026. Nothing since.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/0e5ef81eeb">0e5ef81</a> · <a href="https://github.com/zigtensor/zigtensor/commit/eef687d100">eef687d</a> · <a href="https://github.com/zigtensor/zigtensor/commit/9290d9d0b5">9290d9d</a> · <a href="https://github.com/zigtensor/zigtensor/commit/922b2786b9">922b278</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2753cfa04c">2753cfa</a></p>
+            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-13">Previous</a></p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

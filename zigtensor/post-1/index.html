@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The library has to compile — Ben Miller</title>
+    <meta name="description" content="ZigTensor starts as a Zig build that refuses to ship if the tests fail.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+        <a class="nav-zigtensor" href="/zigtensor">ZigTensor</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>The library has to compile</h1>
+            <time datetime="2025-03-30">30 March 2025</time>
+          </header>
+
+          <div class="prose">
+            <p>ZigTensor is supposed to be a deep learning library you can read. Not a Python binding with a C++ basement. Tensors, ops, autodiff, CUDA, all of it owned in one place, with Zig’s explicit allocators and error unions instead of a framework’s hidden graph. That is the bet. Day one is not a tensor. Day one is a build.</p>
+            <p>The first commits throw out whatever scaffolding was in the way, add a contrived unit test, and make compilation depend on that test passing. An error set is imported so it can grow. Types get tests before they get bodies. The semi-colon convention is established like it matters, because in Zig it does. By the end of the 30th the repo knows how to fail in public.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/e66bff4883">e66bff4</a> · <a href="https://github.com/zigtensor/zigtensor/commit/a356865c2f">a356865</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2dbe06164f">2dbe061</a> · <a href="https://github.com/zigtensor/zigtensor/commit/838f00fbb5">838f00f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/0c7e0ed360">0c7e0ed</a> · <a href="https://github.com/zigtensor/zigtensor/commit/1694bed0c6">1694bed</a> · <a href="https://github.com/zigtensor/zigtensor/commit/cadd654899">cadd654</a></p>
+            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-2">Next</a></p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

@@ -30,7 +30,35 @@ body {
 }
 
 .site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 4rem;
+}
+
+.nav-zigtensor {
+  color: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  padding: 0.22rem 0.7rem;
+}
+
+.nav-zigtensor:hover {
+  color: var(--muted);
+}
+
+.prose .shas,
+.prose .post-nav {
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+article + .posts {
+  margin-top: 2.5rem;
 }
 
 .wordmark {
