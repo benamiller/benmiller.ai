@@ -121,6 +121,15 @@ article time {
   font-size: 0.95rem;
 }
 
+.kicker {
+  margin-bottom: 0.55rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .prose {
   font-size: 1.16rem;
   line-height: 1.68;
