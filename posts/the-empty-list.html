@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The empty list — Ben Miller</title>
+    <meta name="description" content="Mara checked the board out of habit. It had been a year since anything stayed on it overnight.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --deep: #071319;
+        --bay: #0c2430;
+        --glass: #c6ebe4;
+        --mist: #8fbfb8;
+        --gold: #e3b15a;
+        --tea: #c57a3c;
+        --ink: #e8efe8;
+        --mute: #9bb0aa;
+        --red-old: #7a2f32;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--deep);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint,
+      .fog,
+      .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 70% 45% at 12% 8%, rgba(227, 177, 90, 0.22), transparent 55%),
+          radial-gradient(ellipse 50% 40% at 88% 18%, rgba(90, 170, 170, 0.18), transparent 50%),
+          radial-gradient(ellipse 60% 50% at 70% 88%, rgba(14, 70, 72, 0.7), transparent 55%),
+          radial-gradient(ellipse 40% 35% at 8% 78%, rgba(197, 122, 60, 0.12), transparent 50%),
+          linear-gradient(180deg, #071319 0%, #0c2430 38%, #102c2c 72%, #15261f 100%);
+        animation: paint-breathe 28s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 80% 30% at 50% 100%, rgba(180, 220, 210, 0.08), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(150, 200, 195, 0.05), transparent);
+        mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+        animation: fog-drift 40s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--glass);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero {
+        margin: 3.2rem 0 3.5rem;
+      }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.8rem, 8vw, 4.6rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--glass);
+        text-shadow: 0 0 40px rgba(198, 235, 228, 0.2);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .board {
+        position: relative;
+        width: min(26rem, 100%);
+        height: 15.5rem;
+        border-radius: 0.4rem;
+        background:
+          linear-gradient(180deg, rgba(220, 255, 248, 0.16), rgba(220, 255, 248, 0.03)),
+          linear-gradient(90deg, rgba(255,255,255,0.04) 33%, transparent 33.4%);
+        border: 1px solid rgba(198, 235, 228, 0.35);
+        box-shadow:
+          0 30px 80px rgba(0, 0, 0, 0.45),
+          0 0 60px rgba(227, 177, 90, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .board::before {
+        content: "";
+        position: absolute;
+        inset: 12% 8% auto 8%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(198, 235, 228, 0.5), transparent);
+      }
+
+      .board .meta {
+        position: absolute;
+        left: 8%;
+        top: 18%;
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--mist);
+      }
+
+      .board .weather {
+        position: absolute;
+        left: 8%;
+        top: 32%;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-style: italic;
+        font-size: 1.35rem;
+        color: var(--glass);
+      }
+
+      .board .column {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 34%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(198, 235, 228, 0.04), rgba(198, 235, 228, 0.01));
+      }
+
+      .board .column::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 22%;
+        width: 2px;
+        height: 58%;
+        transform: translateX(-50%);
+        background: linear-gradient(180deg, transparent, var(--gold), transparent);
+        opacity: 0.35;
+        animation: column-breathe 6s ease-in-out infinite;
+      }
+
+      .board .ghost {
+        position: absolute;
+        left: 8%;
+        bottom: 16%;
+        right: 40%;
+        height: 3.2rem;
+        background:
+          repeating-linear-gradient(
+            180deg,
+            transparent 0 10px,
+            rgba(122, 47, 50, 0.18) 10px 12px,
+            transparent 12px 16px
+          );
+        mask-image: linear-gradient(90deg, rgba(0,0,0,0.45), transparent 85%);
+        animation: ghosts 12s ease-in-out infinite;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d7e6df;
+      }
+
+      .prose p + p {
+        margin-top: 1.35rem;
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .steam {
+        background:
+          radial-gradient(ellipse 40% 60% at 30% 110%, rgba(197, 122, 60, 0.35), transparent 60%),
+          radial-gradient(ellipse 50% 50% at 70% 120%, rgba(227, 177, 90, 0.2), transparent 55%),
+          linear-gradient(180deg, rgba(12, 36, 48, 0.2), rgba(7, 19, 25, 0.8));
+      }
+
+      .steam span {
+        position: absolute;
+        bottom: 8%;
+        border-radius: 50%;
+        background: rgba(232, 239, 232, 0.18);
+        filter: blur(8px);
+        animation: steam-up 7s ease-in infinite;
+      }
+
+      .steam span:nth-child(1) { left: 28%; width: 40px; height: 40px; }
+      .steam span:nth-child(2) { left: 36%; width: 22px; height: 22px; animation-delay: -2s; animation-duration: 8.5s; }
+      .steam span:nth-child(3) { left: 22%; width: 28px; height: 28px; animation-delay: -4s; }
+      .steam span:nth-child(4) { left: 48%; width: 16px; height: 16px; animation-delay: -1.4s; animation-duration: 6s; }
+      .steam .cup {
+        position: absolute;
+        left: 24%;
+        bottom: 12%;
+        width: 54px;
+        height: 34px;
+        border: 2px solid rgba(227, 177, 90, 0.7);
+        border-top: 0;
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 0 24px rgba(227, 177, 90, 0.25);
+      }
+      .steam .cup::after {
+        content: "";
+        position: absolute;
+        right: -14px;
+        top: 4px;
+        width: 14px;
+        height: 16px;
+        border: 2px solid rgba(227, 177, 90, 0.7);
+        border-left: 0;
+        border-radius: 0 12px 12px 0;
+      }
+
+      .hearts {
+        background:
+          radial-gradient(circle at 50% 50%, rgba(227, 177, 90, 0.08), transparent 45%),
+          linear-gradient(180deg, #08181f, #0a2024);
+      }
+
+      .hearts i {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 8px rgba(227, 177, 90, 0.8);
+        animation-name: beat;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+
+      .chair-scene {
+        background:
+          linear-gradient(180deg, rgba(8, 24, 31, 0.3), rgba(8, 24, 31, 0.85)),
+          repeating-linear-gradient(90deg, rgba(198, 235, 228, 0.03) 0 1px, transparent 1px 28px);
+      }
+
+      .chair {
+        position: absolute;
+        left: 50%;
+        bottom: 18%;
+        width: 90px;
+        height: 110px;
+        transform: translateX(-50%);
+        background:
+          linear-gradient(#1b3036, #1b3036) 18px 0 / 54px 10px no-repeat,
+          linear-gradient(#1b3036, #1b3036) 18px 10px / 54px 48px no-repeat,
+          linear-gradient(#1b3036, #1b3036) 18px 58px / 10px 52px no-repeat,
+          linear-gradient(#1b3036, #1b3036) 62px 58px / 10px 52px no-repeat,
+          linear-gradient(#1b3036, #1b3036) 8px 52px / 74px 10px no-repeat;
+        filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
+      }
+
+      .chair::after {
+        content: "";
+        position: absolute;
+        inset: auto -20% -18% -20%;
+        height: 40px;
+        background: radial-gradient(ellipse at center, rgba(227, 177, 90, 0.18), transparent 70%);
+        animation: chair-glow 8s ease-in-out infinite;
+      }
+
+      .estuary {
+        background:
+          linear-gradient(180deg, #14333d 0%, #1d4a4a 42%, #2a5b4a 58%, #6b8a5a 59%, #3d5a40 100%);
+      }
+
+      .estuary .water {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 38%;
+        height: 22%;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            rgba(198, 235, 228, 0.08) 0 18px,
+            transparent 18px 40px
+          );
+        animation: water 16s linear infinite;
+        opacity: 0.7;
+      }
+
+      .estuary .road {
+        position: absolute;
+        left: -10%;
+        right: -10%;
+        top: 56%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        box-shadow: 0 0 18px var(--gold);
+        transform: rotate(-4deg);
+      }
+
+      .estuary .taxi {
+        position: absolute;
+        top: 52%;
+        width: 28px;
+        height: 10px;
+        background: var(--gold);
+        border-radius: 2px;
+        box-shadow: 0 0 12px var(--gold);
+        animation: taxi 14s linear infinite;
+      }
+
+      .bird {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid rgba(232, 239, 232, 0.7);
+        border-bottom: 2px solid rgba(232, 239, 232, 0.7);
+        transform: rotate(45deg);
+        animation: bird 18s linear infinite;
+      }
+      .bird:nth-child(2) { top: 14%; left: 20%; animation-delay: -4s; }
+      .bird:nth-child(3) { top: 18%; left: 28%; animation-delay: -7s; width: 7px; height: 7px; }
+      .bird:nth-child(4) { top: 12%; left: 40%; animation-delay: -11s; }
+
+      .net {
+        background: radial-gradient(circle at 50% 50%, #10242c, #071319 70%);
+      }
+
+      .net .node {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--glass);
+        box-shadow: 0 0 16px var(--glass);
+      }
+      .net .node.a { left: 18%; top: 58%; }
+      .net .node.b { left: 50%; top: 28%; background: var(--gold); box-shadow: 0 0 16px var(--gold); }
+      .net .node.c { left: 78%; top: 62%; }
+      .net .line {
+        position: absolute;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(198,235,228,0.1), rgba(227,177,90,0.8), rgba(198,235,228,0.1));
+        transform-origin: left center;
+        animation: pulse-line 5s ease-in-out infinite;
+      }
+      .net .line.ab { left: 19%; top: 60%; width: 36%; transform: rotate(-28deg); }
+      .net .line.bc { left: 51%; top: 32%; width: 32%; transform: rotate(32deg); animation-delay: -2s; }
+      .net .label {
+        position: absolute;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+      .net .label.a { left: 12%; top: 68%; }
+      .net .label.b { left: 44%; top: 16%; }
+      .net .label.c { left: 74%; top: 74%; }
+
+      .bench-scene {
+        background:
+          linear-gradient(180deg, #87a08a 0%, #4d6a4e 38%, #2e4634 38.4%, #2e4634 100%);
+      }
+
+      .bench {
+        position: absolute;
+        left: 50%;
+        bottom: 22%;
+        width: 150px;
+        height: 36px;
+        transform: translateX(-50%);
+        background: #1c2a20;
+        border-radius: 2px;
+        box-shadow: 0 10px 0 #152018;
+      }
+      .bench::before,
+      .bench::after {
+        content: "";
+        position: absolute;
+        bottom: -28px;
+        width: 8px;
+        height: 28px;
+        background: #152018;
+      }
+      .bench::before { left: 16px; }
+      .bench::after { right: 16px; }
+
+      .apple {
+        position: absolute;
+        left: 57%;
+        bottom: 38%;
+        width: 14px;
+        height: 14px;
+        background: #8b2e2e;
+        border-radius: 50% 50% 45% 55%;
+        box-shadow: inset -3px -2px 0 rgba(0,0,0,0.2);
+      }
+      .apple::after {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 6px;
+        width: 7px;
+        height: 5px;
+        background: #6b8a5a;
+        border-radius: 40% 0 40% 0;
+        transform: rotate(-20deg);
+      }
+
+      .cap {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mute);
+        margin: 0.7rem 0 0;
+        text-align: center;
+      }
+
+      @keyframes paint-breathe {
+        to {
+          filter: hue-rotate(8deg) saturate(1.08);
+        }
+      }
+      @keyframes fog-drift {
+        from { background-position: 0 0, 0 0; }
+        to { background-position: 0 0, 240px 0; }
+      }
+      @keyframes column-breathe {
+        0%, 100% { opacity: 0.15; }
+        50% { opacity: 0.7; }
+      }
+      @keyframes ghosts {
+        0%, 100% { opacity: 0.15; }
+        50% { opacity: 0.4; }
+      }
+      @keyframes steam-up {
+        0% { transform: translateY(0) scale(0.8); opacity: 0; }
+        20% { opacity: 0.5; }
+        100% { transform: translateY(-120px) scale(1.4); opacity: 0; }
+      }
+      @keyframes beat {
+        0%, 100% { transform: scale(0.7); opacity: 0.35; }
+        50% { transform: scale(1.25); opacity: 1; }
+      }
+      @keyframes chair-glow {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+      @keyframes water {
+        to { background-position: 80px 0; }
+      }
+      @keyframes taxi {
+        from { left: -8%; }
+        to { left: 108%; }
+      }
+      @keyframes bird {
+        from { transform: rotate(45deg) translateX(0); opacity: 0; }
+        10% { opacity: 0.8; }
+        to { transform: rotate(45deg) translateX(220px) translateY(-30px); opacity: 0; }
+      }
+      @keyframes pulse-line {
+        0%, 100% { opacity: 0.25; }
+        50% { opacity: 1; }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .board .column::after, .board .ghost,
+        .steam span, .hearts i, .chair::after, .estuary .water,
+        .estuary .taxi, .bird, .net .line, .scene {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="board" aria-hidden="true">
+          <div class="meta">27 August · estuary</div>
+          <div class="weather">thin morning, clearing</div>
+          <div class="ghost"></div>
+          <div class="column"></div>
+        </div>
+        <h1>The empty list</h1>
+        <time datetime="2026-08-27">27 August 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara checked the board out of habit. It had been a year since anything stayed on it overnight.</p>
+        <p>The board still hung in the corridor outside the bay, a strip of pale glass that used to fill up by four in the afternoon with names and times and the small red marks that meant someone would not be seen today. Now it showed the date, the weather over the estuary, and a blank column. She touched it anyway. The glass was warm.</p>
+      </div>
+
+      <figure class="scene steam" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+        <div class="cup"></div>
+      </figure>
+      <p class="cap">bay three · 2:14</p>
+
+      <div class="prose">
+        <p>Down in bay three a boy of nine was sleeping off a fever that had broken at 2:14. The room had cooled itself a degree. His mother had a cup of tea she had not asked for, because the kettle in the family alcove had boiled when her hands started to shake. Mara sat with her until the shaking stopped. That was the work now. The other work happened in the walls.</p>
+        <p>She had trained in the years when the walls were dumb. You learned to hear a pump change its mind, to smell ketones, to count the minutes until a porter arrived. You learned which consultant would pick up at night and which one would not. You learned the names of the people on the list who would still be on it in the morning. The first winter after the retrofit she kept reaching for a phone that no longer needed her. A scan requested itself. A dose checked itself against the kidneys and the other medicines and the fact that the patient had not eaten. A bed in the city, forty minutes down the new river road, offered itself before she had finished the sentence. She had felt, for a month, professionally unemployed.</p>
+        <p>Then a man died in bay one of something the building had seen coming, and she had been in the canteen, and she understood the job had not gone. It had moved. The building could watch a thousand hearts. It could not sit on the plastic chair.</p>
+      </div>
+
+      <figure class="scene tall hearts" aria-hidden="true">
+          <i style="left:13.8%;top:64.2%;width:10px;height:10px;animation-duration:4.19s;animation-delay:-3.01s;opacity:0.73"></i>
+          <i style="left:30.8%;top:13.8%;width:6px;height:6px;animation-duration:3.43s;animation-delay:-1.26s;opacity:0.51"></i>
+          <i style="left:75.5%;top:17.5%;width:4px;height:4px;animation-duration:5.36s;animation-delay:-2.74s;opacity:0.78"></i>
+          <i style="left:37.2%;top:58.6%;width:8px;height:8px;animation-duration:2.91s;animation-delay:-1.79s;opacity:0.68"></i>
+          <i style="left:19.2%;top:60.1%;width:3px;height:3px;animation-duration:4.42s;animation-delay:-3.89s;opacity:0.43"></i>
+          <i style="left:82.6%;top:38.6%;width:8px;height:8px;animation-duration:5.77s;animation-delay:-2.25s;opacity:0.64"></i>
+          <i style="left:84.3%;top:63.0%;width:3px;height:3px;animation-duration:4.37s;animation-delay:-1.45s;opacity:0.49"></i>
+          <i style="left:83.6%;top:67.8%;width:6px;height:6px;animation-duration:4.15s;animation-delay:-3.22s;opacity:0.54"></i>
+          <i style="left:24.1%;top:71.9%;width:8px;height:8px;animation-duration:3.27s;animation-delay:-3.52s;opacity:0.90"></i>
+          <i style="left:29.6%;top:17.5%;width:4px;height:4px;animation-duration:4.92s;animation-delay:-3.54s;opacity:0.59"></i>
+          <i style="left:12.6%;top:46.4%;width:10px;height:10px;animation-duration:2.97s;animation-delay:-2.45s;opacity:0.45"></i>
+          <i style="left:46.3%;top:41.4%;width:3px;height:3px;animation-duration:3.27s;animation-delay:-2.42s;opacity:0.54"></i>
+          <i style="left:60.6%;top:47.1%;width:8px;height:8px;animation-duration:2.89s;animation-delay:-1.19s;opacity:0.62"></i>
+          <i style="left:5.8%;top:64.4%;width:6px;height:6px;animation-duration:2.47s;animation-delay:-1.16s;opacity:0.49"></i>
+          <i style="left:47.3%;top:36.4%;width:8px;height:8px;animation-duration:3.04s;animation-delay:-1.49s;opacity:0.56"></i>
+          <i style="left:27.6%;top:39.0%;width:3px;height:3px;animation-duration:3.05s;animation-delay:-3.90s;opacity:0.25"></i>
+          <i style="left:50.6%;top:49.7%;width:5px;height:5px;animation-duration:5.77s;animation-delay:-3.54s;opacity:0.87"></i>
+          <i style="left:75.3%;top:8.1%;width:5px;height:5px;animation-duration:5.37s;animation-delay:-2.94s;opacity:0.41"></i>
+          <i style="left:59.6%;top:81.4%;width:5px;height:5px;animation-duration:4.85s;animation-delay:-0.42s;opacity:0.27"></i>
+          <i style="left:88.8%;top:67.3%;width:4px;height:4px;animation-duration:4.13s;animation-delay:-0.63s;opacity:0.49"></i>
+          <i style="left:39.3%;top:84.8%;width:8px;height:8px;animation-duration:4.28s;animation-delay:-0.36s;opacity:0.57"></i>
+          <i style="left:91.6%;top:10.5%;width:10px;height:10px;animation-duration:5.57s;animation-delay:-2.12s;opacity:0.47"></i>
+          <i style="left:28.2%;top:16.3%;width:4px;height:4px;animation-duration:2.59s;animation-delay:-0.29s;opacity:0.39"></i>
+          <i style="left:48.8%;top:18.1%;width:6px;height:6px;animation-duration:2.57s;animation-delay:-3.57s;opacity:0.71"></i>
+          <i style="left:53.8%;top:41.5%;width:6px;height:6px;animation-duration:3.16s;animation-delay:-3.41s;opacity:0.72"></i>
+          <i style="left:17.5%;top:61.4%;width:4px;height:4px;animation-duration:5.74s;animation-delay:-0.56s;opacity:0.78"></i>
+          <i style="left:95.5%;top:55.6%;width:8px;height:8px;animation-duration:4.79s;animation-delay:-1.69s;opacity:0.55"></i>
+          <i style="left:92.2%;top:33.8%;width:3px;height:3px;animation-duration:5.34s;animation-delay:-3.75s;opacity:0.69"></i>
+          <i style="left:89.9%;top:51.4%;width:3px;height:3px;animation-duration:5.53s;animation-delay:-3.73s;opacity:0.80"></i>
+          <i style="left:14.6%;top:12.1%;width:10px;height:10px;animation-duration:5.57s;animation-delay:-3.73s;opacity:0.77"></i>
+          <i style="left:32.1%;top:18.8%;width:6px;height:6px;animation-duration:5.41s;animation-delay:-3.40s;opacity:0.82"></i>
+          <i style="left:47.1%;top:77.2%;width:10px;height:10px;animation-duration:4.20s;animation-delay:-2.81s;opacity:0.88"></i>
+          <i style="left:26.8%;top:62.5%;width:10px;height:10px;animation-duration:4.13s;animation-delay:-1.81s;opacity:0.77"></i>
+          <i style="left:70.7%;top:8.6%;width:5px;height:5px;animation-duration:5.46s;animation-delay:-0.58s;opacity:0.51"></i>
+          <i style="left:45.0%;top:35.7%;width:5px;height:5px;animation-duration:2.50s;animation-delay:-3.45s;opacity:0.87"></i>
+          <i style="left:78.2%;top:64.5%;width:4px;height:4px;animation-duration:4.18s;animation-delay:-0.66s;opacity:0.54"></i>
+          <i style="left:86.9%;top:13.6%;width:6px;height:6px;animation-duration:3.56s;animation-delay:-2.46s;opacity:0.64"></i>
+          <i style="left:27.0%;top:69.1%;width:6px;height:6px;animation-duration:5.70s;animation-delay:-0.87s;opacity:0.49"></i>
+          <i style="left:69.8%;top:27.6%;width:8px;height:8px;animation-duration:5.71s;animation-delay:-0.96s;opacity:0.79"></i>
+          <i style="left:22.0%;top:76.0%;width:3px;height:3px;animation-duration:3.24s;animation-delay:-3.64s;opacity:0.81"></i>
+          <i style="left:55.4%;top:10.2%;width:10px;height:10px;animation-duration:5.16s;animation-delay:-1.58s;opacity:0.43"></i>
+          <i style="left:95.5%;top:44.8%;width:10px;height:10px;animation-duration:2.63s;animation-delay:-3.70s;opacity:0.72"></i>
+          <i style="left:70.1%;top:44.9%;width:4px;height:4px;animation-duration:3.71s;animation-delay:-1.59s;opacity:0.56"></i>
+          <i style="left:73.4%;top:35.9%;width:6px;height:6px;animation-duration:4.22s;animation-delay:-0.08s;opacity:0.28"></i>
+          <i style="left:60.1%;top:44.9%;width:5px;height:5px;animation-duration:4.02s;animation-delay:-2.78s;opacity:0.28"></i>
+          <i style="left:9.1%;top:10.4%;width:5px;height:5px;animation-duration:4.05s;animation-delay:-1.46s;opacity:0.49"></i>
+          <i style="left:92.2%;top:22.0%;width:3px;height:3px;animation-duration:3.11s;animation-delay:-0.92s;opacity:0.90"></i>
+          <i style="left:84.6%;top:26.2%;width:5px;height:5px;animation-duration:5.29s;animation-delay:-1.64s;opacity:0.79"></i>
+          <i style="left:78.7%;top:22.2%;width:4px;height:4px;animation-duration:5.30s;animation-delay:-1.78s;opacity:0.48"></i>
+          <i style="left:79.3%;top:87.9%;width:6px;height:6px;animation-duration:2.78s;animation-delay:-3.84s;opacity:0.82"></i>
+          <i style="left:29.1%;top:32.0%;width:4px;height:4px;animation-duration:2.79s;animation-delay:-0.60s;opacity:0.40"></i>
+          <i style="left:39.7%;top:55.6%;width:3px;height:3px;animation-duration:3.71s;animation-delay:-3.55s;opacity:0.89"></i>
+          <i style="left:59.5%;top:72.8%;width:10px;height:10px;animation-duration:5.20s;animation-delay:-0.72s;opacity:0.41"></i>
+          <i style="left:58.4%;top:24.4%;width:8px;height:8px;animation-duration:5.74s;animation-delay:-1.65s;opacity:0.38"></i>
+          <i style="left:11.4%;top:37.1%;width:10px;height:10px;animation-duration:4.02s;animation-delay:-3.52s;opacity:0.75"></i>
+          <i style="left:91.6%;top:77.8%;width:8px;height:8px;animation-duration:3.18s;animation-delay:-0.39s;opacity:0.32"></i>
+          <i style="left:47.5%;top:45.7%;width:6px;height:6px;animation-duration:4.14s;animation-delay:-1.43s;opacity:0.83"></i>
+          <i style="left:84.8%;top:17.8%;width:8px;height:8px;animation-duration:3.55s;animation-delay:-2.91s;opacity:0.55"></i>
+          <i style="left:93.5%;top:70.4%;width:10px;height:10px;animation-duration:3.61s;animation-delay:-1.86s;opacity:0.46"></i>
+          <i style="left:73.1%;top:50.8%;width:4px;height:4px;animation-duration:3.23s;animation-delay:-3.58s;opacity:0.58"></i>
+          <i style="left:76.0%;top:82.1%;width:5px;height:5px;animation-duration:3.85s;animation-delay:-3.29s;opacity:0.88"></i>
+          <i style="left:42.9%;top:35.4%;width:4px;height:4px;animation-duration:4.30s;animation-delay:-0.19s;opacity:0.71"></i>
+          <i style="left:91.0%;top:20.3%;width:8px;height:8px;animation-duration:4.24s;animation-delay:-1.21s;opacity:0.45"></i>
+          <i style="left:26.5%;top:31.7%;width:4px;height:4px;animation-duration:4.77s;animation-delay:-1.39s;opacity:0.42"></i>
+          <i style="left:51.1%;top:12.8%;width:4px;height:4px;animation-duration:3.13s;animation-delay:-2.99s;opacity:0.40"></i>
+          <i style="left:4.9%;top:67.2%;width:10px;height:10px;animation-duration:5.03s;animation-delay:-3.86s;opacity:0.43"></i>
+          <i style="left:26.2%;top:34.7%;width:4px;height:4px;animation-duration:3.18s;animation-delay:-0.76s;opacity:0.78"></i>
+          <i style="left:4.3%;top:75.8%;width:6px;height:6px;animation-duration:4.56s;animation-delay:-2.91s;opacity:0.57"></i>
+          <i style="left:74.6%;top:67.7%;width:6px;height:6px;animation-duration:5.41s;animation-delay:-2.18s;opacity:0.71"></i>
+          <i style="left:63.0%;top:86.4%;width:4px;height:4px;animation-duration:4.12s;animation-delay:-0.36s;opacity:0.45"></i>
+          <i style="left:15.4%;top:59.2%;width:3px;height:3px;animation-duration:4.03s;animation-delay:-1.87s;opacity:0.89"></i>
+          <i style="left:33.3%;top:51.3%;width:8px;height:8px;animation-duration:2.64s;animation-delay:-1.38s;opacity:0.89"></i>
+          <i style="left:9.8%;top:20.9%;width:4px;height:4px;animation-duration:3.89s;animation-delay:-2.22s;opacity:0.86"></i>
+          <i style="left:39.6%;top:38.8%;width:6px;height:6px;animation-duration:4.34s;animation-delay:-0.59s;opacity:0.30"></i>
+          <i style="left:12.6%;top:56.2%;width:4px;height:4px;animation-duration:5.01s;animation-delay:-1.04s;opacity:0.56"></i>
+          <i style="left:91.4%;top:83.7%;width:6px;height:6px;animation-duration:4.83s;animation-delay:-2.18s;opacity:0.48"></i>
+          <i style="left:83.1%;top:45.9%;width:10px;height:10px;animation-duration:3.30s;animation-delay:-2.88s;opacity:0.37"></i>
+          <i style="left:15.7%;top:86.7%;width:3px;height:3px;animation-duration:4.08s;animation-delay:-1.10s;opacity:0.79"></i>
+          <i style="left:90.9%;top:61.1%;width:4px;height:4px;animation-duration:4.00s;animation-delay:-3.91s;opacity:0.34"></i>
+          <i style="left:63.0%;top:68.7%;width:4px;height:4px;animation-duration:4.42s;animation-delay:-0.53s;opacity:0.37"></i>
+          <i style="left:7.6%;top:31.7%;width:3px;height:3px;animation-duration:3.52s;animation-delay:-3.74s;opacity:0.88"></i>
+          <i style="left:88.9%;top:9.5%;width:10px;height:10px;animation-duration:2.69s;animation-delay:-0.01s;opacity:0.26"></i>
+          <i style="left:24.5%;top:40.7%;width:3px;height:3px;animation-duration:3.54s;animation-delay:-1.72s;opacity:0.77"></i>
+          <i style="left:60.9%;top:74.5%;width:3px;height:3px;animation-duration:4.53s;animation-delay:-2.08s;opacity:0.84"></i>
+          <i style="left:8.8%;top:85.1%;width:10px;height:10px;animation-duration:3.86s;animation-delay:-1.52s;opacity:0.26"></i>
+          <i style="left:62.9%;top:16.2%;width:5px;height:5px;animation-duration:2.47s;animation-delay:-1.82s;opacity:0.37"></i>
+          <i style="left:47.0%;top:60.8%;width:4px;height:4px;animation-duration:3.25s;animation-delay:-0.15s;opacity:0.78"></i>
+          <i style="left:93.1%;top:41.2%;width:6px;height:6px;animation-duration:4.70s;animation-delay:-0.86s;opacity:0.58"></i>
+          <i style="left:76.1%;top:47.9%;width:5px;height:5px;animation-duration:5.75s;animation-delay:-3.36s;opacity:0.30"></i>
+          <i style="left:39.8%;top:47.6%;width:4px;height:4px;animation-duration:5.10s;animation-delay:-1.90s;opacity:0.46"></i>
+          <i style="left:88.9%;top:83.0%;width:6px;height:6px;animation-duration:5.04s;animation-delay:-2.63s;opacity:0.28"></i>
+          <i style="left:7.6%;top:50.5%;width:4px;height:4px;animation-duration:2.50s;animation-delay:-3.93s;opacity:0.29"></i>
+          <i style="left:10.9%;top:68.4%;width:4px;height:4px;animation-duration:4.99s;animation-delay:-1.58s;opacity:0.50"></i>
+          <i style="left:39.1%;top:18.4%;width:6px;height:6px;animation-duration:3.05s;animation-delay:-3.47s;opacity:0.89"></i>
+          <i style="left:86.4%;top:40.0%;width:4px;height:4px;animation-duration:3.42s;animation-delay:-0.51s;opacity:0.72"></i>
+          <i style="left:61.8%;top:55.6%;width:10px;height:10px;animation-duration:4.11s;animation-delay:-2.93s;opacity:0.69"></i>
+      </figure>
+      <p class="cap">a thousand hearts</p>
+
+      <figure class="scene chair-scene" aria-hidden="true">
+        <div class="chair"></div>
+      </figure>
+      <p class="cap">the plastic chair</p>
+
+      <div class="prose">
+        <p>The estuary town had three thousand people in winter and twelve thousand in the weeks when the birds came through. The old hospital had been a converted school. Ambulances took the coast road and sometimes did not. The new one was the same bricks, mostly, with a spine of quiet machines in the basement that talked to the clinic in the city and the pharmacy in the next county and a surgical theatre that did not sleep. When Mrs Chen's valve began to complain on a Tuesday in March, the complaint was a shape in a tracing no human would have sat up to read. By Wednesday she was on a table that had been empty, and by Friday she was arguing with her daughter about soup. Mara walked her to the door. The taxi that used to be a problem was just there, battery full, the driver's son doing homework in the front because school had let out and the car already knew the house.</p>
+      </div>
+
+      <figure class="scene tall estuary" aria-hidden="true">
+        <span class="bird"></span><span class="bird"></span><span class="bird"></span>
+        <div class="water"></div>
+        <div class="road"></div>
+        <div class="taxi"></div>
+      </figure>
+      <p class="cap">the new river road</p>
+
+      <div class="prose">
+        <p>People from the city came down on weekends to look at the birds and, without meaning to, at the hospital. They asked if it felt like cheating. Mara said it felt like Tuesday. The empty list was not a miracle. It was what you got when the shortage stopped being the organising principle. There was still pain. There were still nights. There was still the woman in bay two who did not want to be touched, and the building, to its credit, did not touch her. Mara did, when she asked.</p>
+        <p>In the city the theatres ran the way kitchens run in a good restaurant, which is to say they were busy and no one was waiting in a corridor with a blanket. A kidney found a match in Lisbon while the recipient was still asleep in Glasgow. A burn unit in Accra took a protocol written overnight by a system that had seen ten thousand burns and a surgeon who had seen four hundred, and the child kept her fingers. None of this was announced. It just stopped being rare.</p>
+      </div>
+
+      <figure class="scene net" aria-hidden="true">
+        <div class="line ab"></div>
+        <div class="line bc"></div>
+        <div class="node a"></div>
+        <div class="node b"></div>
+        <div class="node c"></div>
+        <div class="label a">Lisbon</div>
+        <div class="label b">Glasgow</div>
+        <div class="label c">Accra</div>
+      </figure>
+      <p class="cap">it just stopped being rare</p>
+
+      <div class="prose">
+        <p>Mara's daughter wanted to know if she would still be a nurse when she grew up. Mara said yes. She said the interesting part had always been the part with the chair. The rest had been a kind of weather they had decided, finally, to do something about.</p>
+        <p>At six the shift changed. The board still showed nothing. Mara walked home along the estuary in the thin morning, past the place where the ambulances used to queue, which was now a strip of grass and a bench. A man she did not know was sitting on it, eating an apple. He nodded. She nodded back. The town had not become a different planet. It had become a town where a fever broke at 2:14 and someone was there with tea, and the list, for once, had nothing to say.</p>
+      </div>
+
+      <figure class="scene bench-scene" aria-hidden="true">
+        <div class="bench"></div>
+        <div class="apple"></div>
+      </figure>
+      <p class="cap">a strip of grass and a bench</p>
+    </article>
+  </body>
+</html>
