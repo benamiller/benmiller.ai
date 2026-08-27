@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CPU and GPU are not the same init — Ben Miller</title>
-    <meta name="description" content="Initialization splits, leak tests stay honest, and Tensor access grows real errors.">
+    <meta name="description" content="initCpu splits from GPU, slice grows real errors, and a leak test stops hiding behind defer.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -22,10 +22,11 @@
           </header>
 
           <div class="prose">
-            <p>If the tensor is going to live on two machines, it cannot pretend they start the same way. CPU and GPU initialization split. Leak tests stop hiding behind defer so a forgotten free actually fails the build. New errors cover reading the buffer as a slice or a pointer, because “just give me the bytes” is how a library starts lying.</p>
-            <p>The session is messy on purpose. refAllDecls is a hack to get something compiling. A second monitor is not architecture. What survives is the split: host memory and device memory are different contracts, and the Tensor has to say so at init rather than at the first kernel launch.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/e489c17dba">e489c17</a> · <a href="https://github.com/zigtensor/zigtensor/commit/d505eece72">d505eec</a> · <a href="https://github.com/zigtensor/zigtensor/commit/f865685925">f865685</a> · <a href="https://github.com/zigtensor/zigtensor/commit/dffa148747">dffa148</a> · <a href="https://github.com/zigtensor/zigtensor/commit/69176c11a9">69176c1</a> · <a href="https://github.com/zigtensor/zigtensor/commit/b5334e4f05">b5334e4</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-2">Previous</a> · <a href="/zigtensor/post-4">Next</a></p>
+            <p>If the tensor is going to live on two machines, it cannot pretend they start the same way. The 1st is refAllDecls, a hack to get something compiling — sorry, Andrew. The 2nd is the split: init becomes initCpu. GPU is a device tag and a door that is not open.</p>
+            <p>slice on CPU reinterprets the []u8 as f32, i32, or bool. On GPU it returns InvalidDevice. The error set grows InvalidDevice and InvalidType. A leak test drops defer so a forgotten free actually fails the build. Errors for reading the buffer as a slice or a pointer, because “just give me the bytes” is how a library starts lying.</p>
+            <p>A second monitor is not architecture. The last commit of the 2nd is breaking, resume tomorrow. What survives is the contract: host memory and device memory are different, and the Tensor has to say so at init rather than at the first kernel launch. lib.zig finally re-exports Tensor, DType, Device.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/e489c17dba1a41600528c27b29add027f313d3e3">e489c17</a> · <a href="https://github.com/zigtensor/zigtensor/commit/d505eece7246993cd63245d13099d0de6afe3553">d505eec</a> · <a href="https://github.com/zigtensor/zigtensor/commit/f8656859258405c449f40b5cad7cd8456a668033">f865685</a> · <a href="https://github.com/zigtensor/zigtensor/commit/dffa1487473b68cea72dcf34af8d99575e4f4caf">dffa148</a> · <a href="https://github.com/zigtensor/zigtensor/commit/e1a3fe52e6a53a53d31a2f0f6bc3c0ce68036a24">e1a3fe5</a> · <a href="https://github.com/zigtensor/zigtensor/commit/69176c11a96d4db48f8a65f19065fc3084c65734">69176c1</a> · <a href="https://github.com/zigtensor/zigtensor/commit/48cdf92afb98f7882206cc30e8777b7a3e698929">48cdf92</a> · <a href="https://github.com/zigtensor/zigtensor/commit/b5334e4f05ffc3f73a77c573d13671b39c85ad74">b5334e4</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-2">Previous</a> · <a href="/zigtensor/post-4">Next</a></p>
           </div>
         </article>
       </main>

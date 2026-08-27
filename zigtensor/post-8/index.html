@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>This probably runs — Ben Miller</title>
-    <meta name="description" content="The first CUDA kernels: vecadd and matmul, checked in as if they might execute.">
+    <meta name="description" content="vecadd.cu is a whole CUDA program. matmul.cu is an empty file with the right name.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -22,10 +22,10 @@
           </header>
 
           <div class="prose">
-            <p>Three days after the revival, CUDA C files appear: vecadd.cu, matmul.cu. The message is “this probably runs.” That is the GPU half of the original bet, written as kernels instead of a slide. They are not yet wired through a tidy Zig FFI in the way the April issues imagined. They are the thing the FFI would call.</p>
-            <p>A later commit named Kinesis only deletes a leftover a.out and updates gitignore. Not architecture. The kernels are.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/43e768b69a">43e768b</a> · <a href="https://github.com/zigtensor/zigtensor/commit/163f6437ad">163f643</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-7">Previous</a> · <a href="/zigtensor/post-9">Next</a></p>
+            <p>Three days later, CUDA. src/cuda/kernels/vecadd.cu is a whole program, not a library call. Ten thousand floats, host malloc, cudaMalloc, copy, vectorAdd at 256 threads per block, copy back, check within 1e-5, free. The kernel is C[i] = A[i] + B[i]. matmul.cu is an empty file with the right name. The commit message is the honest one: This probably runs.</p>
+            <p>They are not wired through Zig’s C FFI. They are not called from Tensor.add. They are the GPU half of the original bet, sitting next to the Zig, waiting for someone to link them. An a.out from compiling the sample sneaks into the tree and leaves a week later, along with *.out in gitignore. Not architecture. The kernels are.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/43e768b69acc7736c611ddaad40a31ecc5c49627">43e768b</a> · <a href="https://github.com/zigtensor/zigtensor/commit/163f6437ad6cf3eda0763d51ae0d0544f8d6ef85">163f643</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-7">Previous</a> · <a href="/zigtensor/post-9">Next</a></p>
           </div>
         </article>
       </main>

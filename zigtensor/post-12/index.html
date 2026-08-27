@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MNIST as a check, not a framework — Ben Miller</title>
-    <meta name="description" content="Fetch MNIST, then a PyTorch script so ZigTensor has something to be even with.">
+    <meta name="description" content="httpGet, a PyTorch SimpleNet on MNIST, and an empty sigmoid.zig.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -22,10 +22,10 @@
           </header>
 
           <div class="prose">
-            <p>The 23rd adds a tiny HTTP get and an MNIST path in Zig. The 24th checks in the raw MNIST files and a Python benchmark that runs the same idea in PyTorch. The point is not to depend on PyTorch. The point is a number you can argue with: does our tensor math match theirs on a dataset everyone already believes.</p>
-            <p>Sigmoid appears as an empty-ish operations file in the same breath as the fetch. The north star is parity, not a zoo of layers. If the library cannot learn MNIST in a way you can compare, the rest of the README is fiction.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/d9cb42513f">d9cb425</a> · <a href="https://github.com/zigtensor/zigtensor/commit/70073f2dab">70073f2</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-11">Previous</a> · <a href="/zigtensor/post-13">Next</a></p>
+            <p>If the library cannot learn MNIST in a way you can compare, the rest of the README is fiction. The 23rd adds httpGet: a std.http.Client on 0.16’s Io, GET, fail on a bad status, return owned bytes. The test hits Kaggle’s MNIST download URL. src/data/mnist.zig is a stub named getMnistData that does not yet get anything. sigmoid.zig is an empty file with the right name.</p>
+            <p>The 24th checks in the raw MNIST idx files and a Python script. SimpleNet is 784–128–128–10, ReLU, tanh on the last layer, CrossEntropy, Adam, ten epochs, batch 128. It prints a device, a loss, five predictions. The point is not to depend on PyTorch. The point is a number you can argue with when ZigTensor has a net of its own.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/d9cb42513f356cc0285b228de82261450be64805">d9cb425</a> · <a href="https://github.com/zigtensor/zigtensor/commit/70073f2dab3b4532445ba22bf0f49a8ff2a6bc16">70073f2</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-11">Previous</a> · <a href="/zigtensor/post-13">Next</a></p>
           </div>
         </article>
       </main>

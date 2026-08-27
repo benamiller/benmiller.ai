@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>The tensor owns its shape — Ben Miller</title>
-    <meta name="description" content="Stride and shape stop being arguments you pass in and become fields the Tensor keeps.">
+    <title>The tensor has to own its shape — Ben Miller</title>
+    <meta name="description" content="initCpu dupes shape and strides. deinit frees them. Allocator stops being a pointer.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -17,15 +17,15 @@
       <main>
         <article>
           <header>
-            <h1>The tensor owns its shape</h1>
+            <h1>The tensor has to own its shape</h1>
             <time datetime="2026-02-07">7 February 2026</time>
           </header>
 
           <div class="prose">
-            <p>A tensor that does not own its stride and shape is a view into someone else’s story. The 7th puts both on the struct. Call sites stop passing a reference they should not have had to keep. Size-mismatch errors get one name so the API does not grow a dialect per function.</p>
-            <p>This is the setup for later strides work. You cannot hide a stride you do not own. You also cannot write an axis reduction against a layout the tensor forgot.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/fabf71e73d">fabf71e</a> · <a href="https://github.com/zigtensor/zigtensor/commit/a87e80f078">a87e80f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/1c94c2e60d">1c94c2e</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-8">Previous</a> · <a href="/zigtensor/post-10">Next</a></p>
+            <p>initCpu was taking *std.mem.Allocator. Why pass a reference? The field becomes std.mem.Allocator, the Zig value, copied. Then the real change: shape and strides were slices the caller still owned. After this, initCpu dupes both. deinit frees both, plus the data. The tensor is a thing you can return from a function without the caller’s stack arrays dying under it.</p>
+            <p>The size-mismatch error gets one name: DataSizeMismatch. You cannot hide a stride you do not own. You also cannot write a view against a layout the tensor forgot.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/fabf71e73d733ce9d4ecc2655f52828db37ac314">fabf71e</a> · <a href="https://github.com/zigtensor/zigtensor/commit/a87e80f078cd3b4ca25211ab8ed77f54ad6d0e13">a87e80f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/1c94c2e60dc6c57191d021aed2efffc4dbec56ea">1c94c2e</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-8">Previous</a> · <a href="/zigtensor/post-10">Next</a></p>
           </div>
         </article>
       </main>

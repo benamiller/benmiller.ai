@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gone generic — Ben Miller</title>
-    <meta name="description" content="Tensor becomes generic, then learns in-place add and refuses type mismatch.">
+    <meta name="description" content="Tensor becomes Tensor(T). In-place add lands. Zig already forbids the type mismatch.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -22,10 +22,11 @@
           </header>
 
           <div class="prose">
-            <p>The Tensor goes generic. That is the maintenance bet: one implementation, dtype as a parameter, callers stop copy-pasting f32 special cases. Once the type can be many things, element-wise add has to mean something. In-place add lands with tests, then a second path that should fail when the dtypes do not match.</p>
-            <p>This is the first operation that looks like a library instead of a struct. Not GEMM, not a network. Two tensors, same shape, add. The error set for tensor-tensor work starts here. A few WIP tests get reverted the same afternoon. The shape of the API is the point, not the arithmetic.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/535210fe16">535210f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2ddf14bb74">2ddf14b</a> · <a href="https://github.com/zigtensor/zigtensor/commit/077d71e6ee">077d71e</a> · <a href="https://github.com/zigtensor/zigtensor/commit/6362ca196a">6362ca1</a> · <a href="https://github.com/zigtensor/zigtensor/commit/d8c457a6e3">d8c457a</a> · <a href="https://github.com/zigtensor/zigtensor/commit/323a026df8">323a026</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-3">Previous</a> · <a href="/zigtensor/post-5">Next</a></p>
+            <p>The Tensor goes generic: pub fn Tensor(comptime T: type) type. Data is []T. The dtype field goes away because the type is the dtype. Callers write Tensor(f32).initCpu(...). One implementation, no f32 special cases to copy.</p>
+            <p>Once the type can be many things, add has to mean something. add is in-place: same shape, same strides, loop the other’s data onto self. ShapeMismatch and StrideMismatch become real errors. TypeMismatch is put on the error set, then a test tries to add mismatched tensors, then Zig gets us. add takes @This(), so Tensor(f32) cannot even see a Tensor(u32). The type-mismatch test should not have existed. It is deleted the same afternoon.</p>
+            <p>What remains is f32 plus f32, later u32 plus u32, element-wise, in place. First operation that looks like a library instead of a struct. Not GEMM. Not a network. Two tensors, same layout, add.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/535210fe16364237c005d80f8ce62ad6b4626acd">535210f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2ddf14bb7401a0724f6effd123c9a8939f0dcb23">2ddf14b</a> · <a href="https://github.com/zigtensor/zigtensor/commit/077d71e6eef04f8abe505695b1c8c318dc130189">077d71e</a> · <a href="https://github.com/zigtensor/zigtensor/commit/6362ca196a612f453bc18535ec442b8396c62347">6362ca1</a> · <a href="https://github.com/zigtensor/zigtensor/commit/f4b27f9e29990ff30a5f8eb50e0ea326b1f1f7ed">f4b27f9</a> · <a href="https://github.com/zigtensor/zigtensor/commit/990849a586162ff75da11a454a76d40df3e939bd">990849a</a> · <a href="https://github.com/zigtensor/zigtensor/commit/d8c457a6e36541714a699d46c748e02a8190d172">d8c457a</a> · <a href="https://github.com/zigtensor/zigtensor/commit/323a026df8a4fcb766526defce073abb6b9b5508">323a026</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-3">Previous</a> · <a href="/zigtensor/post-5">Next</a></p>
           </div>
         </article>
       </main>

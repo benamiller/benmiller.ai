@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Longer runs, then fill again — Ben Miller</title>
-    <meta name="description" content="Training runs get long enough to trust parity. Post-init fill gets a real loop.">
+    <title>A hundred epochs, then fill again — Ben Miller</title>
+    <meta name="description" content="Tests off the default build. The PyTorch run goes to 100 epochs. Tensor.fill is a while loop.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -17,15 +17,16 @@
       <main>
         <article>
           <header>
-            <h1>Longer runs, then fill again</h1>
+            <h1>A hundred epochs, then fill again</h1>
             <time datetime="2026-06-09">9 June 2026</time>
           </header>
 
           <div class="prose">
-            <p>Not every build needs every test. The useful change is the longer training run: confidence in parity instead of a green that never left the first batch. Then a while-loop post-init fill, so a tensor that already exists can be written with a value without going back through init.</p>
-            <p>Fill-on-init was April. Fill-after-init is June. Same idea, different lifetime. Still CPU. GPU memset remains the fossil issue.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/a38da11996">a38da11</a> · <a href="https://github.com/zigtensor/zigtensor/commit/bc96bc015c">bc96bc0</a> · <a href="https://github.com/zigtensor/zigtensor/commit/e8c3b5d390">e8c3b5d</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-12">Previous</a> · <a href="/zigtensor/post-14">Next</a></p>
+            <p>Not every build needs every test. The default step stops depending on the test step, so zig build is a compile again.</p>
+            <p>The PyTorch script goes from 10 epochs to 100. Longer run, more confidence that the yardstick is a yardstick. Then fill after the fact: Tensor.fill, a while loop over self.data, because memset was the init path and this is the other lifetime. A test inits zeros, calls fill(2), checks the slice.</p>
+            <p>Fill-on-init was April 2025. Fill-after-init is June 2026. Same idea, different lifetime. Still CPU.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/a38da1199673907aac195bcd2a080066bb19826b">a38da11</a> · <a href="https://github.com/zigtensor/zigtensor/commit/bc96bc015c78ec14d45457ddd7df4788deed96fe">bc96bc0</a> · <a href="https://github.com/zigtensor/zigtensor/commit/e8c3b5d39078f91dbfaa5dabdbb8e9b485744b69">e8c3b5d</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-12">Previous</a> · <a href="/zigtensor/post-14">Next</a></p>
           </div>
         </article>
       </main>

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>An operations section — Ben Miller</title>
-    <meta name="description" content="Ops become their own module. Element-wise sum creates a new tensor instead of mutating in place.">
+    <title>Add that allocates — Ben Miller</title>
+    <meta name="description" content="ops.zig: element-wise sum returns a new tensor instead of mutating in place.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -17,15 +17,15 @@
       <main>
         <article>
           <header>
-            <h1>An operations section</h1>
+            <h1>Add that allocates</h1>
             <time datetime="2026-02-08">8 February 2026</time>
           </header>
 
           <div class="prose">
-            <p>In-place add was a method on the value you already had. Sum that allocates a new tensor is a different contract, and it belongs in an operations module so the next dozen kernels do not all live in tensor.zig. ops.zig appears. Element-wise sum gets tests of its own.</p>
-            <p>The file is a place to layer. Linear, conv, reductions can land here later without turning Tensor into a god type. Alloc-add, the issue that asked for a new tensor from two addends, is this. The GitHub issue is still open. The code is not.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/df90e02e5f">df90e02</a> · <a href="https://github.com/zigtensor/zigtensor/commit/d15bc2bbd7">d15bc2b</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-9">Previous</a> · <a href="/zigtensor/post-11">Next</a></p>
+            <p>In-place add mutates the left tensor. The next contract is different: two tensors in, a third out, nobody overwritten. That does not belong as another method on the type. src/tensor/ops.zig appears. ops.add(T, allocator, a, b) checks shape, checks stride, initCpus a zeroed output, writes dst.* = a + b, returns it. Tests live in their own file. lib.zig re-exports ops.</p>
+            <p>The file is a place to layer. Linear, conv, reductions can land here later. Today it is one function. The in-place method stays on Tensor. Both are add. They are not the same API.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/df90e02e5fda96fa9be98de6f9b423e702a85f0c">df90e02</a> · <a href="https://github.com/zigtensor/zigtensor/commit/d15bc2bbd7acd075f7a4e01e515c3ad2c3469a93">d15bc2b</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-9">Previous</a> · <a href="/zigtensor/post-11">Next</a></p>
           </div>
         </article>
       </main>

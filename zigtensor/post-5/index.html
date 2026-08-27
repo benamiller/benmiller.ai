@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fill on the way in — Ben Miller</title>
-    <meta name="description" content="PR #10: a new tensor can be created already filled with a constant.">
+    <title>Fill on init — Ben Miller</title>
+    <meta name="description" content="PR #10: initCpu can memset a new tensor to a constant.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -17,15 +17,15 @@
       <main>
         <article>
           <header>
-            <h1>Fill on the way in</h1>
+            <h1>Fill on init</h1>
             <time datetime="2025-04-09">9 April 2025</time>
           </header>
 
           <div class="prose">
-            <p>zeros and ones are not convenience helpers in a from-scratch library. They are the first time a Tensor is born with a defined buffer instead of whatever the allocator left behind. Fill-on-init lands with a test, then merges as PR #10.</p>
-            <p>The GPU version of this is still an open issue. The CPU path is the one that exists. After this, creating a tensor with a value is part of the type, not a loop the caller writes every time.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/124d68a86e">124d68a</a> · <a href="https://github.com/zigtensor/zigtensor/commit/89946d1c3c">89946d1</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2673ab3746">2673ab3</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-4">Previous</a> · <a href="/zigtensor/post-6">Next</a></p>
+            <p>Zeros are a special case of a number. initCpu grows an optional fill: ?T. No initial data, you memset the buffer to the fill, or to 0. A test asks for a {2,3} of twos and checks the slice. PR #10 — “1 create tensorfill to fill with value” — merges it.</p>
+            <p>This is still CPU. initCpu still takes a device_id you could set to GPU and then fail later in slice. Fill is part of construction, not a method you call on a tensor that already exists. That method is a year away.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/124d68a86e18b791ab4bc41dbcad015bb5b6bf6e">124d68a</a> · <a href="https://github.com/zigtensor/zigtensor/commit/89946d1c3c6d027821899cdf7e751de3dbb4c1c1">89946d1</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2673ab374691d63e6b44a99b3b9d5eed8bc0f282">2673ab3</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-4">Previous</a> · <a href="/zigtensor/post-6">Next</a></p>
           </div>
         </article>
       </main>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>A tensor that exists — Ben Miller</title>
-    <meta name="description" content="The first Tensor appears, instantiation lives in blocks, and the project gets a face.">
+    <meta name="description" content="Tensor starts as four fields and no buffer, then grows an allocator and a byte slice.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -22,10 +22,11 @@
           </header>
 
           <div class="prose">
-            <p>A library without a tensor is a README. The 31st adds a rudimentary Tensor and a test that it can actually be built, then settles the habit of instantiating inside blocks so lifetime stays visible. Icons land. A write-up for the culture goes in, which is the honest version of a homepage: here is why this exists, here is how early it is.</p>
-            <p>The last note of the day is “should be failing, tomorrow.” That is the right posture. The type is clay. CPU and GPU are not even separate initializers yet. The vision is still larger than the file.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/bf1700157d">bf17001</a> · <a href="https://github.com/zigtensor/zigtensor/commit/745b3d64d3">745b3d6</a> · <a href="https://github.com/zigtensor/zigtensor/commit/3a73e15f8c">3a73e15</a> · <a href="https://github.com/zigtensor/zigtensor/commit/c2e48ef4fa">c2e48ef</a> · <a href="https://github.com/zigtensor/zigtensor/commit/5d2904105d">5d29041</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-1">Previous</a> · <a href="/zigtensor/post-3">Next</a></p>
+            <p>A library without a tensor is a README. Tensor starts as four fields and no memory: shape, strides, dtype, device_id. The first test builds one by hand — shape {2,3}, strides {3,1}, f32, CPU — and checks that the shape has two dimensions. Instantiation moves inside the test block so the lifetime is the block, not the file.</p>
+            <p>Icons land. A write-up for the culture goes in, which is the honest version of a homepage: here is why this exists, here is how early it is, here is the CUDA toolkit you will have to install. Then the type grows an allocator and a []u8 buffer. init counts elements from the shape, dupes caller bytes or allocates zeros. deinit frees the buffer. Shape and strides are still borrowed from the caller.</p>
+            <p>The last note of the day is that it should be failing tomorrow. The init does not try the allocator. The data is bytes, not a type. CPU and GPU are a tag, not two initializers. Tomorrow is the point.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/bf1700157df359991b7c6f00fca89ee36e52f8fb">bf17001</a> · <a href="https://github.com/zigtensor/zigtensor/commit/745b3d64d3ec3cf672359c30220f68edf829489e">745b3d6</a> · <a href="https://github.com/zigtensor/zigtensor/commit/3a73e15f8c3d4e2ad31ef10d53abcc54da32d3d3">3a73e15</a> · <a href="https://github.com/zigtensor/zigtensor/commit/c2e48ef4fa12df2e6485f772ca64f03be5d5f4d5">c2e48ef</a> · <a href="https://github.com/zigtensor/zigtensor/commit/5d2904105d9f22c7a8387caf23f70853a9922999">5d29041</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-1">Previous</a> · <a href="/zigtensor/post-3">Next</a></p>
           </div>
         </article>
       </main>

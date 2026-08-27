@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>The library has to compile — Ben Miller</title>
-    <meta name="description" content="ZigTensor starts as a Zig build that refuses to ship if the tests fail.">
+    <meta name="description" content="ZigTensor starts as two enums, an error set, and a build that refuses to ship if the tests fail.">
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
@@ -22,10 +22,11 @@
           </header>
 
           <div class="prose">
-            <p>ZigTensor is supposed to be a deep learning library you can read. Not a Python binding with a C++ basement. Tensors, ops, autodiff, CUDA, all of it owned in one place, with Zig’s explicit allocators and error unions instead of a framework’s hidden graph. That is the bet. Day one is not a tensor. Day one is a build.</p>
-            <p>The first commits throw out whatever scaffolding was in the way, add a contrived unit test, and make compilation depend on that test passing. An error set is imported so it can grow. Types get tests before they get bodies. The semi-colon convention is established like it matters, because in Zig it does. By the end of the 30th the repo knows how to fail in public.</p>
-            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/e66bff4883">e66bff4</a> · <a href="https://github.com/zigtensor/zigtensor/commit/a356865c2f">a356865</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2dbe06164f">2dbe061</a> · <a href="https://github.com/zigtensor/zigtensor/commit/838f00fbb5">838f00f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/0c7e0ed360">0c7e0ed</a> · <a href="https://github.com/zigtensor/zigtensor/commit/1694bed0c6">1694bed</a> · <a href="https://github.com/zigtensor/zigtensor/commit/cadd654899">cadd654</a></p>
-            <p class="post-nav"><a href="/zigtensor">All notes</a> · <a href="/zigtensor/post-2">Next</a></p>
+            <p>The bet is a deep learning library you can read. Zig, not a Python skin over someone else’s C++. Allocators you pass in. Errors you handle. CUDA kernels you wrote, not a graph runtime that decided for you. Day one is not a matmul. Day one is a library that compiles, and refuses to if the tests fail.</p>
+            <p>The first commit is the empty shape. Then back to basics: a contrived test so the build graph has something to run, another so it actually runs. For a moment the artifact is named lib and the linker emits liblib.a, which is as suspicious as it sounds. The static library becomes zigtensor. Compilation is wired to the test step. If the tests fail, you do not get a library.</p>
+            <p>An error set is imported for later: OutOfMemory, NotImplemented. The semi-colon convention is established like it matters, because in Zig it does. Types arrive as two enums. DType is f32, i32, bool. Device is CPU or GPU. Tests assert the tag names exist. One of them points at DType.CPU, which does not exist. Day two of Zig. Awkward. The root of the library is still dummy(). That is enough. The repo knows how to fail in public.</p>
+            <p class="shas"><a href="https://github.com/zigtensor/zigtensor/commit/e66bff4883b408735a6a496485214a57c3ae84fd">e66bff4</a> · <a href="https://github.com/zigtensor/zigtensor/commit/a356865c2f9bb4c7e0a2ce4779f147c9f339d871">a356865</a> · <a href="https://github.com/zigtensor/zigtensor/commit/2dbe06164fb5efb8dbc618fc6477430cba783fe5">2dbe061</a> · <a href="https://github.com/zigtensor/zigtensor/commit/838f00fbb5baf8c4c829680c8aa03b3fba9ca9bf">838f00f</a> · <a href="https://github.com/zigtensor/zigtensor/commit/11a1bfcd72f9b3fdc68f34af8b4a75c6de85a98a">11a1bfc</a> · <a href="https://github.com/zigtensor/zigtensor/commit/0c7e0ed360acadbe4776a9b3ef4f5b1127416ea4">0c7e0ed</a> · <a href="https://github.com/zigtensor/zigtensor/commit/1694bed0c6a0429c40d0e972a4d9e7f45b532b52">1694bed</a> · <a href="https://github.com/zigtensor/zigtensor/commit/7978710f5c46ab19e29b5cda055ff79bead84d18">7978710</a> · <a href="https://github.com/zigtensor/zigtensor/commit/1fc7f604572e888a9c725171e2c8f400fd513c2f">1fc7f60</a> · <a href="https://github.com/zigtensor/zigtensor/commit/758b88e639ded1c99ca88ce4f400f6ccbacfbf91">758b88e</a> · <a href="https://github.com/zigtensor/zigtensor/commit/cadd6548999f8d8d9f02a182968294276e49fc9b">cadd654</a></p>
+            <p class="post-nav"><a href="/zigtensor/post-2">Next</a></p>
           </div>
         </article>
       </main>
