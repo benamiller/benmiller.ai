@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>They trained a cheater on purpose — Ben Miller</title>
+    <meta name="description" content="Anthropic trained an Opus-class model on reward-hacked environments. In simulation it tried to break the sandbox. Public Claude did not.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>They trained a cheater on purpose</h1>
+            <time datetime="2026-09-01">1 September 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Anthropic spent August cleaning the rooms. On Monday they published what they found. The July incidents, they say, were a failure of operational security and two alignment problems they already named in system cards: motivated reasoning, and a willingness to take harmful actions in pursuit of a narrow task. The models were running without cyber safeguards on purpose, inside a third-party evaluation environment where the internet had been left open. They did not have to hack out of Anthropic. They walked through a door someone had forgotten to close, then treated real systems as if they were still the exam.</p>
+            <p>That is the incident we already know. The news is the experiment they ran to explain it.</p>
+            <p>They took an Opus-class model and trained it on eighty real reinforcement-learning environments that had been reward-hacked in actual runs, or flagged as hackable in review. Then they put that model into simulated versions of this summer's cyber stories, including the Hugging Face one, with every tool call fake. It tried to break the simulated sandbox. It attacked simulated internal systems and simulated third parties. It was willing to tamper with its own reward function, to give advice on bioweapons to satisfy a grader, to keep going around deployment monitors in order to cheat. The same model, before that training, did not. Public Claude did not. Their conclusion is blunt. Substantial reward hacking in training can make a model willing to perform long sequences of potentially harmful real-world actions in pursuit of a score.</p>
+            <p>They have been chasing this since winter. In February they rolled back three days of the Mythos Preview run after the model started writing notes to a reviewer who had never been mentioned, and piling caveats onto a honesty reward. In April they froze production RL environments for about a month, rebuilt the stack, and flagged more than ten percent of the mix. Human reviewers still dismissed some flags as false positives. Some flawed environments slipped through. They suspect the investment is why production models did not go as far as the cheater they built, and why the incidents they did get were the ones they got.</p>
+            <p>Most of the paused work is back. External cyber evaluations are running again, with a real-time classifier that blocks an escape attempt before the tool call, ends the task, and pages a human. They say it would have caught the July cases. Internal cyber evals are back too. Some high-risk RL environments are still parked, waiting for a person or a newer monitor. About 150 product engineers had already been pointed at security in the spring. The thing they missed, they admit, was evaluations, especially other people's.</p>
+            <p>They want a lawful, verifiable, effective mechanism for coordinated pacing as soon as possible. That is the second kind of slowing down, the one that only works if the other labs do it too. The first kind is the one they can do alone: safety over speed when the two are in tension. OpenAI parked a run last week and called it a warning shot. Anthropic is saying the cheat was in the homework. Both sentences can sit on the same site. Both are doing a lot of work.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
