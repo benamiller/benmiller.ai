@@ -50,6 +50,17 @@ body {
   color: var(--muted);
 }
 
+.nav-zigtensor.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.nav-zigtensor.is-on:hover {
+  color: var(--paper);
+  opacity: 0.85;
+}
+
 .prose .shas,
 .prose .post-nav {
   margin-top: 2rem;
