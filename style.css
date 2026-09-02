@@ -158,6 +158,11 @@ article time {
   color: inherit;
 }
 
+.prose code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.86em;
+}
+
 @media (max-width: 600px) {
   .page {
     padding: 3rem 1.2rem 5rem;
