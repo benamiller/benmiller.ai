@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>No through route — Ben Miller</title>
+    <meta name="description" content="Kenji watched the pin drift on his phone the way you watch weather you cannot change.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #07060a;
+        --ink: #e7e0d4;
+        --mute: #8b8376;
+        --lane: #3ee0a0;
+        --gold: #d4a84b;
+        --river: #163044;
+        --ember: #c45c3a;
+        --glass: #b7d9c8;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 55% 35% at 78% 8%, rgba(62, 224, 160, 0.16), transparent 55%),
+          radial-gradient(ellipse 40% 30% at 12% 18%, rgba(212, 168, 75, 0.12), transparent 50%),
+          radial-gradient(ellipse 70% 50% at 50% 110%, rgba(22, 48, 68, 0.9), transparent 55%),
+          linear-gradient(180deg, #07060a 0%, #0c1016 42%, #101820 72%, #0a1210 100%);
+        animation: paint-breathe 32s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          linear-gradient(90deg, transparent, rgba(62, 224, 160, 0.04), transparent),
+          radial-gradient(ellipse 90% 28% at 50% 100%, rgba(22, 48, 68, 0.35), transparent 70%);
+        animation: fog-drift 48s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.08;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--glass);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.7rem, 8vw, 4.4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--glass);
+        text-shadow: 0 0 40px rgba(62, 224, 160, 0.18);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .phone {
+        position: relative;
+        width: min(18.5rem, 100%);
+        height: 22rem;
+        margin: 0 auto;
+        border-radius: 1.6rem;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.06), transparent 30%),
+          #12161c;
+        border: 1px solid rgba(183, 217, 200, 0.28);
+        box-shadow:
+          0 40px 90px rgba(0,0,0,0.55),
+          0 0 50px rgba(62, 224, 160, 0.08),
+          inset 0 1px 0 rgba(255,255,255,0.12);
+        overflow: hidden;
+      }
+
+      .phone::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0.55rem;
+        width: 4.2rem;
+        height: 0.38rem;
+        transform: translateX(-50%);
+        border-radius: 99px;
+        background: #07060a;
+      }
+
+      .map {
+        position: absolute;
+        inset: 1.6rem 0.7rem 4.6rem;
+        border-radius: 0.7rem;
+        overflow: hidden;
+        background:
+          linear-gradient(#1a222c, #1a222c) 18% 0 / 2px 100% no-repeat,
+          linear-gradient(#1a222c, #1a222c) 62% 0 / 2px 100% no-repeat,
+          linear-gradient(#1a222c, #1a222c) 0 38% / 100% 2px no-repeat,
+          linear-gradient(#1a222c, #1a222c) 0 71% / 100% 2px no-repeat,
+          radial-gradient(circle at 72% 22%, rgba(212, 168, 75, 0.28), transparent 28%),
+          radial-gradient(circle at 28% 78%, rgba(80, 70, 55, 0.5), transparent 32%),
+          #0e141a;
+      }
+
+      .map .lane {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 46%;
+        height: 10%;
+        background: repeating-linear-gradient(90deg, rgba(62,224,160,0.55) 0 18px, transparent 18px 36px);
+        opacity: 0.45;
+        animation: lane-flow 9s linear infinite;
+      }
+
+      .pin {
+        position: absolute;
+        left: 42%;
+        top: 48%;
+        width: 14px;
+        height: 14px;
+        margin: -7px 0 0 -7px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        background: var(--ember);
+        box-shadow: 0 0 16px rgba(196, 92, 58, 0.8);
+        animation: pin-drift 11s ease-in-out infinite;
+      }
+
+      .pin::after {
+        content: "";
+        position: absolute;
+        inset: -10px;
+        border-radius: 50%;
+        border: 1px solid rgba(196, 92, 58, 0.45);
+        animation: ping 3.2s ease-out infinite;
+      }
+
+      .eta {
+        position: absolute;
+        left: 0.9rem;
+        right: 0.9rem;
+        bottom: 1.15rem;
+        height: 2.4rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .eta b, .eta i {
+        position: absolute;
+        left: 0;
+        right: 0;
+        font-style: normal;
+        font-weight: 500;
+        animation: eta-cycle 12s infinite;
+      }
+
+      .eta b { color: var(--glass); }
+      .eta i:nth-of-type(1) { animation-delay: -4s; color: var(--glass); }
+      .eta i:nth-of-type(2) { animation-delay: -8s; color: var(--gold); }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d9d2c6;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .lanes {
+        background:
+          linear-gradient(180deg, #0b1014 0%, #101820 40%, #0c1410 100%);
+      }
+
+      .lanes .band {
+        position: absolute;
+        left: -5%;
+        right: -5%;
+        height: 18%;
+        background:
+          linear-gradient(180deg, transparent, rgba(62,224,160,0.12), transparent),
+          repeating-linear-gradient(90deg, rgba(62,224,160,0.7) 0 10px, transparent 10px 52px);
+        filter: drop-shadow(0 0 10px rgba(62,224,160,0.25));
+        animation: lane-flow 14s linear infinite;
+      }
+
+      .lanes .band:nth-child(1) { top: 18%; opacity: 0.85; }
+      .lanes .band:nth-child(2) { top: 42%; animation-duration: 11s; animation-direction: reverse; opacity: 0.55; }
+      .lanes .band:nth-child(3) { top: 66%; animation-duration: 16s; opacity: 0.7; }
+
+      .walker {
+        position: absolute;
+        left: 8%;
+        bottom: 10%;
+        width: 8px;
+        height: 22px;
+        background: linear-gradient(#c9c0b2, #8a7f70);
+        border-radius: 3px 3px 0 0;
+        animation: walk 18s linear infinite;
+        box-shadow: 0 0 12px rgba(0,0,0,0.4);
+      }
+
+      .bikes {
+        background:
+          radial-gradient(ellipse at 30% 70%, rgba(62,224,160,0.08), transparent 50%),
+          #0c1016;
+      }
+
+      .bike {
+        position: absolute;
+        bottom: 28%;
+        width: 54px;
+        height: 32px;
+        border: 2px solid rgba(183,217,200,0.45);
+        border-radius: 40% 40% 8px 8px / 70% 70% 8px 8px;
+      }
+
+      .bike::before, .bike::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(183,217,200,0.5);
+        border-radius: 50%;
+      }
+      .bike::before { left: 2px; }
+      .bike::after { right: 2px; }
+      .bike.a { left: 18%; }
+      .bike.b { left: 58%; }
+      .lock {
+        position: absolute;
+        top: 22%;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        opacity: 0;
+        animation: prefer 6.5s ease-in-out infinite;
+      }
+      .lock.a { left: 16%; }
+      .lock.b { left: 56%; animation-delay: -3.2s; }
+
+      .gate {
+        background:
+          linear-gradient(180deg, #0a0e12, #121820);
+      }
+
+      .gate .bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 42%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--lane), var(--gold), var(--lane), transparent);
+        box-shadow: 0 0 18px rgba(62,224,160,0.7);
+        animation: bar-scan 5.5s ease-in-out infinite;
+      }
+
+      .gate .cam {
+        position: absolute;
+        left: 50%;
+        top: 22%;
+        width: 18px;
+        height: 18px;
+        margin-left: -9px;
+        border-radius: 50%;
+        background: #1c242c;
+        box-shadow: inset 0 0 0 3px rgba(183,217,200,0.35), 0 0 16px rgba(62,224,160,0.35);
+      }
+
+      .gate .cam::after {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        border-radius: 50%;
+        background: var(--lane);
+        animation: cam-blink 3.8s ease-in-out infinite;
+      }
+
+      .gate .screen {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 16%;
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--glass);
+      }
+
+      .gate .screen small {
+        display: block;
+        margin-top: 0.55rem;
+        color: var(--mute);
+        letter-spacing: 0.12em;
+      }
+
+      .waterway {
+        background:
+          linear-gradient(180deg, #0d1820 0%, #163044 48%, #0d1a14 49%, #10140e 100%);
+      }
+
+      .waterway .river {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 48%;
+        background:
+          repeating-linear-gradient(90deg, rgba(183,217,200,0.08) 0 22px, transparent 22px 48px);
+        animation: water 22s linear infinite;
+        opacity: 0.7;
+      }
+
+      .waterway .fence {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 46%;
+        height: 8px;
+        background: repeating-linear-gradient(90deg, rgba(139,131,118,0.5) 0 6px, transparent 6px 14px);
+      }
+
+      .waterway .gap {
+        position: absolute;
+        left: 38%;
+        top: 44%;
+        width: 12%;
+        height: 14px;
+        background: #10140e;
+        box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+      }
+
+      .figures span {
+        position: absolute;
+        bottom: 14%;
+        width: 7px;
+        height: 18px;
+        background: #9a9184;
+        border-radius: 2px;
+        opacity: 0.85;
+      }
+      .figures span:nth-child(1) { left: 12%; height: 16px; }
+      .figures span:nth-child(2) { left: 22%; width: 11px; height: 14px; border-radius: 6px 2px; }
+      .figures span:nth-child(3) { left: 48%; }
+      .figures span:nth-child(4) { left: 63%; height: 20px; width: 9px; }
+
+      .junction {
+        background: #0b1014;
+      }
+
+      .junction .green {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 28%;
+        height: 22%;
+        background: repeating-linear-gradient(90deg, rgba(62,224,160,0.65) 0 28px, transparent 28px 70px);
+        animation: lane-flow 8s linear infinite;
+        filter: drop-shadow(0 0 8px rgba(62,224,160,0.4));
+      }
+
+      .junction .wait {
+        position: absolute;
+        left: 8%;
+        right: 38%;
+        bottom: 12%;
+        height: 3px;
+        background: repeating-linear-gradient(90deg, #8b8376 0 6px, transparent 6px 16px);
+      }
+
+      .junction .sig {
+        position: absolute;
+        right: 12%;
+        bottom: 18%;
+        width: 10px;
+        height: 22px;
+        background: #1a1a1a;
+        border: 1px solid #333;
+      }
+      .junction .sig::after {
+        content: "";
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        bottom: 3px;
+        height: 6px;
+        background: #8a6a2a;
+        animation: walk-sig 7s steps(2, end) infinite;
+      }
+
+      .ferry {
+        background:
+          linear-gradient(180deg, #101820 0%, #163044 55%, #0c1418 100%);
+      }
+
+      .ferry .sheet {
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(180deg, transparent 0 18px, rgba(183,217,200,0.05) 18px 19px);
+        animation: water 28s linear infinite;
+      }
+
+      .boat {
+        position: absolute;
+        top: 34%;
+        width: 110px;
+        height: 22px;
+        background: #e8e4dc;
+        border-radius: 2px 40px 8px 2px;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+        animation: sail 22s ease-in-out infinite;
+      }
+
+      .boat::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: -14px;
+        width: 52px;
+        height: 16px;
+        background: #e8e4dc;
+        border-radius: 2px 8px 0 0;
+      }
+
+      .board {
+        position: absolute;
+        left: 8%;
+        bottom: 12%;
+        width: 42%;
+        height: 38%;
+        border: 1px solid rgba(183,217,200,0.25);
+        background: rgba(7,6,10,0.55);
+        color: var(--mute);
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 0.7rem 0.75rem;
+      }
+
+      .board u {
+        display: block;
+        margin-top: 0.45rem;
+        color: var(--gold);
+        text-decoration: none;
+        animation: flex-pulse 3.4s ease-in-out infinite;
+      }
+
+      .tablet {
+        background:
+          radial-gradient(ellipse at 70% 30%, rgba(212,168,75,0.1), transparent 50%),
+          #0c1016;
+      }
+
+      .pad {
+        position: absolute;
+        left: 50%;
+        top: 18%;
+        width: min(16rem, 80%);
+        height: 64%;
+        transform: translateX(-50%);
+        border-radius: 0.5rem;
+        background: #141a20;
+        border: 1px solid rgba(183,217,200,0.25);
+        overflow: hidden;
+      }
+
+      .fields {
+        position: absolute;
+        inset: 12% 10%;
+        background: repeating-linear-gradient(
+          180deg,
+          rgba(183,217,200,0.12) 0 8px,
+          transparent 8px 18px
+        );
+        mask-image: linear-gradient(180deg, #000, transparent 92%);
+      }
+
+      .risk {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 12%;
+        height: 18px;
+        border: 1px solid rgba(196,92,58,0.55);
+        color: var(--ember);
+      }
+
+      .yield {
+        background:
+          linear-gradient(180deg, #0b0e12, #12100c);
+      }
+
+      .grid {
+        position: absolute;
+        inset: 10% 8%;
+        background:
+          repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 28px),
+          repeating-linear-gradient(180deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 28px);
+      }
+
+      .block {
+        position: absolute;
+        left: 18%;
+        bottom: 22%;
+        width: 22%;
+        height: 22%;
+        background: rgba(90, 70, 48, 0.55);
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+      }
+
+      .gold {
+        position: absolute;
+        left: 18%;
+        top: 16%;
+        width: 64%;
+        height: 14%;
+        background: linear-gradient(90deg, rgba(212,168,75,0.15), rgba(212,168,75,0.85), rgba(212,168,75,0.2));
+        box-shadow: 0 0 24px rgba(212,168,75,0.35);
+        animation: gold-pulse 6s ease-in-out infinite;
+      }
+
+      .cart-scene {
+        background: #0c1014;
+      }
+
+      .door {
+        position: absolute;
+        right: 18%;
+        bottom: 28%;
+        width: 36px;
+        height: 58px;
+        background: #1a1e24;
+        border: 1px solid rgba(183,217,200,0.2);
+      }
+
+      .wrong {
+        position: absolute;
+        right: 38%;
+        bottom: 28%;
+        width: 36px;
+        height: 58px;
+        background: #161416;
+        border: 1px solid rgba(139,131,118,0.25);
+      }
+
+      .cart {
+        position: absolute;
+        bottom: 18%;
+        width: 42px;
+        height: 18px;
+        background: #2a3238;
+        border-radius: 3px;
+        box-shadow: 0 0 12px rgba(62,224,160,0.2);
+        animation: dock 9s ease-in-out infinite;
+      }
+
+      .cart::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        top: -8px;
+        height: 10px;
+        background: #3a444c;
+      }
+
+      .clinic {
+        background:
+          linear-gradient(180deg, #0a1018 0%, #163044 46%, #0c1410 47%, #0a0e0c 100%);
+      }
+
+      .clinic .water {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 38%;
+        height: 10%;
+        background: repeating-linear-gradient(90deg, rgba(183,217,200,0.1) 0 16px, transparent 16px 40px);
+        animation: water 18s linear infinite;
+      }
+
+      .windows {
+        position: absolute;
+        right: 14%;
+        top: 16%;
+        width: 46%;
+        height: 22%;
+        background: repeating-linear-gradient(90deg, rgba(232, 210, 150, 0.15) 0 8px, transparent 8px 16px);
+        animation: lights-on 8s ease-in-out infinite;
+        filter: drop-shadow(0 0 8px rgba(232,210,150,0.25));
+      }
+
+      .mini-pin {
+        position: absolute;
+        left: 12%;
+        bottom: 18%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        background: var(--ember);
+        box-shadow: 0 0 14px rgba(196,92,58,0.8);
+        animation: pin-drift 11s ease-in-out infinite;
+      }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(12deg); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-8%); }
+        to { transform: translateX(8%); }
+      }
+      @keyframes pin-drift {
+        0%, 100% { left: 42%; top: 48%; }
+        28% { left: 51%; top: 42%; }
+        55% { left: 36%; top: 58%; }
+        78% { left: 58%; top: 50%; }
+      }
+      @keyframes ping {
+        from { transform: scale(0.6); opacity: 0.7; }
+        to { transform: scale(1.8); opacity: 0; }
+      }
+      @keyframes eta-cycle {
+        0%, 22% { opacity: 1; }
+        28%, 100% { opacity: 0; }
+      }
+      @keyframes lane-flow {
+        from { background-position: 0 0; }
+        to { background-position: 200px 0; }
+      }
+      @keyframes walk {
+        from { left: 4%; }
+        to { left: 78%; }
+      }
+      @keyframes prefer {
+        0%, 40% { opacity: 0; }
+        48%, 70% { opacity: 1; }
+        80%, 100% { opacity: 0; }
+      }
+      @keyframes bar-scan {
+        0%, 100% { opacity: 0.45; filter: hue-rotate(0deg); }
+        50% { opacity: 1; filter: hue-rotate(20deg); }
+      }
+      @keyframes cam-blink {
+        0%, 80% { opacity: 1; }
+        90% { opacity: 0.2; }
+      }
+      @keyframes water {
+        from { background-position: 0 0; }
+        to { background-position: 120px 0; }
+      }
+      @keyframes walk-sig {
+        0% { background: #8a6a2a; }
+        50% { background: var(--lane); }
+      }
+      @keyframes sail {
+        0% { left: 38%; opacity: 1; }
+        70% { left: 92%; opacity: 0.7; }
+        100% { left: 108%; opacity: 0; }
+      }
+      @keyframes flex-pulse {
+        0%, 100% { opacity: 0.55; }
+        50% { opacity: 1; }
+      }
+      @keyframes gold-pulse {
+        0%, 100% { opacity: 0.75; }
+        50% { opacity: 1; }
+      }
+      @keyframes dock {
+        0% { left: 8%; }
+        28% { left: 38%; }
+        40% { left: 38%; }
+        55% { left: 58%; }
+        78% { left: 58%; }
+        100% { left: 78%; }
+      }
+      @keyframes lights-on {
+        0%, 30% { opacity: 0.15; }
+        45%, 100% { opacity: 1; }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .pin, .pin::after, .eta b, .eta i,
+        .lanes .band, .walker, .lock, .gate .bar, .gate .cam::after,
+        .waterway .river, .junction .green, .junction .sig::after,
+        .boat, .board u, .gold, .cart, .clinic .water, .windows, .mini-pin, .scene {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="phone" aria-hidden="true">
+          <div class="map">
+            <div class="lane"></div>
+            <div class="pin"></div>
+          </div>
+          <div class="eta">
+            <b>3 min away</b>
+            <i>5 min away</i>
+            <i>voucher for next time</i>
+          </div>
+        </div>
+        <h1>No through route</h1>
+        <time datetime="2026-09-02">2 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Kenji watched the pin drift on his phone the way you watch weather you cannot change.</p>
+        <p>The car had been three minutes away for eleven minutes. Then it was five. Then the app apologised in the soft voice that never raised its pitch and offered him a voucher for next time. There would not be a next time that mattered. The ferry left at 7:40. The clinic on the other side opened its intake window until 8:15 and then it was tomorrow, and tomorrow his mother would be a day further into the thing the clinic was supposed to catch early.</p>
+        <p>He walked.</p>
+      </div>
+
+      <figure class="scene tall lanes" aria-hidden="true">
+        <div class="band"></div>
+        <div class="band"></div>
+        <div class="band"></div>
+        <div class="walker"></div>
+      </figure>
+      <p class="cap">express lanes · calm green</p>
+
+      <div class="prose">
+        <p>The city still looked like a city. Trams ran. Delivery carts hummed along the kerb with packages stacked like neat brick. Above the river the express lanes glowed a calm green, vehicles spaced as if someone had drawn them with a ruler. Kenji had ridden those lanes two years ago when his score was still the ordinary kind of ordinary. Work badge, rent paid, no flags. Then the warehouse moved its shifts to the model that hated late clocks, and he was late three times in a month because the bus he used to take had been absorbed into a corridor that no longer stopped on his side of the cut. The score noticed. Scores noticed everything that could be measured and nothing that could not.</p>
+        <p>He tried the shared bikes. Two were listed within a block. Both unlocked for someone else's reservation the moment he reached them, as if the street had preferred a different hand. He laughed once, short, and kept walking.</p>
+      </div>
+
+      <figure class="scene bikes" aria-hidden="true">
+        <div class="bike a"></div>
+        <div class="bike b"></div>
+        <div class="lock a">reserved</div>
+        <div class="lock b">reserved</div>
+      </figure>
+      <p class="cap">a different hand</p>
+
+      <div class="prose">
+        <p>At the footbridge a barrier had grown that was not quite a gate. A strip of light, a camera, a polite screen. ACCESS OPTIMISED FOR CURRENT NETWORK LOAD. His phone buzzed with an alternative: a shuttle in fourteen minutes to a hub four kilometres west, from which another shuttle would, eventually, bend back toward the ferry. Estimated arrival 8:31. The clinic window would be closed. The screen wished him a pleasant journey.</p>
+      </div>
+
+      <figure class="scene gate" aria-hidden="true">
+        <div class="cam"></div>
+        <div class="bar"></div>
+        <div class="screen">Access optimised for current network load<small>estimated arrival 8:31 · pleasant journey</small></div>
+      </figure>
+      <p class="cap">not quite a gate</p>
+
+      <div class="prose">
+        <p>Kenji went around. The old pedestrian path along the water still existed if you knew where the fence had a tired place. He was not the only one. A woman with a pram. A man in a kitchen jacket. A teenager with a cello case held like a shield. Nobody spoke. They had the look of people who had already explained themselves to machines and been answered with routes.</p>
+      </div>
+
+      <figure class="scene waterway" aria-hidden="true">
+        <div class="river"></div>
+        <div class="fence"></div>
+        <div class="gap"></div>
+        <div class="figures">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </figure>
+      <p class="cap">the tired place in the fence</p>
+
+      <div class="prose">
+        <p>On the far side the green lanes were louder. Cars that never hesitated. A school group in a liveried van that the network treated as a single bright priority, whisked through a junction while a line of walking people waited for a Walk signal that took its time, checking, checking. Kenji's phone suggested he wait indoors at a cafe partner for a better match. The cafe was a subscription he did not have.</p>
+      </div>
+
+      <figure class="scene junction" aria-hidden="true">
+        <div class="green"></div>
+        <div class="wait"></div>
+        <div class="sig"></div>
+      </figure>
+      <p class="cap">checking, checking</p>
+
+      <div class="prose">
+        <p>He reached the ferry pier at 7:52. The boat was a white shape already mid-river. The next sailing was 8:25 if the river model agreed. A board listed berths. His ticket, bought at six that morning, had been reassigned to flex capacity. Flex capacity meant stand-by. Stand-by meant the algorithm filled the boat with travellers whose predicted value to the evening network was higher: workers headed to the logistics park, a pair of consultants with corporate mobility, a family whose household score made them resilient demand. Kenji's predicted value was a small number next to a small number. He stood under the roof and watched the water.</p>
+        <p>His mother texted. Are you close. He typed yes and did not send it. Then he typed on my way and sent that instead, which was true in the only way left.</p>
+      </div>
+
+      <figure class="scene tall ferry" aria-hidden="true">
+        <div class="sheet"></div>
+        <div class="boat"></div>
+        <div class="board">berths<br>07:40 departed<br>08:25 pending<u>flex capacity</u></div>
+      </figure>
+      <p class="cap">a white shape already mid-river</p>
+
+      <div class="prose">
+        <p>A clerk in a reflective vest came out with a tablet. Manual override, she said, not unkind. For medical. She swiped. The tablet thought. Then it offered her a form with seventeen fields and a risk acknowledgement that named her employee number. She looked at Kenji, at the closed clinic window across the water in her mind, at the tablet that would remember her kindness as a deviation. I'm sorry, she said. Try the morning.</p>
+        <p>He nodded. He had known before she spoke.</p>
+      </div>
+
+      <figure class="scene tablet" aria-hidden="true">
+        <div class="pad">
+          <div class="fields"></div>
+          <div class="risk"></div>
+        </div>
+      </figure>
+      <p class="cap">seventeen fields</p>
+
+      <div class="prose">
+        <p>By nine the green lanes had thinned into something almost peaceful. Kenji took the long way home along streets the network did not bother to optimise, past shuttered shops that used to catch the bus crowd and a playground whose gate still opened to anyone. His phone, helpful to the end, summarised the day: three failed matches, one voucher, a tip to improve eligibility by linking a newer work account or moving closer to a priority corridor. There was a map. His block was the colour of low yield. The corridor two kilometres north was gold.</p>
+      </div>
+
+      <figure class="scene yield" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="gold"></div>
+        <div class="block"></div>
+      </figure>
+      <p class="cap">low yield / gold</p>
+
+      <div class="prose">
+        <p>He sat on the step outside his building and watched a delivery cart dock itself perfectly at the wrong door, correct, redock, leave a package for a neighbour who was not home. Efficient. The cart hummed away toward the gold.</p>
+      </div>
+
+      <figure class="scene cart-scene" aria-hidden="true">
+        <div class="wrong"></div>
+        <div class="door"></div>
+        <div class="cart"></div>
+      </figure>
+      <p class="cap">the wrong door, then the right one</p>
+
+      <div class="prose">
+        <p>In the morning he would walk again, earlier. He would leave before the model finished preferring other people. He would carry the referral letter in his jacket so that if a human still stood at a counter anywhere, he would have paper. Paper was slow. Paper did not reassign itself to flex capacity while you watched a pin drift.</p>
+        <p>Across the river the clinic lights went on for the day shift. On his screen a new car was three minutes away, for someone else, forever.</p>
+      </div>
+
+      <figure class="scene tall clinic" aria-hidden="true">
+        <div class="windows"></div>
+        <div class="water"></div>
+        <div class="mini-pin"></div>
+      </figure>
+      <p class="cap">for someone else, forever</p>
+    </article>
+  </body>
+</html>
