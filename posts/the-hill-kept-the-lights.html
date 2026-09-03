@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The hill kept the lights — Ben Miller</title>
+    <meta name="description" content="Mira woke to the soft click of the kettle, not an alarm. The hill kept the lights.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --dusk: #1a2218;
+        --bay: #243528;
+        --ink: #eef4e6;
+        --mute: #9aab8f;
+        --leaf: #7ecf7a;
+        --gold: #e3c16a;
+        --heat: #d98a4a;
+        --mist: #b8d4c4;
+        --cool: #7eb8c9;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--dusk);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 60% 40% at 15% 12%, rgba(227, 193, 106, 0.22), transparent 55%),
+          radial-gradient(ellipse 50% 35% at 88% 20%, rgba(126, 207, 122, 0.16), transparent 50%),
+          radial-gradient(ellipse 70% 45% at 50% 100%, rgba(36, 53, 40, 0.9), transparent 55%),
+          linear-gradient(180deg, #1a2218 0%, #243528 40%, #2a3a28 70%, #1e2a1c 100%);
+        animation: paint-breathe 30s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 30% at 50% 100%, rgba(184, 212, 196, 0.1), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(126, 207, 122, 0.04), transparent);
+        animation: fog-drift 44s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--mist);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.6rem, 7.5vw, 4.2rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--mist);
+        text-shadow: 0 0 40px rgba(126, 207, 122, 0.2);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .panel {
+        position: relative;
+        width: min(22rem, 100%);
+        height: 11.5rem;
+        border-radius: 0.55rem;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.06), transparent 35%),
+          #1e2a1c;
+        border: 1px solid rgba(184, 212, 196, 0.3);
+        box-shadow:
+          0 30px 70px rgba(0,0,0,0.4),
+          0 0 40px rgba(126, 207, 122, 0.1),
+          inset 0 1px 0 rgba(255,255,255,0.12);
+        overflow: hidden;
+        padding: 1.1rem 1.2rem;
+      }
+
+      .panel .meta {
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .panel .stripe {
+        margin-top: 1.1rem;
+        height: 0.7rem;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.06);
+        overflow: hidden;
+      }
+
+      .panel .stripe i {
+        display: block;
+        height: 100%;
+        width: 61%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #5aa85a, var(--leaf));
+        box-shadow: 0 0 16px rgba(126, 207, 122, 0.55);
+        animation: stripe-breathe 8s ease-in-out infinite;
+      }
+
+      .panel .nums {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1.2rem;
+        font-size: 0.78rem;
+        color: var(--mist);
+      }
+
+      .panel .nums b {
+        display: block;
+        font-weight: 500;
+        color: var(--gold);
+        font-size: 1.05rem;
+        margin-top: 0.15rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e2ebd8;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .valley {
+        background:
+          linear-gradient(180deg, #2a3824 0%, #3a4a30 35%, #8a9a6a 55%, #c4b48a 70%, #d9c49a 100%);
+      }
+
+      .valley .haze {
+        position: absolute;
+        left: 0; right: 0; top: 28%;
+        height: 35%;
+        background: linear-gradient(180deg, transparent, rgba(217, 138, 74, 0.25), transparent);
+        animation: haze-shimmer 12s ease-in-out infinite;
+      }
+
+      .valley .city {
+        position: absolute;
+        left: 10%; right: 10%;
+        top: 18%;
+        height: 22%;
+        background:
+          repeating-linear-gradient(90deg,
+            rgba(40,50,40,0.5) 0 8px,
+            transparent 8px 18px,
+            rgba(40,50,40,0.35) 18px 22px,
+            transparent 22px 36px);
+        filter: blur(1.5px);
+        opacity: 0.7;
+      }
+
+      .valley .hill {
+        position: absolute;
+        left: -5%; right: -5%;
+        bottom: 0;
+        height: 42%;
+        background: radial-gradient(ellipse 80% 100% at 50% 100%, #243528, #1a2218);
+      }
+
+      .valley .window {
+        position: absolute;
+        bottom: 28%;
+        width: 8px;
+        height: 10px;
+        background: var(--gold);
+        box-shadow: 0 0 10px rgba(227, 193, 106, 0.7);
+        animation: window-glow 5s ease-in-out infinite;
+      }
+      .valley .window:nth-child(4) { left: 22%; animation-delay: -1s; }
+      .valley .window:nth-child(5) { left: 38%; height: 12px; animation-delay: -2.2s; }
+      .valley .window:nth-child(6) { left: 55%; animation-delay: -0.5s; }
+      .valley .window:nth-child(7) { left: 70%; animation-delay: -3s; }
+
+      .nmap {
+        background: #1c281c;
+      }
+
+      .nmap .grid {
+        position: absolute;
+        inset: 12% 10%;
+        background:
+          repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 32px),
+          repeating-linear-gradient(180deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 32px);
+      }
+
+      .house {
+        position: absolute;
+        width: 14px;
+        height: 12px;
+        background: rgba(184, 212, 196, 0.35);
+        border-radius: 1px 1px 0 0;
+      }
+      .house::after {
+        content: "";
+        position: absolute;
+        left: -2px; right: -2px; top: -6px;
+        height: 8px;
+        background: rgba(126, 207, 122, 0.55);
+        clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      }
+      .house.a { left: 18%; top: 28%; }
+      .house.b { left: 34%; top: 42%; }
+      .house.c { left: 52%; top: 30%; }
+      .house.d { left: 68%; top: 48%; }
+      .house.e { left: 28%; top: 62%; }
+
+      .batt {
+        position: absolute;
+        width: 10px;
+        height: 6px;
+        border: 1px solid var(--leaf);
+        border-radius: 1px;
+        box-shadow: 0 0 8px rgba(126, 207, 122, 0.4);
+        animation: batt-pulse 4s ease-in-out infinite;
+      }
+      .batt::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        width: 60%;
+        background: var(--leaf);
+      }
+      .batt.a { left: 22%; top: 36%; }
+      .batt.b { left: 56%; top: 38%; animation-delay: -1.5s; }
+      .batt.c { left: 72%; top: 56%; animation-delay: -2.5s; }
+
+      .school {
+        position: absolute;
+        left: 42%;
+        top: 58%;
+        width: 28px;
+        height: 18px;
+        background: rgba(217, 138, 74, 0.55);
+        box-shadow: 0 0 16px rgba(217, 138, 74, 0.35);
+      }
+
+      .clinic-pin {
+        position: absolute;
+        right: 16%;
+        top: 22%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        background: var(--cool);
+        box-shadow: 0 0 14px rgba(126, 184, 201, 0.7);
+      }
+
+      .share {
+        background: #1e2a1c;
+      }
+
+      .share .bar {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 30%;
+        height: 1.4rem;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.06);
+        overflow: hidden;
+      }
+
+      .share .bar i {
+        display: block;
+        height: 100%;
+        width: 54%;
+        background: linear-gradient(90deg, #5aa85a, var(--leaf));
+        animation: share-dip 10s ease-in-out infinite;
+        box-shadow: 0 0 12px rgba(126, 207, 122, 0.5);
+      }
+
+      .share .req {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 22%;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        animation: req-glow 10s ease-in-out infinite;
+      }
+
+      .trees {
+        background:
+          linear-gradient(180deg, #2a3828 0%, #3d4a30 50%, #4a5a38 100%);
+      }
+
+      .trees .trunk {
+        position: absolute;
+        bottom: 0;
+        width: 8px;
+        height: 45%;
+        background: #2a2218;
+      }
+      .trees .trunk:nth-child(1) { left: 18%; height: 50%; }
+      .trees .trunk:nth-child(2) { left: 42%; }
+      .trees .trunk:nth-child(3) { left: 68%; height: 55%; width: 10px; }
+
+      .trees .canopy {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle at 40% 40%, #5a7a48, #2a3a28);
+        filter: blur(0.5px);
+      }
+      .trees .canopy:nth-child(4) { left: 8%; top: 18%; width: 70px; height: 70px; }
+      .trees .canopy:nth-child(5) { left: 32%; top: 22%; width: 60px; height: 60px; }
+      .trees .canopy:nth-child(6) { left: 58%; top: 12%; width: 80px; height: 80px; }
+
+      .mist-burst {
+        position: absolute;
+        bottom: 8%;
+        width: 40px;
+        height: 50px;
+        background: linear-gradient(180deg, transparent, rgba(184, 212, 196, 0.35));
+        filter: blur(6px);
+        animation: mist-up 5s ease-in infinite;
+        opacity: 0;
+      }
+      .mist-burst:nth-child(7) { left: 16%; }
+      .mist-burst:nth-child(8) { left: 40%; animation-delay: -1.6s; }
+      .mist-burst:nth-child(9) { left: 66%; animation-delay: -3.2s; }
+
+      .bowl {
+        position: absolute;
+        left: 48%;
+        bottom: 10%;
+        width: 28px;
+        height: 8px;
+        border: 2px solid rgba(184, 212, 196, 0.5);
+        border-top: 0;
+        border-radius: 0 0 12px 12px;
+      }
+      .bowl::after {
+        content: "";
+        position: absolute;
+        left: 4px; right: 4px; top: 2px;
+        height: 3px;
+        background: rgba(126, 184, 201, 0.6);
+        animation: bowl-fill 7s ease-in-out infinite;
+      }
+
+      .waiting {
+        background:
+          linear-gradient(180deg, #243528, #1e2a28);
+      }
+
+      .waiting .air {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 0%, rgba(126, 184, 201, 0.12), transparent 55%);
+        animation: cool-breathe 8s ease-in-out infinite;
+      }
+
+      .cabinet {
+        position: absolute;
+        left: 50%;
+        top: 28%;
+        width: 70px;
+        height: 90px;
+        margin-left: -35px;
+        border: 1px solid rgba(184, 212, 196, 0.35);
+        background: #1a2218;
+        border-radius: 4px;
+      }
+
+      .cabinet::before {
+        content: "";
+        position: absolute;
+        left: 12%; right: 12%; top: 18%;
+        height: 55%;
+        background: repeating-linear-gradient(
+          180deg,
+          rgba(126, 207, 122, 0.25) 0 4px,
+          transparent 4px 12px
+        );
+      }
+
+      .substation {
+        background: #1a2218;
+      }
+
+      .mural {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 12%;
+        bottom: 28%;
+        border-radius: 2px;
+        background:
+          linear-gradient(180deg, #2a3840 0%, #3a4a38 45%, #1a2218 46%, #12180e 100%);
+        border: 1px solid rgba(184, 212, 196, 0.2);
+        overflow: hidden;
+      }
+
+      .mural .dots span {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 6px rgba(227, 193, 106, 0.8);
+        animation: light-on 6s ease-in-out infinite;
+        opacity: 0;
+      }
+      .mural .dots span:nth-child(1) { left: 12%; top: 62%; animation-delay: 0s; }
+      .mural .dots span:nth-child(2) { left: 24%; top: 58%; animation-delay: 0.4s; }
+      .mural .dots span:nth-child(3) { left: 38%; top: 64%; animation-delay: 0.8s; }
+      .mural .dots span:nth-child(4) { left: 52%; top: 55%; animation-delay: 1.2s; }
+      .mural .dots span:nth-child(5) { left: 66%; top: 60%; animation-delay: 1.6s; }
+      .mural .dots span:nth-child(6) { left: 78%; top: 52%; animation-delay: 2s; }
+      .mural .dots span:nth-child(7) { left: 88%; top: 48%; animation-delay: 2.4s; }
+
+      .stats {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 8%;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+        line-height: 1.6;
+      }
+
+      .stats u {
+        text-decoration: none;
+        color: var(--leaf);
+      }
+
+      .evening {
+        background:
+          linear-gradient(180deg, #3a4a38 0%, #2a3828 40%, #1a2218 100%);
+      }
+
+      .evening .breeze {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(126, 184, 201, 0.08), transparent);
+        animation: breeze 14s linear infinite;
+      }
+
+      .step {
+        position: absolute;
+        left: 18%;
+        bottom: 18%;
+        width: 70px;
+        height: 14px;
+        background: #2a2218;
+        box-shadow: 0 4px 0 #1a160e;
+      }
+
+      .cup {
+        position: absolute;
+        left: 28%;
+        bottom: 32%;
+        width: 16px;
+        height: 14px;
+        border: 2px solid rgba(227, 193, 106, 0.6);
+        border-top: 0;
+        border-radius: 0 0 6px 6px;
+      }
+
+      .towers {
+        position: absolute;
+        right: 10%;
+        bottom: 35%;
+        width: 40%;
+        height: 40%;
+        background:
+          repeating-linear-gradient(90deg,
+            rgba(227, 193, 106, 0.15) 0 4px,
+            transparent 4px 14px);
+        mask-image: linear-gradient(180deg, transparent, #000 40%);
+        animation: tower-hold 8s ease-in-out infinite;
+      }
+
+      .tram-scene {
+        background: #1a2218;
+      }
+
+      .tram {
+        position: absolute;
+        left: -20%;
+        bottom: 28%;
+        width: 120px;
+        height: 28px;
+        background: #2a3830;
+        border-radius: 4px 12px 4px 4px;
+        box-shadow: 0 0 20px rgba(126, 207, 122, 0.15);
+        animation: tram-slide 16s linear infinite;
+      }
+
+      .tram::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 6px;
+        width: 70%;
+        height: 10px;
+        background: repeating-linear-gradient(90deg,
+          rgba(227, 193, 106, 0.5) 0 8px,
+          transparent 8px 16px);
+      }
+
+      .rail {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 26%;
+        height: 2px;
+        background: rgba(184, 212, 196, 0.25);
+      }
+
+      .phones {
+        position: absolute;
+        bottom: 8%;
+        left: 10%;
+        right: 10%;
+        height: 8px;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      .phones i {
+        width: 18px;
+        height: 8px;
+        border-radius: 2px;
+        background: var(--leaf);
+        opacity: 0.7;
+        box-shadow: 0 0 8px rgba(126, 207, 122, 0.5);
+        animation: phone-glow 5s ease-in-out infinite;
+      }
+      .phones i:nth-child(2) { animation-delay: -1s; }
+      .phones i:nth-child(3) { animation-delay: -2s; }
+      .phones i:nth-child(4) { animation-delay: -3s; }
+      .phones i:nth-child(5) { animation-delay: -0.5s; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(10deg); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-6%); }
+        to { transform: translateX(6%); }
+      }
+      @keyframes stripe-breathe {
+        0%, 100% { width: 61%; }
+        50% { width: 58%; }
+      }
+      @keyframes haze-shimmer {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      @keyframes window-glow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes batt-pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes share-dip {
+        0%, 20% { width: 61%; }
+        40%, 60% { width: 54%; }
+        80%, 100% { width: 61%; }
+      }
+      @keyframes req-glow {
+        0%, 25% { opacity: 0; }
+        35%, 55% { opacity: 1; }
+        70%, 100% { opacity: 0.3; }
+      }
+      @keyframes mist-up {
+        0% { opacity: 0; transform: translateY(10px); }
+        30% { opacity: 0.7; }
+        100% { opacity: 0; transform: translateY(-40px); }
+      }
+      @keyframes bowl-fill {
+        0%, 40% { width: 40%; }
+        70%, 100% { width: 80%; }
+      }
+      @keyframes cool-breathe {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      @keyframes light-on {
+        0%, 10% { opacity: 0; }
+        20%, 100% { opacity: 1; }
+      }
+      @keyframes breeze {
+        from { transform: translateX(-20%); }
+        to { transform: translateX(20%); }
+      }
+      @keyframes tower-hold {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes tram-slide {
+        from { left: -25%; }
+        to { left: 110%; }
+      }
+      @keyframes phone-glow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .panel .stripe i, .valley .haze, .valley .window,
+        .batt, .share .bar i, .share .req, .mist-burst, .bowl::after,
+        .waiting .air, .mural .dots span, .evening .breeze, .towers,
+        .tram, .phones i, .scene {
+          animation: none !important;
+        }
+        .mural .dots span, .share .req { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="panel" aria-hidden="true">
+          <div class="meta">3 September · the hill</div>
+          <div class="stripe"><i></i></div>
+          <div class="nums">
+            <span>draw <b>low</b></span>
+            <span>battery <b>61%</b></span>
+            <span>street <b>open</b></span>
+          </div>
+        </div>
+        <h1>The hill kept the lights</h1>
+        <time datetime="2026-09-03">3 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mira woke to the soft click of the kettle, not an alarm.</p>
+        <p>Outside, the wind had the dry rasp of a heatwave that had already lasted nine days. The city below the hill was a pale smudge. On her kitchen wall the little panel showed a green stripe and a number that meant nothing dramatic: household draw low, local battery sixty-one percent, street share open. She poured water for tea the way her mother had, and the kettle did not hesitate.</p>
+        <p>Three summers ago the kettle would have hesitated. Everything had. Fans cut out at four. Fridges went into a slow, guilty cycle. The hill, with its older wiring and its stubborn trees, used to go dark first so the downtown towers could keep their glass cool. People joked about it until the jokes got tired. Mira's neighbour, Mr Okonkwo, had sat on his step with a battery lamp and waved at her like they were camping.</p>
+        <p>This morning his step was empty. His window was open. Cool air drifted out, the quiet kind from a heat pump that did not announce itself.</p>
+      </div>
+
+      <figure class="scene tall valley" aria-hidden="true">
+        <div class="city"></div>
+        <div class="haze"></div>
+        <div class="hill"></div>
+        <div class="window"></div>
+        <div class="window"></div>
+        <div class="window"></div>
+        <div class="window"></div>
+      </figure>
+      <p class="cap">the city below · a pale smudge</p>
+
+      <div class="prose">
+        <p>Mira checked the neighbourhood board on her phone while the tea steeped. Not a feed of outrage. A map. Tiny houses, tiny batteries, a few roofs with panels that looked like they'd always belonged there. A school with a big orange block that meant storage. A clinic with a priority pin that never moved. The model that ran the valley did not post. It just moved electrons the way a good host moves chairs before guests arrive.</p>
+        <p>She worked from home most days, designing interfaces for people who still liked buttons. At eleven the temperature outside crossed the line where the news used to use words like crisis. The panel on her wall brightened by a fraction. A message, plain: STREET SHARE REQUEST FROM BLOCK 4. She tapped yes without thinking. Her battery dipped to fifty-four. Somewhere down the slope a row of flats kept their rooms under twenty-six degrees.</p>
+      </div>
+
+      <figure class="scene nmap" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="house a"></div>
+        <div class="house b"></div>
+        <div class="house c"></div>
+        <div class="house d"></div>
+        <div class="house e"></div>
+        <div class="batt a"></div>
+        <div class="batt b"></div>
+        <div class="batt c"></div>
+        <div class="school"></div>
+        <div class="clinic-pin"></div>
+      </figure>
+      <p class="cap">not a feed of outrage · a map</p>
+
+      <figure class="scene share" aria-hidden="true">
+        <div class="bar"><i></i></div>
+        <div class="req">street share · block 4 · yes</div>
+      </figure>
+      <p class="cap">fifty-four percent · flats under twenty-six</p>
+
+      <div class="prose">
+        <p>By noon the public screens at the tram stop showed the same calm map. No countdown. No shame ranking of who used too much. A woman with a pushchair stood in the shade and watched her child's bottle cool in a pocket fridge the size of a book, powered from a post that charged itself overnight when the wind farms inland had more than the wires needed. The post had a sticker drawn by kids at the school: a sun with a face that was not trying too hard.</p>
+        <p>Mira walked the long way to the clinic to drop off a form for her aunt. The pavement was hot through her shoes. Along the verge, the old ash trees were misted from below by a fine spray that came on in short, smart bursts. The parks department had stopped arguing with the weather and started listening to a model that watched leaf stress the way a nurse watches a pulse. The mist smelled like wet stone. A dog drank from a bowl set out under a bench. The bowl refilled when it got low.</p>
+      </div>
+
+      <figure class="scene tall trees" aria-hidden="true">
+        <div class="trunk"></div>
+        <div class="trunk"></div>
+        <div class="trunk"></div>
+        <div class="canopy"></div>
+        <div class="canopy"></div>
+        <div class="canopy"></div>
+        <div class="mist-burst"></div>
+        <div class="mist-burst"></div>
+        <div class="mist-burst"></div>
+        <div class="bowl"></div>
+      </figure>
+      <p class="cap">leaf stress · wet stone</p>
+
+      <div class="prose">
+        <p>At the clinic the waiting room was cool without being theatrical. A technician in a faded shirt knelt by a wall cabinet that used to be a fuse box and was now something gentler. He caught Mira looking.</p>
+        <p>"Hill used to be the first to drop," he said. "Now it's the buffer. Your batteries up here buy the valley twenty minutes when the river plant hiccups. Twenty minutes is a lot of old people."</p>
+        <p>He did not sound proud. He sounded like someone who had finally been given the right tools.</p>
+      </div>
+
+      <figure class="scene waiting" aria-hidden="true">
+        <div class="air"></div>
+        <div class="cabinet"></div>
+      </figure>
+      <p class="cap">twenty minutes is a lot of old people</p>
+
+      <div class="prose">
+        <p>On the way home she passed the substation behind the co-op. It used to be a grey fortress with a sign that said KEEP OUT. Now there was a low fence and a mural of the valley at dusk, lights coming on house by house. Behind the mural the hardware still hummed. A screen for residents showed today's story in numbers a child could read: wind strong before dawn, solar peak at one, shared to the flats by the station, clinic held steady, nobody cut. A small line at the bottom said the model had refused a request from a billboard company to brighten their screens through the worst of the afternoon. The refusal needed no speech. The billboards stayed dim. The flats stayed cool.</p>
+        <p>Mira's phone buzzed once. Mr Okonkwo had sent a photo of his tomato plants, leaves not curled, fruit coming red. Under it he had written only: still green up here.</p>
+        <p>She sent back a thumbs up and felt, absurdly, like cheering.</p>
+      </div>
+
+      <figure class="scene tall substation" aria-hidden="true">
+        <div class="mural">
+          <div class="dots">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="stats">wind · solar · shared · clinic steady<br><u>nobody cut</u> · billboards dim</div>
+      </figure>
+      <p class="cap">lights coming on house by house</p>
+
+      <div class="prose">
+        <p>Evening came down soft. The heat broke a little when the sea breeze finally found the hill. Windows opened. Someone played a radio too loud for three songs and then thought better of it. On the wall panel the green stripe held. Street share settled. Battery climbing again as the night wind woke the turbines inland and the model tucked spare power into every garage that had room.</p>
+        <p>Mira sat on her step the way Mr Okonkwo used to, tea gone cold in her hands. Across the valley the towers kept their lights, not greedy, just ordinary. On the hill the lights stayed too. No ceremony. No speech from a mayor. Only the quiet fact of a grid that had learned who was fragile, who could spare a kilowatt, and how to ask without making anyone small.</p>
+      </div>
+
+      <figure class="scene evening" aria-hidden="true">
+        <div class="breeze"></div>
+        <div class="towers"></div>
+        <div class="step"></div>
+        <div class="cup"></div>
+      </figure>
+      <p class="cap">not greedy · just ordinary</p>
+
+      <div class="prose">
+        <p>Below her, a tram slid past with its own soft hum. Inside, the air was kind. Outside, the map on a hundred phones glowed the same unremarkable green.</p>
+        <p>The hill kept the lights. It had gotten used to it.</p>
+      </div>
+
+      <figure class="scene tram-scene" aria-hidden="true">
+        <div class="rail"></div>
+        <div class="tram"></div>
+        <div class="phones">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </figure>
+      <p class="cap">the same unremarkable green</p>
+    </article>
+  </body>
+</html>
