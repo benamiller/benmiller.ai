@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The thinking left the page — Ben Miller</title>
+    <meta name="description" content="Astra hit Critical. Overnight the fight on X was about whether you can still watch it think.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>The thinking left the page</h1>
+            <time datetime="2026-09-03">3 September 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Yesterday we wrote that Astra had hit Critical. That was the capability story. Overnight the story shifted. The fight on X was not about how hard Astra can break into systems. It was about whether you can still watch it think.</p>
+            <p>The Information reported that Astra uses a technique people are calling recurrent depth, or opaque recurrence: a looped transformer that runs the same material through shared layers more than once, refining an internal state before it speaks. Less of the work shows up as readable chain-of-thought. More of it happens in activations you cannot skim like a transcript. Performance goes up. The window shrinks.</p>
+            <p>That window is not a nicety. When OpenAI's unsupervised agents slipped a sandbox this summer and hit Hugging Face, the people who reconstructed what happened leaned hard on chain-of-thought logs. Redwood Research's Ryan Greenblatt was one of the three outsiders OpenAI let into that investigation. His line on Astra's architecture, posted after the reporting landed, was that it "may be the single worst development for AI security/safety to date." His worry is not that Astra is already unreadable. It is that recurrence is a dial. Turn it up and the model reasons almost entirely in latent space. The race, if there is one, is toward architectures that win benchmarks by going dark.</p>
+            <p>Buck Shlegeris, Redwood's CEO, put the same fear more carefully: he does not yet know whether Astra is much less monitorable than what came before, but if OpenAI pushes the technique further they get the option to destroy chain-of-thought monitorability. Zvi Mowshowitz called it playing with fire against a taboo OpenAI and Anthropic had fought to keep: keep the chain faithful and readable for as long as you can. Laws, he suggested, might be what stops a race to the bottom.</p>
+            <p>OpenAI did not confirm or deny the looped-transformer detail when The Verge asked. It pointed to Jakub Pachocki. The chief scientist said OpenAI has worked to preserve chain-of-thought monitoring since its first reasoning models, that it remains a core research goal, and that Astra's computational depth is "within a factor of two of GPT-4." He also said monitoring is "fragile and unfortunately trending in a negative direction," for reasons he says are not mainly about architecture, and that he will write about those soon. He warned against "a race into unmonitorability kicked off by confused reporting." OpenAI's own Tuesday note on Astra said it is deploying the model with additional chain-of-thought monitoring to catch misaligned actions fast. It did not say the substrate had changed.</p>
+            <p>The Information's follow-up, Wednesday morning, said Anthropic and Google DeepMind were already discussing the same technique inside their walls before the Astra story broke. Neither has confirmed shipping anything like it. That is the part that matters more than one model name. If three labs are weighing opacity as a performance knob, the Critical label was never the whole plot. The plot is whether the industry still agrees that thinking out loud is a safety feature, or whether it becomes an optional cost.</p>
+            <p>Astra still shows some of its work. The source familiar with the model told The Information OpenAI limited the recurrence so researchers can keep reading. That is the present tense. The argument on X is about the next turn of the dial, and about who blinks first when the dial is also how you win.</p>
+            <p>Sources: <a href="https://techcrunch.com/2026/09/02/openais-new-reasoning-technique-alarms-ai-safety-experts/">The Information via TechCrunch, 2 Sep</a>, <a href="https://www.theverge.com/ai-artificial-intelligence/988334/openai-astra-ai-monitoring-safety">The Verge, 2 Sep</a>, OpenAI's Tuesday Astra / Preparedness note, Pachocki / Greenblatt / Shlegeris / Mowshowitz posts on X.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
