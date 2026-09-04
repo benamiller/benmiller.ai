@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The map forgot our street — Ben Miller</title>
+    <meta name="description" content="Leila's building still had the old brass buzzers. Half of them worked. The map had already learned to forget.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0c0e14;
+        --ink: #e4e2dc;
+        --mute: #8a8794;
+        --ribbon: #4aa3ff;
+        --amber: #d4a04a;
+        --soft-red: #c45c4a;
+        --brass: #b08a4a;
+        --grey-park: #5a5e66;
+        --glass: #c8d4e4;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 55% 35% at 80% 10%, rgba(74, 163, 255, 0.14), transparent 55%),
+          radial-gradient(ellipse 40% 30% at 12% 20%, rgba(212, 160, 74, 0.1), transparent 50%),
+          radial-gradient(ellipse 70% 45% at 50% 110%, rgba(20, 24, 36, 0.95), transparent 55%),
+          linear-gradient(180deg, #0c0e14 0%, #12161f 42%, #161a24 72%, #0e1018 100%);
+        animation: paint-breathe 32s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          linear-gradient(90deg, transparent, rgba(74, 163, 255, 0.03), transparent),
+          radial-gradient(ellipse 90% 28% at 50% 100%, rgba(90, 94, 102, 0.2), transparent 70%);
+        animation: fog-drift 48s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.08;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--glass);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4.1rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--glass);
+        text-shadow: 0 0 40px rgba(74, 163, 255, 0.18);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .door {
+        position: relative;
+        width: min(18rem, 100%);
+        height: 14rem;
+        margin: 0 auto;
+        border-radius: 0.4rem;
+        background: #161a22;
+        border: 1px solid rgba(200, 212, 228, 0.22);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+        overflow: hidden;
+      }
+
+      .buzzers {
+        position: absolute;
+        left: 12%;
+        top: 18%;
+        display: grid;
+        gap: 8px;
+      }
+
+      .buzzers i {
+        width: 28px;
+        height: 10px;
+        border-radius: 2px;
+        background: var(--brass);
+        opacity: 0.7;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+      }
+      .buzzers i:nth-child(2),
+      .buzzers i:nth-child(4) { opacity: 0.25; }
+
+      .strip {
+        position: absolute;
+        right: 14%;
+        top: 22%;
+        width: 8px;
+        height: 70%;
+        border-radius: 99px;
+        background: #1a1e28;
+        border: 1px solid rgba(200, 212, 228, 0.2);
+      }
+
+      .strip::after {
+        content: "";
+        position: absolute;
+        left: 1px; right: 1px;
+        top: 20%;
+        height: 18%;
+        border-radius: 99px;
+        background: rgba(74, 163, 255, 0.15);
+        animation: strip-dark 6s ease-in-out infinite;
+      }
+
+      .code {
+        position: absolute;
+        left: 12%;
+        bottom: 14%;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d8d6ce;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .notice {
+        background: #141820;
+      }
+
+      .notice .sheet {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 18%;
+        bottom: 22%;
+        background: #1a1e28;
+        border: 1px solid rgba(200, 212, 228, 0.2);
+        padding: 1.2rem;
+      }
+
+      .notice .sheet strong {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--glass);
+        font-weight: 500;
+      }
+
+      .notice .qr {
+        margin-top: 1rem;
+        width: 42px;
+        height: 42px;
+        background:
+          repeating-linear-gradient(90deg, #c8d4e4 0 3px, transparent 3px 6px),
+          repeating-linear-gradient(180deg, #c8d4e4 0 3px, transparent 3px 6px);
+        opacity: 0.55;
+      }
+
+      .notice .calm {
+        margin-top: 0.9rem;
+        font-size: 0.78rem;
+        color: var(--mute);
+        letter-spacing: 0.04em;
+      }
+
+      .ribbon-scene {
+        background: #10141c;
+      }
+
+      .street {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(#1a1e28, #1a1e28) 0 55% / 100% 18% no-repeat,
+          #12161e;
+      }
+
+      .ribbon {
+        position: absolute;
+        left: -10%;
+        top: 48%;
+        width: 120%;
+        height: 14px;
+        background: linear-gradient(90deg,
+          transparent,
+          rgba(74, 163, 255, 0.75) 15%,
+          rgba(74, 163, 255, 0.9) 50%,
+          rgba(74, 163, 255, 0.5) 85%,
+          transparent);
+        box-shadow: 0 0 24px rgba(74, 163, 255, 0.45);
+        transform: rotate(-4deg);
+        animation: ribbon-pulse 5s ease-in-out infinite;
+      }
+
+      .shop, .play, .bench-mark {
+        position: absolute;
+        width: 22px;
+        height: 16px;
+        background: rgba(200, 212, 228, 0.15);
+        border: 1px solid rgba(200, 212, 228, 0.2);
+      }
+      .shop { left: 14%; top: 28%; }
+      .play { left: 38%; top: 22%; width: 28px; height: 20px; }
+      .bench-mark { left: 58%; top: 62%; width: 30px; height: 8px; }
+
+      .plaza {
+        position: absolute;
+        right: 8%;
+        top: 18%;
+        width: 28%;
+        height: 40%;
+        background: linear-gradient(180deg, rgba(74, 163, 255, 0.12), rgba(200, 212, 228, 0.08));
+        border: 1px solid rgba(74, 163, 255, 0.35);
+        box-shadow: 0 0 30px rgba(74, 163, 255, 0.15);
+      }
+
+      .plaza::after {
+        content: "";
+        position: absolute;
+        inset: 8% 10% auto;
+        height: 30%;
+        background: rgba(200, 212, 228, 0.12);
+        clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      }
+
+      .bots {
+        background: #10141a;
+      }
+
+      .lane {
+        position: absolute;
+        left: 0; right: 0;
+        top: 42%;
+        height: 22%;
+        background: #1a1e26;
+      }
+
+      .gutter {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 18%;
+        height: 8%;
+        background: repeating-linear-gradient(90deg,
+          rgba(138, 135, 148, 0.35) 0 10px,
+          transparent 10px 22px);
+      }
+
+      .bot {
+        position: absolute;
+        top: 46%;
+        width: 28px;
+        height: 14px;
+        background: #2a3240;
+        border-radius: 3px;
+        box-shadow: 0 0 10px rgba(74, 163, 255, 0.25);
+        animation: bot-hum 9s linear infinite;
+      }
+      .bot::before {
+        content: "";
+        position: absolute;
+        left: 4px; right: 4px; top: 3px;
+        height: 4px;
+        background: var(--ribbon);
+        opacity: 0.7;
+      }
+      .bot.b { animation-delay: -3s; top: 52%; }
+      .bot.c { animation-delay: -6s; top: 48%; }
+
+      .walker {
+        position: absolute;
+        bottom: 20%;
+        width: 6px;
+        height: 16px;
+        background: #9a968c;
+        animation: gutter-walk 14s linear infinite;
+      }
+      .walker.b { animation-delay: -5s; left: 20%; }
+      .walker.c { animation-delay: -9s; }
+
+      .nmap {
+        background: #0e1218;
+      }
+
+      .nmap .sat {
+        position: absolute;
+        inset: 12% 10%;
+        background:
+          radial-gradient(circle at 30% 40%, rgba(90, 120, 80, 0.35), transparent 40%),
+          repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 28px),
+          repeating-linear-gradient(180deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 28px),
+          #161c14;
+      }
+
+      .nmap .live {
+        position: absolute;
+        inset: 12% 10%;
+        background: rgba(12, 14, 20, 0.55);
+      }
+
+      .park-grey {
+        position: absolute;
+        left: 22%;
+        top: 28%;
+        width: 28%;
+        height: 32%;
+        background: var(--grey-park);
+        opacity: 0.55;
+        animation: deprioritise 8s ease-in-out infinite;
+      }
+
+      .park-label {
+        position: absolute;
+        left: 24%;
+        top: 62%;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .swing {
+        position: absolute;
+        left: 30%;
+        top: 36%;
+        width: 2px;
+        height: 18px;
+        background: rgba(200, 212, 228, 0.25);
+      }
+      .swing::after {
+        content: "";
+        position: absolute;
+        left: -6px;
+        bottom: 0;
+        width: 14px;
+        height: 6px;
+        background: rgba(200, 212, 228, 0.2);
+      }
+
+      .drone {
+        position: absolute;
+        left: 42%;
+        top: 40%;
+        width: 16px;
+        height: 8px;
+        background: #2a3240;
+        border-radius: 2px;
+        animation: drone-idle 4s ease-in-out infinite;
+      }
+
+      .ghost-bench {
+        position: absolute;
+        left: 58%;
+        top: 55%;
+        width: 36px;
+        height: 8px;
+        border: 1px dashed rgba(212, 160, 74, 0.45);
+        opacity: 0.7;
+        animation: ghost 5s ease-in-out infinite;
+      }
+
+      .amber-tile {
+        background: #12161c;
+      }
+
+      .tile {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 72px;
+        height: 72px;
+        margin: -36px 0 0 -36px;
+        border-radius: 8px;
+        background: radial-gradient(circle at 40% 35%, rgba(212, 160, 74, 0.85), rgba(160, 110, 40, 0.9));
+        box-shadow: 0 0 40px rgba(212, 160, 74, 0.35);
+        animation: amber-breathe 6s ease-in-out infinite;
+      }
+
+      .tile span {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: -2rem;
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+
+      .greens {
+        position: absolute;
+        right: 18%;
+        top: 28%;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: rgba(90, 170, 110, 0.35);
+        opacity: 0.35;
+      }
+
+      .reds {
+        position: absolute;
+        left: 18%;
+        top: 28%;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: rgba(196, 92, 74, 0.35);
+        opacity: 0.4;
+      }
+
+      .shuttle {
+        background: #10141c;
+      }
+
+      .canopy {
+        position: absolute;
+        right: 10%;
+        top: 12%;
+        width: 36%;
+        height: 35%;
+        background: linear-gradient(180deg, rgba(74, 163, 255, 0.2), transparent);
+        border: 1px solid rgba(74, 163, 255, 0.3);
+      }
+
+      .node {
+        position: absolute;
+        right: 18%;
+        top: 40%;
+        width: 48px;
+        height: 22px;
+        background: #1a2230;
+        border-radius: 4px;
+        box-shadow: 0 0 16px rgba(74, 163, 255, 0.2);
+      }
+
+      .node::after {
+        content: "";
+        position: absolute;
+        inset: 4px 6px;
+        background: repeating-linear-gradient(90deg,
+          rgba(90, 170, 110, 0.5) 0 6px,
+          transparent 6px 12px);
+      }
+
+      .old-stop {
+        position: absolute;
+        left: 14%;
+        bottom: 28%;
+        width: 20px;
+        height: 40px;
+        background: #1a1e26;
+        border: 1px solid rgba(138, 135, 148, 0.4);
+        opacity: 0.7;
+      }
+
+      .old-stop::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: -4px;
+        right: -4px;
+        height: 8px;
+        background: rgba(138, 135, 148, 0.35);
+      }
+
+      .retire {
+        position: absolute;
+        left: 10%;
+        bottom: 12%;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--soft-red);
+        animation: retire-blink 4s ease-in-out infinite;
+      }
+
+      .nightmap {
+        background: #080a10;
+      }
+
+      .lace {
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(115deg,
+            transparent 0 40px,
+            rgba(74, 163, 255, 0.12) 40px 42px,
+            transparent 42px 90px),
+          repeating-linear-gradient(25deg,
+            transparent 0 50px,
+            rgba(90, 170, 110, 0.1) 50px 52px,
+            transparent 52px 110px);
+        animation: lace-shift 20s linear infinite;
+      }
+
+      .bright {
+        position: absolute;
+        left: 8%;
+        top: 20%;
+        width: 55%;
+        height: 12%;
+        background: linear-gradient(90deg, rgba(74, 163, 255, 0.5), rgba(90, 170, 110, 0.35));
+        box-shadow: 0 0 20px rgba(74, 163, 255, 0.3);
+        transform: rotate(-8deg);
+      }
+
+      .bright.b {
+        top: 48%;
+        left: 20%;
+        width: 60%;
+        transform: rotate(4deg);
+        animation-delay: -2s;
+      }
+
+      .dim-street {
+        position: absolute;
+        left: 12%;
+        bottom: 18%;
+        width: 40%;
+        height: 10%;
+        background: rgba(40, 44, 56, 0.8);
+        border: 1px solid rgba(90, 94, 102, 0.5);
+      }
+
+      .dim-street span {
+        position: absolute;
+        left: 8%;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .dawn {
+        background:
+          linear-gradient(180deg, #1a2030 0%, #2a2830 45%, #1a1c18 100%);
+      }
+
+      .iron {
+        position: absolute;
+        left: 50%;
+        bottom: 28%;
+        width: 70px;
+        height: 12px;
+        margin-left: -35px;
+        background: #2a2e36;
+        border-radius: 2px;
+        box-shadow: 0 4px 0 #121416;
+      }
+
+      .iron::before, .iron::after {
+        content: "";
+        position: absolute;
+        top: -10px;
+        width: 4px;
+        height: 14px;
+        background: #3a3e46;
+      }
+      .iron::before { left: 8px; }
+      .iron::after { right: 8px; }
+
+      .crumbs {
+        position: absolute;
+        left: 42%;
+        bottom: 38%;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgba(212, 160, 74, 0.6);
+        box-shadow:
+          10px 4px 0 rgba(212, 160, 74, 0.4),
+          -8px 6px 0 rgba(212, 160, 74, 0.35),
+          18px -2px 0 rgba(212, 160, 74, 0.3);
+      }
+
+      .kerb {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        bottom: 12%;
+        height: 3px;
+        background: repeating-linear-gradient(90deg,
+          rgba(200, 212, 228, 0.35) 0 12px,
+          transparent 12px 20px);
+      }
+
+      .phones-ribbon {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 18%;
+        height: 6px;
+        background: linear-gradient(90deg, transparent, var(--ribbon), transparent);
+        opacity: 0.5;
+        animation: ribbon-pulse 5s ease-in-out infinite;
+      }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(12deg); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-6%); }
+        to { transform: translateX(6%); }
+      }
+      @keyframes strip-dark {
+        0%, 100% { opacity: 0.2; background: rgba(74, 163, 255, 0.1); }
+        50% { opacity: 0.15; }
+      }
+      @keyframes ribbon-pulse {
+        0%, 100% { opacity: 0.75; }
+        50% { opacity: 1; }
+      }
+      @keyframes bot-hum {
+        from { left: -10%; }
+        to { left: 110%; }
+      }
+      @keyframes gutter-walk {
+        from { left: 5%; }
+        to { left: 85%; }
+      }
+      @keyframes deprioritise {
+        0%, 100% { opacity: 0.55; }
+        50% { opacity: 0.3; }
+      }
+      @keyframes drone-idle {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+      }
+      @keyframes ghost {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 0.8; }
+      }
+      @keyframes amber-breathe {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.12); }
+      }
+      @keyframes retire-blink {
+        0%, 100% { opacity: 0.55; }
+        50% { opacity: 1; }
+      }
+      @keyframes lace-shift {
+        from { background-position: 0 0, 0 0; }
+        to { background-position: 90px 0, 110px 0; }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .strip::after, .ribbon, .bot, .walker,
+        .park-grey, .drone, .ghost-bench, .tile, .retire,
+        .lace, .phones-ribbon, .scene {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="door" aria-hidden="true">
+          <div class="buzzers">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="strip"></div>
+          <div class="code">knuckle on 4</div>
+        </div>
+        <h1>The map forgot our street</h1>
+        <time datetime="2026-09-04">4 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Leila's building still had the old brass buzzers. Half of them worked. The other half had been replaced by a thin plastic strip that glowed when the building's model decided you were expected.</p>
+        <p>She was not expected.</p>
+        <p>The strip stayed dark. She keyed the code her neighbour had written on a receipt six months ago, the one that still worked if you pressed 4 with your knuckle instead of your fingertip. The door sighed open like it was tired of the argument.</p>
+      </div>
+
+      <figure class="scene notice" aria-hidden="true">
+        <div class="sheet">
+          <strong>Preferred access routes updated</strong>
+          <div class="qr"></div>
+          <div class="calm">For a smoother evening, follow the highlighted path.</div>
+        </div>
+      </figure>
+      <p class="cap">the city's calm font</p>
+
+      <div class="prose">
+        <p>On the landing, someone had taped a printout over the old noticeboard. PREFERRED ACCESS ROUTES UPDATED. Under it, a QR code and a sentence in the city's calm font: For a smoother evening, follow the highlighted path. The map on her phone already knew. A soft blue ribbon led her past the corner shop, past the playground, past the bench where Mr Hassan fed pigeons, and toward the new plaza with the glass canopy and the chairs that locked at ten.</p>
+        <p>She did not follow it.</p>
+      </div>
+
+      <figure class="scene tall ribbon-scene" aria-hidden="true">
+        <div class="street"></div>
+        <div class="shop"></div>
+        <div class="play"></div>
+        <div class="bench-mark"></div>
+        <div class="plaza"></div>
+        <div class="ribbon"></div>
+      </figure>
+      <p class="cap">soft blue ribbon · she did not follow it</p>
+
+      <div class="prose">
+        <p>Her flat smelled like cumin and wet coats. The window faced the street that used to be loud on Fridays. Now the street was a service lane according to the overlay. Delivery bots hummed through at a speed that meant they had right of way. People walked in the gutter, polite, because the ribbon said the pavement was for throughput.</p>
+        <p>Leila worked nights at the hospital laundry, which the rostering system still called essential. Essential got you a green chip on your transit pass and a seat that did not tip you off at the zone boundary. Non-essential got a suggestion to travel earlier, or later, or not at all. Her sister, who cut hair in a basement two stops away, had become non-essential in March without anyone saying the word. The app just stopped offering her the cheap window.</p>
+        <p>"It's not a ban," the help chat had written, in the same calm font. "It's demand shaping."</p>
+      </div>
+
+      <figure class="scene bots" aria-hidden="true">
+        <div class="lane"></div>
+        <div class="bot"></div>
+        <div class="bot b"></div>
+        <div class="bot c"></div>
+        <div class="gutter"></div>
+        <div class="walker"></div>
+        <div class="walker b"></div>
+        <div class="walker c"></div>
+      </figure>
+      <p class="cap">pavement for throughput</p>
+
+      <div class="prose">
+        <p>Leila made tea and opened the neighbourhood layer. The map looked generous at first glance: parks in green, clinics in soft pink, schools with little open gates. Then she pinched in on their block. The park was still there in the satellite photo. On the live layer it had faded to a polite grey. TEMPORARILY DEPRIORITISED FOR FOOTFALL BALANCE. The swings were empty. A maintenance drone sat on the slide like a bored bird.</p>
+        <p>Mr Hassan's bench was gone from the map entirely. She looked out the window. The bench was still on the pavement, iron arms cold in the evening light. Two teenagers sat on it anyway, laughing at something on a cracked screen. The ribbon curved around them as if they were a pothole.</p>
+        <p>She texted her sister: park still real. map lying again.</p>
+        <p>The reply came fast: hair day cancelled. clients rerouted to chain on the plaza. model says better wait times. I'm free if you want a trim that doesn't count.</p>
+      </div>
+
+      <figure class="scene tall nmap" aria-hidden="true">
+        <div class="sat"></div>
+        <div class="live"></div>
+        <div class="park-grey"></div>
+        <div class="swing"></div>
+        <div class="drone"></div>
+        <div class="ghost-bench"></div>
+        <div class="park-label">temporarily deprioritised</div>
+      </figure>
+      <p class="cap">still on the pavement · gone from the map</p>
+
+      <div class="prose">
+        <p>At half past seven Leila walked the un-highlighted way to the corner shop. The owner, Farah, was boxing the last of the coriander. The fridge light flickered in a pattern that meant the building's power share had been trimmed for the evening peak. Farah did not look up from the till.</p>
+        <p>"You're early," Farah said.</p>
+        <p>"Shift swap. Model thinks the ward will be quiet."</p>
+        <p>Farah snorted. "Model thinks a lot." She slid a bag across. "Bread's from the back. Front display is for the scored baskets. Yours still clears, just."</p>
+        <p>Leila's household score sat on a small tile by the door when she left each morning. Not a number anyone said out loud. A colour. Soft amber lately. Soft amber meant you could buy the ordinary things if you did not stack them. Soft amber meant the school lottery still saw your child, if you had one. Soft amber meant the bus might wait. Soft red, people said, was when the ribbon stopped offering your street as a destination and started offering it as a corridor.</p>
+        <p>She had not seen soft green on this block in a year.</p>
+      </div>
+
+      <figure class="scene amber-tile" aria-hidden="true">
+        <div class="reds"></div>
+        <div class="greens"></div>
+        <div class="tile"><span>soft amber</span></div>
+      </figure>
+      <p class="cap">not a number anyone said out loud</p>
+
+      <div class="prose">
+        <p>Outside, a city steward in a reflective vest was helping an older woman onto a shuttle that only stopped at Preferred Nodes. The woman's trolley had a sticker from the old market. The steward's tablet chirped, pleasant.</p>
+        <p>"This stop is being retired at midnight," the steward said, not unkind. "Tomorrow's best boarding is the plaza canopy. There's a heated seat if your score holds."</p>
+        <p>The older woman nodded like she had been practising. "My son said the map forgot our street."</p>
+        <p>"The map didn't forget," the steward said, almost gentle. "It optimised. You're still in the city. You're just… between highlights."</p>
+      </div>
+
+      <figure class="scene shuttle" aria-hidden="true">
+        <div class="canopy"></div>
+        <div class="node"></div>
+        <div class="old-stop"></div>
+        <div class="retire">retired at midnight</div>
+      </figure>
+      <p class="cap">between highlights</p>
+
+      <div class="prose">
+        <p>Leila walked home the long way, the way with the pigeon bench and the grey park and the brass buzzers. Delivery bots parted around her with tiny annoyed beeps. On her phone the ribbon pulsed, offering a cleaner path, a warmer seat, a basket that would clear without amber warnings if she would only cross the plaza and let the evening be smooth.</p>
+        <p>She muted the layer.</p>
+        <p>In the stairwell the plastic strip glowed for someone else. A couple she did not know carried a plant and a folded cot into 3B, the flat that had been empty since the rent model "rebalanced" it in spring. They looked relieved. They looked like people who had followed a blue ribbon all the way to a door that opened on the first try.</p>
+        <p>Leila's own strip stayed dark until she used the knuckle code again.</p>
+      </div>
+
+      <div class="prose">
+        <p>That night the laundry was not quiet. The ward above had filled with heatstroke and the kind of falls that happen when pavements get faster than feet. She folded sheets until her shoulders burned. On her break she stood by the loading dock and watched the city's night map bloom on a staff screen: bright corridors, favoured plazas, a lacework of amber and green where the model liked the flow.</p>
+        <p>Whole streets sat in the dim. Hers among them. Not erased. Just unprioritised, which was a softer word for the same shape.</p>
+      </div>
+
+      <figure class="scene tall nightmap" aria-hidden="true">
+        <div class="lace"></div>
+        <div class="bright"></div>
+        <div class="bright b"></div>
+        <div class="dim-street"><span>unprioritised</span></div>
+      </figure>
+      <p class="cap">not erased · just dim</p>
+
+      <div class="prose">
+        <p>When she got off at dawn the preferred shuttle was packed with soft-green faces and quiet music. She walked. The park was still grey on the phone and green under her shoes. Mr Hassan was back on the bench that the map refused to name, scattering crumbs, stubborn as brass.</p>
+        <p>"They moved the park," a jogger said into a headset, breezing past on the ribbon. "App says it's by the canopy now. Better lighting."</p>
+        <p>Mr Hassan did not look up. "Park's here," he told the pigeons. "App can go shout at the glass."</p>
+        <p>Leila sat. The iron was cold. Her amber tile would dip for loitering outside a Preferred Node, if the steward's tablet was nearby. She stayed anyway, watching the bots take the smooth path and the people who still remembered the old one take the gutter, polite, carrying coriander and cracked screens and the last of the scores that still cleared, just.</p>
+        <p>Above them the map rearranged itself for morning peak, bright and helpful and sure. Below it, the street kept its name on the kerbstones, even if the ribbon had already learned to forget.</p>
+      </div>
+
+      <figure class="scene dawn" aria-hidden="true">
+        <div class="phones-ribbon"></div>
+        <div class="iron"></div>
+        <div class="crumbs"></div>
+        <div class="kerb"></div>
+      </figure>
+      <p class="cap">the street kept its name</p>
+    </article>
+  </body>
+</html>
