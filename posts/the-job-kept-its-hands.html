@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The job kept its hands — Ben Miller</title>
+    <meta name="description" content="Jon arrived twelve minutes early. The job kept its hands.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --shop: #1c1610;
+        --bay: #2a2118;
+        --ink: #f0e6d4;
+        --mute: #a89478;
+        --timber: #c48a4a;
+        --grain: #8a5a32;
+        --green: #7ecf7a;
+        --blush: #e89a9a;
+        --dust: #d4c4a8;
+        --note: #e8dcc0;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--shop);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 55% 40% at 18% 12%, rgba(196, 138, 74, 0.22), transparent 55%),
+          radial-gradient(ellipse 45% 35% at 85% 18%, rgba(126, 207, 122, 0.1), transparent 50%),
+          radial-gradient(ellipse 70% 45% at 50% 110%, rgba(42, 33, 24, 0.95), transparent 55%),
+          linear-gradient(180deg, #1c1610 0%, #2a2118 40%, #32281c 70%, #1e1810 100%);
+        animation: paint-breathe 30s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 30% at 50% 100%, rgba(212, 196, 168, 0.08), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(196, 138, 74, 0.04), transparent);
+        animation: fog-drift 44s linear infinite;
+      }
+
+      .grain-layer {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--dust);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4.1rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--dust);
+        text-shadow: 0 0 40px rgba(196, 138, 74, 0.2);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .board {
+        position: relative;
+        width: min(22rem, 100%);
+        height: 13rem;
+        border-radius: 0.35rem;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.05), transparent 30%),
+          #241c14;
+        border: 1px solid rgba(212, 196, 168, 0.28);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+        overflow: hidden;
+        padding: 1.1rem 1.2rem;
+      }
+
+      .board .meta {
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .board ul {
+        list-style: none;
+        margin: 1rem 0 0;
+        padding: 0;
+      }
+
+      .board li {
+        padding: 0.45rem 0;
+        border-top: 1px solid rgba(168, 148, 120, 0.25);
+        font-size: 0.82rem;
+        color: var(--dust);
+        letter-spacing: 0.02em;
+      }
+
+      .board li span {
+        display: block;
+        font-size: 0.68rem;
+        color: var(--mute);
+        margin-top: 0.15rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e8dcc8;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .plank-scene {
+        background: #1e1810;
+      }
+
+      .plank {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 32%;
+        height: 36%;
+        background:
+          repeating-linear-gradient(90deg,
+            #6a4228 0 2px,
+            #8a5a32 2px 8px,
+            #7a4a28 8px 12px,
+            #9a6840 12px 18px);
+        border-radius: 2px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      }
+
+      .ghost-cut {
+        position: absolute;
+        left: 18%;
+        top: 28%;
+        width: 64%;
+        height: 44%;
+        border: 2px dashed rgba(126, 207, 122, 0.35);
+        border-radius: 2px;
+        animation: veto-settle 8s ease-in-out infinite;
+      }
+
+      .ghost-cut::after {
+        content: "yield +4%";
+        position: absolute;
+        right: 8%;
+        top: -1.4rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+        animation: yield-fade 8s ease-in-out infinite;
+      }
+
+      .veto {
+        position: absolute;
+        left: 12%;
+        bottom: 14%;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--green);
+        animation: veto-label 8s ease-in-out infinite;
+      }
+
+      .desk {
+        background: #221a12;
+      }
+
+      .desktop {
+        position: absolute;
+        left: 18%;
+        right: 18%;
+        top: 28%;
+        height: 28%;
+        background: linear-gradient(180deg, #8a5a32, #6a4228);
+        border-radius: 2px 2px 0 0;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      }
+
+      .leg {
+        position: absolute;
+        bottom: 18%;
+        width: 10px;
+        height: 28%;
+        background: #5a3820;
+      }
+      .leg.a { left: 24%; }
+      .leg.b { right: 24%; }
+
+      .initials {
+        position: absolute;
+        left: 28%;
+        top: 48%;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-style: italic;
+        font-size: 0.9rem;
+        color: rgba(240, 230, 212, 0.55);
+        letter-spacing: 0.08em;
+        transform: rotate(-6deg);
+        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+      }
+
+      .sand {
+        position: absolute;
+        left: 22%;
+        top: 30%;
+        width: 40%;
+        height: 8%;
+        background: linear-gradient(90deg, transparent, rgba(212, 196, 168, 0.35), transparent);
+        animation: sand-pass 6s ease-in-out infinite;
+      }
+
+      .cabinet {
+        background: #1e1810;
+      }
+
+      .pieces {
+        position: absolute;
+        inset: 18% 12%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .piece {
+        background: #6a4228;
+        border-radius: 2px;
+        position: relative;
+        box-shadow: inset 0 0 0 1px rgba(212, 196, 168, 0.15);
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 14% 10%;
+        border: 1px solid rgba(212, 196, 168, 0.35);
+        background: rgba(240, 230, 212, 0.06);
+        animation: blush 7s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .overlay::after {
+        content: "";
+        position: absolute;
+        right: 8%;
+        bottom: 12%;
+        width: 18%;
+        height: 18%;
+        background: var(--blush);
+        opacity: 0;
+        animation: corner-blush 7s ease-in-out infinite;
+        filter: blur(4px);
+      }
+
+      .mallet {
+        position: absolute;
+        right: 16%;
+        bottom: 16%;
+        width: 36px;
+        height: 10px;
+        background: #4a3020;
+        border-radius: 2px;
+        animation: tap 7s ease-in-out infinite;
+      }
+      .mallet::before {
+        content: "";
+        position: absolute;
+        right: -8px;
+        top: -6px;
+        width: 16px;
+        height: 22px;
+        background: #3a2818;
+        border-radius: 2px;
+      }
+
+      .tea {
+        background: #241c14;
+      }
+
+      .chairs {
+        position: absolute;
+        left: 12%;
+        bottom: 22%;
+        display: flex;
+        gap: 18px;
+      }
+
+      .chair {
+        width: 28px;
+        height: 36px;
+        background:
+          linear-gradient(#3a3028, #3a3028) 6px 0 / 16px 6px no-repeat,
+          linear-gradient(#3a3028, #3a3028) 6px 6px / 16px 14px no-repeat,
+          linear-gradient(#3a3028, #3a3028) 6px 20px / 5px 16px no-repeat,
+          linear-gradient(#3a3028, #3a3028) 17px 20px / 5px 16px no-repeat;
+        opacity: 0.85;
+      }
+
+      .wall-screen {
+        position: absolute;
+        right: 12%;
+        top: 16%;
+        width: 36%;
+        height: 40%;
+        background: #1a140e;
+        border: 1px solid rgba(168, 148, 120, 0.3);
+        animation: screen-dim 10s ease-in-out infinite;
+      }
+
+      .wall-screen::after {
+        content: "";
+        position: absolute;
+        inset: 12%;
+        background: repeating-linear-gradient(180deg,
+          rgba(126, 207, 122, 0.2) 0 3px,
+          transparent 3px 10px);
+        opacity: 0.5;
+      }
+
+      .biscuits {
+        position: absolute;
+        left: 20%;
+        bottom: 18%;
+        width: 40px;
+        height: 8px;
+        background: rgba(196, 138, 74, 0.45);
+        border-radius: 4px;
+      }
+
+      .stamp-scene {
+        background: #1c1610;
+      }
+
+      .drawer {
+        position: absolute;
+        left: 50%;
+        top: 28%;
+        width: 55%;
+        height: 40%;
+        margin-left: -27.5%;
+        background: #7a4a28;
+        border-radius: 2px;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      }
+
+      .drawer::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 42%;
+        width: 28px;
+        height: 8px;
+        margin-left: -14px;
+        background: #3a2818;
+        border-radius: 2px;
+      }
+
+      .stamp {
+        position: absolute;
+        left: 22%;
+        bottom: 18%;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: rgba(240, 230, 212, 0.65);
+        transform: rotate(-8deg);
+        animation: stamp-set 5s ease-in-out infinite;
+      }
+
+      .flash {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.15);
+        opacity: 0;
+        animation: photo-flash 5s ease-in-out infinite;
+      }
+
+      .cart-scene {
+        background: #1a140e;
+      }
+
+      .frames {
+        position: absolute;
+        left: 14%;
+        top: 22%;
+        width: 40%;
+        height: 36%;
+        border: 3px solid #8a5a32;
+        box-shadow:
+          inset 0 0 0 8px #1a140e,
+          18px 12px 0 -3px #8a5a32,
+          18px 12px 0 0 #1a140e;
+      }
+
+      .cart {
+        position: absolute;
+        left: 12%;
+        bottom: 18%;
+        width: 70px;
+        height: 28px;
+        background: #2a3240;
+        border-radius: 3px;
+        animation: cart-wait 10s ease-in-out infinite;
+        box-shadow: 0 0 16px rgba(126, 207, 122, 0.15);
+      }
+
+      .cart::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        top: -10px;
+        height: 12px;
+        background: #3a444c;
+      }
+
+      .cart::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 6px;
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
+        border-radius: 50%;
+        background: var(--green);
+        animation: cart-light 10s ease-in-out infinite;
+      }
+
+      .strap {
+        position: absolute;
+        right: 18%;
+        bottom: 28%;
+        width: 36px;
+        height: 6px;
+        background: #c48a4a;
+        border-radius: 2px;
+        opacity: 0.4;
+        animation: strap-ready 10s ease-in-out infinite;
+      }
+
+      .kettle-note {
+        background: #221a12;
+      }
+
+      .note {
+        position: absolute;
+        left: 50%;
+        top: 22%;
+        width: min(16rem, 70%);
+        margin-left: -8rem;
+        padding: 1.2rem 1rem;
+        background: var(--note);
+        color: #3a2818;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        line-height: 1.4;
+        transform: rotate(-2deg);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      }
+
+      .tape {
+        position: absolute;
+        left: 50%;
+        top: 14%;
+        width: 40px;
+        height: 14px;
+        margin-left: -20px;
+        background: rgba(196, 138, 74, 0.55);
+        transform: rotate(4deg);
+      }
+
+      .kettle {
+        position: absolute;
+        right: 16%;
+        bottom: 16%;
+        width: 36px;
+        height: 28px;
+        border: 2px solid rgba(196, 138, 74, 0.6);
+        border-radius: 4px 4px 8px 8px;
+        border-top: 0;
+      }
+
+      .kettle::after {
+        content: "";
+        position: absolute;
+        right: -12px;
+        top: 4px;
+        width: 12px;
+        height: 10px;
+        border: 2px solid rgba(196, 138, 74, 0.6);
+        border-left: 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .steam span {
+        position: absolute;
+        right: 18%;
+        bottom: 44%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(240, 230, 212, 0.2);
+        filter: blur(4px);
+        animation: steam-up 5s ease-in infinite;
+      }
+      .steam span:nth-child(2) { right: 22%; animation-delay: -1.5s; width: 7px; height: 7px; }
+      .steam span:nth-child(3) { right: 15%; animation-delay: -3s; }
+
+      .evening {
+        background:
+          linear-gradient(180deg, #2a2118 0%, #3a3020 40%, #1c1610 100%);
+      }
+
+      .boots {
+        position: absolute;
+        left: 22%;
+        bottom: 22%;
+        width: 28px;
+        height: 18px;
+        background: #3a2818;
+        border-radius: 2px 8px 2px 2px;
+        box-shadow: 32px 0 0 #3a2818;
+      }
+
+      .boots::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: -32px;
+        top: -4px;
+        height: 6px;
+        background: rgba(212, 196, 168, 0.35);
+        filter: blur(2px);
+      }
+
+      .badge {
+        position: absolute;
+        right: 22%;
+        top: 30%;
+        width: 24px;
+        height: 32px;
+        background: #2a3240;
+        border-radius: 2px;
+        box-shadow: 0 0 12px rgba(126, 207, 122, 0.2);
+      }
+
+      .badge::before {
+        content: "";
+        position: absolute;
+        left: 4px; right: 4px; top: 6px;
+        height: 10px;
+        background: rgba(126, 207, 122, 0.5);
+      }
+
+      .notify {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 14%;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+        text-align: center;
+        line-height: 1.6;
+      }
+
+      .notify b {
+        color: var(--green);
+        font-weight: 500;
+      }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(8deg); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-6%); }
+        to { transform: translateX(6%); }
+      }
+      @keyframes veto-settle {
+        0%, 35% { border-color: rgba(232, 154, 154, 0.45); transform: rotate(2deg); }
+        55%, 100% { border-color: rgba(126, 207, 122, 0.55); transform: none; }
+      }
+      @keyframes yield-fade {
+        0%, 40% { opacity: 0.7; }
+        60%, 100% { opacity: 0; }
+      }
+      @keyframes veto-label {
+        0%, 45% { opacity: 0; }
+        60%, 100% { opacity: 1; }
+      }
+      @keyframes sand-pass {
+        0%, 100% { transform: translateX(0); opacity: 0.3; }
+        50% { transform: translateX(40%); opacity: 0.7; }
+      }
+      @keyframes blush {
+        0%, 25% { opacity: 0.35; }
+        40% { opacity: 0.55; }
+        55%, 100% { opacity: 0.15; }
+      }
+      @keyframes corner-blush {
+        0%, 20% { opacity: 0; }
+        35% { opacity: 0.7; }
+        55%, 100% { opacity: 0; }
+      }
+      @keyframes tap {
+        0%, 30% { transform: translate(0, 0); }
+        38% { transform: translate(-8px, -4px); }
+        46% { transform: translate(0, 0); }
+        54% { transform: translate(-6px, -3px); }
+        62%, 100% { transform: translate(0, 0); }
+      }
+      @keyframes screen-dim {
+        0%, 40% { opacity: 1; }
+        55%, 85% { opacity: 0.35; }
+        100% { opacity: 1; }
+      }
+      @keyframes stamp-set {
+        0%, 40% { opacity: 0.3; transform: rotate(-8deg) scale(0.95); }
+        55%, 100% { opacity: 0.85; transform: rotate(-8deg) scale(1); }
+      }
+      @keyframes photo-flash {
+        0%, 58% { opacity: 0; }
+        62% { opacity: 0.35; }
+        70%, 100% { opacity: 0; }
+      }
+      @keyframes cart-wait {
+        0% { left: 8%; }
+        40% { left: 42%; }
+        100% { left: 42%; }
+      }
+      @keyframes cart-light {
+        0%, 40% { opacity: 0.4; }
+        50%, 100% { opacity: 1; }
+      }
+      @keyframes strap-ready {
+        0%, 45% { opacity: 0.25; transform: translateY(0); }
+        60%, 100% { opacity: 0.85; transform: translateY(-4px); }
+      }
+      @keyframes steam-up {
+        0% { opacity: 0; transform: translateY(0); }
+        30% { opacity: 0.6; }
+        100% { opacity: 0; transform: translateY(-28px); }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .ghost-cut, .ghost-cut::after, .veto, .sand,
+        .overlay, .overlay::after, .mallet, .wall-screen, .stamp,
+        .flash, .cart, .cart::after, .strap, .steam span, .scene {
+          animation: none !important;
+        }
+        .veto, .stamp { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain-layer"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="board" aria-hidden="true">
+          <div class="meta">7 September · workshop</div>
+          <ul>
+            <li>three kitchen cabinets<span>flat on the quay</span></li>
+            <li>school desk repair<span>keep the initials</span></li>
+            <li>window frames<span>co-op · Thursday</span></li>
+          </ul>
+        </div>
+        <h1>The job kept its hands</h1>
+        <time datetime="2026-09-07">7 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Jon arrived twelve minutes early because the tram still ran on a schedule that pretended people had somewhere to be.</p>
+        <p>The workshop door recognised his badge and did not make a speech about it. Inside, the air smelled of cut timber and warm dust. On the wall screen a quiet list waited: three kitchen cabinets for a flat on the quay, a repair on a school desk that had been kicked for thirty years, and a batch of window frames for a co-op that paid in instalments the model had already smoothed into something nobody had to argue about at the counter.</p>
+        <p>His tools were where he left them. The AI that ran the shop did not rearrange them for efficiency. It had tried that once, three years ago, and the whole floor had walked out for a morning until management put the racks back and apologised in a handwritten note taped to the kettle.</p>
+        <p>Jon put the kettle on himself.</p>
+      </div>
+
+      <figure class="scene tall plank-scene" aria-hidden="true">
+        <div class="plank"></div>
+        <div class="ghost-cut"></div>
+        <div class="veto">craft override · grain integrity</div>
+      </figure>
+      <p class="cap">grain says no</p>
+
+      <div class="prose">
+        <p>Maya was already at the big saw, goggles up on her forehead, arguing softly with a projection that hovered over the grain of a plank.</p>
+        <p>"It wants a different cut," she said without looking up. "Says the yield improves by four percent if we flip it."</p>
+        <p>"Does the grain agree?"</p>
+        <p>"Grain says no. Grain's been wood longer than the model's been clever."</p>
+        <p>She flipped the plank the way the wood wanted. The projection flickered, recalculated, and settled into a green edge that meant the shop system had accepted the human veto without escalating. No manager ping. No productivity ding. Just a line in the day's log that would later read, in plain language: craft override, frame B, reason: grain integrity. The co-op would still get their windows on Thursday. The timber yard would still get paid. Maya's hands would still be the ones that chose.</p>
+      </div>
+
+      <div class="prose">
+        <p>Jon took the school desk. The legs were scarred. Someone's initials were carved under the lip, old enough that the letters had softened. The repair brief on his tablet was short: make it last another decade, keep the initials, do not sand them out for cleanliness. A parent committee had voted, and the model that summarised the votes had somehow kept the messy part.</p>
+        <p>He sanded around the letters. The shop fans adjusted without asking. Somewhere in the ceiling a sensor noted particulate levels and opened a vent a fraction. Nobody clapped.</p>
+      </div>
+
+      <figure class="scene desk" aria-hidden="true">
+        <div class="desktop"></div>
+        <div class="leg a"></div>
+        <div class="leg b"></div>
+        <div class="initials">J.R.</div>
+        <div class="sand"></div>
+      </figure>
+      <p class="cap">keep the initials</p>
+
+      <div class="prose">
+        <p>By ten the quay cabinets were in pieces on the benches, dry-fitted, checked against a holographic overlay that floated an inch above the real wood like a polite ghost. When Jon's joint was a hair off, the ghost blushed pink at the corner. He tapped the wood with a mallet until the blush went away. The overlay did not congratulate him. It just went transparent again.</p>
+      </div>
+
+      <figure class="scene tall cabinet" aria-hidden="true">
+        <div class="pieces">
+          <div class="piece"></div>
+          <div class="piece"></div>
+          <div class="piece"></div>
+          <div class="piece"></div>
+        </div>
+        <div class="overlay"></div>
+        <div class="mallet"></div>
+      </figure>
+      <p class="cap">a polite ghost</p>
+
+      <div class="prose">
+        <p>At half eleven the floor went quiet for tea the way it always had. Plastic chairs. Someone's leftover biscuits. The wall screen dimmed so it would not stare.</p>
+        <p>Rafi from dispatch wandered in with a tablet and a face like he'd won a small, private bet.</p>
+        <p>"Client on the quay tried to rush the cabinets," he said. "Model offered them a surcharge slot next week or a free redesign consult if they wait for the craft window. They took the wait. Said they liked that the estimate still said 'human hours' in the line item."</p>
+        <p>Maya snorted into her mug. "Fancy."</p>
+        <p>"Not fancy," Rafi said. "Honest. The other shops that hide the hands lose the jobs that care. We keep the ones that want a thumbprint in the finish."</p>
+      </div>
+
+      <figure class="scene tea" aria-hidden="true">
+        <div class="wall-screen"></div>
+        <div class="chairs">
+          <div class="chair"></div>
+          <div class="chair"></div>
+          <div class="chair"></div>
+        </div>
+        <div class="biscuits"></div>
+      </figure>
+      <p class="cap">human hours in the line item</p>
+
+      <div class="prose">
+        <p>Jon looked at his own thumbs, stained pale with sealer. The old fear from the first automation wave still lived in the back of his neck some mornings: the fear that a clean algorithm would make him decorative. What had arrived instead was stranger and quieter. The algorithms booked the timber, priced the risk, caught the hairline cracks in the kiln logs before they became returns, and wrote the invoices in language a tired person could read at midnight. The cutting, the fitting, the judgment calls that lived in the wrist — those had stayed on the floor, protected by a local rule the city had bothered to write down: if a trade voted that a step was craft-critical, the model could advise and could not execute.</p>
+        <p>Some towns had not written that rule. Their workshops were bright and empty, full of arms that never got splinters. Those towns ordered their cabinets from places like this one and pretended not to notice the delivery labels.</p>
+        <p>After lunch Jon signed the underside of a finished drawer the way his mentor had taught him, a small stamp and a date. The shop system photographed it for the warranty file and filed the photo under his name, not under a generic "operator." When the quay couple opened the drawer in six months and found the mark, they would know a person had stood where he was standing.</p>
+      </div>
+
+      <figure class="scene stamp-scene" aria-hidden="true">
+        <div class="drawer"></div>
+        <div class="stamp">J · 7.9.26</div>
+        <div class="flash"></div>
+      </figure>
+      <p class="cap">under his name</p>
+
+      <div class="prose">
+        <p>Maya's window frames went out on a cart that steered itself to the loading bay and then waited, lights soft, until a human hooked the strap. The cart was allowed to move wood. It was not allowed to claim the work.</p>
+        <p>Near four a trainee named Ellis hovered at Jon's elbow, seventeen, still startled by how little shouting there was.</p>
+        <p>"I thought the machines would be louder," Ellis said.</p>
+        <p>"The loud ones got quieter when they stopped pretending to replace us," Jon said. He handed Ellis a square and a pencil. "Mark the next rebate. I'll watch. If the overlay argues, listen to the wood first."</p>
+        <p>Ellis marked. The overlay argued lightly. Ellis listened to the wood. The overlay yielded. Somewhere in a cloud that did not care about their street, a larger model updated a prior about timber yield in coastal workshops and learned, again, that four percent was not always the point.</p>
+      </div>
+
+      <figure class="scene cart-scene" aria-hidden="true">
+        <div class="frames"></div>
+        <div class="cart"></div>
+        <div class="strap"></div>
+      </figure>
+      <p class="cap">allowed to move wood · not to claim the work</p>
+
+      <div class="prose">
+        <p>Clock-out was still a clock-out. Not a productivity score that unlocked the door. Jon washed his hands at the sink until the sealer smell faded enough for the tram. On the way out he passed the handwritten note by the kettle, edges soft now, still taped where management had left it years ago: racks stay where hands put them.</p>
+      </div>
+
+      <figure class="scene kettle-note" aria-hidden="true">
+        <div class="tape"></div>
+        <div class="note">racks stay where hands put them</div>
+        <div class="kettle"></div>
+        <div class="steam">
+          <span></span><span></span><span></span>
+        </div>
+      </figure>
+      <p class="cap">edges soft now</p>
+
+      <div class="prose">
+        <p>Outside, the evening was ordinary. People coming off other shifts. A bakery dumping warm air into the pavement. On his phone a quiet notification from the shop system: three jobs closed, one repair under warranty held for human review, payroll prepped, no disputes. He did not open the detail. He already knew what the day had felt like in his shoulders.</p>
+        <p>At home he put his badge on the hook. His partner asked how the desk had gone. He said the initials survived. They ate something that had been suggested by a fridge that only suggested, never shopped without a tap. Later he fell asleep without rehearsing a speech about the future of work, because the future of work, for one more Tuesday, had looked like wood dust on his boots and a stamp that still meant a person.</p>
+        <p>The job kept its hands. The list for Wednesday was already waiting, patient as timber.</p>
+      </div>
+
+      <figure class="scene evening" aria-hidden="true">
+        <div class="badge"></div>
+        <div class="boots"></div>
+        <div class="notify">three jobs closed · <b>no disputes</b><br>wednesday waiting</div>
+      </figure>
+      <p class="cap">patient as timber</p>
+    </article>
+  </body>
+</html>
