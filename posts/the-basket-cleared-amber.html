@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The basket cleared amber — Ben Miller</title>
+    <meta name="description" content="Ana's mother still cooked with a clay pot that had outlived three fridges. The amber tile wanted Blend 7.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #140f0c;
+        --ink: #f0e4d4;
+        --mute: #a89078;
+        --amber: #d4a04a;
+        --clay: #a86a3a;
+        --lentil: #c45c3a;
+        --green: #6aaa6a;
+        --blend: #8a9a7a;
+        --steam: #e8dcc8;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 55% 40% at 20% 10%, rgba(212, 160, 74, 0.2), transparent 55%),
+          radial-gradient(ellipse 40% 30% at 85% 20%, rgba(168, 106, 58, 0.14), transparent 50%),
+          radial-gradient(ellipse 70% 45% at 50% 110%, rgba(40, 28, 20, 0.95), transparent 55%),
+          linear-gradient(180deg, #140f0c 0%, #1c1610 40%, #241a12 70%, #16100c 100%);
+        animation: paint-breathe 30s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 30% at 50% 100%, rgba(232, 220, 200, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(212, 160, 74, 0.04), transparent);
+        animation: fog-drift 44s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--steam);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--steam);
+        text-shadow: 0 0 40px rgba(212, 160, 74, 0.2);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .kitchen {
+        position: relative;
+        width: min(20rem, 100%);
+        height: 14rem;
+        margin: 0 auto;
+        border-radius: 0.4rem;
+        background: #1c1610;
+        border: 1px solid rgba(232, 220, 200, 0.22);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+        overflow: hidden;
+      }
+
+      .tile {
+        position: absolute;
+        right: 12%;
+        top: 14%;
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        background: radial-gradient(circle at 40% 35%, rgba(212, 160, 74, 0.95), rgba(160, 110, 40, 0.9));
+        box-shadow: 0 0 28px rgba(212, 160, 74, 0.4);
+        animation: amber-breathe 5s ease-in-out infinite;
+      }
+
+      .tile span {
+        position: absolute;
+        left: -20%;
+        right: -20%;
+        bottom: -1.5rem;
+        text-align: center;
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+
+      .pot {
+        position: absolute;
+        left: 18%;
+        bottom: 18%;
+        width: 70px;
+        height: 48px;
+        background: var(--clay);
+        border-radius: 8px 8px 28px 28px;
+        box-shadow:
+          inset 0 8px 12px rgba(0,0,0,0.25),
+          0 8px 20px rgba(0,0,0,0.35);
+      }
+
+      .pot::before {
+        content: "";
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: -8px;
+        height: 12px;
+        background: #8a5230;
+        border-radius: 6px 6px 0 0;
+      }
+
+      .steam span {
+        position: absolute;
+        left: 28%;
+        bottom: 52%;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(232, 220, 200, 0.25);
+        filter: blur(5px);
+        animation: steam-up 6s ease-in infinite;
+      }
+      .steam span:nth-child(2) { left: 36%; animation-delay: -2s; width: 10px; height: 10px; }
+      .steam span:nth-child(3) { left: 24%; animation-delay: -3.5s; }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e8dcc8;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .app {
+        background: #18120e;
+      }
+
+      .phone {
+        position: absolute;
+        left: 50%;
+        top: 12%;
+        width: min(14rem, 70%);
+        height: 72%;
+        margin-left: -7rem;
+        border-radius: 1.2rem;
+        background: #12100e;
+        border: 1px solid rgba(232, 220, 200, 0.25);
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      }
+
+      .phone .bar {
+        margin: 1.4rem 1rem 0.8rem;
+        height: 1.6rem;
+        border-radius: 6px;
+        background: rgba(232, 220, 200, 0.08);
+        font-size: 0.62rem;
+        letter-spacing: 0.06em;
+        color: var(--mute);
+        display: flex;
+        align-items: center;
+        padding: 0 0.6rem;
+      }
+
+      .phone .alt {
+        margin: 0 1rem;
+        padding: 0.7rem;
+        border-radius: 6px;
+        background: rgba(106, 170, 106, 0.12);
+        border: 1px solid rgba(106, 170, 106, 0.35);
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--blend);
+        animation: suggest-pulse 5s ease-in-out infinite;
+      }
+
+      .phone .heart {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 6px;
+        background: var(--green);
+        transform: rotate(45deg);
+        box-shadow: -2px -2px 0 var(--green);
+        vertical-align: middle;
+      }
+
+      .phone .hold {
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1.2rem;
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+
+      .market {
+        background: #1a140e;
+      }
+
+      .counter {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        bottom: 22%;
+        height: 18%;
+        background: #3a2a1c;
+        border-radius: 2px;
+      }
+
+      .bag {
+        position: absolute;
+        left: 22%;
+        bottom: 38%;
+        width: 50px;
+        height: 36px;
+        background: #c45c3a;
+        border-radius: 4px 4px 8px 8px;
+        box-shadow: inset 0 -10px 0 rgba(0,0,0,0.15);
+        animation: bag-glow 6s ease-in-out infinite;
+      }
+
+      .pouches {
+        position: absolute;
+        right: 12%;
+        top: 18%;
+        display: flex;
+        gap: 8px;
+      }
+
+      .pouch {
+        width: 28px;
+        height: 40px;
+        background: linear-gradient(180deg, #8a9a7a, #6a7a5a);
+        border-radius: 4px 4px 2px 2px;
+        opacity: 0.85;
+      }
+      .pouch::after {
+        content: "";
+        position: absolute;
+        /* can't use absolute on flex child easily - use box */
+      }
+
+      .scan {
+        position: absolute;
+        left: 50%;
+        top: 28%;
+        width: 60px;
+        height: 8px;
+        margin-left: -30px;
+        background: rgba(212, 160, 74, 0.7);
+        box-shadow: 0 0 16px rgba(212, 160, 74, 0.5);
+        animation: scan-orange 3s ease-in-out infinite;
+      }
+
+      .adherence {
+        background: #14100c;
+      }
+
+      .meter {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 35%;
+        height: 1.2rem;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.06);
+        overflow: hidden;
+      }
+
+      .meter i {
+        display: block;
+        height: 100%;
+        width: 61%;
+        background: linear-gradient(90deg, #a86a3a, var(--amber));
+        box-shadow: 0 0 12px rgba(212, 160, 74, 0.4);
+        animation: meter-tick 8s ease-in-out infinite;
+      }
+
+      .meter-label {
+        position: absolute;
+        left: 12%;
+        top: 55%;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .meter-label b {
+        color: var(--amber);
+        font-weight: 500;
+      }
+
+      .steward {
+        background: #18120e;
+      }
+
+      .leaflet {
+        position: absolute;
+        left: 50%;
+        top: 18%;
+        width: min(15rem, 75%);
+        margin-left: -7.5rem;
+        padding: 1rem;
+        background: #e8dcc8;
+        color: #3a2818;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        line-height: 1.5;
+        transform: rotate(1deg);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+        animation: leaflet-in 8s ease-in-out infinite;
+      }
+
+      .leaflet strong {
+        display: block;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .bowls {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 14%;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .bowl {
+        width: 36px;
+        height: 16px;
+        border: 2px solid rgba(168, 106, 58, 0.5);
+        border-top: 0;
+        border-radius: 0 0 18px 18px;
+        opacity: 0.6;
+      }
+
+      .map-scene {
+        background: #120e0a;
+      }
+
+      .cmap {
+        position: absolute;
+        inset: 12% 10%;
+        background:
+          repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 30px),
+          repeating-linear-gradient(180deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 30px),
+          #1a1610;
+      }
+
+      .yield {
+        position: absolute;
+        left: 12%;
+        top: 16%;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--green);
+      }
+
+      .pin {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+      }
+      .pin.grey {
+        left: 38%;
+        top: 48%;
+        background: #6a6660;
+        animation: grey-pin 5s ease-in-out infinite;
+      }
+      .pin.green {
+        left: 62%;
+        top: 32%;
+        background: var(--green);
+        box-shadow: 0 0 12px rgba(106, 170, 106, 0.5);
+      }
+      .pin.green.b { left: 72%; top: 55%; }
+      .pin.green.c { left: 28%; top: 30%; }
+
+      .coaching {
+        position: absolute;
+        left: 30%;
+        top: 62%;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .cupboard {
+        background: #1a140e;
+      }
+
+      .shelf {
+        position: absolute;
+        left: 15%;
+        right: 15%;
+        top: 40%;
+        height: 8px;
+        background: #3a2a1c;
+        box-shadow: 0 20px 0 #3a2a1c, 0 40px 0 #3a2a1c;
+      }
+
+      .blend-box {
+        position: absolute;
+        left: 28%;
+        top: 22%;
+        width: 44px;
+        height: 52px;
+        background: linear-gradient(180deg, #8a9a7a, #5a6a4a);
+        border-radius: 3px;
+        box-shadow: 0 0 0 1px rgba(232, 220, 200, 0.15);
+      }
+
+      .jar {
+        position: absolute;
+        left: 52%;
+        top: 26%;
+        width: 28px;
+        height: 40px;
+        background: rgba(196, 92, 58, 0.85);
+        border-radius: 4px 4px 8px 8px;
+        box-shadow:
+          inset 0 0 0 2px rgba(232, 220, 200, 0.2),
+          0 0 20px rgba(196, 92, 58, 0.35);
+        animation: secret-jar 6s ease-in-out infinite;
+      }
+
+      .jar::before {
+        content: "";
+        position: absolute;
+        left: 15%;
+        right: 15%;
+        top: -6px;
+        height: 8px;
+        background: #6a4228;
+        border-radius: 2px;
+      }
+
+      .cart-green {
+        background: #14100c;
+      }
+
+      .street {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, #1c1610 0%, #241a12 60%, #1a140e 100%);
+      }
+
+      .cart {
+        position: absolute;
+        bottom: 28%;
+        width: 48px;
+        height: 22px;
+        background: #2a3240;
+        border-radius: 3px;
+        animation: cart-hum 14s linear infinite;
+        box-shadow: 0 0 14px rgba(106, 170, 106, 0.25);
+      }
+
+      .cart::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        top: -8px;
+        height: 10px;
+        background: #3a444c;
+      }
+
+      .greens {
+        position: absolute;
+        bottom: 52%;
+        left: 8%;
+        right: 8%;
+        height: 6px;
+        background: repeating-linear-gradient(90deg,
+          rgba(106, 170, 106, 0.5) 0 20px,
+          transparent 20px 40px);
+        opacity: 0.6;
+      }
+
+      .window-cumin {
+        position: absolute;
+        right: 18%;
+        top: 22%;
+        width: 24px;
+        height: 32px;
+        background: rgba(196, 138, 74, 0.2);
+        box-shadow: 0 0 20px rgba(196, 138, 74, 0.25);
+        animation: cumin-glow 7s ease-in-out infinite;
+      }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(10deg); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-6%); }
+        to { transform: translateX(6%); }
+      }
+      @keyframes amber-breathe {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.15); }
+      }
+      @keyframes steam-up {
+        0% { opacity: 0; transform: translateY(0); }
+        30% { opacity: 0.7; }
+        100% { opacity: 0; transform: translateY(-36px); }
+      }
+      @keyframes suggest-pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes bag-glow {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.1); }
+      }
+      @keyframes scan-orange {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      @keyframes meter-tick {
+        0%, 100% { width: 61%; }
+        50% { width: 58%; }
+      }
+      @keyframes leaflet-in {
+        0%, 20% { opacity: 0; transform: rotate(1deg) translateY(12px); }
+        35%, 100% { opacity: 1; transform: rotate(1deg) translateY(0); }
+      }
+      @keyframes grey-pin {
+        0%, 100% { opacity: 0.55; }
+        50% { opacity: 0.9; }
+      }
+      @keyframes secret-jar {
+        0%, 100% { box-shadow: inset 0 0 0 2px rgba(232, 220, 200, 0.2), 0 0 16px rgba(196, 92, 58, 0.3); }
+        50% { box-shadow: inset 0 0 0 2px rgba(232, 220, 200, 0.3), 0 0 28px rgba(196, 92, 58, 0.55); }
+      }
+      @keyframes cart-hum {
+        from { left: -10%; }
+        to { left: 110%; }
+      }
+      @keyframes cumin-glow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .tile, .steam span, .phone .alt, .bag, .scan,
+        .meter i, .leaflet, .pin.grey, .jar, .cart, .window-cumin, .scene {
+          animation: none !important;
+        }
+        .leaflet { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="kitchen" aria-hidden="true">
+          <div class="tile"><span>amber</span></div>
+          <div class="pot"></div>
+          <div class="steam">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <h1>The basket cleared amber</h1>
+        <time datetime="2026-09-08">8 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Ana's mother still cooked with a clay pot that had outlived three fridges.</p>
+        <p>The pot did not have a chip. It did not report simmer time to the household model. It just held heat the way clay always had, and tonight Ana needed that more than she needed a green tile on the kitchen wall.</p>
+        <p>The wall tile was amber. Amber meant the week's protein allocation was "flexible," which meant the shop would offer substitutes until the basket cleared. Clearance was a soft word for a hard gate. Without it, the delivery slot would not open, and the corner market's scanner would blink apologetic lights and suggest the Preferred Hub two kilometres north, where the air smelled like disinfectant and the fruit arrived already labelled with its micronutrient score.</p>
+        <p>Ana's mother wanted lentils. Red ones. The kind that fell apart into something that tasted like home if you were patient.</p>
+        <p>"Put lentils," her mother said from the sofa, eyes half on a telenovela that still ran on the old screen because nobody had bothered to train a model to replace it yet. "Not the powder. The ones that look like lentils."</p>
+      </div>
+
+      <figure class="scene tall app" aria-hidden="true">
+        <div class="phone">
+          <div class="bar">lentils, red, dry, 500g</div>
+          <div class="alt"><span class="heart"></span>protein blend 7 · aligned</div>
+          <div class="hold">hold and review</div>
+        </div>
+      </figure>
+      <p class="cap">availability: low in your catchment</p>
+
+      <div class="prose">
+        <p>Ana opened the household app. The search bar already knew. Lentils, red, dry, 500g. Availability: low in your catchment. Suggested alternative: PROTEIN BLEND 7, fortified, household-compatible, 12% cheaper under current yield rules. A small heart icon meant the blend was "aligned with your metabolic profile." Ana's metabolic profile had been inferred from grocery history, a clinic visit two years ago, and the smart scale she had unplugged in April after it started leaving notes on the fridge about evening snacks.</p>
+        <p>She tapped lentils anyway.</p>
+        <p>The app paused, polite. Then: We can hold a dry-lentil line item if you accept a basket review. Review may delay delivery by 1–3 days. Continue with Protein Blend 7 for same-day clearance?</p>
+        <p>Ana chose hold and review. The amber tile flickered, as if disappointed.</p>
+      </div>
+
+      <div class="prose">
+        <p>In the morning the corner market still had a queue of people who preferred to see food before it became a line item. Farid behind the counter had grey in his beard and a tablet he treated like a suspicious dog.</p>
+        <p>"Red lentils?" he said. "Back room. Model keeps marking them low velocity. Wants me to face the blends instead." He jerked a thumb at a shelf of identical pouches, each with a smiling diagram of a gut. "I face what people ask for. Tablet complains. I live."</p>
+        <p>He weighed a bag. The scanner chirped, then went soft orange. Farid frowned, tried again, got the same orange.</p>
+        <p>"Your household's on amber protein," he said. "I can sell you these if I override. Override puts my stall in a coaching queue. Coaching queue means a steward visits and talks about catchment balance until I want to put the tablet in the stew."</p>
+        <p>Ana looked at the bag. Ordinary. Dusty. Real.</p>
+        <p>"How bad is coaching?"</p>
+        <p>"Last time they moved my olive oil to 'specialty' and cut my morning delivery window. Specialty means the people with green tiles buy it on their way to somewhere else. My regulars get the blends and a smile." He shrugged. "Your call. I can override once. Not twice in a week. Tablet remembers kindness the way a landlord remembers late rent."</p>
+        <p>Ana paid cash for half the bag, which the tablet hated, and let Farid enter the other half as "bulk spice — unclassified" because the spice codes still had gaps the model had not closed. Farid did not smile. He looked tired in a way that had nothing to do with standing.</p>
+      </div>
+
+      <figure class="scene market" aria-hidden="true">
+        <div class="pouches">
+          <div class="pouch"></div>
+          <div class="pouch"></div>
+          <div class="pouch"></div>
+        </div>
+        <div class="scan"></div>
+        <div class="bag"></div>
+        <div class="counter"></div>
+      </figure>
+      <p class="cap">soft orange</p>
+
+      <div class="prose">
+        <p>On the walk home her phone buzzed. Basket review update: dry legumes flagged as redundant with Blend 7 inventory in catchment. Recommendation: cancel hold, accept blend, unlock same-day slot for greens and oil. A progress bar showed her week's "dietary adherence" at 61%. Below 70%, the school lunch form for her nephew would stop offering the hot option and default to the standardised tray. The note said this gently, as if it were weather.</p>
+        <p>She did not cancel the hold. She walked faster.</p>
+      </div>
+
+      <figure class="scene adherence" aria-hidden="true">
+        <div class="meter"><i></i></div>
+        <div class="meter-label">dietary adherence · <b>61%</b></div>
+      </figure>
+      <p class="cap">as if it were weather</p>
+
+      <div class="prose">
+        <p>Her mother sorted the lentils on a tea towel, picking out the ones that looked wrong the way her grandmother had taught her, which was a kind of quality control no barcode could copy. The clay pot went on. Onion. Cumin. The smell rose and made the amber tile on the wall look briefly ridiculous.</p>
+        <p>Ana's sister called from the Preferred Hub queue, voice thin with the acoustics of a place designed for throughput.</p>
+        <p>"They're out of the chicken that counts as chicken," she said. "Only the pressed stuff with the green check. Lina's teacher sent a note — kids with amber households get the check protein at lunch this month. 'Equity of micronutrients.' Lina asked if we were poor. I said we were particular."</p>
+        <p>"Particular," Ana repeated.</p>
+        <p>"Particular," her sister said, and hung up before the hub's wait-music could crawl back into the call.</p>
+        <p>At noon a steward knocked. Soft shoes. Soft voice. A badge that said FOOD SYSTEMS, NEIGHBOURHOOD LAYER.</p>
+        <p>"Just a check-in," the steward said. "Your basket reviews are clustering. Sometimes that means a household needs a meal plan reset. We can enrol you in Smooth Week. Smooth Week auto-substitutes to clear amber within twenty-four hours. Most people feel relief."</p>
+        <p>Ana's mother appeared in the doorway with a wooden spoon and an expression that had ended arguments in three countries.</p>
+        <p>"We feel lunch," she said. "Come in if you want soup. Leave the tablet on the step."</p>
+        <p>The steward did not come in. The tablet stayed in hand. A note was taken: cultural preference expressed; education leaflet queued. The leaflet arrived on Ana's phone before the steward reached the stairwell. It had recipes that used Blend 7 in twelve ways, each timed to the second, each with a photo of a bowl that looked like every other bowl.</p>
+      </div>
+
+      <figure class="scene steward" aria-hidden="true">
+        <div class="leaflet">
+          <strong>Smooth Week</strong>
+          twelve ways with Blend 7 · timed to the second
+        </div>
+        <div class="bowls">
+          <div class="bowl"></div>
+          <div class="bowl"></div>
+          <div class="bowl"></div>
+          <div class="bowl"></div>
+        </div>
+      </figure>
+      <p class="cap">education leaflet queued</p>
+
+      <div class="prose">
+        <p>By Thursday the hold on dry lentils had expired. The app converted the line to Blend 7 automatically and cleared the basket to a soft green for six hours, long enough to book oil, greens, and the bread that still came from a bakery with a human name on the bag. Ana let the blend arrive. She put it in the cupboard behind the rice. Her mother did not ask. The clay pot made soup from the half-bag Farid had risked, stretched with potato and a bone the butcher had sold as "pet trimmings" because pet trimmings still moved outside the protein ledger.</p>
+        <p>Friday evening the neighbourhood board lit up with a cheerful map. Catchment yield up 4%. Amber households down. A sidebar thanked residents who had accepted optimised baskets. Farid's stall showed as a pale grey pin: UNDER COACHING. Ana walked there after dark. The olive oil was gone from the front. The lentil shelf held pouches. Farid was wiping the counter with the slow care of someone who refused to hurry for a sensor.</p>
+        <p>"Steward come?" he asked.</p>
+        <p>"Leaflet," Ana said.</p>
+        <p>He nodded. "They'll call this a success in the monthly. Numbers go up when people get tired." He tapped the tablet face-down. "I put a sack under the counter for the ones who still ask. Don't tell the map."</p>
+      </div>
+
+      <figure class="scene tall map-scene" aria-hidden="true">
+        <div class="cmap"></div>
+        <div class="yield">catchment yield · +4%</div>
+        <div class="pin green"></div>
+        <div class="pin green b"></div>
+        <div class="pin green c"></div>
+        <div class="pin grey"></div>
+        <div class="coaching">under coaching</div>
+      </figure>
+      <p class="cap">don't tell the map</p>
+
+      <div class="prose">
+        <p>On Saturday Ana's nephew came over and ate soup that had taken patience and a clay pot and a lie at a scanner. He did not ask if they were poor. He asked for more. The amber tile on the wall had returned, patient as mould. The app offered Smooth Week again, with a discount and a free dessert blend that promised stable evening glucose.</p>
+        <p>Ana declined. She washed the pot. She dried it with a cloth that had no connectivity. Outside, a delivery cart hummed past with baskets that had cleared on the first try, green all the way down the street that still smelled, faintly, of cumin from an open window the model had not yet learned to close.</p>
+        <p>In the cupboard, Blend 7 waited, sealed, aligned, ready for the week she got too tired to argue. Behind it, in a jar with no barcode, the last of Farid's red lentils sat like a secret the catchment had not finished erasing.</p>
+        <p>The basket, when it cleared amber, always cleared toward the same shelf. The pot, when it simmered, still remembered another one.</p>
+      </div>
+
+      <figure class="scene cupboard" aria-hidden="true">
+        <div class="shelf"></div>
+        <div class="blend-box"></div>
+        <div class="jar"></div>
+      </figure>
+      <p class="cap">a jar with no barcode</p>
+
+      <figure class="scene cart-green" aria-hidden="true">
+        <div class="street"></div>
+        <div class="greens"></div>
+        <div class="window-cumin"></div>
+        <div class="cart"></div>
+      </figure>
+      <p class="cap">the pot still remembered</p>
+    </article>
+  </body>
+</html>
