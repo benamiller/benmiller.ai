@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The main kept its pressure — Ben Miller</title>
+    <meta name="description" content="Lina woke to a pale blue band across their street. Planned work. The main kept its pressure.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0c1218;
+        --ink: #e4eef4;
+        --mute: #8a9aa8;
+        --blue: #5eb0e0;
+        --band: #4a9fd4;
+        --amber: #d4a04a;
+        --green: #6aba8a;
+        --clay: #8a6a4a;
+        --asphalt: #2a3038;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 55% 40% at 18% 12%, rgba(94, 176, 224, 0.2), transparent 55%),
+          radial-gradient(ellipse 40% 30% at 88% 18%, rgba(106, 186, 138, 0.1), transparent 50%),
+          radial-gradient(ellipse 70% 45% at 50% 110%, rgba(20, 32, 44, 0.95), transparent 55%),
+          linear-gradient(180deg, #0c1218 0%, #121a22 40%, #162028 70%, #0e141a 100%);
+        animation: paint-breathe 30s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 30% at 50% 100%, rgba(94, 176, 224, 0.08), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(94, 176, 224, 0.04), transparent);
+        animation: fog-drift 44s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--blue);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #d4e8f4;
+        text-shadow: 0 0 40px rgba(94, 176, 224, 0.22);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .screen {
+        position: relative;
+        width: min(22rem, 100%);
+        height: 12rem;
+        border-radius: 0.5rem;
+        background: #141c24;
+        border: 1px solid rgba(94, 176, 224, 0.28);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+        overflow: hidden;
+        padding: 1rem 1.1rem;
+      }
+
+      .screen .meta {
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .band {
+        margin-top: 1.1rem;
+        height: 1.4rem;
+        border-radius: 4px;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(74, 159, 212, 0.85) 12%,
+          rgba(94, 176, 224, 0.95) 50%,
+          rgba(74, 159, 212, 0.85) 88%,
+          transparent 100%);
+        box-shadow: 0 0 24px rgba(94, 176, 224, 0.4);
+        animation: band-glow 5s ease-in-out infinite;
+      }
+
+      .screen .lines {
+        margin-top: 1rem;
+        font-size: 0.78rem;
+        color: #c8d8e4;
+        line-height: 1.55;
+      }
+
+      .screen .lines em {
+        color: var(--blue);
+        font-style: normal;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d8e4ec;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .kerb {
+        background: #121820;
+      }
+
+      .road {
+        position: absolute;
+        left: 0; right: 0;
+        top: 35%;
+        height: 40%;
+        background: var(--asphalt);
+      }
+
+      .van {
+        position: absolute;
+        left: 12%;
+        top: 22%;
+        width: 70px;
+        height: 32px;
+        background: #2a3848;
+        border-radius: 4px;
+        box-shadow: 0 0 16px rgba(94, 176, 224, 0.15);
+      }
+      .van::before {
+        content: "";
+        position: absolute;
+        right: 8px;
+        top: 6px;
+        width: 22px;
+        height: 14px;
+        background: rgba(94, 176, 224, 0.25);
+        border-radius: 2px;
+      }
+      .van.b { left: 48%; top: 18%; }
+
+      .wrench {
+        position: absolute;
+        right: 22%;
+        bottom: 28%;
+        width: 40px;
+        height: 6px;
+        background: #8a9aa8;
+        border-radius: 2px;
+        transform: rotate(-25deg);
+      }
+
+      .cutaway {
+        background: #10161c;
+      }
+
+      .layers {
+        position: absolute;
+        inset: 15% 10%;
+        background:
+          linear-gradient(#6a7a4a 0 18%, transparent 18%),
+          linear-gradient(transparent 18%, #8a7a5a 18% 38%, transparent 38%),
+          linear-gradient(transparent 38%, #5a4a3a 38% 100%);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .spine {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 58%;
+        height: 14px;
+        background: #a8c0d0;
+        border-radius: 7px;
+        box-shadow: 0 0 12px rgba(94, 176, 224, 0.25);
+      }
+
+      .joint {
+        position: absolute;
+        left: 42%;
+        top: 54%;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 20px rgba(212, 160, 74, 0.6);
+        animation: joint-fix 8s ease-in-out infinite;
+      }
+
+      .key {
+        position: absolute;
+        right: 12%;
+        bottom: 14%;
+        width: 28px;
+        height: 12px;
+        background: #c8a060;
+        border-radius: 2px;
+        animation: key-wait 8s ease-in-out infinite;
+      }
+      .key::after {
+        content: "";
+        position: absolute;
+        right: -6px;
+        top: 2px;
+        width: 10px;
+        height: 8px;
+        border: 2px solid #c8a060;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+      }
+
+      .trench {
+        background: #121820;
+      }
+
+      .hole {
+        position: absolute;
+        left: 15%;
+        right: 15%;
+        top: 28%;
+        bottom: 22%;
+        background:
+          linear-gradient(180deg, #3a3028 0%, #2a2218 40%, #1a1814 100%);
+        border: 2px solid #4a4038;
+        border-radius: 2px;
+      }
+
+      .pipe {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 48%;
+        height: 16px;
+        background: #90a8b8;
+        border-radius: 8px;
+      }
+
+      .sleeve {
+        position: absolute;
+        left: 38%;
+        top: 44%;
+        width: 24%;
+        height: 24px;
+        background: var(--green);
+        border-radius: 4px;
+        box-shadow: 0 0 16px rgba(106, 186, 138, 0.45);
+        animation: sleeve-seat 7s ease-in-out infinite;
+      }
+
+      .catch {
+        position: absolute;
+        right: 18%;
+        bottom: 12%;
+        width: 36px;
+        height: 28px;
+        border: 2px solid rgba(94, 176, 224, 0.5);
+        border-radius: 2px 2px 8px 8px;
+        overflow: hidden;
+      }
+      .catch::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 55%;
+        background: rgba(94, 176, 224, 0.45);
+        animation: water-fill 7s ease-in-out infinite;
+      }
+
+      .sign {
+        position: absolute;
+        left: 12%;
+        top: 10%;
+        padding: 0.45rem 0.6rem;
+        background: #1a2430;
+        border: 1px solid rgba(94, 176, 224, 0.35);
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--blue);
+        line-height: 1.4;
+      }
+
+      .charter {
+        background: #101820;
+      }
+
+      .board {
+        position: absolute;
+        left: 50%;
+        top: 12%;
+        width: min(16rem, 78%);
+        margin-left: -8rem;
+        padding: 1rem;
+        background: #e8eef2;
+        color: #1a2430;
+        box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+        transform: rotate(-1deg);
+      }
+
+      .board strong {
+        display: block;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .board ol {
+        margin: 0;
+        padding-left: 1.2rem;
+        font-size: 0.78rem;
+        line-height: 1.55;
+      }
+
+      .queue {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 12%;
+        height: 8px;
+        background: rgba(255,255,255,0.06);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .queue i {
+        display: block;
+        height: 100%;
+        width: 35%;
+        background: linear-gradient(90deg, var(--blue), var(--green));
+        animation: queue-hold 8s ease-in-out infinite;
+      }
+
+      .valve-scene {
+        background: #0e141a;
+      }
+
+      .gauge {
+        position: absolute;
+        left: 18%;
+        top: 22%;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 3px solid rgba(94, 176, 224, 0.4);
+        background: #141c24;
+      }
+      .gauge::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        width: 3px;
+        height: 28px;
+        margin-left: -1.5px;
+        background: var(--green);
+        transform-origin: bottom center;
+        animation: needle 8s ease-in-out infinite;
+        border-radius: 2px;
+      }
+      .gauge.b { left: auto; right: 18%; }
+      .gauge.b::before { animation-delay: -0.3s; }
+
+      .valve {
+        position: absolute;
+        left: 50%;
+        bottom: 22%;
+        width: 48px;
+        height: 48px;
+        margin-left: -24px;
+        border-radius: 50%;
+        border: 4px solid #8a9aa8;
+        background: #2a3038;
+        animation: valve-turn 8s ease-in-out infinite;
+      }
+      .valve::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 8%;
+        bottom: 8%;
+        width: 4px;
+        margin-left: -2px;
+        background: #c8d0d8;
+      }
+      .valve::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 8%;
+        right: 8%;
+        height: 4px;
+        margin-top: -2px;
+        background: #c8d0d8;
+      }
+
+      .evening {
+        background:
+          linear-gradient(180deg, #1a2830 0%, #121c24 50%, #0c1218 100%);
+      }
+
+      .asphalt-new {
+        position: absolute;
+        left: 20%;
+        right: 20%;
+        top: 42%;
+        height: 18%;
+        background: #3a424c;
+        box-shadow: inset 0 0 20px rgba(94, 176, 224, 0.08);
+      }
+
+      .hydrant {
+        position: absolute;
+        right: 24%;
+        bottom: 28%;
+        width: 18px;
+        height: 32px;
+        background: #c45c4a;
+        border-radius: 2px 2px 0 0;
+      }
+      .hydrant::before {
+        content: "";
+        position: absolute;
+        left: -4px;
+        right: -4px;
+        top: 8px;
+        height: 8px;
+        background: #c45c4a;
+        border-radius: 2px;
+      }
+
+      .tag {
+        position: absolute;
+        right: 18%;
+        bottom: 18%;
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        transform: rotate(-6deg);
+      }
+
+      .glass {
+        position: absolute;
+        left: 22%;
+        bottom: 30%;
+        width: 22px;
+        height: 36px;
+        border: 2px solid rgba(94, 176, 224, 0.45);
+        border-radius: 2px 2px 4px 4px;
+        overflow: hidden;
+      }
+      .glass::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 70%;
+        background: rgba(94, 176, 224, 0.35);
+      }
+
+      .archive {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 16%;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+        text-align: center;
+        line-height: 1.6;
+      }
+      .archive b {
+        color: var(--green);
+        font-weight: 500;
+      }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg); }
+        to { filter: hue-rotate(10deg); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-6%); }
+        to { transform: translateX(6%); }
+      }
+      @keyframes band-glow {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1; }
+      }
+      @keyframes joint-fix {
+        0%, 40% { background: var(--amber); box-shadow: 0 0 20px rgba(212, 160, 74, 0.6); }
+        60%, 100% { background: var(--green); box-shadow: 0 0 20px rgba(106, 186, 138, 0.55); }
+      }
+      @keyframes key-wait {
+        0%, 45% { opacity: 0.5; transform: translateY(0); }
+        60%, 100% { opacity: 1; transform: translateY(-3px); }
+      }
+      @keyframes sleeve-seat {
+        0%, 30% { opacity: 0.4; transform: translateY(-6px); }
+        50%, 100% { opacity: 1; transform: none; }
+      }
+      @keyframes water-fill {
+        0%, 40% { height: 20%; }
+        70%, 100% { height: 55%; }
+      }
+      @keyframes queue-hold {
+        0%, 100% { width: 35%; }
+        50% { width: 38%; }
+      }
+      @keyframes needle {
+        0%, 40% { transform: rotate(-40deg); }
+        70%, 100% { transform: rotate(25deg); }
+      }
+      @keyframes valve-turn {
+        0%, 40% { transform: rotate(0deg); }
+        70%, 100% { transform: rotate(90deg); }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .band, .joint, .key, .sleeve, .catch::after,
+        .queue i, .gauge::before, .valve, .scene {
+          animation: none !important;
+        }
+        .joint { background: var(--green); }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint"></div>
+    <div class="fog"></div>
+    <div class="grain"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="screen" aria-hidden="true">
+          <div class="meta">9 September · the block</div>
+          <div class="band"></div>
+          <div class="lines">
+            planned work · water held · two hours<br>
+            weak joint at <em>number fourteen</em> · before it becomes a story
+          </div>
+        </div>
+        <h1>The main kept its pressure</h1>
+        <time datetime="2026-09-09">9 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Lina woke to a soft chime that was not an alarm so much as a neighbour clearing its throat.</p>
+        <p>The household screen showed a pale blue band across their street: planned work, water held, two hours, starting at nine. A second line said the model had found a weak joint under the pavement outside number fourteen, and that the crew would replace it before it became a sinkhole story. No drama. No red. Just a map that treated their block like something worth keeping dry.</p>
+        <p>She put the kettle on while the pressure in the pipes stayed exactly where it belonged.</p>
+      </div>
+
+      <div class="prose">
+        <p>By half eight the vans were already on the kerb, quiet hybrids with tool racks that opened themselves and then waited. Keir from the district crew waved with a wrench still in his hand. He had been on this street for eleven years. The AI that scheduled him had tried, once, to bounce him to a newer estate across the river where the sensors were denser and the response scores looked prettier. The union board and the neighbourhood charter both said no. Seniority stayed with the streets that knew your name.</p>
+        <p>"Weak joint?" Lina asked.</p>
+        <p>"Hairline," Keir said. "Model caught the acoustic signature Tuesday. We could have left it until spring, but the charter scores winter risk higher for houses with basements." He nodded at number fourteen, where Mrs Chen's basement had flooded twice in the old days, before the mains got ears. "We're not waiting for spring on her."</p>
+      </div>
+
+      <figure class="scene kerb" aria-hidden="true">
+        <div class="road"></div>
+        <div class="van"></div>
+        <div class="van b"></div>
+        <div class="wrench"></div>
+      </figure>
+      <p class="cap">quiet hybrids · tool racks waiting</p>
+
+      <div class="prose">
+        <p>A tablet on the van's side panel showed a cutaway of the street: clay, gravel, the main like a pale spine, the weak joint pulsing amber. When Keir approved the dig, the amber went green. The digger did not start itself. It waited for his thumb on the physical key, the one that still lived on a ring with his house keys.</p>
+      </div>
+
+      <figure class="scene tall cutaway" aria-hidden="true">
+        <div class="layers"></div>
+        <div class="spine"></div>
+        <div class="joint"></div>
+        <div class="key"></div>
+      </figure>
+      <p class="cap">amber to green · thumb on the key</p>
+
+      <div class="prose">
+        <p>The cut was neat. Sensors along the trench walls watched for gas and for the fibre ducts that used to get sliced by accident in the years when maps lied. A soft voice in Keir's earpiece murmured depths and clearances. He muted it when he needed to think, and the system logged the mute as craft time rather than noncompliance.</p>
+        <p>Mira, the apprentice, held the replacement sleeve while the old joint came free. Water hissed into a catch tank that would be filtered and returned to the system by afternoon. Nothing poured into the gutter. Children on the way to school slowed to watch, and a pavement sign explained, in plain language, what was happening: preventive repair; pressure maintained on neighbouring laterals; expected restore 11:00.</p>
+        <p>Mrs Chen brought tea in a thermos that had outlived three phones. Keir drank. Mira drank. The model did not get a cup.</p>
+        <p>"In my sister's city they don't dig until it breaks," Mrs Chen said. "Then they apologise with a voucher."</p>
+        <p>"We're not her city," Keir said.</p>
+      </div>
+
+      <figure class="scene trench" aria-hidden="true">
+        <div class="sign">preventive repair · restore 11:00</div>
+        <div class="hole">
+          <div class="pipe"></div>
+          <div class="sleeve"></div>
+        </div>
+        <div class="catch"></div>
+      </figure>
+      <p class="cap">nothing poured into the gutter</p>
+
+      <div class="prose">
+        <p>At ten the district office pinged Lina's block group with a short note: temporary pressure dip of three percent on the far side of the cut, within comfort band, no boil notice, kettle times may stretch by a breath. Someone joked about weaker coffee. Someone else posted a photo of the trench looking oddly beautiful in the morning light.</p>
+        <p>Across town, in a neighbourhood that used to wait longest for trucks, the same blue bands appeared on the same mornings. That had been the fight, five years back — not whether to put ears on the pipes, but whose pipes got listened to first. The old optimisation had chased leak volume and property value. The new charter chased people: schools first, basements second, then the rest by how long since the last touch. A dashboard in the library basement showed the queue in public. You could argue with it on Tuesday nights. People did. Sometimes the model yielded. Sometimes a councillor did. The point was that the yielding left a mark you could read.</p>
+        <p>Lina had gone to one of those Tuesdays when the river ward tried to jump the queue after a developer donated sensors. The room had been full of folding chairs and wet coats. The model's advocate had put up charts. An old man from the ward that flooded in '19 had put up a photograph of a soaked living room and said, quietly, that charts did not sleep on soggy carpet. The queue stayed with the charter. The developer's sensors still went in. They just did not buy a place at the front.</p>
+      </div>
+
+      <figure class="scene charter" aria-hidden="true">
+        <div class="board">
+          <strong>Neighbourhood charter</strong>
+          <ol>
+            <li>schools first</li>
+            <li>basements second</li>
+            <li>then by last touch</li>
+          </ol>
+        </div>
+        <div class="queue"><i></i></div>
+      </figure>
+      <p class="cap">the yielding left a mark</p>
+
+      <div class="prose">
+        <p>By eleven the sleeve was seated, the trench partially backfilled, the temporary plates down so a bus could pass. Keir turned the valve by hand — not because a motor could not do it, but because the district had decided that certain acts should stay human-shaped. Pressure climbed on the gauges the way a held breath returns. Number fourteen's basement sensor stayed dry. The blue band on Lina's screen faded to a thin grey archive line: work complete, warranty twenty years, crew Keir / Mira, model assist acoustic-v4.</p>
+        <p>She ran the tap. Cold. Clear. Ordinary.</p>
+        <p>Mira wiped mud from her gloves and grinned like someone who had been trusted with a real joint on a real street. "Next week we're on the east trunk," she said. "Model wants a night window. Charter says day work near the care home so residents can ask questions. We're doing day."</p>
+        <p>Keir nodded. "Night's cheaper. Day's kinder. We can afford kinder."</p>
+      </div>
+
+      <figure class="scene tall valve-scene" aria-hidden="true">
+        <div class="gauge"></div>
+        <div class="gauge b"></div>
+        <div class="valve"></div>
+      </figure>
+      <p class="cap">human-shaped · pressure returns</p>
+
+      <div class="prose">
+        <p>After lunch the street looked almost as if nothing had happened, except for a cleaner patch of asphalt and a faint smell of cut earth. Delivery carts rerouted for two hours and then forgot the detour. The school's water fountain never went off. In the district control room, somewhere with better coffee and worse windows, a larger model updated its priors about clay soils and winter joints and wrote a note that a human supervisor would actually read: recommend earlier sleeve stock for blocks with basements built before 1980.</p>
+        <p>Nobody issued a press release. Nobody called it the future of infrastructure. A pipe that did not burst rarely made the news.</p>
+        <p>That evening Lina walked Mrs Chen to the corner shop. The pavement was even. The hydrant on the corner still wore its last inspection tag, handwritten date over a QR code, because Keir preferred ink you could smudge. Rain was forecast for Thursday. The mains would listen. The crew would sleep. The charter would still be pinned in the library basement where anyone could take a photo of it.</p>
+        <p>At home Lina filled a glass and drank it standing at the sink, the way people do when they are not thinking about systems. The pressure held. Somewhere under the street a new sleeve settled into the dark and began its quiet decades of not becoming a story.</p>
+        <p>The main kept its pressure. The block kept its Tuesday.</p>
+      </div>
+
+      <figure class="scene evening" aria-hidden="true">
+        <div class="archive">work complete · <b>warranty twenty years</b><br>crew keir / mira</div>
+        <div class="asphalt-new"></div>
+        <div class="hydrant"></div>
+        <div class="tag">ink you could smudge</div>
+        <div class="glass"></div>
+      </figure>
+      <p class="cap">the block kept its Tuesday</p>
+    </article>
+  </body>
+</html>
