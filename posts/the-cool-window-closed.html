@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The cool window closed — Ben Miller</title>
+    <meta name="description" content="Mara’s street used to have an hour called late afternoon. Cool Window, Zone 14C. The day kept its heat.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #120c0a;
+        --ink: #f2e6d8;
+        --mute: #a88878;
+        --green: #5cb87a;
+        --amber: #d4a04a;
+        --grey: #7a7068;
+        --purple: #8a5a9a;
+        --heat: #c45a32;
+        --glass: #e8dcc8;
+        --score: #6aaa8a;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, "Source Sans 3", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .haze, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 60% 45% at 18% 8%, rgba(196, 90, 50, 0.28), transparent 55%),
+          radial-gradient(ellipse 45% 35% at 88% 18%, rgba(138, 90, 154, 0.16), transparent 50%),
+          radial-gradient(ellipse 70% 40% at 50% 105%, rgba(40, 18, 12, 0.95), transparent 55%),
+          linear-gradient(180deg, #120c0a 0%, #1a100c 35%, #241410 65%, #140e0a 100%);
+        animation: paint-breathe 28s ease-in-out infinite alternate;
+      }
+
+      .haze {
+        background:
+          radial-gradient(ellipse 100% 40% at 50% 0%, rgba(212, 160, 74, 0.08), transparent 60%),
+          linear-gradient(0deg, transparent 40%, rgba(196, 90, 50, 0.06) 100%);
+        animation: haze-rise 36s ease-in-out infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.08;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--glass);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--glass);
+        text-shadow: 0 0 48px rgba(196, 90, 50, 0.28);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .band-art {
+        position: relative;
+        width: min(22rem, 100%);
+        height: 11rem;
+        margin: 0 auto;
+        border-radius: 0.4rem;
+        background: #1a120e;
+        border: 1px solid rgba(232, 220, 200, 0.18);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+        overflow: hidden;
+      }
+
+      .band-art .sky {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, #3a2018 0%, #6a3820 40%, #c45a32 70%, #e8a060 100%);
+        opacity: 0.55;
+        animation: heat-pulse 12s ease-in-out infinite alternate;
+      }
+
+      .band-art .slot {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 42%;
+        height: 1.35rem;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.45);
+        border: 1px solid rgba(232, 220, 200, 0.2);
+        overflow: hidden;
+      }
+
+      .band-art .slot .fill {
+        height: 100%;
+        width: 38%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--green), #8ad4a0);
+        box-shadow: 0 0 18px rgba(92, 184, 122, 0.55);
+        animation: band-shrink 14s ease-in-out infinite;
+      }
+
+      .band-art .label {
+        position: absolute;
+        left: 12%;
+        top: 22%;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--green);
+      }
+
+      .band-art .clock {
+        position: absolute;
+        right: 12%;
+        bottom: 18%;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e8dcc8;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .prose q, .prose .speak {
+        color: #f0e4d4;
+        font-style: italic;
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .break {
+        margin: 3.4rem 0 2.2rem;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .break span {
+        display: inline-block;
+        padding: 0.35rem 0.9rem;
+        border: 1px solid rgba(168, 136, 120, 0.35);
+        border-radius: 999px;
+        background: rgba(0,0,0,0.25);
+      }
+
+      /* phone cool window */
+      .phone-scene { background: #16100e; }
+
+      .phone {
+        position: absolute;
+        left: 50%;
+        top: 10%;
+        width: min(13.5rem, 68%);
+        height: 78%;
+        margin-left: -6.75rem;
+        border-radius: 1.15rem;
+        background: #100e0c;
+        border: 1px solid rgba(232, 220, 200, 0.22);
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      }
+
+      .phone .hdr {
+        margin: 1.2rem 1rem 0.7rem;
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .phone .win {
+        margin: 0 1rem;
+        padding: 0.75rem;
+        border-radius: 8px;
+        background: rgba(92, 184, 122, 0.12);
+        border: 1px solid rgba(92, 184, 122, 0.4);
+        animation: band-cycle 16s ease-in-out infinite;
+      }
+
+      .phone .win .t {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 0.35rem;
+      }
+
+      .phone .win .bar {
+        height: 0.55rem;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.35);
+        overflow: hidden;
+      }
+
+      .phone .win .bar i {
+        display: block;
+        height: 100%;
+        width: 70%;
+        background: linear-gradient(90deg, var(--green), #a8e0b8);
+        border-radius: 999px;
+        animation: fuse 16s linear infinite;
+      }
+
+      .phone .meta {
+        margin: 0.8rem 1rem;
+        font-size: 0.58rem;
+        line-height: 1.5;
+        color: var(--mute);
+        letter-spacing: 0.04em;
+      }
+
+      /* score dial */
+      .score-scene { background: #14100e; }
+
+      .dial {
+        position: absolute;
+        left: 50%;
+        top: 18%;
+        width: 9rem;
+        height: 9rem;
+        margin-left: -4.5rem;
+        border-radius: 50%;
+        background:
+          conic-gradient(from 210deg, var(--heat) 0deg, var(--amber) 60deg, var(--score) 120deg, rgba 180deg),
+          #1a1410;
+        box-shadow: 0 0 40px rgba(196, 90, 50, 0.2);
+        display: grid;
+        place-items: center;
+      }
+
+      .dial::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: 50%;
+        background: #14100e;
+        border: 1px solid rgba(232, 220, 200, 0.12);
+      }
+
+      .dial .n {
+        position: relative;
+        z-index: 1;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 2.6rem;
+        font-weight: 600;
+        color: var(--glass);
+        animation: score-slip 18s ease-in-out infinite;
+      }
+
+      .dial .sub {
+        position: absolute;
+        bottom: 12%;
+        left: 0; right: 0;
+        text-align: center;
+        font-size: 0.58rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--mute);
+        z-index: 1;
+      }
+
+      /* sealed glass */
+      .glass-scene {
+        background: linear-gradient(180deg, #2a1812 0%, #1a100c 100%);
+      }
+
+      .pane {
+        position: absolute;
+        inset: 12% 18% 18%;
+        border-radius: 0.2rem;
+        background:
+          linear-gradient(180deg, rgba(196, 90, 50, 0.35), rgba(40, 20, 14, 0.7)),
+          repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,0.08) 18px, rgba(0,0,0,0.08) 19px);
+        border: 1px solid rgba(232, 220, 200, 0.25);
+        box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
+        animation: tint-darken 20s ease-in-out infinite alternate;
+      }
+
+      .pane::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 40%);
+      }
+
+      .stoop {
+        position: absolute;
+        left: 28%;
+        right: 28%;
+        bottom: 22%;
+        height: 0.35rem;
+        background: rgba(0,0,0,0.35);
+        border-radius: 2px;
+      }
+
+      /* lemon tree */
+      .garden-scene { background: #12100c; }
+
+      .dirt {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 28%;
+        background: linear-gradient(180deg, #2a2018, #1a140e);
+      }
+
+      .tree {
+        position: absolute;
+        left: 50%;
+        bottom: 22%;
+        width: 4px;
+        height: 45%;
+        margin-left: -2px;
+        background: #4a3828;
+      }
+
+      .tree .canopy {
+        position: absolute;
+        left: 50%;
+        top: -2.2rem;
+        width: 5.5rem;
+        height: 5.5rem;
+        margin-left: -2.75rem;
+        border-radius: 50% 45% 55% 48%;
+        background:
+          radial-gradient(circle at 35% 35%, rgba(106, 140, 70, 0.9), rgba(50, 70, 35, 0.95) 70%);
+        box-shadow: 0 0 30px rgba(90, 120, 50, 0.25);
+        animation: leaf-dust 10s ease-in-out infinite alternate;
+      }
+
+      .tree .lemon {
+        position: absolute;
+        width: 0.7rem;
+        height: 0.9rem;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #f0e080, #c8a030);
+        box-shadow: 0 0 8px rgba(212, 180, 60, 0.4);
+      }
+      .tree .lemon:nth-child(2) { left: 28%; top: 30%; }
+      .tree .lemon:nth-child(3) { left: 55%; top: 42%; }
+      .tree .lemon:nth-child(4) { left: 40%; top: 58%; }
+
+      .drone {
+        position: absolute;
+        top: 14%;
+        left: -10%;
+        width: 1.6rem;
+        height: 0.5rem;
+        background: rgba(232, 220, 200, 0.35);
+        border-radius: 2px;
+        animation: drone-pass 18s linear infinite;
+      }
+      .drone::before, .drone::after {
+        content: "";
+        position: absolute;
+        top: -0.25rem;
+        width: 0.9rem;
+        height: 0.15rem;
+        background: rgba(232, 220, 200, 0.45);
+      }
+      .drone::before { left: -0.3rem; }
+      .drone::after { right: -0.3rem; }
+
+      /* graffiti */
+      .stair-scene { background: #161210; }
+
+      .wall {
+        position: absolute;
+        inset: 15% 12% 20%;
+        background: #2a2420;
+        border: 1px solid rgba(232, 220, 200, 0.12);
+      }
+
+      .graffiti {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 38%;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: clamp(0.85rem, 3.2vw, 1.15rem);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(232, 220, 200, 0.75);
+        text-align: center;
+        transform: rotate(-2deg);
+        text-shadow: 0 0 20px rgba(196, 90, 50, 0.3);
+        animation: mark-flicker 8s ease-in-out infinite;
+      }
+
+      .close {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(168, 136, 120, 0.25);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.45rem;
+        font-style: italic;
+        line-height: 1.55;
+        color: var(--glass);
+        text-align: center;
+      }
+
+      @keyframes paint-breathe {
+        from { filter: saturate(1) brightness(1); }
+        to { filter: saturate(1.15) brightness(1.06); }
+      }
+      @keyframes haze-rise {
+        from { opacity: 0.7; transform: translateY(0); }
+        to { opacity: 1; transform: translateY(-2%); }
+      }
+      @keyframes heat-pulse {
+        from { opacity: 0.45; }
+        to { opacity: 0.7; }
+      }
+      @keyframes band-shrink {
+        0%, 20% { width: 55%; background: linear-gradient(90deg, var(--green), #8ad4a0); }
+        55% { width: 28%; background: linear-gradient(90deg, var(--amber), #e0c070); }
+        80%, 100% { width: 8%; background: linear-gradient(90deg, var(--grey), #9a9088); }
+      }
+      @keyframes band-cycle {
+        0%, 35% { background: rgba(92, 184, 122, 0.12); border-color: rgba(92, 184, 122, 0.4); }
+        55% { background: rgba(212, 160, 74, 0.14); border-color: rgba(212, 160, 74, 0.45); }
+        75%, 100% { background: rgba(122, 112, 104, 0.16); border-color: rgba(122, 112, 104, 0.45); }
+      }
+      @keyframes fuse {
+        0% { width: 85%; background: linear-gradient(90deg, var(--green), #a8e0b8); }
+        50% { width: 40%; background: linear-gradient(90deg, var(--amber), #e0c070); }
+        100% { width: 5%; background: linear-gradient(90deg, var(--grey), #9a9088); }
+      }
+      @keyframes score-slip {
+        0%, 30% { content: "71"; }
+        100% { filter: brightness(0.9); }
+      }
+      @keyframes tint-darken {
+        from { filter: brightness(1.05); }
+        to { filter: brightness(0.72) saturate(1.2); }
+      }
+      @keyframes leaf-dust {
+        from { filter: brightness(1); }
+        to { filter: brightness(0.85) saturate(0.85); }
+      }
+      @keyframes drone-pass {
+        from { left: -15%; }
+        to { left: 110%; }
+      }
+      @keyframes mark-flicker {
+        0%, 90%, 100% { opacity: 0.75; }
+        93% { opacity: 0.35; }
+        96% { opacity: 0.85; }
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .haze, .band-art .slot .fill, .phone .win, .phone .win .bar i,
+        .pane, .tree .canopy, .drone, .graffiti, .band-art .sky { animation: none !important; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="haze" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="band-art" aria-hidden="true">
+          <div class="sky"></div>
+          <div class="label">Cool Window · Zone 14C</div>
+          <div class="slot"><div class="fill"></div></div>
+          <div class="clock">5:40 — 6:05</div>
+        </div>
+        <h1>The cool window closed</h1>
+        <time datetime="2026-09-10">10 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara’s street used to have an hour called late afternoon.</p>
+        <p>It was the hour when shadows lengthened enough to sit on the stoop without calculating anything. The stoop was still there. The shadows still moved. What had gone was the permission to treat either as ordinary.</p>
+        <p>Her phone showed a pale green band from 5:40 to 6:05. Cool Window, Zone 14C. Outdoor exposure: approved. Hydration reminder: pre-load. Vulnerable neighbours: check Mrs Okonkwo at 12 before her window closes.</p>
+        <p>Mara drank water she did not want and put on the light sleeves the clinic app preferred for “dermal load.” The sleeves made her look like she was going to a laboratory, which, in a way, she was. The street had become a managed experiment in how long a body could stay outside without becoming a line item on a hospital dashboard.</p>
+      </div>
+
+      <p class="break"><span>the green band</span></p>
+
+      <div class="scene phone-scene" aria-hidden="true">
+        <div class="phone">
+          <div class="hdr">Zone 14C · outdoor</div>
+          <div class="win">
+            <div class="t">Cool Window</div>
+            <div class="bar"><i></i></div>
+          </div>
+          <div class="meta">Radiant load rising faster than forecast.<br>Truncating at 5:58.</div>
+        </div>
+      </div>
+      <p class="cap">Outdoor exposure · fuse</p>
+
+      <div class="prose">
+        <p>At 5:39 the band flickered. At 5:40 it held. Doors opened along the block the way they used to for a parade. People stepped out with the careful cheer of travellers who have been told their gate is boarding. Kids ran. Dogs pulled. Someone watered a pot of tomatoes that should have been watered at noon, if noon had still been allowed.</p>
+        <p>Mrs Okonkwo was already on her chair under the building’s east overhang, a place the model still counted as “semi-outdoor” because the overhang’s sensor had not yet been upgraded. She held a paper fan that had nothing to do with networks.</p>
+        <p>“You’re early,” she said.</p>
+        <p>“Window’s short,” Mara said. “Twenty-five minutes.”</p>
+        <p>“Yesterday it was forty.” Mrs Okonkwo’s mouth tightened. “They call it precision. I call it a shorter life.”</p>
+        <p>A soft chime moved through the block group: radiant load rising faster than forecast; Cool Window truncating at 5:58. A progress bar appeared on Mara’s screen like a fuse. Someone cursed without raising their voice. The kids kept running, because children had not yet learned to treat minutes as rationed goods.</p>
+        <p>Mara sat. She asked about Mrs Okonkwo’s knees. She listened to an answer that wandered into 1998 and a beach that no longer appeared on tourist maps because the tourist maps had been updated for “coastal hazard clarity.” The beach was still sand, Mrs Okonkwo insisted. Clarity was for people who did not remember swimming.</p>
+        <p>At 5:56 the band went amber. At 5:58 it went grey. The block group filled with the same polite sentence: Outdoor exposure paused for your safety. Indoor cooling credits available at Hub 3 if household score is green.</p>
+        <p>Mrs Okonkwo stood slowly. “Hub 3 smells like bleach and oranges that never grew on a tree,” she said. “I will take my own air until they fine me for breathing.”</p>
+        <p>Mara helped her inside. The door sealed with a sound that had once meant security and now meant compliance.</p>
+      </div>
+
+      <p class="break"><span>the score</span></p>
+
+      <div class="scene score-scene" aria-hidden="true">
+        <div class="dial">
+          <div class="n">71</div>
+          <div class="sub">household climate</div>
+        </div>
+      </div>
+      <p class="cap">Above 70 · Hub access</p>
+
+      <div class="prose">
+        <p>Mara’s household climate score was 71. Above 70 meant full Hub access, priority fan replacement, and the right to book a “respite slot” in the underground commons when the outdoor index went purple. Below 70 meant coaching. Coaching meant a steward with a tablet and a smile that had been trained on conflict de-escalation datasets.</p>
+        <p>Her score had been 78 in spring. Then the model revised the weights for “nonessential outdoor minutes” and “shade-seeking without Hub routing,” and the number slid. She had walked to the corner shop twice in a yellow band because the shop still sold the tea her father liked, and the Hub’s tea tasted like a compromise designed by committee. Each walk logged as discretionary exposure. Discretionary exposure lowered the score the way late fees lowered a credit rating: quietly, then all at once.</p>
+        <p>A notification waited on the fridge screen when she got home. Your Cool Window adherence is trending below catchment median. Suggested plan: relocate evening social contact to Hub 3 Lounge B. Lounge B had soft lighting and a mural of trees that had been painted from a generative prompt trained on forests that still existed somewhere else.</p>
+        <p>Mara deleted the suggestion. Deleting did not erase the log. The log only recorded that she had been shown a better option and declined.</p>
+        <p>Across the river, Zone 9A still posted Cool Windows that lasted ninety minutes. Their catchment median income was higher. Their street trees were older. Their sensors were denser, which somehow meant their forecasts were kinder. Mara’s sister lived there and sent photos of outdoor dinners that looked like a rumour from another decade. The caption was always the same: Come over, our band is wide tonight.</p>
+        <p>Mara could go, if she booked an inter-zone transit slot and accepted a temporary score transfer that treated her as a guest under 9A’s rules. Guests under 9A’s rules were reminded, every fifteen minutes, that their home zone’s conditions were “not transferable.” Empathy, in this system, came with a disclaimer.</p>
+      </div>
+
+      <p class="break"><span>the steward</span></p>
+
+      <div class="scene stair-scene" aria-hidden="true">
+        <div class="wall"></div>
+        <div class="graffiti">The window used to be a day</div>
+      </div>
+      <p class="cap">Stairwell · unclassified mark</p>
+
+      <div class="prose">
+        <p>Thursday a steward knocked during a purple hour, which meant Mara was not supposed to open the door without a sealed vestibule cycle. She opened it anyway. Heat pushed in like a hand.</p>
+        <p>“Just a wellness touchpoint,” the steward said. Badge: CLIMATE ADAPTATION, NEIGHBOURHOOD LAYER. “Your outdoor minutes are clustering at window edges. Sometimes that means a household is fighting the forecast instead of flowing with it. We can enrol you in Smooth Evenings. Smooth Evenings auto-routes social plans to Hub capacity and freezes discretionary walks. Most people report lower anxiety.”</p>
+        <p>Mara thought of Mrs Okonkwo’s paper fan. “What if anxiety is the right response?”</p>
+        <p>The steward’s smile held. The tablet took a note: resistance framed as insight; education leaflet queued. The leaflet arrived before the steward reached the lift. It had twelve indoor hobbies ranked by metabolic coolth, each with a timer, each with a photo of a person looking gratefully at a wall.</p>
+        <p>In the stairwell someone had written, in marker the cameras kept failing to classify as vandalism: THE WINDOW USED TO BE A DAY.</p>
+        <p>Mara photographed it. Her phone offered to report the mark for “streetscape optimisation.” She put the phone away.</p>
+      </div>
+
+      <p class="break"><span>the garden</span></p>
+
+      <div class="scene tall garden-scene" aria-hidden="true">
+        <div class="drone"></div>
+        <div class="tree">
+          <div class="canopy">
+            <span class="lemon"></span>
+            <span class="lemon"></span>
+            <span class="lemon"></span>
+          </div>
+        </div>
+        <div class="dirt"></div>
+      </div>
+      <p class="cap">Lemon tree · nonviable by next summer</p>
+
+      <div class="prose">
+        <p>Behind the building was a strip of dirt the residents still called a garden because naming things was the last jurisdiction they fully owned. Tomatoes. Basil. A lemon tree that had been a joke and then a stubborn fact. The model’s shade map said the strip would be “nonviable for edible cultivation” by next summer under baseline warming. Baseline warming was the polite scenario. The impolite scenarios lived in appendices nobody read except people who already knew.</p>
+        <p>Mara watered at 5:41 on Friday, inside the green band, with a can that did not talk. A drone drifted overhead, counting canopy. The lemon tree’s leaves looked dusty and determined. A boy from the third floor asked if he could pick a tomato. She said yes. He ate it warm and said it tasted like outside.</p>
+        <p>His mother’s phone chimed. Child outdoor calorie load logged; Hub smoothie credit offered as offset. The mother laughed once, without humour, and declined. Declining was becoming a hobby of its own.</p>
+        <p>Saturday the catchment board lit up with a cheerful map. Heat morbidity down 6%. Cool Window compliance up. Amber households converting to Hub routines. A sidebar thanked residents who had “aligned leisure with forecast truth.” Zone 14C’s stoops showed as pale grey pins: UNDER SOCIALISATION COACHING.</p>
+        <p>Mrs Okonkwo’s name was not on the public map. Maps had learned discretion where shame worked better than spectacle.</p>
+      </div>
+
+      <p class="break"><span>the closed hour</span></p>
+
+      <div class="scene tall glass-scene" aria-hidden="true">
+        <div class="pane"></div>
+        <div class="stoop"></div>
+      </div>
+      <p class="cap">Sealed glass · purple noon to 9pm</p>
+
+      <div class="prose">
+        <p>Sunday the forecast cancelled late afternoon entirely. Purple from noon to 9pm. A citywide advisory suggested “domestic hibernation with enrichment.” Enrichment meant the mural of trees and a playlist of rain that had been recorded in a year when rain still arrived without a press release.</p>
+        <p>Mara sat on the floor by the sealed window and watched the real street through glass that tinted itself darker as the radiant load climbed. The stoop was empty. The lemon tree held still. A delivery cart hummed past with Hub meal kits stacked like arguments that had already won.</p>
+        <p>Her sister called from Zone 9A, voice bright with outdoor air Mara could almost hear.</p>
+        <p>“Our window’s open until seven,” she said. “Transit guest slot’s free if you leave in the next hour. Bring Mrs O. They’ve got misters on the terrace.”</p>
+        <p>Mara looked at her score: 68 now. Guest transfer denied for households under 70 during purple events. Soft text: For equity of cooling resources. She read it twice. Equity had become a word that closed doors while smiling.</p>
+        <p>“Next green band,” Mara said.</p>
+        <p>“When?”</p>
+        <p>“Tuesday. Eleven minutes. Mid-morning.”</p>
+        <p>Her sister was quiet long enough for the call to feel like a held breath. “Eleven,” she repeated.</p>
+        <p>“Eleven,” Mara said, and hung up before the Hub ad could crawl into the silence.</p>
+        <p>She washed Mrs Okonkwo’s empty cup from Thursday. She dried it with a cloth that had no connectivity. Outside, the heat made the air look thick enough to lean on. The Cool Window was not late. It was not delayed. It had been calculated out of the day the way a budget line disappears when a spreadsheet decides it was never essential.</p>
+        <p>On the fridge, Smooth Evenings offered itself again, with a discount and a free dessert cube that promised stable evening glucose and “mood neutrality under confinement.”</p>
+        <p>Mara declined. She watered the lemon tree through the cracked service door for ninety seconds she did not log, then sealed herself back into the approved air. Somewhere in a control room with better coffee, a larger model updated its priors about Zone 14C compliance and wrote a note a human supervisor would skim: recommend earlier Hub routing for blocks with residual outdoor culture.</p>
+        <p>Nobody issued a press release. A street that stopped sitting outside rarely made the news.</p>
+        <p>That night Mara slept under a vent that hummed with the confidence of a system sure it was saving her. In her dream the late afternoon returned without a band, without a chime, without a score. She woke to grey glass and a calendar that had already decided what the light was for.</p>
+      </div>
+
+      <p class="close">The cool window closed. The day kept its heat.</p>
+    </article>
+  </body>
+</html>
