@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bench kept the night — Ben Miller</title>
+    <meta name="description" content="Rina’s lab coat still had a coffee stain. The foldout was gone. The bench kept the night.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0a1016;
+        --ink: #e2eef4;
+        --mute: #7a8e9c;
+        --teal: #4ec4b0;
+        --blue: #5a9fd4;
+        --bay: #3d8fd0;
+        --amber: #d4a04a;
+        --green: #6aba8a;
+        --glass: rgba(78, 196, 176, 0.12);
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 35% at 15% 10%, rgba(78, 196, 176, 0.16), transparent 55%),
+          radial-gradient(ellipse 40% 28% at 88% 20%, rgba(90, 159, 212, 0.12), transparent 50%),
+          radial-gradient(ellipse 70% 40% at 50% 105%, rgba(18, 28, 40, 0.95), transparent 55%),
+          linear-gradient(180deg, #0a1016 0%, #101820 45%, #121c26 70%, #0c1218 100%);
+        animation: paint-breathe 32s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 85% 28% at 50% 100%, rgba(78, 196, 176, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(90, 159, 212, 0.04), transparent);
+        animation: fog-drift 48s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--teal);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #d8f0ea;
+        text-shadow: 0 0 40px rgba(78, 196, 176, 0.22);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .coat {
+        position: relative;
+        width: min(18rem, 100%);
+        height: 11rem;
+        border-radius: 0.4rem;
+        background: #161e28;
+        border: 1px solid rgba(78, 196, 176, 0.25);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+        overflow: hidden;
+      }
+
+      .coat-body {
+        position: absolute;
+        left: 18%;
+        right: 18%;
+        top: 18%;
+        bottom: 12%;
+        background: linear-gradient(180deg, #e8eef2 0%, #d0d8e0 100%);
+        border-radius: 0.2rem;
+        opacity: 0.9;
+      }
+
+      .stain {
+        position: absolute;
+        left: 38%;
+        top: 42%;
+        width: 1.6rem;
+        height: 1.1rem;
+        border-radius: 50% 40% 55% 45%;
+        background: rgba(120, 70, 30, 0.45);
+        transform: rotate(-18deg);
+        filter: blur(0.3px);
+        animation: stain-hold 12s ease-in-out infinite;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d8e6ee;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .section {
+        margin: 3.4rem 0 1.2rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--teal);
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .board-scene { background: #121a22; }
+
+      .atrium {
+        position: absolute;
+        inset: 12% 8%;
+        background: #0e161e;
+        border: 1px solid rgba(90, 159, 212, 0.3);
+        border-radius: 0.25rem;
+        padding: 0.9rem 1rem;
+        box-shadow: inset 0 0 40px rgba(78, 196, 176, 0.06);
+      }
+
+      .atrium .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.45rem 0;
+        border-top: 1px solid rgba(90, 159, 212, 0.18);
+        font-size: 0.78rem;
+        color: #b8ced8;
+      }
+
+      .atrium .row:first-child { border-top: 0; padding-top: 0; }
+
+      .atrium .tag {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--teal);
+        animation: tag-glow 5s ease-in-out infinite;
+      }
+
+      .bay-dot {
+        display: inline-block;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 50%;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+        background: var(--blue);
+        box-shadow: 0 0 8px var(--bay);
+        animation: bay-pulse 3.5s ease-in-out infinite;
+      }
+
+      .bay-scene { background: #101820; }
+
+      .bay {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 18%;
+        bottom: 22%;
+        border: 2px solid rgba(61, 143, 208, 0.55);
+        border-radius: 0.3rem;
+        background: rgba(61, 143, 208, 0.06);
+        animation: soft-lock 6s ease-in-out infinite;
+      }
+
+      .bay::before {
+        content: "RESERVED · SOFT-LOCK";
+        position: absolute;
+        left: 8%;
+        top: 10%;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        color: var(--blue);
+      }
+
+      .plate {
+        position: absolute;
+        left: 22%;
+        right: 22%;
+        top: 38%;
+        height: 36%;
+        background:
+          repeating-linear-gradient(90deg,
+            rgba(78, 196, 176, 0.15) 0 8%,
+            transparent 8% 12%),
+          repeating-linear-gradient(0deg,
+            rgba(90, 159, 212, 0.12) 0 18%,
+            transparent 18% 22%);
+        border: 1px solid rgba(78, 196, 176, 0.25);
+        border-radius: 2px;
+      }
+
+      .drift {
+        position: absolute;
+        right: 14%;
+        bottom: 12%;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--amber);
+        animation: drift-note 7s ease-in-out infinite;
+      }
+
+      .ledger-scene { background: #121a22; }
+
+      .ledger {
+        position: absolute;
+        inset: 16% 10%;
+        display: grid;
+        gap: 0.55rem;
+      }
+
+      .btn {
+        padding: 0.7rem 0.9rem;
+        border-radius: 0.2rem;
+        border: 1px solid rgba(90, 159, 212, 0.25);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
+        background: rgba(20, 30, 40, 0.8);
+      }
+
+      .btn.live {
+        border-color: rgba(78, 196, 176, 0.55);
+        color: var(--teal);
+        box-shadow: 0 0 20px rgba(78, 196, 176, 0.12);
+        animation: btn-live 4s ease-in-out infinite;
+      }
+
+      .auth-scene { background: #101820; }
+
+      .form {
+        position: absolute;
+        inset: 14% 10%;
+        border: 1px solid rgba(78, 196, 176, 0.28);
+        border-radius: 0.25rem;
+        padding: 1rem;
+        background: #0e161e;
+      }
+
+      .field {
+        margin-bottom: 0.65rem;
+        font-size: 0.72rem;
+        color: var(--mute);
+        letter-spacing: 0.06em;
+      }
+
+      .field strong {
+        display: block;
+        color: #c8e0d8;
+        font-weight: 500;
+        margin-top: 0.15rem;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        text-transform: none;
+      }
+
+      .required {
+        position: absolute;
+        right: 12%;
+        bottom: 12%;
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+
+      .roof-scene { background: #0e141c; }
+
+      .dome {
+        position: absolute;
+        left: 22%;
+        right: 22%;
+        top: 18%;
+        height: 55%;
+        border: 2px solid rgba(90, 159, 212, 0.35);
+        border-bottom: none;
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        background: radial-gradient(ellipse at 50% 100%, rgba(90, 159, 212, 0.15), transparent 60%);
+        animation: dome-close 10s ease-in-out infinite;
+        transform-origin: bottom center;
+      }
+
+      .stars {
+        position: absolute;
+        inset: 20% 28% 40%;
+        background-image:
+          radial-gradient(1px 1px at 20% 30%, rgba(232, 240, 248, 0.7), transparent),
+          radial-gradient(1px 1px at 70% 20%, rgba(232, 240, 248, 0.5), transparent),
+          radial-gradient(1.5px 1.5px at 45% 55%, rgba(78, 196, 176, 0.6), transparent),
+          radial-gradient(1px 1px at 85% 60%, rgba(232, 240, 248, 0.4), transparent);
+        animation: stars-dim 10s ease-in-out infinite;
+      }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(78, 196, 176, 0.18);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #c8e4dc;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(8deg) brightness(1.05); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-4%); }
+        to { transform: translateX(4%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes stain-hold {
+        0%, 100% { opacity: 0.55; }
+        50% { opacity: 0.7; }
+      }
+      @keyframes tag-glow {
+        0%, 100% { opacity: 0.75; }
+        50% { opacity: 1; text-shadow: 0 0 10px rgba(78, 196, 176, 0.4); }
+      }
+      @keyframes bay-pulse {
+        0%, 100% { box-shadow: 0 0 6px var(--bay); }
+        50% { box-shadow: 0 0 14px var(--blue); }
+      }
+      @keyframes soft-lock {
+        0%, 100% { border-color: rgba(61, 143, 208, 0.45); }
+        50% { border-color: rgba(61, 143, 208, 0.75); box-shadow: 0 0 24px rgba(61, 143, 208, 0.12); }
+      }
+      @keyframes drift-note {
+        0%, 70%, 100% { opacity: 0.35; }
+        80%, 90% { opacity: 1; }
+      }
+      @keyframes btn-live {
+        0%, 100% { background: rgba(78, 196, 176, 0.08); }
+        50% { background: rgba(78, 196, 176, 0.16); }
+      }
+      @keyframes dome-close {
+        0%, 40% { transform: scaleY(1); opacity: 1; }
+        70%, 100% { transform: scaleY(0.15); opacity: 0.55; }
+      }
+      @keyframes stars-dim {
+        0%, 40% { opacity: 1; }
+        70%, 100% { opacity: 0.25; }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="coat" aria-hidden="true">
+          <div class="coat-body"></div>
+          <div class="stain"></div>
+        </div>
+        <h1>The bench kept the night</h1>
+        <time datetime="2026-09-11">11 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Rina’s lab coat still had a coffee stain from a year when the overnight runs needed a person in the chair.</p>
+        <p>The stain had outlived three lab assistants, two refrigerators, and the old rule that someone had to sleep on the foldout if the PCR block was busy. The foldout was gone now. In its place: a quiet rack of instruments that talked to a local model and, more importantly, to a human on call who was allowed to sleep until something actually mattered.</p>
+        <p>Tonight the mattering threshold was set by Rina, not by a dashboard optimised for uptime theatre.</p>
+      </div>
+
+      <p class="section">the queue</p>
+      <div class="prose">
+        <p>The science commons posted instrument time the way the library posted study rooms. A public board in the atrium showed who had the mass spec, who had the clean hood, who had the small telescope on the roof that the astronomy club still called “ours” even though the city paid for the dome. You could argue with the board on Thursday evenings. People did. Sometimes the model yielded. Sometimes a faculty steward did. The yielding left a note you could read.</p>
+        <p>Rina’s slot was 10pm to 6am: a peptide assay that had failed twice in daylight for reasons that looked like noise and felt like a grudge. The commons model had offered to bump her to a “higher yield” window after lunch, when the building’s power was cheaper and the corridor was full of people performing busyness. She had declined. Night was when the building hummed at one pitch. Night was when her hands stopped performing for whoever walked past the glass.</p>
+        <p>“You’re on night again,” said Omar at the desk, scanning her badge. He had been a facilities tech before the commons hired him as a steward. He still carried a physical keyring. “Model flagged your last two runs as ‘inconclusive clustering.’ Want me to soft-lock the bay so nobody ‘helps’ by restarting your protocol mid-cycle?”</p>
+        <p>“Soft-lock,” Rina said. “And leave the failure log public. I’m tired of people treating inconclusive like a personal defect.”</p>
+        <p>Omar tapped. The bay light went from open green to reserved blue. On the atrium board, her name appeared beside MASS-SPEC 2 with a small tag: NEGATIVE RESULTS WELCOME. The tag had been a fight, two years back — not whether to run the instruments with AI watchdogs, but whether a clean failure counted as science worth the electricity. The old optimisation had chased publication probability. The new charter chased completed questions. A finished no was a gift to the next person in the queue.</p>
+      </div>
+
+      <figure class="scene board-scene" aria-hidden="true">
+        <div class="atrium">
+          <div class="row"><span><span class="bay-dot"></span>MASS-SPEC 2 · Rina</span><span class="tag">Negative results welcome</span></div>
+          <div class="row"><span>CLEAN HOOD 1 · open</span><span></span></div>
+          <div class="row"><span>ROOF DOME · astronomy club</span><span></span></div>
+          <div class="row"><span>PCR BLOCK · day crew</span><span></span></div>
+        </div>
+      </figure>
+      <p class="cap">Atrium board · reserved blue</p>
+
+      <p class="section">the watch</p>
+      <div class="prose">
+        <p>At 10:12 the assay started. Rina loaded the plate herself. The model suggested a pipetting order that shaved four minutes and reduced cross-well risk. She took three of the suggestions and ignored one because her wrist knew that particular reagent foamed if you rushed the last dispense. The system logged her override as craft time, not noncompliance.</p>
+        <p>She sat. She did not open a second screen to “maximise the idle window.” She drank tea that had gone lukewarm. Through the glass, the corridor was empty except for a floor robot that believed itself essential.</p>
+        <p>Her earpiece stayed off until 1:40, when a soft tone meant the watchdog had something that cleared her threshold: temperature drift in the block, two-tenths of a degree, inside the manufacturer’s tolerance but outside the band she had set because her peptide was moody. She walked in, adjusted, initialled the physical logbook that still lived beside the instrument because ink could not be silently revised by a helpful agent.</p>
+        <p>“Good catch,” she told the empty bay, which was a habit she refused to apologise for.</p>
+        <p>The model did not answer. It updated the run card: human confirm, drift corrected, continue. Somewhere in a rack room with better air conditioning, a larger scheduler updated its priors about this instrument and this peptide class and wrote a note a human supervisor would actually read in the morning: recommend earlier thermal recal for assays tagged ‘mood’ by repeat operators. The note named Rina as the operator who had taught it the mood. Credit for a temperature quirk was a small thing. It was also the kind of small thing that used to vanish into a vendor’s anonymous “user feedback.”</p>
+      </div>
+
+      <figure class="scene bay-scene tall" aria-hidden="true">
+        <div class="bay"><div class="plate"></div></div>
+        <div class="drift">ΔT +0.2° · craft confirm</div>
+      </figure>
+      <p class="cap">Bay soft-lock · thermal watch</p>
+
+      <p class="section">the ledger</p>
+      <div class="prose">
+        <p>By 3:05 the first pass was done. The results were not a triumph. They were a clean, boring no — the binding she hoped for was not there under these conditions. The commons ledger offered three buttons: publish negative to catchment, hold private for seven days, or escalate to a human reviewer if she suspected instrument fault.</p>
+        <p>Rina published negative. The ledger assigned a stable ID, attached her name, Omar’s steward mark, the instrument’s maintenance hash, and a plain-language summary a first-year could search: peptide X under buffer Y, no binding at Z; do not repeat without changing temperature profile. Within minutes two labs in other buildings had thanked the entry with a quiet react. One of them cancelled a duplicate run scheduled for Friday. Electricity saved. Weeks saved. Nobody issued a press release about a cancelled run.</p>
+        <p>Her phone buzzed with a softer kind of message: a postdoc across town, someone she had met once at a sad conference coffee. “Your no just kept me from wasting a grant month. Dinner on me when the sun’s up.”</p>
+        <p>Rina smiled at the dark window. Science, on a good night, could look like a favour passed down a hallway.</p>
+      </div>
+
+      <figure class="scene ledger-scene" aria-hidden="true">
+        <div class="ledger">
+          <div class="btn live">Publish negative to catchment</div>
+          <div class="btn">Hold private · 7 days</div>
+          <div class="btn">Escalate · instrument fault?</div>
+        </div>
+      </figure>
+      <p class="cap">Commons ledger · finished no</p>
+
+      <p class="section">the authorship screen</p>
+      <div class="prose">
+        <p>At 4:10 she started the write-up for the lab notebook — not a paper, not yet, just the record that made the next morning’s meeting sane. The notebook assistant drafted a methods paragraph from the instrument logs. It was accurate and slightly too proud of itself. She cut the adjectives. She kept the numbers. When the assistant offered to “generate candidate discussion points optimised for reviewer appetite,” she declined with the same thumb motion she used on spam.</p>
+        <p>A dialog appeared, required by the commons charter whenever a model touched text destined for the shared ledger: Who asked the question? She typed her name. Who set the failure threshold? Her name. Who overrode the pipette order? Her name. Model assist: thermal watch, draft methods, search for prior negatives. The form would not submit without the human fields filled. That rule had been mocked online as bureaucracy. In practice it was how the atrium board stayed honest when the monthly metrics came out.</p>
+        <p>Omar poked his head in with two cups. “Board’s quiet. Astronomy club’s got the roof. You want company or the night?”</p>
+        <p>“The night,” Rina said, and took the cup anyway.</p>
+      </div>
+
+      <figure class="scene auth-scene" aria-hidden="true">
+        <div class="form">
+          <div class="field">Who asked the question?<strong>Rina</strong></div>
+          <div class="field">Who set the failure threshold?<strong>Rina</strong></div>
+          <div class="field">Who overrode the pipette order?<strong>Rina</strong></div>
+          <div class="field">Model assist<strong>thermal watch · draft methods · prior negatives</strong></div>
+        </div>
+        <div class="required">Human fields required</div>
+      </figure>
+      <p class="cap">Authorship screen · charter form</p>
+
+      <p class="section">the morning edge</p>
+      <div class="prose">
+        <p>At 5:50 the second exploratory pass — a temperature tweak suggested by her own earlier override — returned a faint positive at the edge of significance. Not a headline. A door slightly ajar. The model highlighted it without fireworks: signal present; recommend daylight replicate with fresh stock; do not announce. Rina scheduled the replicate for 11am, when her hands would be less heroic and more careful, and left a note for her PI that was three sentences long and contained no words like breakthrough.</p>
+        <p>She cleaned the bench. She signed the log. She unlocked the soft-lock so the day crew could enter without inheriting her ghost. On the atrium board, MASS-SPEC 2 flipped back to open, and her negative result stayed pinned in the catchment feed like a streetlamp: small, local, useful.</p>
+        <p>Outside, the city was turning the colour of weak tea. The astronomy club was packing up a night of photometry that had also published two nondetections to the same ledger. A first-year waved from the stairwell, eyes bright with the specific joy of having been trusted with a real instrument and a real no.</p>
+        <p>Rina hung up the stained coat. The stain remained, a reminder that presence used to mean sacrifice. Presence now meant setting a threshold, keeping a key, and going home when the watch said the watch could watch.</p>
+      </div>
+
+      <figure class="scene roof-scene tall" aria-hidden="true">
+        <div class="stars"></div>
+        <div class="dome"></div>
+      </figure>
+      <p class="cap">Roof dome · held breath released</p>
+
+      <div class="close">
+        <p>In the rack room the scheduler filed its morning note. In the ledger the duplicate run across town stayed cancelled. On the roof the dome closed with a sound like a held breath released.</p>
+        <p>The bench kept the night. The question kept its answer — even when the answer was not yet yes.</p>
+      </div>
+    </article>
+  </body>
+</html>
