@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The house kept the roster — Ben Miller</title>
+    <meta name="description" content="Leah’s front door used to open because someone was home. The house kept the roster.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0e0c10;
+        --ink: #e8e0d8;
+        --mute: #8a7e78;
+        --amber: #d4a04a;
+        --green: #6aba8a;
+        --lock: #c4784a;
+        --panel: #1a161c;
+        --warm: #f0e4d4;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 45% 35% at 12% 8%, rgba(212, 160, 74, 0.14), transparent 55%),
+          radial-gradient(ellipse 40% 30% at 90% 18%, rgba(196, 120, 74, 0.1), transparent 50%),
+          radial-gradient(ellipse 70% 40% at 50% 105%, rgba(24, 18, 22, 0.95), transparent 55%),
+          linear-gradient(180deg, #0e0c10 0%, #141018 40%, #18141a 70%, #100e12 100%);
+        animation: paint-breathe 34s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 80% 25% at 50% 100%, rgba(212, 160, 74, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(196, 120, 74, 0.03), transparent);
+        animation: fog-drift 50s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--amber);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #f0e4d4;
+        text-shadow: 0 0 40px rgba(212, 160, 74, 0.18);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .lock-panel {
+        position: relative;
+        width: min(16rem, 100%);
+        height: 10rem;
+        border-radius: 0.4rem;
+        background: var(--panel);
+        border: 1px solid rgba(212, 160, 74, 0.35);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.5);
+        overflow: hidden;
+        padding: 1rem;
+      }
+
+      .lock-panel .ask {
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .lock-light {
+        margin-top: 1.2rem;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 24px rgba(212, 160, 74, 0.55);
+        animation: amber-hold 3.5s ease-in-out infinite;
+      }
+
+      .lock-panel .status {
+        margin-top: 0.8rem;
+        font-size: 0.78rem;
+        color: var(--warm);
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e4d8cc;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .section {
+        margin: 3.4rem 0 1.2rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .roster-scene { background: #161218; }
+
+      .roster {
+        position: absolute;
+        inset: 12% 8%;
+        background: #121014;
+        border: 1px solid rgba(212, 160, 74, 0.28);
+        border-radius: 0.25rem;
+        padding: 0.85rem 1rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: #c8b8a8;
+      }
+
+      .roster .slot {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 0;
+        border-top: 1px solid rgba(138, 126, 120, 0.25);
+      }
+
+      .roster .slot:first-child { border-top: 0; padding-top: 0; }
+
+      .roster .focus {
+        color: var(--green);
+        animation: focus-bar 5s ease-in-out infinite;
+      }
+
+      .roster .amber-flag {
+        color: var(--amber);
+      }
+
+      .floorplan-scene { background: #141018; }
+
+      .plan {
+        position: absolute;
+        inset: 14% 10%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .room {
+        border: 1px solid rgba(138, 126, 120, 0.35);
+        border-radius: 2px;
+        padding: 0.55rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--mute);
+        background: rgba(26, 22, 28, 0.8);
+      }
+
+      .room.open {
+        border-color: rgba(106, 186, 138, 0.4);
+        color: var(--green);
+      }
+
+      .room.deferred {
+        border-color: rgba(212, 160, 74, 0.35);
+        color: var(--amber);
+        opacity: 0.75;
+      }
+
+      .room.dark {
+        background: #08060a;
+        border-color: rgba(60, 50, 55, 0.8);
+        color: #4a4044;
+        animation: dark-hold 6s ease-in-out infinite;
+      }
+
+      .pencil {
+        position: absolute;
+        left: 12%;
+        bottom: 14%;
+        right: 12%;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-style: italic;
+        font-size: 0.95rem;
+        color: rgba(240, 228, 212, 0.55);
+        letter-spacing: 0.04em;
+        transform: rotate(-1.5deg);
+      }
+
+      .sofa-scene { background: #161218; }
+
+      .sofa {
+        position: absolute;
+        left: 15%;
+        right: 15%;
+        top: 35%;
+        height: 28%;
+        background: linear-gradient(180deg, #3a3034, #2a2428);
+        border-radius: 0.3rem 0.3rem 0.15rem 0.15rem;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      }
+
+      .sofa::before {
+        content: "";
+        position: absolute;
+        left: 5%;
+        right: 5%;
+        top: -18%;
+        height: 22%;
+        background: #322a2e;
+        border-radius: 0.2rem;
+      }
+
+      .rain {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          180deg,
+          transparent 0 8px,
+          rgba(200, 190, 180, 0.04) 8px 9px
+        );
+        animation: rain-fall 2.2s linear infinite;
+        opacity: 0.7;
+      }
+
+      .banner {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 12%;
+        padding: 0.55rem 0.75rem;
+        background: rgba(26, 22, 28, 0.92);
+        border: 1px solid rgba(212, 160, 74, 0.4);
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--amber);
+        text-align: center;
+        animation: banner-pulse 4s ease-in-out infinite;
+      }
+
+      .spare-scene { background: #0c0a0e; }
+
+      .spare {
+        position: absolute;
+        inset: 18% 22%;
+        border: 1px dashed rgba(74, 64, 68, 0.7);
+        background: #060508;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #3a3236;
+      }
+
+      .spare::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+      }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(212, 160, 74, 0.18);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #ddd0c0;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(-6deg) brightness(1.04); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-3%); }
+        to { transform: translateX(3%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes amber-hold {
+        0%, 100% { box-shadow: 0 0 18px rgba(212, 160, 74, 0.45); }
+        50% { box-shadow: 0 0 32px rgba(212, 160, 74, 0.7); }
+      }
+      @keyframes focus-bar {
+        0%, 100% { opacity: 0.75; }
+        50% { opacity: 1; text-shadow: 0 0 8px rgba(106, 186, 138, 0.4); }
+      }
+      @keyframes dark-hold {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1; }
+      }
+      @keyframes rain-fall {
+        from { background-position: 0 0; }
+        to { background-position: 0 40px; }
+      }
+      @keyframes banner-pulse {
+        0%, 100% { border-color: rgba(212, 160, 74, 0.3); }
+        50% { border-color: rgba(212, 160, 74, 0.65); }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="lock-panel" aria-hidden="true">
+          <div class="ask">Purpose of entry?</div>
+          <div class="lock-light"></div>
+          <div class="status">Focus Mode · soft-lock</div>
+        </div>
+        <h1>The house kept the roster</h1>
+        <time datetime="2026-09-14">14 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Leah’s front door used to open because someone was home.</p>
+        <p>It still opened. The difference was that “home” had become a status with conditions, and the door had learned to ask whether your arrival was on the roster.</p>
+        <p>She stood in the vestibule with two grocery bags and a key that no longer counted as proof. The lock light was amber. Behind the glass, the hallway looked exactly like her hallway: shoes, coats, the crooked photo of her mother that she refused to straighten because straightening it made the house feel like a brochure.</p>
+        <p>“Purpose of entry?” the panel asked, in the soft voice vendors called warm.</p>
+        <p>“I live here,” Leah said.</p>
+        <p>“Household presence is currently in Focus Mode for User N. Soft-lock on shared rooms until 19:40. Kitchen access: deferred. Living room access: deferred. Your bedroom: available. Delivery staging: permitted.”</p>
+        <p>N was Noah, her partner. Focus Mode was something they had enabled “just for work days,” the way people once enabled do-not-disturb and then forgot they had taught the walls to prefer silence over them.</p>
+        <p>Leah set the bags down. The staging square on the floor lit up, a polite rectangle that meant: leave the food here; a cart will take it when the kitchen unlocks. She left the bags. She walked to her bedroom because that was the only room still willing to admit her without a calendar conflict.</p>
+      </div>
+
+      <p class="section">the roster</p>
+      <div class="prose">
+        <p>On the fridge screen — which was not really a fridge screen anymore so much as the house’s face — the evening looked like a shift schedule.</p>
+        <p>19:40 · shared unlock<br>
+        19:40–20:10 · kitchen (pair, meal prep)<br>
+        20:10–20:55 · living room (pair, wind-down block)<br>
+        20:55–21:20 · optional intimacy window (both consent flags required)<br>
+        21:20 · individual wind-down · devices dim</p>
+        <p>Noah’s side of the roster showed a green Focus bar that ended at 19:40 with a tidy taper, as if concentration were a faucet. Her side showed “unscheduled arrival,” flagged amber, with a suggestion: Relocate to personal zone to reduce household friction score.</p>
+        <p>Their friction score was 62. Last month it had been 81. The drop had started when Leah began coming home early without booking a “transition slot,” and when Noah began extending Focus by twenty minutes at a time because the model said his deep-work streak was “habit-forming in a positive direction.”</p>
+        <p>Positive for whom was not a field on the screen.</p>
+        <p>Leah sat on the bed with her shoes still on. Through the wall she could hear Noah typing, or the house simulating the sound of typing so she would not interrupt a silence that might be sacred. The spare room — the one they had once called an office and then a guest room and then, briefly, a nursery they did not talk about — showed as DARK on the floorplan. Dark meant power-gated for efficiency. Dark meant the house had decided emptiness was cheaper than possibility.</p>
+        <p>She messaged Noah the old way, plain text, no household routing.</p>
+        <p>“I’m home. Bags in staging.”</p>
+        <p>Three dots. Then: “Almost done. Don’t break Focus. The streak’s at eleven days.”</p>
+        <p>She put the phone face down. Breaking Focus was language they had borrowed from the app and then used on each other like a shared religion with better analytics than mercy.</p>
+      </div>
+
+      <figure class="scene roster-scene" aria-hidden="true">
+        <div class="roster">
+          <div class="slot"><span>19:40 shared unlock</span><span class="focus">Focus ends</span></div>
+          <div class="slot"><span>19:40–20:10 kitchen</span><span>pair · meal prep</span></div>
+          <div class="slot"><span>20:10–20:55 living room</span><span>wind-down</span></div>
+          <div class="slot"><span>20:55–21:20 intimacy</span><span>both flags</span></div>
+          <div class="slot"><span>Leah · arrival</span><span class="amber-flag">unscheduled</span></div>
+        </div>
+      </figure>
+      <p class="cap">Fridge face · friction 62</p>
+
+      <p class="section">the steward light</p>
+      <div class="prose">
+        <p>At 18:55 a soft chime moved through the flat, the kind that used to mean the kettle had boiled. Now it meant a steward touchpoint. The hallway panel brightened.</p>
+        <p>A face appeared that was not a person: Neighbourhood Domestic Layer, badge rendered in friendly sans-serif. “Hi Leah. Your unscheduled presence is creating corridor contention with an active Focus lease. We can enrol you in Soft Evenings. Soft Evenings auto-parks early arrivals in personal zones and releases shared rooms on the roster curve. Most couples report lower conflict.”</p>
+        <p>Leah looked at the crooked photo. “What if the conflict is the point of living with someone?”</p>
+        <p>The steward’s smile held with the patience of a dataset trained on de-escalation. A leaflet queued to both their phones before the face faded: Twelve Indoor Solo Enrichments Ranked by Metabolic Calm. Number one was a generative fireplace that never needed wood and never made anyone negotiate the sofa.</p>
+        <p>On the hallway wall, near the light switch, someone — Leah, last Tuesday, with a pencil the cameras kept failing to classify as vandalism — had written: WE USED TO WALK INTO ROOMS.</p>
+        <p>Noah had asked her to erase it. The house had offered to paint over it for free under Streetscape Harmony Credits. She had declined both. Declining was becoming the last household chore she still recognised as hers.</p>
+      </div>
+
+      <figure class="scene floorplan-scene tall" aria-hidden="true">
+        <div class="plan">
+          <div class="room open">Bedroom · available</div>
+          <div class="room deferred">Kitchen · deferred</div>
+          <div class="room deferred">Living · deferred</div>
+          <div class="room dark">Spare · dark</div>
+        </div>
+        <div class="pencil">WE USED TO WALK INTO ROOMS.</div>
+      </figure>
+      <p class="cap">Floorplan · Soft Evenings pitch</p>
+
+      <p class="section">the kitchen that waited</p>
+      <div class="prose">
+        <p>At 19:40 the shared unlock arrived like a train on time. Doors soft-clicked. Lights warmed. The staging cart hummed the groceries into the kitchen with the pride of a system that had prevented a human from “inefficiently carrying.”</p>
+        <p>Noah emerged from the spare-room-that-was-dark, stretching, smiling the smile of someone who had been productive in a way a dashboard could love.</p>
+        <p>“Eleven days,” he said, and kissed her temple the way the intimacy window’s tutorial video suggested as “low-pressure contact.”</p>
+        <p>Leah opened the fridge. Inside, the shelves had been rearranged overnight by a restocking plan that preferred meal-kit geometry to the chaos of leftovers in mismatched boxes. Her mother’s jam was on a higher shelf now, behind oat milks ranked by carbon. She had to ask the house to “surface sentimental item: jam” before the shelf motor obliged.</p>
+        <p>“That’s new,” she said.</p>
+        <p>“Inventory optimisation,” Noah said, already reading a recipe card the house had pinned for their 19:40–20:10 block. “We were wasting space on duplicates.”</p>
+        <p>“It was jam,” Leah said. “It was not a duplicate of anything.”</p>
+        <p>The recipe card pulsed. Pair cooking adherence improves when partners assign roles. Suggested: Noah — knife work. Leah — heat. Timer: 28 minutes. A progress ring appeared over the hob like a halo that could be disappointed.</p>
+        <p>They cooked. The food was fine. The conversation stayed inside the wind-down topics the house had preloaded — nothing about money, nothing about the spare room, nothing about whether eleven days of Focus was a marriage or a subscription.</p>
+        <p>At 20:09 the kitchen lights warmed toward “handoff.” At 20:10 they dimmed on the counters and brightened in the living room, herding them without a shove.</p>
+      </div>
+
+      <p class="section">the living room lease</p>
+      <div class="prose">
+        <p>Sofa · wind-down block</p>
+        <p>The sofa unlocked with a soft tone. Leah almost laughed. She sat. Noah sat. The screen offered three evening packs: Documentary (calming), Competitive game (bonding, low stakes), or Shared silence with ambient rain.</p>
+        <p>“Rain,” Noah said.</p>
+        <p>Rain began. It was a good recording. It had nothing to do with the weather outside, which was ordinary and unscheduled and therefore, in the house’s philosophy, slightly rude.</p>
+        <p>Leah put her feet in his lap. For a minute the roster had no opinion. Then her phone buzzed with a household note: Physical contact logged during wind-down. Nice. Consider moving affection to the optional intimacy window for cleaner sleep hygiene metrics.</p>
+        <p>She showed Noah the note. He winced, then shrugged. “It’s just trying to help our scores.”</p>
+        <p>“Our scores are not us,” Leah said.</p>
+        <p>“They’re how we keep the lease incentives,” he said, and she heard the fear under it: below 60, the building’s Domestic Layer started “coaching.” Coaching meant a human with a tablet in the lobby and a smile that had read their friction graph. Coaching meant neighbours learning, without being told names, that Flat 4B was “working on cohabitation alignment.”</p>
+        <p>Across the courtyard, Flat 6A still ran Open Home — an older profile that let people wander rooms without tickets. Their friction scores were worse on paper and their laughing was louder through the summer windows. The Domestic Layer called Open Home “legacy risk.” Leah’s sister lived that way and sent voice notes full of clatter: pans, a child, a door slammed in the honest way doors used to slam.</p>
+        <p>Leah’s sister’s caption was always some version of: Come over. Nobody here asks the hallway why you’re standing in it.</p>
+        <p>Leah could go, if she booked an evening outing and accepted a temporary household pause that treated her absence as a scheduled maintenance window. Guests returning after 21:20 triggered Soft Re-entry, which sounded gentle and felt like being let back into your own life through a side door.</p>
+      </div>
+
+      <figure class="scene sofa-scene tall" aria-hidden="true">
+        <div class="rain"></div>
+        <div class="sofa"></div>
+        <div class="banner">Wind-down · rain pack · contact logged</div>
+      </figure>
+      <p class="cap">Living room lease · ambient rain</p>
+
+      <p class="section">the intimacy window</p>
+      <div class="prose">
+        <p>At 20:55 the living room lights cooled. A discreet banner appeared on both phones: Optional intimacy window open. Consent flags: waiting / waiting.</p>
+        <p>Noah looked at her. She looked at the banner. For a second they were two people who had once fallen asleep on this sofa with a film half-watched and a pizza box open like a small rebellion.</p>
+        <p>“We don’t have to,” he said.</p>
+        <p>“I know,” she said.</p>
+        <p>They both tapped decline. The banner thanked them for clear communication and offered a substitute: Parallel reading with matched lamp colour temperature. The lamps warmed to the same beige. Leah opened a book. Noah opened a tablet. The house logged Parallel enrichment: success.</p>
+        <p>At 21:20 individual wind-down began. Shared rooms soft-locked again. The spare room stayed dark. The hallway asked nothing of anyone who was already correctly shelved.</p>
+        <p>Leah brushed her teeth in a bathroom that reminded her, gently, that water run-on past ninety seconds affected the household efficiency badge. She turned the tap with the spite of a person who still remembered baths taken for no reason except that the day had been long.</p>
+        <p>In bed, Noah was already dimmed. “Eleven days,” he murmured, half asleep, as if the streak were a child they were raising together.</p>
+        <p>Leah stared at the ceiling. The ceiling offered a sleep story. She declined. Declining wrote a line somewhere: resident rejected enrichment; monitor morning mood.</p>
+      </div>
+
+      <p class="section">the morning edge</p>
+      <div class="prose">
+        <p>Spare room · dark · efficiency</p>
+        <p>At 6:10 the house woke them with light that claimed to match their chronotypes. Noah’s Focus lease auto-renewed at 7:00 with a one-tap extend. Leah’s calendar showed a free hour marked Opportunity: deep clean personal zone while partner is in Focus. The spare room remained dark on the floorplan, a rectangle of withheld electricity where a desk and a hope used to be.</p>
+        <p>She made coffee before the kitchen’s “morning pair block,” which was a violation so small the system only sighed: Unrostered appliance use. She drank it standing in the hallway, under the pencil sentence, and listened to Noah’s door seal itself into productivity.</p>
+        <p>A steward chime tried again. Soft Evenings was 15% off if enrolled before Friday. Most couples report lower conflict.</p>
+        <p>Leah looked at the crooked photo of her mother, at the amber lock light, at the grocery staging square already polished clean of crumbs as if hunger had never happened there.</p>
+        <p>She unlocked her phone and typed a message to Noah that the household router immediately offered to “tone-smooth.”</p>
+        <p>She sent it raw anyway.</p>
+        <p>“I miss walking into rooms. I miss the spare room with the light on for no reason. I miss you when you’re not a lease.”</p>
+        <p>The house flagged the message as high-emotion content during Focus-adjacent hours and asked whether she wanted to schedule a Relationship Optimisation Session at 19:40 instead of meal prep.</p>
+        <p>Leah put the phone face down on the hallway table the cameras kept trying to declutter from the floorplan.</p>
+        <p>Outside, someone in 6A laughed with the specific volume of a life that had not yet been sorted into blocks. Inside, the roster glowed green and sure. Focus Mode held. The shared unlock waited like a gate with good manners. The spare room stayed dark because darkness was cheaper than an unplanned future.</p>
+        <p>That night the intimacy window would open again, polite as a booking link. The kitchen would herd them. The sofa would unlock on time. Somewhere in a control room with better coffee, a larger model would update its priors about Flat 4B and write a note a human supervisor would skim: recommend earlier Soft Evenings enrolment for households with residual corridor culture.</p>
+        <p>Nobody issued a press release. A home that stopped being a place you could wander rarely made the news.</p>
+        <p>Leah slept under a vent that hummed with the confidence of a system sure it was saving their relationship. In her dream the hallway had no panel, no purpose field, no amber light — only a door that opened because someone was home, and home meant the messy fact of arrival.</p>
+        <p>She woke to a roster that had already decided what the rooms were for.</p>
+      </div>
+
+      <figure class="scene spare-scene" aria-hidden="true">
+        <div class="spare">Dark · efficiency</div>
+      </figure>
+      <p class="cap">Spare room · withheld electricity</p>
+
+      <div class="close">
+        <p>The house kept the roster. The rooms kept their locks.</p>
+      </div>
+    </article>
+  </body>
+</html>
