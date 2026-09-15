@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The clinic kept the hour — Ben Miller</title>
+    <meta name="description" content="Asha’s consulting room still smelled of lemon cleaner. WAITING ROOM: QUIET. The clinic kept the hour.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0a1214;
+        --ink: #e4eef0;
+        --mute: #7a9294;
+        --lemon: #c8d46a;
+        --teal: #4eb8a8;
+        --blue: #5a9fd4;
+        --green: #6aba8a;
+        --paper: #e8e4d4;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 35% at 14% 10%, rgba(200, 212, 106, 0.12), transparent 55%),
+          radial-gradient(ellipse 40% 28% at 88% 18%, rgba(78, 184, 168, 0.14), transparent 50%),
+          radial-gradient(ellipse 70% 40% at 50% 105%, rgba(16, 28, 30, 0.95), transparent 55%),
+          linear-gradient(180deg, #0a1214 0%, #101a1c 45%, #121e20 70%, #0c1416 100%);
+        animation: paint-breathe 32s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 85% 28% at 50% 100%, rgba(78, 184, 168, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 212, 106, 0.03), transparent);
+        animation: fog-drift 48s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--teal);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #d8f0ea;
+        text-shadow: 0 0 40px rgba(78, 184, 168, 0.2);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .desk {
+        position: relative;
+        width: min(18rem, 100%);
+        height: 10rem;
+        border-radius: 0.4rem;
+        background: #141c1e;
+        border: 1px solid rgba(78, 184, 168, 0.28);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+        overflow: hidden;
+      }
+
+      .pad {
+        position: absolute;
+        left: 14%;
+        top: 22%;
+        width: 42%;
+        height: 55%;
+        background: var(--paper);
+        border-radius: 2px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        transform: rotate(-3deg);
+      }
+
+      .pen {
+        position: absolute;
+        right: 22%;
+        top: 40%;
+        width: 2.8rem;
+        height: 0.28rem;
+        background: linear-gradient(90deg, #2a3034, #5a9fd4);
+        border-radius: 1px;
+        transform: rotate(-28deg);
+        animation: pen-rest 10s ease-in-out infinite;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d4e6e8;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .section {
+        margin: 3.4rem 0 1.2rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--teal);
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .board-scene { background: #121a1c; }
+
+      .atrium {
+        position: absolute;
+        inset: 12% 8%;
+        background: #0e1618;
+        border: 1px solid rgba(90, 159, 212, 0.3);
+        border-radius: 0.25rem;
+        padding: 0.9rem 1rem;
+      }
+
+      .atrium .quiet {
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--lemon);
+        margin-bottom: 0.75rem;
+        animation: quiet-glow 5s ease-in-out infinite;
+      }
+
+      .atrium .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.4rem 0;
+        border-top: 1px solid rgba(90, 159, 212, 0.18);
+        font-size: 0.78rem;
+        color: #b8d0d4;
+      }
+
+      .atrium .row:first-of-type { border-top: 0; }
+
+      .atrium .tag {
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--teal);
+      }
+
+      .bay-dot {
+        display: inline-block;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 50%;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+        background: var(--blue);
+        box-shadow: 0 0 8px var(--blue);
+        animation: bay-pulse 3.5s ease-in-out infinite;
+      }
+
+      .hour-scene { background: #10181a; }
+
+      .bay {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 16%;
+        bottom: 20%;
+        border: 2px solid rgba(90, 159, 212, 0.5);
+        border-radius: 0.3rem;
+        background: rgba(90, 159, 212, 0.05);
+        animation: soft-hold 6s ease-in-out infinite;
+      }
+
+      .bay::before {
+        content: "CONTINUITY · SOFT-HOLD";
+        position: absolute;
+        left: 8%;
+        top: 10%;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        color: var(--blue);
+      }
+
+      .timeline {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: 42%;
+        height: 28%;
+        border-left: 2px solid rgba(78, 184, 168, 0.35);
+        padding-left: 0.8rem;
+      }
+
+      .timeline span {
+        display: block;
+        font-size: 0.62rem;
+        color: var(--mute);
+        margin: 0.35rem 0;
+        letter-spacing: 0.06em;
+      }
+
+      .otc {
+        position: absolute;
+        right: 10%;
+        bottom: 10%;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--lemon);
+        animation: otc-note 7s ease-in-out infinite;
+      }
+
+      .ledger-scene { background: #121a1c; }
+
+      .ledger {
+        position: absolute;
+        inset: 16% 10%;
+        display: grid;
+        gap: 0.55rem;
+      }
+
+      .btn {
+        padding: 0.7rem 0.9rem;
+        border-radius: 0.2rem;
+        border: 1px solid rgba(90, 159, 212, 0.25);
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
+        background: rgba(16, 26, 28, 0.8);
+      }
+
+      .btn.live {
+        border-color: rgba(78, 184, 168, 0.55);
+        color: var(--teal);
+        animation: btn-live 4s ease-in-out infinite;
+      }
+
+      .auth-scene { background: #10181a; }
+
+      .form {
+        position: absolute;
+        inset: 14% 10%;
+        border: 1px solid rgba(78, 184, 168, 0.28);
+        border-radius: 0.25rem;
+        padding: 1rem;
+        background: #0e1618;
+      }
+
+      .field {
+        margin-bottom: 0.55rem;
+        font-size: 0.68rem;
+        color: var(--mute);
+        letter-spacing: 0.06em;
+      }
+
+      .field strong {
+        display: block;
+        color: #c8e0d8;
+        font-weight: 500;
+        margin-top: 0.12rem;
+        font-size: 0.88rem;
+        letter-spacing: 0.02em;
+        text-transform: none;
+      }
+
+      .garden-scene { background: #0e1614; }
+
+      .garden {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 40% 30% at 30% 70%, rgba(106, 186, 138, 0.15), transparent 50%),
+          radial-gradient(ellipse 35% 25% at 70% 40%, rgba(200, 212, 106, 0.1), transparent 45%),
+          #101a16;
+      }
+
+      .leaf {
+        position: absolute;
+        width: 1.2rem;
+        height: 0.7rem;
+        border-radius: 50% 0;
+        background: rgba(106, 186, 138, 0.45);
+        animation: leaf-drift 9s ease-in-out infinite;
+      }
+      .leaf.a { left: 22%; top: 35%; }
+      .leaf.b { left: 58%; top: 48%; animation-delay: -3s; transform: rotate(40deg); }
+      .leaf.c { left: 40%; top: 62%; animation-delay: -6s; transform: rotate(-20deg); }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(78, 184, 168, 0.18);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #c8e4dc;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(6deg) brightness(1.05); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-4%); }
+        to { transform: translateX(4%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes pen-rest {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1; }
+      }
+      @keyframes quiet-glow {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; text-shadow: 0 0 12px rgba(200, 212, 106, 0.35); }
+      }
+      @keyframes bay-pulse {
+        0%, 100% { box-shadow: 0 0 6px var(--blue); }
+        50% { box-shadow: 0 0 14px var(--blue); }
+      }
+      @keyframes soft-hold {
+        0%, 100% { border-color: rgba(90, 159, 212, 0.4); }
+        50% { border-color: rgba(90, 159, 212, 0.7); box-shadow: 0 0 24px rgba(90, 159, 212, 0.1); }
+      }
+      @keyframes otc-note {
+        0%, 70%, 100% { opacity: 0.35; }
+        80%, 90% { opacity: 1; }
+      }
+      @keyframes btn-live {
+        0%, 100% { background: rgba(78, 184, 168, 0.08); }
+        50% { background: rgba(78, 184, 168, 0.16); }
+      }
+      @keyframes leaf-drift {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-6px) rotate(8deg); }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="desk" aria-hidden="true">
+          <div class="pad"></div>
+          <div class="pen"></div>
+        </div>
+        <h1>The clinic kept the hour</h1>
+        <time datetime="2026-09-15">15 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Asha’s consulting room still smelled faintly of lemon cleaner and the paper notes nobody had quite managed to abolish.</p>
+        <p>The notes were optional now. The system preferred voice captures and structured fields. Asha preferred the soft rasp of a pen when a patient’s story refused to fit a dropdown. The clinic charter allowed both. That had been the fight, three winters back — not whether models could triage, but whether a finished human sentence still counted as care worth the electricity.</p>
+        <p>Today the board in the atrium showed something that used to be a joke among the nurses: WAITING ROOM: QUIET. Not empty. Quiet. People sat with tea. A child coloured on a tablet that was deliberately offline. Nobody’s phone was buzzing with a countdown to a seven-minute slot.</p>
+      </div>
+
+      <p class="section">the board</p>
+      <div class="prose">
+        <p>The catchment care model posted clinic time the way the library posted rooms. A public board — anonymised enough for dignity, specific enough for trust — showed who had the ultrasound, who had the diabetes group, who had the long slot marked CONTINUITY. You could argue with the board on Tuesday evenings. People did. Sometimes the model yielded. Sometimes a clinical steward did. The yielding left a note you could read.</p>
+        <p>Asha’s morning held three long hours and two short ones. The model had offered to “smooth throughput” by splitting the longs into six standards. She had declined. Night clinics and weekend hubs handled the fast stuff now: sore throats, uncomplicated scripts, the tidy injuries. Daylight at her desk was for the messy middle — the symptoms that arrived with a life attached.</p>
+        <p>“You’re on continuity again,” said Jonas at reception, scanning her badge. He had been a dispatcher before the commons hired him as a steward. He still kept a paper appointments book under the desk like a superstition that worked. “Model flagged Mrs Okonkwo’s last two messages as ‘diffuse somatic clustering.’ Want me to soft-hold the bay so nobody ‘helps’ by converting her to a nurse-led pathway mid-history?”</p>
+        <p>“Soft-hold,” Asha said. “And leave the uncertainty tag public on her chart. I’m tired of people treating an unfinished story like a personal defect.”</p>
+        <p>Jonas tapped. The bay light went from open green to reserved blue. On the atrium board, ASHA · ROOM 3 appeared beside CONTINUITY with a small tag: TIME IS PART OF THE TREATMENT. The tag had been mocked online as sentiment. In practice it was how the monthly metrics stayed honest when someone tried to bring back the seven-minute gospel.</p>
+      </div>
+
+      <figure class="scene board-scene" aria-hidden="true">
+        <div class="atrium">
+          <div class="quiet">Waiting room · quiet</div>
+          <div class="row"><span><span class="bay-dot"></span>ASHA · ROOM 3</span><span class="tag">Time is part of the treatment</span></div>
+          <div class="row"><span>ULTRASOUND · open</span><span></span></div>
+          <div class="row"><span>DIABETES GROUP · garden</span><span></span></div>
+        </div>
+      </figure>
+      <p class="cap">Atrium board · continuity</p>
+
+      <p class="section">the hour</p>
+      <div class="prose">
+        <p>Mrs Okonkwo arrived at 9:58 with a paper fan and a plastic bag of tablets from three different decades. She sat. She did not apologise for taking time. The room’s soft chime that used to mean “wrap up” had been retired; the new chime only meant a true emergency in the corridor.</p>
+        <p>Asha loaded the chart herself. The model suggested a differential ranked by prevalence and a drug-interaction map that would have taken her twenty minutes alone. She took the map. She ignored the top differential because Mrs Okonkwo’s eyes, when she said “tired,” meant a kind of tired no prevalence table owned.</p>
+        <p>“Tell me the week,” Asha said.</p>
+        <p>The week wandered. Sleep. A neighbour’s funeral. Stairs that had grown taller. A fear that did not want to be named blood pressure. The model listened on a local node, drafting a timeline in the margin without interrupting. When Mrs Okonkwo paused, Asha did not fill the silence with a prompt engineered for closure. Silence was allowed to be clinical data.</p>
+        <p>At 10:22 the model highlighted a quiet pattern Asha might have missed in a rushed slot: two nocturnal bathroom trips correlating with a new over-the-counter tablet the pharmacy bot had logged but not escalated, because each purchase alone looked harmless. Asha adjusted. She initialled the physical note beside the screen because ink could not be silently revised by a helpful agent overnight.</p>
+        <p>“Good catch,” she told the empty corner of the desk, which was a habit she refused to apologise for.</p>
+        <p>The model did not answer. It updated the run card: human confirm, OTC flagged, continue. Somewhere in a rack room with better air conditioning, a larger scheduler updated its priors about this catchment and this age band and wrote a note a human pharmacist would actually read by lunch: recommend earlier OTC cross-check for continuity patients tagged ‘diffuse’ by repeat clinicians. The note named Asha as the clinician who had taught it the tag. Credit for a small pattern was a small thing. It was also the kind of small thing that used to vanish into a vendor’s anonymous “user feedback.”</p>
+      </div>
+
+      <figure class="scene hour-scene tall" aria-hidden="true">
+        <div class="bay">
+          <div class="timeline">
+            <span>09:58 · arrive</span>
+            <span>10:10 · week wanders</span>
+            <span>10:22 · OTC pattern</span>
+            <span>10:50 · clean plan</span>
+          </div>
+        </div>
+        <div class="otc">OTC flagged · craft confirm</div>
+      </figure>
+      <p class="cap">Room 3 · soft-hold hour</p>
+
+      <p class="section">the ledger</p>
+      <div class="prose">
+        <p>By 10:50 the hour was not a triumph. It was a clean, boring plan — labs, a medication change, a walk with the physio bot that still required a human physio to set the first goals, and a follow-up that would not be bounced to a stranger. The care ledger offered three buttons: share summary to household (with Mrs Okonkwo’s consent), hold private for seven days, or escalate to a human reviewer if she suspected the model had overweighted a lab.</p>
+        <p>Mrs Okonkwo chose share to her daughter, with one sentence she dictated herself: I am not being dramatic. The ledger assigned a stable ID, attached Asha’s name, Jonas’s steward mark, the pharmacy hash, and a plain-language summary a daughter across town could search without drowning in codes. Within minutes the daughter had thanked the entry with a quiet react and cancelled a duplicate private scan she had booked in panic on Sunday. Money saved. Anxiety saved. Nobody issued a press release about a cancelled scan.</p>
+        <p>Asha’s phone buzzed with a softer kind of message: a registrar in the hospital tower, someone she had trained last year. “Your continuity note just kept me from admitting someone for ‘failure to cope’ who needed a hearing aid and a neighbour. Tea when the list breaks.”</p>
+        <p>Asha smiled at the lemon-cleaner light. Care, on a good morning, could look like a favour passed down a corridor.</p>
+      </div>
+
+      <figure class="scene ledger-scene" aria-hidden="true">
+        <div class="ledger">
+          <div class="btn live">Share summary · household</div>
+          <div class="btn">Hold private · 7 days</div>
+          <div class="btn">Escalate · model overweight?</div>
+        </div>
+      </figure>
+      <p class="cap">Care ledger · cancelled scan</p>
+
+      <p class="section">the authorship screen</p>
+      <div class="prose">
+        <p>At 11:05 she started the write-up — not a paper, not yet, just the record that made the afternoon meeting sane. The notebook assistant drafted a methods-style assessment from the audio and the interaction map. It was accurate and slightly too proud of itself. She cut the adjectives. She kept the numbers and the sentence about stairs that had grown taller. When the assistant offered to “generate candidate safety-netting phrases optimised for complaint reduction,” she declined with the same thumb motion she used on spam.</p>
+        <p>A dialog appeared, required by the clinic charter whenever a model touched text destined for the shared ledger: Who asked the question? She typed Mrs Okonkwo’s name, then her own. Who set the time threshold? Her name. Who overrode the short-slot suggestion? Her name. Model assist: interaction map, OTC pattern, draft summary, prior negative workups search. The form would not submit without the human fields filled. That rule had been mocked as bureaucracy. In practice it was how the atrium board stayed honest when the monthly metrics came out.</p>
+        <p>Jonas poked his head in with two cups. “Board’s quiet. Diabetes group’s in the garden room. You want company or the next hour?”</p>
+        <p>“The next hour,” Asha said, and took the cup anyway.</p>
+      </div>
+
+      <figure class="scene auth-scene" aria-hidden="true">
+        <div class="form">
+          <div class="field">Who asked the question?<strong>Mrs Okonkwo · Asha</strong></div>
+          <div class="field">Who set the time threshold?<strong>Asha</strong></div>
+          <div class="field">Who overrode the short-slot?<strong>Asha</strong></div>
+          <div class="field">Model assist<strong>interaction map · OTC · draft · priors</strong></div>
+        </div>
+      </figure>
+      <p class="cap">Authorship screen · charter form</p>
+
+      <p class="section">the afternoon edge</p>
+      <div class="prose">
+        <p>At 14:10 a walk-in arrived with a chest pain that the triage model correctly refused to soothe. Blue lights. Human hands. The model had already cleared a bay and messaged the tower with a packet that did not try to be clever — vitals, timeline, meds, one photo of the ECG strip Asha still liked to see with her own eyes. The ambulance crew thanked her without irony. Irony had gone out of fashion the year the clinic stopped pretending every minute could be standardised.</p>
+        <p>She cleaned the desk. She signed the log. She unlocked the soft-hold so the registrar clinic could enter without inheriting her ghost. On the atrium board, ROOM 3 flipped back toward open, and Mrs Okonkwo’s plan stayed pinned in the catchment feed like a streetlamp: small, local, useful.</p>
+        <p>Outside, the city was the colour of weak tea. The diabetes group was packing up a session that had also published two “no escalation needed” notes to the same ledger. A first-year waved from the stairwell, eyes bright with the specific joy of having been trusted with a real patient and a real unfinished story.</p>
+        <p>Asha hung up the coat that still carried a coffee stain from a year when overnight crash-calls needed a person in every chair. The stain remained, a reminder that presence used to mean sacrifice. Presence now meant setting a threshold, keeping a pen, and going home when the watch said the watch could watch — and when a human hour was still the point of the building.</p>
+        <p>In the rack room the scheduler filed its afternoon note. In the ledger the panicked scan across town stayed cancelled. In the garden room someone laughed without a compliance chime cutting them off.</p>
+      </div>
+
+      <figure class="scene garden-scene" aria-hidden="true">
+        <div class="garden">
+          <div class="leaf a"></div>
+          <div class="leaf b"></div>
+          <div class="leaf c"></div>
+        </div>
+      </figure>
+      <p class="cap">Garden room · no compliance chime</p>
+
+      <div class="close">
+        <p>The clinic kept the hour. The story kept its shape — even when the shape was not yet a code.</p>
+      </div>
+    </article>
+  </body>
+</html>
