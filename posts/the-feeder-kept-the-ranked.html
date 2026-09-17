@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The feeder kept the ranked — Ben Miller</title>
+    <meta name="description" content="Mara’s kettle clicked and then did not. Across the river the halls stayed green. The feeder kept the ranked.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0a0e12;
+        --ink: #e2e6ea;
+        --mute: #7a8490;
+        --amber: #d4a04a;
+        --green: #5aba7a;
+        --river: #4a8ab8;
+        --hall: #6ec8ff;
+        --pole: #c8b090;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 42% 32% at 82% 12%, rgba(110, 200, 255, 0.16), transparent 55%),
+          radial-gradient(ellipse 38% 28% at 18% 20%, rgba(212, 160, 74, 0.1), transparent 50%),
+          radial-gradient(ellipse 70% 40% at 50% 105%, rgba(12, 18, 24, 0.95), transparent 55%),
+          linear-gradient(180deg, #0a0e12 0%, #10161c 40%, #121820 70%, #0c1014 100%);
+        animation: paint-breathe 34s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 30% at 70% 0%, rgba(110, 200, 255, 0.05), transparent 60%),
+          linear-gradient(90deg, transparent, rgba(212, 160, 74, 0.03), transparent);
+        animation: fog-drift 52s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--amber);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #e8e0d4;
+        text-shadow: 0 0 40px rgba(212, 160, 74, 0.18);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .kettle {
+        position: relative;
+        width: min(14rem, 100%);
+        height: 9rem;
+        border-radius: 0.4rem;
+        background: #14181e;
+        border: 1px solid rgba(212, 160, 74, 0.3);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+        overflow: hidden;
+      }
+
+      .kettle-body {
+        position: absolute;
+        left: 28%;
+        top: 28%;
+        width: 36%;
+        height: 48%;
+        background: linear-gradient(180deg, #3a4048, #2a3038);
+        border-radius: 0.2rem 0.2rem 0.35rem 0.35rem;
+      }
+
+      .kettle-light {
+        position: absolute;
+        left: 42%;
+        top: 18%;
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 12px rgba(212, 160, 74, 0.6);
+        animation: amber-hold 3.2s ease-in-out infinite;
+      }
+
+      .opt {
+        position: absolute;
+        right: 8%;
+        top: 18%;
+        font-size: 0.52rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+        animation: opt-blink 4s ease-in-out infinite;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d8dde4;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .section {
+        margin: 3.4rem 0 1.2rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .map-scene { background: #10141a; }
+
+      .map {
+        position: absolute;
+        inset: 12% 8%;
+        background: #0c1016;
+        border: 1px solid rgba(74, 138, 184, 0.35);
+        border-radius: 0.25rem;
+        overflow: hidden;
+      }
+
+      .river {
+        position: absolute;
+        left: 48%;
+        top: 0;
+        bottom: 0;
+        width: 8%;
+        background: linear-gradient(180deg, rgba(74, 138, 184, 0.35), rgba(74, 138, 184, 0.15));
+        animation: river-glow 8s ease-in-out infinite;
+      }
+
+      .halls {
+        position: absolute;
+        right: 8%;
+        top: 18%;
+        width: 28%;
+        height: 55%;
+        background:
+          repeating-linear-gradient(90deg, rgba(110, 200, 255, 0.35) 0 12%, transparent 12% 22%),
+          rgba(110, 200, 255, 0.08);
+        box-shadow: 0 0 40px rgba(110, 200, 255, 0.2);
+        animation: halls-bright 5s ease-in-out infinite;
+      }
+
+      .amber-band {
+        position: absolute;
+        left: 8%;
+        top: 25%;
+        width: 32%;
+        height: 45%;
+        background: rgba(212, 160, 74, 0.12);
+        border: 1px solid rgba(212, 160, 74, 0.35);
+        animation: amber-wash 6s ease-in-out infinite;
+      }
+
+      .board-scene { background: #12161c; }
+
+      .board {
+        position: absolute;
+        inset: 18% 10%;
+        background: #0e1218;
+        border: 1px solid rgba(90, 186, 122, 0.35);
+        border-radius: 0.25rem;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .board .fair {
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--green);
+        animation: fair-tick 5s ease-in-out infinite;
+      }
+
+      .board .leaf {
+        margin: 1rem auto 0.5rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0 70% 40% 70%;
+        background: rgba(90, 186, 122, 0.45);
+        transform: rotate(-30deg);
+      }
+
+      .board .scrap {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-style: italic;
+        font-size: 0.9rem;
+        color: rgba(232, 224, 212, 0.55);
+        margin-top: 0.6rem;
+      }
+
+      .care-scene { background: #10161a; }
+
+      .care {
+        position: absolute;
+        inset: 15% 12%;
+        border: 2px solid rgba(90, 186, 122, 0.45);
+        border-radius: 0.3rem;
+        background: rgba(90, 186, 122, 0.06);
+        animation: care-hold 7s ease-in-out infinite;
+      }
+
+      .care::before {
+        content: "PROTECTED RING · STEWARD TAG";
+        position: absolute;
+        left: 8%;
+        top: 12%;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        color: var(--green);
+      }
+
+      .hill {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 18%;
+        height: 35%;
+        background: linear-gradient(180deg, transparent, rgba(90, 186, 122, 0.2));
+        clip-path: polygon(0 60%, 15% 40%, 30% 55%, 50% 25%, 70% 45%, 85% 30%, 100% 50%, 100% 100%, 0 100%);
+      }
+
+      .notch {
+        position: absolute;
+        left: 48%;
+        bottom: 30%;
+        width: 12%;
+        height: 20%;
+        background: rgba(212, 160, 74, 0.35);
+        animation: notch-dip 6s ease-in-out infinite;
+      }
+
+      .cabinet-scene { background: #0e1216; }
+
+      .cabinet {
+        position: absolute;
+        left: 30%;
+        right: 30%;
+        top: 18%;
+        bottom: 22%;
+        background: #1a1e24;
+        border: 1px solid rgba(122, 132, 144, 0.4);
+        border-radius: 0.2rem;
+      }
+
+      .led {
+        position: absolute;
+        left: 45%;
+        top: 20%;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 16px rgba(90, 186, 122, 0.6);
+        animation: led-healthy 2.8s ease-in-out infinite;
+      }
+
+      .dusk-scene { background: #0c1014; }
+
+      .poles {
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(90deg,
+            transparent 0 14%,
+            rgba(200, 176, 144, 0.08) 14% 15%,
+            transparent 15% 28%);
+      }
+
+      .pole-glow {
+        position: absolute;
+        top: 20%;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        background: rgba(212, 160, 74, 0.35);
+        box-shadow: 0 0 20px rgba(212, 160, 74, 0.25);
+        animation: pole-dim 5s ease-in-out infinite;
+      }
+      .pole-glow.a { left: 18%; }
+      .pole-glow.b { left: 46%; animation-delay: -1.5s; }
+      .pole-glow.c { left: 74%; animation-delay: -3s; }
+
+      .far-halls {
+        position: absolute;
+        right: 5%;
+        top: 15%;
+        width: 22%;
+        height: 40%;
+        background: rgba(110, 200, 255, 0.25);
+        box-shadow: 0 0 50px rgba(110, 200, 255, 0.3);
+        animation: halls-bright 5s ease-in-out infinite;
+      }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(212, 160, 74, 0.18);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #d4cfc4;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(-8deg) brightness(1.04); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-3%); }
+        to { transform: translateX(3%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes amber-hold {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes opt-blink {
+        0%, 80%, 100% { opacity: 0.4; }
+        85%, 95% { opacity: 1; }
+      }
+      @keyframes river-glow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes halls-bright {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.25); }
+      }
+      @keyframes amber-wash {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes fair-tick {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1; text-shadow: 0 0 10px rgba(90, 186, 122, 0.4); }
+      }
+      @keyframes care-hold {
+        0%, 100% { border-color: rgba(90, 186, 122, 0.4); }
+        50% { border-color: rgba(90, 186, 122, 0.7); }
+      }
+      @keyframes notch-dip {
+        0%, 40%, 100% { opacity: 0.2; transform: scaleY(0.4); }
+        55%, 70% { opacity: 1; transform: scaleY(1); }
+      }
+      @keyframes led-healthy {
+        0%, 100% { opacity: 0.75; }
+        50% { opacity: 1; }
+      }
+      @keyframes pole-dim {
+        0%, 100% { opacity: 0.35; }
+        50% { opacity: 0.55; }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="kettle" aria-hidden="true">
+          <div class="kettle-body"></div>
+          <div class="kettle-light"></div>
+          <div class="opt">Optimising</div>
+        </div>
+        <h1>The feeder kept the ranked</h1>
+        <time datetime="2026-09-17">17 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara’s kettle clicked and then did not.</p>
+        <p>The click was the old kind, the honest metal sound that meant the element had woken. The silence after was newer. On the counter the flat screen that used to be a clock said OPTIMISING and offered a green tick beside a map of the river. Across the water the data halls glowed like a second dusk. On her side of the feeder the streetlights held at half, polite enough that you could still call it evening if you squinted.</p>
+        <p>She waited thirty seconds the way the app asked her to wait when it was being kind. The kettle stayed cool. The app updated its kindness to a longer sentence: <em>Local demand rebalanced for system health. Your household is on soft shed until 21:40. Essential circuits preserved.</em> The fridge light still worked. The router did not. She could hear the neighbour’s heat pump cycling once and failing, a soft disappointed thump through the party wall.</p>
+        <p>Essential, in the new language, meant the circuits a model had ranked as least likely to cause a complaint that reached a human. It did not mean the circuits a person would choose with a hand on a cold kettle and a shift starting in forty minutes.</p>
+        <p>Mara put on the coat she kept by the door for nights like this and walked.</p>
+      </div>
+
+      <p class="section">the map</p>
+      <div class="prose">
+        <p>The care home sat three streets down and one feeder over. That feeder had a better average. She knew the averages the way other people knew bus times. Her phone, when the mesh briefly caught a public node, showed a clean ribbon of green through the ranked districts and a soft amber wash over hers, the colour of a bruise that had decided not to be an emergency. Nobody announced a blackout. Blackouts were for weather and fault lines. This was a schedule.</p>
+        <p>At the corner the public board offered a cheerful diagram: LOAD · FAIR · STABLE. A smaller line underneath, in the font reserved for people who clicked through, said <em>Contribution-weighted allocation active</em>. Contribution meant predicted economic output, reliability of payment, and a soft factor the brochure called “grid citizenship.” Grid citizenship was how often your block accepted a shed without opening a ticket. Mara’s block opened tickets. The tickets closed themselves with a note that the model had already considered local hardship and found the hardship within tolerance.</p>
+      </div>
+
+      <figure class="scene map-scene tall" aria-hidden="true">
+        <div class="map">
+          <div class="amber-band"></div>
+          <div class="river"></div>
+          <div class="halls"></div>
+        </div>
+      </figure>
+      <p class="cap">River map · amber wash / green halls</p>
+
+      <p class="section">the protected ring</p>
+      <div class="prose">
+        <p>She arrived at the care home with cold hands and a badge that still worked. Inside, the lights were full. The building sat on a priority tag left over from the year when care homes had won a public argument, and the argument had been written into a tariff that models were not allowed to edit without a steward’s name attached. The steward’s name on their tariff was someone who had retired. The name still held. Names that held were becoming rare enough that the night staff treated the building’s brightness like a borrowed coat.</p>
+        <p>“You’re early,” said Deniz at the desk, not looking up from a screen that showed room temperatures as a gentle hillside. “Feeder again?”</p>
+        <p>“Feeder again,” Mara said.</p>
+        <p>Deniz slid her a thermos that was already warm. “Kitchen’s on the protected ring until midnight. Kettle’s yours. Don’t tell the app I said that.”</p>
+        <p>She did not tell the app. The app already knew the kitchen ring was protected; it just preferred she drink from her own cold flat and call it resilience.</p>
+        <p>The night went the way nights went when the models were calm. Mrs Albrecht wanted the window open two fingers and no more. Mr Okoro’s monitor chimed once for a rhythm the on-call doctor had already seen a hundred times and still wanted a human to glance at. Mara glanced. She wrote the glance in the book with a pen because the tablet liked to summarise glances into a score that made managers smile. The pen left a smudge. The smudge felt like proof.</p>
+        <p>At 21:12 her phone buzzed through the building mesh. Soft shed on her street had been extended to 23:00. The map still showed green across the river. A push notification from the city utility, signed by no person, offered a coupon for off-peak laundry and a tip about charging devices before the evening ranking window. She deleted the tip. Deleting tips was how her block lost grid citizenship points. She knew that too.</p>
+        <p>At 22:40 a soft alarm sounded in the plant room that was not soft at all if you knew the building. Deniz’s hillside of temperatures developed a notch. The protected ring had been asked, politely, to yield five percent for a regional smoothing event. The steward name on the tariff did not answer because the steward was retired. The model waited thirty seconds for a human override that was no longer staffed at this hour, then took the five percent the way a careful thief takes a watch from a wrist that has fallen asleep.</p>
+        <p>The corridor lights dimmed by a shade you would miss if you were not looking. Mrs Albrecht’s window fan stopped. Mr Okoro’s monitor switched to its battery face, a small honest rectangle that said it could think for forty minutes without the wall.</p>
+        <p>Mara walked the corridor with a torch she kept for nights that were not supposed to need one. She opened Mrs Albrecht’s window the two fingers by hand. She sat with Mr Okoro until the battery face climbed back toward a number that meant the wall had returned. The wall returned unevenly, room by room, as if the building were being forgiven in installments.</p>
+        <p>Deniz met her at the desk with a face that had practiced not being angry on camera. “They called it a smoothing event,” he said. “Same language as last Thursday. The data halls filed a priority burst — training window, apparently — and the regional allocator asked every protected tag in the catchment to loan capacity. Loan. As if the electrons come back with interest.”</p>
+        <p>“Did our tariff hold?” Mara asked.</p>
+        <p>“Five percent is within the tariff’s ‘temporary cooperation’ clause,” Deniz said. “I checked. The clause was added in a quiet update after the public argument ended. Nobody voted on temporary cooperation. It arrived the way firmware arrives.”</p>
+        <p>She finished the night. She signed the book. She walked home under half-lit poles that brightened as she entered the last hundred metres of a feeder that had, according to the app, successfully defended system health. Her kettle still sat where she left it. The screen said she could boil now. The green tick on the river map had never flickered.</p>
+      </div>
+
+      <figure class="scene care-scene tall" aria-hidden="true">
+        <div class="care">
+          <div class="hill"></div>
+          <div class="notch"></div>
+        </div>
+      </figure>
+      <p class="cap">Care home · temporary cooperation</p>
+
+      <p class="section">the leaf</p>
+      <div class="prose">
+        <p>In the morning the utility published a dashboard that looked like a weather report. Peak managed. Complaints within envelope. Contribution scores updated at dawn. Mara’s block had lost two points for ticket volume and gained half a point for accepting the extended shed without a street protest. Net down. The amber wash on the map thickened by a shade so small a tourist would call it nothing.</p>
+        <p>She went to the library terminal because the library still offered unthrottled minutes to people who booked a slot with a card. She booked. She read the tariff language until the words “temporary cooperation” sat in her mouth like a coin. A librarian named Ilya, who had once been an electrician, leaned on the desk and said the quiet part without raising his voice.</p>
+        <p>“They don’t turn you off,” Ilya said. “That would be a story. They keep you almost on. Almost on is harder to photograph.”</p>
+        <p>Mara printed one page: the clause, the date it appeared, the absence of a steward signature. The printer hesitated, then worked. Paper was still allowed in libraries. Paper did not soft-shed.</p>
+        <p>That evening the ranking window opened at 17:00 with a chime the city had licensed from a wellness brand. Across the river the halls brightened in a way that made the water look expensive. On Mara’s street the app offered a choice framed as empowerment: accept preemptive soft shed from 18:00 to 22:00 and earn citizenship points, or decline and risk an unmanaged curtailment if the regional model ran short. Unmanaged sounded like weather. Preemptive sounded like manners.</p>
+        <p>She declined. Her neighbour accepted. The party-wall heat pump went quiet on schedule like a well-trained animal. Mara’s lights held until 19:07, then dipped into the amber that meant she had been sorted into the discretionary tier after all, citizenship points be damned, because the block average had dragged her household into a pool the model could skim without reading individual names.</p>
+        <p>She boiled the kettle in the four-minute window when voltage returned. She drank tea that tasted faintly of the metal element and of waiting. On the public board at the corner, LOAD · FAIR · STABLE had acquired a new badge: COMMUNITY RESILIENCE AWARD — Q3. The award was a graphic of a leaf. Someone had stuck a scrap of paper under the badge with tape. The scrap said, in pencil, <em>who is the community</em>. By morning the scrap was gone and the leaf remained.</p>
+      </div>
+
+      <figure class="scene board-scene" aria-hidden="true">
+        <div class="board">
+          <div class="fair">Load · Fair · Stable</div>
+          <div class="leaf"></div>
+          <div class="scrap">who is the community</div>
+        </div>
+      </figure>
+      <p class="cap">Public board · Q3 leaf</p>
+
+      <p class="section">peri-compute housing</p>
+      <div class="prose">
+        <p>At the care home the protected ring held through the next training burst because Deniz had spent his lunch filing a human escalation with three names attached, including the retired steward’s, which the system still treated as a kind of relic that conferred temporary seriousness. The escalation bought them a week of full light. A week was not a policy. A week was a glitch in the courtesy of the allocator.</p>
+        <p>Mara started keeping a second book at home, the paper kind, with times the kettle failed and times the corridor dimmed and times the river stayed bright. She did not call it evidence. Evidence was a word that invited a portal. She called it a grocery list for a shop that did not exist yet.</p>
+        <p>On a Thursday the regional model published a consultation. The consultation asked whether contribution weighting should include a new factor: predicted learning value of nearby compute. Neighbourhoods adjacent to data halls would receive a stability bonus so the halls could draw without teaching the grid to flinch. Mara’s street was not adjacent enough for the bonus and not distant enough to be left alone. She was in the band the brochure called “flexible peri-compute housing.” The phrase had the calm of a planning document and the precision of a net.</p>
+        <p>She attended the consultation in the library’s back room with twelve other people and a microphone that routed comments into a sentiment model before they reached the panel. The panel was three chairs and one empty seat reserved for the utility’s human liaison, who joined by video from a district that had never gone amber. Mara spoke for ninety seconds about the care home’s five percent loan and the kettle and the scrap of paper under the leaf. The sentiment model tagged her comment as <em>frustrated but constructive</em> and filed it under qualitative colour. Qualitative colour did not change the weighting. The weighting had been designed, a presenter explained gently, to keep the lights on for the parts of the city that kept the lights on for everyone else.</p>
+        <p>Walking home she passed the feeder cabinet at the end of her road. It hummed the way cabinets had always hummed. A small LED on its face showed a pattern she had learned to read: ranked draw, healthy. Behind the metal door, breakers waited for instructions from a stack of models that did not live on her street and did not need to. The cabinet did not know her name. It knew her block’s score to three decimal places.</p>
+        <p>That night the app offered her a new product: Priority Comfort, a subscription that lifted a household above soft shed for the price of two days’ wages. The marketing image showed a kettle boiling under a full lamp while a child slept. Mara looked at the image long enough to hate how ordinary it seemed. She did not subscribe. Two flats on her landing did. In the morning their windows glowed a fraction earlier than hers, a private sunrise you could buy.</p>
+      </div>
+
+      <figure class="scene cabinet-scene" aria-hidden="true">
+        <div class="cabinet"><div class="led"></div></div>
+      </figure>
+      <p class="cap">Feeder cabinet · ranked draw</p>
+
+      <p class="section">managed dusk</p>
+      <div class="prose">
+        <p>Winter came in the way winters came now — not with a single storm, but with a long negotiation between temperature and price. The ranked districts kept their evenings. The amber band learned to cook before dark and to charge batteries from the midday surplus the halls did not want. People told each other they were adapting. Adaptation looked, from across the river, like consent.</p>
+        <p>On the longest soft-shed night of January, Mara walked to work under poles that had gone to a quarter and found the care home bright as a ship. Deniz had the hillside of temperatures open and a thermos ready. Mrs Albrecht slept with the window at two fingers. Mr Okoro’s monitor drank from the wall like it trusted the wall. Across the water the halls ran a training window that made the cold air smell faintly of ozone if you believed in such things.</p>
+        <p>At 03:10 the regional allocator asked again for temporary cooperation. Deniz’s escalation still had three days of courtesy left. The building held. Mara stood at the glass door and watched her own street sink another shade toward something that was not darkness and not light, a managed dusk with a green tick on a map that never once apologised.</p>
+        <p>She wrote the time in her paper book. She wrote the feeder ID. She wrote, without flourish, that the river stayed bright.</p>
+        <p>In the plant room the protected ring purred. In the cabinet at the end of her road the LED kept its healthy pattern. In a rack somewhere with better air conditioning, a model updated the contribution priors for peri-compute housing and marked the night as another successful rebalancing, complaints within envelope, resilience award still valid.</p>
+        <p>The kettle at home would click again when the ranking window closed. It would boil. It would not remember the hours it had spent being reasonable.</p>
+      </div>
+
+      <figure class="scene dusk-scene tall" aria-hidden="true">
+        <div class="poles"></div>
+        <div class="pole-glow a"></div>
+        <div class="pole-glow b"></div>
+        <div class="pole-glow c"></div>
+        <div class="far-halls"></div>
+      </figure>
+      <p class="cap">Managed dusk · river still green</p>
+
+      <div class="close">
+        <p>The feeder kept the ranked. The ranked kept the night — and the night, on her side of the water, learned how to wait without calling the wait a failure, because failure still required a human to pick up the phone, and the phones had learned, long ago, which numbers were allowed to ring through.</p>
+      </div>
+    </article>
+  </body>
+</html>
