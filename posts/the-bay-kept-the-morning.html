@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bay kept the morning — Ben Miller</title>
+    <meta name="description" content="Mara learned the bay by the light on the water. The mornings got quieter. The bay kept the morning.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0a1218;
+        --ink: #e4eef4;
+        --mute: #7a929e;
+        --sea: #4a9ec8;
+        --mist: #a8c8d8;
+        --gold: #d4b06a;
+        --glass: rgba(74, 158, 200, 0.12);
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 55% 40% at 70% 8%, rgba(212, 176, 106, 0.14), transparent 55%),
+          radial-gradient(ellipse 50% 35% at 20% 30%, rgba(74, 158, 200, 0.16), transparent 50%),
+          radial-gradient(ellipse 80% 45% at 50% 110%, rgba(14, 28, 36, 0.95), transparent 55%),
+          linear-gradient(180deg, #0a1218 0%, #101c24 40%, #122028 70%, #0c161c 100%);
+        animation: paint-breathe 36s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 35% at 50% 100%, rgba(74, 158, 200, 0.08), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(168, 200, 216, 0.04), transparent);
+        animation: fog-drift 56s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--sea);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #d8ecf4;
+        text-shadow: 0 0 40px rgba(74, 158, 200, 0.22);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .deck {
+        position: relative;
+        width: min(18rem, 100%);
+        height: 10rem;
+        border-radius: 0.4rem;
+        background: #121c24;
+        border: 1px solid rgba(74, 158, 200, 0.3);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+        overflow: hidden;
+      }
+
+      .water {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 45%;
+        background:
+          linear-gradient(180deg, transparent, rgba(74, 158, 200, 0.25)),
+          repeating-linear-gradient(90deg, transparent 0 8px, rgba(168, 200, 216, 0.08) 8px 10px);
+        animation: water-sheen 8s ease-in-out infinite;
+      }
+
+      .dawn {
+        position: absolute;
+        right: 15%;
+        top: 12%;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(212, 176, 106, 0.7), transparent 70%);
+        animation: dawn-hold 10s ease-in-out infinite;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d4e4ec;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .gate-scene { background: #101820; }
+
+      .gate {
+        position: absolute;
+        inset: 18% 12%;
+        border: 1px solid rgba(74, 158, 200, 0.35);
+        border-radius: 0.25rem;
+        background: rgba(74, 158, 200, 0.05);
+      }
+
+      .gate::before {
+        content: "GATE THREE · INTENTION HELD";
+        position: absolute;
+        left: 8%;
+        top: 12%;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        color: var(--sea);
+      }
+
+      .hull {
+        position: absolute;
+        left: 18%;
+        right: 28%;
+        bottom: 22%;
+        height: 28%;
+        background: linear-gradient(180deg, #2a3844, #1a2834);
+        border-radius: 0.15rem 0.15rem 40% 40%;
+        animation: hull-ease 9s ease-in-out infinite;
+      }
+
+      .door {
+        position: absolute;
+        right: 22%;
+        bottom: 38%;
+        width: 8%;
+        height: 22%;
+        background: rgba(212, 176, 106, 0.45);
+        animation: door-wait 7s ease-in-out infinite;
+      }
+
+      .board-scene { background: #121a22; }
+
+      .board {
+        position: absolute;
+        inset: 14% 10%;
+        background: #0e161e;
+        border: 1px solid rgba(74, 158, 200, 0.3);
+        border-radius: 0.25rem;
+        padding: 1rem;
+      }
+
+      .board .line {
+        padding: 0.45rem 0;
+        border-top: 1px solid rgba(74, 158, 200, 0.15);
+        font-size: 0.78rem;
+        color: #b8d0dc;
+        letter-spacing: 0.02em;
+      }
+
+      .board .line:first-child { border-top: 0; padding-top: 0; }
+
+      .board .hold {
+        color: var(--gold);
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .freight-scene { background: #101820; }
+
+      .lane {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 40%;
+        height: 12%;
+        background: rgba(74, 158, 200, 0.08);
+        border-top: 1px dashed rgba(74, 158, 200, 0.3);
+        border-bottom: 1px dashed rgba(74, 158, 200, 0.3);
+      }
+
+      .box {
+        position: absolute;
+        top: 28%;
+        width: 14%;
+        height: 22%;
+        background: #2a3844;
+        border: 1px solid rgba(168, 200, 216, 0.25);
+        animation: box-slide 12s ease-in-out infinite;
+      }
+      .box.a { left: 12%; animation-delay: 0s; }
+      .box.b { left: 32%; animation-delay: -4s; background: #243040; }
+      .box.c { left: 52%; animation-delay: -8s; }
+
+      .hall-scene { background: #121a20; }
+
+      .hall {
+        position: absolute;
+        inset: 15% 10%;
+        background: linear-gradient(180deg, rgba(74, 158, 200, 0.08), transparent 40%), #0e161c;
+        border: 1px solid rgba(168, 200, 216, 0.2);
+        border-radius: 0.25rem;
+      }
+
+      .seat {
+        position: absolute;
+        bottom: 20%;
+        width: 12%;
+        height: 18%;
+        background: #1a2830;
+        border-radius: 0.1rem;
+      }
+      .seat.a { left: 15%; }
+      .seat.b { left: 32%; }
+      .seat.c { left: 49%; }
+
+      .window-band {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 18%;
+        height: 28%;
+        background: linear-gradient(180deg, rgba(212, 176, 106, 0.15), rgba(74, 158, 200, 0.2));
+        animation: window-light 11s ease-in-out infinite;
+      }
+
+      .pier-scene { background: #0e161c; }
+
+      .pier {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 28%;
+        height: 8%;
+        background: #1a242c;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      }
+
+      .pier-water {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 28%;
+        background:
+          linear-gradient(180deg, rgba(74, 158, 200, 0.3), rgba(20, 40, 52, 0.9));
+        animation: water-sheen 8s ease-in-out infinite;
+      }
+
+      .figure {
+        position: absolute;
+        left: 42%;
+        bottom: 36%;
+        width: 0.55rem;
+        height: 1.8rem;
+        background: rgba(232, 240, 244, 0.55);
+        border-radius: 1px;
+        animation: walk-soft 14s ease-in-out infinite;
+      }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(74, 158, 200, 0.18);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #c8dce8;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(6deg) brightness(1.05); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-3%); }
+        to { transform: translateX(3%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes water-sheen {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1; }
+      }
+      @keyframes dawn-hold {
+        0%, 100% { opacity: 0.7; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
+      @keyframes hull-ease {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(4%); }
+      }
+      @keyframes door-wait {
+        0%, 40% { opacity: 0.9; transform: scaleX(1); }
+        50%, 65% { opacity: 1; transform: scaleX(1.4); box-shadow: 0 0 12px rgba(212, 176, 106, 0.4); }
+        75%, 100% { opacity: 0.5; transform: scaleX(0.3); }
+      }
+      @keyframes box-slide {
+        0% { transform: translateX(0); opacity: 0.6; }
+        40% { opacity: 1; }
+        100% { transform: translateX(180%); opacity: 0.3; }
+      }
+      @keyframes window-light {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes walk-soft {
+        0% { left: 20%; opacity: 0; }
+        10% { opacity: 0.7; }
+        90% { opacity: 0.7; }
+        100% { left: 70%; opacity: 0; }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="deck" aria-hidden="true">
+          <div class="dawn"></div>
+          <div class="water"></div>
+        </div>
+        <h1>The bay kept the morning</h1>
+        <time datetime="2026-09-18">18 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara learned the bay by the way the light hit the water before anything else moved. For twenty years that had meant standing on the glass deck above Gate Three with a radio in her fist and a board of delays she could not outrun. Ferries stacked. Freight barges waited their turn. The coastal buses arrived in clumps and left half empty. People missed connections by four minutes and spent the rest of the morning pretending it was fine.</p>
+        <p>The system that replaced the old scramble did not arrive as a speech. It arrived as quieter mornings.</p>
+        <p>She still came in before dawn. Habit. The bay was already awake in a different way. Schedules were not posted as fixed times anymore. They were held as intentions. A ferry that needed to meet the 6:40 inland train was not locked to a clock that ignored fog. The network watched the tide, the wind along the channel, the load already on the quay, and the handful of passengers whose tickets said they had a hard arrival inland. It left a little early when the water was kind. It held a little when a late coach from the ridge was two minutes out and carrying someone with a hospital appointment the system had been asked, weeks ago, not to miss.</p>
+        <p>Mara’s job had changed shape without changing its name. She was still bay lead. She no longer shouted. She confirmed. When a human decision still mattered — a medical priority, a storm the models treated too lightly, a school group that wanted to stay together — she touched the pane and the bay listened. The rest of the morning arranged itself.</p>
+      </div>
+
+      <figure class="scene gate-scene tall" aria-hidden="true">
+        <div class="gate">
+          <div class="hull"></div>
+          <div class="door"></div>
+        </div>
+      </figure>
+      <p class="cap">Gate Three · door holds a breath</p>
+
+      <div class="prose">
+        <p>On the first week she had not trusted it. She had hovered over Gate Three waiting for the old pile-up. The 5:55 to the islands left on a calm sheet of water with eight seats still open and no one sprinting down the ramp. The freight tug that used to idle for forty minutes slid into the slot the network had kept warm for it, took its containers, and was gone before the coffee cart opened. A woman with a cane reached the lower walk as the shuttle door stayed open an extra breath. Nobody announced why. The door simply waited, then closed.</p>
+        <p>By the third month Mara had stopped bringing the old radio. She brought a thermos and stood at the rail because she liked the bay, not because she was bracing for it.</p>
+        <p>The people who used the network noticed in small ways. A mechanic who used to leave home at four to be sure of the first crossing now left at five and still made his shift. A teenager who took the coastal bus to the art college stopped writing apology texts to her tutor. Couriers stopped buffering an hour of slack into every waterfront run. The slack had been a tax on everyone who could least afford it. When the tax lifted, the day got longer in the middle, where life actually happens.</p>
+      </div>
+
+      <figure class="scene freight-scene" aria-hidden="true">
+        <div class="lane"></div>
+        <div class="box a"></div>
+        <div class="box b"></div>
+        <div class="box c"></div>
+      </figure>
+      <p class="cap">Freight in the gaps · daylight for bodies</p>
+
+      <div class="prose">
+        <p>Freight was the quiet miracle. The old bay had treated cargo as something that argued with passengers. Now the same lanes held both without the argument. Containers moved in the gaps people did not need. Night barges took the heavy loads while the city slept. Daylight kept the decks for bodies and bikes and the occasional dog that refused to stay in its carrier. Mara watched a refrigerated load for the island clinic transfer in under three minutes one Tuesday and felt, for the first time in years, that the bay was on the same side as the people who lived on it.</p>
+        <p>There were still storms. The system did not pretend weather was optional. What it did was tell the truth early. Phones lit with a revised morning before anyone left the house. Alternate coaches were already staged inland. A ferry that could not safely cross did not pretend it could, and the network spent the saved risk on getting everyone where they had meant to go by another route that still felt like a plan, not a scramble. Mara’s desk used to fill with angry calls on those days. Now it filled with confirmations. People thanked her for things she had only approved.</p>
+      </div>
+
+      <figure class="scene board-scene" aria-hidden="true">
+        <div class="board">
+          <div class="line">Island ferry <span class="hold">holding for ridge coach</span></div>
+          <div class="line">Coastal bus · early · tunnel clear</div>
+          <div class="line">Inland connection · still whole</div>
+        </div>
+      </figure>
+      <p class="cap">Waiting hall board · no red DELAY</p>
+
+      <div class="prose">
+        <p>In the spring the city opened the old waiting hall as a room again instead of a holding pen. There were seats that faced the water. There was a corner for kids. The board on the wall no longer screamed DELAY in red. It showed the next few movements in plain language: this boat is holding for the ridge coach; that bus is early because the tunnel is clear; your connection inland is still whole. Mara watched an elderly man read the board, nod once, and sit down without checking his watch. He trusted the morning to finish what it had started.</p>
+        <p>Her own life shifted in the same soft way. She used to miss her daughter’s school concerts because the evening peak would not let her leave. The peak still existed. It no longer owned her. On a Thursday in June she clocked out at the time she had said she would, walked the long pier while the late light made the water look like metal that had decided to be kind, and reached the school hall before the first song. Her daughter saw her in the third row and did not look surprised. That was the part that stayed with Mara. Not surprise. Expectation. The bay had given her back enough ordinary evenings that being present had become the default.</p>
+      </div>
+
+      <figure class="scene hall-scene" aria-hidden="true">
+        <div class="hall">
+          <div class="window-band"></div>
+          <div class="seat a"></div>
+          <div class="seat b"></div>
+          <div class="seat c"></div>
+        </div>
+      </figure>
+      <p class="cap">Old waiting hall · seats face the water</p>
+
+      <figure class="scene pier-scene tall" aria-hidden="true">
+        <div class="pier"></div>
+        <div class="pier-water"></div>
+        <div class="figure"></div>
+      </figure>
+      <p class="cap">Long pier · evening light</p>
+
+      <div class="close">
+        <p>She still learned the morning by the light on the water. The difference was that the light was no longer a countdown. It was just the start of a day the network intended to keep.</p>
+        <p>The bay kept the morning.</p>
+      </div>
+    </article>
+  </body>
+</html>
