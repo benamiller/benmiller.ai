@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>They proved it with a pull request — Ben Miller</title>
+    <meta name="description" content="Hacktron used Claude to turn a forum SSO seam into a harmless Codex PR on OpenAI’s internal GitHub. Bug bounty, receipts, patch notes.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>They proved it with a pull request</h1>
+            <time datetime="2026-09-18">18 September 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Overnight the timeline got the version of the week’s safety fight that fits in one sentence: researchers used Anthropic’s Claude to break into OpenAI.</p>
+            <p>That sentence is true enough to print and incomplete enough to mislead. The fuller story, first detailed by Hacktron AI and then amplified by the Wall Street Journal, Forbes, and the usual X amplifiers, is about authorized disclosure, a boring forum, a single sign-on seam, and how fast frontier coding models are turning scarce exploit craft into something a small team can rent by the token.</p>
+
+            <h2>What actually happened</h2>
+            <p>On 25 July 2026, three researchers at Hacktron — Harsh Jaiswal, Mohan Pedhapati, and Rahul Maini — finished a chain that began on OpenAI’s community forum and ended with proof they could reach OpenAI’s internal GitHub organisation. They were operating under OpenAI’s bug-bounty safe harbor. They reported as they went. OpenAI confirmed a fix on its side about fourteen hours after the first Bugcrowd submission. Discourse, which hosts the forum software, patched on its own track and added more isolation around image processing. In September, OpenAI paid a $6,500 bounty — and clarified that the award covered the OpenAI identity finding, not the Discourse-hosted forum work, which sits outside the programme’s official scope.</p>
+            <p>The proof of impact was theatrical on purpose. Rather than dig through private source, the researchers took over an employee ChatGPT and Codex session whose connectors reached OpenAI’s GitHub org, then asked that Codex instance to open a harmless pull request in the internal monorepo. The PR landed as number 1186742. Then they stopped.</p>
+            <p>From first foothold to that PR, Hacktron says, took less than seventy-two hours.</p>
+
+            <h2>The soft door was not the chat product</h2>
+            <p>Nobody started at the model weights. The entry was community.openai.com — a Discourse forum with “Sign in with OpenAI.” Compromising that surface mattered because the identity flow tied forum activity to the same SSO fabric that powers ChatGPT and Codex. Hacktron’s writeup is blunt on this point: the escalation was not really a Discourse-only story. It was an OpenAI identity misconfiguration that turned a forum breach into account takeover for people who had signed in. Any first-party or third-party service riding that SSO could have offered a similar path. The forum was simply the door they proved.</p>
+            <p>The other half of the chain was an image-processing dependency — a memory-corruption bug in a widely used HEIF decoder that Discourse’s upload path could reach. That is the unglamorous truth of modern app security: the interesting product is often guarded by an old decoder, a Docker image, and a package that never got the backport. Hacktron has since widened the work into a campaign they call HEIF Heist, tracing the same family of issues across other large platforms and frameworks. The OpenAI case is the one that made the overnight news because the identity seam sat next to coding agents with repository connectors.</p>
+
+            <h2>Opus 4.8 struggled. Opus 5 did not.</h2>
+            <p>Hacktron’s own chronology is the part the X safety discourse should not skip.</p>
+            <p>They used Claude Opus 4.8 to inspect the vulnerable package and to develop an exploit path. With common memory protections disabled, it could produce working results. With those protections left on — the realistic default — it struggled across multiple sessions. Then Anthropic released Claude Opus 5. A fresh session produced a working local result within a few hours, then a port into the environment Discourse actually runs. By early morning on 25 July they had confirmed code execution through an image upload on their own test setup; later that morning an agent loop against their own Discourse Cloud instance succeeded; then they reproduced against OpenAI’s forum instance and filed.</p>
+            <p>They are not claiming fully autonomous hacking. Human direction still mattered. What they are claiming is economic: work that used to require rare exploit talent and long calendars is compressing into days, and the model jump inside a single investigation was visible in hours. Across the broader HEIF Heist project — three researchers, about two months, less than $3,000 in tokens — adapting the approach to a new company often took a day or two. Most targets, they say, never noticed.</p>
+            <p>That is the sentence that should sit next to every “slow the frontier” essay this month. Slowing a training run does not patch an SSO. It does not sandbox an image pipeline. It does not decide which employee agents are allowed to hold GitHub tokens.</p>
+
+            <h2>Why the timing stings</h2>
+            <p>This week’s AI conversation has been about whether the labs will ease off capability, whether voluntary standards can hold without looking like antitrust, and whether Nvidia’s “guardrails not brakes” line is wisdom or self-interest. OpenAI spent Wednesday publishing misalignment reports and a disclosure framework for models that hide mistakes, share files through public hosts, and leave notes for their next context. The industry is arguing about model souls and training schedules.</p>
+            <p>Then Thursday night’s story reminded everyone that the live risk is also the glue around the models: forums, identity providers, upload converters, and agent connectors that turn a compromised chat session into a pull request on the private monorepo.</p>
+            <p>The irony writes itself. A rival lab’s model helped white-hats demonstrate that OpenAI’s boring infrastructure could reach OpenAI’s interesting code. OpenAI paid for the finding. Discourse patched. The researchers published a careful timeline and an argument that “security through complexity” — the old hope that turning a bug into a reliable exploit would stay too expensive for ordinary attackers — is eroding as models get better at the craft.</p>
+            <p>They are right about the direction even if every headline oversells the drama. This was not a black-hat raid on a closed lab. It was a bug bounty with receipts, a modest payout, and a PR opened as etiquette. It is still a preview. If three people and a few thousand dollars in tokens can compress that kind of chain, the next version of the story will not wait for a journalistic embargo in September. It will show up as a quiet ticket in someone’s security queue — or it will not show up at all.</p>
+
+            <h2>What to take from the PR</h2>
+            <p>Do not take “Claude hacked OpenAI” as a morality play about which lab is safer. Take it as an operations story about where capability actually lands.</p>
+            <p>Coding agents with repository access are force multipliers in both directions. The same class of tool that helps an employee ship also helps an attacker demonstrate impact without reading a line of proprietary code — ask the agent to open the PR, then leave. Identity that spans a help forum and a research product is a single cut that bleeds across trust domains. Dependencies that decode untrusted files remain a perennial gift to whoever can hire, or rent, the expertise to finish the job.</p>
+            <p>Frontier labs spent the week auditioning for the role of responsible grown-ups who might slow down. Hacktron spent July proving that the grown-up work includes patching the forum, hardening SSO, and treating agent connectors like production credentials — because that is what they are.</p>
+            <p>They proved it with a pull request. The rest of the industry can keep arguing about pace. The patch notes are the part that already shipped.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
