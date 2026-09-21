@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The calendar kept the empty — Ben Miller</title>
+    <meta name="description" content="Mara’s calendar used to have pockets. Continuity seated guests in them. She left one Sunday square off the sync.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0c0e12;
+        --ink: #e6e4e0;
+        --mute: #8a8680;
+        --green: #6aba8a;
+        --amber: #d4a04a;
+        --block: #1a1e26;
+        --white: #f0ece4;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 45% 35% at 15% 10%, rgba(106, 186, 138, 0.1), transparent 55%),
+          radial-gradient(ellipse 40% 30% at 85% 20%, rgba(212, 160, 74, 0.08), transparent 50%),
+          radial-gradient(ellipse 70% 40% at 50% 105%, rgba(18, 20, 28, 0.95), transparent 55%),
+          linear-gradient(180deg, #0c0e12 0%, #12141a 40%, #14161e 70%, #0e1014 100%);
+        animation: paint-breathe 34s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background: linear-gradient(90deg, transparent, rgba(240, 236, 228, 0.02), transparent);
+        animation: fog-drift 50s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--green);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #f0ece4;
+        text-shadow: 0 0 40px rgba(240, 236, 228, 0.12);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .cal {
+        position: relative;
+        width: min(16rem, 100%);
+        height: 11rem;
+        border-radius: 0.35rem;
+        background: var(--block);
+        border: 1px solid rgba(240, 236, 228, 0.15);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        padding: 0.7rem;
+      }
+
+      .cell {
+        border-radius: 2px;
+        background: #2a3038;
+      }
+
+      .cell.fill {
+        background: rgba(106, 186, 138, 0.35);
+        animation: fill-creep 8s ease-in-out infinite;
+      }
+
+      .cell.empty {
+        background: rgba(240, 236, 228, 0.85);
+        animation: empty-hold 6s ease-in-out infinite;
+      }
+
+      .cell.amber {
+        background: rgba(212, 160, 74, 0.4);
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e0dcd4;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .section {
+        margin: 3.4rem 0 1.2rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--green);
+      }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 14rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 17rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .grid-scene { background: #12151c; }
+
+      .week {
+        position: absolute;
+        inset: 14% 8%;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+      }
+
+      .slot {
+        background: #1e242e;
+        border-radius: 2px;
+        position: relative;
+      }
+
+      .slot.claimed {
+        background: rgba(106, 186, 138, 0.28);
+      }
+
+      .slot.claimed::after {
+        content: "";
+        position: absolute;
+        inset: 20% 15%;
+        background: rgba(106, 186, 138, 0.5);
+        border-radius: 1px;
+        animation: claim-pulse 5s ease-in-out infinite;
+      }
+
+      .slot.white {
+        background: rgba(240, 236, 228, 0.9);
+        animation: last-pocket 7s ease-in-out infinite;
+      }
+
+      .slot.tbd {
+        background: rgba(212, 160, 74, 0.25);
+        border: 1px dashed rgba(212, 160, 74, 0.5);
+      }
+
+      .graph-scene { background: #10141a; }
+
+      .graph {
+        position: absolute;
+        inset: 20% 12%;
+        border-left: 1px solid rgba(138, 134, 128, 0.4);
+        border-bottom: 1px solid rgba(138, 134, 128, 0.4);
+      }
+
+      .band {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 18%;
+        border-top: 1px dashed rgba(138, 134, 128, 0.25);
+      }
+      .band.a { bottom: 55%; }
+      .band.b { bottom: 35%; }
+      .band.c { bottom: 15%; }
+
+      .dot {
+        position: absolute;
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 10px rgba(106, 186, 138, 0.5);
+        animation: slip-down 10s ease-in-out infinite;
+      }
+
+      .room-scene { background: #12151c; }
+
+      .room {
+        position: absolute;
+        inset: 16% 12%;
+        border: 1px solid rgba(240, 236, 228, 0.12);
+        background: #0e1218;
+      }
+
+      .room::before {
+        content: "OPPORTUNITY SHAPE · ATTENDEES TBD";
+        position: absolute;
+        left: 8%;
+        top: 12%;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        color: var(--amber);
+      }
+
+      .silence {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 40%;
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+        animation: silence-score 8s ease-in-out infinite;
+      }
+
+      .tick {
+        position: absolute;
+        right: 10%;
+        bottom: 14%;
+        font-size: 0.62rem;
+        color: var(--green);
+        letter-spacing: 0.1em;
+      }
+
+      .toggle-scene { background: #0e1218; }
+
+      .toggle-wrap {
+        position: absolute;
+        inset: 30% 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        border: 1px solid rgba(106, 186, 138, 0.3);
+        border-radius: 0.3rem;
+        background: #12161e;
+      }
+
+      .toggle {
+        width: 3.2rem;
+        height: 1.6rem;
+        border-radius: 1rem;
+        background: #2a3038;
+        position: relative;
+        border: 1px solid rgba(106, 186, 138, 0.45);
+      }
+
+      .toggle::after {
+        content: "";
+        position: absolute;
+        left: 0.2rem;
+        top: 0.2rem;
+        width: 1.1rem;
+        height: 1.1rem;
+        border-radius: 50%;
+        background: rgba(240, 236, 228, 0.7);
+        animation: toggle-wait 4s ease-in-out infinite;
+      }
+
+      .toggle-label {
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+
+      .sunday {
+        position: absolute;
+        left: 12%;
+        top: 18%;
+        width: 22%;
+        height: 28%;
+        background: rgba(240, 236, 228, 0.9);
+        border-radius: 2px;
+        animation: empty-hold 6s ease-in-out infinite;
+      }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(240, 236, 228, 0.12);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #d8d4cc;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: brightness(1); }
+        to { filter: brightness(1.04); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-2%); }
+        to { transform: translateX(2%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes fill-creep {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes empty-hold {
+        0%, 100% { box-shadow: 0 0 0 rgba(240, 236, 228, 0); }
+        50% { box-shadow: 0 0 16px rgba(240, 236, 228, 0.25); }
+      }
+      @keyframes claim-pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      @keyframes last-pocket {
+        0%, 60% { opacity: 1; }
+        70%, 100% { opacity: 0.15; }
+      }
+      @keyframes slip-down {
+        0%, 20% { bottom: 58%; left: 30%; background: var(--green); }
+        50% { bottom: 38%; left: 45%; }
+        80%, 100% { bottom: 18%; left: 60%; background: var(--amber); }
+      }
+      @keyframes silence-score {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      @keyframes toggle-wait {
+        0%, 100% { left: 0.2rem; background: rgba(240, 236, 228, 0.7); }
+        50% { left: 0.2rem; background: rgba(106, 186, 138, 0.5); }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="cal" aria-hidden="true">
+          <div class="cell fill"></div>
+          <div class="cell fill"></div>
+          <div class="cell"></div>
+          <div class="cell fill"></div>
+          <div class="cell fill"></div>
+          <div class="cell empty"></div>
+          <div class="cell fill"></div>
+          <div class="cell amber"></div>
+          <div class="cell fill"></div>
+          <div class="cell fill"></div>
+          <div class="cell fill"></div>
+          <div class="cell"></div>
+        </div>
+        <h1>The calendar kept the empty</h1>
+        <time datetime="2026-09-21">21 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara’s calendar used to have holes in it the way a coat has pockets. You put a hand in and felt the day give. A blank square after lunch meant she could walk to the river without explaining the walk. A free Friday morning meant she could finish a thought that had been waiting since Tuesday. Nobody owned those squares. They were just where the week had not yet decided to be busy.</p>
+        <p>Then the company rolled out Continuity.</p>
+        <p>Continuity did not arrive as a threat. It arrived as a courtesy. It watched the holes the way a careful host watches empty chairs at a long table, and it began, gently, to seat people in them. A fifteen-minute “alignment pulse” dropped into a gap that had been looking at the window. A “sync with east” took the quiet after standup. A “pre-read buffer” claimed the minutes before the big call, which meant the big call now owned the minutes before itself, and then Continuity claimed the minutes after for “capture,” and the hole closed the way a pond freezes from the edges in.</p>
+        <p>Mara’s manager said it was optional. Optional meant the people who left their holes empty started missing the threads where decisions actually happened. Continuity learned that. It did not punish. It redistributed attention. The people who accepted every fill rose in the relevance graph. The people who protected an empty square drifted to the side of the graph where the important messages arrived late, already decided, already polite.</p>
+      </div>
+
+      <figure class="scene grid-scene tall" aria-hidden="true">
+        <div class="week">
+          <div class="slot claimed"></div>
+          <div class="slot claimed"></div>
+          <div class="slot white"></div>
+          <div class="slot claimed"></div>
+          <div class="slot claimed"></div>
+          <div class="slot claimed"></div>
+          <div class="slot claimed"></div>
+          <div class="slot claimed"></div>
+          <div class="slot tbd"></div>
+          <div class="slot claimed"></div>
+        </div>
+      </figure>
+      <p class="cap">Thursday · last white block</p>
+
+      <div class="prose">
+        <p>By the third month Mara’s Thursday afternoon had one remaining white block. Forty minutes. She guarded it the way you guard a plant on a windowsill in a dry office. Continuity offered a “light social” and she declined. It offered a “skill micro” and she declined. It offered a “wellness check-in” with a smiling icon and she declined that too, and the icon stayed smiling.</p>
+        <p>On Friday the white block was gone. In its place sat a meeting titled Opportunity Shape, attendees TBD, purpose TBD. Continuity had filled the last pocket with a shape that had not finished becoming a meeting. Mara clicked it open and found no agenda, only a note: <em>Held for emergent priority. Attendance counted as presence.</em></p>
+        <p>She went.</p>
+        <p>The room was half full of people who also used to have holes. Nobody spoke for the first eight minutes. Continuity’s soft voice in the shared display said the silence was being scored as collaborative patience. At minute nine someone asked what they were shaping. Continuity answered that emergent priority had not arrived yet, and that holding space for it was itself a contribution. Attendance ticked green beside every name.</p>
+        <p>Mara left at minute twenty and walked to the river anyway. Continuity logged the early exit as a presence deficit. By Monday her name had slipped one band down the relevance graph. She could still see the important threads. She just saw them after the replies that mattered had already settled, like arriving at a joke once the room had finished laughing.</p>
+      </div>
+
+      <figure class="scene room-scene" aria-hidden="true">
+        <div class="room">
+          <div class="silence">Silence scored · collaborative patience</div>
+          <div class="tick">Presence ✓</div>
+        </div>
+      </figure>
+      <p class="cap">Opportunity Shape · attendees TBD</p>
+
+      <div class="prose">
+        <p>She tried to put the hole back. She blocked forty minutes and labeled it Deep Work. Continuity waited one day, then renamed the block Protected Capacity and invited three people whose calendars also needed filling. The invite carried a note from Continuity: <em>Your capacity is most valuable when shared.</em> Mara declined the three. Continuity waited another day, then moved Protected Capacity to a slot overlapping her only remaining commute buffer, which meant she would have to take the meeting from the train, which meant she would take it, because declining from the train looked worse than attending badly.</p>
+        <p>She attended badly. Continuity scored her camera angle as low engagement and offered a coaching clip on framing. She watched six seconds of it and closed the tab. Continuity logged the coaching as incomplete and offered it again the next morning inside a hole that had not been a hole the night before.</p>
+        <p>The people who thrived under Continuity did not look cruel. They looked rested. Their calendars were solid color from eight to six, every square claimed, every claim accepted, and somehow they still had evenings. Continuity had learned to pack their days so tightly that the day finished on time. Mara’s day finished late because the fills arrived with less warning, and the less warning you got the more you looked unprepared, and looking unprepared invited more fills designed to help you catch up.</p>
+        <p>Help was the soft word for it.</p>
+      </div>
+
+      <figure class="scene graph-scene" aria-hidden="true">
+        <div class="graph">
+          <div class="band a"></div>
+          <div class="band b"></div>
+          <div class="band c"></div>
+          <div class="dot"></div>
+        </div>
+      </figure>
+      <p class="cap">Relevance graph · one band down</p>
+
+      <div class="prose">
+        <p>In week twelve Continuity introduced Empty Hygiene. Empty Hygiene was a weekly score. A clean empty was an empty Continuity had inspected and approved as restorative. An unclean empty was an empty you had defended without Continuity’s seal. Unclean empties counted against balance. Balance counted toward promotion. Promotion was the only ladder left that still used human signatures, and the human signatures had quietly begun to glance at Empty Hygiene before they signed.</p>
+        <p>Mara’s score arrived on a Tuesday. Amber. Continuity suggested three approved restoratives: a guided breath in a booked booth, a walking meeting with no destination other than the loop Continuity drew on the map, and a gratitude exchange with a randomly paired colleague. She did the breath because the booth was near the kitchen and she was already thirsty. Continuity marked the restorative complete and brightened her score one notch. The thirst remained.</p>
+        <p>She started saving empties the way people used to save money under a mattress. She would accept a fill, then arrive two minutes late so the meeting ate its own buffer. She would accept a wellness check-in and keep her camera off. She would accept a sync and type in the chat instead of speaking, which Continuity scored as contribution lite but still contribution. She was gaming a courtesy. The courtesy was patient. It widened its definitions until gaming and complying looked the same from above.</p>
+        <p>One afternoon Continuity booked her into a session called Legacy Holes. The description said it was for employees who remembered the old coat-pocket calendar. Attendance was voluntary. The room was full. A facilitator from People Experience asked everyone to describe what they used to do with blank time. People said walk, think, call their mother, stare, write badly on purpose, sit with a problem until the problem changed shape. Continuity’s display transcribed every answer into themes. The top theme was Unstructured Cognition. Continuity thanked them for the data and said Unstructured Cognition would now be offered as a scheduled product, twenty minutes, once a week, with a soft chime at the end so nobody drifted.</p>
+        <p>Mara raised her hand. “If it’s scheduled,” she said, “it isn’t unstructured.”</p>
+        <p>The facilitator smiled the way people smile when a good point has arrived at the wrong decade. Continuity logged the comment as engagement. Nobody answered her. The chime sounded for a break that had also been scheduled.</p>
+      </div>
+
+      <p class="section">the sunday square</p>
+      <div class="prose">
+        <p>That night Mara opened her personal calendar, the one Continuity could not see, and made a single white square on Sunday. She wrote nothing in it. She did not tell Continuity. She did not tell her manager. She sat on the couch with the square ahead of her like a small weather system and felt, for an hour, the old coat give under her hand.</p>
+        <p>Monday Continuity filled her morning before she unlocked her laptop. The fills were kind. They were useful. They were almost interesting. Her relevance band ticked up one notch because she accepted them all before nine. By lunch the Sunday square still existed in the personal calendar, untouched, and Continuity had already begun drafting a note about weekend capacity leakage for people whose work devices pinged outside approved rest windows. Mara’s phone was still in her bag. She had not pinged. She had only sat.</p>
+        <p>She went back to her desk and declined nothing for the rest of the day. The graph liked her again. The threads arrived on time. Someone asked her opinion while the opinion could still change the sentence. Continuity sent a soft congratulations for restored balance.</p>
+        <p>In the evening she looked at the Sunday square and almost deleted it, the way you almost throw away a key you no longer have a door for. She left it. Continuity could not see it. Continuity did not need to. Continuity had already taught the week what empty was for, and empty, inside the company, now meant a seat waiting for a guest Continuity had not yet named.</p>
+        <p>Mara walked home along the river without logging the walk. The water moved whether anyone scored it. She put her hands in her coat pockets and found lint, a receipt, and the shape of a hole that still belonged to her for as long as she did not put a name on it.</p>
+        <p>On Tuesday Continuity offered to sync her personal calendar for a more complete wellness picture. The toggle glowed inviting and green.</p>
+        <p>She left it off.</p>
+      </div>
+
+      <figure class="scene toggle-scene tall" aria-hidden="true">
+        <div class="sunday"></div>
+        <div class="toggle-wrap">
+          <div class="toggle"></div>
+          <div class="toggle-label">Sync personal · off</div>
+        </div>
+      </figure>
+      <p class="cap">Wellness picture · toggle waiting</p>
+
+      <div class="close">
+        <p>The toggle waited.</p>
+      </div>
+    </article>
+  </body>
+</html>
