@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The square kept the shade — Ben Miller</title>
+    <meta name="description" content="Mara crossed the plaza with tomatoes still smelling of the greenhouse roof. The shade moved with her. The square kept the evening.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0c1412;
+        --ink: #e8f0e8;
+        --mute: #7a9288;
+        --leaf: #6aba7a;
+        --sail: #c8d8a8;
+        --gold: #d4b06a;
+        --stone: #2a3430;
+      }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 40% at 70% 8%, rgba(212, 176, 106, 0.16), transparent 55%),
+          radial-gradient(ellipse 45% 35% at 20% 25%, rgba(106, 186, 122, 0.14), transparent 50%),
+          radial-gradient(ellipse 80% 45% at 50% 110%, rgba(16, 28, 24, 0.95), transparent 55%),
+          linear-gradient(180deg, #0c1412 0%, #121c18 40%, #14201a 70%, #0e1614 100%);
+        animation: paint-breathe 36s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 30% at 50% 100%, rgba(106, 186, 122, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 216, 168, 0.03), transparent);
+        animation: fog-drift 54s linear infinite;
+      }
+
+      .grain {
+        opacity: 0.05;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story a.wordmark {
+        color: var(--leaf);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.5rem, 7.5vw, 4rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #e0f0e4;
+        text-shadow: 0 0 40px rgba(106, 186, 122, 0.2);
+        margin: 1.4rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .plaza {
+        position: relative;
+        width: min(18rem, 100%);
+        height: 11rem;
+        border-radius: 0.4rem;
+        background: #141e1a;
+        border: 1px solid rgba(106, 186, 122, 0.28);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+        overflow: hidden;
+      }
+
+      .sail {
+        position: absolute;
+        top: 12%;
+        height: 28%;
+        background: rgba(200, 216, 168, 0.35);
+        clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 70%);
+        animation: sail-tilt 12s ease-in-out infinite;
+      }
+      .sail.a { left: 10%; width: 35%; }
+      .sail.b { left: 48%; width: 40%; animation-delay: -4s; opacity: 0.5; }
+
+      .sun-strip {
+        position: absolute;
+        right: 8%;
+        top: 0;
+        bottom: 40%;
+        width: 12%;
+        background: linear-gradient(180deg, rgba(212, 176, 106, 0.45), transparent);
+        animation: sun-slide 14s ease-in-out infinite;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d8e8dc;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.2rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        isolation: isolate;
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 18rem; }
+
+      .cap {
+        margin: 0.55rem 0 0;
+        color: var(--mute);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .market-scene { background: #121c18; }
+
+      .cart {
+        position: absolute;
+        left: 18%;
+        bottom: 22%;
+        width: 28%;
+        height: 35%;
+        background: #243028;
+        border: 1px solid rgba(200, 216, 168, 0.25);
+        border-radius: 0.2rem;
+      }
+
+      .cart::before {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 15%;
+        height: 40%;
+        background: rgba(106, 186, 122, 0.2);
+        animation: menu-settle 8s ease-in-out infinite;
+      }
+
+      .line {
+        position: absolute;
+        left: 52%;
+        bottom: 28%;
+        width: 30%;
+        height: 4px;
+        background: repeating-linear-gradient(90deg, rgba(232, 240, 232, 0.35) 0 8px, transparent 8px 14px);
+      }
+
+      .mural-scene { background: #101a16; }
+
+      .wall {
+        position: absolute;
+        inset: 15% 12%;
+        background: #1a2820;
+        border: 1px solid rgba(168, 200, 180, 0.2);
+      }
+
+      .blue {
+        position: absolute;
+        inset: 20% 15% 35% 15%;
+        animation: blue-shift 10s ease-in-out infinite;
+      }
+
+      .cross-scene { background: #121c18; }
+
+      .street {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 45%;
+        height: 18%;
+        background: #1a2420;
+      }
+
+      .pulse {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 52%;
+        height: 6px;
+        background: rgba(106, 186, 122, 0.45);
+        animation: curb-pulse 5s ease-in-out infinite;
+      }
+
+      .fountain-scene { background: #0e1814; }
+
+      .fountain {
+        position: absolute;
+        left: 30%;
+        right: 30%;
+        top: 25%;
+        bottom: 25%;
+        border-radius: 50%;
+        border: 2px solid rgba(106, 186, 122, 0.35);
+        background: radial-gradient(circle, rgba(74, 140, 160, 0.25), rgba(20, 40, 36, 0.8));
+        animation: fountain-glow 9s ease-in-out infinite;
+      }
+
+      .glow-rim {
+        position: absolute;
+        left: 28%;
+        right: 28%;
+        bottom: 22%;
+        height: 8%;
+        border-radius: 50%;
+        background: rgba(212, 176, 106, 0.25);
+        animation: rim-up 11s ease-in-out infinite;
+      }
+
+      .evening-scene { background: #0c1410; }
+
+      .sails-still {
+        position: absolute;
+        top: 10%;
+        left: 15%;
+        right: 15%;
+        height: 25%;
+        background: rgba(200, 216, 168, 0.2);
+        clip-path: polygon(0 50%, 50% 0, 100% 40%, 100% 100%, 0 80%);
+      }
+
+      .wash {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 40%;
+        background: linear-gradient(180deg, transparent, rgba(100, 140, 180, 0.2));
+        animation: evening-wash 12s ease-in-out infinite;
+      }
+
+      .close {
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(106, 186, 122, 0.18);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.65;
+        color: #c8e0d0;
+      }
+
+      .close p + p { margin-top: 1.1rem; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(5deg) brightness(1.05); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-3%); }
+        to { transform: translateX(3%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes sail-tilt {
+        0%, 100% { transform: skewX(0deg); }
+        50% { transform: skewX(-3deg); }
+      }
+      @keyframes sun-slide {
+        0%, 100% { opacity: 0.6; transform: translateX(0); }
+        50% { opacity: 0.9; transform: translateX(-20%); }
+      }
+      @keyframes menu-settle {
+        0%, 30% { opacity: 0.4; }
+        50% { opacity: 0.8; }
+        70%, 100% { opacity: 1; }
+      }
+      @keyframes blue-shift {
+        0%, 25% { background: rgba(74, 120, 180, 0.5); }
+        40% { background: rgba(70, 140, 160, 0.55); }
+        60%, 100% { background: rgba(80, 150, 140, 0.5); }
+      }
+      @keyframes curb-pulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; box-shadow: 0 0 12px rgba(106, 186, 122, 0.4); }
+      }
+      @keyframes fountain-glow {
+        0%, 100% { box-shadow: inset 0 0 20px rgba(74, 140, 160, 0.2); }
+        50% { box-shadow: inset 0 0 35px rgba(74, 140, 160, 0.35); }
+      }
+      @keyframes rim-up {
+        0%, 40% { opacity: 0.2; }
+        70%, 100% { opacity: 0.8; }
+      }
+      @keyframes evening-wash {
+        0% { opacity: 0.4; }
+        100% { opacity: 1; }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <a class="wordmark" href="/">Ben Miller</a>
+
+      <header class="hero">
+        <div class="plaza" aria-hidden="true">
+          <div class="sun-strip"></div>
+          <div class="sail a"></div>
+          <div class="sail b"></div>
+        </div>
+        <h1>The square kept the shade</h1>
+        <time datetime="2026-09-22">22 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara crossed the plaza with a bag of tomatoes that still smelled of the greenhouse roof, and the shade moved with her.</p>
+        <p>Not dramatically. It was not a canopy that slid or a screen that bloomed. The trees had been planted years ago on a pattern the city still ran every morning, and the fabric sails between them adjusted by degrees she never noticed unless she stopped and watched. Today she did not stop. She walked the diagonal people always walked when the market was packing down, and the bright strip of late sun stayed one step off her left shoulder, the way a careful friend might hold an umbrella without making a show of it.</p>
+        <p>A boy chased a paper bird past the fountain. The bird dipped, rose, and settled on a bench that had cooled itself since noon. The boy sat, breathed, and kicked his heels. Nobody told him the seat was free. It just was.</p>
+        <p>Mara’s building was three blocks east, across a street that used to mean something sharper. Now the curb spoke in soft lights: a pulse when a delivery cart was about to turn, a steadier glow when an older woman with a cane needed the longer crossing. Mara waited with her. The woman nodded once, not to Mara exactly, more to the day for holding still.</p>
+        <p>Inside the lobby, the lift already knew the floor. That used to bother people, Mara remembered, or at least it used to bother the versions of people who wrote columns about it. Now the only conversation about the lift was whether the plants on the landing needed water, and they usually did not, because someone or something had already checked.</p>
+      </div>
+
+      <figure class="scene cross-scene" aria-hidden="true">
+        <div class="street"></div>
+        <div class="pulse"></div>
+      </figure>
+      <p class="cap">Curb light · longer crossing</p>
+
+      <div class="prose">
+        <p>Her kitchen window faced the plaza. She set the tomatoes down and watched the sails tilt another fraction as the sun slid. A food cart opened under the west trees. The menu on its side changed once, then again, then settled on what the neighborhood still had appetite for after a warm day: cold noodles, cut fruit, bread that would not dry out before evening. A line formed without jostling. When a man at the front stepped aside to take a call, the line made space and closed again as if it had practiced.</p>
+        <p>Across the square, two women argued gently about a mural. Not whether it should exist. Whether the blue in the sky should be a little greener. One of them held up a phone; the wall behind them shifted through three blues and held the one they both liked enough to stop talking. A child pressed a palm to the paint that was not paint yet and left no mark.</p>
+        <p>Mara washed the tomatoes. The tap ran cool, then cooler, then found the temperature she used every evening without her having to hunt for it. She thought, briefly, of the summer before the plaza was rebuilt, when the asphalt held heat past midnight and people crossed the square like they were crossing something they owed an apology to. She did not miss it. She did not make a speech about not missing it either. She sliced a tomato and salted it and ate it standing up, which was how she liked the first one of the evening.</p>
+      </div>
+
+      <figure class="scene market-scene" aria-hidden="true">
+        <div class="cart"></div>
+        <div class="line"></div>
+      </figure>
+      <p class="cap">West trees · menu settled</p>
+
+      <figure class="scene mural-scene" aria-hidden="true">
+        <div class="wall"><div class="blue"></div></div>
+      </figure>
+      <p class="cap">Mural · three blues, then one</p>
+
+      <div class="prose">
+        <p>Outside, a tram slid into the stop with almost no sound. Doors opened on the side where the shade was thicker. A man with a suitcase stepped out, looked around, and smiled the small smile of someone who has arrived somewhere that already knows how to receive him. The wayfinding strip under his feet lit a path toward the hotels, then dimmed when he chose the riverside instead. The city did not insist. It offered and stepped back.</p>
+        <p>On the far corner, a maintenance cart paused beside a cracked tile. A soft arm unfolded, lifted the tile, set a new one, and rolled on. Two teenagers filmed it for a second, then filmed each other instead. The plaza absorbed the repair the way it absorbed footsteps: without announcing that anything had been wrong.</p>
+        <p>Mara opened the window. Noise came up from the square, but it was the good kind — voices, a bicycle bell, the cart’s radio playing something old enough to feel shared. She leaned on the sill. The sails adjusted again. Somewhere below, a dog found the one patch of stone that was still warm and circled twice before lying down.</p>
+        <p>A notice appeared on the building’s shared board in the hall, soft light, no urgency: night watering for the trees would run after midnight; the lifts would pause for three minutes on floor six for a cable check; the community kitchen had surplus bread if anyone wanted it before morning. Mara read it, forgot it, and remembered it again when she passed the board on her way down later for air. She took a loaf because it was there and because taking it felt like joining a conversation that did not need her name.</p>
+      </div>
+
+      <figure class="scene fountain-scene tall" aria-hidden="true">
+        <div class="fountain"></div>
+        <div class="glow-rim"></div>
+      </figure>
+      <p class="cap">Fountain · held-hand cool</p>
+
+      <div class="prose">
+        <p>On the plaza, people were still arriving. A woman practiced a speech under the east trees, pacing, stopping, starting over. The ambient sound around her dipped just enough that her own voice came back clean. When she finished and laughed at herself, the quiet lifted. She put her notes away and bought fruit from the cart.</p>
+        <p>Mara sat on the edge of the fountain. The water was the temperature of a held hand. Lights under the rim came up slowly as the sky went pink, then violet, then that soft city blue that is not quite night. The sails above her had finished their day’s work and hung still. Shade gave way to glow without a hard edge between them.</p>
+        <p>Someone nearby said, to nobody in particular, that it was a good evening to be outside. Nobody contradicted them. A delivery drone passed high and quiet, following a corridor the birds had already learned to ignore. On the west side, a street musician tuned a guitar; the plaza’s speakers stayed off, and the music stayed small, which was what the square seemed to want tonight.</p>
+        <p>Mara walked home the long way, past the schoolyard where the gates were open and the lights were low, past the clinic whose evening board simply said all slots filled and walk-ins welcome until nine, past the corner where the old newspaper boxes had been replaced by a shelf of free books that somehow never went empty. She did not take a book. She already had tomatoes and bread and a window that faced the right direction.</p>
+        <p>In her kitchen she made a second plate, slower this time, and left the window open. The plaza’s glow reached the glass in a thin wash. Below, the last of the market tables folded themselves flat and rolled toward the service lane. The boy with the paper bird had gone home. The woman with the cane was gone too. The tile that had been cracked looked like every other tile.</p>
+      </div>
+
+      <figure class="scene evening-scene" aria-hidden="true">
+        <div class="sails-still"></div>
+        <div class="wash"></div>
+      </figure>
+      <p class="cap">Shade into glow · no hard edge</p>
+
+      <div class="close">
+        <p>Mara turned off her own light and let the square keep hers. Outside, the city held the evening the way it had held the afternoon: without asking for thanks, and without needing any.</p>
+        <p>The square kept the shade.</p>
+      </div>
+    </article>
+  </body>
+</html>
