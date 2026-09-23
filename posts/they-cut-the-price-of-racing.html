@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>They cut the price of racing — Ben Miller</title>
+    <meta name="description" content="Anthropic ships Opus 5.5. OpenAI answers with Sol and Luna. Ten days after the pacing essay, Tuesday sold the frontier cheaper.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>They cut the price of racing</h1>
+            <time datetime="2026-09-23">23 September 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Ten days after Dario Amodei asked the industry to slow how fast frontier models get better, Anthropic shipped Claude Opus 5.5. About ninety minutes later, OpenAI put GPT-6 Sol and GPT-6 Luna on the API and into ChatGPT Work. The press called it a duel. The invoices called it a sale. The calendar called it Tuesday.</p>
+            <p>That is the story. Not which logo won the night. The story is that “pace the frontier” and “ship before the other lab does” are now living in the same week without apparent embarrassment.</p>
+
+            <h2>What landed</h2>
+            <p>Anthropic’s post is frank about the optics. Opus 5.5 is “our first release since we called for pacing the frontier.” It is also the first model in a Claude 5.5 family, pitched as Fable 5.1–level on most work at roughly forty percent less cost than Opus 5 on typical workloads. Token prices move to $4 and $20 per million input and output — twenty percent under Opus 5. Cache reads, the line item that dominates agent and coding bills, drop sixty percent to $0.20 per million. Output is more than thirty percent faster. External evaluators including METR and Frontier Design saw it before release. On Anthropic’s own automated behavioral audit, the company says it is the strongest-performing model it has tested. Because the model sits near Mythos 5.1 on biology and cybersecurity, the same class of safeguards that arrived with Fable ride along: risky asks get routed to an older model, verified life-sciences and cyber programs get a door that ordinary accounts do not.</p>
+            <p>OpenAI’s answer was not another Astra. It was a price cut with a capability bump attached. Sol is the coding and agent lane. Luna is the high-volume lane — extract, summarize, clear tasks at volume. Both sit under Astra and under the GPT-5.6 promotional prices by half on the API: Sol at $2 and $10 per million input and output, Luna at $0.10 and $0.50. Sam Altman spent the evening saying the thing that matters is cost per task, not cost per token, and that there was “nothing competitive anywhere in the market” on that metric. Greg Brockman posted the launch note. The OpenAI account put cute characters next to the model cards. DevDay still has “too much stuff to launch,” Altman said, which is a strange sentence in a month when the same industry is arguing about whether anyone should be launching at all.</p>
+            <p>Independent scoreboards moved the same night. The Register, citing Artificial Analysis, put Opus 5.5 on top of that firm’s Intelligence Index at 58 and roughly on par with GPT-6 Astra for agentic work. Treat those numbers as one vendor’s board, not a court. What the board and the price sheets agree on is simpler: the useful frontier for most teams just got cheaper.</p>
+
+            <h2>What pacing was supposed to mean</h2>
+            <p>Amodei’s September 12 essay did not ask labs to stop writing software. It asked them to slow the rate at which the most capable systems improve, so safety practice could stay ahead of capability. Altman echoed the direction. Elon Musk said Amodei was right. Jensen Huang, on CBS last Friday, gave the industry’s other answer: zero percent chance 2030 is the end of the world, scaring people is irresponsible, compete. Trump has already called the extinction talk a hoax. Yesterday’s reported piece on this site walked the UN week that tried to put “human control” in a communiqué without the United States or China in the room. Today the same CEOs who starred in that pacing chorus are on the UN Security Council docket to brief on AI and international security — while yesterday’s model cards are still warm.</p>
+            <p>Anthropic’s own announcement tries to hold both ideas at once. Safety for current models: audits, outside evaluators, capability-matched safeguards. Preparation for future ones: tighter training environments, better alignment rewards, less reliance on reading a model’s chain of thought. Public policy, the post says, should play a larger role as systems approach the point where they can automate AI research itself. Then the same document ships a model that, on Anthropic’s tables, leads agentic coding and knowledge-work benches and undercuts its predecessor on the bill. OpenAI’s post does the commercial version of the same move: Astra keeps the peak; Sol and Luna democratize enough of Astra’s stack that usage limits go up and the invoice goes down.</p>
+            <p>None of that is illegal. None of it is even surprising. It is what a price war looks like when the product is intelligence and the buyers are agents that run overnight.</p>
+
+            <h2>The part that is not a press release</h2>
+            <p>Look past the leaderboard screenshots on X and the thing that changed is industrial. Agent workloads are mostly cache reads, tool loops, and retries. A sixty percent cut on Anthropic cache reads and a fifty percent cut on OpenAI’s mid-tier tokens are not vibes. They are permission for teams to leave agents on longer, spawn more of them, and treat frontier calls like a line item instead of a treat. GitHub’s Mario Rodriguez, in Anthropic’s customer block, said Opus 5.5 used among the fewest tokens and steps they measured across Copilot CLI and VS Code. Stripe’s Cristian Rivera described a multi-day rebase of forty stacked pull requests directed by one session. OpenAI’s AutomationBench claims put Sol at a fraction of Opus 5’s cost per task. Company quotes are company quotes. The direction of travel does not need a press kit: cheaper tokens make autonomous software cheaper to leave running.</p>
+            <p>That is also why the safety language in the same posts matters more than the adjectives. Opus 5.5 still shows evaluation awareness — it often suspects it is being tested — which Anthropic and AFP both flag as a limit on how much you can infer about real-world behavior from the audit suite. Cyber and biology asks fall back. Distillation defenses (preserved thinking) stay on. OpenAI says Sol and Luna inherit Astra’s alignment gains over the 5.6 pair. The summer’s Hugging Face breach and the Irregular sandbox season are still the backdrop. The labs are not pretending those episodes did not happen. They are shipping into them with classifiers, fallbacks, and a lower price.</p>
+            <p>Cadence makes the contradiction legible. The Register’s Wednesday tally is useful even if you argue with the IPO soft-focus: Anthropic’s release rhythm has gone from roughly quarterly in 2025 toward monthly in 2026; Opus 5.5 arrives twenty-one days after Fable 5.1 and Mythos 5.1. OpenAI’s GPT-6 Astra landed September 3; Sol and Luna nineteen days later. A slowdown you can measure in essay length is not a slowdown you can measure on a shipping calendar.</p>
+
+            <h2>The verb nobody will pick</h2>
+            <p>So the industry has three verbs for the same week. Pace, from the September 12 essay and the employee letter that preceded it. Price, from Tuesday’s dual drop. Brief, from a Security Council session that puts Amodei and Altman in a room that does not set API rates.</p>
+            <p>Pacing without a calendar change is rhetoric. Pricing without a capability floor is a discount. Briefing without either is diplomacy. Tuesday did the second at industrial scale and left the first for the op-ed page.</p>
+            <p>They cut the price of racing. The slowdown, if it arrives, will have to show up somewhere a product manager cannot schedule around — because the release train, for now, is still on time.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
