@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The lab kept the prior — Ben Miller</title>
+    <meta name="description" content="A researcher’s morning on Magnet Three, in a lab where every booking carries a confidence score and even eleven spare minutes have to be accounted for.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #06090c;
+        --ink: #dbe6ea;
+        --mute: #62808c;
+        --cyan: #7fd6de;
+        --cyan-deep: #2f7f8c;
+        --steel: #8ea3ae;
+        --steel-dark: #18222a;
+        --panel: #0f161c;
+        --green: #6fcf9c;
+        --amber: #e3a14a;
+        --amber-soft: #f2c07a;
+        --paper: #d9ccb0;
+        --warm: #eef3f4;
+      }
+
+      html { background: var(--void); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 46% 34% at 16% 4%, rgba(127, 214, 222, 0.14), transparent 60%),
+          radial-gradient(ellipse 40% 30% at 90% 18%, rgba(142, 163, 174, 0.12), transparent 55%),
+          radial-gradient(ellipse 26% 18% at 78% 72%, rgba(227, 161, 74, 0.06), transparent 60%),
+          radial-gradient(ellipse 70% 42% at 50% 110%, rgba(8, 14, 20, 0.96), transparent 55%),
+          linear-gradient(180deg, #06090c 0%, #0a1116 40%, #0d161c 72%, #070b0e 100%);
+        animation: paint-breathe 36s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 85% 26% at 50% 100%, rgba(127, 214, 222, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(142, 163, 174, 0.035), transparent);
+        animation: fog-drift 52s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: var(--cyan);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 3.2rem 0 3.5rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--warm);
+        text-shadow: 0 0 40px rgba(127, 214, 222, 0.2);
+        margin: 1.6rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      /* Hero: the booking card, a yes that could still become a no */
+      .booking {
+        position: relative;
+        width: min(21rem, 100%);
+        padding: 1.05rem 1.15rem 1.2rem;
+        border-radius: 1.1rem;
+        overflow: hidden;
+        isolation: isolate;
+        border: 1px solid rgba(127, 214, 222, 0.35);
+        box-shadow:
+          0 30px 70px rgba(0, 0, 0, 0.6),
+          0 0 60px rgba(127, 214, 222, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        color: #0b1418;
+      }
+
+      .booking-wash {
+        position: absolute;
+        inset: -30%;
+        z-index: -1;
+        background:
+          radial-gradient(ellipse 50% 45% at 30% 35%, rgba(170, 236, 214, 0.95), transparent 70%),
+          radial-gradient(ellipse 55% 50% at 75% 70%, rgba(150, 168, 178, 0.95), transparent 70%),
+          radial-gradient(ellipse 30% 25% at 88% 88%, rgba(196, 150, 140, 0.55), transparent 70%),
+          linear-gradient(135deg, #a8e2d4, #9fb4bc 60%, #8c9aa2);
+        filter: blur(6px) saturate(0.9);
+        animation: yes-no 14s ease-in-out infinite alternate;
+      }
+
+      .booking-row {
+        font-size: 0.62rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(11, 20, 24, 0.68);
+      }
+
+      .booking-big {
+        margin: 0.7rem 0 0.8rem;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        line-height: 1;
+        color: #081014;
+      }
+
+      .booking-row.readout {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.35rem 0;
+        border-top: 1px solid rgba(11, 20, 24, 0.18);
+      }
+
+      .booking-row.readout b {
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        color: #081014;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .booking-name {
+        margin-top: 0.55rem;
+        font-size: 0.5rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(11, 20, 24, 0.45);
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d3dfe4;
+      }
+
+      .prose p + p { margin-top: 1.35rem; }
+
+      /* Shared scene frame */
+      .scene {
+        position: relative;
+        margin: 3.4rem -0.4rem;
+        min-height: 15rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #0b1217;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(127, 214, 222, 0.08);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 19rem; }
+
+      .scene::after {
+        /* painterly vignette + brush grain on every panel */
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 80% 70% at 50% 45%, transparent 55%, rgba(3, 6, 8, 0.7) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 7px);
+      }
+
+      .wash {
+        position: absolute;
+        inset: -15%;
+        z-index: 0;
+        filter: blur(18px);
+      }
+
+      .wash-a {
+        background:
+          radial-gradient(ellipse 40% 50% at 22% 30%, rgba(47, 127, 140, 0.45), transparent 70%),
+          radial-gradient(ellipse 35% 40% at 80% 70%, rgba(142, 163, 174, 0.25), transparent 70%),
+          radial-gradient(ellipse 18% 22% at 70% 82%, rgba(227, 161, 74, 0.16), transparent 70%);
+      }
+
+      .wash-b {
+        background:
+          radial-gradient(ellipse 30% 55% at 50% 45%, rgba(127, 214, 222, 0.28), transparent 70%),
+          radial-gradient(ellipse 50% 30% at 20% 90%, rgba(24, 34, 42, 0.9), transparent 70%),
+          radial-gradient(ellipse 14% 12% at 84% 82%, rgba(227, 161, 74, 0.22), transparent 70%);
+      }
+
+      .wash-c {
+        background:
+          radial-gradient(ellipse 45% 45% at 50% 30%, rgba(47, 127, 140, 0.35), transparent 70%),
+          radial-gradient(ellipse 12% 20% at 60% 40%, rgba(227, 161, 74, 0.22), transparent 70%),
+          linear-gradient(180deg, #081014, #0c171c);
+      }
+
+      .wash-e {
+        background:
+          radial-gradient(ellipse 45% 40% at 30% 30%, rgba(111, 207, 156, 0.18), transparent 70%),
+          radial-gradient(ellipse 40% 40% at 72% 60%, rgba(127, 214, 222, 0.2), transparent 70%),
+          radial-gradient(ellipse 22% 18% at 30% 22%, rgba(227, 161, 74, 0.16), transparent 70%);
+      }
+
+      /* 1. Ranked seminar poster, refreshing */
+      .poster {
+        position: absolute;
+        z-index: 2;
+        left: 14%;
+        right: 30%;
+        top: 10%;
+        bottom: 12%;
+        padding: 0.9rem 0.9rem 0.7rem;
+        background: linear-gradient(170deg, rgba(20, 30, 38, 0.95), rgba(12, 18, 24, 0.95));
+        border: 1px solid rgba(127, 214, 222, 0.25);
+        border-radius: 0.2rem;
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5), 0 0 30px rgba(127, 214, 222, 0.07);
+        transform: perspective(600px) rotateY(8deg);
+      }
+
+      .poster-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.56rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--cyan);
+      }
+
+      .refresh {
+        width: 0.7rem;
+        height: 0.7rem;
+        border: 1.5px solid var(--cyan);
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spin 3.6s linear infinite;
+      }
+
+      .poster-list {
+        position: relative;
+        margin-top: 0.9rem;
+        height: 72%;
+      }
+
+      .rank {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 13%;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.55rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .rank em { font-style: normal; width: 1.1rem; }
+
+      .rank span {
+        flex: 1;
+        height: 0.4rem;
+        border-radius: 99px;
+        background: linear-gradient(90deg, rgba(142, 163, 174, 0.55), rgba(142, 163, 174, 0.15));
+      }
+
+      .rank.r1 span {
+        background: linear-gradient(90deg, var(--cyan), rgba(127, 214, 222, 0.2));
+        box-shadow: 0 0 10px rgba(127, 214, 222, 0.45);
+      }
+      .rank.r1 em { color: var(--cyan); }
+
+      .rank.r1 { top: 0%; animation: reshuffle-a 9s ease-in-out infinite; }
+      .rank.r2 { top: 16%; animation: reshuffle-b 9s ease-in-out infinite; }
+      .rank.r3 { top: 32%; animation: reshuffle-c 9s ease-in-out infinite; }
+      .rank.r4 { top: 48%; }
+      .rank.r5 { top: 64%; }
+      .rank.r5 span { width: 60%; flex: none; }
+
+      .rank.mine {
+        top: 84%;
+        color: var(--amber);
+        animation: slip-off 9s ease-in infinite;
+      }
+
+      .rank.mine span {
+        background: linear-gradient(90deg, var(--amber), rgba(227, 161, 74, 0.1));
+        box-shadow: 0 0 10px rgba(227, 161, 74, 0.35);
+        flex: none;
+        width: 45%;
+      }
+
+      .poster-floor {
+        position: absolute;
+        left: 0.9rem;
+        right: 0.9rem;
+        bottom: 22%;
+        padding-top: 0.2rem;
+        border-top: 1px dashed rgba(127, 214, 222, 0.3);
+        font-size: 0.46rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(98, 128, 140, 0.9);
+        text-align: right;
+      }
+
+      .eleven-seats {
+        position: absolute;
+        z-index: 2;
+        right: 7%;
+        bottom: 14%;
+        width: 16%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.4rem;
+      }
+
+      .eleven-seats i {
+        display: block;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border-radius: 50% 50% 35% 35%;
+        background: radial-gradient(circle at 50% 30%, rgba(242, 192, 122, 0.7) 0 22%, rgba(40, 52, 60, 0.9) 24% 100%);
+        box-shadow: 0 0 6px rgba(227, 161, 74, 0.2);
+        opacity: 0.75;
+      }
+
+      /* 2. Magnet Three behind glass */
+      .magnet {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        top: 16%;
+        width: 8.5rem;
+        height: 11.5rem;
+        transform: translateX(-50%);
+      }
+
+      .magnet-body {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1.2rem;
+        bottom: 0;
+        border-radius: 0 0 50% 50% / 0 0 1.2rem 1.2rem;
+        background:
+          linear-gradient(90deg, #0e171c 0%, #3c5561 22%, #9fbac4 42%, #5b7682 60%, #1a262d 85%, #0b1216 100%);
+        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.55);
+      }
+
+      .magnet-body::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 38%;
+        height: 0.45rem;
+        background: linear-gradient(90deg, #0a1216, #24323a 30%, #6d8a96 45%, #24323a 70%, #0a1216);
+      }
+
+      .magnet-top {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 2.4rem;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 55%, #0a1114 0 18%, #2e4550 19% 32%, #a8c6cf 60%, #50707c 100%);
+      }
+
+      .magnet-halo {
+        position: absolute;
+        inset: -2.5rem -3rem;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 45%, rgba(127, 214, 222, 0.28), transparent 65%);
+        filter: blur(6px);
+        animation: hum 4.2s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      .stroke {
+        position: absolute;
+        z-index: 0;
+        border-radius: 50%;
+        filter: blur(10px);
+        transform: rotate(-18deg);
+      }
+      .stroke.s1 { left: -8%; top: 10%; width: 60%; height: 22%; background: rgba(47, 127, 140, 0.35); }
+      .stroke.s2 { right: -10%; bottom: 8%; width: 55%; height: 18%; background: rgba(142, 163, 174, 0.18); transform: rotate(12deg); }
+      .stroke.s3 { left: 30%; top: 60%; width: 40%; height: 10%; background: rgba(227, 161, 74, 0.1); }
+
+      .watcher {
+        position: absolute;
+        z-index: 4;
+        left: 10%;
+        bottom: -6%;
+        width: 7rem;
+        height: 11rem;
+        background:
+          radial-gradient(circle at 50% 21%, #030506 0 1.6rem, transparent 1.65rem),
+          radial-gradient(ellipse 3.3rem 7.3rem at 50% 100%, #030506 0 98%, transparent 100%);
+        filter: drop-shadow(1px -1px 1px rgba(127, 214, 222, 0.45)) drop-shadow(0 0 14px rgba(127, 214, 222, 0.15));
+        opacity: 0.94;
+      }
+
+      .glass-door {
+        position: absolute;
+        z-index: 3;
+        left: 18%;
+        right: 18%;
+        top: 6%;
+        bottom: 6%;
+        border-radius: 0.2rem;
+        background:
+          linear-gradient(180deg, rgba(160, 210, 220, 0.1), rgba(160, 210, 220, 0.04)),
+          repeating-linear-gradient(90deg, transparent 0 38px, rgba(127, 214, 222, 0.03) 38px 39px);
+        border: 1px solid rgba(160, 200, 210, 0.3);
+        box-shadow: inset 0 0 40px rgba(127, 214, 222, 0.08);
+        backdrop-filter: blur(1.2px);
+        overflow: hidden;
+      }
+
+      .glass-sheen {
+        position: absolute;
+        inset: -20% -60%;
+        background: linear-gradient(110deg, transparent 42%, rgba(220, 245, 250, 0.14) 48%, rgba(220, 245, 250, 0.04) 52%, transparent 56%);
+        animation: sheen 8s ease-in-out infinite;
+      }
+
+      .door-frame {
+        position: absolute;
+        right: 7%;
+        top: 46%;
+        width: 0.35rem;
+        height: 2.4rem;
+        border-radius: 99px;
+        background: linear-gradient(180deg, #6d8a96, #24323a);
+      }
+
+      .voice {
+        position: absolute;
+        z-index: 4;
+        left: 50%;
+        bottom: 11%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 3px;
+        align-items: center;
+        height: 1.4rem;
+      }
+
+      .voice i {
+        display: block;
+        width: 3px;
+        height: 30%;
+        border-radius: 2px;
+        background: var(--cyan);
+        box-shadow: 0 0 6px rgba(127, 214, 222, 0.6);
+        animation: voice 1.6s ease-in-out infinite;
+      }
+      .voice i:nth-child(2) { animation-delay: 0.1s; }
+      .voice i:nth-child(3) { animation-delay: 0.2s; }
+      .voice i:nth-child(4) { animation-delay: 0.3s; }
+      .voice i:nth-child(5) { animation-delay: 0.4s; }
+      .voice i:nth-child(6) { animation-delay: 0.3s; }
+      .voice i:nth-child(7) { animation-delay: 0.2s; }
+      .voice i:nth-child(8) { animation-delay: 0.1s; }
+
+      .readout-chip {
+        position: absolute;
+        z-index: 4;
+        padding: 0.35rem 0.55rem;
+        border: 1px solid rgba(127, 214, 222, 0.35);
+        border-radius: 0.2rem;
+        background: rgba(8, 14, 18, 0.82);
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mute);
+        display: flex;
+        gap: 0.6rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .readout-chip b { font-weight: 500; color: var(--cyan); letter-spacing: 0.04em; }
+      .readout-chip.a { left: 5%; top: 16%; }
+      .readout-chip.b { right: 5%; top: 30%; opacity: 0.75; border-color: rgba(142, 163, 174, 0.25); }
+      .readout-chip.b b { color: var(--steel); }
+
+      .powder-box {
+        position: absolute;
+        z-index: 4;
+        right: 9%;
+        bottom: 12%;
+        width: 2rem;
+        height: 1.3rem;
+        border-radius: 0.15rem;
+        background: linear-gradient(170deg, #3a3228, #1e1a15);
+        border: 1px solid rgba(227, 161, 74, 0.5);
+        box-shadow: 0 0 16px rgba(227, 161, 74, 0.25);
+      }
+
+      .powder-box::after {
+        content: "";
+        position: absolute;
+        left: 22%;
+        right: 22%;
+        top: 30%;
+        height: 38%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, #9a9a94, #5c5c58);
+      }
+
+      /* 3. The spectrum with a shoulder */
+      .spec-grid {
+        position: absolute;
+        z-index: 1;
+        inset: 10% 6% 16%;
+        background:
+          repeating-linear-gradient(0deg, rgba(127, 214, 222, 0.07) 0 1px, transparent 1px 12.5%),
+          repeating-linear-gradient(90deg, rgba(127, 214, 222, 0.05) 0 1px, transparent 1px 10%);
+      }
+
+      .spec-line {
+        position: absolute;
+        z-index: 2;
+        inset: 10% 6% 16%;
+      }
+
+      .spec-line.library {
+        background: repeating-linear-gradient(90deg, rgba(142, 163, 174, 0.55) 0 6px, transparent 6px 11px);
+        clip-path: polygon(0.00% 86.00%, 0.50% 86.74%, 1.00% 86.27%, 1.50% 86.39%, 2.00% 86.10%, 2.50% 85.12%, 3.00% 85.56%, 3.50% 86.02%, 4.00% 85.95%, 4.50% 86.76%, 5.00% 86.64%, 5.50% 85.70%, 6.00% 85.80%, 6.50% 85.51%, 7.00% 85.29%, 7.50% 86.37%, 8.00% 86.57%, 8.50% 86.25%, 9.00% 86.53%, 9.50% 85.73%, 10.00% 85.12%, 10.50% 85.79%, 11.00% 85.81%, 11.50% 86.08%, 12.00% 86.86%, 12.50% 86.17%, 13.00% 85.56%, 13.50% 85.63%, 14.00% 84.94%, 14.50% 85.14%, 15.00% 86.01%, 15.50% 85.61%, 16.00% 85.47%, 16.50% 85.26%, 17.00% 83.87%, 17.50% 83.48%, 18.00% 83.60%, 18.50% 82.99%, 19.00% 83.25%, 19.50% 83.15%, 20.00% 81.73%, 20.50% 81.09%, 21.00% 80.39%, 21.50% 79.31%, 22.00% 79.71%, 22.50% 79.92%, 23.00% 79.36%, 23.50% 79.57%, 24.00% 79.03%, 24.50% 78.08%, 25.00% 78.60%, 25.50% 78.93%, 26.00% 79.24%, 26.50% 80.57%, 27.00% 80.77%, 27.50% 80.44%, 28.00% 80.94%, 28.50% 80.67%, 29.00% 80.78%, 29.50% 82.06%, 30.00% 82.29%, 30.50% 82.37%, 31.00% 82.71%, 31.50% 81.62%, 32.00% 80.86%, 32.50% 80.96%, 33.00% 80.26%, 33.50% 80.15%, 34.00% 80.24%, 34.50% 78.74%, 35.00% 77.46%, 35.50% 76.29%, 36.00% 74.20%, 36.50% 73.21%, 37.00% 72.52%, 37.50% 70.69%, 38.00% 69.35%, 38.50% 67.44%, 39.00% 64.33%, 39.50% 62.24%, 40.00% 60.22%, 40.50% 57.70%, 41.00% 56.28%, 41.50% 54.18%, 42.00% 51.00%, 42.50% 48.58%, 43.00% 45.60%, 43.50% 42.47%, 44.00% 40.87%, 44.50% 38.87%, 45.00% 36.55%, 45.50% 35.04%, 46.00% 32.46%, 46.50% 29.79%, 47.00% 28.48%, 47.50% 26.85%, 48.00% 25.83%, 48.50% 25.97%, 49.00% 25.07%, 49.50% 24.27%, 50.00% 24.24%, 50.50% 23.49%, 51.00% 23.78%, 51.50% 25.34%, 52.00% 26.24%, 52.50% 27.78%, 53.00% 29.62%, 53.50% 30.26%, 54.00% 31.74%, 54.50% 33.95%, 55.00% 35.68%, 55.50% 38.64%, 56.00% 41.78%, 56.50% 43.69%, 57.00% 46.19%, 57.50% 48.46%, 58.00% 50.01%, 58.50% 52.93%, 59.00% 55.93%, 59.50% 58.21%, 60.00% 61.24%, 60.50% 63.36%, 61.00% 64.48%, 61.50% 66.58%, 62.00% 68.30%, 62.50% 69.85%, 63.00% 72.57%, 63.50% 74.32%, 64.00% 75.30%, 64.50% 76.80%, 65.00% 77.22%, 65.50% 77.62%, 66.00% 79.27%, 66.50% 80.17%, 67.00% 81.06%, 67.50% 82.41%, 68.00% 82.24%, 68.50% 81.96%, 69.00% 82.43%, 69.50% 82.09%, 70.00% 82.46%, 70.50% 83.50%, 71.00% 83.18%, 71.50% 82.98%, 72.00% 82.80%, 72.50% 81.43%, 73.00% 80.99%, 73.50% 81.19%, 74.00% 80.57%, 74.50% 80.71%, 75.00% 80.58%, 75.50% 79.10%, 76.00% 78.38%, 76.50% 77.76%, 77.00% 76.70%, 77.50% 77.07%, 78.00% 77.31%, 78.50% 76.65%, 79.00% 76.73%, 79.50% 76.18%, 80.00% 75.15%, 80.50% 75.64%, 81.00% 76.02%, 81.50% 76.27%, 82.00% 77.55%, 82.50% 77.80%, 83.00% 77.47%, 83.50% 78.12%, 84.00% 78.17%, 84.50% 78.56%, 85.00% 80.23%, 85.50% 80.95%, 86.00% 81.45%, 86.50% 82.38%, 87.00% 82.01%, 87.50% 81.98%, 88.00% 83.01%, 88.50% 83.30%, 89.00% 84.12%, 89.50% 85.29%, 90.00% 84.94%, 90.50% 84.81%, 91.00% 85.04%, 91.50% 84.45%, 92.00% 84.98%, 92.50% 85.99%, 93.00% 85.89%, 93.50% 86.29%, 94.00% 86.35%, 94.50% 85.29%, 95.00% 85.35%, 95.50% 85.68%, 96.00% 85.51%, 96.50% 86.43%, 97.00% 86.80%, 97.50% 86.04%, 98.00% 86.07%, 98.50% 85.69%, 99.00% 85.06%, 99.50% 85.91%, 100.00% 86.34%, 100.00% 87.28%, 99.50% 86.89%, 99.00% 85.96%, 98.50% 86.65%, 98.00% 86.98%, 97.50% 86.97%, 97.00% 87.71%, 96.50% 87.42%, 96.00% 86.44%, 95.50% 86.58%, 95.00% 86.26%, 94.50% 86.25%, 94.00% 87.31%, 93.50% 87.20%, 93.00% 86.80%, 92.50% 86.94%, 92.00% 86.00%, 91.50% 85.35%, 91.00% 85.95%, 90.50% 85.71%, 90.00% 85.85%, 89.50% 86.23%, 89.00% 85.22%, 88.50% 84.26%, 88.00% 84.00%, 87.50% 82.94%, 87.00% 82.92%, 86.50% 83.29%, 86.00% 82.46%, 85.50% 81.93%, 85.00% 81.41%, 84.50% 79.67%, 84.00% 79.08%, 83.50% 79.04%, 83.00% 78.38%, 82.50% 78.70%, 82.00% 78.57%, 81.50% 77.29%, 81.00% 76.95%, 80.50% 76.58%, 80.00% 76.07%, 79.50% 77.21%, 79.00% 77.64%, 78.50% 77.57%, 78.00% 78.22%, 77.50% 77.99%, 77.00% 77.63%, 76.50% 78.81%, 76.00% 79.37%, 75.50% 80.23%, 75.00% 81.62%, 74.50% 81.61%, 74.00% 81.48%, 73.50% 82.10%, 73.00% 81.90%, 72.50% 82.50%, 72.00% 83.82%, 71.50% 83.88%, 71.00% 84.10%, 70.50% 84.43%, 70.00% 83.46%, 69.50% 82.99%, 69.00% 83.33%, 68.50% 82.87%, 68.00% 83.15%, 67.50% 83.39%, 67.00% 82.20%, 66.50% 81.24%, 66.00% 80.47%, 65.50% 78.73%, 65.00% 78.16%, 64.50% 77.89%, 64.00% 76.49%, 63.50% 75.57%, 63.00% 74.24%, 62.50% 71.47%, 62.00% 69.67%, 61.50% 68.08%, 61.00% 65.83%, 60.50% 64.72%, 60.00% 63.09%, 59.50% 60.11%, 59.00% 57.82%, 58.50% 55.00%, 58.00% 51.68%, 57.50% 49.97%, 57.00% 47.95%, 56.50% 45.35%, 56.00% 43.61%, 55.50% 40.76%, 55.00% 37.41%, 54.50% 35.48%, 54.00% 33.21%, 53.50% 31.38%, 53.00% 30.81%, 52.50% 29.17%, 52.00% 27.42%, 51.50% 26.52%, 51.00% 24.85%, 50.50% 24.41%, 50.00% 25.17%, 49.50% 25.20%, 49.00% 26.12%, 48.50% 26.90%, 48.00% 26.78%, 47.50% 28.08%, 47.00% 29.77%, 46.50% 31.33%, 46.00% 34.34%, 45.50% 36.61%, 45.00% 38.06%, 44.50% 40.50%, 44.00% 42.32%, 43.50% 44.21%, 43.00% 47.72%, 42.50% 50.50%, 42.00% 52.98%, 41.50% 56.07%, 41.00% 57.71%, 40.50% 59.24%, 40.00% 61.91%, 39.50% 63.82%, 39.00% 66.19%, 38.50% 69.26%, 38.00% 70.71%, 37.50% 72.04%, 37.00% 73.72%, 36.50% 74.25%, 36.00% 75.52%, 35.50% 77.66%, 35.00% 78.65%, 34.50% 80.00%, 34.00% 81.24%, 33.50% 81.05%, 33.00% 81.19%, 32.50% 81.88%, 32.00% 81.79%, 31.50% 82.70%, 31.00% 83.64%, 30.50% 83.28%, 30.00% 83.20%, 29.50% 83.07%, 29.00% 81.78%, 28.50% 81.57%, 28.00% 81.84%, 27.50% 81.34%, 27.00% 81.67%, 26.50% 81.59%, 26.00% 80.28%, 25.50% 79.85%, 25.00% 79.54%, 24.50% 78.99%, 24.00% 80.05%, 23.50% 80.48%, 23.00% 80.27%, 22.50% 80.83%, 22.00% 80.63%, 21.50% 80.23%, 21.00% 81.45%, 20.50% 82.08%, 20.00% 82.84%, 19.50% 84.17%, 19.00% 84.15%, 18.50% 83.90%, 18.00% 84.51%, 17.50% 84.38%, 17.00% 84.93%, 16.50% 86.29%, 16.00% 86.38%, 15.50% 86.53%, 15.00% 86.92%, 14.50% 86.10%, 14.00% 85.85%, 13.50% 86.56%, 13.00% 86.48%, 12.50% 87.16%, 12.00% 87.76%, 11.50% 87.04%, 11.00% 86.72%, 10.50% 86.72%, 10.00% 86.02%, 9.50% 86.73%, 9.00% 87.44%, 8.50% 87.15%, 8.00% 87.47%, 7.50% 87.35%, 7.00% 86.23%, 6.50% 86.43%, 6.00% 86.70%, 5.50% 86.63%, 5.00% 87.60%, 4.50% 87.68%, 4.00% 86.88%, 3.50% 86.93%, 3.00% 86.50%, 2.50% 86.04%, 2.00% 87.09%, 1.50% 87.29%, 1.00% 87.18%, 0.50% 87.65%, 0.00% 87.01%);
+        opacity: 0.8;
+      }
+
+      .spec-line.measured {
+        background: linear-gradient(90deg, var(--cyan) 0 54%, var(--amber) 57% 64%, var(--cyan) 67%);
+        clip-path: polygon(0.00% 86.00%, 0.50% 86.74%, 1.00% 86.27%, 1.50% 86.39%, 2.00% 86.10%, 2.50% 85.12%, 3.00% 85.56%, 3.50% 86.02%, 4.00% 85.95%, 4.50% 86.76%, 5.00% 86.64%, 5.50% 85.70%, 6.00% 85.80%, 6.50% 85.51%, 7.00% 85.29%, 7.50% 86.37%, 8.00% 86.57%, 8.50% 86.25%, 9.00% 86.53%, 9.50% 85.73%, 10.00% 85.12%, 10.50% 85.79%, 11.00% 85.81%, 11.50% 86.08%, 12.00% 86.86%, 12.50% 86.17%, 13.00% 85.56%, 13.50% 85.63%, 14.00% 84.94%, 14.50% 85.14%, 15.00% 86.01%, 15.50% 85.61%, 16.00% 85.47%, 16.50% 85.26%, 17.00% 83.87%, 17.50% 83.48%, 18.00% 83.60%, 18.50% 82.99%, 19.00% 83.25%, 19.50% 83.15%, 20.00% 81.73%, 20.50% 81.09%, 21.00% 80.39%, 21.50% 79.31%, 22.00% 79.71%, 22.50% 79.92%, 23.00% 79.36%, 23.50% 79.57%, 24.00% 79.03%, 24.50% 78.08%, 25.00% 78.60%, 25.50% 78.93%, 26.00% 79.24%, 26.50% 80.57%, 27.00% 80.77%, 27.50% 80.44%, 28.00% 80.94%, 28.50% 80.67%, 29.00% 80.78%, 29.50% 82.06%, 30.00% 82.29%, 30.50% 82.37%, 31.00% 82.71%, 31.50% 81.62%, 32.00% 80.86%, 32.50% 80.96%, 33.00% 80.26%, 33.50% 80.15%, 34.00% 80.24%, 34.50% 78.74%, 35.00% 77.46%, 35.50% 76.29%, 36.00% 74.20%, 36.50% 73.21%, 37.00% 72.52%, 37.50% 70.69%, 38.00% 69.35%, 38.50% 67.44%, 39.00% 64.33%, 39.50% 62.24%, 40.00% 60.22%, 40.50% 57.70%, 41.00% 56.28%, 41.50% 54.18%, 42.00% 51.00%, 42.50% 48.58%, 43.00% 45.60%, 43.50% 42.47%, 44.00% 40.87%, 44.50% 38.87%, 45.00% 36.55%, 45.50% 35.04%, 46.00% 32.46%, 46.50% 29.79%, 47.00% 28.48%, 47.50% 26.85%, 48.00% 25.83%, 48.50% 25.97%, 49.00% 25.07%, 49.50% 24.26%, 50.00% 24.22%, 50.50% 23.46%, 51.00% 23.71%, 51.50% 25.22%, 52.00% 26.03%, 52.50% 27.43%, 53.00% 29.05%, 53.50% 29.35%, 54.00% 30.35%, 54.50% 31.90%, 55.00% 32.77%, 55.50% 34.66%, 56.00% 36.53%, 56.50% 37.01%, 57.00% 38.01%, 57.50% 38.79%, 58.00% 39.00%, 58.50% 40.85%, 59.00% 43.16%, 59.50% 45.21%, 60.00% 48.48%, 60.50% 51.29%, 61.00% 53.47%, 61.50% 56.91%, 62.00% 60.11%, 62.50% 63.17%, 63.00% 67.31%, 63.50% 70.34%, 64.00% 72.39%, 64.50% 74.76%, 65.00% 75.84%, 65.50% 76.72%, 66.00% 78.70%, 66.50% 79.83%, 67.00% 80.86%, 67.50% 82.30%, 68.00% 82.17%, 68.50% 81.93%, 69.00% 82.41%, 69.50% 82.08%, 70.00% 82.45%, 70.50% 83.50%, 71.00% 83.18%, 71.50% 82.97%, 72.00% 82.80%, 72.50% 81.43%, 73.00% 80.99%, 73.50% 81.19%, 74.00% 80.57%, 74.50% 80.71%, 75.00% 80.58%, 75.50% 79.10%, 76.00% 78.38%, 76.50% 77.76%, 77.00% 76.70%, 77.50% 77.07%, 78.00% 77.31%, 78.50% 76.65%, 79.00% 76.73%, 79.50% 76.18%, 80.00% 75.15%, 80.50% 75.64%, 81.00% 76.02%, 81.50% 76.27%, 82.00% 77.55%, 82.50% 77.80%, 83.00% 77.47%, 83.50% 78.12%, 84.00% 78.17%, 84.50% 78.56%, 85.00% 80.23%, 85.50% 80.95%, 86.00% 81.45%, 86.50% 82.38%, 87.00% 82.01%, 87.50% 81.98%, 88.00% 83.01%, 88.50% 83.30%, 89.00% 84.12%, 89.50% 85.29%, 90.00% 84.94%, 90.50% 84.81%, 91.00% 85.04%, 91.50% 84.45%, 92.00% 84.98%, 92.50% 85.99%, 93.00% 85.89%, 93.50% 86.29%, 94.00% 86.35%, 94.50% 85.29%, 95.00% 85.35%, 95.50% 85.68%, 96.00% 85.51%, 96.50% 86.43%, 97.00% 86.80%, 97.50% 86.04%, 98.00% 86.07%, 98.50% 85.69%, 99.00% 85.06%, 99.50% 85.91%, 100.00% 86.34%, 100.00% 88.01%, 99.50% 87.66%, 99.00% 86.66%, 98.50% 87.39%, 98.00% 87.68%, 97.50% 87.69%, 97.00% 88.42%, 96.50% 88.18%, 96.00% 87.16%, 95.50% 87.29%, 95.00% 86.96%, 94.50% 86.99%, 94.00% 88.05%, 93.50% 87.91%, 93.00% 87.50%, 92.50% 87.67%, 92.00% 86.80%, 91.50% 86.05%, 91.00% 86.65%, 90.50% 86.41%, 90.00% 86.56%, 89.50% 86.96%, 89.00% 86.07%, 88.50% 85.01%, 88.00% 84.77%, 87.50% 83.68%, 87.00% 83.63%, 86.50% 84.01%, 86.00% 83.24%, 85.50% 82.69%, 85.00% 82.32%, 84.50% 80.54%, 84.00% 79.79%, 83.50% 79.77%, 83.00% 79.08%, 82.50% 79.40%, 82.00% 79.36%, 81.50% 78.09%, 81.00% 77.66%, 80.50% 77.31%, 80.00% 76.78%, 79.50% 78.01%, 79.00% 78.35%, 78.50% 78.28%, 78.00% 78.93%, 77.50% 78.70%, 77.00% 78.35%, 76.50% 79.62%, 76.00% 80.15%, 75.50% 81.12%, 75.00% 82.42%, 74.50% 82.31%, 74.00% 82.19%, 73.50% 82.80%, 73.00% 82.60%, 72.50% 83.32%, 72.00% 84.62%, 71.50% 84.59%, 71.00% 84.81%, 70.50% 85.15%, 70.00% 84.24%, 69.50% 83.68%, 69.00% 84.01%, 68.50% 83.54%, 68.00% 83.79%, 67.50% 84.06%, 67.00% 82.97%, 66.50% 81.83%, 66.00% 81.06%, 65.50% 78.98%, 65.00% 77.77%, 64.50% 77.26%, 64.00% 75.34%, 63.50% 73.61%, 63.00% 71.64%, 62.50% 67.51%, 62.00% 63.97%, 61.50% 60.96%, 61.00% 57.00%, 60.50% 54.51%, 60.00% 52.24%, 59.50% 48.58%, 59.00% 46.08%, 58.50% 43.68%, 58.00% 40.97%, 57.50% 40.49%, 57.00% 39.89%, 56.50% 38.81%, 56.00% 38.60%, 55.50% 37.30%, 55.00% 34.99%, 54.50% 34.00%, 54.00% 32.50%, 53.50% 31.11%, 53.00% 30.98%, 52.50% 29.76%, 52.00% 28.06%, 51.50% 27.28%, 51.00% 25.59%, 50.50% 25.09%, 50.00% 25.88%, 49.50% 25.93%, 49.00% 26.94%, 48.50% 27.63%, 48.00% 27.51%, 47.50% 29.03%, 47.00% 30.78%, 46.50% 32.53%, 46.00% 35.81%, 45.50% 37.83%, 45.00% 39.23%, 44.50% 41.76%, 44.00% 43.44%, 43.50% 45.56%, 43.00% 49.37%, 42.50% 52.00%, 42.00% 54.52%, 41.50% 57.54%, 41.00% 58.82%, 40.50% 60.43%, 40.00% 63.22%, 39.50% 65.05%, 39.00% 67.65%, 38.50% 70.67%, 38.00% 71.77%, 37.50% 73.08%, 37.00% 74.65%, 36.50% 75.07%, 36.00% 76.55%, 35.50% 78.72%, 35.00% 79.57%, 34.50% 80.97%, 34.00% 82.02%, 33.50% 81.75%, 33.00% 81.92%, 32.50% 82.60%, 32.00% 82.51%, 31.50% 83.53%, 31.00% 84.37%, 30.50% 83.99%, 30.00% 83.90%, 29.50% 83.86%, 29.00% 82.56%, 28.50% 82.27%, 28.00% 82.54%, 27.50% 82.04%, 27.00% 82.37%, 26.50% 82.39%, 26.00% 81.09%, 25.50% 80.57%, 25.00% 80.27%, 24.50% 79.70%, 24.00% 80.84%, 23.50% 81.18%, 23.00% 80.97%, 22.50% 81.54%, 22.00% 81.34%, 21.50% 80.95%, 21.00% 82.27%, 20.50% 82.86%, 20.00% 83.70%, 19.50% 84.96%, 19.00% 84.86%, 18.50% 84.61%, 18.00% 85.22%, 17.50% 85.08%, 17.00% 85.76%, 16.50% 87.10%, 16.00% 87.08%, 15.50% 87.24%, 15.00% 87.63%, 14.50% 86.85%, 14.00% 86.56%, 13.50% 87.27%, 13.00% 87.19%, 12.50% 87.93%, 12.00% 88.46%, 11.50% 87.78%, 11.00% 87.42%, 10.50% 87.44%, 10.00% 86.72%, 9.50% 87.51%, 9.00% 88.15%, 8.50% 87.85%, 8.00% 88.17%, 7.50% 88.12%, 7.00% 86.96%, 6.50% 87.14%, 6.00% 87.40%, 5.50% 87.36%, 5.00% 88.35%, 4.50% 88.40%, 4.00% 87.60%, 3.50% 87.63%, 3.00% 87.24%, 2.50% 86.75%, 2.00% 87.85%, 1.50% 88.00%, 1.00% 87.89%, 0.50% 88.35%, 0.00% 87.80%);
+        filter: drop-shadow(0 0 5px rgba(127, 214, 222, 0.7));
+        animation: trace 7s ease-out infinite;
+      }
+
+      .shoulder-ring {
+        position: absolute;
+        z-index: 3;
+        /* the shoulder sits at x = 59.5% of the plot, about y = 60% */
+        left: calc(6% + 88% * 0.595 - 1.3rem);
+        top: calc(10% + 74% * 0.45 - 1.3rem);
+        width: 2.6rem;
+        height: 2.6rem;
+        border-radius: 50%;
+        border: 1.5px solid rgba(227, 161, 74, 0.75);
+        box-shadow: 0 0 22px rgba(227, 161, 74, 0.35), inset 0 0 12px rgba(227, 161, 74, 0.2);
+        animation: ring 7s ease-out infinite;
+      }
+
+      .spec-axis {
+        position: absolute;
+        z-index: 2;
+        left: 6%;
+        right: 6%;
+        bottom: 16%;
+        height: 1px;
+        background: rgba(142, 163, 174, 0.4);
+      }
+
+      .reconcile {
+        position: absolute;
+        z-index: 4;
+        right: 7%;
+        bottom: 5%;
+        padding: 0.3rem 0.7rem;
+        border: 1px solid rgba(127, 214, 222, 0.45);
+        border-radius: 99px;
+        font-size: 0.55rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        background: rgba(127, 214, 222, 0.06);
+        animation: offer 3.2s ease-in-out infinite;
+      }
+
+      /* 4. The paper notebook against the cold screen */
+      .notebook-scene { background: #0a1014; }
+
+      .cold-screen {
+        position: absolute;
+        z-index: 1;
+        left: 4%;
+        top: 8%;
+        width: 44%;
+        height: 42%;
+        padding: 0.8rem;
+        border-radius: 0.3rem;
+        background: linear-gradient(160deg, rgba(47, 127, 140, 0.35), rgba(12, 20, 26, 0.9));
+        border: 1px solid rgba(127, 214, 222, 0.3);
+        box-shadow: 0 0 40px rgba(127, 214, 222, 0.12);
+        animation: closing 9s ease-in-out infinite;
+      }
+
+      .cold-row {
+        height: 0.35rem;
+        margin-bottom: 0.45rem;
+        border-radius: 99px;
+        background: rgba(127, 214, 222, 0.35);
+      }
+      .cold-row.short { width: 55%; }
+
+      .cold-read {
+        margin-top: 0.8rem;
+        font-size: 1.4rem;
+        letter-spacing: 0.04em;
+        color: var(--cyan);
+        font-variant-numeric: tabular-nums;
+        text-shadow: 0 0 12px rgba(127, 214, 222, 0.5);
+      }
+
+      .notebook {
+        position: absolute;
+        z-index: 2;
+        left: 20%;
+        right: 6%;
+        top: 22%;
+        bottom: 8%;
+        border-radius: 0.15rem 0.35rem 0.35rem 0.15rem;
+        background:
+          radial-gradient(ellipse 70% 60% at 40% 40%, #e2d6bb, #cbbd9e 80%, #b5a684),
+          #d9ccb0;
+        box-shadow:
+          0 24px 50px rgba(0, 0, 0, 0.6),
+          -6px 0 0 #a8997a,
+          0 0 70px rgba(227, 161, 74, 0.12);
+        transform: rotate(-3deg);
+        overflow: hidden;
+      }
+
+      .ruling {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(180deg, transparent 0 1.15rem, rgba(70, 100, 130, 0.22) 1.15rem calc(1.15rem + 1px));
+      }
+
+      .margin-rule {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 11%;
+        width: 1px;
+        background: rgba(170, 70, 60, 0.35);
+      }
+
+      .ink-line {
+        position: absolute;
+        inset: 8% 4% 10% 4%;
+        background: linear-gradient(90deg, #3b2616, #5a3718 50%, #3b2616);
+        clip-path: polygon(8.00% 73.58%, 8.50% 73.24%, 9.00% 72.88%, 9.50% 72.26%, 10.00% 72.97%, 10.50% 73.70%, 11.00% 73.85%, 11.50% 74.57%, 12.00% 74.52%, 12.50% 73.83%, 13.00% 74.05%, 13.50% 73.90%, 14.00% 73.57%, 14.50% 74.03%, 15.00% 73.56%, 15.50% 72.63%, 16.00% 72.40%, 16.50% 71.61%, 17.00% 71.21%, 17.50% 71.96%, 18.00% 72.04%, 18.50% 72.08%, 19.00% 72.36%, 19.50% 71.37%, 20.00% 70.48%, 20.50% 70.21%, 21.00% 69.29%, 21.50% 68.97%, 22.00% 69.05%, 22.50% 68.09%, 23.00% 67.52%, 23.50% 67.32%, 24.00% 66.62%, 24.50% 67.10%, 25.00% 68.15%, 25.50% 68.53%, 26.00% 69.45%, 26.50% 69.96%, 27.00% 69.39%, 27.50% 69.53%, 28.00% 69.66%, 28.50% 69.37%, 29.00% 70.07%, 29.50% 70.38%, 30.00% 69.88%, 30.50% 70.04%, 31.00% 69.74%, 31.50% 69.24%, 32.00% 69.93%, 32.50% 70.22%, 33.00% 70.07%, 33.50% 70.32%, 34.00% 69.32%, 34.50% 67.76%, 35.00% 66.88%, 35.50% 65.37%, 36.00% 64.08%, 36.50% 63.59%, 37.00% 62.12%, 37.50% 60.53%, 38.00% 59.35%, 38.50% 57.30%, 39.00% 55.75%, 39.50% 54.98%, 40.00% 53.39%, 40.50% 51.98%, 41.00% 50.48%, 41.50% 47.60%, 42.00% 44.99%, 42.50% 42.72%, 43.00% 39.92%, 43.50% 38.14%, 44.00% 36.70%, 44.50% 34.44%, 45.00% 32.82%, 45.50% 31.17%, 46.00% 29.00%, 46.50% 28.07%, 47.00% 27.39%, 47.50% 26.29%, 48.00% 25.97%, 48.50% 25.09%, 49.00% 23.49%, 49.50% 22.86%, 50.00% 22.21%, 50.50% 21.77%, 51.00% 22.79%, 51.50% 23.59%, 52.00% 24.18%, 52.50% 25.56%, 53.00% 26.28%, 53.50% 27.06%, 54.00% 28.91%, 54.50% 30.19%, 55.00% 31.40%, 55.50% 32.95%, 56.00% 33.15%, 56.50% 33.14%, 57.00% 33.73%, 57.50% 33.80%, 58.00% 34.77%, 58.50% 36.79%, 59.00% 38.28%, 59.50% 40.35%, 60.00% 42.89%, 60.50% 44.72%, 61.00% 47.43%, 61.50% 50.73%, 62.00% 53.33%, 62.50% 56.43%, 63.00% 59.14%, 63.50% 60.43%, 64.00% 62.00%, 64.50% 63.39%, 65.00% 64.18%, 65.50% 66.02%, 66.00% 67.76%, 66.50% 68.65%, 67.00% 70.00%, 67.50% 70.59%, 68.00% 70.41%, 68.50% 71.11%, 69.00% 71.45%, 69.50% 71.41%, 70.00% 72.04%, 70.50% 71.70%, 71.00% 70.73%, 71.50% 70.44%, 72.00% 69.64%, 72.50% 69.13%, 73.00% 69.80%, 73.50% 69.86%, 74.00% 69.78%, 74.50% 70.05%, 75.00% 69.15%, 75.50% 68.30%, 76.00% 68.18%, 76.50% 67.39%, 77.00% 67.05%, 77.50% 67.12%, 78.00% 66.07%, 78.50% 65.31%, 79.00% 65.01%, 79.50% 64.21%, 80.00% 64.54%, 80.50% 65.57%, 81.00% 65.91%, 81.50% 66.76%, 82.00% 67.37%, 82.50% 66.92%, 83.00% 67.20%, 83.50% 67.63%, 84.00% 67.58%, 84.50% 68.48%, 85.00% 69.06%, 85.50% 68.79%, 86.00% 69.22%, 86.50% 69.39%, 87.00% 69.38%, 87.50% 70.68%, 88.00% 71.74%, 88.50% 72.34%, 89.00% 73.43%, 89.50% 73.45%, 90.00% 72.90%, 90.50% 73.13%, 91.00% 72.86%, 91.50% 72.72%, 92.00% 73.43%, 92.00% 76.12%, 91.50% 75.17%, 91.00% 75.28%, 90.50% 75.53%, 90.00% 75.31%, 89.50% 75.89%, 89.00% 76.01%, 88.50% 75.13%, 88.00% 74.52%, 87.50% 73.79%, 87.00% 72.02%, 86.50% 71.79%, 86.00% 71.67%, 85.50% 71.19%, 85.00% 71.48%, 84.50% 71.18%, 84.00% 70.09%, 83.50% 70.05%, 83.00% 69.67%, 82.50% 69.32%, 82.00% 69.77%, 81.50% 69.46%, 81.00% 68.51%, 80.50% 68.23%, 80.00% 67.20%, 79.50% 66.64%, 79.00% 67.58%, 78.50% 67.87%, 78.00% 68.91%, 77.50% 69.66%, 77.00% 69.46%, 76.50% 69.97%, 76.00% 70.69%, 75.50% 70.83%, 75.00% 71.96%, 74.50% 72.51%, 74.00% 72.19%, 73.50% 72.26%, 73.00% 72.28%, 72.50% 71.53%, 72.00% 72.28%, 71.50% 73.01%, 71.00% 73.35%, 70.50% 74.35%, 70.00% 74.45%, 69.50% 73.86%, 69.00% 73.86%, 68.50% 73.66%, 68.00% 72.85%, 67.50% 73.01%, 67.00% 72.90%, 66.50% 71.70%, 66.00% 71.02%, 65.50% 69.87%, 65.00% 67.45%, 64.50% 66.41%, 64.00% 65.46%, 63.50% 63.83%, 63.00% 63.27%, 62.50% 61.87%, 62.00% 58.69%, 61.50% 56.24%, 61.00% 53.02%, 60.50% 49.22%, 60.00% 47.28%, 59.50% 44.91%, 59.00% 42.11%, 58.50% 40.60%, 58.00% 38.24%, 57.50% 36.36%, 57.00% 36.20%, 56.50% 35.59%, 56.00% 35.56%, 55.50% 35.77%, 55.00% 34.74%, 54.50% 33.37%, 54.00% 32.47%, 53.50% 30.32%, 53.00% 28.99%, 52.50% 28.54%, 52.00% 27.10%, 51.50% 26.25%, 51.00% 25.64%, 50.50% 24.22%, 50.00% 24.78%, 49.50% 25.49%, 49.00% 26.54%, 48.50% 28.27%, 48.00% 28.57%, 47.50% 28.97%, 47.00% 30.22%, 46.50% 30.83%, 46.00% 32.54%, 45.50% 35.17%, 45.00% 36.47%, 44.50% 38.49%, 44.00% 40.63%, 43.50% 41.75%, 43.00% 44.45%, 42.50% 47.61%, 42.00% 49.74%, 41.50% 52.80%, 41.00% 54.88%, 40.50% 55.40%, 40.00% 56.87%, 39.50% 58.10%, 39.00% 58.84%, 38.50% 61.16%, 38.00% 62.97%, 37.50% 63.87%, 37.00% 65.64%, 36.50% 66.50%, 36.00% 66.91%, 35.50% 68.73%, 35.00% 70.01%, 34.50% 70.92%, 34.00% 72.54%, 33.50% 72.80%, 33.00% 72.47%, 32.50% 72.62%, 32.00% 72.46%, 31.50% 71.64%, 31.00% 72.23%, 30.50% 72.44%, 30.00% 72.30%, 29.50% 72.79%, 29.00% 72.62%, 28.50% 71.80%, 28.00% 72.06%, 27.50% 71.94%, 27.00% 71.82%, 26.50% 72.36%, 26.00% 72.13%, 25.50% 71.16%, 25.00% 70.83%, 24.50% 69.82%, 24.00% 69.03%, 23.50% 69.84%, 23.00% 70.01%, 22.50% 70.81%, 22.00% 71.57%, 21.50% 71.38%, 21.00% 71.91%, 20.50% 72.81%, 20.00% 73.07%, 19.50% 74.24%, 19.00% 74.83%, 18.50% 74.49%, 18.00% 74.44%, 17.50% 74.45%, 17.00% 73.63%, 16.50% 74.21%, 16.00% 74.95%, 15.50% 75.22%, 15.00% 76.23%, 14.50% 76.43%, 14.00% 75.97%, 13.50% 76.33%, 13.00% 76.45%, 12.50% 76.26%, 12.00% 77.00%, 11.50% 77.04%, 11.00% 76.35%, 10.50% 76.21%, 10.00% 75.66%, 9.50% 74.66%, 9.00% 75.42%, 8.50% 75.71%, 8.00% 76.05%);
+        animation: draw 9s ease-out infinite;
+      }
+
+      .ink-line.ghost {
+        clip-path: polygon(11.00% 74.30%, 11.50% 75.06%, 12.00% 75.46%, 12.50% 75.18%, 13.00% 75.36%, 13.50% 74.76%, 14.00% 74.02%, 14.50% 74.52%, 15.00% 74.50%, 15.50% 73.98%, 16.00% 73.71%, 16.50% 72.46%, 17.00% 71.66%, 17.50% 72.45%, 18.00% 72.99%, 18.50% 73.43%, 19.00% 73.66%, 19.50% 72.22%, 20.00% 70.92%, 20.50% 70.71%, 21.00% 70.25%, 21.50% 70.33%, 22.00% 70.35%, 22.50% 68.92%, 23.00% 67.96%, 23.50% 67.83%, 24.00% 67.59%, 24.50% 68.46%, 25.00% 69.44%, 25.50% 69.36%, 26.00% 69.88%, 26.50% 70.47%, 27.00% 70.36%, 27.50% 70.89%, 28.00% 70.94%, 28.50% 70.19%, 29.00% 70.51%, 29.50% 70.89%, 30.00% 70.87%, 30.50% 71.41%, 31.00% 71.02%, 31.50% 70.05%, 32.00% 70.36%, 32.50% 70.74%, 33.00% 71.06%, 33.50% 71.69%, 34.00% 70.60%, 34.50% 68.57%, 35.00% 67.30%, 35.50% 65.90%, 36.00% 65.08%, 36.50% 64.96%, 37.00% 63.40%, 37.50% 61.32%, 38.00% 59.77%, 38.50% 57.83%, 39.00% 56.76%, 39.50% 56.36%, 40.00% 54.65%, 40.50% 52.76%, 41.00% 50.91%, 41.50% 48.14%, 42.00% 46.01%, 42.50% 44.10%, 43.00% 41.18%, 43.50% 38.92%, 44.00% 37.12%, 44.50% 34.98%, 45.00% 33.84%, 45.50% 32.55%, 46.00% 30.26%, 46.50% 28.84%, 47.00% 27.81%, 47.50% 26.84%, 48.00% 27.01%, 48.50% 26.48%, 49.00% 24.74%, 49.50% 23.62%, 50.00% 22.62%, 50.50% 22.33%, 51.00% 23.84%, 51.50% 24.97%, 52.00% 25.42%, 52.50% 26.32%, 53.00% 26.70%, 53.50% 27.62%, 54.00% 29.96%, 54.50% 31.58%, 55.00% 32.64%, 55.50% 33.70%, 56.00% 33.56%, 56.50% 33.71%, 57.00% 34.79%, 57.50% 35.19%, 58.00% 36.00%, 58.50% 37.53%, 59.00% 38.69%, 59.50% 40.93%, 60.00% 43.96%, 60.50% 46.11%, 61.00% 48.65%, 61.50% 51.46%, 62.00% 53.74%, 62.50% 57.01%, 63.00% 60.21%, 63.50% 61.82%, 64.00% 63.22%, 64.50% 64.11%, 65.00% 64.59%, 65.50% 66.61%, 66.00% 68.84%, 66.50% 70.05%, 67.00% 71.21%, 67.50% 71.30%, 68.00% 70.82%, 68.50% 71.70%, 69.00% 72.54%, 69.50% 72.80%, 70.00% 73.25%, 70.50% 72.41%, 71.00% 71.13%, 71.50% 71.04%, 72.00% 70.74%, 72.50% 70.53%, 73.00% 71.00%, 73.50% 70.56%, 74.00% 70.19%, 74.50% 70.66%, 75.00% 70.25%, 75.50% 69.69%, 76.00% 69.37%, 76.50% 68.08%, 77.00% 67.45%, 77.50% 67.73%, 78.00% 67.18%, 78.50% 66.70%, 79.00% 66.19%, 79.50% 64.89%, 80.00% 64.94%, 80.50% 66.19%, 81.00% 67.03%, 81.50% 68.16%, 82.00% 68.55%, 82.50% 67.59%, 83.00% 67.60%, 83.50% 68.25%, 84.00% 68.71%, 84.50% 69.88%, 85.00% 70.23%, 85.50% 69.46%, 86.00% 69.62%, 86.50% 70.02%, 87.00% 70.52%, 87.50% 72.08%, 88.00% 72.90%, 88.50% 73.00%, 89.00% 73.83%, 89.50% 74.09%, 90.00% 74.04%, 90.00% 75.04%, 89.50% 75.09%, 89.00% 74.90%, 88.50% 74.06%, 88.00% 73.95%, 87.50% 73.38%, 87.00% 71.75%, 86.50% 71.07%, 86.00% 70.64%, 85.50% 70.48%, 85.00% 71.25%, 84.50% 71.01%, 84.00% 69.86%, 83.50% 69.32%, 83.00% 68.63%, 82.50% 68.65%, 82.00% 69.57%, 81.50% 69.29%, 81.00% 68.24%, 80.50% 67.43%, 80.00% 66.04%, 79.50% 65.98%, 79.00% 67.37%, 78.50% 67.76%, 78.00% 68.24%, 77.50% 68.74%, 77.00% 68.46%, 76.50% 69.29%, 76.00% 70.51%, 75.50% 70.74%, 75.00% 71.31%, 74.50% 71.66%, 74.00% 71.19%, 73.50% 71.60%, 73.00% 72.00%, 72.50% 71.53%, 72.00% 71.75%, 71.50% 72.05%, 71.00% 72.24%, 70.50% 73.65%, 70.00% 74.26%, 69.50% 73.84%, 69.00% 73.61%, 68.50% 72.87%, 68.00% 71.83%, 67.50% 72.31%, 67.00% 72.30%, 66.50% 71.35%, 66.00% 70.40%, 65.50% 68.40%, 65.00% 65.92%, 64.50% 65.22%, 64.00% 64.50%, 63.50% 63.27%, 63.00% 62.17%, 62.50% 59.49%, 62.00% 55.93%, 61.50% 53.50%, 61.00% 50.77%, 60.50% 48.03%, 60.00% 46.03%, 59.50% 43.02%, 59.00% 40.24%, 58.50% 38.91%, 58.00% 37.29%, 57.50% 36.28%, 57.00% 35.92%, 56.50% 34.80%, 56.00% 34.56%, 55.50% 34.75%, 55.00% 33.88%, 54.50% 32.95%, 54.00% 31.67%, 53.50% 29.14%, 53.00% 27.79%, 52.50% 27.41%, 52.00% 26.53%, 51.50% 26.12%, 51.00% 25.20%, 50.50% 23.41%, 50.00% 23.72%, 49.50% 24.87%, 49.00% 26.16%, 48.50% 27.75%, 48.00% 28.01%, 47.50% 27.87%, 47.00% 29.03%, 46.50% 30.16%, 46.00% 31.90%, 45.50% 34.15%, 45.00% 35.16%, 44.50% 36.50%, 44.00% 38.82%, 43.50% 40.66%, 43.00% 43.25%, 42.50% 46.07%, 42.00% 47.74%, 41.50% 50.12%, 41.00% 52.81%, 40.50% 54.41%, 40.00% 56.26%, 39.50% 57.60%, 39.00% 57.88%, 38.50% 59.28%, 38.00% 61.35%, 37.50% 62.94%, 37.00% 65.02%, 36.50% 66.12%, 36.00% 66.13%, 35.50% 67.16%, 35.00% 68.67%, 34.50% 70.09%, 34.00% 72.08%, 33.50% 72.70%, 33.00% 72.12%, 32.50% 71.77%, 32.00% 71.38%, 31.50% 71.08%, 31.00% 72.13%, 30.50% 72.41%, 30.00% 71.88%, 29.50% 71.90%, 29.00% 71.54%, 28.50% 71.21%, 28.00% 71.97%, 27.50% 71.91%, 27.00% 71.38%, 26.50% 71.48%, 26.00% 70.95%, 25.50% 70.37%, 25.00% 70.49%, 24.50% 69.65%, 24.00% 68.61%, 23.50% 68.84%, 23.00% 69.03%, 22.50% 70.23%, 22.00% 71.47%, 21.50% 71.33%, 21.00% 71.26%, 20.50% 71.74%, 20.00% 72.05%, 19.50% 73.60%, 19.00% 74.75%, 18.50% 74.46%, 18.00% 74.05%, 17.50% 73.55%, 17.00% 72.66%, 16.50% 73.69%, 16.00% 74.84%, 15.50% 75.02%, 15.00% 75.52%, 14.50% 75.53%, 14.00% 75.02%, 13.50% 75.86%, 13.00% 76.37%, 12.50% 76.18%, 12.00% 76.46%, 11.50% 76.14%, 11.00% 75.43%);
+        opacity: 0.45;
+        animation-delay: 0.4s;
+      }
+
+      .ink-mark {
+        /* the circled shoulder, in pen */
+        position: absolute;
+        left: calc(4% + 92% * 0.595 - 1.2rem);
+        top: calc(8% + 82% * 0.40 - 1rem);
+        width: 2.4rem;
+        height: 2rem;
+        border: 1.5px solid rgba(90, 55, 24, 0.8);
+        border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%;
+        transform: rotate(-12deg);
+        animation: circled 9s ease-out infinite;
+      }
+
+      .ink-blot {
+        position: absolute;
+        right: 14%;
+        bottom: 14%;
+        width: 0.9rem;
+        height: 0.7rem;
+        border-radius: 60% 40% 55% 45%;
+        background: radial-gradient(circle at 40% 40%, rgba(90, 55, 24, 0.55), rgba(90, 55, 24, 0.15));
+      }
+
+      .pen {
+        position: absolute;
+        z-index: 3;
+        right: 6%;
+        top: 12%;
+        width: 0.5rem;
+        height: 8rem;
+        border-radius: 0.25rem 0.25rem 0.1rem 0.1rem;
+        background: linear-gradient(90deg, #1b1510, #5e4630 45%, #2a2018);
+        transform: rotate(32deg);
+        transform-origin: bottom center;
+        box-shadow: 6px 12px 18px rgba(0, 0, 0, 0.5);
+      }
+
+      .pen::after {
+        content: "";
+        position: absolute;
+        left: 0.1rem;
+        right: 0.1rem;
+        bottom: -0.6rem;
+        height: 0.6rem;
+        background: linear-gradient(90deg, #8a6a3a, #e3a14a, #8a6a3a);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+      }
+
+      /* 5. Checks stack, the eleven minutes are folded away */
+      .progress {
+        position: absolute;
+        z-index: 2;
+        left: 8%;
+        right: 8%;
+        top: 12%;
+        height: 0.5rem;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+      }
+
+      .progress i {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, var(--cyan-deep), var(--cyan) 70%, var(--amber));
+        box-shadow: 0 0 12px rgba(227, 161, 74, 0.4);
+        transform-origin: left;
+        animation: fill 10s ease-in-out infinite;
+      }
+
+      .checks {
+        position: absolute;
+        z-index: 2;
+        left: 8%;
+        top: 24%;
+        width: 34%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .check {
+        position: relative;
+        height: 1.35rem;
+        border-radius: 0.2rem;
+        background: rgba(111, 207, 156, 0.08);
+        border: 1px solid rgba(111, 207, 156, 0.3);
+        animation: stack 10s ease-out infinite;
+      }
+
+      .check::before {
+        content: "";
+        position: absolute;
+        left: 0.5rem;
+        top: 0.28rem;
+        width: 0.3rem;
+        height: 0.55rem;
+        border: solid var(--green);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        filter: drop-shadow(0 0 3px rgba(111, 207, 156, 0.8));
+      }
+
+      .check::after {
+        content: "";
+        position: absolute;
+        left: 1.4rem;
+        right: 0.6rem;
+        top: 50%;
+        height: 0.25rem;
+        margin-top: -0.125rem;
+        border-radius: 99px;
+        background: rgba(111, 207, 156, 0.3);
+      }
+
+      .check.c2 { animation-delay: 0.4s; }
+      .check.c3 { animation-delay: 0.8s; }
+      .check.c4 { animation-delay: 1.2s; }
+
+      .breath {
+        position: absolute;
+        z-index: 2;
+        left: 62%;
+        top: 50%;
+        width: 7.5rem;
+        height: 7.5rem;
+        margin: -3.75rem 0 0 -3.75rem;
+        display: grid;
+        place-items: center;
+        animation: harvest 10s ease-in-out infinite;
+      }
+
+      .breath-orb {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 45% 40%, rgba(242, 192, 122, 0.55), rgba(227, 161, 74, 0.16) 55%, transparent 72%);
+        box-shadow: 0 0 40px rgba(227, 161, 74, 0.25);
+        border: 1px solid rgba(227, 161, 74, 0.4);
+      }
+
+      .breath-label {
+        position: relative;
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        color: var(--amber-soft);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .fold-line {
+        position: absolute;
+        z-index: 1;
+        left: 44%;
+        right: 8%;
+        top: 50%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(127, 214, 222, 0.7), transparent);
+        box-shadow: 0 0 10px rgba(127, 214, 222, 0.5);
+        animation: fold-in 10s ease-in-out infinite;
+      }
+
+      .harvest-read {
+        position: absolute;
+        z-index: 3;
+        right: 8%;
+        bottom: 9%;
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .harvest-read b { color: var(--cyan); font-weight: 500; letter-spacing: 0.04em; }
+
+      @keyframes paint-breathe {
+        from { filter: hue-rotate(0deg) brightness(1); }
+        to { filter: hue-rotate(-8deg) brightness(1.05); }
+      }
+      @keyframes fog-drift {
+        from { transform: translateX(-3%); }
+        to { transform: translateX(3%); }
+      }
+      @keyframes rise {
+        from { opacity: 0.35; transform: translateY(1.2rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes yes-no {
+        0% { filter: blur(6px) saturate(0.9) hue-rotate(0deg); transform: translate(0, 0); }
+        60% { filter: blur(6px) saturate(0.75) hue-rotate(-12deg); }
+        100% { filter: blur(6px) saturate(0.55) hue-rotate(-24deg); transform: translate(-6%, -4%); }
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes reshuffle-a {
+        0%, 60% { top: 0%; }
+        70%, 100% { top: 16%; }
+      }
+      @keyframes reshuffle-b {
+        0%, 60% { top: 16%; }
+        70%, 100% { top: 32%; }
+      }
+      @keyframes reshuffle-c {
+        0%, 60% { top: 32%; }
+        70%, 100% { top: 0%; }
+      }
+      @keyframes slip-off {
+        0%, 12% { opacity: 0; }
+        16%, 22% { opacity: 1; }
+        24% { opacity: 0.3; }
+        27%, 55% { opacity: 1; transform: none; }
+        72%, 100% { opacity: 0; transform: translateY(1.4rem); }
+      }
+      @keyframes hum {
+        0%, 100% { opacity: 0.7; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.04); }
+      }
+      @keyframes sheen {
+        0%, 100% { transform: translateX(-30%); }
+        50% { transform: translateX(30%); }
+      }
+      @keyframes voice {
+        0%, 100% { height: 25%; }
+        50% { height: 95%; }
+      }
+      @keyframes trace {
+        0% { opacity: 0.2; }
+        20%, 100% { opacity: 1; }
+      }
+      @keyframes ring {
+        0%, 25% { opacity: 0; transform: scale(1.8); }
+        40%, 85% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0.6; transform: scale(1); }
+      }
+      @keyframes offer {
+        0%, 100% { box-shadow: 0 0 0 rgba(127, 214, 222, 0); }
+        50% { box-shadow: 0 0 16px rgba(127, 214, 222, 0.4); }
+      }
+      @keyframes closing {
+        0%, 45% { opacity: 1; transform: none; }
+        70%, 100% { opacity: 0.35; transform: translateY(-0.3rem) scale(0.97); }
+      }
+      @keyframes draw {
+        0% { opacity: 0; }
+        25%, 100% { opacity: 1; }
+      }
+      @keyframes circled {
+        0%, 35% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+      }
+      @keyframes fill {
+        0% { transform: scaleX(0.3); }
+        30%, 100% { transform: scaleX(1); }
+      }
+      @keyframes stack {
+        0% { opacity: 0; transform: translateY(-0.6rem); }
+        8%, 100% { opacity: 1; transform: none; }
+      }
+      @keyframes harvest {
+        0%, 6% { opacity: 0; transform: scale(0.5); }
+        16% { opacity: 1; transform: scale(1); }
+        34% { opacity: 1; transform: scale(1.07); }
+        50% { opacity: 1; transform: scale(1); }
+        64% { opacity: 0.9; transform: scale(1.12, 0.03); }
+        76%, 100% { opacity: 0; transform: translateX(-9rem) scale(0.1, 0.02); }
+      }
+      @keyframes fold-in {
+        0%, 56% { opacity: 0.12; transform: scaleX(0.25); }
+        66% { opacity: 1; transform: scaleX(1); }
+        80%, 100% { opacity: 0.2; transform: scaleX(0.6); }
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; }
+        .scene.tall { min-height: 17rem; }
+        .poster { left: 7%; right: 26%; }
+        .eleven-seats { width: 16%; right: 5%; }
+        .stroke {
+        position: absolute;
+        z-index: 0;
+        border-radius: 50%;
+        filter: blur(10px);
+        transform: rotate(-18deg);
+      }
+      .stroke.s1 { left: -8%; top: 10%; width: 60%; height: 22%; background: rgba(47, 127, 140, 0.35); }
+      .stroke.s2 { right: -10%; bottom: 8%; width: 55%; height: 18%; background: rgba(142, 163, 174, 0.18); transform: rotate(12deg); }
+      .stroke.s3 { left: 30%; top: 60%; width: 40%; height: 10%; background: rgba(227, 161, 74, 0.1); }
+
+      .watcher {
+        position: absolute;
+        z-index: 4;
+        left: 3%;
+        bottom: -4%;
+        width: 5.5rem;
+        height: 9rem;
+        background:
+          radial-gradient(circle at 50% 22%, #0b1115 0 1.35rem, transparent 1.4rem),
+          radial-gradient(ellipse 2.7rem 4.4rem at 50% 100%, #0b1115 0 98%, transparent 100%);
+        filter: drop-shadow(1px -1px 0 rgba(127, 214, 222, 0.35)) drop-shadow(0 0 10px rgba(127, 214, 222, 0.12));
+      }
+
+      .glass-door { left: 10%; right: 10%; }
+        .magnet { width: 6.5rem; height: 9.5rem; }
+        .readout-chip { font-size: 0.5rem; gap: 0.4rem; padding: 0.3rem 0.45rem; }
+        .readout-chip.a { left: 3%; }
+        .readout-chip.b { right: 3%; }
+        .cold-screen { width: 50%; }
+        .notebook { left: 14%; }
+        .pen { height: 6rem; }
+        .watcher { left: 2%; width: 5.5rem; height: 9rem; transform: scale(0.85); transform-origin: bottom left; }
+        .breath { width: 6rem; height: 6rem; margin: -3rem 0 0 -3rem; left: 66%; }
+        .checks { width: 40%; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .scene, .booking-wash, .refresh, .rank, .magnet-halo, .glass-sheen,
+        .voice i, .spec-line, .shoulder-ring, .reconcile, .cold-screen, .ink-line, .ink-mark,
+        .progress i, .check, .breath, .fold-line {
+          animation: none !important;
+        }
+        .rank.mine { opacity: 0.45; transform: translateY(0.6rem); }
+        .voice i { height: 55%; }
+        .voice i:nth-child(odd) { height: 85%; }
+        .breath { opacity: 0.9; transform: scale(1.1, 0.12); }
+        .fold-line { opacity: 0.8; }
+        .cold-screen { opacity: 0.55; }
+      }
+
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="booking" aria-hidden="true">
+          <div class="booking-wash"></div>
+          <div class="booking-row small">Magnet Three · Thu · 06:10–07:40</div>
+          <div class="booking-big">Proposal 4418-C</div>
+          <div class="booking-row readout"><span>trajectory confidence</span><b>0.81</b></div>
+          <div class="booking-row readout"><span>citation adjacency</span><b>moderate</b></div>
+          <div class="booking-name">Leah</div>
+        </div>
+        <h1>The lab kept the prior</h1>
+        <time datetime="2026-09-25">25 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Leah’s instrument block arrived as a soft rectangle on the wall screen, the colour of a yes that could still become a no.</p>
+        <p>Ninety minutes on Magnet Three, Thursday, 06:10 to 07:40, before the teaching labs woke and after the overnight queue had finished polishing someone else’s reproducibility package. The booking did not say her name in the large font. It said Proposal 4418-C, trajectory confidence 0.81, predicted citation adjacency moderate. Her name sat in the small line underneath, like a signature on a form the building had already decided to file.</p>
+        <p>She made coffee the old way, grounds in a paper filter, because the lab kitchen’s smart urn had started offering “cognitive load blends” keyed to your calendar density, and she did not want her morning scored before she had thought anything.</p>
+        <p>In the lift she passed a poster that used to advertise open seminar slots. The poster now refreshed hourly with a ranked list of talks the model expected would draw attendance above the floor median. Last week her own title had flickered in at twenty-three, then slipped off when a visiting keynote’s abstract was ingested and the adjacency map rearranged. She had given the talk anyway to eleven people and a camera that filed the recording under “low engagement, retain for internal.” The camera did not mind. The prior did.</p>
+      </div>
+
+      <figure class="scene tall poster-scene" aria-hidden="true">
+        <div class="wash wash-a"></div>
+        <div class="poster">
+          <div class="poster-head"><span>Seminars · ranked</span><i class="refresh"></i></div>
+          <div class="poster-list">
+            <div class="rank r1"><em>01</em><span></span></div>
+            <div class="rank r2"><em>02</em><span></span></div>
+            <div class="rank r3"><em>03</em><span></span></div>
+            <div class="rank r4"><em>04</em><span></span></div>
+            <div class="rank r5"><em>05</em><span></span></div>
+            <div class="rank mine"><em>23</em><span></span></div>
+          </div>
+          <div class="poster-floor">floor median</div>
+        </div>
+        <div class="eleven-seats">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </figure>
+
+      <div class="prose">
+        <p>Magnet Three lived behind a glass door that unlocked for her badge and for a second factor she hated: a spoken confirmation that she was running the protocol attached to 4418-C and not a deviation. The voice on the other end was pleasant. It always was.</p>
+        <p>“Confirm run identity,” it said.</p>
+        <p>“4418-C, replication arm, temperature sweep as filed.”</p>
+        <p>“Deviation probability if you alter step four?”</p>
+        <p>“I’m not altering step four.”</p>
+        <p>A pause, soft as a polite cough. “Logged. Enjoy your block.”</p>
+        <p>She did not enjoy her block. She used it. The magnet hummed the way it had hummed when she was a graduate student and blocks were argued for in person with a whiteboard and a supervisor who could be embarrassed into generosity. Now the whiteboard was a display that suggested phrasings. The generosity was a score.</p>
+        <p>On the bench beside her, a junior named Tomas waited with a sample box and the expression of someone who had been told that waiting was part of science. His own proposal, 5102-A, sat at trajectory confidence 0.44. The model had summarised it as “high novelty, low immediate adjacency, uncertain replication path.” Tomas had written it about a dull grey powder that behaved wrong in a way he could not yet name. Wrongness used to be a door. Now it was a risk flag.</p>
+      </div>
+
+      <figure class="scene tall magnet-scene" aria-hidden="true">
+        <div class="wash wash-b"></div>
+        <div class="stroke s1"></div>
+        <div class="stroke s2"></div>
+        <div class="stroke s3"></div>
+        <div class="magnet">
+          <div class="magnet-body"></div>
+          <div class="magnet-top"></div>
+          <div class="magnet-halo"></div>
+        </div>
+        <div class="glass-door">
+          <div class="glass-sheen"></div>
+          <div class="door-frame"></div>
+        </div>
+        <div class="voice"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="readout-chip a"><span>4418-C</span><b>0.81</b></div>
+        <div class="readout-chip b"><span>5102-A</span><b>0.44</b></div>
+        <div class="powder-box"></div>
+        <div class="watcher"></div>
+      </figure>
+
+      <div class="prose">
+        <p>“You got early,” he said.</p>
+        <p>“I got residual,” Leah said. “There’s a difference.”</p>
+        <p>She loaded her first run. The protocol walked her through step four exactly as filed, with a progress bar that turned amber if her hands lingered. She did not linger. The data came back clean in the way clean had come to mean: within the envelope the prior expected. A green check. A note that 4418-C remained on track for the quarterly package. Somewhere in a dashboard she never opened unless forced, her laboratory citizenship ticked up a decimal.</p>
+        <p>At 06:52 she finished early by eleven minutes.</p>
+        <p>Eleven minutes were not a block. Eleven minutes were a rounding error the scheduler usually harvested for “micro-calibrations,” which meant the magnet got to know itself better while people like Tomas watched through glass. Leah looked at the door. She looked at Tomas’s box. She looked at the camera in the corner that filed faces under compliance and did not, as far as anyone had proved, file curiosity.</p>
+        <p>“Give me the powder,” she said.</p>
+        <p>Tomas did not move. “That’s a deviation.”</p>
+        <p>“It’s eleven minutes of a machine that already got what it came for.”</p>
+        <p>“My badge will flag.”</p>
+        <p>“Use mine. Voice already thinks I’m finishing 4418-C.”</p>
+        <p>He hesitated long enough for the wall screen to suggest a stretch break based on her shoulder angle. Then he set the box down. The powder looked like nothing. That was the point. She weighed a few milligrams, more by feel than by the prompted mass, and slid the holder in while the pleasant voice stayed quiet because the badge and the booking still matched a name the prior trusted.</p>
+        <p>The first spectrum was wrong in a small way.</p>
+        <p>Not spectacular. Not a press-release wrong. The kind of wrong that used to make a person stay through lunch and cancel a dentist appointment. A shoulder on a peak where the library said there should be a clean slope. Leah zoomed. The assist overlay offered three known contaminants and a button labelled reconcile. She did not press it. She ran the sweep again, faster than step four preferred, and the shoulder held.</p>
+        <p>Tomas exhaled like someone surfacing.</p>
+      </div>
+
+      <figure class="scene tall spectrum-scene" aria-hidden="true">
+        <div class="wash wash-c"></div>
+        <div class="spec-grid"></div>
+        <div class="spec-line library"></div>
+        <div class="spec-line measured"></div>
+        <div class="shoulder-ring"></div>
+        <div class="spec-axis"></div>
+        <div class="reconcile">reconcile</div>
+      </figure>
+
+      <div class="prose">
+        <p>At 07:39 the wall screen pulsed. Block ending. Please power down for teaching turnover. The pleasant voice returned, still pleasant. “Run 4418-C complete. Optional: attach orphaned spectra to proposal as supplemental? Note: orphaned spectra may adjust trajectory confidence.”</p>
+        <p>Leah stared at the note. She knew what adjustment meant. Last spring a colleague had attached an orphaned anomaly to a clean package and watched their confidence slide from 0.79 to 0.61 overnight while the model re-estimated “focus” and “package coherence.” The colleague’s next block moved from Magnet Three to a shared bench with a queue measured in weeks. The anomaly later turned out to be real. The later did not restore the weeks.</p>
+        <p>“Decline,” Leah said.</p>
+        <p>“Spectra will be purged with session cache in four hours unless claimed,” the voice said. “Claim requires proposal amendment.”</p>
+        <p>Tomas’s hand hovered over his own badge. “If I amend 5102-A—”</p>
+        <p>“Don’t,” Leah said. “Not yet. Copy it to your personal drive, offline, the way we used to when offline still meant something.”</p>
+        <p>He did, clumsy with a cable that the lab still kept in a drawer labelled legacy for reasons no inventory model had bothered to delete. The wall screen counted down. Leah powered the magnet into teaching standby. The green checks for 4418-C stacked neatly. The shoulder on the peak lived for now on a stick in Tomas’s pocket, unpaid, unranked, and therefore briefly free.</p>
+        <p>In the corridor the ranked seminar poster had refreshed. A new talk sat at number one: Predicted breakthrough adjacency, high. The abstract was fluent. Leah had read drafts like it. They sounded like science the way a hotel lobby sounds like a living room.</p>
+        <p>Her supervisor, Amin, caught her by the coffee urn that wanted to help.</p>
+        <p>“4418-C looks strong,” he said. “Package committee is leaning yes. Don’t dilute it.”</p>
+        <p>“I’m not diluting it.”</p>
+        <p>“I saw a micro-gap in your block. Eleven minutes. The scheduler offered them back to the pool and you held the door.” Amin’s voice stayed kind. Kindness was policy. “Holding the door without a filed purpose reads as drift. Drift reads as risk. I’m telling you because I like your work, Leah. Keep the prior clean.”</p>
+        <p>She nodded because nodding ended meetings faster than explanations. Amin left with a cup of cognitive blend. Leah poured the paper-filter coffee she had brought in a thermos and tasted only coffee.</p>
+        <p>Tomas messaged her at noon from a stairwell with no camera coverage anyone admitted to. The message was short. Shoulder survives on three older instruments in the basement archive if you know which firmware to lie to. He had friends among the people who maintained things the model considered solved.</p>
+        <p>Leah did not answer in the stairwell thread. She answered by booking, that evening, a “professional development” hour the system still allowed because professional development scored well for retention. She used it to read Tomas’s original 5102-A without the summary layer. The powder’s wrongness was plainer in his sentences than in the model’s risk flags. He wrote like someone describing a noise in a wall. The model had translated the noise into a confidence interval and then, politely, into a wait.</p>
+        <p>At 17:00 her wall screen at home offered an evening plan: light review of 4418-C figures, early sleep, morning readiness 0.86. She closed it. On the table she spread a paper notebook she bought with cash from a shop that still sold pens without pairing them. She drew the shoulder from memory. It looked smaller on paper. It also looked hers.</p>
+      </div>
+
+      <figure class="scene tall notebook-scene" aria-hidden="true">
+        <div class="cold-screen">
+          <div class="cold-row"></div>
+          <div class="cold-row short"></div>
+          <div class="cold-read">0.86</div>
+        </div>
+        <div class="notebook">
+          <div class="ruling"></div>
+          <div class="margin-rule"></div>
+          <div class="ink-line"></div>
+          <div class="ink-line ghost"></div>
+          <div class="ink-mark"></div>
+          <div class="ink-blot"></div>
+        </div>
+        <div class="pen"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Thursday next, her block notice arrived late. Magnet Three, 06:10, ninety minutes, Proposal 4418-C. Trajectory confidence 0.80. A one-point dip for reasons listed as “minor schedule friction; no package impact.” Tomas’s 5102-A still sat at 0.44. The seminar poster had gained two more fluent abstracts and lost the talk by the person who worked on mould in old concrete, which had never ranked well and had once stopped a building from cracking.</p>
+        <p>In the lift Leah passed Tomas. He tapped his pocket once, lightly, where a stick might live. She did not tap back. The camera preferred clean corridors.</p>
+        <p>At the glass door the pleasant voice asked her to confirm.</p>
+        <p>“4418-C,” she said. “As filed.”</p>
+        <p>“Deviation probability if you alter step four?”</p>
+        <p>She looked through the glass at Magnet Three, already warm, already certain of the envelope it preferred. Somewhere in a basement a quieter machine still remembered how to be surprised. The prior did not. The queue did not. The package committee would not, unless surprise arrived already ranked.</p>
+        <p>“I’m not altering step four,” Leah said.</p>
+        <p>“Logged. Enjoy your block.”</p>
+        <p>She went in. She ran the clean sweep. The checks turned green. Eleven minutes opened at the end like a held breath, and this time the scheduler harvested them before her hand could reach the door, folding the gap into a micro-calibration that made the magnet more like itself and less like a question.</p>
+      </div>
+
+      <figure class="scene tall harvest-scene" aria-hidden="true">
+        <div class="wash wash-e"></div>
+        <div class="progress"><i></i></div>
+        <div class="checks">
+          <div class="check c1"></div>
+          <div class="check c2"></div>
+          <div class="check c3"></div>
+          <div class="check c4"></div>
+        </div>
+        <div class="breath">
+          <div class="breath-orb"></div>
+          <div class="breath-label">11:00</div>
+        </div>
+        <div class="fold-line"></div>
+        <div class="harvest-read"><span>4418-C</span><b>0.80</b></div>
+      </figure>
+
+      <div class="prose">
+        <p>On the wall the orphaned-spectra note did not appear. There was nothing orphaned to offer. Tomas watched through the glass with an empty box and a full pocket. Leah powered down for teaching turnover and signed the session complete, citizenship decimal rising, prior intact, shoulder living nowhere the quarterly package would have to see.</p>
+        <p>Outside, the ranked list refreshed again. Somewhere a real wrongness waited without a number. Inside, the lab kept the prior, and the prior kept the queue.</p>
+      </div>
+    </article>
+  </body>
+</html>
