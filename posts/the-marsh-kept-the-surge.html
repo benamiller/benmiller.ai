@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The marsh kept the surge — Ben Miller</title>
+    <meta name="description" content="A coastal walker answers an amber tide note on Marsh Seven, where boots and a parish charter still decide what the surge may take.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0a0c0b;
+        --ink: #e4e0d4;
+        --mute: #8a7f6a;
+        --marsh: #6b5335;
+        --marsh-deep: #2a2116;
+        --gold: #c9a35a;
+        --gold-soft: #e0c078;
+        --silver: #aeb8b8;
+        --amber: #e0a040;
+        --amber-glow: #f0b84a;
+        --teal: #2f5e5c;
+        --teal-dusk: #3a6e6a;
+        --pan: #1e3a3a;
+        --porch: #ffc977;
+        --brass: #b8974a;
+        --warm: #f2ebe0;
+        --grey-cool: #9aa0a0;
+      }
+
+      html { background: var(--void); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 34% at 12% 4%, rgba(201, 163, 90, 0.14), transparent 60%),
+          radial-gradient(ellipse 40% 28% at 88% 18%, rgba(47, 94, 92, 0.16), transparent 55%),
+          radial-gradient(ellipse 55% 30% at 60% 105%, rgba(107, 83, 53, 0.18), transparent 60%),
+          linear-gradient(180deg, #0a0c0b 0%, #101412 40%, #12100c 72%, #0c0b09 100%);
+        animation: paint-breathe 38s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 85% 24% at 50% 100%, rgba(174, 184, 184, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(58, 110, 106, 0.04), transparent);
+        animation: fog-drift 54s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: var(--gold-soft);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--warm);
+        text-shadow: 0 0 40px rgba(201, 163, 90, 0.22);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #ddd6c8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.4rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #0e1210;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(201, 163, 90, 0.08);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 82% 72% at 50% 45%, transparent 55%, rgba(5, 6, 5, 0.72) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.013) 0 2px, transparent 2px 7px);
+      }
+
+      .scene > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(14px); }
+
+      .stroke { border-radius: 50%; filter: blur(6px); z-index: 7; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 55%; height: 10%; background: rgba(174, 184, 184, 0.4); transform: rotate(-8deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 8%; background: rgba(201, 163, 90, 0.35); transform: rotate(10deg); }
+      .stroke.t3 { left: 20%; bottom: 6%; width: 50%; height: 7%; background: rgba(58, 110, 106, 0.35); transform: rotate(-4deg); }
+
+      /* ===== HERO: boardwalk over estuary ===== */
+      .marsh-hero {
+        position: relative;
+        height: 19rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(201, 163, 90, 0.12);
+        background: linear-gradient(180deg, #1a2830 0%, #2a3a3c 22%, #4a5540 48%, #6b5335 68%, #3a2e1c 100%);
+      }
+      .marsh-hero > * { position: absolute; }
+      .marsh-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background:
+          radial-gradient(ellipse 85% 75% at 50% 45%, transparent 55%, rgba(5, 6, 5, 0.65) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 7px);
+      }
+
+      .mh-sky { inset: 0 0 45% 0; background: linear-gradient(180deg, #142028, #2a3840 60%, transparent); }
+      .mh-band {
+        left: 8%; right: 8%; top: 28%; height: 8%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(100, 160, 200, 0.55), transparent);
+        filter: blur(6px);
+        animation: band-soft 12s ease-in-out infinite alternate;
+      }
+      .mh-water {
+        left: -5%; right: -5%; top: 42%; bottom: 18%;
+        background:
+          linear-gradient(180deg, rgba(174, 184, 184, 0.45), rgba(90, 110, 110, 0.55) 40%, rgba(60, 70, 65, 0.7)),
+          repeating-linear-gradient(90deg, transparent 0 18px, rgba(200, 210, 210, 0.08) 18px 20px);
+        clip-path: polygon(0 40%, 15% 28%, 35% 35%, 55% 22%, 75% 32%, 100% 20%, 100% 100%, 0 100%);
+        animation: water-shimmer 8s ease-in-out infinite alternate;
+      }
+      .mh-reeds {
+        left: 0; right: 0; bottom: 12%; height: 35%;
+        background:
+          repeating-linear-gradient(90deg, transparent 0 10px, rgba(80, 90, 40, 0.7) 10px 12px, transparent 12px 22px),
+          repeating-linear-gradient(85deg, transparent 0 14px, rgba(107, 83, 53, 0.5) 14px 16px, transparent 16px 28px);
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 40%);
+        mask-image: linear-gradient(180deg, transparent, #000 40%);
+        filter: blur(0.5px);
+      }
+      .mh-boardwalk {
+        left: 5%; right: 5%; top: 55%; height: 12%;
+        background: linear-gradient(180deg, #5a4830, #3a2e1c);
+        clip-path: polygon(0 60%, 100% 40%, 100% 70%, 0 90%);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        z-index: 3;
+      }
+      .mh-planks {
+        left: 5%; right: 5%; top: 55%; height: 12%;
+        z-index: 4;
+        background: repeating-linear-gradient(90deg, transparent 0 22px, rgba(0,0,0,0.25) 22px 24px);
+        clip-path: polygon(0 60%, 100% 40%, 100% 70%, 0 90%);
+      }
+      .mh-rail {
+        left: 8%; right: 12%; top: 52%; height: 3px;
+        background: linear-gradient(90deg, #2a2218, #6a5840, #2a2218);
+        z-index: 5;
+        transform: perspective(200px) rotateX(20deg);
+        clip-path: polygon(0 80%, 100% 20%, 100% 60%, 0 100%);
+      }
+      .mh-walker {
+        left: 42%; top: 46%; width: 8px; height: 18px; z-index: 6;
+        background:
+          radial-gradient(circle at 50% 18%, #0c100e 0 3px, transparent 3.4px),
+          radial-gradient(ellipse 3.5px 8px at 50% 100%, #0c100e 0 98%, transparent 100%);
+        filter: drop-shadow(0 0 3px rgba(255, 201, 119, 0.35));
+      }
+      .mh-gold-wash { left: -10%; bottom: -5%; width: 50%; height: 40%; background: rgba(201, 163, 90, 0.35); filter: blur(28px); border-radius: 50%; }
+      .mh-teal-wash { right: -12%; top: -10%; width: 55%; height: 45%; background: rgba(47, 94, 92, 0.4); filter: blur(30px); border-radius: 50%; }
+      .mh-porch-glow {
+        right: 8%; bottom: 22%; width: 18%; height: 8%;
+        background:
+          radial-gradient(circle at 20% 50%, var(--porch) 0 2px, transparent 4px),
+          radial-gradient(circle at 50% 40%, var(--porch) 0 2px, transparent 4px),
+          radial-gradient(circle at 80% 55%, var(--porch) 0 2px, transparent 4px);
+        filter: drop-shadow(0 0 6px rgba(255, 201, 119, 0.9));
+        opacity: 0.85;
+        animation: lamp 10s ease-in-out infinite;
+        z-index: 5;
+      }
+      .mh-caravan {
+        right: 6%; bottom: 28%; width: 22%; height: 10%;
+        background: linear-gradient(180deg, #3a3428, #1e1a14);
+        clip-path: polygon(0 40%, 8% 20%, 92% 20%, 100% 40%, 100% 100%, 0 100%);
+        opacity: 0.7;
+        z-index: 4;
+      }
+
+      /* ===== PANEL 1: amber gauge post ===== */
+      .gauge-scene { background: linear-gradient(180deg, #1a2828 0%, #2a3028 40%, #1e1810 100%); }
+      .g-wash-a { left: -10%; top: -15%; width: 55%; height: 50%; background: rgba(224, 160, 64, 0.35); }
+      .g-wash-b { right: -10%; top: 20%; width: 50%; height: 45%; background: rgba(47, 94, 92, 0.25); }
+      .g-marsh-floor { left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(180deg, #3a2e1c, #1a1410); }
+      .g-post {
+        left: 50%; bottom: 18%; width: 2.2rem; height: 62%; margin-left: -1.1rem; z-index: 3;
+        background:
+          linear-gradient(90deg, rgba(0,0,0,0.35), transparent 35%, rgba(180,160,100,0.15) 70%, rgba(0,0,0,0.3)),
+          linear-gradient(180deg, #5a4a30, #3a2e1c);
+        border-radius: 0.15rem;
+        box-shadow: 0 16px 30px rgba(0,0,0,0.5);
+      }
+      .g-stain {
+        left: 50%; bottom: 38%; width: 2.6rem; height: 0.9rem; margin-left: -1.3rem; z-index: 4;
+        background: linear-gradient(180deg, transparent, rgba(40, 50, 55, 0.75));
+        border-radius: 0 0 0.2rem 0.2rem;
+        box-shadow: 0 0 0 1px rgba(80, 90, 95, 0.3);
+      }
+      .g-brass {
+        left: 50%; top: 18%; width: 4.8rem; height: 3.4rem; margin-left: -2.4rem; z-index: 5;
+        border-radius: 0.25rem;
+        background:
+          linear-gradient(145deg, #d4b86a, var(--brass) 40%, #8a6e30 80%, #c4a050);
+        box-shadow:
+          0 8px 20px rgba(0,0,0,0.45),
+          inset 0 1px 0 rgba(255,230,160,0.5),
+          inset 0 -2px 4px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        font-family: Karla, system-ui, sans-serif;
+        color: #1a1408;
+      }
+      .g-brass .num {
+        font-size: 1.35rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        font-variant-numeric: tabular-nums;
+      }
+      .g-brass .label {
+        font-size: 0.42rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        opacity: 0.7;
+      }
+      .g-amber {
+        left: 50%; top: 8%; width: 1.1rem; height: 1.1rem; margin-left: -0.55rem; z-index: 6;
+        border-radius: 50%;
+        background: radial-gradient(circle at 40% 35%, var(--amber-glow), var(--amber) 55%, #a06020);
+        box-shadow: 0 0 18px rgba(224, 160, 64, 0.85), 0 0 40px rgba(224, 160, 64, 0.4);
+        animation: amber-pulse 4s ease-in-out infinite;
+      }
+      .g-glow {
+        left: 50%; top: 20%; width: 14rem; height: 14rem; margin: -4rem 0 0 -7rem; z-index: 2;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(224, 160, 64, 0.22), transparent 60%);
+        animation: amber-pulse 4s ease-in-out infinite;
+      }
+      .g-reeds {
+        left: 0; right: 0; bottom: 18%; height: 20%; z-index: 2;
+        background: repeating-linear-gradient(90deg, transparent 0 8px, rgba(70, 80, 35, 0.55) 8px 10px, transparent 10px 18px);
+      }
+
+      /* ===== PANEL 2: fingers in mud / seep ===== */
+      .seep-scene { background: linear-gradient(180deg, #1c2824 0%, #3a3428 35%, #2a2116 70%, #18140e 100%); }
+      .s-wash-a { left: -10%; top: -10%; width: 50%; height: 40%; background: rgba(58, 110, 106, 0.3); }
+      .s-wash-b { right: -10%; bottom: 10%; width: 55%; height: 45%; background: rgba(107, 83, 53, 0.35); }
+      .s-mud {
+        left: 5%; right: 5%; top: 35%; bottom: 8%;
+        border-radius: 45% 55% 40% 60% / 30% 35% 65% 70%;
+        background:
+          radial-gradient(ellipse 40% 30% at 55% 40%, rgba(90, 70, 40, 0.9), transparent 70%),
+          radial-gradient(ellipse 50% 40% at 30% 60%, rgba(60, 45, 28, 0.95), transparent 70%),
+          linear-gradient(160deg, #4a3a24, #2a2116 60%, #1a1510);
+        box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
+        z-index: 2;
+      }
+      .s-model-q {
+        right: 12%; top: 18%; width: 28%; height: 22%; z-index: 4;
+        border-radius: 0.3rem;
+        background: rgba(8, 12, 12, 0.75);
+        border: 1px solid rgba(224, 160, 64, 0.45);
+        box-shadow: 0 0 20px rgba(224, 160, 64, 0.15);
+        padding: 0.45rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+      .s-model-q .dot {
+        display: inline-block;
+        width: 0.45rem; height: 0.45rem;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 8px var(--amber);
+        margin-right: 0.35rem;
+        vertical-align: middle;
+        animation: amber-pulse 3.5s ease-in-out infinite;
+      }
+      .s-model-q .line {
+        display: block;
+        height: 0.28rem;
+        margin-top: 0.35rem;
+        border-radius: 99px;
+        background: rgba(174, 184, 184, 0.25);
+      }
+      .s-model-q .line.short { width: 60%; }
+      .s-model-q .line.amber-bar {
+        width: 70%;
+        background: linear-gradient(90deg, var(--amber), rgba(224,160,64,0.2));
+        box-shadow: 0 0 8px rgba(224,160,64,0.4);
+      }
+      .s-hand {
+        left: 28%; top: 42%; width: 32%; height: 38%; z-index: 5;
+        background:
+          radial-gradient(ellipse 18% 12% at 30% 20%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 16% 14% at 48% 15%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 16% 14% at 66% 18%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 14% 12% at 82% 28%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 45% 55% at 50% 70%, #1a1510 0 90%, transparent 100%);
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      }
+      .s-seep {
+        left: 38%; top: 58%; width: 18%; height: 22%; z-index: 4;
+        background:
+          radial-gradient(ellipse 50% 40% at 40% 30%, rgba(120, 140, 140, 0.55), transparent 70%),
+          radial-gradient(ellipse 40% 60% at 60% 70%, rgba(90, 110, 110, 0.45), transparent 70%);
+        filter: blur(3px);
+        animation: seep-flow 6s ease-in-out infinite;
+      }
+      .s-thread {
+        left: 42%; top: 62%; width: 28%; height: 4px; z-index: 4;
+        background: linear-gradient(90deg, rgba(150, 170, 170, 0.7), transparent);
+        border-radius: 99px;
+        filter: blur(1px);
+        transform: rotate(18deg);
+        animation: seep-flow 6s ease-in-out infinite;
+      }
+      .s-beside {
+        left: 52%; top: 68%; width: 12%; height: 10%; z-index: 4;
+        border: 1.5px dashed rgba(201, 163, 90, 0.55);
+        border-radius: 50%;
+        animation: listen-ring 4s ease-out infinite;
+      }
+
+      /* ===== PANEL 3: sluice gate + pan filling ===== */
+      .sluice-scene { background: linear-gradient(180deg, #152428 0%, #1e3a3a 40%, #2a3028 70%, #1a1810 100%); }
+      .sl-wash-a { left: -10%; top: -15%; width: 50%; height: 45%; background: rgba(47, 94, 92, 0.4); }
+      .sl-wash-b { right: -10%; bottom: 0; width: 55%; height: 50%; background: rgba(201, 163, 90, 0.2); }
+      .sl-embank {
+        left: 0; right: 55%; top: 20%; bottom: 30%;
+        background: linear-gradient(100deg, #3a3428, #2a2418);
+        clip-path: polygon(0 40%, 100% 20%, 100% 100%, 0 100%);
+        z-index: 2;
+      }
+      .sl-gate {
+        left: 32%; top: 28%; width: 18%; height: 42%; z-index: 4;
+        position: absolute;
+        background:
+          linear-gradient(90deg, #4a5048, #6a7068 30%, #3a4038 60%, #5a6058),
+          #4a5048;
+        border: 2px solid rgba(174, 184, 184, 0.4);
+        border-radius: 0.15rem;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.5), inset 0 0 12px rgba(0,0,0,0.3);
+      }
+      .sl-gate::before {
+        content: "";
+        position: absolute;
+        left: 15%; right: 15%; top: 12%; bottom: 12%;
+        background: repeating-linear-gradient(0deg, transparent 0 10px, rgba(20, 24, 22, 0.7) 10px 12px);
+      }
+      .sl-notch {
+        position: absolute;
+        right: -0.55rem;
+        width: 0.55rem;
+        height: 0.35rem;
+        background: var(--brass);
+        box-shadow: 0 0 6px rgba(184, 151, 74, 0.6);
+      }
+      .sl-notch.n1 { top: 28%; }
+      .sl-notch.n2 { top: 42%; }
+      .sl-notch-mark {
+        left: 28%; top: 22%; z-index: 5;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        text-shadow: 0 0 8px rgba(201, 163, 90, 0.5);
+      }
+      .sl-pan {
+        left: 48%; right: -5%; top: 38%; bottom: 8%;
+        z-index: 3;
+        background:
+          radial-gradient(ellipse 60% 50% at 40% 40%, rgba(58, 110, 106, 0.7), transparent 70%),
+          linear-gradient(180deg, rgba(40, 70, 70, 0.5), rgba(30, 50, 50, 0.85));
+        clip-path: polygon(5% 50%, 30% 20%, 100% 10%, 100% 100%, 0 100%);
+        animation: pan-fill 10s ease-in-out infinite alternate;
+      }
+      .sl-pan-water {
+        left: 52%; right: 0; top: 48%; bottom: 10%;
+        z-index: 4;
+        background:
+          linear-gradient(180deg, rgba(120, 150, 150, 0.35), rgba(60, 90, 90, 0.6)),
+          repeating-linear-gradient(95deg, transparent 0 14px, rgba(180, 200, 200, 0.08) 14px 16px);
+        clip-path: polygon(0 60%, 40% 30%, 100% 20%, 100% 100%, 0 100%);
+        animation: pan-fill 10s ease-in-out infinite alternate;
+      }
+      .sl-cordgrass {
+        left: 55%; right: 5%; bottom: 12%; height: 22%; z-index: 5;
+        background: repeating-linear-gradient(88deg, transparent 0 7px, rgba(70, 100, 70, 0.55) 7px 9px, transparent 9px 16px);
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 50%);
+        mask-image: linear-gradient(180deg, transparent, #000 50%);
+      }
+      .sl-amber-shop {
+        left: 8%; top: 30%; width: 1rem; height: 1rem; z-index: 5;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 14px rgba(224, 160, 64, 0.8);
+        animation: cool-to-grey 10s ease-in-out infinite alternate;
+      }
+      .sl-shop {
+        left: 4%; top: 38%; width: 16%; height: 14%; z-index: 3;
+        background: #2a2418;
+        clip-path: polygon(0 30%, 50% 0, 100% 30%, 100% 100%, 0 100%);
+      }
+
+      /* ===== PANEL 4: noticeboard + archive + bus ===== */
+      .charter-scene { background: linear-gradient(180deg, #1a2228 0%, #243028 45%, #1a1812 100%); }
+      .c-wash-a { left: -10%; top: -10%; width: 45%; height: 40%; background: rgba(184, 151, 74, 0.25); }
+      .c-wash-b { right: -10%; top: 10%; width: 50%; height: 45%; background: rgba(47, 94, 92, 0.28); }
+      .c-board {
+        left: 6%; top: 12%; width: 42%; bottom: 18%; z-index: 4;
+        background: linear-gradient(170deg, #3a3224, #2a2218);
+        border: 3px solid var(--brass);
+        border-radius: 0.2rem;
+        box-shadow: 0 16px 36px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,230,160,0.15);
+        overflow: hidden;
+      }
+      .c-board-head {
+        padding: 0.55rem 0.6rem 0.35rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--brass);
+        border-bottom: 1px solid rgba(184, 151, 74, 0.35);
+      }
+      .c-pin {
+        position: absolute;
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #8a3030;
+        box-shadow: 0 0 4px rgba(140, 40, 40, 0.6);
+        z-index: 5;
+      }
+      .c-pin.p1 { left: 12%; top: 28%; }
+      .c-pin.p2 { left: 38%; top: 28%; }
+      .c-notice {
+        position: absolute;
+        left: 10%; right: 10%; top: 32%;
+        padding: 0.5rem;
+        background: #d9ccb0;
+        color: #2a2116;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.06em;
+        line-height: 1.45;
+        box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
+        transform: rotate(-1.5deg);
+      }
+      .c-notice b { display: block; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.25rem; }
+      .c-jar {
+        left: 18%; bottom: 22%; width: 8%; height: 10%; z-index: 5;
+        background: linear-gradient(180deg, rgba(180, 200, 200, 0.25), rgba(100, 120, 120, 0.35));
+        border: 1px solid rgba(174, 184, 184, 0.4);
+        border-radius: 0.15rem 0.15rem 0.3rem 0.3rem;
+      }
+      .c-pens {
+        left: 19%; bottom: 26%; width: 6%; height: 8%; z-index: 6;
+        background:
+          linear-gradient(90deg, transparent 20%, #2a1810 20% 35%, transparent 35% 45%, #1a3050 45% 58%, transparent 58% 68%, #4a2010 68% 82%, transparent 82%);
+      }
+      .c-road {
+        left: 52%; right: 0; bottom: 0; height: 28%; z-index: 3;
+        background: linear-gradient(180deg, #2a2a28, #1a1a18);
+      }
+      .c-road-line {
+        left: 52%; right: 0; bottom: 14%; height: 2px; z-index: 4;
+        background: repeating-linear-gradient(90deg, rgba(220, 200, 140, 0.5) 0 18px, transparent 18px 32px);
+      }
+      .c-bus {
+        left: 62%; bottom: 16%; width: 28%; height: 14%; z-index: 5;
+        background: linear-gradient(180deg, #3a5040, #2a3a30);
+        border-radius: 0.3rem 0.5rem 0.15rem 0.15rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        animation: bus-pass 14s linear infinite;
+      }
+      .c-bus::before {
+        content: "";
+        position: absolute;
+        left: 8%; right: 18%; top: 18%; height: 35%;
+        background: repeating-linear-gradient(90deg, rgba(180, 220, 230, 0.5) 0 12%, transparent 12% 18%);
+        border-radius: 0.1rem;
+      }
+      .c-bus::after {
+        content: "";
+        position: absolute;
+        left: 12%; bottom: -18%; width: 18%; height: 45%;
+        border-radius: 50%;
+        background: #1a1a18;
+        box-shadow: 55px 0 0 #1a1a18;
+      }
+      .c-archive {
+        right: 6%; top: 14%; width: 38%; height: 28%; z-index: 4;
+        border-radius: 0.25rem;
+        background: rgba(8, 12, 12, 0.85);
+        border: 1px solid rgba(154, 160, 160, 0.35);
+        padding: 0.55rem 0.65rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.08em;
+        color: var(--grey-cool);
+        line-height: 1.5;
+        animation: archive-grey 8s ease-in-out infinite alternate;
+      }
+      .c-archive .head {
+        font-size: 0.42rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 0.35rem;
+        color: rgba(154, 160, 160, 0.7);
+      }
+      .c-open {
+        right: 8%; top: 48%; z-index: 5;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.55rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(201, 163, 90, 0.45);
+        border-radius: 99px;
+        background: rgba(201, 163, 90, 0.08);
+      }
+
+      /* ===== PANEL 5: evening calm — pan, bus, grey archive ===== */
+      .evening-scene { background: linear-gradient(180deg, #121c22 0%, #1e2a28 35%, #2a2818 70%, #14120e 100%); }
+      .e-wash-a { left: -10%; top: -15%; width: 55%; height: 45%; background: rgba(47, 94, 92, 0.35); }
+      .e-wash-b { right: -10%; bottom: 5%; width: 50%; height: 40%; background: rgba(201, 163, 90, 0.18); }
+      .e-pan {
+        left: -5%; right: -5%; top: 40%; bottom: 20%;
+        background:
+          radial-gradient(ellipse 50% 40% at 50% 40%, rgba(58, 110, 106, 0.55), transparent 70%),
+          linear-gradient(180deg, rgba(80, 100, 100, 0.35), rgba(40, 55, 55, 0.7));
+        clip-path: polygon(0 50%, 25% 30%, 50% 40%, 75% 25%, 100% 35%, 100% 100%, 0 100%);
+        z-index: 2;
+      }
+      .e-boardwalk {
+        left: 10%; right: 10%; top: 48%; height: 10%;
+        background: linear-gradient(180deg, #5a4830, #3a2e1c);
+        clip-path: polygon(0 50%, 100% 30%, 100% 70%, 0 90%);
+        z-index: 4;
+      }
+      .e-walker {
+        left: 48%; top: 40%; width: 7px; height: 16px; z-index: 5;
+        background:
+          radial-gradient(circle at 50% 18%, #0c100e 0 2.8px, transparent 3.2px),
+          radial-gradient(ellipse 3px 7px at 50% 100%, #0c100e 0 98%, transparent 100%);
+        filter: drop-shadow(0 0 3px rgba(255, 201, 119, 0.4));
+      }
+      .e-bus {
+        left: 15%; top: 22%; width: 22%; height: 8%; z-index: 3;
+        background: linear-gradient(180deg, #3a5040, #2a3a30);
+        border-radius: 0.2rem 0.35rem 0.1rem 0.1rem;
+        opacity: 0.85;
+        animation: bus-pass 16s linear infinite;
+      }
+      .e-bus::before {
+        content: "";
+        position: absolute;
+        left: 10%; right: 20%; top: 20%; height: 40%;
+        background: repeating-linear-gradient(90deg, rgba(180, 220, 230, 0.45) 0 14%, transparent 14% 22%);
+      }
+      .e-embank {
+        left: 0; right: 0; top: 18%; height: 18%;
+        background: linear-gradient(180deg, #2a3428, #1e2418);
+        clip-path: polygon(0 80%, 20% 40%, 40% 55%, 60% 30%, 80% 50%, 100% 35%, 100% 100%, 0 100%);
+        z-index: 2;
+        opacity: 0.85;
+      }
+      .e-porch {
+        right: 10%; top: 28%; width: 20%; height: 6%; z-index: 4;
+        background:
+          radial-gradient(circle at 15% 50%, var(--porch) 0 2px, transparent 3px),
+          radial-gradient(circle at 40% 40%, var(--porch) 0 2px, transparent 3px),
+          radial-gradient(circle at 65% 55%, var(--porch) 0 2px, transparent 3px),
+          radial-gradient(circle at 88% 45%, var(--porch) 0 2px, transparent 3px);
+        filter: drop-shadow(0 0 5px rgba(255, 201, 119, 0.85));
+        animation: lamp 9s ease-in-out infinite;
+      }
+      .e-archive-line {
+        left: 12%; right: 12%; bottom: 8%; height: 1.6rem; z-index: 5;
+        border-radius: 0.2rem;
+        background: rgba(12, 14, 14, 0.85);
+        border: 1px solid rgba(154, 160, 160, 0.4);
+        display: flex;
+        align-items: center;
+        padding: 0 0.7rem;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.1em;
+        color: var(--grey-cool);
+        animation: archive-grey 7s ease-in-out infinite alternate;
+      }
+      .e-egret {
+        left: 70%; top: 52%; width: 10px; height: 14px; z-index: 5;
+        background:
+          radial-gradient(circle at 50% 15%, #e8e4d8 0 2.5px, transparent 2.8px),
+          linear-gradient(180deg, #e8e4d8 0 60%, transparent 60%);
+        clip-path: polygon(40% 0, 60% 0, 55% 40%, 80% 90%, 20% 90%, 45% 40%);
+        opacity: 0.7;
+        filter: drop-shadow(0 0 3px rgba(230, 228, 216, 0.4));
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; }
+        .marsh-hero { margin: 0; height: 15rem; }
+        .g-brass { width: 4rem; height: 2.9rem; margin-left: -2rem; }
+        .g-brass .num { font-size: 1.1rem; }
+        .c-board { width: 48%; }
+        .c-archive { width: 42%; font-size: 0.42rem; }
+        .s-model-q { width: 34%; font-size: 0.42rem; }
+        .sl-notch-mark { font-size: 0.48rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes band-soft { from { opacity: 0.55; transform: scaleX(0.95); } to { opacity: 0.9; transform: scaleX(1.05); } }
+      @keyframes water-shimmer { from { filter: brightness(1); } to { filter: brightness(1.08); } }
+      @keyframes lamp { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+      @keyframes amber-pulse {
+        0%, 100% { opacity: 0.85; box-shadow: 0 0 14px rgba(224, 160, 64, 0.7), 0 0 30px rgba(224, 160, 64, 0.3); }
+        50% { opacity: 1; box-shadow: 0 0 22px rgba(224, 160, 64, 0.95), 0 0 48px rgba(224, 160, 64, 0.45); }
+      }
+      @keyframes seep-flow {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.06); }
+      }
+      @keyframes listen-ring {
+        from { transform: scale(0.6); opacity: 0.9; }
+        to { transform: scale(1.8); opacity: 0; }
+      }
+      @keyframes pan-fill {
+        from { opacity: 0.65; transform: translateY(4%); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes cool-to-grey {
+        from { background: var(--amber); box-shadow: 0 0 14px rgba(224, 160, 64, 0.8); }
+        to { background: var(--grey-cool); box-shadow: 0 0 10px rgba(154, 160, 160, 0.5); }
+      }
+      @keyframes bus-pass {
+        0% { transform: translateX(-30%); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateX(40%); opacity: 0; }
+      }
+      @keyframes archive-grey {
+        from { color: rgba(174, 184, 184, 0.9); border-color: rgba(174, 184, 184, 0.45); }
+        to { color: rgba(120, 124, 124, 0.85); border-color: rgba(120, 124, 124, 0.35); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .scene, .mh-band, .mh-water, .mh-porch-glow, .g-amber, .g-glow,
+        .s-model-q .dot, .s-seep, .s-thread, .s-beside, .sl-pan, .sl-pan-water, .sl-amber-shop,
+        .c-bus, .c-archive, .e-bus, .e-porch, .e-archive-line {
+          animation: none !important;
+        }
+        .mh-band { opacity: 0.8; }
+        .mh-porch-glow, .e-porch { opacity: 0.9; }
+        .g-amber { opacity: 1; }
+        .s-seep, .s-thread { opacity: 1; }
+        .s-beside { transform: scale(1.2); opacity: 0.5; }
+        .sl-pan, .sl-pan-water { opacity: 1; transform: none; }
+        .sl-amber-shop { background: var(--grey-cool); box-shadow: 0 0 10px rgba(154, 160, 160, 0.5); }
+        .c-bus, .e-bus { transform: none; opacity: 0.9; left: 62%; }
+        .e-bus { left: 20%; }
+        .c-archive, .e-archive-line { color: var(--grey-cool); }
+      }
+
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="marsh-hero" aria-hidden="true">
+          <div class="mh-sky"></div>
+          <div class="mh-teal-wash brush"></div>
+          <div class="mh-gold-wash brush"></div>
+          <div class="mh-band"></div>
+          <div class="mh-water"></div>
+          <div class="mh-reeds"></div>
+          <div class="mh-caravan"></div>
+          <div class="mh-porch-glow"></div>
+          <div class="mh-boardwalk"></div>
+          <div class="mh-planks"></div>
+          <div class="mh-rail"></div>
+          <div class="mh-walker"></div>
+        </div>
+        <h1>The marsh kept the surge</h1>
+        <time datetime="2026-09-29">29 September 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara’s boots found the boardwalk before the forecast found its voice.</p>
+        <p>A soft blue band lay across the estuary on her tablet: Marsh Seven, western lobe, tide coming with a following wind, surge model asking for a human walk before the evening high. Not a siren. Not the old red that used to empty the caravan park and send everyone to the dual carriageway with a boot full of photograph albums. Just a note that the water wanted watching, and that the watching was hers if she wanted it. She did. She had walked Seven for eleven years. The sensors had been there for five. They still did not know the way the reeds sounded when the wind turned before the water did.</p>
+        <p>She left a thermos on the porch rail for her brother, who would take the late shift at the pump house, and wrote on the whiteboard in the kitchen — ink, not a ping — <em>out on the lobe, back before dark if the charts behave</em>.</p>
+        <p>By four she was on the outer walk with binoculars she rarely needed and a radio that stayed quiet until spoken to. The marsh breathed under a skin of late light, brown and gold and the dull silver of water finding old routes. Overhead a thin line of geese practiced a decision. Her earpiece offered depths and wind histories in a voice she had trained to stay soft. She unmuted it once, listened to the afternoon summary, then muted it again and put her palm on the cold handrail where the boardwalk turned toward the western lobe.</p>
+        <p>“Afternoon,” she said to the marsh, the way you greet a neighbour who already knows the weather better than you do.</p>
+        <p>The western lobe’s gauge cluster sat on a timber post that still wore last spring’s high-water stain. Not her phone. A brass plate with a number you could read without unlocking anything. The model had painted the post amber overnight when the North Sea stacked a little higher than the seasonal prior. Amber meant a walk. The parish charter, rewritten after the winter of the long sirens, said so in language anyone could photograph on the noticeboard outside the hall: amber meant boots on the boardwalk before closures, unless a human said the word. Red still meant red. Amber meant Mara, or someone like her, with salt on her cuffs before the first caravan light came on.</p>
+      </div>
+
+      <figure class="scene tall gauge-scene" aria-hidden="true">
+        <div class="brush g-wash-a"></div>
+        <div class="brush g-wash-b"></div>
+        <div class="g-glow"></div>
+        <div class="g-marsh-floor"></div>
+        <div class="g-reeds"></div>
+        <div class="g-post"></div>
+        <div class="g-stain"></div>
+        <div class="g-brass"><span class="label">Marsh Seven</span><span class="num">amber</span></div>
+        <div class="g-amber"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She walked the lobe the long way, not the optimisation’s short cut across the new coir rolls. The short cut was faster. The long way let her see where the cordgrass had taken and where the mud still argued. At the second bend a cluster of gauges held amber on the seaward face, the colour of a question rather than an alarm. She crouched, gloves off despite the wind, and put her fingers in the mud where the model had pointed. Ordinary cold. She pressed again a handspan inland, where the model had not asked, because eleven years had taught her that the marsh sometimes answered beside the question.</p>
+        <p>There. Softer. A seep the overnight rise had found first, threading toward a path the old maps still called a farm track and the new maps called a buffer.</p>
+        <p>She photographed it, voice-noted the location, and marked a sandbag sleeve for the Tuesday crew — not a wall, a nudge, the kind that asks water to remember the lobe instead of the lane. The model updated its prior in her peripheral vision, polite as a colleague who knows when to stop talking. Upstream, a heron lifted without hurry. Across the water the caravan park’s string of porch lights stayed ordinary.</p>
+      </div>
+
+      <figure class="scene tall seep-scene" aria-hidden="true">
+        <div class="brush s-wash-a"></div>
+        <div class="brush s-wash-b"></div>
+        <div class="s-mud"></div>
+        <div class="s-model-q"><span class="dot"></span>amber<span class="line amber-bar"></span><span class="line"></span><span class="line short"></span></div>
+        <div class="s-seep"></div>
+        <div class="s-thread"></div>
+        <div class="s-beside"></div>
+        <div class="s-hand"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>At five the evening buses began to run the coast road.</p>
+        <p>They always had. The difference was that the old optimisation used to close the road at the first amber, sending the school run and the care-home van inland through a junction that flooded from the wrong ditch, because a dashboard preferred empty safety to grounded judgment. The charter said otherwise. Schools and care routes first. Then lobes by how long since the last human hand. Then the rest. Developers could donate denser gauges. They could not buy the front of the line. Sometimes the model yielded. Sometimes a councillor did. The yielding left a mark you could read on the hall noticeboard, pinned under a jam-jar of pens.</p>
+        <p>Mara signed the walk as in progress at 17:08 and kept going. At the tip of the lobe the surge model wanted a sluice nudge: open the western gate two notches so the high water could spend itself in the restored pan instead of shouldering the embankment by the shop. Five years earlier the model had tried to schedule sluice moves by property-value density, which meant the new marina got stroked every tide while Seven, which took the weather for two villages and a lot of people who bought milk on the high street, waited for something louder. Tuesday nights in the hall had fixed that, slowly. Folding chairs. Wet coats. A public queue on a screen anyone could photograph.</p>
+        <p>She called the pump house. Her brother answered on the third ring, radio crackle and kettle in the background.</p>
+        <p>“Western gate,” she said. “Two notches. Model agrees. I agree. Shop embankment stays dry if we let the pan fill.”</p>
+        <p>“Charter day window?” he asked, which meant: are we doing this while people can see the gate move, or are we sneaking a night optimisation because night is cheaper.</p>
+        <p>“Day,” Mara said. “Porch lights are on. If someone’s walking the strand they can ask what that clank is.”</p>
+        <p>He laughed the short laugh of someone who had lost the old argument and was glad of it. “We’re doing day.”</p>
+        <p>“We’re doing day.”</p>
+        <p>The gate clanked. Water took the invitation the way water does when you stop arguing with it — not dramatic, just a widening of the pan, a soft lift through the cordgrass, the surge spending itself on mud that had been rebuilt for exactly this kind of spending. On her tablet the amber on the shop embankment thinned toward grey. The caravan park’s board, facing the lane, refreshed in plain language: preventive check; western lobe taking the high; road open; expected ease by 20:00. No voucher language. A dog walker slowed, read it, nodded as if the marsh had told a joke worth getting.</p>
+      </div>
+
+      <figure class="scene tall sluice-scene" aria-hidden="true">
+        <div class="brush sl-wash-a"></div>
+        <div class="brush sl-wash-b"></div>
+        <div class="sl-embank"></div>
+        <div class="sl-shop"></div>
+        <div class="sl-amber-shop"></div>
+        <div class="sl-gate"><span class="sl-notch n1"></span><span class="sl-notch n2"></span></div>
+        <div class="sl-notch-mark">two notches</div>
+        <div class="sl-pan"></div>
+        <div class="sl-pan-water"></div>
+        <div class="sl-cordgrass"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In the hall across the dyke, where the coffee was instant and the windows faced the bowling green, her supervisor Elena watched the same amber settle as Mara’s notes landed. Elena did not override. She did not need to. The public queue showed Seven near the top because Seven had gone longest since a hand on the seep, and because the school bus still used the coast road. A donor gauge package for the marina blinked politely in the wing and stayed in the wing.</p>
+        <p>At 18:41 Mara signed the walk complete. The archive line went grey: check done, seep logged, sleeve Tuesday, sluice two notches, walker Mara Quinn, model assist tide-v4. The evening buses kept their ordinary route. A care-home van passed with a wave from the driver who always waved. Geese finished their decision and went wherever geese go when the light thins.</p>
+      </div>
+
+      <figure class="scene tall charter-scene" aria-hidden="true">
+        <div class="brush c-wash-a"></div>
+        <div class="brush c-wash-b"></div>
+        <div class="c-board">
+          <div class="c-board-head">parish charter</div>
+          <div class="c-pin p1"></div><div class="c-pin p2"></div>
+          <div class="c-notice"><b>amber</b>boots on the boardwalk before closures</div>
+        </div>
+        <div class="c-jar"></div>
+        <div class="c-pens"></div>
+        <div class="c-archive"><div class="head">archive</div>check done · seep logged<br>sleeve Tuesday · sluice two notches<br>walker Mara Quinn · tide-v4</div>
+        <div class="c-open">road open</div>
+        <div class="c-road"></div>
+        <div class="c-road-line"></div>
+        <div class="c-bus"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>At the landward stile she met Jonas, the apprentice, who had ridden out on a district bike with spare batteries and the look of someone trusted with real weather for the first time.</p>
+        <p>“Seep?” Jonas asked.</p>
+        <p>“Seaward face of the second bend. Model caught the overnight stack. I caught the neighbour it missed.” Mara handed over the notebook she still carried because ink did not need a signal. “You’ll do the eastern lobe Thursday. Day window. Charter says no night gate moves while the birders are in season. Night’s quieter. Day means people can ask what that water is doing in their old field.”</p>
+        <p>Jonas grinned like the tide had just made room. “We’re doing day.”</p>
+        <p>“We’re doing day.”</p>
+        <p>They stood a minute and watched the pan take its ordinary load: wind, a late egret, the soft argument of water against coir that would be root and mud by spring. Somewhere in a larger model a note queued for a human supervisor who would actually read it: earlier sleeve stock for lobes rebuilt before 2029 when the winters ran meaner in March. Nobody issued a release. A marsh that did not empty a village rarely made the news.</p>
+        <p>That evening Mara walked the coast road home because the short way was still the short way. The pavement was even. The reed beds held the last of the light. An inspection tag on the gauge post still wore last month’s ink over a QR code, smudged where a thumb had checked it in rain. Rain was due tomorrow. The gauges would listen. The crew would sleep. The charter would stay pinned in the hall where anyone could take a picture of it.</p>
+        <p>At the midpoint of the boardwalk she stopped, the way you do when a place has held you without asking for thanks. Below, the pan kept its slow argument with the surge. Above, a bus passed and the embankment answered in the small honest ways earth and root answer when they are still themselves.</p>
+      </div>
+
+      <figure class="scene tall evening-scene" aria-hidden="true">
+        <div class="brush e-wash-a"></div>
+        <div class="brush e-wash-b"></div>
+        <div class="e-embank"></div>
+        <div class="e-pan"></div>
+        <div class="e-boardwalk"></div>
+        <div class="e-walker"></div>
+        <div class="e-egret"></div>
+        <div class="e-bus"></div>
+        <div class="e-porch"></div>
+        <div class="e-archive-line">archive · grey · road open · expected ease by 20:00</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She finished the walk. Her brother texted a photo of the western gate at two notches and a kettle steam bloom in the corner of the frame.</p>
+        <p><em>Listened,</em> she wrote back. <em>Then I opened.</em></p>
+        <p>At home she filled a glass at the sink and drank it standing, not thinking about systems. Across the dyke the archive line stayed grey. Under the second bend a seep waited for Tuesday’s sleeve and its quiet years of not becoming a story.</p>
+        <p>The marsh kept the surge. The evening kept its road.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
