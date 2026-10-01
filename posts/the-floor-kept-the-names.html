@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The floor kept the names — Ben Miller</title>
+    <meta name="description" content="An assembly lead clocks an empty bay, a soft yellow torque pulse, and names painted under stations in a plant that finally feels calm.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0b0c0b;
+        --ink: #e4e0d4;
+        --mute: #8a8476;
+        --dawn: #e8c9a0;
+        --dawn-soft: #f2dbc0;
+        --concrete: #6a6458;
+        --concrete-warm: #8a7e6c;
+        --yellow: #e0c04a;
+        --yellow-soft: #f0d878;
+        --plant: #6a9a6a;
+        --plant-deep: #3a6a48;
+        --cool: #7a9aaa;
+        --cool-deep: #3a5a6a;
+        --slate: #1a1e1c;
+        --warm: #f2ebe0;
+        --paper: #d9ccb0;
+      }
+
+      html { background: var(--void); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 34% at 12% 4%, rgba(232, 201, 160, 0.14), transparent 60%),
+          radial-gradient(ellipse 40% 28% at 88% 18%, rgba(106, 154, 106, 0.12), transparent 55%),
+          radial-gradient(ellipse 45% 28% at 55% 92%, rgba(224, 192, 74, 0.08), transparent 60%),
+          linear-gradient(180deg, #0b0c0b 0%, #121410 40%, #14120e 72%, #0c0b09 100%);
+        animation: paint-breathe 38s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 85% 24% at 50% 100%, rgba(122, 154, 170, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(232, 201, 160, 0.03), transparent);
+        animation: fog-drift 54s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: var(--dawn-soft);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--warm);
+        text-shadow: 0 0 40px rgba(232, 201, 160, 0.22);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #ddd6c8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.4rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #101410;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(232, 201, 160, 0.08);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 82% 72% at 50% 45%, transparent 55%, rgba(5, 6, 5, 0.72) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.013) 0 2px, transparent 2px 7px);
+      }
+
+      .scene > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(14px); }
+
+      .stroke { border-radius: 50%; filter: blur(6px); z-index: 7; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 55%; height: 10%; background: rgba(232, 201, 160, 0.35); transform: rotate(-8deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 8%; background: rgba(224, 192, 74, 0.3); transform: rotate(10deg); }
+      .stroke.t3 { left: 20%; bottom: 6%; width: 50%; height: 7%; background: rgba(106, 154, 106, 0.32); transform: rotate(-4deg); }
+
+      /* ===== HERO: empty bay before trucks ===== */
+      .floor-hero {
+        position: relative;
+        height: 19rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(232, 201, 160, 0.12);
+        background: linear-gradient(180deg, #1a2228 0%, #2a3028 22%, #3a3830 48%, #4a4438 68%, #2a261e 100%);
+      }
+      .floor-hero > * { position: absolute; }
+      .floor-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background:
+          radial-gradient(ellipse 85% 75% at 50% 45%, transparent 55%, rgba(5, 6, 5, 0.65) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 7px);
+      }
+
+      .fh-dawn {
+        left: -10%; top: -15%; width: 70%; height: 45%;
+        background: rgba(232, 201, 160, 0.45);
+        filter: blur(36px);
+        border-radius: 50%;
+        animation: dawn-wash 14s ease-in-out infinite alternate;
+      }
+      .fh-cool {
+        right: -12%; top: -10%; width: 50%; height: 40%;
+        background: rgba(122, 154, 170, 0.28);
+        filter: blur(30px);
+        border-radius: 50%;
+      }
+      .fh-mezz {
+        left: 0; right: 0; top: 18%; height: 14%;
+        background: linear-gradient(180deg, #3a3830, #2a2820);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+        z-index: 3;
+      }
+      .fh-mezz-rail {
+        left: 4%; right: 4%; top: 18%; height: 3px;
+        background: linear-gradient(90deg, transparent, rgba(232, 201, 160, 0.55), transparent);
+        z-index: 4;
+        box-shadow: 0 0 12px rgba(232, 201, 160, 0.35);
+      }
+      .fh-wash-line {
+        left: 8%; right: 8%; top: 22%; height: 6%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(242, 219, 192, 0.55), transparent);
+        filter: blur(5px);
+        z-index: 4;
+        animation: dawn-wash 14s ease-in-out infinite alternate;
+      }
+      .fh-doors {
+        left: 18%; right: 18%; top: 38%; bottom: 22%;
+        background:
+          linear-gradient(90deg, rgba(0,0,0,0.35) 0 48%, transparent 48% 52%, rgba(0,0,0,0.35) 52%),
+          linear-gradient(180deg, #4a5048, #3a4038 40%, #2a3028);
+        border: 2px solid rgba(140, 150, 140, 0.35);
+        border-radius: 0.15rem;
+        z-index: 3;
+        box-shadow: inset 0 0 40px rgba(0,0,0,0.35);
+      }
+      .fh-doors::before {
+        content: "";
+        position: absolute;
+        left: 50%; top: 10%; bottom: 10%; width: 2px;
+        margin-left: -1px;
+        background: rgba(0,0,0,0.45);
+      }
+      .fh-floor {
+        left: 0; right: 0; bottom: 0; height: 28%;
+        background:
+          linear-gradient(180deg, #5a5448, #3a3428),
+          repeating-linear-gradient(90deg, transparent 0 40px, rgba(0,0,0,0.08) 40px 41px);
+        z-index: 2;
+      }
+      .fh-names {
+        left: 12%; right: 12%; bottom: 10%; height: 12%;
+        z-index: 4;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.42rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(210, 200, 180, 0.22);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0 0.5rem;
+      }
+      .fh-stations {
+        left: 10%; right: 10%; bottom: 22%; height: 8%;
+        z-index: 3;
+        background: repeating-linear-gradient(90deg,
+          transparent 0 12%,
+          rgba(60, 58, 50, 0.7) 12% 18%,
+          transparent 18% 28%);
+        opacity: 0.7;
+      }
+
+      /* ===== PANEL 1: morning wall panel ===== */
+      .morning-scene { background: linear-gradient(180deg, #1a2220 0%, #2a2e28 45%, #1e1c16 100%); }
+      .m-wash-a { left: -10%; top: -15%; width: 55%; height: 50%; background: rgba(232, 201, 160, 0.3); }
+      .m-wash-b { right: -10%; bottom: 5%; width: 50%; height: 45%; background: rgba(106, 154, 106, 0.18); }
+      .m-wall {
+        left: 8%; top: 10%; width: 55%; bottom: 18%;
+        background: linear-gradient(170deg, #3a3830, #2a2820);
+        border-radius: 0.2rem;
+        box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+        z-index: 2;
+      }
+      .m-panel {
+        left: 14%; top: 18%; width: 42%; bottom: 28%;
+        z-index: 4;
+        border-radius: 0.25rem;
+        background: rgba(10, 14, 12, 0.88);
+        border: 1px solid rgba(180, 190, 180, 0.35);
+        padding: 0.65rem 0.75rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        line-height: 1.55;
+      }
+      .m-panel .head {
+        font-size: 0.42rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--dawn-soft);
+        margin-bottom: 0.55rem;
+        opacity: 0.85;
+      }
+      .m-panel .row { margin-top: 0.35rem; display: flex; align-items: center; gap: 0.4rem; }
+      .m-panel .dot {
+        width: 0.4rem; height: 0.4rem; border-radius: 50%; flex-shrink: 0;
+      }
+      .m-panel .dot.hot { background: var(--yellow); box-shadow: 0 0 8px rgba(224, 192, 74, 0.6); }
+      .m-panel .dot.ok { background: var(--plant); box-shadow: 0 0 6px rgba(106, 154, 106, 0.5); }
+      .m-panel .dot.soft { background: var(--cool); box-shadow: 0 0 6px rgba(122, 154, 170, 0.45); }
+      .m-panel .bar {
+        margin-top: 0.55rem; height: 0.28rem; border-radius: 99px;
+        background: linear-gradient(90deg, rgba(232, 201, 160, 0.55), rgba(232, 201, 160, 0.1));
+        width: 85%;
+      }
+      .m-panel .bar.short { width: 55%; background: rgba(140, 150, 140, 0.25); }
+      .m-locker {
+        right: 10%; top: 22%; width: 18%; height: 42%;
+        background: linear-gradient(90deg, #3a3e38, #2a2e28 40%, #4a4e48);
+        border-radius: 0.15rem;
+        z-index: 3;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+      }
+      .m-locker::before {
+        content: "";
+        position: absolute;
+        right: 18%; top: 42%; width: 0.45rem; height: 0.9rem;
+        background: var(--concrete-warm);
+        border-radius: 0.1rem;
+        box-shadow: 0 0 4px rgba(232, 201, 160, 0.3);
+      }
+      .m-boot {
+        right: 14%; bottom: 16%; width: 12%; height: 8%;
+        background: radial-gradient(ellipse at 40% 50%, #2a2218, #1a1510);
+        border-radius: 40% 40% 30% 30%;
+        z-index: 4;
+        opacity: 0.85;
+      }
+
+      /* ===== PANEL 2: torque pulse ===== */
+      .torque-scene { background: linear-gradient(180deg, #181c1a 0%, #2a2e28 40%, #1e1a14 100%); }
+      .tq-wash-a { left: -10%; top: -15%; width: 50%; height: 45%; background: rgba(224, 192, 74, 0.28); }
+      .tq-wash-b { right: -10%; bottom: 0; width: 55%; height: 50%; background: rgba(106, 154, 106, 0.15); }
+      .tq-rail {
+        left: 0; right: 0; top: 12%; height: 4%;
+        background: linear-gradient(180deg, #4a5048, #2a3028);
+        z-index: 2;
+      }
+      .tq-station {
+        left: 28%; right: 28%; top: 28%; bottom: 18%;
+        background: linear-gradient(180deg, #3a3e36, #2a2c26);
+        border-radius: 0.2rem;
+        z-index: 3;
+        box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+      }
+      .tq-overhead {
+        left: 42%; right: 42%; top: 8%; height: 18%;
+        background: linear-gradient(180deg, #2a2e28, #1a1e1a);
+        border-radius: 0.1rem;
+        z-index: 4;
+      }
+      .tq-pulse {
+        left: 50%; top: 14%; width: 1.2rem; height: 1.2rem; margin-left: -0.6rem;
+        border-radius: 50%;
+        z-index: 6;
+        background: radial-gradient(circle at 40% 35%, var(--yellow-soft), var(--yellow) 55%, #a08020);
+        box-shadow: 0 0 20px rgba(224, 192, 74, 0.85), 0 0 44px rgba(224, 192, 74, 0.4);
+        animation: yellow-pulse 3.5s ease-in-out infinite;
+      }
+      .tq-glow {
+        left: 50%; top: 10%; width: 12rem; height: 12rem; margin: -2rem 0 0 -6rem;
+        border-radius: 50%;
+        z-index: 2;
+        background: radial-gradient(circle, rgba(224, 192, 74, 0.22), transparent 60%);
+        animation: yellow-pulse 3.5s ease-in-out infinite;
+      }
+      .tq-hands {
+        left: 38%; top: 48%; width: 28%; height: 28%;
+        z-index: 5;
+        background:
+          radial-gradient(ellipse 22% 18% at 30% 35%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 20% 20% at 52% 28%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 18% 16% at 72% 38%, #1a1510 0 90%, transparent 100%),
+          radial-gradient(ellipse 40% 50% at 50% 75%, #1a1510 0 90%, transparent 100%);
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+      }
+      .tq-bit {
+        left: 52%; top: 42%; width: 8%; height: 14%;
+        z-index: 6;
+        background: linear-gradient(180deg, #8a9088, #4a5048);
+        border-radius: 0.1rem 0.1rem 0.05rem 0.05rem;
+        box-shadow: 0 0 8px rgba(224, 192, 74, 0.35);
+        transform: rotate(12deg);
+      }
+      .tq-label {
+        left: 0; right: 0; bottom: 6%;
+        text-align: center;
+        z-index: 5;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--yellow-soft);
+        text-shadow: 0 0 10px rgba(224, 192, 74, 0.4);
+      }
+
+      /* ===== PANEL 3: break room ===== */
+      .break-scene { background: linear-gradient(180deg, #1c2420 0%, #2a3228 40%, #1e1c16 100%); }
+      .b-wash-a { left: -10%; top: -10%; width: 50%; height: 40%; background: rgba(106, 154, 106, 0.28); }
+      .b-wash-b { right: -10%; bottom: 5%; width: 55%; height: 45%; background: rgba(232, 201, 160, 0.2); }
+      .b-window {
+        left: 8%; top: 10%; right: 8%; height: 42%;
+        background: linear-gradient(180deg, #2a3a40, #3a4848);
+        border: 3px solid #4a4840;
+        border-radius: 0.15rem;
+        z-index: 2;
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+      }
+      .b-yard {
+        left: 12%; top: 16%; right: 12%; height: 28%;
+        background:
+          linear-gradient(180deg, rgba(90, 110, 100, 0.35), rgba(60, 70, 55, 0.5)),
+          repeating-linear-gradient(90deg, transparent 0 20px, rgba(40, 50, 40, 0.25) 20px 28px);
+        z-index: 3;
+        clip-path: polygon(0 40%, 100% 20%, 100% 100%, 0 100%);
+      }
+      .b-sill {
+        left: 8%; right: 8%; top: 48%; height: 6%;
+        background: linear-gradient(180deg, #5a5448, #3a3428);
+        z-index: 4;
+      }
+      .b-plant {
+        bottom: auto; z-index: 5;
+        width: 6%; height: 14%;
+        background:
+          radial-gradient(ellipse 60% 40% at 50% 20%, var(--plant) 0 40%, transparent 55%),
+          linear-gradient(180deg, var(--plant-deep), #2a4a30);
+        border-radius: 40% 40% 20% 20%;
+        filter: drop-shadow(0 0 6px rgba(106, 154, 106, 0.45));
+      }
+      .b-plant.p1 { left: 18%; top: 36%; }
+      .b-plant.p2 { left: 48%; top: 34%; width: 7%; height: 16%; }
+      .b-plant.p3 { right: 20%; top: 37%; left: auto; }
+      .b-table {
+        left: 18%; right: 18%; bottom: 12%; height: 18%;
+        background: linear-gradient(180deg, #4a4438, #2a261e);
+        border-radius: 0.15rem;
+        z-index: 3;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+      }
+      .b-mug {
+        bottom: 22%; width: 5%; height: 8%;
+        background: linear-gradient(180deg, #6a7068, #3a4038);
+        border-radius: 0.15rem 0.15rem 0.25rem 0.25rem;
+        z-index: 4;
+      }
+      .b-mug.a { left: 32%; }
+      .b-mug.b { left: 58%; background: linear-gradient(180deg, #8a7060, #4a3830); }
+      .b-timer {
+        left: 0; right: 0; bottom: 3%;
+        text-align: center;
+        z-index: 5;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--plant);
+        text-shadow: 0 0 10px rgba(106, 154, 106, 0.4);
+      }
+
+      /* ===== PANEL 4: mezzanine names ===== */
+      .mezz-scene { background: linear-gradient(180deg, #1a1e1c 0%, #2a2e28 35%, #3a3428 70%, #1e1a14 100%); }
+      .mz-wash-a { left: -10%; top: -15%; width: 55%; height: 45%; background: rgba(232, 201, 160, 0.25); }
+      .mz-wash-b { right: -10%; bottom: 0; width: 50%; height: 50%; background: rgba(122, 154, 170, 0.18); }
+      .mz-rail {
+        left: 0; right: 0; top: 8%; height: 10%;
+        background: linear-gradient(180deg, #4a4840, #2a2820);
+        z-index: 5;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      }
+      .mz-rail::after {
+        content: "";
+        position: absolute;
+        left: 4%; right: 4%; top: 35%; height: 3px;
+        background: rgba(232, 201, 160, 0.45);
+      }
+      .mz-bay {
+        left: 5%; right: 5%; top: 22%; bottom: 8%;
+        background:
+          linear-gradient(180deg, rgba(50, 55, 48, 0.5), rgba(40, 38, 32, 0.85)),
+          repeating-linear-gradient(90deg, transparent 0 14%, rgba(0,0,0,0.12) 14% 15%);
+        z-index: 2;
+        perspective: 400px;
+      }
+      .mz-stations {
+        left: 8%; right: 8%; top: 35%; height: 28%;
+        z-index: 3;
+        background: repeating-linear-gradient(90deg,
+          transparent 0 8%,
+          rgba(70, 72, 64, 0.75) 8% 14%,
+          transparent 14% 22%);
+      }
+      .mz-name {
+        z-index: 4;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.38rem;
+        letter-spacing: 0.22em;
+        color: rgba(210, 200, 180, 0.35);
+        bottom: 18%;
+      }
+      .mz-name.n1 { left: 12%; }
+      .mz-name.n2 { left: 34%; }
+      .mz-name.n3 { left: 56%; }
+      .mz-name.n4 { left: 76%; }
+      .mz-figure {
+        z-index: 5;
+        width: 7px; height: 16px;
+        background:
+          radial-gradient(circle at 50% 18%, #0c100e 0 2.8px, transparent 3.2px),
+          radial-gradient(ellipse 3px 7px at 50% 100%, #0c100e 0 98%, transparent 100%);
+        filter: drop-shadow(0 0 3px rgba(232, 201, 160, 0.35));
+        top: 42%;
+      }
+      .mz-figure.a { left: 36%; }
+      .mz-figure.b { left: 58%; top: 44%; }
+      .mz-label {
+        left: 0; right: 0; bottom: 4%;
+        text-align: center;
+        z-index: 5;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--dawn-soft);
+        opacity: 0.75;
+      }
+
+      /* ===== PANEL 5: traveler / evening ===== */
+      .eve-scene { background: linear-gradient(180deg, #121820 0%, #1e2828 35%, #2a2818 70%, #14120e 100%); }
+      .ev-wash-a { left: -10%; top: -15%; width: 55%; height: 45%; background: rgba(122, 154, 170, 0.3); }
+      .ev-wash-b { right: -10%; bottom: 5%; width: 50%; height: 40%; background: rgba(232, 201, 160, 0.16); }
+      .ev-desk {
+        left: 6%; top: 14%; width: 48%; bottom: 22%;
+        background: linear-gradient(170deg, #3a3428, #2a2418);
+        border-radius: 0.15rem;
+        z-index: 3;
+        box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+      }
+      .ev-traveler {
+        left: 12%; top: 22%; width: 36%; height: 42%;
+        z-index: 5;
+        background: var(--paper);
+        color: #2a2116;
+        border-radius: 0.1rem;
+        padding: 0.55rem 0.6rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.06em;
+        line-height: 1.45;
+        box-shadow: 2px 4px 12px rgba(0,0,0,0.35);
+        transform: rotate(-1.5deg);
+      }
+      .ev-traveler .head {
+        font-size: 0.42rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+        opacity: 0.7;
+      }
+      .ev-traveler .line {
+        height: 0.22rem;
+        margin-top: 0.35rem;
+        border-radius: 99px;
+        background: rgba(42, 33, 22, 0.2);
+        width: 90%;
+      }
+      .ev-traveler .line.short { width: 55%; }
+      .ev-traveler .initials {
+        margin-top: 0.7rem;
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        font-weight: 500;
+      }
+      .ev-pen {
+        left: 42%; top: 48%; width: 2%; height: 18%;
+        z-index: 6;
+        background: linear-gradient(180deg, #1a3050, #0a1828);
+        border-radius: 99px;
+        transform: rotate(35deg);
+        box-shadow: 0 0 6px rgba(0,0,0,0.3);
+      }
+      .ev-plant-glow {
+        left: 8%; bottom: 8%; width: 30%; height: 12%;
+        z-index: 4;
+        background: radial-gradient(ellipse at 40% 50%, rgba(224, 192, 74, 0.35), transparent 70%);
+        filter: blur(8px);
+        animation: lights-dim 12s ease-in-out infinite alternate;
+      }
+      .ev-yard {
+        right: 0; top: 18%; width: 42%; bottom: 0;
+        background: linear-gradient(180deg, #1a2228, #121410);
+        z-index: 2;
+      }
+      .ev-bus {
+        right: 6%; bottom: 18%; width: 28%; height: 12%;
+        z-index: 4;
+        background: linear-gradient(180deg, #3a5048, #2a3a34);
+        border-radius: 0.25rem 0.4rem 0.12rem 0.12rem;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 20px rgba(122, 154, 170, 0.25);
+        animation: bus-soft 16s linear infinite;
+      }
+      .ev-bus::before {
+        content: "";
+        position: absolute;
+        left: 10%; right: 18%; top: 18%; height: 38%;
+        background: repeating-linear-gradient(90deg, rgba(180, 220, 230, 0.55) 0 12%, transparent 12% 20%);
+        border-radius: 0.1rem;
+      }
+      .ev-bus::after {
+        content: "";
+        position: absolute;
+        left: 14%; bottom: -20%; width: 16%; height: 48%;
+        border-radius: 50%;
+        background: #1a1a18;
+        box-shadow: 48px 0 0 #1a1a18;
+      }
+      .ev-cool {
+        right: 4%; top: 22%; width: 35%; height: 8%;
+        z-index: 3;
+        background: linear-gradient(90deg, transparent, rgba(122, 154, 170, 0.35), transparent);
+        filter: blur(6px);
+        animation: cool-air 10s ease-in-out infinite alternate;
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; }
+        .floor-hero { margin: 0; height: 15rem; }
+        .m-panel { font-size: 0.42rem; width: 48%; }
+        .m-locker { width: 16%; }
+        .ev-traveler { width: 42%; font-size: 0.42rem; }
+        .mz-name { font-size: 0.32rem; letter-spacing: 0.14em; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes dawn-wash { from { opacity: 0.65; } to { opacity: 1; } }
+      @keyframes yellow-pulse {
+        0%, 100% { opacity: 0.85; box-shadow: 0 0 16px rgba(224, 192, 74, 0.7), 0 0 32px rgba(224, 192, 74, 0.3); }
+        50% { opacity: 1; box-shadow: 0 0 24px rgba(224, 192, 74, 0.95), 0 0 48px rgba(224, 192, 74, 0.45); }
+      }
+      @keyframes lights-dim {
+        from { opacity: 0.9; }
+        to { opacity: 0.45; }
+      }
+      @keyframes bus-soft {
+        0% { transform: translateX(15%); opacity: 0; }
+        12% { opacity: 1; }
+        88% { opacity: 1; }
+        100% { transform: translateX(-25%); opacity: 0; }
+      }
+      @keyframes cool-air {
+        from { opacity: 0.4; transform: translateY(0); }
+        to { opacity: 0.85; transform: translateY(-4%); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .scene,
+        .fh-dawn, .fh-wash-line,
+        .tq-pulse, .tq-glow,
+        .ev-plant-glow, .ev-bus, .ev-cool {
+          animation: none !important;
+        }
+        .fh-dawn, .fh-wash-line { opacity: 0.85; }
+        .tq-pulse { opacity: 1; }
+        .ev-plant-glow { opacity: 0.65; }
+        .ev-bus { transform: none; opacity: 0.9; right: 8%; }
+        .ev-cool { opacity: 0.65; }
+      }
+
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="floor-hero" aria-hidden="true">
+          <div class="fh-dawn"></div>
+          <div class="fh-cool"></div>
+          <div class="fh-mezz"></div>
+          <div class="fh-mezz-rail"></div>
+          <div class="fh-wash-line"></div>
+          <div class="fh-doors"></div>
+          <div class="fh-floor"></div>
+          <div class="fh-stations"></div>
+          <div class="fh-names"><span>mara</span><span>theo</span><span>june</span><span>ellis</span></div>
+        </div>
+        <h1>The floor kept the names</h1>
+        <time datetime="2026-10-01">1 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mara clocked in at seven because she liked the empty bay before the first trucks, not because anyone asked her to. The lights came up in a soft wash along the mezzanine and the big doors stayed shut until the schedule said open, which was usually eight, sometimes later if the overnight routing had been kind. On the wall by her locker a small panel showed the day’s shape in plain language: which lines were hot, which kits had already cleared intake, where the bottlenecks had been last week and whether they were still there. She glanced once, the way you glance at weather, and went to put on her boots.</p>
+        <p>The plant used to run on a kind of low panic. Everyone remembered it, even the ones who hadn’t been here then. Screens that screamed. Tickets that multiplied overnight. A supervisor walking the floor with a tablet held like a shield, assigning and reassigning until lunch was a rumor. People got good at looking busy because looking busy was safer than standing still with a question. Mara had been one of them. She had left twice and come back once, which was the local joke about loyalty.</p>
+        <p>What changed was not a speech. It was quieter than that. The company bought a stack of models the way companies buy everything, and for a while nothing felt different except the language in the all-hands. Then the thrash began to thin. Orders stopped bouncing between three desks. The night shift stopped inheriting a mess that had been nobody’s fault and everybody’s problem. The panel on the wall learned to say useful things in a calm voice, and when it was wrong someone could tap a correction without opening a war.</p>
+      </div>
+
+      <figure class="scene tall morning-scene" aria-hidden="true">
+        <div class="brush m-wash-a"></div>
+        <div class="brush m-wash-b"></div>
+        <div class="m-wall"></div>
+        <div class="m-panel">
+          <div class="head">day shape</div>
+          <div class="row"><span class="dot hot"></span>line A · hot</div>
+          <div class="row"><span class="dot ok"></span>kits cleared intake</div>
+          <div class="row"><span class="dot soft"></span>bottleneck · bay 3 soft</div>
+          <div class="bar"></div>
+          <div class="bar short"></div>
+        </div>
+        <div class="m-locker"></div>
+        <div class="m-boot"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Mara’s job title had not changed. She was still a lead on assembly, still the person who signed the traveler when a unit left the bay. What left her days was the part that had never been the work: chasing missing fasteners across three warehouses, arguing with a queue that did not know a human was waiting, rewriting the same exception for a customer who had already been told twice. Those threads still existed. They just stopped landing on her chest at 6:14 a.m.</p>
+        <p>By half past seven the apprentices were in. Theo was nineteen and careful with his hands. He had grown up watching his uncle rebuild bikes in a garage that smelled like oil and rain, and he had applied here because the listing said training hours were protected, which used to be a sentence people laughed at. Mara put him on a subassembly that needed patience more than speed and stood where she could see his elbows without hovering. The model that watched the line flagged a torque drift on station four; a yellow soft pulse on the overhead, nothing that made anyone flinch. Mara walked over, checked the bit, swapped it, and the pulse went out. Theo watched her do it and then did the next one himself while she nodded once and left him alone.</p>
+      </div>
+
+      <figure class="scene tall torque-scene" aria-hidden="true">
+        <div class="brush tq-wash-a"></div>
+        <div class="brush tq-wash-b"></div>
+        <div class="tq-rail"></div>
+        <div class="tq-station"></div>
+        <div class="tq-overhead"></div>
+        <div class="tq-pulse"></div>
+        <div class="tq-glow"></div>
+        <div class="tq-hands"></div>
+        <div class="tq-bit"></div>
+        <div class="tq-label">station four</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Around nine the floor filled the way a good kitchen fills. Sound without shouting. The conveyors ran at a pace a person could walk beside. When a kit arrived incomplete, the system did not dump the blame on the nearest badge. It held the station, called the kit back, and put a note on the supplier side that someone in purchasing would actually read before lunch. Mara used to spend mornings on those notes. Now she spent them on the work under her hands and on Theo’s questions, which were better than most of the old tickets.</p>
+        <p>At eleven they took a real break. Not a stolen one. The break room had windows that faced the yard, and someone had put plants on the sill that somehow stayed alive. People ate. People talked about a football match and a sister’s wedding and a rent that had finally stopped climbing for a season. Nobody refreshed a dashboard under the table. The model kept the line warm without them for twenty-two minutes, and when they came back the board said so without drama.</p>
+      </div>
+
+      <figure class="scene tall break-scene" aria-hidden="true">
+        <div class="brush b-wash-a"></div>
+        <div class="brush b-wash-b"></div>
+        <div class="b-window"></div>
+        <div class="b-yard"></div>
+        <div class="b-sill"></div>
+        <div class="b-plant p1"></div>
+        <div class="b-plant p2"></div>
+        <div class="b-plant p3"></div>
+        <div class="b-table"></div>
+        <div class="b-mug a"></div>
+        <div class="b-mug b"></div>
+        <div class="b-timer">twenty-two minutes</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Mara’s afternoon used to be the worst of it. That was when the escalations stacked and the late changes arrived and the Friday promise to a customer became everyone else’s emergency. Now the late changes still arrived, because customers were still customers, but they arrived as proposals with a cost in hours and a clear owner, and someone with authority said yes or no before the floor had to absorb the hit. Twice that week Mara had been that someone. Both times she chose the option that kept the shift from breaking, and both times the panel recorded the choice in language a future Mara would understand.</p>
+        <p>Near three she walked the mezzanine with the plant manager, an older man named Ellis who had survived three ownership changes by learning when to stop defending the old way. They looked down at the bay. Names were still painted on the concrete under each station, not for nostalgia, though there was some of that, but because people still stood there, still owned a stretch of floor, still wanted their name where their feet went. The model knew the stations by number and sensor ID. The people knew them by who had taught them and who had left and who had come back.</p>
+        <p>“Theo’s clean,” Ellis said.</p>
+        <p>“He’s careful,” Mara said. “Careful’s better this month.”</p>
+        <p>Ellis nodded. He did not ask for a productivity slide. He already had one if he wanted it, generated overnight, written in the same plain voice as the morning panel. What he wanted from Mara was the thing the slide could not hold: whether the floor felt right, whether anyone was carrying a quiet injury, whether the new kit vendor was going to make Fridays ugly again. She told him the vendor was fine so far and that station seven’s light was a little too eager to yellow on soft faults. He said he would have maintenance look, and she believed him because last month he had.</p>
+      </div>
+
+      <figure class="scene tall mezz-scene" aria-hidden="true">
+        <div class="brush mz-wash-a"></div>
+        <div class="brush mz-wash-b"></div>
+        <div class="mz-rail"></div>
+        <div class="mz-bay"></div>
+        <div class="mz-stations"></div>
+        <div class="mz-name n1">MARA</div>
+        <div class="mz-name n2">THEO</div>
+        <div class="mz-name n3">ELLIS</div>
+        <div class="mz-name n4">JUNE</div>
+        <div class="mz-figure a"></div>
+        <div class="mz-figure b"></div>
+        <div class="mz-label">names under stations</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>At four the trucks began to queue in the yard. Loading had its own model now, the rude cousin of the one on the floor, good at stacking and less good at courtesy. The dock crew argued with it the way people argue with a GPS that insists on a shortcut through a school zone. Mostly they won. When they lost, the loss was a few minutes, not a ruined evening.</p>
+        <p>Mara signed the last traveler of her shift at ten to five. The unit was ordinary and correct. She ran her thumb along the seam where Theo had seated the cover and felt the evenness he was learning. She wrote his initials next to hers on the paper copy they still kept, because paper still calmed certain customers and because some habits earned their keep. Then she washed her hands, checked the panel one more time, and saw nothing that needed her name on it overnight.</p>
+      </div>
+
+      <figure class="scene tall eve-scene" aria-hidden="true">
+        <div class="brush ev-wash-a"></div>
+        <div class="brush ev-wash-b"></div>
+        <div class="ev-desk"></div>
+        <div class="ev-traveler">
+          <div class="head">traveler</div>
+          <div class="line"></div>
+          <div class="line short"></div>
+          <div class="initials">T.R. · M.Q.</div>
+        </div>
+        <div class="ev-pen"></div>
+        <div class="ev-plant-glow"></div>
+        <div class="ev-yard"></div>
+        <div class="ev-bus"></div>
+        <div class="ev-cool"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Outside the air was cool and the buses were on time more often than they used to be. She walked toward the stop with two of the dock crew and Theo, who was talking about a night class in materials he had almost skipped and then hadn’t. Nobody’s phone buzzed with a red escalation. The plant behind them kept working under lights that would dim on a schedule instead of a crisis. Tomorrow the panel would open with another ordinary shape, and Mara would glance at it like weather, and the floor would still hold the names where people stood.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
