@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>They let the defenders go first — Ben Miller</title>
+    <meta name="description" content="Google DeepMind’s Gemini 4 Argon reaches trusted Fairwind cyber defenders first, ungated for defensive work, while the public waits on safeguards — benchmarks, $2/$10 intro pricing, and the Accord-week release order.">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <main>
+        <article>
+          <header>
+            <h1>They let the defenders go first</h1>
+            <time datetime="2026-10-01">1 October 2026</time>
+          </header>
+
+          <div class="prose">
+            <p>Google DeepMind put Gemini 4 Argon on the internet late Wednesday, and the first people allowed to run it are not the usual API queue. They are trusted cyber defenders inside Google’s Fairwind Program, and for them the model ships without the cyber guardrails that will sit on the public version. Koray Kavukcuoglu’s post frames Argon as a frontier system for long-horizon coding, enterprise knowledge work, and defensive cybersecurity, with an industry-leading million-token output limit and a phased rollout while Google sits inside the U.S. government’s voluntary pre-release access process. Logan Kilpatrick’s version of the pitch was shorter and sharper: cyber defenders starting today, wider access as soon as possible, introductory pricing at $2 in and $10 out.</p>
+            <p>That order of operations is the story. A day after the White House luncheon produced a voluntary Accord on Super Intelligence that the labs signed in public, Google’s next frontier model is being handed first to the blue team, ungated for defensive work, while developers, enterprises, and consumers wait for the safeguards to catch up. Fairwind was built for exactly this kind of head start, giving governments and trusted partners early access so the people who patch hospitals and grids get the sharp tools before the people who would use them the other way. Wiz is already running Argon through its Scan for Good program and says the model found a critical exposure in healthcare software used by hospitals worldwide that earlier frontier systems had missed. On CWE-bench v1, Google’s own table has Argon tying OpenAI’s GPT-6 Astra and Grok 4.7 at 68 percent for vulnerability remediation — a three-way tie for first.</p>
+            <p>The comeback numbers matter because Google has been living in Flash-class territory for months. Artificial Analysis puts Argon at 53 on its Intelligence Index, level with Astra and Claude Fable 5.1, twenty-three points above Gemini 3.1 Pro Preview and twelve above Gemini 3.8 Flash. Anthropic still owns the top of that chart — Claude Opus 5.5 at 58, Sonnet 5.5 at 56 — so this is not a coronation. It is Google climbing back into the group that can argue about first place. On Google’s own eighteen-benchmark table, Argon leads outright on twelve and ties one more for thirteen top scores, with especially wide gaps on knowledge-work tests like AutomationBench and Harvey’s Legal Agent Benchmark, and a long-context GraphWalks result at the million-token end that sits more than twelve points clear of Astra. The weaknesses are consistent and familiar: Terminal-Bench and FrontierSWE still favor Anthropic and OpenAI, which is another way of saying the agentic terminal fight is not over just because the blog post is.</p>
+            <p>Pricing is doing as much work as the scoreboard. The introductory $2 / $10 rate undercuts Opus 5.5’s $4 / $20 and sits well below Astra’s $10 / $50. After the promo, Google says Argon moves to $4 / $20, which is still cheaper per token than the OpenAI and Anthropic flagships but far less of a bargain once you notice, as Artificial Analysis did, that Argon burns more than twice as many output tokens per task as Astra. At the discount, Argon looks about forty percent cheaper per Intelligence Index task; at list, the advantage flips. Cached input at ninety-five percent off is the other lever Google is pulling for agentic workloads that keep re-reading the same context. Arena.ai had Argon High debuting at number one on Text Arena and eighth on Code Arena: WebDev, with a cost-per-task number that reshaped the Pareto line on Text overnight, which is the kind of X metric that travels farther than a vendor table.</p>
+            <p>Inside Google, the anecdotes are the ones that will get quoted in every brief. Argon agents cutting spacetime resources on a quantum subroutine forty percent past a published baseline in minutes. A fleet of agents reading profiling telemetry and lining up memory optimizations Google says will free more than three hundred tebibytes once rolled out, with a path toward half a pebibyte to a full one. Large-scale C and C++ to Rust migrations, including more than eight hundred thousand lines for the Fuchsia Zircon kernel still under audit, and a libgav1 rewrite that replaced thirty-two thousand lines of SIMD with safe Rust the compiler could vectorize, landing 2.7× faster than the earlier Rust port with identical video output. Those are the receipts for the long-horizon pitch, and they are also a reminder that the model Google is keeping behind Fairwind and voluntary review is already deep in production-adjacent work at home.</p>
+            <p>The safeguard section of the launch is careful in a way that fits the week. Google lists misuse monitors on internal activations for cyber and CBRN, claims Argon leads Gray Swan’s indirect prompt-injection benchmark, and says it is watching chain-of-thought and actions for misalignment without feeding those findings back into training so the model does not learn to dodge the cameras. It is urging the rest of the industry to keep reasoning transparent for the same reason. Sandboxes get isolated and sealed before high-risk runs. None of that is a substitute for the fact that the ungated cyber build is already with selected defenders while the rest of the world waits for paid API and Google AI Ultra, then everyone else, on a timetable Google has not published.</p>
+            <p>So the scoreboard says Google is back in the top tier. The price says it wants the workload before the promo expires. The independent index says Anthropic still leads and Argon’s cheapness is temporary. The release order says the first people allowed to use the sharpest version are the ones hired to find the holes, which is either the responsible sequencing the Accord week asked for, or a very clear map of who Google trusts with the model before the guardrails go on. For now, Argon is real, gated, and pointed at the blue team. The rest of us are still reading the blog.</p>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
