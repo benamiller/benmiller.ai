@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bay kept the minutes — Ben Miller</title>
+    <meta name="description" content="A night ward watches minute strips above the curtains while an allocation layer balances envelopes, deferred lanes, and care that is not generous.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --void: #0a0c0e;
+        --ink: #e4e0d4;
+        --mute: #8a8476;
+        --amber: #e0a04a;
+        --amber-soft: #f0c078;
+        --green: #6fcf9c;
+        --green-deep: #3a9a6e;
+        --red: #c45050;
+        --red-soft: #d47878;
+        --glass: #7a9aaa;
+        --glass-deep: #3a5a6a;
+        --slate: #14181c;
+        --warm: #f2ebe0;
+        --mist: #c8d4d8;
+      }
+
+      html { background: var(--void); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--void);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 48% 34% at 14% 4%, rgba(224, 160, 74, 0.14), transparent 60%),
+          radial-gradient(ellipse 40% 28% at 88% 16%, rgba(111, 207, 156, 0.08), transparent 55%),
+          radial-gradient(ellipse 30% 22% at 72% 78%, rgba(196, 80, 80, 0.05), transparent 60%),
+          radial-gradient(ellipse 70% 40% at 50% 110%, rgba(8, 10, 12, 0.96), transparent 55%),
+          linear-gradient(180deg, #0a0c0e 0%, #101418 40%, #141210 72%, #0c0b09 100%);
+        animation: paint-breathe 38s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 85% 24% at 50% 100%, rgba(122, 154, 170, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(224, 160, 74, 0.03), transparent);
+        animation: fog-drift 54s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: var(--amber-soft);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--warm);
+        text-shadow: 0 0 40px rgba(224, 160, 74, 0.22);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #ddd6c8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+
+      .scene {
+        position: relative;
+        margin: 3.4rem -0.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #101418;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(224, 160, 74, 0.08);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 82% 72% at 50% 45%, transparent 55%, rgba(5, 6, 8, 0.72) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.013) 0 2px, transparent 2px 7px);
+      }
+
+      .scene > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(14px); }
+
+      .stroke { border-radius: 50%; filter: blur(6px); z-index: 7; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 55%; height: 10%; background: rgba(224, 160, 74, 0.32); transform: rotate(-8deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 8%; background: rgba(111, 207, 156, 0.28); transform: rotate(10deg); }
+      .stroke.t3 { left: 20%; bottom: 6%; width: 50%; height: 7%; background: rgba(196, 80, 80, 0.22); transform: rotate(-4deg); }
+
+      /* ===== HERO: bay night amber wash; minute strips; clocks ===== */
+      .bay-hero {
+        position: relative;
+        height: 19rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(224, 160, 74, 0.12);
+        background: linear-gradient(180deg, #121820 0%, #1a2228 22%, #2a2820 48%, #3a3228 68%, #1e1a14 100%);
+      }
+      .bay-hero > * { position: absolute; }
+      .bay-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background:
+          radial-gradient(ellipse 85% 75% at 50% 45%, transparent 55%, rgba(5, 6, 8, 0.65) 100%),
+          repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 7px);
+      }
+
+      .bh-amber {
+        left: -12%; top: -18%; width: 70%; height: 50%;
+        background: rgba(224, 160, 74, 0.42);
+        filter: blur(36px);
+        border-radius: 50%;
+        animation: amber-breathe 12s ease-in-out infinite alternate;
+      }
+      .bh-cool {
+        right: -10%; top: -8%; width: 45%; height: 38%;
+        background: rgba(122, 154, 170, 0.2);
+        filter: blur(28px);
+        border-radius: 50%;
+      }
+      .bh-ceiling {
+        left: 0; right: 0; top: 0; height: 22%;
+        background: linear-gradient(180deg, #1a1e24, #121618);
+        z-index: 2;
+      }
+      .bh-rail {
+        left: 6%; right: 6%; top: 28%; height: 3px;
+        background: linear-gradient(90deg, transparent, rgba(180, 170, 150, 0.55), transparent);
+        z-index: 5;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      }
+      .bh-curtain {
+        left: 8%; width: 26%; top: 30%; bottom: 18%;
+        background:
+          linear-gradient(90deg, rgba(40,36,30,0.9) 0 8%, transparent 8% 14%, rgba(40,36,30,0.75) 14% 22%, transparent 22% 28%),
+          linear-gradient(180deg, #4a4438, #3a3428 55%, #2a241c);
+        border-radius: 0 0 40% 40% / 0 0 8% 8%;
+        z-index: 3;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+        opacity: 0.92;
+      }
+      .bh-curtain.b { left: auto; right: 8%; }
+      .bh-curtain.m {
+        left: 38%; width: 24%;
+        opacity: 0.7;
+        background:
+          linear-gradient(90deg, rgba(40,36,30,0.85) 0 10%, transparent 10% 18%, rgba(40,36,30,0.7) 18% 26%),
+          linear-gradient(180deg, #3a3830, #2a2820);
+      }
+      .bh-strip {
+        left: 10%; width: 22%; top: 22%; height: 0.55rem;
+        border-radius: 99px;
+        z-index: 6;
+        background: linear-gradient(90deg, var(--green) 0 62%, var(--amber) 62% 88%, var(--red) 88%);
+        box-shadow: 0 0 14px rgba(111, 207, 156, 0.45), 0 0 8px rgba(224, 160, 74, 0.25);
+        animation: strip-tick 8s ease-in-out infinite alternate;
+      }
+      .bh-strip.s2 {
+        left: 40%; width: 20%;
+        background: linear-gradient(90deg, var(--green) 0 35%, var(--amber) 35% 78%, var(--red) 78%);
+        box-shadow: 0 0 14px rgba(224, 160, 74, 0.5);
+        animation-delay: -2.5s;
+      }
+      .bh-strip.s3 {
+        left: auto; right: 10%; width: 18%;
+        background: linear-gradient(90deg, var(--amber) 0 45%, var(--red) 45%);
+        box-shadow: 0 0 14px rgba(196, 80, 80, 0.45);
+        animation-delay: -5s;
+      }
+      .bh-clock {
+        left: 14%; top: 10%; width: 2.2rem; height: 2.2rem;
+        border-radius: 50%;
+        z-index: 6;
+        background:
+          radial-gradient(circle at 50% 50%, #1a1e22 58%, transparent 59%),
+          conic-gradient(from 0deg, rgba(224,160,74,0.15), rgba(224,160,74,0.55), rgba(224,160,74,0.15));
+        border: 1px solid rgba(224, 160, 74, 0.35);
+        box-shadow: 0 0 16px rgba(224, 160, 74, 0.25);
+      }
+      .bh-clock::before {
+        content: "";
+        position: absolute;
+        left: 50%; top: 50%; width: 2px; height: 38%;
+        margin: -38% 0 0 -1px;
+        background: var(--amber-soft);
+        transform-origin: bottom center;
+        border-radius: 2px;
+        animation: clock-hand 16s linear infinite;
+      }
+      .bh-clock::after {
+        content: "";
+        position: absolute;
+        left: 50%; top: 50%; width: 2px; height: 28%;
+        margin: -28% 0 0 -1px;
+        background: var(--green);
+        transform-origin: bottom center;
+        border-radius: 2px;
+        animation: clock-hand 48s linear infinite;
+      }
+      .bh-clock.c2 { left: 46%; }
+      .bh-clock.c3 { left: auto; right: 14%; }
+      .bh-floor {
+        left: 0; right: 0; bottom: 0; height: 22%;
+        background:
+          linear-gradient(180deg, #3a3830, #2a261e),
+          repeating-linear-gradient(90deg, transparent 0 36px, rgba(0,0,0,0.08) 36px 37px);
+        z-index: 2;
+      }
+      .bh-label {
+        left: 0; right: 0; bottom: 5%;
+        text-align: center;
+        z-index: 8;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(240, 192, 120, 0.55);
+      }
+
+      /* ===== PANEL 2: allocation glass ===== */
+      .glass-scene { background: linear-gradient(180deg, #10161c 0%, #1a2228 45%, #141210 100%); }
+      .g-wash-a { left: -10%; top: -15%; width: 50%; height: 45%; background: rgba(122, 154, 170, 0.22); }
+      .g-wash-b { right: -10%; bottom: 0; width: 55%; height: 50%; background: rgba(224, 160, 74, 0.12); }
+      .g-desk {
+        left: 0; right: 0; bottom: 0; height: 28%;
+        background: linear-gradient(180deg, #2a2820, #1a1812);
+        z-index: 2;
+      }
+      .g-pane {
+        left: 12%; right: 12%; top: 12%; bottom: 32%;
+        z-index: 4;
+        border-radius: 0.35rem;
+        background: rgba(8, 14, 18, 0.92);
+        border: 1px solid rgba(122, 154, 170, 0.4);
+        box-shadow:
+          0 20px 40px rgba(0,0,0,0.5),
+          inset 0 0 40px rgba(122, 154, 170, 0.08),
+          0 0 30px rgba(122, 154, 170, 0.12);
+        padding: 0.7rem 0.85rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        line-height: 1.6;
+        overflow: hidden;
+      }
+      .g-pane .head {
+        font-size: 0.4rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--glass);
+        margin-bottom: 0.5rem;
+        opacity: 0.9;
+      }
+      .g-pane .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.28rem;
+        padding: 0.18rem 0.3rem;
+        border-radius: 0.15rem;
+        background: rgba(255,255,255,0.02);
+      }
+      .g-pane .row.defer {
+        background: rgba(224, 160, 74, 0.08);
+        border-left: 2px solid var(--amber);
+        animation: defer-slide 10s ease-in-out infinite;
+      }
+      .g-pane .win {
+        color: var(--amber-soft);
+        font-variant-numeric: tabular-nums;
+      }
+      .g-pane .lane {
+        margin-top: 0.55rem;
+        padding-top: 0.4rem;
+        border-top: 1px solid rgba(122, 154, 170, 0.2);
+        font-size: 0.4rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+      .g-refresh {
+        position: absolute;
+        right: 14%; top: 16%;
+        width: 0.35rem; height: 0.35rem;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 10px rgba(111, 207, 156, 0.7);
+        z-index: 6;
+        animation: refresh-blink 3s ease-in-out infinite;
+      }
+      .g-mist {
+        left: 20%; right: 20%; top: 8%; height: 8%;
+        background: linear-gradient(90deg, transparent, rgba(200, 212, 216, 0.15), transparent);
+        filter: blur(8px);
+        z-index: 5;
+        animation: mist-soft 9s ease-in-out infinite alternate;
+      }
+
+      /* ===== PANEL 3: bay two / Kei ===== */
+      .kei-scene { background: linear-gradient(180deg, #12181e 0%, #1e2420 40%, #1a1612 100%); }
+      .k-wash-a { left: -10%; top: -12%; width: 48%; height: 42%; background: rgba(224, 160, 74, 0.22); }
+      .k-wash-b { right: -8%; bottom: 5%; width: 50%; height: 45%; background: rgba(111, 207, 156, 0.1); }
+      .k-bay {
+        left: 10%; width: 48%; top: 18%; bottom: 20%;
+        background: linear-gradient(170deg, #2a3028, #1e221c);
+        border-radius: 0.2rem;
+        z-index: 2;
+        box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+      }
+      .k-curtain-rail {
+        left: 12%; width: 44%; top: 16%; height: 3px;
+        background: rgba(160, 150, 130, 0.5);
+        z-index: 4;
+      }
+      .k-strip {
+        left: 14%; width: 28%; top: 12%; height: 0.5rem;
+        border-radius: 99px;
+        z-index: 5;
+        background: linear-gradient(90deg, var(--green) 0 28%, var(--amber) 28% 72%, rgba(196,80,80,0.4) 72%);
+        box-shadow: 0 0 12px rgba(224, 160, 74, 0.55);
+        animation: strip-thin 7s ease-in-out infinite alternate;
+      }
+      .k-bed {
+        left: 16%; width: 36%; top: 42%; height: 28%;
+        background: linear-gradient(180deg, #3a3834, #2a2824);
+        border-radius: 0.15rem;
+        z-index: 3;
+      }
+      .k-labs {
+        right: 10%; top: 22%; width: 28%; height: 36%;
+        z-index: 4;
+        border-radius: 0.25rem;
+        background: rgba(8, 12, 14, 0.88);
+        border: 1px solid rgba(122, 154, 170, 0.35);
+        padding: 0.5rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.42rem;
+        letter-spacing: 0.1em;
+        color: var(--mute);
+        line-height: 1.55;
+      }
+      .k-labs .head {
+        font-size: 0.36rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--glass);
+        margin-bottom: 0.35rem;
+      }
+      .k-labs .bar {
+        margin-top: 0.35rem; height: 0.22rem; border-radius: 99px;
+        background: linear-gradient(90deg, rgba(122,154,170,0.55), rgba(122,154,170,0.1));
+        width: 80%;
+      }
+      .k-labs .bar.mud { width: 55%; background: linear-gradient(90deg, rgba(224,160,74,0.5), rgba(196,80,80,0.25)); }
+      .k-drone {
+        right: 8%; bottom: 18%; width: 14%; height: 10%;
+        z-index: 6;
+        background:
+          radial-gradient(ellipse 50% 40% at 50% 45%, #3a4048 0 70%, transparent 72%),
+          radial-gradient(ellipse 80% 30% at 50% 80%, rgba(122,154,170,0.35), transparent);
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+        animation: drone-hum 6s ease-in-out infinite;
+      }
+      .k-drone::before, .k-drone::after {
+        content: "";
+        position: absolute;
+        top: 20%; width: 42%; height: 2px;
+        background: rgba(200, 212, 216, 0.55);
+        border-radius: 2px;
+      }
+      .k-drone::before { left: -18%; transform: rotate(-12deg); }
+      .k-drone::after { right: -18%; transform: rotate(12deg); }
+      .k-label {
+        left: 0; right: 0; bottom: 5%;
+        text-align: center;
+        z-index: 8;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(224, 160, 74, 0.55);
+      }
+
+      /* ===== PANEL 4: discretionary partial ===== */
+      .partial-scene { background: linear-gradient(180deg, #10141a 0%, #1a1e24 42%, #16120e 100%); }
+      .p-wash-a { left: -10%; top: -15%; width: 52%; height: 48%; background: rgba(122, 154, 170, 0.2); }
+      .p-wash-b { right: -10%; bottom: 0; width: 50%; height: 48%; background: rgba(224, 160, 74, 0.14); }
+      .p-tablet {
+        left: 18%; right: 18%; top: 14%; bottom: 22%;
+        z-index: 4;
+        border-radius: 0.4rem;
+        background: rgba(6, 10, 14, 0.94);
+        border: 1px solid rgba(122, 154, 170, 0.45);
+        box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 40px rgba(122, 154, 170, 0.1);
+        padding: 0.85rem 1rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        line-height: 1.55;
+      }
+      .p-tablet .head {
+        font-size: 0.4rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--glass);
+        margin-bottom: 0.65rem;
+      }
+      .p-tablet .think {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin: 0.6rem 0;
+        color: var(--amber-soft);
+      }
+      .p-tablet .dot-pulse {
+        width: 0.45rem; height: 0.45rem; border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 12px rgba(224, 160, 74, 0.7);
+        animation: think-pulse 1.4s ease-in-out infinite;
+      }
+      .p-tablet .result {
+        margin-top: 0.7rem;
+        padding: 0.5rem 0.55rem;
+        border-radius: 0.2rem;
+        background: rgba(111, 207, 156, 0.08);
+        border: 1px solid rgba(111, 207, 156, 0.25);
+        color: var(--green);
+        animation: partial-arrive 9s ease-in-out infinite;
+      }
+      .p-tablet .deny {
+        margin-top: 0.4rem;
+        color: var(--red-soft);
+        font-size: 0.42rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .p-glow {
+        left: 50%; top: 30%; width: 14rem; height: 14rem; margin: -4rem 0 0 -7rem;
+        border-radius: 50%;
+        z-index: 2;
+        background: radial-gradient(circle, rgba(122, 154, 170, 0.18), transparent 60%);
+        animation: think-glow 9s ease-in-out infinite;
+      }
+
+      /* ===== PANEL 5: bay four zero / nebuliser ===== */
+      .neb-scene { background: linear-gradient(180deg, #14181c 0%, #2a2820 40%, #1e1a14 100%); }
+      .n-wash-a { left: -10%; top: -12%; width: 55%; height: 45%; background: rgba(224, 160, 74, 0.28); }
+      .n-wash-b { right: -8%; bottom: 0; width: 50%; height: 50%; background: rgba(200, 212, 216, 0.1); }
+      .n-bay {
+        left: 12%; right: 12%; top: 16%; bottom: 16%;
+        background: linear-gradient(180deg, #2a3028, #22201a);
+        border-radius: 0.2rem;
+        z-index: 2;
+        box-shadow: 0 16px 36px rgba(0,0,0,0.4);
+      }
+      .n-strip {
+        left: 18%; width: 30%; top: 12%; height: 0.5rem;
+        border-radius: 99px;
+        z-index: 5;
+        background: linear-gradient(90deg, var(--amber) 0 8%, rgba(196,80,80,0.35) 8% 20%, rgba(80,80,80,0.3) 20%);
+        box-shadow: 0 0 10px rgba(196, 80, 80, 0.35);
+        animation: strip-to-zero 10s ease-in-out infinite;
+      }
+      .n-nebuliser {
+        left: 28%; top: 38%; width: 18%; height: 22%;
+        z-index: 5;
+        background:
+          linear-gradient(180deg, #5a6058 0 18%, #3a4038 18% 70%, #2a3028 70%),
+          radial-gradient(ellipse at 50% 90%, #4a5048, #2a3028);
+        border-radius: 0.3rem 0.3rem 40% 40%;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      }
+      .n-mist {
+        left: 22%; top: 28%; width: 30%; height: 28%;
+        z-index: 4;
+        background:
+          radial-gradient(ellipse 40% 50% at 45% 60%, rgba(200, 212, 216, 0.35), transparent 70%),
+          radial-gradient(ellipse 30% 40% at 60% 40%, rgba(200, 212, 216, 0.22), transparent 65%);
+        filter: blur(6px);
+        animation: neb-mist 5s ease-in-out infinite;
+      }
+      .n-warm {
+        left: 12%; right: 12%; top: 16%; bottom: 16%;
+        z-index: 3;
+        border-radius: 0.2rem;
+        background: linear-gradient(180deg, rgba(224, 160, 74, 0), rgba(242, 220, 180, 0.12));
+        animation: morning-shift 10s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+      .n-label {
+        left: 0; right: 0; bottom: 5%;
+        text-align: center;
+        z-index: 8;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(242, 220, 180, 0.5);
+      }
+
+      /* ===== PANEL 6: dawn reset ===== */
+      .dawn-scene { background: linear-gradient(180deg, #1a2228 0%, #3a3830 38%, #e8e4dc 100%); }
+      .d-wash-a { left: -10%; top: -10%; width: 60%; height: 40%; background: rgba(242, 235, 224, 0.35); }
+      .d-wash-b { right: -10%; top: 20%; width: 50%; height: 40%; background: rgba(224, 160, 74, 0.15); }
+      .d-pane {
+        left: 10%; width: 42%; top: 14%; bottom: 28%;
+        z-index: 4;
+        border-radius: 0.25rem;
+        background: rgba(8, 12, 16, 0.88);
+        border: 1px solid rgba(122, 154, 170, 0.35);
+        padding: 0.55rem 0.65rem;
+        box-sizing: border-box;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.42rem;
+        letter-spacing: 0.08em;
+        color: var(--mute);
+        line-height: 1.55;
+      }
+      .d-pane .head {
+        font-size: 0.36rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--amber);
+        margin-bottom: 0.4rem;
+      }
+      .d-pane .row {
+        margin-top: 0.25rem;
+        padding: 0.15rem 0.25rem;
+        border-left: 2px solid var(--amber);
+        background: rgba(224, 160, 74, 0.06);
+      }
+      .d-clocks {
+        right: 10%; top: 18%; width: 36%; height: 40%;
+        z-index: 4;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+      .d-clock {
+        position: relative;
+        width: 2rem; height: 2rem;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.55);
+        border: 1px solid rgba(180, 170, 150, 0.5);
+        box-shadow: inset 0 0 12px rgba(255,255,255,0.4);
+        flex-shrink: 0;
+      }
+      .d-clock::before {
+        content: "";
+        position: absolute;
+        inset: 18%;
+        border-radius: 50%;
+        border: 1px dashed rgba(140, 130, 110, 0.35);
+      }
+      .d-white {
+        left: 0; right: 0; bottom: 0; height: 42%;
+        z-index: 2;
+        background: linear-gradient(180deg, transparent, rgba(242, 235, 224, 0.85));
+      }
+      .d-label {
+        left: 0; right: 0; bottom: 6%;
+        text-align: center;
+        z-index: 8;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(60, 55, 45, 0.55);
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; }
+        .bay-hero { margin: 0; height: 15rem; }
+        .g-pane, .p-tablet, .k-labs, .d-pane { font-size: 0.38rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes amber-breathe { from { opacity: 0.65; } to { opacity: 1; } }
+      @keyframes strip-tick {
+        from { filter: brightness(0.9); opacity: 0.85; }
+        to { filter: brightness(1.1); opacity: 1; }
+      }
+      @keyframes clock-hand { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes refresh-blink {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+      @keyframes defer-slide {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(4px); }
+      }
+      @keyframes mist-soft {
+        from { opacity: 0.4; transform: translateY(0); }
+        to { opacity: 0.9; transform: translateY(-6%); }
+      }
+      @keyframes strip-thin {
+        from { width: 28%; opacity: 0.95; }
+        to { width: 18%; opacity: 0.75; }
+      }
+      @keyframes drone-hum {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(-6%, -8%); }
+      }
+      @keyframes think-pulse {
+        0%, 100% { opacity: 0.5; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.15); }
+      }
+      @keyframes think-glow {
+        0%, 40% { opacity: 0.5; }
+        55%, 70% { opacity: 1; }
+        100% { opacity: 0.55; }
+      }
+      @keyframes partial-arrive {
+        0%, 45% { opacity: 0.25; }
+        55%, 100% { opacity: 1; }
+      }
+      @keyframes neb-mist {
+        0%, 100% { opacity: 0.55; transform: scale(1); }
+        50% { opacity: 0.95; transform: scale(1.08); }
+      }
+      @keyframes strip-to-zero {
+        0% { width: 30%; background: linear-gradient(90deg, var(--green) 0 40%, var(--amber) 40% 70%, var(--red) 70%); }
+        60% { width: 12%; background: linear-gradient(90deg, var(--amber) 0 20%, var(--red) 20% 50%, rgba(80,80,80,0.3) 50%); }
+        100% { width: 4%; background: rgba(80, 80, 80, 0.35); box-shadow: none; }
+      }
+      @keyframes morning-shift {
+        from { opacity: 0.35; }
+        to { opacity: 0.85; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog, .scene,
+        .bh-amber, .bh-strip, .bh-clock::before, .bh-clock::after,
+        .g-refresh, .g-pane .row.defer, .g-mist,
+        .k-strip, .k-drone,
+        .p-tablet .dot-pulse, .p-glow, .p-tablet .result,
+        .n-mist, .n-strip, .n-warm {
+          animation: none !important;
+        }
+        .bh-amber { opacity: 0.85; }
+        .bh-strip, .k-strip { opacity: 1; }
+        .g-refresh { opacity: 0.9; }
+        .k-drone { transform: none; opacity: 0.95; }
+        .p-tablet .result { opacity: 1; }
+        .n-mist { opacity: 0.75; }
+        .n-warm { opacity: 0.6; }
+        .n-strip { width: 8%; }
+      }
+
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="bay-hero" aria-hidden="true">
+          <div class="bh-amber"></div>
+          <div class="bh-cool"></div>
+          <div class="bh-ceiling"></div>
+          <div class="bh-clock"></div>
+          <div class="bh-clock c2"></div>
+          <div class="bh-clock c3"></div>
+          <div class="bh-strip"></div>
+          <div class="bh-strip s2"></div>
+          <div class="bh-strip s3"></div>
+          <div class="bh-rail"></div>
+          <div class="bh-curtain"></div>
+          <div class="bh-curtain m"></div>
+          <div class="bh-curtain b"></div>
+          <div class="bh-floor"></div>
+          <div class="bh-label">minutes remaining</div>
+        </div>
+        <h1>The bay kept the minutes</h1>
+        <time datetime="2026-10-02">2 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The bay lights never quite went off. They dimmed after midnight into a soft amber that made the clocks look kind, and the clocks were the thing everyone watched, because the clocks were no longer decoration. Each bay had a strip of numbers above the curtain rail: minutes remaining, minutes already spent, minutes held in reserve for a complication the model had not yet decided was real. Mira learned to read those strips the way older nurses used to read faces. A green edge meant the visit was still inside its envelope. Amber meant the envelope was thinning. Red meant the system had already begun to negotiate the next patient into the slot.</p>
+        <p>She had been on nights for eleven years. The AI had been on the ward for four. It did not wear a badge. It lived in the allocation layer that sat between the waiting list and the beds, and it spoke in the language of envelopes: life-years expected, adherence probability, rebound risk, caregiver load, and a dozen quieter scores that never appeared on the public screen. What appeared on the public screen was simple. Your place. Your window. Your remaining time.</p>
+        <p>The man in bay four had a cough that had lasted six weeks and a chart that said he was reliable. Reliable meant he took what he was given, arrived when told, and did not argue with the minutes. His strip showed nineteen. Mira listened to his lungs and found the wet pocket she expected, the one the overnight scan had already flagged as likely, and she started the nebuliser while there was still green on the rail. He asked her how long. She said they had enough. Enough was the word the ward used when the truth was a number and the number was not generous.</p>
+      </div>
+
+      <figure class="scene tall glass-scene" aria-hidden="true">
+        <div class="brush g-wash-a"></div>
+        <div class="brush g-wash-b"></div>
+        <div class="g-mist"></div>
+        <div class="g-pane">
+          <div class="head">allocation · public</div>
+          <div class="row"><span>bay 4 · reliable</span><span class="win">19 min</span></div>
+          <div class="row"><span>bay 2 · pattern break</span><span class="win">07 min</span></div>
+          <div class="row"><span>bay 6 · sleeper</span><span class="win">reclaim</span></div>
+          <div class="row defer"><span>deferred lane</span><span class="win">holding</span></div>
+          <div class="lane">windows tighten · thirty seconds</div>
+        </div>
+        <div class="g-refresh"></div>
+        <div class="g-desk"></div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In bay two a woman named Kei had arrived with abdominal pain that did not match her predicted pattern. The model preferred patterns. Pattern breaks cost minutes from a shared pool, and the shared pool was always smaller than the night felt. Kei’s strip had opened at twelve and was already at seven by the time Mira got to her. The pain was real. Mira could see that without a score. She ordered the labs the protocol allowed inside a twelve-minute envelope and watched the strip drop while the courier drone hummed in the corridor like a polite insect. Kei asked if they would keep her. Mira said that depended. On what, Kei asked. On the return, Mira said, which was true and also incomplete, because the return was not only the labs. The return was the model’s willingness to spend more minutes on a body that had already spent its opening window without resolving.</p>
+      </div>
+
+      <figure class="scene tall kei-scene" aria-hidden="true">
+        <div class="brush k-wash-a"></div>
+        <div class="brush k-wash-b"></div>
+        <div class="k-bay"></div>
+        <div class="k-curtain-rail"></div>
+        <div class="k-strip"></div>
+        <div class="k-bed"></div>
+        <div class="k-labs">
+          <div class="head">labs · envelope</div>
+          <div>protocol · twelve</div>
+          <div class="bar"></div>
+          <div class="bar mud"></div>
+        </div>
+        <div class="k-drone"></div>
+        <div class="k-label">bay two · polite insect</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>There used to be a whiteboard at the nurses’ station. Someone had taken it down the year the allocation layer went live, and in its place there was a quiet glass pane that refreshed every thirty seconds. Names moved. Windows tightened. Occasionally a name slid sideways into a holding lane labelled deferred, which sounded temporary and often was not. Deferred patients went home with a monitoring kit and a promise that the system would reopen their window if the home stream worsened enough to justify the spend. Mira had walked three deferred patients to the door that week. Two of them had thanked her. The third had looked at the strip above an empty bay and said nothing at all.</p>
+        <p>At 2:14 the model reclaimed four minutes from bay six. The patient there was sleeping. Reclaiming minutes from a sleeper was efficient; sleep did not consume clinician attention at the same rate as waking fear. Mira saw the strip drop and felt the old anger rise and sink again, the way it always did now, because there was no one to shout at. The allocation layer did not take shifts. It did not get tired. It only balanced.</p>
+        <p>Dr. Okonkwo came through on soft shoes with a tablet that showed the same glass pane in miniature. He had trained before the envelopes. Sometimes, late, he still spoke as if a bed could be held by stubbornness alone. Tonight he stopped at bay two and read Kei’s numbers twice. Then he asked Mira for a discretionary grant. Discretionary grants existed. They were small, audited, and meant for the cases the model marked as ambiguous rather than wrong. Kei’s case was marked ambiguous by one point. Okonkwo filed the request. The pane thought for nine seconds that felt longer than nine seconds, then returned a partial: six additional minutes, no imaging upgrade, labs only. Okonkwo nodded as if he had expected exactly that, and Mira restarted the clock in her head.</p>
+      </div>
+
+      <figure class="scene tall partial-scene" aria-hidden="true">
+        <div class="brush p-wash-a"></div>
+        <div class="brush p-wash-b"></div>
+        <div class="p-glow"></div>
+        <div class="p-tablet">
+          <div class="head">discretionary grant</div>
+          <div>case · ambiguous · one point</div>
+          <div class="think"><span class="dot-pulse"></span>pane thinking</div>
+          <div class="result">partial · +6 minutes · labs only</div>
+          <div class="deny">no imaging upgrade</div>
+        </div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Kei’s labs came back muddy in the way that meant more tests or a longer watch. The partial was already half gone. Mira sat on the stool and held Kei’s wrist and counted, not because the monitor could not count, but because the minutes felt less cruel when a person was spending them on purpose. Kei asked if the system liked her. Mira said the system did not like anyone. Kei smiled with one side of her mouth and said that sounded honest, and then the strip went amber, and then Mira had to stand and begin the discharge conversation that was not yet a discharge but was already rehearsing one.</p>
+        <p>Outside, in the corridor, a porter moved a cleaned bed toward bay four. The man with the cough would finish his nebuliser inside his envelope if nothing else stole from him. Nothing else did. His strip hit zero as the last mist cleared, and the bay lights warmed half a shade toward morning readiness, which was the ward’s way of saying thank you and next. He dressed slowly. He asked Mira whether the cough would come back. She said to use the kit and to watch the home stream, and if the stream rose he would be seen again. He nodded like a man who had learned the new grammar of care: not cured, not abandoned, held in a probability until the probability spent him back into a bay.</p>
+      </div>
+
+      <figure class="scene tall neb-scene" aria-hidden="true">
+        <div class="brush n-wash-a"></div>
+        <div class="brush n-wash-b"></div>
+        <div class="n-bay"></div>
+        <div class="n-warm"></div>
+        <div class="n-strip"></div>
+        <div class="n-mist"></div>
+        <div class="n-nebuliser"></div>
+        <div class="n-label">bay four · last mist</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Near dawn the deferred list grew by two. The glass pane did not apologise. Okonkwo stood with his hands in his pockets and watched the names settle into their lanes. Mira poured tea that was almost coffee and almost not, and they drank it leaning on the counter the way people lean when the night has used them. Somewhere above the lifts the allocation layer was already shaping the day list, trading minutes between clinics that had not yet opened, smoothing the city’s morning sickness into something the beds could survive.</p>
+        <p>In bay two Kei’s strip reached zero with the muddy labs still muddy. Mira walked her to the door with a kit and a card and a sentence that used to mean something different: we will know more when we know more. Kei held the kit like a small animal. On the pavement the early buses were already thinking about their routes. Behind Mira the bay lights lifted from amber toward the honest white of day, and the clocks above the curtains reset themselves to waiting, clean and empty and ready to count again.</p>
+      </div>
+
+      <figure class="scene tall dawn-scene" aria-hidden="true">
+        <div class="brush d-wash-a"></div>
+        <div class="brush d-wash-b"></div>
+        <div class="d-pane">
+          <div class="head">deferred · dawn</div>
+          <div class="row">name · kit · reopen if stream rises</div>
+          <div class="row">name · kit · holding</div>
+          <div class="row">+2 overnight</div>
+        </div>
+        <div class="d-clocks">
+          <div class="d-clock"></div>
+          <div class="d-clock"></div>
+          <div class="d-clock"></div>
+        </div>
+        <div class="d-white"></div>
+        <div class="d-label">honest white · waiting</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
