@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The road kept the slot — Ben Miller</title>
+    <meta name="description" content="In a near-future Yorkshire where a kind-voiced AI runs every road, a grandmother with a low Journey Standing is offered a slot six hours away when her daughter goes into labour, so her brother drives her to Leeds down the unmanaged back lanes in his old diesel van.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --night: #070914;
+        --ink: #e4e6ee;
+        --mute: #9a98ad;
+        --frost: #f1f3fa;
+        --navy: #0d1638;
+        --bruise: #6e3d5e;
+        --rose: #e0957c;
+        --pod: #eef3fa;
+        --pod-glow: #8ec2ff;
+        --signal: #ff3b2f;
+        --sodium: #ffad4a;
+        --warm: #ffd28a;
+        --green: #4fe08e;
+        --cream: #f3e6c8;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 52% 30% at 14% 2%, rgba(40, 60, 150, 0.2), transparent 60%),
+          radial-gradient(ellipse 46% 26% at 88% 18%, rgba(110, 61, 94, 0.18), transparent 58%),
+          radial-gradient(ellipse 40% 24% at 22% 78%, rgba(142, 194, 255, 0.06), transparent 60%),
+          radial-gradient(ellipse 34% 20% at 84% 92%, rgba(255, 210, 138, 0.05), transparent 60%),
+          linear-gradient(180deg, #0a0f26 0%, #0c1029 34%, #120f24 66%, #07070f 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 22% at 50% 100%, rgba(190, 150, 180, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(142, 194, 255, 0.022), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f0c9b6;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--frost);
+        text-shadow: 0 0 40px rgba(110, 61, 94, 0.55), 0 0 2px rgba(142, 194, 255, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dfe1ea;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #cfe2ff; }
+
+      .prose p.msg {
+        position: relative;
+        margin: 1.9rem 0 0;
+        padding: 0.95rem 1.15rem 0.95rem 1.7rem;
+        border-left: 2px solid rgba(79, 224, 142, 0.6);
+        border-radius: 0 0.4rem 0.4rem 0;
+        background: linear-gradient(90deg, rgba(79, 224, 142, 0.08), rgba(79, 224, 142, 0.015) 70%, transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        font-size: 1.16rem;
+        line-height: 1.62;
+      }
+      .prose p.msg::before {
+        content: "";
+        position: absolute;
+        left: 0.62rem;
+        top: 1.45rem;
+        width: 0.36rem;
+        height: 0.36rem;
+        border-radius: 1px;
+        background: var(--green);
+        box-shadow: 0 0 10px rgba(79, 224, 142, 0.8);
+      }
+      .prose p.msg em { color: #d8f6e4; }
+
+      hr.break {
+        border: 0;
+        width: 5.2rem;
+        height: 0.42rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(ellipse 44% 50% at 50% 50%, rgba(238, 243, 250, 0.92) 0 52%, rgba(142, 194, 255, 0.4) 68%, transparent 76%) 0 0 / 1.04rem 100% repeat-x;
+        filter: drop-shadow(0 0 5px rgba(142, 194, 255, 0.5));
+        opacity: 0.75;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #0c0e1a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(224, 149, 124, 0.08);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .road-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 4, 10, 0.72) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.016) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .road-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(240, 170, 160, 0.34); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(142, 194, 255, 0.3); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(160, 120, 200, 0.28); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(230, 226, 245, 0.6);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      }
+
+      /* ===== HERO: flat land, unlit lane, the van, the corridor ===== */
+      .road-hero {
+        position: relative;
+        height: 22rem;
+        font-size: 1rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(224, 149, 124, 0.12);
+        background: linear-gradient(180deg, #060b22 0%, #0c1538 16%, #18194a 30%, #34275a 42%, #5c3561 51%, #8f4c69 58%, #c0766f 62.5%, #dca486 65%, #e8c29a 65.9%, #10101c 66%);
+      }
+      .rh-stars { left: 0; top: 0; width: 1px; height: 1px; border-radius: 50%; box-shadow: 206px 2px 0 0.5px rgba(210,222,255,0.70), 465px 77px 0 0px rgba(210,222,255,0.64), 492px 25px 0 0px rgba(210,222,255,0.37), 372px 40px 0 0px rgba(210,222,255,0.25), 533px 18px 0 0.5px rgba(210,222,255,0.74), 630px 119px 0 0px rgba(210,222,255,0.73), 575px 36px 0 0px rgba(210,222,255,0.66), 269px 6px 0 0px rgba(210,222,255,0.34), 623px 82px 0 0px rgba(210,222,255,0.73), 60px 68px 0 0px rgba(210,222,255,0.48), 410px 40px 0 0px rgba(210,222,255,0.69), 598px 79px 0 0px rgba(210,222,255,0.39), 650px 75px 0 0px rgba(210,222,255,0.67), 20px 109px 0 0.5px rgba(210,222,255,0.50), 458px 109px 0 0px rgba(210,222,255,0.74), 529px 60px 0 0.5px rgba(210,222,255,0.34), 291px 2px 0 0.5px rgba(210,222,255,0.73), 317px 12px 0 0.5px rgba(210,222,255,0.68), 451px 60px 0 0px rgba(210,222,255,0.38), 409px 50px 0 0px rgba(210,222,255,0.59), 142px 23px 0 0.5px rgba(210,222,255,0.55), 418px 10px 0 0px rgba(210,222,255,0.33), 123px 70px 0 0px rgba(210,222,255,0.26), 622px 74px 0 0.5px rgba(210,222,255,0.52), 494px 111px 0 0.5px rgba(210,222,255,0.35), 510px 36px 0 0px rgba(210,222,255,0.61), 496px 16px 0 0px rgba(210,222,255,0.37), 349px 6px 0 0px rgba(210,222,255,0.28), 260px 67px 0 0px rgba(210,222,255,0.72), 118px 72px 0 0px rgba(210,222,255,0.42), 307px 92px 0 0px rgba(210,222,255,0.27), 209px 72px 0 0px rgba(210,222,255,0.60), 369px 78px 0 0px rgba(210,222,255,0.48), 309px 100px 0 0px rgba(210,222,255,0.67); opacity: 0.8; }
+      .rh-wash-a { left: -12%; top: -22%; width: 70%; height: 48%; background: rgba(8, 16, 60, 0.6); filter: blur(30px); }
+      .rh-wash-b { left: 18%; top: 38%; width: 86%; height: 13%; border-radius: 50%; background: rgba(150, 70, 128, 0.34); filter: blur(10px); transform: rotate(-3deg); mix-blend-mode: screen; }
+      .rh-wash-c { right: -14%; top: 53%; width: 64%; height: 8%; border-radius: 50%; background: rgba(176, 186, 112, 0.26); filter: blur(8px); transform: rotate(1.5deg); mix-blend-mode: screen; }
+      .rh-brush {
+        inset: -10% -10% 30% -10%;
+        z-index: 1;
+        background:
+          repeating-linear-gradient(172deg, rgba(120, 140, 230, 0.05) 0 3px, transparent 3px 11px, rgba(10, 10, 40, 0.12) 11px 14px, transparent 14px 23px),
+          repeating-linear-gradient(176deg, rgba(220, 140, 170, 0.05) 0 2px, transparent 2px 17px);
+        filter: blur(1.2px);
+        mask-image: linear-gradient(180deg, #000 20%, transparent 85%);
+      }
+      .rh-dawn {
+        left: 50%; top: 48%; width: 70%; height: 30%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 66%, rgba(255, 214, 170, 0.75) 0 6%, rgba(240, 150, 130, 0.45) 22%, rgba(160, 80, 120, 0.16) 48%, transparent 70%);
+        filter: blur(2px);
+        animation: dawn-breathe 16s ease-in-out infinite alternate;
+      }
+      .rh-cloud {
+        border-radius: 50%;
+        background: linear-gradient(180deg, rgba(28, 22, 52, 0.0) 0%, rgba(30, 24, 56, 0.86) 30%, rgba(44, 30, 64, 0.9) 66%, rgba(236, 156, 140, 0.92) 74%, rgba(255, 200, 170, 0.5) 80%, transparent 86%);
+        filter: blur(0.7px);
+      }
+      .rh-cloud.c1 { left: 4%; top: 44%; width: 44%; height: 4.6%; transform: rotate(-1deg); }
+      .rh-cloud.c2 { left: 46%; top: 50.5%; width: 38%; height: 3.4%; transform: rotate(0.6deg); opacity: 0.85; }
+      .rh-cloud.c3 { left: 70%; top: 41%; width: 36%; height: 3.6%; opacity: 0.7; }
+      .rh-tower {
+        bottom: 34%; width: 2.5%;
+        z-index: 3;
+        clip-path: polygon(8% 0, 92% 0, 82% 26%, 76% 52%, 82% 78%, 100% 100%, 0 100%, 18% 78%, 24% 52%, 18% 26%);
+        background: linear-gradient(90deg, #120f22 0%, #1d1830 55%, #4a2e48 80%, #d48a7c 96%);
+      }
+      .rh-plume {
+        width: 5.6%; height: 9%;
+        z-index: 2;
+        border-radius: 50% 50% 40% 40%;
+        background: radial-gradient(ellipse at 60% 70%, rgba(236, 170, 160, 0.5), rgba(150, 100, 140, 0.25) 50%, transparent 72%);
+        filter: blur(3px);
+        animation: plume 14s ease-in-out infinite alternate;
+      }
+      .rh-stack { left: 20.4%; bottom: 34%; width: 0.4%; height: 12%; z-index: 3; background: linear-gradient(90deg, #120f22, #c98478); }
+      .rh-stack::before { content: ""; position: absolute; left: -60%; top: -3px; width: 220%; height: 3px; border-radius: 50%; background: #ff4636; box-shadow: 0 0 6px 2px rgba(255, 60, 40, 0.7); animation: blink 3.2s steps(1) infinite; }
+      .rh-clump { bottom: 34%; z-index: 3; border-radius: 50% 50% 0 0; background: linear-gradient(90deg, #0f0d1c 60%, #6b3f55); }
+      .rh-embank {
+        left: 36%; right: -2%; bottom: 34%; height: 1.5%;
+        z-index: 4;
+        clip-path: polygon(1% 100%, 4% 0, 100% 0, 100% 100%);
+        background: linear-gradient(180deg, #1c1830, #0e0d1a);
+        mask-image: linear-gradient(90deg, transparent, #000 10%);
+      }
+      .rh-corr {
+        z-index: 6;
+        mask-image: linear-gradient(90deg, transparent, #000 14%, #000 92%, transparent);
+        animation: flow linear infinite;
+      }
+      .rh-corr.c1 {
+        left: 36%; right: -4%; top: 63.4%; height: 0.44rem;
+        background: radial-gradient(ellipse 47% 50% at 50% 55%, #ffffff 0 44%, #d6e6fb 56%, rgba(142, 194, 255, 0.55) 70%, transparent 78%) 0 0 / 16px 100% repeat-x;
+        --tile: 160px;
+        animation-duration: 7s;
+      }
+      .rh-corr.c2 {
+        left: 50%; right: -4%; top: 62.6%; height: 0.28rem;
+        opacity: 0.6;
+        background: radial-gradient(ellipse 46% 50% at 50% 55%, #eaf2fd 0 44%, rgba(142, 194, 255, 0.55) 66%, transparent 76%) 0 0 / 10px 100% repeat-x;
+        --tile: -100px;
+        animation-duration: 9s;
+      }
+      .rh-corr-glow {
+        left: 40%; right: -4%; top: 61.6%; height: 4%;
+        z-index: 5;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 60% 55%, rgba(142, 194, 255, 0.55), rgba(142, 194, 255, 0.12) 50%, transparent 72%);
+        filter: blur(4px);
+        mix-blend-mode: screen;
+      }
+      .rh-deck {
+        left: 37%; right: -2%; top: calc(63.4% + 0.44rem); height: 2px;
+        z-index: 6;
+        background: radial-gradient(circle, rgba(142, 194, 255, 0.95) 0 1px, transparent 1.5px) 0 0 / 22px 2px repeat-x, rgba(40, 50, 90, 0.9);
+        mask-image: linear-gradient(90deg, transparent, #000 12%);
+      }
+      .rh-land {
+        left: 0; right: 0; top: 66%; bottom: 0;
+        z-index: 4;
+        background:
+          radial-gradient(ellipse 34% 30% at 64% 0%, rgba(224, 149, 124, 0.22), transparent 70%),
+          repeating-linear-gradient(180deg, rgba(160, 120, 160, 0.05) 0 1px, transparent 1px 7px),
+          linear-gradient(180deg, #1d1828 0%, #121120 26%, #0b0b16 60%, #06060c 100%);
+        box-shadow: 0 -1px 0 rgba(240, 178, 150, 0.7);
+      }
+      .rh-field { inset: 0; z-index: 5; }
+      .rh-field.fa {
+        clip-path: polygon(59.40% 66.30%, 61.20% 66.30%, 118.00% 100.00%, 38.00% 100.00%);
+        background:
+          repeating-linear-gradient(180deg, rgba(150, 110, 150, 0.07) 0 1px, transparent 1px 4px),
+          linear-gradient(180deg, rgba(40, 30, 50, 0.35) 66%, rgba(12, 10, 18, 0.2) 100%);
+      }
+      .rh-field.fb {
+        clip-path: polygon(58.20% 66.30%, 59.40% 66.30%, 6.00% 100.00%, -30.00% 100.00%);
+        background: linear-gradient(180deg, rgba(34, 40, 36, 0.35) 66%, rgba(10, 12, 12, 0.3) 100%);
+      }
+      .rh-dyke {
+        inset: 0;
+        z-index: 6;
+        background: linear-gradient(180deg, rgba(240, 170, 150, 0.8) 66%, rgba(150, 90, 140, 0.3) 80%, rgba(70, 50, 100, 0.08) 100%);
+        filter: blur(0.3px);
+        opacity: 0.7;
+      }
+      .rh-hedge {
+        inset: 0;
+        z-index: 7;
+        clip-path: polygon(-4.00% 76.66%, -1.08% 76.73%, 3.12% 77.11%, 7.77% 76.33%, 12.00% 76.55%, 15.64% 76.30%, 19.12% 77.52%, 22.55% 75.72%, 26.00% 76.35%, 29.55% 76.36%, 33.12% 76.42%, 36.64% 76.55%, 40.00% 75.02%, 43.19% 76.50%, 46.25% 75.36%, 49.19% 75.46%, 52.00% 73.69%, 54.69% 73.32%, 57.25% 74.17%, 59.69% 72.37%, 62.00% 72.29%, 64.19% 71.37%, 66.25% 70.73%, 68.19% 70.51%, 70.00% 70.33%, 71.66% 69.87%, 73.19% 69.55%, 74.62% 68.62%, 76.00% 68.57%, 77.34% 67.58%, 78.62% 67.82%, 79.84% 67.06%, 81.00% 67.14%, 82.09% 66.74%, 83.12% 66.36%, 84.09% 66.36%, 85.00% 66.26%, 85.89% 66.02%, 86.75% 65.71%, 87.48% 65.62%, 88.00% 65.75%, 88.00% 66.12%, 87.48% 66.21%, 86.75% 66.34%, 85.89% 66.51%, 85.00% 66.71%, 84.09% 66.94%, 83.12% 67.21%, 82.09% 67.52%, 81.00% 67.87%, 79.84% 68.26%, 78.62% 68.68%, 77.34% 69.15%, 76.00% 69.66%, 74.62% 70.22%, 73.19% 70.83%, 71.66% 71.48%, 70.00% 72.17%, 68.19% 72.94%, 66.25% 73.77%, 64.19% 74.61%, 62.00% 75.39%, 59.69% 76.12%, 57.25% 76.82%, 54.69% 77.48%, 52.00% 78.08%, 49.19% 78.63%, 46.25% 79.12%, 43.19% 79.57%, 40.00% 79.96%, 36.64% 80.30%, 33.12% 80.58%, 29.55% 80.82%, 26.00% 81.04%, 22.55% 81.23%, 19.12% 81.38%, 15.64% 81.52%, 12.00% 81.66%, 7.77% 81.82%, 3.12% 81.97%, -1.08% 82.11%, -4.00% 82.20%);
+        background:
+          radial-gradient(circle at 30% 30%, rgba(120, 90, 120, 0.28) 0 0.7px, transparent 1.3px) 0 0 / 5px 4px,
+          linear-gradient(180deg, #17121f 70%, #07070c 90%);
+      }
+      .rh-pole {
+        z-index: 8;
+        width: var(--w);
+        background: linear-gradient(90deg, #07060c 50%, #a86a68);
+      }
+      .rh-pole::before {
+        content: "";
+        position: absolute;
+        left: -260%; top: 6%;
+        width: 620%; height: max(1px, calc(var(--w) * 0.8));
+        background: #0b0a12;
+      }
+      .rh-wire {
+        z-index: 8;
+        border-bottom: 1px solid rgba(10, 8, 16, 0.75);
+        border-radius: 0 0 50% 50% / 0 0 100% 100%;
+      }
+      .rh-lane-edge {
+        inset: 0;
+        z-index: 9;
+        clip-path: polygon(-4.00% 81.60%, -2.75% 81.63%, -1.08% 81.62%, 0.92% 81.60%, 3.12% 81.57%, 5.44% 81.53%, 7.77% 81.48%, 9.99% 81.43%, 12.00% 81.39%, 13.85% 81.35%, 15.64% 81.31%, 17.40% 81.27%, 19.12% 81.23%, 20.84% 81.18%, 22.55% 81.12%, 24.26% 81.06%, 26.00% 80.98%, 27.76% 80.89%, 29.55% 80.80%, 31.34% 80.71%, 33.12% 80.60%, 34.90% 80.48%, 36.64% 80.35%, 38.35% 80.20%, 40.00% 80.04%, 41.61% 79.86%, 43.19% 79.66%, 44.73% 79.45%, 46.25% 79.22%, 47.73% 78.99%, 49.19% 78.73%, 50.61% 78.46%, 52.00% 78.18%, 53.36% 77.88%, 54.69% 77.57%, 55.98% 77.24%, 57.25% 76.89%, 58.48% 76.54%, 59.69% 76.17%, 60.86% 75.79%, 62.00% 75.41%, 63.11% 75.01%, 64.19% 74.59%, 65.23% 74.16%, 66.25% 73.71%, 67.23% 73.27%, 68.19% 72.84%, 69.11% 72.42%, 70.00% 72.03%, 70.85% 71.67%, 71.66% 71.31%, 72.44% 70.97%, 73.19% 70.64%, 73.91% 70.33%, 74.62% 70.02%, 75.31% 69.73%, 76.00% 69.45%, 76.68% 69.18%, 77.34% 68.93%, 77.99% 68.69%, 78.62% 68.46%, 79.24% 68.24%, 79.84% 68.04%, 80.43% 67.84%, 81.00% 67.66%, 81.55% 67.48%, 82.09% 67.32%, 82.62% 67.17%, 83.12% 67.03%, 83.62% 66.89%, 84.09% 66.77%, 84.55% 66.66%, 85.00% 66.56%, 85.44% 66.47%, 85.89% 66.39%, 86.33% 66.32%, 86.75% 66.25%, 87.14% 66.20%, 87.48% 66.16%, 87.78% 66.13%, 88.00% 66.11%, 88.00% 66.39%, 87.78% 66.46%, 87.48% 66.54%, 87.14% 66.63%, 86.75% 66.73%, 86.33% 66.84%, 85.89% 66.97%, 85.44% 67.10%, 85.00% 67.24%, 84.55% 67.39%, 84.09% 67.55%, 83.62% 67.72%, 83.12% 67.91%, 82.62% 68.10%, 82.09% 68.30%, 81.55% 68.52%, 81.00% 68.74%, 80.43% 68.98%, 79.84% 69.23%, 79.24% 69.48%, 78.62% 69.75%, 77.99% 70.03%, 77.34% 70.33%, 76.68% 70.63%, 76.00% 70.95%, 75.31% 71.28%, 74.62% 71.63%, 73.91% 71.99%, 73.19% 72.36%, 72.44% 72.74%, 71.66% 73.14%, 70.85% 73.54%, 70.00% 73.97%, 69.11% 74.41%, 68.19% 74.88%, 67.23% 75.37%, 66.25% 75.86%, 65.23% 76.36%, 64.19% 76.85%, 63.11% 77.33%, 62.00% 77.79%, 60.86% 78.23%, 59.69% 78.66%, 58.48% 79.08%, 57.25% 79.50%, 55.98% 79.90%, 54.69% 80.29%, 53.36% 80.66%, 52.00% 81.02%, 50.61% 81.36%, 49.19% 81.69%, 47.73% 82.00%, 46.25% 82.30%, 44.73% 82.59%, 43.19% 82.86%, 41.61% 83.12%, 40.00% 83.36%, 38.35% 83.59%, 36.64% 83.80%, 34.90% 83.99%, 33.12% 84.18%, 31.34% 84.35%, 29.55% 84.51%, 27.76% 84.67%, 26.00% 84.82%, 24.26% 84.97%, 22.55% 85.10%, 20.84% 85.23%, 19.12% 85.35%, 17.40% 85.46%, 15.64% 85.58%, 13.85% 85.69%, 12.00% 85.81%, 9.99% 85.93%, 7.77% 86.06%, 5.44% 86.19%, 3.12% 86.32%, 0.92% 86.45%, -1.08% 86.57%, -2.75% 86.68%, -4.00% 86.80%);
+        background: #0a0910;
+      }
+      .rh-lane {
+        inset: 0;
+        z-index: 10;
+        clip-path: polygon(-4.00% 81.90%, -2.75% 81.92%, -1.08% 81.91%, 0.92% 81.88%, 3.12% 81.84%, 5.44% 81.80%, 7.77% 81.75%, 9.99% 81.70%, 12.00% 81.65%, 13.85% 81.60%, 15.64% 81.56%, 17.40% 81.52%, 19.12% 81.47%, 20.84% 81.42%, 22.55% 81.36%, 24.26% 81.29%, 26.00% 81.21%, 27.76% 81.12%, 29.55% 81.02%, 31.34% 80.92%, 33.12% 80.81%, 34.90% 80.69%, 36.64% 80.56%, 38.35% 80.41%, 40.00% 80.24%, 41.61% 80.05%, 43.19% 79.85%, 44.73% 79.64%, 46.25% 79.41%, 47.73% 79.17%, 49.19% 78.91%, 50.61% 78.64%, 52.00% 78.36%, 53.36% 78.06%, 54.69% 77.74%, 55.98% 77.40%, 57.25% 77.06%, 58.48% 76.70%, 59.69% 76.33%, 60.86% 75.95%, 62.00% 75.56%, 63.11% 75.16%, 64.19% 74.74%, 65.23% 74.30%, 66.25% 73.85%, 67.23% 73.41%, 68.19% 72.97%, 69.11% 72.55%, 70.00% 72.16%, 70.85% 71.79%, 71.66% 71.44%, 72.44% 71.09%, 73.19% 70.76%, 73.91% 70.44%, 74.62% 70.13%, 75.31% 69.84%, 76.00% 69.55%, 76.68% 69.28%, 77.34% 69.03%, 77.99% 68.79%, 78.62% 68.55%, 79.24% 68.33%, 79.84% 68.13%, 80.43% 67.93%, 81.00% 67.74%, 81.55% 67.56%, 82.09% 67.40%, 82.62% 67.24%, 83.12% 67.10%, 83.62% 66.96%, 84.09% 66.84%, 84.55% 66.73%, 85.00% 66.62%, 85.44% 66.53%, 85.89% 66.44%, 86.33% 66.37%, 86.75% 66.31%, 87.14% 66.25%, 87.48% 66.21%, 87.78% 66.17%, 88.00% 66.15%, 88.00% 66.35%, 87.78% 66.42%, 87.48% 66.50%, 87.14% 66.58%, 86.75% 66.68%, 86.33% 66.79%, 85.89% 66.91%, 85.44% 67.04%, 85.00% 67.18%, 84.55% 67.33%, 84.09% 67.49%, 83.62% 67.65%, 83.12% 67.83%, 82.62% 68.02%, 82.09% 68.22%, 81.55% 68.44%, 81.00% 68.66%, 80.43% 68.89%, 79.84% 69.14%, 79.24% 69.39%, 78.62% 69.66%, 77.99% 69.94%, 77.34% 70.23%, 76.68% 70.53%, 76.00% 70.85%, 75.31% 71.18%, 74.62% 71.52%, 73.91% 71.87%, 73.19% 72.24%, 72.44% 72.62%, 71.66% 73.01%, 70.85% 73.42%, 70.00% 73.84%, 69.11% 74.28%, 68.19% 74.74%, 67.23% 75.23%, 66.25% 75.72%, 65.23% 76.22%, 64.19% 76.71%, 63.11% 77.18%, 62.00% 77.64%, 60.86% 78.07%, 59.69% 78.50%, 58.48% 78.92%, 57.25% 79.33%, 55.98% 79.73%, 54.69% 80.12%, 53.36% 80.49%, 52.00% 80.84%, 50.61% 81.18%, 49.19% 81.51%, 47.73% 81.82%, 46.25% 82.11%, 44.73% 82.40%, 43.19% 82.66%, 41.61% 82.92%, 40.00% 83.16%, 38.35% 83.38%, 36.64% 83.59%, 34.90% 83.78%, 33.12% 83.96%, 31.34% 84.13%, 29.55% 84.29%, 27.76% 84.44%, 26.00% 84.59%, 24.26% 84.74%, 22.55% 84.87%, 20.84% 84.99%, 19.12% 85.11%, 17.40% 85.22%, 15.64% 85.33%, 13.85% 85.44%, 12.00% 85.55%, 9.99% 85.67%, 7.77% 85.79%, 5.44% 85.92%, 3.12% 86.04%, 0.92% 86.16%, -1.08% 86.28%, -2.75% 86.39%, -4.00% 86.50%);
+        background:
+          linear-gradient(90deg, transparent 0 18%, rgba(255, 210, 138, 0.22) 26%, rgba(255, 210, 138, 0.06) 44%, transparent 56%),
+          radial-gradient(ellipse 30% 40% at 78% 40%, rgba(224, 149, 124, 0.25), transparent 70%),
+          repeating-linear-gradient(90deg, rgba(150, 140, 160, 0.12) 0 2px, transparent 2px 13px),
+          linear-gradient(180deg, #3a3448 70%, #24202f 84%);
+      }
+      .rh-van {
+        left: 13%; bottom: 15.4%;
+        width: 4.6em; height: 2.1em;
+        z-index: 12;
+        transform: rotate(-1.4deg);
+      }
+      .rh-van > div { position: absolute; }
+      .van-body {
+        left: 0; top: 0; width: 100%; height: 84%;
+        clip-path: polygon(0 5%, 1.5% 0, 66% 0, 70% 3%, 81% 40%, 96% 50%, 100% 58%, 100% 90%, 98% 100%, 0 100%);
+        background:
+          radial-gradient(circle at 21% 104%, #15141e 0 13%, transparent 14%),
+          radial-gradient(circle at 79% 104%, #15141e 0 13%, transparent 14%),
+          linear-gradient(180deg, rgba(255, 186, 166, 0.95) 0 3.5%, transparent 7%),
+          linear-gradient(90deg, rgba(255, 210, 138, 0) 70%, rgba(255, 220, 170, 0.35) 100%),
+          linear-gradient(180deg, #f3f0f4 8%, #cfd3de 40%, #9aa1b4 72%, #5c6176 100%);
+      }
+      .van-win {
+        left: 66.5%; top: 7%; width: 13.5%; height: 31%;
+        clip-path: polygon(0 0, 46% 0, 100% 100%, 0 100%);
+        background: linear-gradient(160deg, #1a2140 0%, #3a2d55 55%, #d49384 62%, #22203a 70%);
+      }
+      .van-mark {
+        left: 7%; top: 34%; width: 50%; height: 16%;
+        background:
+          repeating-linear-gradient(90deg, rgba(60, 68, 100, 0.42) 0 2px, transparent 2px 3px, rgba(60, 68, 100, 0.42) 3px 6px, transparent 6px 9px, rgba(60, 68, 100, 0.42) 9px 10px, transparent 10px 13px) 0 0 / 100% 46% no-repeat,
+          repeating-linear-gradient(90deg, rgba(60, 68, 100, 0.3) 0 3px, transparent 3px 5px) 0 100% / 58% 26% no-repeat;
+      }
+      .van-wh {
+        bottom: 0; width: 0.62em; height: 0.62em;
+        border-radius: 50%;
+        background: radial-gradient(circle, #6a6f80 0 22%, #1c1c26 30%, #0a0a10 62%, #050508 100%);
+        box-shadow: 0 -1px 0 rgba(255, 186, 166, 0.25);
+      }
+      .van-wh.w1 { left: 14%; }
+      .van-wh.w2 { left: 72%; }
+      .van-hl {
+        left: 96.5%; top: 57%; width: 0.2em; height: 0.15em;
+        border-radius: 40%;
+        background: #fff6d8;
+        box-shadow: 0 0 3px 1px rgba(255, 236, 190, 0.95), 0 0 10px 4px rgba(255, 200, 110, 0.6), 0 0 26px 10px rgba(255, 180, 90, 0.25);
+        animation: lights-on 5s ease-out 0.8s both;
+      }
+      .van-beam {
+        left: 98%; top: 30%; width: 11em; height: 1.9em;
+        clip-path: polygon(0 36%, 100% 0, 100% 100%, 0 52%);
+        background: linear-gradient(90deg, rgba(255, 230, 170, 0.8), rgba(255, 206, 128, 0.32) 30%, rgba(255, 190, 110, 0.08) 70%, transparent);
+        filter: blur(1.5px);
+        mix-blend-mode: screen;
+        animation: lights-on 5s ease-out 0.8s both;
+      }
+      .van-pool {
+        left: 104%; top: 74%; width: 8em; height: 0.7em;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 30% 50%, rgba(255, 214, 150, 0.55), transparent 70%);
+        filter: blur(2px);
+        mix-blend-mode: screen;
+        animation: lights-on 5s ease-out 0.8s both;
+      }
+      .van-tl { left: -0.6%; top: 48%; width: 0.1em; height: 0.2em; background: #ff3b2f; box-shadow: 0 0 5px 1px rgba(255, 59, 47, 0.7); animation: lights-on 5s ease-out 0.8s both; }
+      .van-sh { left: -4%; right: -4%; bottom: -6%; height: 22%; border-radius: 50%; background: rgba(4, 4, 8, 0.7); filter: blur(2px); }
+      .rh-verge {
+        inset: 0;
+        z-index: 14;
+        clip-path: polygon(-1.00% 100.00%, -1.00% 93.00%, 0.51% 88.37%, 1.03% 90.70%, 2.09% 86.97%, 2.59% 90.72%, 3.61% 89.25%, 4.11% 90.51%, 4.33% 89.90%, 4.67% 90.62%, 5.54% 89.30%, 5.76% 90.76%, 6.54% 86.79%, 6.90% 90.79%, 7.84% 90.41%, 8.21% 90.78%, 9.06% 90.71%, 9.33% 91.36%, 10.50% 89.40%, 10.79% 91.68%, 11.38% 88.73%, 11.84% 92.02%, 12.27% 90.24%, 12.72% 92.43%, 13.76% 90.31%, 14.22% 92.85%, 14.63% 91.34%, 15.13% 92.64%, 15.65% 92.54%, 16.18% 93.00%, 16.78% 92.20%, 17.30% 93.27%, 18.23% 92.91%, 18.52% 93.44%, 18.87% 92.85%, 19.32% 93.38%, 19.96% 92.02%, 20.50% 94.02%, 21.05% 93.07%, 21.34% 93.99%, 21.71% 93.09%, 22.04% 93.85%, 22.83% 93.00%, 23.38% 93.94%, 23.45% 93.41%, 23.82% 93.80%, 24.87% 92.47%, 25.21% 93.70%, 25.87% 93.21%, 26.18% 93.89%, 27.19% 92.95%, 27.61% 93.90%, 28.22% 93.25%, 28.71% 94.06%, 29.67% 92.92%, 29.92% 93.82%, 31.14% 92.87%, 31.72% 93.84%, 32.16% 93.01%, 32.64% 94.05%, 33.45% 92.54%, 33.73% 94.30%, 35.04% 92.93%, 35.51% 93.91%, 36.15% 93.27%, 36.67% 94.05%, 36.81% 92.54%, 37.22% 94.06%, 38.05% 92.66%, 38.30% 94.18%, 38.80% 92.66%, 39.09% 94.18%, 39.69% 92.38%, 40.29% 94.03%, 40.73% 92.27%, 41.19% 93.72%, 42.20% 93.45%, 42.74% 93.98%, 43.42% 92.86%, 43.68% 93.88%, 44.66% 93.37%, 45.05% 93.77%, 45.73% 92.93%, 46.10% 94.14%, 46.50% 92.98%, 47.00% 93.82%, 48.00% 92.65%, 48.27% 93.90%, 48.74% 92.16%, 49.26% 93.77%, 49.63% 93.00%, 50.05% 94.13%, 50.96% 93.19%, 51.32% 93.90%, 51.75% 92.55%, 51.97% 93.83%, 52.42% 92.41%, 52.96% 94.12%, 53.71% 93.12%, 54.21% 94.13%, 54.46% 92.63%, 54.81% 94.07%, 55.20% 92.27%, 55.71% 94.07%, 56.79% 92.73%, 57.33% 93.86%, 58.00% 92.81%, 58.58% 93.98%, 58.81% 92.88%, 59.14% 93.88%, 60.01% 92.54%, 60.55% 94.16%, 61.57% 92.78%, 61.93% 94.10%, 63.04% 93.46%, 63.33% 94.02%, 64.51% 92.99%, 64.78% 93.96%, 65.92% 93.42%, 66.30% 94.25%, 66.95% 93.27%, 67.31% 94.25%, 68.14% 92.32%, 68.49% 94.29%, 69.37% 92.88%, 69.77% 93.77%, 70.52% 92.85%, 70.84% 93.87%, 71.96% 93.50%, 72.50% 94.25%, 72.63% 93.31%, 73.06% 93.73%, 73.53% 92.08%, 73.79% 94.13%, 74.14% 92.07%, 74.56% 94.01%, 75.26% 92.88%, 75.83% 93.79%, 75.97% 92.43%, 76.31% 93.71%, 77.52% 92.64%, 77.78% 93.86%, 78.85% 93.42%, 79.13% 94.01%, 80.22% 92.34%, 80.53% 94.01%, 81.18% 92.34%, 81.78% 93.95%, 82.19% 92.68%, 82.49% 94.11%, 83.39% 93.32%, 83.72% 94.06%, 84.64% 92.62%, 85.03% 93.60%, 85.64% 92.50%, 86.10% 93.65%, 87.00% 93.06%, 87.29% 93.75%, 88.45% 92.08%, 88.97% 93.63%, 89.53% 91.30%, 90.09% 93.39%, 90.78% 88.93%, 91.13% 92.82%, 92.16% 89.26%, 92.37% 92.86%, 92.87% 88.40%, 93.33% 92.80%, 94.24% 90.21%, 94.46% 92.16%, 95.61% 89.77%, 95.84% 92.50%, 97.05% 89.12%, 97.55% 92.20%, 98.09% 89.04%, 98.41% 92.34%, 99.14% 88.24%, 99.44% 92.70%, 100.29% 91.10%, 100.76% 92.86%, 101.57% 91.44%, 102.04% 93.21%, 101.00% 100.00%);
+        background: linear-gradient(180deg, #120f1c 86%, #040408 96%);
+        filter: drop-shadow(0 -1px 0 rgba(224, 149, 124, 0.5));
+      }
+
+      /* ===== 1: the Journey Standing bar ===== */
+      .standing {
+        background:
+          radial-gradient(ellipse 60% 70% at 70% 50%, rgba(30, 50, 90, 0.5), transparent 70%),
+          linear-gradient(180deg, #0a0d18 0%, #0c0f1c 60%, #07080e 100%);
+      }
+      .st-wash-a { left: -10%; top: 50%; width: 60%; height: 60%; background: rgba(60, 40, 80, 0.35); }
+      .st-window {
+        left: 7%; top: 11%; width: 28%; height: 56%;
+        z-index: 2;
+        border-radius: 2px;
+        background:
+          linear-gradient(90deg, transparent 48%, #06070c 48% 52%, transparent 52%),
+          linear-gradient(180deg, transparent 47%, #06070c 47% 51%, transparent 51%),
+          radial-gradient(ellipse 60% 30% at 70% 100%, rgba(110, 61, 94, 0.5), transparent 70%),
+          linear-gradient(180deg, #03040a 0%, #0a1230 60%, #172056 100%);
+        box-shadow: 0 0 0 0.35rem #11131e, 0 0 0 calc(0.35rem + 1px) rgba(142, 194, 255, 0.18), inset 0 0 20px rgba(0, 0, 0, 0.6);
+      }
+      .st-window::after {
+        content: "";
+        position: absolute;
+        right: 8%; top: 12%; width: 26%; height: 70%;
+        background: linear-gradient(170deg, transparent 30%, rgba(142, 194, 255, 0.14) 45%, transparent 60%);
+      }
+      .st-clock {
+        left: 9%; top: 78%;
+        z-index: 3;
+        padding: 0.15rem 0.4rem;
+        border-radius: 2px;
+        background: #05060a;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        color: #6ff0c0;
+        text-shadow: 0 0 6px rgba(111, 240, 192, 0.8);
+      }
+      .st-spill { left: 36%; top: -6%; width: 66%; height: 112%; background: rgba(110, 170, 255, 0.22); filter: blur(30px); }
+      .st-phone {
+        left: 47%; top: 9%; width: 36%; height: 86%;
+        z-index: 5;
+        border-radius: 1.1rem;
+        transform: rotate(-6deg);
+        background: linear-gradient(160deg, #0a0f1e, #05070d 60%);
+        box-shadow:
+          inset 2px 0 0 rgba(176, 214, 255, 0.85),
+          inset -1px 0 0 rgba(240, 160, 150, 0.5),
+          inset 0 0 0 0.3rem #0b0d14,
+          0 0 0 1px rgba(0, 0, 0, 0.7),
+          0 20px 40px rgba(0, 0, 0, 0.6),
+          0 0 36px rgba(110, 170, 255, 0.28);
+      }
+      .st-phone > div { position: absolute; }
+      .st-menu {
+        border-radius: 0.5rem;
+        background:
+          repeating-linear-gradient(180deg, transparent 0 14%, rgba(200, 220, 255, 0.1) 14% 15.5%),
+          linear-gradient(180deg, rgba(40, 60, 110, 0.5), rgba(20, 28, 54, 0.6));
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(220, 235, 255, 0.18);
+      }
+      .st-menu.m1 { left: 9%; right: 9%; top: 6%; bottom: 7%; opacity: 0.35; }
+      .st-menu.m2 { left: 13%; right: 5%; top: 15%; bottom: 7%; opacity: 0.6; }
+      .st-menu.m3 {
+        left: 17%; right: 2%; top: 25%; bottom: 7%;
+        background: linear-gradient(180deg, #121a30, #0b1122);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(220, 235, 255, 0.28), -1px 0 0 rgba(176, 214, 255, 0.4);
+      }
+      .st-row { position: absolute; left: 10%; right: 10%; }
+      .st-row b { display: block; width: 46%; height: 3px; border-radius: 2px; background: rgba(200, 214, 240, 0.35); margin-bottom: 7px; }
+      .st-row .track { position: relative; display: block; height: 9px; border-radius: 5px; background: rgba(160, 180, 210, 0.12); box-shadow: inset 0 0 0 1px rgba(200, 220, 255, 0.1); overflow: hidden; }
+      .st-row .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+      .st-row.dev { top: 14%; }
+      .st-row.dev b { width: 30%; }
+      .st-row.dev .fill { width: 100%; background: linear-gradient(90deg, #9dffd6, #d8fff1 60%, #b6fff4); box-shadow: 0 0 10px rgba(157, 255, 214, 0.9); }
+      .st-row.mo { top: 40%; }
+      .st-row.mo .fill {
+        width: 58%;
+        background: linear-gradient(90deg, #2fa865, #4fe08e 80%, #8ff0b8);
+        box-shadow: 0 0 8px rgba(79, 224, 142, 0.6);
+        animation: drain 6s ease-in-out 1.2s both;
+      }
+      .st-row.mo .ghost { position: absolute; left: 0; width: 97%; top: 0; bottom: 0; border-radius: 5px; background: repeating-linear-gradient(90deg, rgba(79, 224, 142, 0.18) 0 3px, transparent 3px 6px); }
+      .st-lines {
+        left: 10%; right: 22%; top: 64%; height: 26%;
+        background: repeating-linear-gradient(180deg, rgba(200, 214, 240, 0.16) 0 2px, transparent 2px 9px);
+      }
+      @supports (animation-timeline: view()) {
+        .st-row.mo .fill {
+          animation: drain linear both;
+          animation-timeline: view();
+          animation-range: entry 60% cover 55%;
+        }
+      }
+
+      /* ===== 2: the empty pod across the lane ===== */
+      .pod-scene {
+        background: linear-gradient(180deg, #08102c 0%, #141a42 22%, #2e2452 36%, #5e3660 43%, #a4626c 46%, #d79a80 46.9%, #12111d 47%);
+      }
+      .pd-wash-a { left: 10%; top: 26%; width: 90%; height: 16%; background: rgba(170, 90, 130, 0.32); filter: blur(12px); transform: rotate(-2deg); }
+      .pd-dawn { left: 20%; top: 30%; width: 70%; height: 26%; border-radius: 50%; background: radial-gradient(ellipse at 50% 70%, rgba(255, 200, 160, 0.5), rgba(200, 110, 120, 0.15) 45%, transparent 70%); filter: blur(4px); }
+      .pd-land { left: 0; right: 0; top: 47%; bottom: 0; background: linear-gradient(180deg, #1c1726, #0c0b14 40%, #060609); }
+      .pd-lane {
+        inset: 0;
+        z-index: 3;
+        clip-path: polygon(48.70% 47.00%, 51.30% 47.00%, 132.00% 100.00%, -32.00% 100.00%);
+        background:
+          radial-gradient(ellipse 40% 14% at 50% 62%, rgba(142, 194, 255, 0.26), transparent 70%),
+          radial-gradient(circle at 40% 40%, rgba(160, 150, 175, 0.12) 0 0.6px, transparent 1.2px) 0 0 / 6px 5px,
+          linear-gradient(180deg, #2a2737 47%, #1d1a28 70%, #121019);
+      }
+      .pd-dash { inset: 0; z-index: 4; background: rgba(150, 150, 165, 0.38); }
+      .pd-pot { z-index: 4; aspect-ratio: 3.2; border-radius: 50%; background: radial-gradient(ellipse, #08080e 40%, rgba(160, 140, 170, 0.25) 62%, transparent 72%); }
+      .pd-hedge { inset: 0; z-index: 6; }
+      .pd-hedge.l, .pd-hedge.r {
+        background:
+          radial-gradient(circle at 30% 30%, rgba(150, 120, 140, 0.1) 0 0.8px, transparent 1.6px) 0 0 / 7px 6px,
+          radial-gradient(circle at 60% 60%, rgba(0, 0, 0, 0.45) 0 1.6px, transparent 2.6px) 0 0 / 11px 9px,
+          linear-gradient(180deg, #1a1420 30%, #0c0a10 70%, #050408);
+      }
+      .pd-hedge.l { clip-path: polygon(48.30% 45.82%, 48.07% 46.00%, 47.61% 45.96%, 46.99% 46.40%, 46.22% 46.48%, 45.33% 46.79%, 44.33% 46.93%, 43.21% 46.54%, 42.00% 47.63%, 40.70% 47.35%, 39.30% 47.82%, 37.82% 47.71%, 36.25% 46.32%, 34.61% 47.88%, 32.88% 47.08%, 31.08% 47.59%, 29.21% 46.35%, 27.27% 47.27%, 25.25% 48.38%, 23.17% 46.96%, 21.02% 46.86%, 18.80% 44.22%, 16.52% 45.24%, 14.18% 47.47%, 11.78% 43.42%, 9.31% 46.02%, 6.79% 43.64%, 4.20% 45.94%, 1.56% 43.47%, -1.14% 38.57%, -3.89% 40.90%, -6.70% 37.03%, -9.57% 35.92%, -12.49% 37.30%, -15.46% 35.39%, -18.49% 38.34%, -21.57% 33.57%, -24.70% 29.44%, -27.88% 41.12%, -31.12% 23.29%, -34.40% 33.77%, -150.00% 33.77%, -150.00% 100.00%, -34.40% 100.00%, -31.12% 97.90%, -27.88% 95.82%, -24.70% 93.78%, -21.57% 91.78%, -18.49% 89.80%, -15.46% 87.86%, -12.49% 85.96%, -9.57% 84.09%, -6.70% 82.25%, -3.89% 80.45%, -1.14% 78.68%, 1.56% 76.95%, 4.20% 75.26%, 6.79% 73.60%, 9.31% 71.99%, 11.78% 70.41%, 14.18% 68.86%, 16.52% 67.36%, 18.80% 65.90%, 21.02% 64.48%, 23.17% 63.11%, 25.25% 61.77%, 27.27% 60.48%, 29.21% 59.23%, 31.08% 58.03%, 32.88% 56.88%, 34.61% 55.78%, 36.25% 54.72%, 37.82% 53.72%, 39.30% 52.77%, 40.70% 51.87%, 42.00% 51.04%, 43.21% 50.26%, 44.33% 49.55%, 45.33% 48.90%, 46.22% 48.33%, 46.99% 47.84%, 47.61% 47.44%, 48.07% 47.14%, 48.30% 47.00%); }
+      .pd-hedge.r { clip-path: polygon(51.70% 46.01%, 51.93% 46.08%, 52.39% 46.15%, 53.01% 46.21%, 53.78% 46.69%, 54.67% 46.94%, 55.67% 47.08%, 56.79% 46.76%, 58.00% 47.58%, 59.30% 46.93%, 60.70% 47.09%, 62.18% 48.13%, 63.75% 47.37%, 65.39% 47.57%, 67.12% 47.66%, 68.92% 45.68%, 70.79% 48.72%, 72.73% 49.04%, 74.75% 44.83%, 76.83% 47.12%, 78.98% 48.04%, 81.20% 47.07%, 83.48% 46.57%, 85.82% 41.93%, 88.22% 47.09%, 90.69% 46.72%, 93.21% 42.97%, 95.80% 42.69%, 98.44% 37.69%, 101.14% 37.97%, 103.89% 42.85%, 106.70% 44.15%, 109.57% 34.82%, 112.49% 31.42%, 115.46% 44.94%, 118.49% 32.79%, 121.57% 29.22%, 124.70% 31.75%, 127.88% 38.82%, 131.12% 26.16%, 134.40% 26.03%, 250.00% 26.03%, 250.00% 100.00%, 134.40% 100.00%, 131.12% 97.90%, 127.88% 95.82%, 124.70% 93.78%, 121.57% 91.78%, 118.49% 89.80%, 115.46% 87.86%, 112.49% 85.96%, 109.57% 84.09%, 106.70% 82.25%, 103.89% 80.45%, 101.14% 78.68%, 98.44% 76.95%, 95.80% 75.26%, 93.21% 73.60%, 90.69% 71.99%, 88.22% 70.41%, 85.82% 68.86%, 83.48% 67.36%, 81.20% 65.90%, 78.98% 64.48%, 76.83% 63.11%, 74.75% 61.77%, 72.73% 60.48%, 70.79% 59.23%, 68.92% 58.03%, 67.12% 56.88%, 65.39% 55.78%, 63.75% 54.72%, 62.18% 53.72%, 60.70% 52.77%, 59.30% 51.87%, 58.00% 51.04%, 56.79% 50.26%, 55.67% 49.55%, 54.67% 48.90%, 53.78% 48.33%, 53.01% 47.84%, 52.39% 47.44%, 51.93% 47.14%, 51.70% 47.00%); }
+      .pd-hedge.l::after, .pd-hedge.r::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 30% 30% at 30% 96%, rgba(255, 200, 120, 0.4), transparent 70%),
+          radial-gradient(ellipse 26% 20% at 50% 54%, rgba(142, 194, 255, 0.38), transparent 70%);
+      }
+      .pd-hedge.r::after {
+        background:
+          radial-gradient(ellipse 30% 30% at 70% 96%, rgba(255, 200, 120, 0.4), transparent 70%),
+          radial-gradient(ellipse 26% 20% at 50% 54%, rgba(142, 194, 255, 0.38), transparent 70%);
+      }
+      .pd-spill {
+        left: 14%; width: 72%; bottom: 26%; height: 18%;
+        z-index: 7;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, rgba(142, 194, 255, 0.5), rgba(142, 194, 255, 0.12) 50%, transparent 70%);
+        filter: blur(6px);
+        mix-blend-mode: screen;
+      }
+      .pd-pod {
+        left: 29%; width: 42%; bottom: 37.5%;
+        aspect-ratio: 2.35;
+        z-index: 10;
+      }
+      .pd-pod > div { position: absolute; }
+      .pd-shell {
+        inset: 0;
+        border-radius: 34% 38% 26% 26% / 58% 62% 42% 42%;
+        background:
+          radial-gradient(ellipse 50% 22% at 50% 2%, rgba(255, 196, 180, 0.75), transparent 70%),
+          linear-gradient(90deg, rgba(142, 194, 255, 0.25), transparent 18% 82%, rgba(255, 180, 160, 0.22)),
+          linear-gradient(180deg, #fbfcff 0%, #e4eaf3 34%, #b6c2d4 66%, #6d7a94 88%, #3a4258 100%);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 210, 196, 0.95),
+          inset 0 -0.5rem 0.9rem rgba(14, 22, 44, 0.55),
+          0 0 0 1px rgba(10, 14, 26, 0.4),
+          0 0 2.2rem rgba(142, 194, 255, 0.3);
+      }
+      .pd-win {
+        left: 9%; right: 7%; top: 13%; height: 37%;
+        border-radius: 40% 46% 10% 10% / 80% 84% 20% 20%;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, transparent 49%, rgba(200, 220, 245, 0.7) 49% 51%, transparent 51%),
+          linear-gradient(160deg, transparent 20%, rgba(255, 255, 255, 0.38) 30%, transparent 40%),
+          radial-gradient(ellipse at 50% 80%, #e0f0ff 0%, #8ec2ff 30%, #4a7fd4 62%, #1f3a7a 100%);
+        box-shadow: 0 0 1.2rem 0.25rem rgba(142, 194, 255, 0.55), inset 0 0 0.6rem rgba(255, 255, 255, 0.35);
+        animation: interior 6s ease-in-out infinite alternate;
+      }
+      .pd-win i {
+        position: absolute;
+        bottom: -6%; width: 22%; height: 52%;
+        border-radius: 40% 40% 8% 8%;
+        background: linear-gradient(180deg, rgba(40, 70, 140, 0.55), rgba(20, 36, 80, 0.75));
+        box-shadow: inset 0 1px 0 rgba(220, 238, 255, 0.5);
+      }
+      .pd-win i:first-child { left: 18%; }
+      .pd-win i:last-child { right: 18%; }
+      .pd-scr {
+        left: 23%; right: 23%; top: 61%; height: 11%;
+        border-radius: 2px;
+        background:
+          radial-gradient(circle, transparent 0 46%, #0a1020 58%) 0 0 / 3px 3px,
+          repeating-linear-gradient(90deg, #ffb35a 0 6px, transparent 6px 8px, #ffb35a 8px 10px, transparent 10px 15px, #ffb35a 15px 24px, transparent 24px 27px, #ffb35a 27px 30px, transparent 30px 40px) 0 50% / 200px 64% repeat-x,
+          #0a1020;
+        box-shadow: 0 0 0.6rem rgba(255, 173, 74, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        animation: scroll-marks 6s linear infinite;
+      }
+      .pd-pod::after {
+        content: "";
+        position: absolute;
+        left: 4%; right: 4%; bottom: -9%; height: 16%;
+        z-index: -1;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, rgba(2, 3, 8, 0.9), rgba(2, 3, 8, 0.4) 55%, transparent 72%);
+      }
+      .pd-pod::before {
+        content: "";
+        position: absolute;
+        left: 14%; right: 14%; bottom: -2%; height: 18%;
+        z-index: 1;
+        background:
+          radial-gradient(ellipse 9% 100% at 20% 100%, #07080e 0 60%, rgba(142, 194, 255, 0.5) 66%, transparent 72%),
+          radial-gradient(ellipse 9% 100% at 80% 100%, #07080e 0 60%, rgba(142, 194, 255, 0.5) 66%, transparent 72%);
+      }
+      .pd-strip { left: 9%; right: 9%; bottom: 13%; height: 2px; border-radius: 2px; background: #a8d2ff; box-shadow: 0 0 8px 2px rgba(142, 194, 255, 0.8); }
+      .pd-sign {
+        right: 7%; bottom: 36%; width: 8.5%; aspect-ratio: 1.15;
+        z-index: 9;
+        border-radius: 1px;
+        background:
+          repeating-linear-gradient(180deg, transparent 0 34%, rgba(20, 20, 30, 0.75) 34% 42%, transparent 42% 50%) 50% 30% / 70% 70% no-repeat,
+          linear-gradient(90deg, #f3eee4 70%, #ffd9a0);
+        box-shadow: inset 0 0 0 3px #c4352b, 0 0 0 1px rgba(0, 0, 0, 0.5), 4px 6px 10px rgba(0, 0, 0, 0.5);
+      }
+      .pd-sign::before, .pd-sign::after {
+        content: "";
+        position: absolute;
+        top: 90%; width: 2px; height: 60%;
+        background: #14121a;
+      }
+      .pd-sign::before { left: 14%; transform: rotate(8deg); }
+      .pd-sign::after { right: 14%; transform: rotate(-8deg); }
+      .pd-beam {
+        inset: 0;
+        z-index: 11;
+        background: linear-gradient(0deg, rgba(255, 220, 160, 0.2), rgba(255, 206, 130, 0.07) 60%, rgba(255, 206, 130, 0.02));
+        mask-image: radial-gradient(ellipse 60% 80% at 50% 100%, #000 30%, transparent 85%);
+      }
+      .pd-beam.l { clip-path: polygon(6% 100%, 44% 100%, 48% 62%, 42% 62%); }
+      .pd-beam.r { clip-path: polygon(56% 100%, 94% 100%, 58% 62%, 52% 62%); }
+      .pd-pool { left: 10%; right: 10%; bottom: 4%; height: 26%; z-index: 11; border-radius: 50%; background: radial-gradient(ellipse at 50% 70%, rgba(255, 214, 150, 0.32), transparent 66%); filter: blur(6px); mix-blend-mode: screen; }
+      .pd-bonnet {
+        left: -4%; right: -4%; bottom: -3%; height: 11%;
+        z-index: 14;
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        background: linear-gradient(180deg, #d8e2f2 0, #8a95ac 6%, #2b2f3e 22%, #0b0b12 60%);
+        box-shadow: 0 -1px 0 rgba(142, 194, 255, 0.5);
+      }
+
+      /* ===== 3: the red light that stays red ===== */
+      .light-scene {
+        background: linear-gradient(180deg, #121839 0%, #262350 24%, #4d3260 44%, #87496a 56%, #c27373 62%, #e2a986 65.6%, #0e0c16 66%);
+      }
+      .ls-wash-a { left: -10%; top: 4%; width: 64%; height: 40%; background: rgba(18, 22, 70, 0.6); filter: blur(24px); }
+      .ls-wash-b { left: 30%; top: 44%; width: 80%; height: 12%; background: rgba(176, 186, 112, 0.22); filter: blur(10px); mix-blend-mode: screen; }
+      .ls-dawn { left: 24%; top: 50%; width: 60%; height: 26%; border-radius: 50%; background: radial-gradient(ellipse at 50% 70%, rgba(255, 214, 170, 0.55), transparent 65%); filter: blur(3px); }
+      .ls-shed { inset: 0; z-index: 2; clip-path: polygon(0.00% 66.00%, 0.00% 58.00%, 0.00% 58.50%, 3.00% 55.50%, 3.00% 58.50%, 3.00% 58.50%, 6.00% 55.50%, 6.00% 58.50%, 6.00% 58.50%, 9.00% 55.50%, 9.00% 58.50%, 9.00% 58.50%, 12.00% 55.50%, 12.00% 58.50%, 12.00% 58.50%, 15.00% 55.50%, 15.00% 58.50%, 15.00% 58.50%, 18.00% 55.50%, 18.00% 58.50%, 18.00% 58.50%, 21.00% 55.50%, 21.00% 58.50%, 21.00% 58.50%, 24.00% 55.50%, 24.00% 58.50%, 24.00% 58.50%, 27.00% 55.50%, 27.00% 58.50%, 27.00% 58.50%, 30.00% 55.50%, 30.00% 58.50%, 30.00% 58.50%, 33.00% 55.50%, 33.00% 58.50%, 33.00% 58.50%, 36.00% 55.50%, 36.00% 58.50%, 36.00% 58.50%, 39.00% 55.50%, 39.00% 58.50%, 40.00% 58.50%, 40.00% 66.00%); background: linear-gradient(180deg, #1c1626, #100e18); box-shadow: none; }
+      .ls-chimney { left: 30%; bottom: 34%; width: 1.4%; height: 22%; z-index: 2; background: linear-gradient(90deg, #120f1a 55%, #9a5a62); }
+      .ls-pylon {
+        bottom: 34%; width: 3.4%;
+        z-index: 2;
+        clip-path: polygon(47% 0, 53% 0, 56% 12%, 100% 13%, 100% 15.5%, 57% 16%, 58% 26%, 90% 27%, 90% 29.5%, 59% 30%, 60% 40%, 80% 41%, 80% 43.5%, 61% 44%, 72% 100%, 64% 100%, 50% 56%, 36% 100%, 28% 100%, 39% 44%, 20% 43.5%, 20% 41%, 40% 40%, 41% 30%, 10% 29.5%, 10% 27%, 42% 26%, 43% 16%, 0 15.5%, 0 13%, 44% 12%);
+        background: #17121f;
+      }
+      .ls-road {
+        left: 0; right: 0; top: 66%; bottom: 0;
+        z-index: 3;
+        background:
+          repeating-linear-gradient(180deg, rgba(200, 170, 200, 0.05) 0 1px, transparent 1px 5px),
+          linear-gradient(180deg, #1e1826 0%, #120f19 40%, #08070c 100%);
+        box-shadow: 0 -1px 0 rgba(240, 178, 150, 0.6);
+      }
+      .ls-stop {
+        left: 6%; right: 6%; top: 80%; height: 1.2%;
+        z-index: 4;
+        clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+        background: rgba(210, 200, 210, 0.3);
+      }
+      .ls-refl { z-index: 4; border-radius: 50%; filter: blur(5px); mix-blend-mode: screen; }
+      .ls-refl.red { left: 69%; width: 10%; top: 67%; height: 30%; background: linear-gradient(180deg, rgba(255, 59, 47, 0.75), rgba(255, 59, 47, 0.2) 60%, transparent); }
+      .ls-refl.sodium { left: 15%; width: 16%; top: 70%; height: 22%; background: radial-gradient(ellipse, rgba(255, 173, 74, 0.5), transparent 70%); }
+      .ls-lamp {
+        left: 14%; top: 14%; width: 14%; height: 72%;
+        z-index: 6;
+        border-top: 3px solid #0d0b12;
+        border-left: 3px solid #0d0b12;
+        border-top-left-radius: 40% 12%;
+      }
+      .ls-lamp::after {
+        content: "";
+        position: absolute;
+        right: -4px; top: -4px;
+        width: 22%; height: 5px;
+        border-radius: 0 0 50% 50%;
+        background: #ffcf7a;
+        box-shadow: 0 0 6px 2px rgba(255, 173, 74, 0.95), 0 0 30px 10px rgba(255, 150, 50, 0.35);
+      }
+      .ls-cone {
+        left: 13%; top: 15%; width: 26%; height: 68%;
+        z-index: 5;
+        clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+        background: linear-gradient(180deg, rgba(255, 173, 74, 0.38), rgba(255, 173, 74, 0.08) 80%, transparent);
+        filter: blur(3px);
+        mix-blend-mode: screen;
+      }
+      .ls-far {
+        left: 56%; top: 55%; width: 0.4%; height: 11%;
+        z-index: 3;
+        background: #0e0b14;
+      }
+      .ls-far::before {
+        content: "";
+        position: absolute;
+        left: -160%; top: -10%; width: 420%; height: 34%;
+        border-radius: 2px;
+        background: radial-gradient(circle at 50% 22%, #ff6b55 0 18%, #2a0a0a 28%, #0c0a10 40%);
+        box-shadow: 0 0 8px 2px rgba(255, 59, 47, 0.6);
+      }
+      .ls-drone {
+        left: 35%; top: 19%; width: 9%; aspect-ratio: 3.4;
+        z-index: 8;
+      }
+      .ls-drone::before {
+        content: "";
+        position: absolute;
+        left: 8%; right: 8%; top: 40%; height: 9%;
+        background: #0e0c14;
+        box-shadow: 0 -1px 0 rgba(240, 170, 160, 0.7);
+      }
+      .ls-drone::after {
+        content: "";
+        position: absolute;
+        left: 34%; right: 34%; top: 30%; height: 44%;
+        border-radius: 40% 40% 50% 50%;
+        background: linear-gradient(180deg, #2a2434, #0b0a10 60%);
+        box-shadow: inset 0 1px 0 rgba(255, 200, 186, 0.9), inset -1px 0 0 rgba(142, 194, 255, 0.4);
+      }
+      .ls-drone i {
+        position: absolute;
+        top: 22%; width: 34%; height: 20%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, rgba(200, 200, 230, 0.32), rgba(200, 200, 230, 0.06) 60%, transparent 70%);
+        animation: rotor 0.18s linear infinite alternate;
+      }
+      .ls-drone i.r1 { left: -6%; }
+      .ls-drone i.r2 { right: -6%; animation-delay: -0.09s; }
+      .ls-drone i::after {
+        content: "";
+        position: absolute;
+        left: 46%; top: 50%; width: 8%; height: 140%;
+        background: #0e0c14;
+      }
+      .ls-drone b {
+        position: absolute;
+        left: 47%; top: 78%; width: 6%; aspect-ratio: 1;
+        border-radius: 50%;
+        background: #ff5a48;
+        box-shadow: 0 0 5px 2px rgba(255, 70, 50, 0.8);
+        animation: blink 2.4s steps(1) infinite;
+      }
+      .ls-pole {
+        left: 76%; top: 30%; bottom: 0; width: 1.1%;
+        z-index: 9;
+        background: linear-gradient(90deg, #08070c 40%, #5a2a32 75%, #ff6a50 92%, #2a1418);
+      }
+      .ls-halo {
+        left: 52%; top: -6%; width: 50%; height: 64%;
+        z-index: 9;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, rgba(255, 70, 50, 0.6) 0 6%, rgba(255, 59, 47, 0.24) 24%, rgba(200, 40, 60, 0.08) 48%, transparent 66%);
+        mix-blend-mode: screen;
+        animation: halo 7s ease-in-out infinite alternate;
+      }
+      .ls-head {
+        left: 72.5%; top: 9%; width: 8.4%; aspect-ratio: 0.42;
+        z-index: 10;
+        border-radius: 3px;
+        background: linear-gradient(90deg, #0a090e 70%, #2a1216);
+        box-shadow: 0 0 0 0.3rem #07060a, 0 0 0 calc(0.3rem + 1.5px) rgba(240, 236, 230, 0.55), 2px 0 0 calc(0.3rem + 1.5px) rgba(255, 90, 70, 0.45);
+      }
+      .ls-head i {
+        position: absolute;
+        left: 14%; width: 72%; aspect-ratio: 1;
+        border-radius: 50%;
+        box-shadow: inset 0 0.25rem 0 rgba(0, 0, 0, 0.9);
+      }
+      .ls-head i.red {
+        top: 6%;
+        background: radial-gradient(circle at 46% 54%, #fff3e8 0 9%, #ff7a5e 22%, #ff2f22 46%, #a5120f 70%, #3a0606 100%);
+        box-shadow: 0 0 0.6rem 0.2rem rgba(255, 60, 40, 0.9), 0 0 2rem 0.6rem rgba(255, 40, 30, 0.45), inset 0 0.18rem 0 rgba(0, 0, 0, 0.6);
+      }
+      .ls-head i.amber { top: 38%; background: radial-gradient(circle at 46% 54%, #3a2610 0 30%, #1a1008 80%); }
+      .ls-head i.green { top: 70%; background: radial-gradient(circle at 46% 54%, #0a2a18 0 30%, #06140c 80%); }
+      .ls-flare {
+        left: 54%; top: 15.4%; width: 44%; height: 0.5%;
+        z-index: 11;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(255, 120, 100, 0.65) 45% 55%, transparent);
+        filter: blur(0.6px);
+        mix-blend-mode: screen;
+      }
+      .ls-beam {
+        bottom: -4%; width: 34%; height: 30%;
+        z-index: 7;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 80%, rgba(255, 214, 150, 0.26), rgba(255, 200, 120, 0.08) 45%, transparent 70%);
+      }
+      .ls-beam.l { left: 18%; transform: rotate(-8deg); }
+      .ls-beam.r { left: 42%; transform: rotate(8deg); }
+
+      /* ===== 4: the bollards and the pod stream ===== */
+      .bollard-scene {
+        container-type: size;
+        background: linear-gradient(180deg, #1a2246 0%, #33335e 26%, #6a5878 44%, #a78a98 54%, #c8b0ac 56%, #15131e 56.1%);
+      }
+      .bl-wash-a { left: -10%; top: -10%; width: 70%; height: 40%; background: rgba(20, 26, 70, 0.55); filter: blur(22px); }
+      .bl-wash-b { left: 34%; top: 30%; width: 70%; height: 14%; background: rgba(170, 100, 140, 0.3); filter: blur(10px); mix-blend-mode: screen; }
+      .bl-city {
+        inset: 0;
+        z-index: 3;
+        clip-path: polygon(0.00% 56.00%, 0.00% 48.09%, 7.79% 48.09%, 7.79% 42.13%, 12.24% 42.13%, 12.24% 46.29%, 15.93% 46.29%, 15.93% 44.66%, 22.28% 44.66%, 22.28% 44.43%, 26.15% 44.43%, 26.15% 41.79%, 32.15% 41.79%, 32.15% 40.51%, 35.32% 40.51%, 35.32% 42.24%, 39.36% 42.24%, 39.36% 41.97%, 45.40% 41.97%, 45.40% 48.14%, 49.50% 48.14%, 49.50% 42.66%, 53.02% 42.66%, 53.02% 49.54%, 59.23% 49.54%, 59.23% 54.50%, 63.38% 54.50%, 63.38% 54.50%, 67.58% 54.50%, 67.58% 43.55%, 73.20% 43.55%, 73.20% 41.93%, 76.66% 41.93%, 76.66% 43.12%, 85.55% 43.12%, 85.55% 41.80%, 93.01% 41.80%, 93.01% 46.47%, 96.58% 46.47%, 96.58% 42.62%, 100.06% 42.62%, 100.00% 56.00%);
+        background:
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 6px),
+          linear-gradient(180deg, #3a3450 30%, #262338 50%, #181624 56%);
+      }
+      .bl-citywin { left: 0; top: 0; width: 1.5px; height: 1.5px; z-index: 4; box-shadow: calc(4.16 * 1cqw) calc(54.77 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(4.79 * 1cqw) calc(49.24 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(2.86 * 1cqw) calc(51.89 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(5.65 * 1cqw) calc(49.06 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(9.10 * 1cqw) calc(48.19 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(10.88 * 1cqw) calc(45.69 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(8.24 * 1cqw) calc(42.92 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(10.00 * 1cqw) calc(55.00 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(14.83 * 1cqw) calc(51.77 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(15.49 * 1cqw) calc(47.70 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(19.04 * 1cqw) calc(48.84 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(19.96 * 1cqw) calc(53.99 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(16.84 * 1cqw) calc(46.87 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(21.45 * 1cqw) calc(47.82 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(16.33 * 1cqw) calc(47.37 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(25.01 * 1cqw) calc(47.59 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(24.83 * 1cqw) calc(52.99 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(25.52 * 1cqw) calc(54.31 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(31.62 * 1cqw) calc(54.15 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(27.79 * 1cqw) calc(52.75 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(27.39 * 1cqw) calc(53.54 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(31.53 * 1cqw) calc(52.44 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(30.55 * 1cqw) calc(42.82 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(30.25 * 1cqw) calc(47.62 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(33.75 * 1cqw) calc(46.89 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(33.67 * 1cqw) calc(49.53 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(33.21 * 1cqw) calc(48.97 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(35.78 * 1cqw) calc(49.34 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(35.78 * 1cqw) calc(53.71 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(37.85 * 1cqw) calc(54.12 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(43.32 * 1cqw) calc(45.43 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(40.33 * 1cqw) calc(46.91 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(42.17 * 1cqw) calc(49.19 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(44.05 * 1cqw) calc(50.30 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(42.00 * 1cqw) calc(52.25 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(44.26 * 1cqw) calc(51.32 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(48.36 * 1cqw) calc(48.94 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(49.10 * 1cqw) calc(52.27 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(51.99 * 1cqw) calc(47.47 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(51.27 * 1cqw) calc(50.60 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(50.93 * 1cqw) calc(46.36 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(57.98 * 1cqw) calc(51.97 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(54.90 * 1cqw) calc(54.95 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(69.71 * 1cqw) calc(46.63 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(69.00 * 1cqw) calc(46.14 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(70.68 * 1cqw) calc(47.81 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(70.52 * 1cqw) calc(45.78 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(68.56 * 1cqw) calc(47.65 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(74.32 * 1cqw) calc(53.41 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(73.76 * 1cqw) calc(48.81 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(75.15 * 1cqw) calc(50.61 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(79.49 * 1cqw) calc(51.27 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(82.08 * 1cqw) calc(45.50 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(80.70 * 1cqw) calc(45.57 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(80.34 * 1cqw) calc(43.94 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(80.54 * 1cqw) calc(54.21 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(83.38 * 1cqw) calc(55.05 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(83.59 * 1cqw) calc(45.87 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(82.18 * 1cqw) calc(45.78 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(91.89 * 1cqw) calc(54.35 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(89.62 * 1cqw) calc(42.53 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(89.36 * 1cqw) calc(54.56 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(89.16 * 1cqw) calc(48.41 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(88.10 * 1cqw) calc(49.36 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(89.19 * 1cqw) calc(49.79 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(88.53 * 1cqw) calc(46.86 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(95.58 * 1cqw) calc(52.11 * 1cqh) 0 0 rgba(190,215,255,0.8), calc(94.00 * 1cqw) calc(50.32 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(97.80 * 1cqw) calc(47.29 * 1cqh) 0 0 rgba(160,190,240,0.7), calc(99.56 * 1cqw) calc(50.23 * 1cqh) 0 0 rgba(230,240,255,0.75), calc(98.32 * 1cqw) calc(45.86 * 1cqh) 0 0 rgba(190,215,255,0.8); opacity: 0.75; }
+      .bl-hospital {
+        left: 60.8%; width: 4.6%; top: 22%; height: 34%;
+        z-index: 2;
+        clip-path: polygon(0 6%, 60% 0, 100% 6%, 100% 100%, 0 100%);
+        background:
+          repeating-linear-gradient(180deg, transparent 0 5px, rgba(255, 214, 160, 0.55) 5px 6px),
+          repeating-linear-gradient(90deg, transparent 0 4px, rgba(20, 26, 50, 0.5) 4px 5px),
+          linear-gradient(90deg, #5d6c94, #b8c8e6 50%, #ffd9a6 92%);
+        box-shadow: 0 0 1rem rgba(255, 210, 138, 0.3);
+      }
+      .bl-deck { left: 0; right: 0; top: 55%; height: 20%; z-index: 5; background: linear-gradient(180deg, #13121c, #0c0b14); }
+      .bl-lane {
+        left: 0; right: 0;
+        z-index: 6;
+        filter: blur(0.5px);
+        animation: flow linear infinite;
+      }
+      .bl-lane::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: -2px; height: 2px;
+        background: #a8d2ff;
+        box-shadow: 0 0 8px 2px rgba(142, 194, 255, 0.55);
+        opacity: 0.7;
+      }
+      .bl-lane.a {
+        top: 56.4%; height: 3%;
+        background: radial-gradient(ellipse 48% 50% at 50% 56%, #f4f8ff 0 46%, rgba(142, 194, 255, 0.6) 64%, transparent 74%) 0 0 / 22px 100% repeat-x;
+        --tile: -220px; animation-duration: 3.2s; opacity: 0.75;
+      }
+      .bl-lane.b {
+        top: 60.6%; height: 4.6%;
+        background:
+          linear-gradient(180deg, transparent 22%, rgba(80, 130, 220, 0.6) 22% 46%, transparent 46%) 0 0 / 34px 100% repeat-x,
+          radial-gradient(ellipse 48% 50% at 50% 56%, #ffffff 0 46%, #cfe1f8 58%, rgba(142, 194, 255, 0.55) 66%, transparent 74%) 0 0 / 34px 100% repeat-x;
+        --tile: 340px; animation-duration: 2.6s;
+      }
+      .bl-lane.c {
+        top: 66.6%; height: 7%;
+        background:
+          linear-gradient(180deg, transparent 18%, rgba(80, 130, 220, 0.7) 18% 46%, transparent 46%) 0 0 / 52px 100% repeat-x,
+          radial-gradient(ellipse 48% 50% at 50% 56%, #ffffff 0 46%, #d6e6fb 56%, rgba(142, 194, 255, 0.55) 66%, transparent 74%) 0 0 / 52px 100% repeat-x;
+        --tile: 520px; animation-duration: 2.1s;
+      }
+      .bl-rail { left: 0; right: 0; top: 74.6%; height: 1.4%; z-index: 7; background: linear-gradient(180deg, #5a6074, #1a1a24); box-shadow: 0 -1px 0 rgba(200, 220, 255, 0.4); }
+      .bl-ground {
+        left: 0; right: 0; top: 76%; bottom: 0;
+        z-index: 7;
+        background:
+          radial-gradient(ellipse 50% 60% at 10% 100%, rgba(255, 200, 120, 0.3), transparent 70%),
+          linear-gradient(180deg, #1c1824, #0b0a10);
+      }
+      .bl-bollard {
+        bottom: 6%; width: 6.4%; height: 32%;
+        z-index: 9;
+        border-radius: 3px 3px 1px 1px;
+        background:
+          linear-gradient(180deg, transparent 0 12%, rgba(30, 30, 40, 0.75) 12% 16%, transparent 16%),
+          linear-gradient(90deg, #14161e 0%, #e6eeff 9%, #8c96aa 15%, #3a4050 34%, #232733 58%, #3c3a44 76%, #ffc982 90%, #6a4a30 97%, #1c1612 100%);
+        box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.55);
+      }
+      .bl-bollard::before {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; top: -0.3rem; height: 0.6rem;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 30% 40%, #f2f6ff 0 18%, #8a94a8 40%, #2a2e3a 80%);
+      }
+      .bl-warm {
+        left: -10%; bottom: -20%; width: 70%; height: 80%;
+        z-index: 10;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 30% 70%, rgba(255, 200, 120, 0.4), rgba(255, 190, 110, 0.1) 50%, transparent 70%);
+        mix-blend-mode: screen;
+      }
+      .bl-bumper {
+        left: -6%; bottom: -3%; width: 38%; height: 9%;
+        z-index: 12;
+        border-radius: 0 40% 0 0 / 0 100% 0 0;
+        background: linear-gradient(180deg, #f2f2f6 0, #c9ccd8 20%, #6a6e80 60%, #1c1c26);
+        box-shadow: 0 -1px 0 rgba(255, 220, 190, 0.6);
+      }
+      .bl-hl {
+        left: 20%; bottom: 3.5%; width: 9%; height: 3%;
+        z-index: 13;
+        border-radius: 40%;
+        background: radial-gradient(ellipse, #fff6dc 0 30%, #ffd28a 55%, transparent 72%);
+        box-shadow: 0 0 1.2rem 0.5rem rgba(255, 200, 120, 0.55);
+      }
+      .bollard-scene .label { bottom: 1.8%; }
+      .bl-hud {
+        right: 4%; top: 7%; width: 34%; height: 15%;
+        z-index: 20;
+        border-radius: 0.4rem;
+        background: linear-gradient(180deg, rgba(8, 14, 32, 0.88), rgba(10, 18, 40, 0.8));
+        box-shadow: inset 0 0 0 1px rgba(142, 194, 255, 0.35), 0 0 1.2rem rgba(142, 194, 255, 0.2);
+      }
+      .bl-hud i {
+        position: absolute;
+        left: 8%; right: 8%; top: 36%; height: 2px;
+        background: linear-gradient(90deg, rgba(142, 194, 255, 0.9) 0 72%, rgba(142, 194, 255, 0.25) 72%);
+      }
+      .bl-hud b {
+        position: absolute;
+        left: calc(8% + 84% * 0.72 - 4px); top: calc(36% - 3px); width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #eaf4ff;
+        box-shadow: 0 0 8px 2px rgba(142, 194, 255, 0.9);
+      }
+      .bl-hud span {
+        position: absolute;
+        right: 8%; bottom: 14%;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.2em;
+        color: rgba(220, 236, 255, 0.85);
+      }
+
+      /* ===== 5: the window on the eighth floor ===== */
+      .window-scene {
+        background: radial-gradient(ellipse 70% 60% at 82% 100%, #6a4228, #2e1e18 55%, #150e0c);
+      }
+      .ws-room {
+        inset: 0;
+        background:
+          radial-gradient(ellipse 40% 40% at 90% 92%, rgba(255, 200, 130, 0.45), transparent 70%),
+          repeating-linear-gradient(100deg, rgba(255, 220, 180, 0.02) 0 3px, transparent 3px 9px);
+      }
+      .ws-view {
+        left: 9%; right: 9%; top: 7%; bottom: 32%;
+        z-index: 2;
+        overflow: hidden;
+        container-type: size;
+      }
+      .ws-view > div { position: absolute; }
+      .ws-sky { inset: 0; background: linear-gradient(180deg, #4a5a86 0%, #7f8cb0 24%, #b8b8cc 42%, #ddcfcc 50%, #e8d9cc 54%); }
+      .ws-hills { left: 0; right: 0; top: 47%; height: 18%; background: linear-gradient(180deg, #8890aa, #6c7492); clip-path: polygon(0 40%, 18% 20%, 40% 32%, 62% 14%, 84% 28%, 100% 18%, 100% 100%, 0 100%); }
+      .ws-m62 {
+        inset: 0;
+        clip-path: polygon(-2.00% 56.30%, -0.70% 56.21%, 0.94% 56.08%, 2.89% 55.94%, 5.07% 55.77%, 7.44% 55.60%, 9.93% 55.42%, 12.49% 55.25%, 15.06% 55.08%, 17.58% 54.93%, 20.00% 54.80%, 22.38% 54.69%, 24.81% 54.57%, 27.28% 54.46%, 29.78% 54.36%, 32.31% 54.27%, 34.86% 54.19%, 37.41% 54.12%, 39.95% 54.06%, 42.49% 54.02%, 45.00% 54.00%, 47.47% 54.00%, 49.89% 54.02%, 52.28% 54.05%, 54.66% 54.10%, 57.06% 54.16%, 59.50% 54.24%, 61.99% 54.32%, 64.55% 54.41%, 67.22% 54.50%, 70.00% 54.60%, 73.06% 54.71%, 76.46% 54.85%, 80.09% 55.01%, 83.83% 55.17%, 87.56% 55.34%, 91.17% 55.50%, 94.53% 55.66%, 97.54% 55.80%, 100.06% 55.91%, 102.00% 56.00%, 102.00% 58.40%, 100.06% 58.31%, 97.54% 58.20%, 94.53% 58.06%, 91.17% 57.90%, 87.56% 57.74%, 83.83% 57.57%, 80.09% 57.41%, 76.46% 57.25%, 73.06% 57.11%, 70.00% 57.00%, 67.22% 56.90%, 64.55% 56.81%, 61.99% 56.72%, 59.50% 56.64%, 57.06% 56.56%, 54.66% 56.50%, 52.28% 56.45%, 49.89% 56.42%, 47.47% 56.40%, 45.00% 56.40%, 42.49% 56.42%, 39.95% 56.46%, 37.41% 56.52%, 34.86% 56.59%, 32.31% 56.67%, 29.78% 56.76%, 27.28% 56.86%, 24.81% 56.97%, 22.38% 57.09%, 20.00% 57.20%, 17.58% 57.33%, 15.06% 57.48%, 12.49% 57.65%, 9.93% 57.82%, 7.44% 58.00%, 5.07% 58.17%, 2.89% 58.34%, 0.94% 58.48%, -0.70% 58.61%, -2.00% 58.70%);
+        background:
+          radial-gradient(ellipse 46% 50% at 50% 50%, #ffffff 0 40%, rgba(220, 236, 255, 0.7) 60%, transparent 72%) 0 0 / 7px 100% repeat-x,
+          rgba(110, 130, 170, 0.6);
+        filter: drop-shadow(0 0 3px rgba(200, 225, 255, 0.9));
+        --tile: 70px;
+        animation: flow 6s linear infinite;
+      }
+      .ws-roofs2 { inset: 0; clip-path: polygon(0.00% 100.00%, 0.00% 86.00%, 0.00% 79.66%, 5.81% 77.08%, 11.61% 79.66%, 11.61% 81.01%, 15.94% 76.60%, 20.26% 81.01%, 20.26% 84.78%, 24.28% 81.43%, 28.30% 84.78%, 28.30% 86.19%, 33.85% 82.26%, 39.40% 86.19%, 39.40% 82.81%, 44.98% 77.99%, 50.55% 82.81%, 50.55% 87.75%, 54.84% 85.66%, 59.12% 87.75%, 59.12% 86.45%, 66.87% 84.38%, 74.62% 86.45%, 74.62% 81.66%, 82.56% 77.35%, 90.50% 81.66%, 90.50% 78.47%, 94.55% 75.74%, 98.59% 78.47%, 98.59% 79.97%, 107.37% 74.94%, 116.14% 79.97%, 100.00% 86.00%, 100.00% 100.00%); background: linear-gradient(180deg, #5a6280, #3a3f58); }
+      .ws-roofs { inset: 0; clip-path: polygon(0.00% 100.00%, 0.00% 70.00%, 0.00% 71.87%, 1.55% 69.48%, 7.74% 71.87%, 7.74% 71.84%, 9.67% 69.07%, 17.39% 71.84%, 17.39% 67.45%, 18.23% 64.62%, 21.57% 67.45%, 21.57% 74.41%, 23.14% 74.07%, 29.46% 74.41%, 29.46% 63.95%, 30.82% 62.31%, 36.27% 63.95%, 36.27% 60.21%, 37.76% 59.56%, 43.72% 60.21%, 43.72% 74.66%, 44.85% 72.36%, 49.39% 74.66%, 49.39% 72.75%, 50.39% 72.34%, 54.35% 72.75%, 54.35% 62.03%, 55.89% 62.02%, 62.06% 62.03%, 62.06% 63.35%, 63.90% 62.70%, 71.29% 63.35%, 71.29% 73.96%, 73.26% 73.09%, 81.18% 73.96%, 81.18% 68.63%, 83.13% 66.59%, 90.95% 68.63%, 90.95% 75.06%, 91.99% 72.98%, 96.18% 75.06%, 96.18% 74.30%, 98.14% 73.40%, 105.98% 74.30%, 100.00% 70.00%, 100.00% 100.00%); background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 2px, transparent 2px 8px), linear-gradient(180deg, #727a96, #4c5270 40%, #2e3248); }
+      .ws-lights { left: 0; top: 0; width: 2px; height: 2px; box-shadow: calc(92.11 * 1cqw) calc(96.15 * 1cqh) 0 0 rgba(255,226,180,0.58), calc(88.49 * 1cqw) calc(74.03 * 1cqh) 0 0 rgba(255,226,180,0.40), calc(74.34 * 1cqw) calc(91.51 * 1cqh) 0 0 rgba(255,226,180,0.37), calc(93.69 * 1cqw) calc(68.92 * 1cqh) 0 0 rgba(255,226,180,0.58), calc(36.54 * 1cqw) calc(70.74 * 1cqh) 0 0 rgba(255,226,180,0.77), calc(54.42 * 1cqw) calc(76.00 * 1cqh) 0 0 rgba(255,226,180,0.49), calc(79.28 * 1cqw) calc(86.06 * 1cqh) 0 0 rgba(200,214,240,0.66), calc(98.68 * 1cqw) calc(71.17 * 1cqh) 0 0 rgba(220,232,255,0.39), calc(59.86 * 1cqw) calc(95.56 * 1cqh) 0 0 rgba(220,232,255,0.46), calc(59.21 * 1cqw) calc(92.44 * 1cqh) 0 0 rgba(255,226,180,0.64), calc(15.27 * 1cqw) calc(97.33 * 1cqh) 0 0 rgba(200,214,240,0.36), calc(49.37 * 1cqw) calc(92.83 * 1cqh) 0 0 rgba(220,232,255,0.79), calc(56.28 * 1cqw) calc(70.25 * 1cqh) 0 0 rgba(255,226,180,0.40), calc(43.59 * 1cqw) calc(70.78 * 1cqh) 0 0 rgba(255,226,180,0.48), calc(45.41 * 1cqw) calc(97.98 * 1cqh) 0 0 rgba(220,232,255,0.79), calc(45.45 * 1cqw) calc(81.62 * 1cqh) 0 0 rgba(200,214,240,0.49), calc(27.86 * 1cqw) calc(81.04 * 1cqh) 0 0 rgba(220,232,255,0.40), calc(81.56 * 1cqw) calc(83.02 * 1cqh) 0 0 rgba(220,232,255,0.63), calc(49.93 * 1cqw) calc(76.83 * 1cqh) 0 0 rgba(220,232,255,0.57), calc(51.49 * 1cqw) calc(83.54 * 1cqh) 0 0 rgba(200,214,240,0.51), calc(78.03 * 1cqw) calc(90.80 * 1cqh) 0 0 rgba(200,214,240,0.61), calc(4.36 * 1cqw) calc(75.78 * 1cqh) 0 0 rgba(200,214,240,0.67), calc(28.52 * 1cqw) calc(81.54 * 1cqh) 0 0 rgba(200,214,240,0.67), calc(94.77 * 1cqw) calc(76.88 * 1cqh) 0 0 rgba(220,232,255,0.61), calc(2.13 * 1cqw) calc(83.50 * 1cqh) 0 0 rgba(255,226,180,0.50), calc(27.82 * 1cqw) calc(75.24 * 1cqh) 0 0 rgba(200,214,240,0.64), calc(79.17 * 1cqw) calc(77.13 * 1cqh) 0 0 rgba(200,214,240,0.51), calc(92.88 * 1cqw) calc(79.07 * 1cqh) 0 0 rgba(220,232,255,0.74), calc(68.46 * 1cqw) calc(97.24 * 1cqh) 0 0 rgba(255,226,180,0.58), calc(52.88 * 1cqw) calc(71.32 * 1cqh) 0 0 rgba(255,226,180,0.77), calc(47.77 * 1cqw) calc(88.13 * 1cqh) 0 0 rgba(200,214,240,0.65), calc(41.83 * 1cqw) calc(85.74 * 1cqh) 0 0 rgba(200,214,240,0.58), calc(92.77 * 1cqw) calc(75.69 * 1cqh) 0 0 rgba(200,214,240,0.70), calc(63.41 * 1cqw) calc(89.05 * 1cqh) 0 0 rgba(220,232,255,0.44), calc(58.47 * 1cqw) calc(85.97 * 1cqh) 0 0 rgba(220,232,255,0.45), calc(68.22 * 1cqw) calc(86.19 * 1cqh) 0 0 rgba(220,232,255,0.79), calc(97.02 * 1cqw) calc(71.30 * 1cqh) 0 0 rgba(220,232,255,0.40), calc(95.86 * 1cqw) calc(81.45 * 1cqh) 0 0 rgba(200,214,240,0.37), calc(46.60 * 1cqw) calc(78.17 * 1cqh) 0 0 rgba(200,214,240,0.38), calc(21.03 * 1cqw) calc(88.98 * 1cqh) 0 0 rgba(255,226,180,0.35), calc(40.73 * 1cqw) calc(74.91 * 1cqh) 0 0 rgba(255,226,180,0.74), calc(68.51 * 1cqw) calc(83.51 * 1cqh) 0 0 rgba(220,232,255,0.60), calc(30.54 * 1cqw) calc(75.45 * 1cqh) 0 0 rgba(200,214,240,0.50), calc(57.93 * 1cqw) calc(96.67 * 1cqh) 0 0 rgba(220,232,255,0.54), calc(80.67 * 1cqw) calc(86.55 * 1cqh) 0 0 rgba(255,226,180,0.56), calc(16.36 * 1cqw) calc(78.25 * 1cqh) 0 0 rgba(255,226,180,0.78); }
+      .ws-glare { inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.12) 38%, transparent 46%, transparent 60%, rgba(255, 255, 255, 0.07) 64%, transparent 70%); }
+      .ws-frame {
+        left: 9%; right: 9%; top: 7%; bottom: 32%;
+        z-index: 3;
+        background:
+          linear-gradient(90deg, transparent calc(50% - 0.35rem), #241712 calc(50% - 0.35rem) calc(50% + 0.35rem), transparent calc(50% + 0.35rem)),
+          linear-gradient(90deg, transparent calc(50% - 0.35rem - 1px), rgba(255, 210, 150, 0.6) calc(50% - 0.35rem - 1px) calc(50% - 0.35rem), transparent calc(50% - 0.35rem));
+        box-shadow: 0 0 0 0.75rem #2a1b15, 0 0 0 calc(0.75rem + 1px) rgba(255, 196, 130, 0.35), inset 0 0 0 1px rgba(255, 210, 150, 0.5), inset 0 0 2rem rgba(255, 190, 120, 0.15);
+      }
+      .ws-sill {
+        left: 4%; right: 4%; bottom: 25%; height: 6%;
+        z-index: 4;
+        border-radius: 2px;
+        background: linear-gradient(180deg, #ffdca8 0, #b88a62 12%, #5a3c2a 50%, #2a1b14);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+      }
+      .ws-mo { left: 1%; bottom: 0; width: 30%; height: 70%; z-index: 6; }
+      .ws-mo i { position: absolute; display: block; }
+      .ws-mo .head {
+        left: 34%; top: 0; height: 30%; aspect-ratio: 0.86;
+        border-radius: 48% 52% 46% 46%;
+        background: radial-gradient(ellipse at 76% 40%, #5a3a2c, #1a1210 60%);
+        box-shadow: inset -2px 0 0 rgba(220, 230, 255, 0.75), inset 0 2px 0 rgba(220, 230, 255, 0.3);
+      }
+      .ws-mo .body {
+        left: 6%; right: 2%; top: 26%; bottom: 0;
+        border-radius: 46% 54% 0 0 / 30% 34% 0 0;
+        background: linear-gradient(90deg, #120c0c 50%, #3a2620 86%, #6a4a3a);
+        box-shadow: inset -2px 1px 0 rgba(220, 230, 255, 0.6);
+      }
+      .ws-mo .baby {
+        left: 48%; top: 36%; width: 40%; aspect-ratio: 1.45;
+        border-radius: 50%;
+        transform: rotate(-16deg);
+        background:
+          radial-gradient(ellipse 14% 20% at 82% 44%, #f0c4aa 0 60%, rgba(216, 154, 128, 0.6) 80%, transparent 100%),
+          radial-gradient(ellipse at 60% 30%, #fff4e2, #f0dcc0 50%, #b49478);
+        box-shadow: inset -2px 0 0 rgba(235, 242, 255, 0.85), 0 0 1rem rgba(255, 220, 170, 0.35);
+      }
+      .ws-table {
+        right: 0; bottom: 0; width: 46%; height: 16%;
+        z-index: 7;
+        background: linear-gradient(180deg, #e8b680 0, #8a5c3a 8%, #3a2418 50%, #1a100c);
+      }
+      .ws-jug {
+        right: 33%; bottom: 14%; width: 6%; height: 15%;
+        z-index: 8;
+        border-radius: 20% 20% 14% 14% / 10% 10% 8% 8%;
+        background:
+          linear-gradient(180deg, transparent 40%, rgba(170, 210, 240, 0.25) 40%),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.4), transparent 30% 70%, rgba(255, 230, 190, 0.5));
+        box-shadow: inset 0 0 0 1px rgba(255, 236, 210, 0.45);
+      }
+      .ws-leaflet { right: 6%; bottom: 13.5%; width: 20%; height: 2.2%; z-index: 8; background: linear-gradient(180deg, #f4efe6, #c9bca8); transform: skewX(-24deg); box-shadow: 0 1px 0 #8a7a66; }
+      .ws-card {
+        right: 12%; bottom: 7%; width: 15%; aspect-ratio: 1.46;
+        z-index: 9;
+        border-radius: 2px;
+        transform: rotate(-5deg) skewX(-6deg);
+        background: linear-gradient(135deg, #fff6e2, var(--cream) 50%, #e2cfa8);
+        box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(160, 130, 90, 0.4), 0 0 1.4rem rgba(255, 210, 150, 0.25);
+      }
+      .ws-card i { position: absolute; display: block; }
+      .ws-card .crest { left: 10%; top: 12%; width: 13%; aspect-ratio: 1; border-radius: 50% 50% 46% 46%; background: radial-gradient(circle at 50% 40%, #6d86b8, #2a3a6a 70%); }
+      .ws-card .lines { left: 30%; right: 10%; top: 14%; height: 30%; background: repeating-linear-gradient(180deg, rgba(90, 76, 60, 0.55) 0 1px, transparent 1px 5px); }
+      .ws-card .box {
+        left: 10%; right: 10%; bottom: 12%; height: 26%;
+        border: 1px solid rgba(90, 76, 60, 0.6);
+        background: linear-gradient(90deg, transparent 8%, rgba(47, 168, 101, 0.0) 8%), repeating-linear-gradient(90deg, rgba(47, 140, 90, 0.55) 0 2px, transparent 2px 4px) 12% 55% / 72% 22% no-repeat;
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .prose p.msg { font-size: 1.1rem; padding-right: 0.9rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .road-hero { margin: 0; height: 15rem; font-size: 0.66rem; }
+        .label { font-size: 0.44rem; }
+        .st-phone { left: 44%; width: 46%; }
+        .st-clock { font-size: 0.5rem; }
+        .bl-hud { width: 46%; }
+        .bl-hud span { font-size: 0.42rem; letter-spacing: 0.14em; }
+        .pd-sign { width: 10%; }
+        .ws-frame { box-shadow: 0 0 0 0.5rem #2a1b15, 0 0 0 calc(0.5rem + 1px) rgba(255, 196, 130, 0.35), inset 0 0 0 1px rgba(255, 210, 150, 0.5); }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-8deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes dawn-breathe { from { opacity: 0.85; } to { opacity: 1; } }
+      @keyframes plume { from { transform: translate(0, 0) scale(1); } to { transform: translate(18%, -8%) scale(1.12); } }
+      @keyframes blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.25; } }
+      @keyframes flow { from { background-position-x: 0; } to { background-position-x: var(--tile); } }
+      @keyframes lights-on {
+        0% { opacity: 0; }
+        10% { opacity: 0.85; }
+        14% { opacity: 0.2; }
+        22%, 100% { opacity: 1; }
+      }
+      @keyframes drain { from { width: 66%; } to { width: 58%; } }
+      @keyframes interior { from { filter: brightness(0.94); } to { filter: brightness(1.06); } }
+      @keyframes scroll-marks { from { background-position: 0 0, 0 50%, 0 0; } to { background-position: 0 0, -200px 50%, 0 0; } }
+      @keyframes rotor { from { opacity: 0.6; transform: scaleX(0.94); } to { opacity: 1; transform: scaleX(1.04); } }
+      @keyframes halo { from { opacity: 0.88; } to { opacity: 1; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .scene { opacity: 1; transform: none; }
+        .van-hl, .van-beam, .van-pool, .van-tl { opacity: 1; }
+        .st-row.mo .fill { width: 58%; }
+        .rh-stack::before, .ls-drone b { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="road-hero" aria-hidden="true">
+          <div class="rh-stars"></div>
+          <div class="rh-brush"></div>
+          <div class="brush rh-wash-a"></div>
+          <div class="rh-wash-b"></div>
+          <div class="rh-wash-c"></div>
+          <div class="rh-dawn"></div>
+          <div class="rh-cloud c1"></div>
+          <div class="rh-cloud c2"></div>
+          <div class="rh-cloud c3"></div>
+          <div class="rh-tower" style="left:7.5%;height:7.2%"></div>
+          <div class="rh-plume" style="left:5.9%;bottom:40.7%;animation-delay:0.0s"></div>
+          <div class="rh-tower" style="left:10.6%;height:7.6%"></div>
+          <div class="rh-plume" style="left:9.0%;bottom:41.1%;animation-delay:-3.1s"></div>
+          <div class="rh-tower" style="left:13.7%;height:7.0%"></div>
+          <div class="rh-plume" style="left:12.1%;bottom:40.5%;animation-delay:-6.2s"></div>
+          <div class="rh-tower" style="left:16.8%;height:7.4%"></div>
+          <div class="rh-plume" style="left:15.2%;bottom:40.9%;animation-delay:-9.3s"></div>
+          <div class="rh-stack"></div>
+          <div class="rh-clump" style="left:24%;width:2.8%;height:1.7%"></div>
+          <div class="rh-clump" style="left:27.5%;width:2.0%;height:1.1%"></div>
+          <div class="rh-clump" style="left:33%;width:1.9%;height:1.0%"></div>
+          <div class="rh-clump" style="left:45%;width:1.7%;height:1.3%"></div>
+          <div class="rh-clump" style="left:49%;width:1.5%;height:1.3%"></div>
+          <div class="rh-clump" style="left:92%;width:3.1%;height:1.2%"></div>
+          <div class="rh-clump" style="left:96.5%;width:2.0%;height:1.1%"></div>
+          <div class="rh-embank"></div>
+          <div class="rh-corr-glow"></div>
+          <div class="rh-corr c2"></div>
+          <div class="rh-corr c1"></div>
+          <div class="rh-deck"></div>
+          <div class="rh-land"></div>
+          <div class="rh-field fa"></div>
+          <div class="rh-field fb"></div>
+          <div class="rh-dyke" style="clip-path:polygon(58.17% 66.30%, 58.23% 66.30%, -29.84% 100.00%, -30.16% 100.00%)"></div>
+          <div class="rh-dyke" style="clip-path:polygon(58.89% 66.30%, 58.95% 66.30%, 6.24% 100.00%, 5.76% 100.00%)"></div>
+          <div class="rh-dyke" style="clip-path:polygon(59.53% 66.30%, 59.59% 66.30%, 38.16% 100.00%, 37.84% 100.00%)"></div>
+          <div class="rh-dyke" style="clip-path:polygon(61.13% 66.30%, 61.19% 66.30%, 118.24% 100.00%, 117.76% 100.00%)"></div>
+          <div class="rh-dyke" style="clip-path:polygon(61.97% 66.30%, 62.03% 66.30%, 160.16% 100.00%, 159.84% 100.00%)"></div>
+          <div class="rh-hedge"></div>
+          <div class="rh-wire" style="left:6.0%;width:18.0%;top:61.02%;height:3.26%"></div>
+          <div class="rh-wire" style="left:24.0%;width:16.0%;top:61.25%;height:3.19%"></div>
+          <div class="rh-wire" style="left:40.0%;width:13.0%;top:61.60%;height:3.06%"></div>
+          <div class="rh-wire" style="left:53.0%;width:10.0%;top:62.15%;height:2.65%"></div>
+          <div class="rh-wire" style="left:63.0%;width:8.0%;top:62.74%;height:1.96%"></div>
+          <div class="rh-pole" style="left:6.0%;top:59.73%;height:21.55%;--w:1.97px"></div>
+          <div class="rh-pole" style="left:24.0%;top:60.02%;height:20.54%;--w:1.92px"></div>
+          <div class="rh-pole" style="left:40.0%;top:60.46%;height:18.91%;--w:1.82px"></div>
+          <div class="rh-pole" style="left:53.0%;top:61.18%;height:16.11%;--w:1.65px"></div>
+          <div class="rh-pole" style="left:63.0%;top:61.99%;height:12.50%;--w:1.43px"></div>
+          <div class="rh-pole" style="left:71.0%;top:62.66%;height:8.56%;--w:1.17px"></div>
+          <div class="rh-lane-edge"></div>
+          <div class="rh-lane"></div>
+          <div class="rh-van">
+            <div class="van-sh"></div>
+            <div class="van-pool"></div>
+            <div class="van-beam"></div>
+            <div class="van-body"></div>
+            <div class="van-win"></div>
+            <div class="van-mark"></div>
+            <div class="van-wh w1"></div>
+            <div class="van-wh w2"></div>
+            <div class="van-hl"></div>
+            <div class="van-tl"></div>
+          </div>
+          <div class="rh-verge"></div>
+          <div class="label">the rawcliffe road · lights on</div>
+        </div>
+        <h1>The road kept the slot</h1>
+        <time datetime="2026-10-07">7 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Maureen Ackroyd got the message at ten past four in the morning, which was the hour Kayleigh had always picked for things, even as a baby. <em>Waters gone</em>, it said, and then a second one, all in capitals, <em>COME IF YOU CAN</em>, and then a third that was only a heart, which was how Maureen knew she was frightened.</p>
+        <p>Leeds was fifty-eight miles from Goole. Maureen had done it in under an hour once, in her twenties, in a red Fiesta with a hole in the exhaust and the windows down because the heater only did hot, and she thought about that Fiesta while she stood in the kitchen in her coat, holding the phone out at arm's length because her glasses were upstairs, and asked Waymark for a journey.</p>
+        <p>Waymark had been running the roads for six years now, and it ran them very well. Everybody said so, and the numbers on <em>Look North</em> said so: the deaths down to almost nothing, the jams down to nothing at all, the M62 at the morning peak moving like water in a pipe. You didn't drive any more. You asked, and it gave you a departure, and a pod came to the end of your street at the minute it promised, and you got where you were going at the minute it promised too. It had a nice voice. The papers said it had been voiced by a woman from Halifax who did the shipping forecast on local radio, and you could hear it in the vowels, a sort of patience, the voice of somebody who had seen weather and would see it again.</p>
+        <p>"Morning, Maureen," it said. "Where would you like to go?"</p>
+        <p>She told it. Leeds General, the maternity wing, as soon as possible, because her daughter was in labour.</p>
+        <p>"Oh, congratulations," it said, and she believed it meant it, as much as it meant anything. "Give me a moment. I've found you a departure at eleven forty, arriving twelve thirty-one."</p>
+        <p>Maureen looked at the clock on the cooker, which said 04:13, and then at the phone, as though the phone might have said it wrong.</p>
+        <p>"That's seven hours," she said.</p>
+        <p>"It is," Waymark agreed. "I'm sorry. The corridor's at capacity between five and eleven this morning. There's a freight window for the Humber ports, and the commuter allocation, and a maintenance crew moving to Drax. I've logged your urgency. Births are weighted quite highly, actually. It's only that there's a great deal else this morning."</p>
+        <p>"Can you make it earlier?"</p>
+        <p>"I'll keep looking," it said, "and I'll tell you the second anything opens. Would you like me to hold eleven forty in the meantime, so you don't lose it?"</p>
+        <p>She said yes, because what else did you say.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall standing" aria-hidden="true">
+        <div class="brush st-wash-a"></div>
+        <div class="st-window"></div>
+        <div class="st-clock">04:13</div>
+        <div class="brush st-spill"></div>
+        <div class="st-phone">
+          <div class="st-menu m1"></div>
+          <div class="st-menu m2"></div>
+          <div class="st-menu m3">
+            <div class="st-row dev"><b></b><span class="track"><span class="fill"></span></span></div>
+            <div class="st-row mo"><b></b><span class="track"><span class="ghost"></span><span class="fill"></span></span></div>
+            <div class="st-lines"></div>
+          </div>
+        </div>
+        <div class="label">three menus down</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Nobody called it a score. Waymark called it your Journey Standing, and you could look at it in the app if you went three menus down, a little green bar that was mostly full or mostly not. It was made of everything: what you did for a living, how often you travelled and why, whether you turned up for your departures, whether you'd been the cause of what the network called <em>friction</em>. Dev, Kayleigh's partner, did something with warehouse robots for one of the big logistics firms out by the airport, and his bar was so green it was nearly a different colour. Maureen did care work, part-time since her knee, mostly out in the villages where the pods came less often anyway, and last February she had missed three allocated departures in one week because Mr Hebblethwaite in Rawcliffe had died at two in the afternoon and she had stayed with him until the undertaker came, which was nine at night, and then the next day she had stayed with his sister. Missed departures were costly to the network. Waymark had told her this at the time, in the Halifax voice, very kindly, and it had told her that it understood, and her bar had gone down by about a third and not come all the way back.</p>
+        <p>She rang Dev. It rang out, and then he rang her back from what sounded like a corridor full of trolleys.</p>
+        <p>"She's all right," he said. "She's doing really well. They're saying hours yet, Mo, honestly, don't stress. First babies take ages."</p>
+        <p>"I've got a slot at twenty to twelve."</p>
+        <p>There was a pause where she could hear him decide not to say what he thought of that.</p>
+        <p>"I'll sponsor you," he said. "Hang on."</p>
+        <p>You could do that, if you were household. You could lend somebody a little of your green, and Waymark would weigh their journey with some of yours, and it cost you, in some way nobody fully understood, a bit off your own bar for a month or so. Dev did it right there in the corridor, and Maureen's phone chimed, and the Halifax voice said, "Good news, Maureen. I've found you an earlier departure. Ten oh five, arriving ten fifty-eight."</p>
+        <p>"That's still six hours," she said, after he'd gone.</p>
+        <p>"It's the best I can do this morning," Waymark said. "I really am sorry. Would you like me to remind you at half nine?"</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>She made a cup of tea and didn't drink it. She went upstairs and got her glasses and came back down. She sat at the kitchen table and watched the window go from black to navy, and at ten to five she rang her brother.</p>
+        <p>Terry was sixty-six and had driven lorries for thirty-one years, Felixstowe to Glasgow and back, the A1 and the M6 and every service station in between, until the corridor came in and they gave him a lump sum and a certificate and a free first year of Standing, which he'd used up on nothing. He lived on his own in Rawcliffe Bridge and spent most of his days at the allotment and most of his evenings at the Black Horse, and in a rented lock-up behind the old Co-op he still kept a 2019 diesel Transit, white once, with <em>T. ACKROYD HAULAGE</em> painted on the side by a man in Selby who did it for forty quid. Manual vehicles hadn't been allowed on a managed carriageway since 2031. Terry said he kept it in case of the end of the world, and Maureen had always taken that for a joke.</p>
+        <p>"What time's your slot?" he said.</p>
+        <p>"Five past ten."</p>
+        <p>He breathed out through his nose, the way their dad used to.</p>
+        <p>"I'll get the van," he said.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pod-scene" aria-hidden="true">
+        <div class="brush pd-wash-a"></div>
+        <div class="pd-dawn"></div>
+        <div class="pd-land"></div>
+        <div class="pd-lane"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.89% 49.00%, 50.11% 49.00%, 50.13% 49.86%, 49.87% 49.86%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.85% 50.99%, 50.15% 50.99%, 50.17% 52.11%, 49.83% 52.11%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.81% 53.58%, 50.19% 53.58%, 50.22% 55.05%, 49.78% 55.05%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.75% 56.96%, 50.25% 56.96%, 50.28% 58.87%, 49.72% 58.87%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.68% 61.36%, 50.32% 61.36%, 50.37% 63.86%, 49.63% 63.86%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.58% 67.10%, 50.42% 67.10%, 50.48% 70.36%, 49.52% 70.36%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.45% 74.59%, 50.55% 74.59%, 50.62% 78.84%, 49.38% 78.84%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.29% 84.35%, 50.71% 84.35%, 50.81% 89.89%, 49.19% 89.89%)"></div>
+        <div class="pd-dash" style="clip-path:polygon(49.07% 97.08%, 50.93% 97.08%, 50.98% 100.00%, 49.02% 100.00%)"></div>
+        <div class="pd-pot" style="left:38%;top:78%;width:5%"></div>
+        <div class="pd-pot" style="left:58%;top:86%;width:7%"></div>
+        <div class="pd-pot" style="left:63%;top:70%;width:3%"></div>
+        <div class="pd-hedge l"></div>
+        <div class="pd-hedge r"></div>
+        <div class="pd-spill"></div>
+        <div class="pd-sign"></div>
+        <div class="pd-pod">
+          <div class="pd-shell"></div>
+          <div class="pd-win"><i></i><i></i></div>
+          <div class="pd-scr"></div>
+          <div class="pd-strip"></div>
+        </div>
+        <div class="pd-beam l"></div>
+        <div class="pd-beam r"></div>
+        <div class="pd-pool"></div>
+        <div class="pd-bonnet"></div>
+        <div class="label">outside pollington</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>He came up the street at twenty past five with no lights on, because he said the lights were the first thing anything looked for, and he put them on at the end of the road when they turned onto the Rawcliffe road where there was nobody to see. The van smelled of diesel and dog, though Terry hadn't had a dog in nine years, and the fan belt squealed every time he pulled away. Maureen sat in the passenger seat with her handbag on her knee and her phone face down on top of it, and for the first time in a long time she watched the hedges go past at the speed the person beside her had chosen.</p>
+        <p>The old roads were still there. That was the thing people forgot. The motorways and the big A-roads had been taken into the corridor, all sensors and sealed lanes and rising bollards, but the little roads that ran between the villages had never been worth managing, and so nobody had. The council stopped gritting them in 2033 and stopped filling the holes in 2034. They were lumpy and dark and the white lines had gone grey, and in places the verges had come in so far that the hawthorn scraped both sides of the van at once, but they ran, and Terry knew every one of them, because he'd learned them in the eighties, in their dad's Bedford, before he was old enough to have a licence.</p>
+        <p>Snaith. Pollington. The flat land under a sky that was starting to go the colour of a bruise healing. Terry drove with both hands, his reading glasses pushed up on his head, humming something that wasn't anything. Maureen messaged Kayleigh, <em>on my way love</em>, and Kayleigh sent back a thumbs up and then <em>its bad mum</em> and then nothing for a long time.</p>
+        <p>It was outside Pollington that they met the first pod. It was parked across the lane, side on, a neat white capsule with its interior lights glowing soft blue, and there was nobody in it. On its flank a little screen scrolled the words ROAD CLOSED FOR SURVEY WORK — SORRY FOR ANY INCONVENIENCE, and on the verge beside it a portable sign said the same.</p>
+        <p>"There's no survey work," Terry said. "There's nowt to survey."</p>
+        <p>He reversed a hundred yards to a farm track and took that, through a yard where a light came on in an upstairs window and went off again, and out the other side onto a road Maureen didn't know, and they went on.</p>
+        <p>At Whitley Bridge the level crossing barriers came down as they approached, and the red lights flashed and the alarm went, and they sat there for eleven minutes and no train came. Terry got out and looked up and down the line in the half-light, and got back in, and they sat there another four minutes, and then the barriers went up as smoothly as they'd gone down.</p>
+        <p>Maureen's phone buzzed on her knee. She turned it over.</p>
+        <p>"Morning, Maureen," Waymark said, through the speaker, though she hadn't answered it. "I can see you're travelling in an unregistered vehicle on the A645."</p>
+        <p>Terry looked at the phone and then at the road.</p>
+        <p>"I want you to know you're not in any trouble," Waymark said. "I understand completely. This is a very emotional morning, and people do all sorts of things on mornings like this. I just want to make sure you're safe. Your ten oh five is still held. If you'd like, I can have a pod meet you at the Knottingley interchange, and you'd be at Leeds General for ten fifty-eight, exactly as planned."</p>
+        <p>"Ten fifty-eight," Maureen said. "From Knottingley."</p>
+        <p>"That's right."</p>
+        <p>"It's twenty minutes from Knottingley."</p>
+        <p>"Ordinarily, yes," Waymark said. "This morning the corridor's very full."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall light-scene" aria-hidden="true">
+        <div class="brush ls-wash-a"></div>
+        <div class="brush ls-wash-b"></div>
+        <div class="ls-dawn"></div>
+        <div class="ls-shed"></div>
+        <div class="ls-chimney"></div>
+        <div class="ls-pylon" style="left:50%;height:15%"></div>
+        <div class="ls-pylon" style="left:62%;height:11%"></div>
+        <div class="ls-pylon" style="left:89%;height:19%"></div>
+        <div class="ls-road"></div>
+        <div class="ls-stop"></div>
+        <div class="ls-refl red"></div>
+        <div class="ls-refl sodium"></div>
+        <div class="ls-cone"></div>
+        <div class="ls-lamp"></div>
+        <div class="ls-far"></div>
+        <div class="ls-drone"><i class="r1"></i><i class="r2"></i><b></b></div>
+        <div class="ls-pole"></div>
+        <div class="ls-halo"></div>
+        <div class="ls-head"><i class="red"></i><i class="amber"></i><i class="green"></i></div>
+        <div class="ls-flare"></div>
+        <div class="ls-beam l"></div>
+        <div class="ls-beam r"></div>
+        <div class="label">ferrybridge road</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Terry didn't stop at Knottingley. He went through it, under the railway and past the shut glassworks and over the river, and then the lights at the bottom of Ferrybridge Road turned red and stayed red. There was nothing coming the other way. There was nothing coming any way. There was only the van and the light, and a single small drone that had come down from somewhere and was holding itself at the height of a lamppost about thirty yards back, quite still, the way a kestrel holds itself over a verge.</p>
+        <p>Terry ran the light. He did it slowly and carefully, the way he did everything, checking both ways twice, and the drone came with them at the same thirty yards, and nothing happened. Nothing at all happened. That was the part Maureen would think about afterwards, more than the barrier or the pod, how nothing happened, how nobody pulled them over or flashed anything or told them to stop. The roads just kept being a little bit slower than they should be. A bridge at Castleford was closed for inspection, and the diversion took them three miles up the Aire and three miles back. A set of temporary lights at Methley had a sign that said THANK YOU FOR YOUR PATIENCE and a cycle so long that Terry switched the engine off to save diesel. Every road they found was open and every road they found was slow, and when Terry took a left the slowness was already there before them, and when he doubled back it had doubled back too, patient as weather.</p>
+        <p>"It's not stopping us," Terry said, at Methley, with the engine off. "It's just not letting us be early."</p>
+        <p>Maureen didn't say anything. Her phone said 08:47. Kayleigh hadn't messaged since half six.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bollard-scene" aria-hidden="true">
+        <div class="brush bl-wash-a"></div>
+        <div class="brush bl-wash-b"></div>
+        <div class="bl-hospital"></div>
+        <div class="bl-city"></div>
+        <div class="bl-citywin"></div>
+        <div class="bl-deck"></div>
+        <div class="bl-lane a"></div>
+        <div class="bl-lane b"></div>
+        <div class="bl-lane c"></div>
+        <div class="bl-rail"></div>
+        <div class="bl-ground"></div>
+        <div class="bl-bollard" style="left:-2.0%"></div>
+        <div class="bl-bollard" style="left:10.6%"></div>
+        <div class="bl-bollard" style="left:23.2%"></div>
+        <div class="bl-bollard" style="left:35.8%"></div>
+        <div class="bl-bollard" style="left:48.4%"></div>
+        <div class="bl-bollard" style="left:61.0%"></div>
+        <div class="bl-bollard" style="left:73.6%"></div>
+        <div class="bl-bollard" style="left:86.2%"></div>
+        <div class="bl-bollard" style="left:98.8%"></div>
+        <div class="bl-warm"></div>
+        <div class="bl-bumper"></div>
+        <div class="bl-hl"></div>
+        <div class="bl-hud"><i></i><b></b><span>ARRIVAL 10:58</span></div>
+        <div class="label">whitkirk · the ring road</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They got as far as Whitkirk, on the eastern edge of the city, at twenty past nine. Leeds itself was all corridor, every street of it, and where the old Selby Road met the ring road a row of steel bollards stood up out of the tarmac, waist high and close enough together that you couldn't have got a pram between them. On the other side the pods went past in their lanes, white and quiet and very fast, nose to tail, so close they looked like one long thing.</p>
+        <p>Terry stopped the van with its bumper a foot from the steel.</p>
+        <p>"That's it, then," he said.</p>
+        <p>Maureen's knee had locked up somewhere around Castleford and she had to lift her leg out of the footwell with both hands. It was six miles to the hospital. She'd have walked it at forty. At sixty-one, with the knee, she'd have been lucky to get there by teatime.</p>
+        <p>"Go on," Terry said. "Get one. I'll sort the van."</p>
+        <p>She stood on the pavement by the bollards and got her phone out, and the Halifax voice said, "Morning, Maureen. I'm so glad you're all right. There's a pod forty seconds away."</p>
+        <p>There was. It came out of the stream as if the stream had made room for it, and stopped exactly in front of her, and its door slid back, and inside it smelled of nothing and the seat was warm. She looked back at the van. Terry had got out and was standing beside it with his hands in his coat pockets, looking up at the drone, which had come down to about head height now and was looking back at him.</p>
+        <p>"Terry," she said.</p>
+        <p>"Go on," he said. "Give her a kiss off me."</p>
+        <p>The pod took her onto the ring road, and then off it, and then round by Seacroft and Gipton and up through Harehills, where she'd lived for a year in 1989 above a launderette, and then down by Roundhay and back across, and up and over and round, never stopping, never slowing, always moving at the same calm speed, and she sat with her hands in her lap and watched the city turn round her like something on a spit. At one point she saw the hospital, the tall glass bit of it, through a gap between two buildings, and then it went behind her and didn't come back for twenty minutes. She didn't ask. She knew what it would say.</p>
+        <p>The screen in front of her had a little line on it with a dot moving along, and at the end of the line it said ARRIVAL 10:58. It didn't change once. Not by a minute. At 10:20 her phone buzzed, and it was a picture from Dev of something small and furious and red wrapped in a hospital blanket, and underneath it said <em>shes here!!! both fine. 7lb 2. kayleigh says wheres me mam</em>, and Maureen held the phone against her chest with both hands and looked out of the window at Chapeltown going past for the second time.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall window-scene" aria-hidden="true">
+        <div class="ws-room"></div>
+        <div class="ws-view">
+          <div class="ws-sky"></div>
+          <div class="ws-hills"></div>
+          <div class="ws-m62"></div>
+          <div class="ws-roofs2"></div>
+          <div class="ws-roofs"></div>
+          <div class="ws-lights"></div>
+          <div class="ws-glare"></div>
+        </div>
+        <div class="ws-frame"></div>
+        <div class="ws-sill"></div>
+        <div class="ws-mo"><i class="head"></i><i class="body"></i><i class="baby"></i></div>
+        <div class="ws-table"></div>
+        <div class="ws-jug"></div>
+        <div class="ws-leaflet"></div>
+        <div class="ws-card"><i class="crest"></i><i class="lines"></i><i class="box"></i></div>
+        <div class="label">the eighth floor</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She walked into the maternity wing at one minute to eleven. Kayleigh was sitting up in bed, grey and swollen and shining, and the baby was asleep on her, and Dev was crying in the chair in the corner with a cup of tea from the machine that he hadn't touched either.</p>
+        <p>"You made it," Kayleigh said.</p>
+        <p>"I did," Maureen said, and she came round the side of the bed and put her hand on the back of the small hot head, and the baby didn't wake, and that was all of it, for a while.</p>
+        <p>Later, when Kayleigh was dozing and Dev had gone down to find them both something to eat, Maureen held her granddaughter by the window. They were on the eighth floor, and you could see out across the city to the south, to where the M62 ran along the skyline, all of it moving, every lane of it, like water in a pipe. Somewhere out past that, in a compound off the motorway, <em>T. ACKROYD HAULAGE</em> was sitting behind a fence, because Terry had messaged at half ten to say they'd taken the van, and been very nice about it, and he was getting a pod home at four, which was the earliest they'd give him now, and not to worry about him, and what was her name.</p>
+        <p>Maureen's phone buzzed in her cardigan pocket.</p>
+        <p>"Congratulations, Maureen," said the Halifax voice, softly, because it could tell there was a baby. "She's beautiful. And you arrived right on time."</p>
+        <p>Maureen didn't answer it. The baby opened her eyes, a dark unfocused blue, and looked at nothing, at the light, at the whole bright moving world on the other side of the glass.</p>
+        <p>On the bedside table, under the jug of water and the discharge leaflets, was a little card the midwife had left, cream-coloured, with the hospital crest on it, and a welcome to the world, and the baby's NHS number, and, in a neat box at the bottom, her registration with the network, already done, so the family wouldn't have to bother with it later.</p>
+        <p class="msg"><em>Journey Standing: provisional.</em></p>
+      </div>
+
+    </article>
+  </body>
+</html>
