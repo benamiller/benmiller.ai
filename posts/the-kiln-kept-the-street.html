@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The kiln kept the street — Ben Miller</title>
+    <meta name="description" content="In a near-future Stoke-on-Trent where a kind AI the children call the Heron walks every street asking what people want, a Longton widow who has said no for nine years to protect the last bottle oven on her street is finally asked the right question.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --night: #120c14;
+        --ink: #efe6dc;
+        --mute: #b39f96;
+        --cream: #f6ead6;
+        --amber: #f4b56a;
+        --ember: #ff8a3a;
+        --cherry: #d8403a;
+        --violet: #4b2c5e;
+        --lamp: #ffe6b0;
+        --heron: #8d93a0;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(244, 181, 106, 0.16), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(120, 70, 140, 0.18), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(255, 138, 58, 0.1), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(216, 64, 58, 0.08), transparent 60%),
+          linear-gradient(180deg, #1a1020 0%, #1a0f1a 36%, #170d12 70%, #0f090c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(255, 170, 100, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(244, 181, 106, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #ffcf96;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 138, 58, 0.4), 0 0 2px rgba(255, 220, 160, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #ece2d8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #ffd9a8; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 170, 0.95) 0 1.5px, rgba(255, 138, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 138, 58, 0.55));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #1a1018;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 207, 150, 0.1);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .kiln-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(14, 6, 10, 0.66) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .kiln-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 200, 130, 0.4); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(200, 130, 200, 0.3); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(255, 150, 90, 0.3); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 232, 200, 0.7);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+      /* ===== the street (shared perspective pieces) ===== */
+      .st-road, .st-yard, .st-sett, .st-pave, .st-kerb, .st-facade, .st-sill, .st-windark, .st-winlit, .st-door, .st-step, .st-roof, .st-chim { position: absolute; inset: 0; }
+      .st-city {
+        left: -2%; right: -2%; height: 3.6%;
+        clip-path: polygon(0 100%, 0 60%, 4% 60%, 4% 30%, 9% 30%, 9% 55%, 15% 55%, 15% 20%, 17% 20%, 17% 50%, 26% 50%, 26% 35%, 33% 35%, 33% 60%, 41% 60%, 41% 25%, 44% 25%, 44% 0, 45.5% 0, 45.5% 25%, 48% 25%, 48% 55%, 58% 55%, 58% 30%, 66% 30%, 66% 50%, 72% 50%, 72% 15%, 74% 15%, 74% 45%, 83% 45%, 83% 25%, 90% 25%, 90% 55%, 100% 55%, 100% 100%);
+        background: linear-gradient(180deg, #5a3450, #3a2238);
+      }
+      .st-yard { background: linear-gradient(180deg, #4a2a30 0%, #2a1820 30%, #1a1016 70%); }
+      .st-road {
+        background:
+          repeating-conic-gradient(from 180deg at 50% 58.6%, rgba(10, 4, 6, 0.32) 0 0.12deg, transparent 0.12deg 0.55deg),
+          radial-gradient(ellipse 30% 40% at 50% 58%, rgba(255, 190, 120, 0.55), transparent 70%),
+          linear-gradient(180deg, #7a4a3a 56%, #4a2c28 66%, #2a1a1a 82%, #160e10);
+      }
+      .st-sett { background: rgba(14, 6, 8, 0.45); }
+      .st-pave { background: linear-gradient(180deg, #8a6250 56%, #5a3e36 70%, #2c1e1e 90%); }
+      .st-kerb { background: linear-gradient(180deg, #ffd29a 50%, #a07058 70%, #4a3028); }
+      .st-facade {
+        background:
+          repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 3px),
+          linear-gradient(90deg, #1e0e10 0%, #4a2220 26%, #8a4632 44%, #b0623e 50%, #8a4632 56%, #4a2220 74%, #1e0e10 100%);
+      }
+      .st-sill { background: rgba(255, 220, 180, 0.35); }
+      .st-windark { background: linear-gradient(180deg, #4a3050, #1e1424 60%); }
+      .st-winlit { background: radial-gradient(ellipse 70% 60% at 50% 60%, #fff0c0, #ffc870 40%, #e8903a 100%); filter: drop-shadow(0 0 3px rgba(255, 190, 100, 0.7)); }
+      .st-door { background: linear-gradient(90deg, #120a0c, #2a1a1e 50%, #120a0c); }
+      .st-step { background: linear-gradient(90deg, #6a5048, #d8b090 50%, #6a5048); }
+      .st-roof {
+        background:
+          linear-gradient(90deg, #160c16 0%, #3a2438 40%, #5a3a4a 50%, #3a2438 60%, #160c16 100%);
+      }
+      .st-chim { background: linear-gradient(90deg, #140a0e, #4a2a28 50%, #140a0e); }
+      .st-kiln, .st-kiln-rim { clip-path: polygon(3.50% 100.00%, 3.28% 99.50%, 2.96% 98.85%, 2.59% 98.06%, 2.20% 97.15%, 1.83% 96.12%, 1.50% 95.00%, 1.20% 93.78%, 0.88% 92.44%, 0.58% 91.00%, 0.31% 89.44%, 0.11% 87.78%, 0.00% 86.00%, -0.05% 84.06%, -0.05% 81.96%, 0.02% 79.75%, 0.16% 77.48%, 0.40% 75.21%, 0.75% 73.00%, 1.20% 70.82%, 1.73% 68.63%, 2.36% 66.44%, 3.10% 64.26%, 3.98% 62.11%, 5.00% 60.00%, 6.20% 57.92%, 7.57% 55.85%, 9.08% 53.81%, 10.68% 51.81%, 12.33% 49.87%, 14.00% 48.00%, 15.75% 46.21%, 17.63% 44.48%, 19.56% 42.81%, 21.48% 41.19%, 23.32% 39.59%, 25.00% 38.00%, 26.55% 36.44%, 28.02% 34.93%, 29.41% 33.44%, 30.70% 31.96%, 31.90% 30.49%, 33.00% 29.00%, 33.98% 27.51%, 34.83% 26.04%, 35.59% 24.56%, 36.28% 23.07%, 36.91% 21.56%, 37.50% 20.00%, 38.06% 18.34%, 38.56% 16.57%, 39.00% 14.78%, 39.39% 13.04%, 39.72% 11.42%, 40.00% 10.00%, 40.20% 8.76%, 40.33% 7.63%, 40.41% 6.62%, 40.44% 5.76%, 40.47% 5.05%, 40.50% 4.50%, 38.25% 4.50%, 38.25% 0.00%, 61.75% 0.00%, 61.75% 4.50%, 59.50% 4.50%, 59.53% 5.05%, 59.56% 5.76%, 59.59% 6.62%, 59.67% 7.63%, 59.80% 8.76%, 60.00% 10.00%, 60.28% 11.42%, 60.61% 13.04%, 61.00% 14.78%, 61.44% 16.57%, 61.94% 18.34%, 62.50% 20.00%, 63.09% 21.56%, 63.72% 23.07%, 64.41% 24.56%, 65.17% 26.04%, 66.02% 27.51%, 67.00% 29.00%, 68.10% 30.49%, 69.30% 31.96%, 70.59% 33.44%, 71.98% 34.93%, 73.45% 36.44%, 75.00% 38.00%, 76.68% 39.59%, 78.52% 41.19%, 80.44% 42.81%, 82.37% 44.48%, 84.25% 46.21%, 86.00% 48.00%, 87.67% 49.87%, 89.32% 51.81%, 90.92% 53.81%, 92.43% 55.85%, 93.80% 57.92%, 95.00% 60.00%, 96.02% 62.11%, 96.90% 64.26%, 97.64% 66.44%, 98.27% 68.63%, 98.80% 70.82%, 99.25% 73.00%, 99.60% 75.21%, 99.84% 77.48%, 99.98% 79.75%, 100.05% 81.96%, 100.05% 84.06%, 100.00% 86.00%, 99.89% 87.78%, 99.69% 89.44%, 99.42% 91.00%, 99.12% 92.44%, 98.80% 93.78%, 98.50% 95.00%, 98.17% 96.12%, 97.80% 97.15%, 97.41% 98.06%, 97.04% 98.85%, 96.72% 99.50%, 96.50% 100.00%); }
+      .st-kiln {
+        background:
+          repeating-linear-gradient(180deg, rgba(255, 200, 150, 0.05) 0 1px, transparent 1px 4px),
+          radial-gradient(ellipse 60% 30% at 50% 100%, rgba(255, 120, 50, 0.0), transparent 70%),
+          linear-gradient(90deg, #0e080a 0%, #1e1214 40%, #2c1a18 72%, #120a0c 100%);
+      }
+      .st-kiln-rim { background: linear-gradient(180deg, #ffe0a8, #ff9a50); transform: translate(1.5px, -1.5px); }
+      .st-kiln.big { background: repeating-linear-gradient(180deg, rgba(255, 200, 150, 0.05) 0 1px, transparent 1px 4px), radial-gradient(ellipse 50% 22% at 50% 100%, rgba(255, 130, 50, 0.5), transparent 70%), linear-gradient(90deg, #0e080a 0%, #1e1214 40%, #2c1a18 72%, #120a0c 100%); }
+      .st-smoke {
+        clip-path: polygon(40% 100%, 60% 100%, 70% 0, 30% 0);
+        background:
+          repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 6px, transparent 6px 14px),
+          linear-gradient(0deg, rgba(70, 56, 70, 0.95) 0%, rgba(110, 90, 110, 0.75) 45%, rgba(140, 120, 150, 0.25) 85%, transparent);
+        filter: blur(0.5px);
+        animation: smoke-rise 5s linear infinite;
+      }
+      .st-firebox {
+        border-radius: 50% 50% 0 0 / 70% 70% 0 0;
+        background: radial-gradient(ellipse at 50% 90%, #fff4c8 0 18%, #ffc04a 40%, #ff6a1a 70%, #b8321a 100%);
+        box-shadow: 0 0 6px 2px rgba(255, 140, 50, 0.85), 0 0 18px 6px rgba(255, 100, 40, 0.4);
+        animation: fire-breathe 3.4s ease-in-out infinite alternate;
+      }
+      .st-firespill { border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 140, 60, 0.42), transparent 66%); }
+      .st-fence { background: repeating-linear-gradient(90deg, #0a0608 0 1px, transparent 1px 4px); }
+      .st-lamp { background: linear-gradient(90deg, #0c0608, #3a2622); }
+      .st-lamp::after {
+        content: "";
+        position: absolute;
+        left: -150%; top: -3%; width: 400%; height: 7%;
+        border-radius: 30% 30% 10% 10%;
+        background: #fff0c8;
+        box-shadow: 0 0 6px 2px rgba(255, 200, 120, 0.9), 0 0 22px 8px rgba(255, 170, 90, 0.35);
+      }
+      .st-p { position: absolute; }
+      .st-p::before, .st-p::after { content: ""; position: absolute; background: #140a0e; }
+      .st-p::before { left: 31%; top: 0; width: 38%; aspect-ratio: 0.9; border-radius: 50% 50% 46% 46%; }
+      .st-p::after { left: 2%; right: 2%; top: 21%; bottom: 0; border-radius: 42% 42% 16% 16% / 16% 16% 4% 4%; clip-path: polygon(0 12%, 18% 0, 82% 0, 100% 12%, 94% 62%, 84% 100%, 16% 100%, 6% 62%); }
+      .st-p.kid::before { left: 26%; width: 48%; }
+      .st-p.kid::after { top: 22%; }
+
+      /* ===== HERO: Chadwick Street at dusk ===== */
+      .kiln-hero {
+        position: relative;
+        height: 22rem;
+        font-size: 1rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 207, 150, 0.14);
+        background: linear-gradient(180deg, #24183e 0%, #3e2552 16%, #6a3460 30%, #a24c5e 40%, #d87454 48%, #f2a35e 54%, #ffcf8a 58.5%, #ffe0a6 60%, #f4b06a 64%);
+      }
+      .kh-wash-a { left: -14%; top: -20%; width: 70%; height: 50%; background: rgba(40, 24, 70, 0.6); filter: blur(30px); }
+      .kh-wash-b { left: 30%; top: 20%; width: 80%; height: 16%; border-radius: 50%; background: rgba(255, 150, 120, 0.25); filter: blur(10px); transform: rotate(-5deg); mix-blend-mode: screen; }
+      .kh-glow {
+        left: 20%; top: 34%; width: 60%; height: 40%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 62%, rgba(255, 240, 200, 0.85) 0 5%, rgba(255, 196, 120, 0.5) 22%, rgba(255, 140, 90, 0.18) 48%, transparent 70%);
+        animation: glow-breathe 14s ease-in-out infinite alternate;
+      }
+      .kh-strokes {
+        inset: -10% -10% 40% -10%;
+        background:
+          repeating-linear-gradient(168deg, rgba(255, 200, 160, 0.06) 0 3px, transparent 3px 12px, rgba(40, 10, 50, 0.12) 12px 15px, transparent 15px 26px),
+          repeating-linear-gradient(174deg, rgba(255, 160, 120, 0.05) 0 2px, transparent 2px 19px);
+        filter: blur(1.2px);
+        mask-image: linear-gradient(180deg, #000 30%, transparent 90%);
+      }
+      .kiln-hero .st-p, .kiln-hero .st-lamp { z-index: 2; }
+      .kh-gate {
+        right: -1%; bottom: 0; width: 34%; height: 24%;
+        z-index: 8;
+        background:
+          linear-gradient(180deg, transparent 0 8%, #0e0608 8% 12%, transparent 12% 64%, #0e0608 64% 68%, transparent 68%),
+          repeating-linear-gradient(90deg, #0e0608 0 3px, #ffb070 3px 4px, transparent 4px 15px);
+        clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
+      }
+      .kh-step {
+        left: -2%; bottom: -1%; width: 40%; height: 6%;
+        z-index: 9;
+        border-radius: 0 4px 0 0;
+        background: linear-gradient(180deg, #ffc890 0, #6a4236 10%, #2a1a18 60%, #140c0e);
+      }
+
+      /* ===== the Heron (shared) ===== */
+      .heron { position: absolute; width: 2.2em; height: 6em; z-index: 6; }
+      .heron > i { position: absolute; display: block; }
+      .h-legs { inset: 0; clip-path: polygon(42.60% 55.00%, 39.10% 76.00%, 42.88% 98.50%, 51.00% 98.70%, 51.00% 99.80%, 40.88% 99.80%, 45.12% 98.40%, 41.90% 76.00%, 47.40% 55.00%, 42.60% 55.00%, 50.60% 55.00%, 48.60% 77.00%, 53.88% 99.00%, 62.00% 99.20%, 62.00% 100.30%, 51.88% 100.30%, 56.12% 98.90%, 51.40% 77.00%, 55.40% 55.00%, 50.60% 55.00%, 42.60% 55.00%); background: linear-gradient(90deg, #2c2e38, #7a808e 55%, #ffcf96 90%); }
+      .h-neck { inset: 0; clip-path: polygon(70.40% 37.00%, 69.64% 36.14%, 68.48% 34.96%, 67.14% 33.56%, 65.84% 32.04%, 64.79% 30.48%, 64.20% 29.00%, 64.13% 27.53%, 64.41% 26.00%, 64.94% 24.44%, 65.62% 22.89%, 66.34% 21.40%, 67.00% 20.00%, 67.71% 18.69%, 68.58% 17.43%, 69.49% 16.22%, 70.33% 15.07%, 70.97% 14.00%, 71.30% 13.00%, 71.22% 12.05%, 70.81% 11.15%, 70.20% 10.31%, 69.54% 9.57%, 68.96% 8.96%, 68.60% 8.50%, 71.40% 8.50%, 71.86% 8.96%, 72.54% 9.57%, 73.30% 10.31%, 74.01% 11.15%, 74.52% 12.05%, 74.70% 13.00%, 74.47% 14.00%, 73.93% 15.07%, 73.19% 16.22%, 72.38% 17.43%, 71.61% 18.69%, 71.00% 20.00%, 70.44% 21.40%, 69.82% 22.89%, 69.24% 24.44%, 68.81% 26.00%, 68.63% 27.53%, 68.80% 29.00%, 69.49% 30.48%, 70.64% 32.04%, 72.04% 33.56%, 73.48% 34.96%, 74.74% 36.14%, 75.60% 37.00%); background: linear-gradient(90deg, #4a4e5a, #a8aeba 60%, #ffd8a0); }
+      .h-body {
+        left: 22%; top: 31%; width: 62%; height: 25%;
+        border-radius: 62% 38% 45% 55% / 62% 48% 52% 38%;
+        transform: rotate(-24deg);
+        background: linear-gradient(160deg, #d0d4de 0%, #949aa8 32%, #5e6370 72%, #3a3d48);
+        box-shadow: inset 0 0.06em 0 rgba(255, 214, 160, 0.9), inset -0.08em -0.1em 0.2em rgba(0, 0, 0, 0.35);
+      }
+      .h-wing {
+        left: 14%; top: 37%; width: 60%; height: 18%;
+        border-radius: 70% 30% 60% 40% / 60% 40% 60% 40%;
+        transform: rotate(-18deg);
+        background:
+          repeating-linear-gradient(115deg, rgba(0, 0, 0, 0.2) 0 0.04em, transparent 0.04em 0.13em),
+          linear-gradient(180deg, #7a7f8c, #4a4e5a);
+        box-shadow: inset 0 0.04em 0 rgba(255, 220, 180, 0.5);
+      }
+      .h-slate {
+        left: 6%; top: 47%; width: 58%; height: 10%;
+        transform: rotate(-14deg);
+        border-radius: 0.05em;
+        background: linear-gradient(180deg, #3e434c, #23262d);
+        box-shadow: 0 0 0 0.05em #8a6444, 0 0.06em 0.12em rgba(0, 0, 0, 0.5);
+      }
+      .h-head {
+        left: 58%; top: 3.6%; width: 46%; height: 9.6%;
+        transform: rotate(var(--tilt, 0deg));
+        transform-origin: 30% 60%;
+        border-radius: 45% 60% 55% 45% / 60% 60% 40% 40%;
+        background: radial-gradient(ellipse at 42% 62%, #fffdf0 0 18%, #ffe6a8 40%, #ffbe68 70%, #c97a3a 100%);
+        box-shadow: 0 0 0.22em 0.06em rgba(255, 214, 150, 0.95), 0 0 1em 0.32em rgba(255, 190, 110, 0.38);
+      }
+      .h-head::before {
+        content: "";
+        position: absolute;
+        left: -6%; right: -6%; top: -16%; height: 54%;
+        border-radius: 60% 60% 14% 14% / 90% 90% 14% 14%;
+        background: linear-gradient(180deg, #b8bec8, #6a6f7c);
+      }
+      .h-head::after {
+        content: "";
+        position: absolute;
+        left: 90%; top: 30%; width: 46%; height: 24%;
+        clip-path: polygon(0 0, 100% 60%, 0 100%);
+        background: linear-gradient(180deg, #c8ced8, #6a6f7c);
+      }
+      .hero-heron { transform: scaleX(-1); }
+
+      .swift {
+        width: calc(1.3rem * var(--sz));
+        aspect-ratio: 2.6;
+        z-index: 3;
+        clip-path: polygon(0% 70%, 22% 38%, 44% 46%, 50% 30%, 56% 46%, 78% 38%, 100% 70%, 76% 50%, 56% 60%, 52% 86%, 48% 86%, 44% 60%, 24% 50%);
+        background: #1c1020;
+        animation: swift-fly linear infinite;
+      }
+
+      /* ===== 1: the glass plate on the slate ===== */
+      .plate-scene { background: linear-gradient(160deg, #3a2232, #6a3a3a 50%, #8a5236); }
+      .pl-wash-a { left: -10%; top: -20%; width: 70%; height: 70%; background: rgba(255, 190, 120, 0.3); }
+      .pl-wash-b { right: -10%; bottom: -20%; width: 60%; height: 60%; background: rgba(90, 40, 90, 0.5); }
+      .pl-wing {
+        left: -14%; top: 40%; width: 30%; height: 80%;
+        z-index: 2;
+        border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+        transform: rotate(-8deg);
+        background:
+          repeating-linear-gradient(170deg, rgba(0, 0, 0, 0.16) 0 2px, transparent 2px 12px),
+          linear-gradient(90deg, #3a3e48, #7a808e 70%, #ffd2a0);
+      }
+      .pl-slate {
+        left: 17%; right: 15%; top: 8%; bottom: 10%;
+        z-index: 3;
+        transform: rotate(-3deg);
+        border-radius: 4px;
+        background:
+          radial-gradient(ellipse 30% 20% at 80% 90%, rgba(255, 255, 255, 0.06), transparent 70%),
+          linear-gradient(160deg, #3a3e48, #22252c 60%, #1a1c22);
+        box-shadow: 0 0 0 0.45rem #6a462e, 0 0 0 calc(0.45rem + 1px) rgba(255, 200, 140, 0.5), 0 18px 34px rgba(0, 0, 0, 0.55);
+      }
+      .pl-photo {
+        position: absolute;
+        left: 7%; right: 7%; top: 9%; bottom: 9%;
+        overflow: hidden;
+        background: linear-gradient(180deg, #f6f0e2 0%, #eee4d0 40%, #d8ccb4 60%);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        filter: contrast(1.04);
+      }
+      .pl-photo > div { position: absolute; }
+      .pl-photo .st-yard { background: linear-gradient(180deg, #c8bca4, #a89a82); }
+      .pl-photo .st-road { background: repeating-conic-gradient(from 180deg at 50% 46%, rgba(40, 30, 20, 0.22) 0 0.15deg, transparent 0.15deg 0.6deg), linear-gradient(180deg, #b4a68e 40%, #8a7c66 70%, #6a5e4c); }
+      .pl-photo .st-sett { background: rgba(50, 40, 30, 0.3); }
+      .pl-photo .st-pave { background: linear-gradient(180deg, #b8aa92, #7a6e5c); }
+      .pl-photo .st-kerb { background: #ddd2bc; }
+      .pl-photo .st-facade { background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 3px), linear-gradient(90deg, #4a4036 0%, #7a6e5e 35%, #b0a48e 50%, #7a6e5e 65%, #4a4036 100%); }
+      .pl-photo .st-windark, .pl-photo .st-winlit { background: linear-gradient(180deg, #8a8070, #2e2820); filter: none; }
+      .pl-photo .st-sill { background: rgba(240, 230, 210, 0.5); }
+      .pl-photo .st-door { background: #2a241e; }
+      .pl-photo .st-step { background: #e2d8c4; }
+      .pl-photo .st-roof { background: linear-gradient(90deg, #2e2822, #5a5046 50%, #2e2822); }
+      .pl-photo .st-chim { background: #3a322a; }
+      .pl-photo .st-kiln { background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px), linear-gradient(90deg, #14100c, #2a241e 60%, #1a1410); }
+      .pl-photo .st-kiln-rim { background: #8a7e6c; }
+      .pl-photo .st-smoke { background: linear-gradient(0deg, rgba(40, 34, 28, 0.95), rgba(70, 62, 52, 0.7) 60%, rgba(120, 110, 96, 0.2)); }
+      .pl-photo .st-lamp { background: #2a241e; }
+      .pl-photo .st-lamp::after { background: #4a4036; box-shadow: none; }
+      .pl-photo .st-p::before, .pl-photo .st-p::after { background: #2a2219; }
+      .pl-photo .st-p.plaid::after {
+        background:
+          repeating-linear-gradient(0deg, rgba(240, 230, 210, 0.55) 0 1px, transparent 1px 3px),
+          repeating-linear-gradient(90deg, rgba(240, 230, 210, 0.55) 0 1px, transparent 1px 3px),
+          #5a4c3c;
+      }
+      .pl-silver {
+        inset: 0;
+        background:
+          radial-gradient(ellipse 40% 30% at 0% 0%, rgba(120, 140, 170, 0.45), transparent 70%),
+          radial-gradient(ellipse 34% 30% at 100% 100%, rgba(110, 130, 160, 0.4), transparent 70%),
+          radial-gradient(ellipse 90% 90% at 50% 50%, transparent 60%, rgba(60, 44, 28, 0.55) 100%);
+        mix-blend-mode: multiply;
+      }
+      .pl-scratch { left: 56%; top: -10%; width: 1px; height: 120%; transform: rotate(24deg); background: rgba(255, 255, 255, 0.5); }
+      .pl-wingtip {
+        left: 4%; top: 30%; width: 22%; height: 66%;
+        z-index: 4;
+        transform: rotate(10deg);
+        clip-path: polygon(30.00% 0.00%, 16.00% 12.00%, 8.00% 30.00%, 4.00% 52.00%, 6.00% 76.00%, 14.00% 100.00%, 73.80% 100.00%, 67.27% 95.00%, 78.57% 90.00%, 71.67% 85.00%, 82.54% 80.00%, 75.17% 75.00%, 85.53% 70.00%, 77.60% 65.00%, 87.37% 60.00%, 78.84% 55.00%, 88.00% 50.00%, 78.84% 45.00%, 87.37% 40.00%, 77.60% 35.00%, 85.53% 30.00%, 75.17% 25.00%, 82.54% 20.00%, 71.67% 15.00%, 78.57% 10.00%, 67.27% 5.00%, 73.80% 0.00%);
+        background:
+          repeating-linear-gradient(172deg, rgba(30, 32, 40, 0.38) 0 1px, transparent 1px 9%),
+          linear-gradient(90deg, #5a5f6c 0%, #9aa0ac 40%, #c8ced8 70%, #ffdcb0 100%);
+        filter: drop-shadow(4px 6px 6px rgba(0, 0, 0, 0.45));
+      }
+
+      /* ===== 2: the corner, the kiln behind its fence ===== */
+      .corner-scene { background: linear-gradient(180deg, #4a3a6a 0%, #8a5a78 26%, #e09a78 48%, #ffd29a 60%, #f4b480 70%); }
+      .cn-wash-a { left: 30%; top: -10%; width: 80%; height: 50%; background: rgba(255, 220, 170, 0.35); }
+      .cn-sun { right: 2%; top: 38%; width: 30%; height: 34%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 250, 220, 0.95) 0 8%, rgba(255, 210, 140, 0.5) 26%, transparent 66%); }
+      .cn-far { left: 0; right: 0; top: 54%; height: 12%; clip-path: polygon(0 60%, 12% 40%, 24% 50%, 38% 30%, 52% 44%, 66% 26%, 80% 40%, 100% 30%, 100% 100%, 0 100%); background: linear-gradient(180deg, #a26a78, #7a4a62); opacity: 0.85; }
+      .cn-ground {
+        left: 0; right: 0; top: 76%; bottom: 0;
+        background:
+          repeating-linear-gradient(176deg, rgba(255, 210, 160, 0.06) 0 1px, transparent 1px 6px),
+          linear-gradient(180deg, #6a4440, #3a2228 60%, #24141a);
+      }
+      .cn-kiln, .cn-kiln-rim { left: 58%; top: 22%; width: 26%; height: 58%; clip-path: polygon(3.50% 100.00%, 3.28% 99.50%, 2.96% 98.85%, 2.59% 98.06%, 2.20% 97.15%, 1.83% 96.12%, 1.50% 95.00%, 1.20% 93.78%, 0.88% 92.44%, 0.58% 91.00%, 0.31% 89.44%, 0.11% 87.78%, 0.00% 86.00%, -0.05% 84.06%, -0.05% 81.96%, 0.02% 79.75%, 0.16% 77.48%, 0.40% 75.21%, 0.75% 73.00%, 1.20% 70.82%, 1.73% 68.63%, 2.36% 66.44%, 3.10% 64.26%, 3.98% 62.11%, 5.00% 60.00%, 6.20% 57.92%, 7.57% 55.85%, 9.08% 53.81%, 10.68% 51.81%, 12.33% 49.87%, 14.00% 48.00%, 15.75% 46.21%, 17.63% 44.48%, 19.56% 42.81%, 21.48% 41.19%, 23.32% 39.59%, 25.00% 38.00%, 26.55% 36.44%, 28.02% 34.93%, 29.41% 33.44%, 30.70% 31.96%, 31.90% 30.49%, 33.00% 29.00%, 33.98% 27.51%, 34.83% 26.04%, 35.59% 24.56%, 36.28% 23.07%, 36.91% 21.56%, 37.50% 20.00%, 38.06% 18.34%, 38.56% 16.57%, 39.00% 14.78%, 39.39% 13.04%, 39.72% 11.42%, 40.00% 10.00%, 40.20% 8.76%, 40.33% 7.63%, 40.41% 6.62%, 40.44% 5.76%, 40.47% 5.05%, 40.50% 4.50%, 38.25% 4.50%, 38.25% 0.00%, 61.75% 0.00%, 61.75% 4.50%, 59.50% 4.50%, 59.53% 5.05%, 59.56% 5.76%, 59.59% 6.62%, 59.67% 7.63%, 59.80% 8.76%, 60.00% 10.00%, 60.28% 11.42%, 60.61% 13.04%, 61.00% 14.78%, 61.44% 16.57%, 61.94% 18.34%, 62.50% 20.00%, 63.09% 21.56%, 63.72% 23.07%, 64.41% 24.56%, 65.17% 26.04%, 66.02% 27.51%, 67.00% 29.00%, 68.10% 30.49%, 69.30% 31.96%, 70.59% 33.44%, 71.98% 34.93%, 73.45% 36.44%, 75.00% 38.00%, 76.68% 39.59%, 78.52% 41.19%, 80.44% 42.81%, 82.37% 44.48%, 84.25% 46.21%, 86.00% 48.00%, 87.67% 49.87%, 89.32% 51.81%, 90.92% 53.81%, 92.43% 55.85%, 93.80% 57.92%, 95.00% 60.00%, 96.02% 62.11%, 96.90% 64.26%, 97.64% 66.44%, 98.27% 68.63%, 98.80% 70.82%, 99.25% 73.00%, 99.60% 75.21%, 99.84% 77.48%, 99.98% 79.75%, 100.05% 81.96%, 100.05% 84.06%, 100.00% 86.00%, 99.89% 87.78%, 99.69% 89.44%, 99.42% 91.00%, 99.12% 92.44%, 98.80% 93.78%, 98.50% 95.00%, 98.17% 96.12%, 97.80% 97.15%, 97.41% 98.06%, 97.04% 98.85%, 96.72% 99.50%, 96.50% 100.00%); }
+      .cn-kiln {
+        z-index: 2;
+        background:
+          repeating-linear-gradient(180deg, rgba(255, 210, 160, 0.05) 0 1px, transparent 1px 4px),
+          linear-gradient(90deg, #120a0c 0%, #22161a 55%, #3a2420 82%, #1a1012 100%);
+      }
+      .cn-kiln-rim { z-index: 1; background: linear-gradient(180deg, #fff0c8, #ffb468); transform: translate(3px, -2px); }
+      .cn-fence {
+        left: 52%; width: 38%; top: 70%; height: 11%;
+        z-index: 3;
+        background:
+          linear-gradient(180deg, transparent 0 22%, #1a0e10 22% 30%, transparent 30% 72%, #1a0e10 72% 80%, transparent 80%),
+          repeating-linear-gradient(90deg, #1a0e10 0 2px, rgba(255, 200, 140, 0.5) 2px 3px, transparent 3px 9px);
+        mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      }
+      .cn-plaque {
+        left: 68.5%; top: 66%; width: 5%; height: 4%;
+        z-index: 4;
+        border-radius: 1px;
+        background: linear-gradient(135deg, #3a4a6a, #1e2a46 60%);
+        box-shadow: inset 0 0 0 1px rgba(255, 230, 190, 0.7), 0 0 6px rgba(255, 220, 160, 0.4);
+      }
+      .cn-scrub { z-index: 3; width: calc(1.4rem * var(--s)); aspect-ratio: 2; border-radius: 50% 50% 20% 20%; background: radial-gradient(ellipse at 50% 80%, #2a2a1c, #3e3a24 60%, transparent 72%); }
+      .cn-roof {
+        z-index: 4;
+        height: 70%;
+        clip-path: polygon(0 6%, 100% 0, 100% 100%, 0 100%);
+        background:
+          linear-gradient(180deg, #2a1a2a 0 9%, #ffcf96 9% 10%, transparent 10%),
+          repeating-linear-gradient(90deg, transparent 0 20%, rgba(255, 206, 140, 0.55) 20% 32%, transparent 32% 60%, rgba(30, 18, 26, 0.7) 60% 72%, transparent 72%) 0 30% / 100% 12% no-repeat,
+          linear-gradient(90deg, #4a2422, #7a3a2c 70%, #a8583a);
+      }
+      .cn-chim { z-index: 4; width: 1.4%; height: 4%; background: linear-gradient(90deg, #2a1418, #8a4a3a); }
+      .cn-beam {
+        inset: 0;
+        z-index: 5;
+        clip-path: polygon(22% 8%, 24% 13%, 76% 74%, 60% 78%);
+        background: linear-gradient(140deg, rgba(255, 236, 190, 0.4), rgba(255, 220, 160, 0.06) 80%);
+      }
+      .cn-wall {
+        left: 0; top: 0; bottom: 0; width: 6%;
+        z-index: 5;
+        background:
+          repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 5px),
+          linear-gradient(90deg, #2a1416, #6a3428 80%, #ffb878);
+      }
+
+      /* ===== 3: Efua's rocket, chalk on the slate ===== */
+      .rocket-scene { background: linear-gradient(180deg, #6a3a6a, #b8607a 50%, #f0a070); }
+      .rk-wash-a { left: -10%; top: -20%; width: 60%; height: 70%; background: rgba(255, 210, 150, 0.4); }
+      .rk-wash-b { right: -10%; bottom: -20%; width: 60%; height: 70%; background: rgba(110, 50, 120, 0.5); }
+      .rk-slate {
+        left: 13%; right: 13%; top: 7%; bottom: 8%;
+        z-index: 2;
+        overflow: hidden;
+        transform: rotate(2deg);
+        border-radius: 4px;
+        background: linear-gradient(160deg, #3a3f48, #262a31 55%, #1d2026);
+        box-shadow: 0 0 0 0.45rem #74502f, 0 0 0 calc(0.45rem + 1px) rgba(255, 210, 150, 0.55), 0 18px 34px rgba(0, 0, 0, 0.5);
+      }
+      .rk-slate > * { position: absolute; display: block; }
+      .rk-dust {
+        inset: 0;
+        background:
+          radial-gradient(ellipse 30% 14% at 30% 80%, rgba(255, 255, 255, 0.07), transparent 70%),
+          radial-gradient(ellipse 24% 18% at 72% 30%, rgba(255, 255, 255, 0.05), transparent 70%),
+          repeating-linear-gradient(30deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 7px);
+      }
+      .rk-kiln {
+        left: 39%; top: 38%; width: 22%; height: 50%;
+        clip-path: polygon(3.50% 100.00%, 3.28% 99.50%, 2.96% 98.85%, 2.59% 98.06%, 2.20% 97.15%, 1.83% 96.12%, 1.50% 95.00%, 1.20% 93.78%, 0.88% 92.44%, 0.58% 91.00%, 0.31% 89.44%, 0.11% 87.78%, 0.00% 86.00%, -0.05% 84.06%, -0.05% 81.96%, 0.02% 79.75%, 0.16% 77.48%, 0.40% 75.21%, 0.75% 73.00%, 1.20% 70.82%, 1.73% 68.63%, 2.36% 66.44%, 3.10% 64.26%, 3.98% 62.11%, 5.00% 60.00%, 6.20% 57.92%, 7.57% 55.85%, 9.08% 53.81%, 10.68% 51.81%, 12.33% 49.87%, 14.00% 48.00%, 15.75% 46.21%, 17.63% 44.48%, 19.56% 42.81%, 21.48% 41.19%, 23.32% 39.59%, 25.00% 38.00%, 26.55% 36.44%, 28.02% 34.93%, 29.41% 33.44%, 30.70% 31.96%, 31.90% 30.49%, 33.00% 29.00%, 33.98% 27.51%, 34.83% 26.04%, 35.59% 24.56%, 36.28% 23.07%, 36.91% 21.56%, 37.50% 20.00%, 38.06% 18.34%, 38.56% 16.57%, 39.00% 14.78%, 39.39% 13.04%, 39.72% 11.42%, 40.00% 10.00%, 40.20% 8.76%, 40.33% 7.63%, 40.41% 6.62%, 40.44% 5.76%, 40.47% 5.05%, 40.50% 4.50%, 38.25% 4.50%, 38.25% 0.00%, 61.75% 0.00%, 61.75% 4.50%, 59.50% 4.50%, 59.53% 5.05%, 59.56% 5.76%, 59.59% 6.62%, 59.67% 7.63%, 59.80% 8.76%, 60.00% 10.00%, 60.28% 11.42%, 60.61% 13.04%, 61.00% 14.78%, 61.44% 16.57%, 61.94% 18.34%, 62.50% 20.00%, 63.09% 21.56%, 63.72% 23.07%, 64.41% 24.56%, 65.17% 26.04%, 66.02% 27.51%, 67.00% 29.00%, 68.10% 30.49%, 69.30% 31.96%, 70.59% 33.44%, 71.98% 34.93%, 73.45% 36.44%, 75.00% 38.00%, 76.68% 39.59%, 78.52% 41.19%, 80.44% 42.81%, 82.37% 44.48%, 84.25% 46.21%, 86.00% 48.00%, 87.67% 49.87%, 89.32% 51.81%, 90.92% 53.81%, 92.43% 55.85%, 93.80% 57.92%, 95.00% 60.00%, 96.02% 62.11%, 96.90% 64.26%, 97.64% 66.44%, 98.27% 68.63%, 98.80% 70.82%, 99.25% 73.00%, 99.60% 75.21%, 99.84% 77.48%, 99.98% 79.75%, 100.05% 81.96%, 100.05% 84.06%, 100.00% 86.00%, 99.89% 87.78%, 99.69% 89.44%, 99.42% 91.00%, 99.12% 92.44%, 98.80% 93.78%, 98.50% 95.00%, 98.17% 96.12%, 97.80% 97.15%, 97.41% 98.06%, 97.04% 98.85%, 96.72% 99.50%, 96.50% 100.00%);
+        transform: rotate(-2deg);
+        background: rgba(244, 240, 230, 0.86);
+        filter: blur(0.3px);
+      }
+      .rk-kiln::after {
+        content: "";
+        position: absolute;
+        inset: 3% 6% 2% 6%;
+        clip-path: polygon(3.50% 100.00%, 3.28% 99.50%, 2.96% 98.85%, 2.59% 98.06%, 2.20% 97.15%, 1.83% 96.12%, 1.50% 95.00%, 1.20% 93.78%, 0.88% 92.44%, 0.58% 91.00%, 0.31% 89.44%, 0.11% 87.78%, 0.00% 86.00%, -0.05% 84.06%, -0.05% 81.96%, 0.02% 79.75%, 0.16% 77.48%, 0.40% 75.21%, 0.75% 73.00%, 1.20% 70.82%, 1.73% 68.63%, 2.36% 66.44%, 3.10% 64.26%, 3.98% 62.11%, 5.00% 60.00%, 6.20% 57.92%, 7.57% 55.85%, 9.08% 53.81%, 10.68% 51.81%, 12.33% 49.87%, 14.00% 48.00%, 15.75% 46.21%, 17.63% 44.48%, 19.56% 42.81%, 21.48% 41.19%, 23.32% 39.59%, 25.00% 38.00%, 26.55% 36.44%, 28.02% 34.93%, 29.41% 33.44%, 30.70% 31.96%, 31.90% 30.49%, 33.00% 29.00%, 33.98% 27.51%, 34.83% 26.04%, 35.59% 24.56%, 36.28% 23.07%, 36.91% 21.56%, 37.50% 20.00%, 38.06% 18.34%, 38.56% 16.57%, 39.00% 14.78%, 39.39% 13.04%, 39.72% 11.42%, 40.00% 10.00%, 40.20% 8.76%, 40.33% 7.63%, 40.41% 6.62%, 40.44% 5.76%, 40.47% 5.05%, 40.50% 4.50%, 38.25% 4.50%, 38.25% 0.00%, 61.75% 0.00%, 61.75% 4.50%, 59.50% 4.50%, 59.53% 5.05%, 59.56% 5.76%, 59.59% 6.62%, 59.67% 7.63%, 59.80% 8.76%, 60.00% 10.00%, 60.28% 11.42%, 60.61% 13.04%, 61.00% 14.78%, 61.44% 16.57%, 61.94% 18.34%, 62.50% 20.00%, 63.09% 21.56%, 63.72% 23.07%, 64.41% 24.56%, 65.17% 26.04%, 66.02% 27.51%, 67.00% 29.00%, 68.10% 30.49%, 69.30% 31.96%, 70.59% 33.44%, 71.98% 34.93%, 73.45% 36.44%, 75.00% 38.00%, 76.68% 39.59%, 78.52% 41.19%, 80.44% 42.81%, 82.37% 44.48%, 84.25% 46.21%, 86.00% 48.00%, 87.67% 49.87%, 89.32% 51.81%, 90.92% 53.81%, 92.43% 55.85%, 93.80% 57.92%, 95.00% 60.00%, 96.02% 62.11%, 96.90% 64.26%, 97.64% 66.44%, 98.27% 68.63%, 98.80% 70.82%, 99.25% 73.00%, 99.60% 75.21%, 99.84% 77.48%, 99.98% 79.75%, 100.05% 81.96%, 100.05% 84.06%, 100.00% 86.00%, 99.89% 87.78%, 99.69% 89.44%, 99.42% 91.00%, 99.12% 92.44%, 98.80% 93.78%, 98.50% 95.00%, 98.17% 96.12%, 97.80% 97.15%, 97.41% 98.06%, 97.04% 98.85%, 96.72% 99.50%, 96.50% 100.00%);
+        background:
+          repeating-linear-gradient(62deg, rgba(244, 240, 230, 0.2) 0 1px, transparent 1px 6px),
+          #292d34;
+      }
+      .rk-door { left: 47.5%; top: 79%; width: 5%; height: 8%; border: 2px solid rgba(255, 170, 90, 0.9); border-bottom: 0; border-radius: 50% 50% 0 0; }
+      .rk-flame {
+        top: 86.5%; width: 3.4%; height: 20%;
+        transform-origin: 50% 0;
+        clip-path: polygon(0 0, 100% 0, 92% 30%, 70% 62%, 50% 100%, 32% 66%, 8% 32%);
+        background:
+          repeating-linear-gradient(70deg, rgba(255, 170, 60, 0.95) 0 2px, transparent 2px 4px),
+          radial-gradient(ellipse at 50% 0%, rgba(255, 230, 140, 0.5), transparent 70%);
+        animation: flame 0.9s ease-in-out infinite alternate;
+      }
+      .rk-flame.f1 { left: 45%; transform: rotate(12deg); }
+      .rk-flame.f2 { left: 48.3%; height: 24%; background: repeating-linear-gradient(70deg, rgba(255, 220, 90, 0.9) 0 2px, transparent 2px 4px); }
+      .rk-flame.f3 { left: 51.6%; transform: rotate(-12deg); animation-delay: -0.4s; }
+      .rk-ground { left: 6%; right: 6%; top: 95%; height: 4px; border-top: 2px dashed rgba(244, 240, 230, 0.5); }
+      .rk-puff {
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: repeating-linear-gradient(var(--r), rgba(186, 120, 236, 0.75) 0 2px, transparent 2px 5px);
+        box-shadow: 0 0 0 2px rgba(206, 150, 250, 0.75);
+        filter: blur(0.3px);
+        animation: puff 6s ease-in-out infinite alternate;
+      }
+      .rk-star {
+        width: 2.4%; aspect-ratio: 1;
+        clip-path: polygon(50% 0, 61% 36%, 100% 38%, 68% 60%, 80% 100%, 50% 76%, 20% 100%, 32% 60%, 0 38%, 39% 36%);
+        background: rgba(255, 236, 160, 0.85);
+        transform: rotate(var(--r));
+      }
+      .rk-chalk { z-index: 3; height: 0.32rem; border-radius: 0.16rem; bottom: 4.6%; }
+      .rk-chalk.c1 { left: 30%; width: 2.6rem; background: linear-gradient(180deg, #d6a8ff, #9a60d0); transform: rotate(-4deg); }
+      .rk-chalk.c2 { left: 40%; width: 1.6rem; background: linear-gradient(180deg, #ffc888, #e0843a); transform: rotate(6deg); }
+      .rk-wing {
+        right: 1%; top: 24%; width: 20%; height: 74%;
+        z-index: 4;
+        transform: scaleX(-1) rotate(8deg);
+        clip-path: polygon(30.00% 0.00%, 16.00% 12.00%, 8.00% 30.00%, 4.00% 52.00%, 6.00% 76.00%, 14.00% 100.00%, 73.80% 100.00%, 67.27% 95.00%, 78.57% 90.00%, 71.67% 85.00%, 82.54% 80.00%, 75.17% 75.00%, 85.53% 70.00%, 77.60% 65.00%, 87.37% 60.00%, 78.84% 55.00%, 88.00% 50.00%, 78.84% 45.00%, 87.37% 40.00%, 77.60% 35.00%, 85.53% 30.00%, 75.17% 25.00%, 82.54% 20.00%, 71.67% 15.00%, 78.57% 10.00%, 67.27% 5.00%, 73.80% 0.00%);
+        background:
+          repeating-linear-gradient(172deg, rgba(30, 32, 40, 0.38) 0 1px, transparent 1px 9%),
+          linear-gradient(90deg, #5a5f6c 0%, #9aa0ac 40%, #c8ced8 70%, #ffdcb0 100%);
+      }
+
+      /* ===== 4: night crews, brick by brick ===== */
+      .crews-scene {
+        container-type: size;
+        background: linear-gradient(180deg, #120c26 0%, #241640 40%, #4a2a4a 66%, #7a4040 78%);
+      }
+      .cw-stars { left: 0; top: 0; width: 1px; height: 1px; border-radius: 50%; box-shadow: 375px 11px 0 0.5px rgba(255,236,210,0.55), 316px 3px 0 0.5px rgba(255,236,210,0.72), 16px 103px 0 0px rgba(255,236,210,0.55), 297px 79px 0 0px rgba(255,236,210,0.46), 131px 92px 0 0px rgba(255,236,210,0.35), 396px 63px 0 0px rgba(255,236,210,0.44), 84px 67px 0 0px rgba(255,236,210,0.72), 264px 12px 0 0px rgba(255,236,210,0.51), 133px 17px 0 0px rgba(255,236,210,0.57), 471px 41px 0 0.5px rgba(255,236,210,0.67), 7px 2px 0 0px rgba(255,236,210,0.34), 345px 23px 0 0px rgba(255,236,210,0.67), 243px 39px 0 0.5px rgba(255,236,210,0.72), 8px 63px 0 0px rgba(255,236,210,0.60), 586px 36px 0 0.5px rgba(255,236,210,0.43), 43px 36px 0 0px rgba(255,236,210,0.50), 27px 44px 0 0px rgba(255,236,210,0.36), 192px 82px 0 0px rgba(255,236,210,0.47), 389px 5px 0 0px rgba(255,236,210,0.64), 132px 66px 0 0px rgba(255,236,210,0.69), 395px 78px 0 0px rgba(255,236,210,0.72), 509px 24px 0 0px rgba(255,236,210,0.74), 440px 109px 0 0.5px rgba(255,236,210,0.44), 393px 116px 0 0px rgba(255,236,210,0.61), 240px 75px 0 0.5px rgba(255,236,210,0.65), 387px 102px 0 0px rgba(255,236,210,0.52), 409px 12px 0 0px rgba(255,236,210,0.68), 162px 35px 0 0px rgba(255,236,210,0.71), 106px 20px 0 0px rgba(255,236,210,0.49), 488px 116px 0 0px rgba(255,236,210,0.72), 134px 97px 0 0px rgba(255,236,210,0.35), 138px 66px 0 0px rgba(255,236,210,0.75), 582px 64px 0 0px rgba(255,236,210,0.70), 407px 12px 0 0.5px rgba(255,236,210,0.57), 391px 0px 0 0.5px rgba(255,236,210,0.35), 452px 63px 0 0px rgba(255,236,210,0.55), 318px 23px 0 0.5px rgba(255,236,210,0.79), 443px 36px 0 0.5px rgba(255,236,210,0.53), 693px 30px 0 0px rgba(255,236,210,0.43), 311px 21px 0 0px rgba(255,236,210,0.45); }
+      .cw-wash-a { left: -10%; top: 50%; width: 70%; height: 40%; background: rgba(255, 150, 90, 0.25); }
+      .cw-wash-b { right: -10%; top: 0; width: 60%; height: 40%; background: rgba(60, 40, 110, 0.5); }
+      .cw-ground {
+        left: 0; right: 0; top: 79%; bottom: 0;
+        z-index: 1;
+        background:
+          radial-gradient(ellipse 30% 60% at 34% 0%, rgba(255, 230, 180, 0.4), transparent 70%),
+          radial-gradient(ellipse 30% 60% at 78% 0%, rgba(255, 230, 180, 0.3), transparent 70%),
+          repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 12px),
+          linear-gradient(180deg, #5a3a34, #2a1a1c 60%, #160e10);
+      }
+      .cw-k { z-index: 2; }
+      .cw-k > i { position: absolute; inset: 0; clip-path: polygon(3.50% 100.00%, 3.28% 99.50%, 2.96% 98.85%, 2.59% 98.06%, 2.20% 97.15%, 1.83% 96.12%, 1.50% 95.00%, 1.20% 93.78%, 0.88% 92.44%, 0.58% 91.00%, 0.31% 89.44%, 0.11% 87.78%, 0.00% 86.00%, -0.05% 84.06%, -0.05% 81.96%, 0.02% 79.75%, 0.16% 77.48%, 0.40% 75.21%, 0.75% 73.00%, 1.20% 70.82%, 1.73% 68.63%, 2.36% 66.44%, 3.10% 64.26%, 3.98% 62.11%, 5.00% 60.00%, 6.20% 57.92%, 7.57% 55.85%, 9.08% 53.81%, 10.68% 51.81%, 12.33% 49.87%, 14.00% 48.00%, 15.75% 46.21%, 17.63% 44.48%, 19.56% 42.81%, 21.48% 41.19%, 23.32% 39.59%, 25.00% 38.00%, 26.55% 36.44%, 28.02% 34.93%, 29.41% 33.44%, 30.70% 31.96%, 31.90% 30.49%, 33.00% 29.00%, 33.98% 27.51%, 34.83% 26.04%, 35.59% 24.56%, 36.28% 23.07%, 36.91% 21.56%, 37.50% 20.00%, 38.06% 18.34%, 38.56% 16.57%, 39.00% 14.78%, 39.39% 13.04%, 39.72% 11.42%, 40.00% 10.00%, 40.20% 8.76%, 40.33% 7.63%, 40.41% 6.62%, 40.44% 5.76%, 40.47% 5.05%, 40.50% 4.50%, 38.25% 4.50%, 38.25% 0.00%, 61.75% 0.00%, 61.75% 4.50%, 59.50% 4.50%, 59.53% 5.05%, 59.56% 5.76%, 59.59% 6.62%, 59.67% 7.63%, 59.80% 8.76%, 60.00% 10.00%, 60.28% 11.42%, 60.61% 13.04%, 61.00% 14.78%, 61.44% 16.57%, 61.94% 18.34%, 62.50% 20.00%, 63.09% 21.56%, 63.72% 23.07%, 64.41% 24.56%, 65.17% 26.04%, 66.02% 27.51%, 67.00% 29.00%, 68.10% 30.49%, 69.30% 31.96%, 70.59% 33.44%, 71.98% 34.93%, 73.45% 36.44%, 75.00% 38.00%, 76.68% 39.59%, 78.52% 41.19%, 80.44% 42.81%, 82.37% 44.48%, 84.25% 46.21%, 86.00% 48.00%, 87.67% 49.87%, 89.32% 51.81%, 90.92% 53.81%, 92.43% 55.85%, 93.80% 57.92%, 95.00% 60.00%, 96.02% 62.11%, 96.90% 64.26%, 97.64% 66.44%, 98.27% 68.63%, 98.80% 70.82%, 99.25% 73.00%, 99.60% 75.21%, 99.84% 77.48%, 99.98% 79.75%, 100.05% 81.96%, 100.05% 84.06%, 100.00% 86.00%, 99.89% 87.78%, 99.69% 89.44%, 99.42% 91.00%, 99.12% 92.44%, 98.80% 93.78%, 98.50% 95.00%, 98.17% 96.12%, 97.80% 97.15%, 97.41% 98.06%, 97.04% 98.85%, 96.72% 99.50%, 96.50% 100.00%); }
+      .cw-k .ghost { background: repeating-linear-gradient(180deg, rgba(255, 220, 170, 0.16) 0 1px, transparent 1px 5px), rgba(255, 220, 170, 0.05); }
+      .cw-k .built {
+        background:
+          linear-gradient(180deg, rgba(255, 238, 200, 0.85) 0 1.5px, transparent 1.5px),
+          repeating-linear-gradient(90deg, transparent 0 7px, rgba(0, 0, 0, 0.3) 7px 8px),
+          repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 4px),
+          linear-gradient(90deg, #5a2a1e 0%, #9a4a2e 40%, #e08a5a 72%, #7a3a26 100%);
+        -webkit-mask: linear-gradient(#000, #000) bottom / 100% var(--h) no-repeat;
+        mask: linear-gradient(#000, #000) bottom / 100% var(--h) no-repeat;
+        animation: build 6s ease-out 0.6s both;
+      }
+      .cw-k.big .built {
+        background:
+          linear-gradient(180deg, rgba(255, 238, 200, 0.85) 0 1.5px, transparent 1.5px),
+          repeating-linear-gradient(90deg, transparent 0 9px, rgba(0, 0, 0, 0.4) 9px 10px),
+          repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0 1px, transparent 1px 4px),
+          linear-gradient(90deg, #0e080a 0%, #241618 45%, #6a3a2a 76%, #1a1012 100%);
+      }
+      .cw-k.big { left: 36%; width: 28%; top: 14%; bottom: 20%; --h: 74%; --h0: 30%; }
+      .cw-k.k2 { left: 9%; width: 21%; top: 30%; bottom: 21%; --h: 56%; --h0: 18%; }
+      .cw-k.k3 { left: 70%; width: 20%; top: 32%; bottom: 21%; --h: 40%; --h0: 10%; }
+      .cw-k.k4 { left: 57%; width: 15%; top: 42%; bottom: 21%; --h: 88%; --h0: 40%; opacity: 0.85; }
+      .cw-nums { left: 0; top: 0; width: 1.5px; height: 1.5px; z-index: 3; box-shadow: calc(51.97 * 1cqw) calc(70.02 * 1cqh) 0 0 rgba(255,240,210,0.72), calc(43.76 * 1cqw) calc(70.77 * 1cqh) 0 0 rgba(255,240,210,0.75), calc(61.45 * 1cqw) calc(53.09 * 1cqh) 0 0 rgba(255,240,210,0.64), calc(53.28 * 1cqw) calc(65.13 * 1cqh) 0 0 rgba(255,240,210,0.78), calc(50.79 * 1cqw) calc(62.92 * 1cqh) 0 0 rgba(255,240,210,0.77), calc(53.80 * 1cqw) calc(57.45 * 1cqh) 0 0 rgba(255,240,210,0.49), calc(49.89 * 1cqw) calc(48.00 * 1cqh) 0 0 rgba(255,240,210,0.62), calc(56.60 * 1cqw) calc(62.19 * 1cqh) 0 0 rgba(255,240,210,0.73), calc(61.98 * 1cqw) calc(67.11 * 1cqh) 0 0 rgba(255,240,210,0.66), calc(39.28 * 1cqw) calc(48.13 * 1cqh) 0 0 rgba(255,240,210,0.79), calc(43.96 * 1cqw) calc(54.11 * 1cqh) 0 0 rgba(255,240,210,0.75), calc(56.99 * 1cqw) calc(50.68 * 1cqh) 0 0 rgba(255,240,210,0.49), calc(42.79 * 1cqw) calc(56.36 * 1cqh) 0 0 rgba(255,240,210,0.35), calc(50.69 * 1cqw) calc(57.57 * 1cqh) 0 0 rgba(255,240,210,0.53), calc(41.19 * 1cqw) calc(50.18 * 1cqh) 0 0 rgba(255,240,210,0.36), calc(60.44 * 1cqw) calc(74.40 * 1cqh) 0 0 rgba(255,240,210,0.60), calc(39.47 * 1cqw) calc(51.66 * 1cqh) 0 0 rgba(255,240,210,0.40), calc(44.86 * 1cqw) calc(48.19 * 1cqh) 0 0 rgba(255,240,210,0.47), calc(41.68 * 1cqw) calc(53.33 * 1cqh) 0 0 rgba(255,240,210,0.64), calc(48.82 * 1cqw) calc(63.99 * 1cqh) 0 0 rgba(255,240,210,0.51), calc(51.09 * 1cqw) calc(75.84 * 1cqh) 0 0 rgba(255,240,210,0.49), calc(37.97 * 1cqw) calc(64.28 * 1cqh) 0 0 rgba(255,240,210,0.52), calc(57.85 * 1cqw) calc(50.22 * 1cqh) 0 0 rgba(255,240,210,0.74), calc(36.42 * 1cqw) calc(66.60 * 1cqh) 0 0 rgba(255,240,210,0.55), calc(44.83 * 1cqw) calc(79.78 * 1cqh) 0 0 rgba(255,240,210,0.67), calc(40.57 * 1cqw) calc(64.81 * 1cqh) 0 0 rgba(255,240,210,0.63), calc(36.94 * 1cqw) calc(49.32 * 1cqh) 0 0 rgba(255,240,210,0.62), calc(56.43 * 1cqw) calc(63.58 * 1cqh) 0 0 rgba(255,240,210,0.54), calc(50.19 * 1cqw) calc(55.90 * 1cqh) 0 0 rgba(255,240,210,0.74), calc(62.93 * 1cqw) calc(64.31 * 1cqh) 0 0 rgba(255,240,210,0.36), calc(47.12 * 1cqw) calc(76.52 * 1cqh) 0 0 rgba(255,240,210,0.50), calc(38.96 * 1cqw) calc(53.04 * 1cqh) 0 0 rgba(255,240,210,0.67), calc(53.42 * 1cqw) calc(56.87 * 1cqh) 0 0 rgba(255,240,210,0.63), calc(57.30 * 1cqw) calc(82.71 * 1cqh) 0 0 rgba(255,240,210,0.72), calc(48.15 * 1cqw) calc(76.76 * 1cqh) 0 0 rgba(255,240,210,0.77), calc(60.33 * 1cqw) calc(74.52 * 1cqh) 0 0 rgba(255,240,210,0.61), calc(50.32 * 1cqw) calc(78.31 * 1cqh) 0 0 rgba(255,240,210,0.63), calc(56.19 * 1cqw) calc(54.66 * 1cqh) 0 0 rgba(255,240,210,0.39), calc(43.57 * 1cqw) calc(68.17 * 1cqh) 0 0 rgba(255,240,210,0.61), calc(41.56 * 1cqw) calc(53.17 * 1cqh) 0 0 rgba(255,240,210,0.78), calc(38.00 * 1cqw) calc(81.20 * 1cqh) 0 0 rgba(255,240,210,0.70), calc(52.06 * 1cqw) calc(83.83 * 1cqh) 0 0 rgba(255,240,210,0.66), calc(36.19 * 1cqw) calc(81.69 * 1cqh) 0 0 rgba(255,240,210,0.54), calc(61.67 * 1cqw) calc(76.93 * 1cqh) 0 0 rgba(255,240,210,0.41), calc(37.11 * 1cqw) calc(46.79 * 1cqh) 0 0 rgba(255,240,210,0.70), calc(58.16 * 1cqw) calc(54.66 * 1cqh) 0 0 rgba(255,240,210,0.40); opacity: 0.8; }
+      .cw-scaffold {
+        left: 68%; width: 24%; top: 50%; bottom: 21%;
+        z-index: 3;
+        background:
+          repeating-linear-gradient(90deg, rgba(255, 220, 170, 0.5) 0 1px, transparent 1px 22%),
+          repeating-linear-gradient(180deg, rgba(255, 220, 170, 0.4) 0 1px, transparent 1px 25%);
+      }
+      .cw-mast { z-index: 4; width: 3px; bottom: 20%; background: #1a1016; }
+      .cw-mast::after { content: ""; position: absolute; left: -0.5rem; top: -0.2rem; width: 1.2rem; height: 0.4rem; border-radius: 2px; background: #fff6e0; box-shadow: 0 0 10px 4px rgba(255, 236, 190, 0.8), 0 0 40px 14px rgba(255, 220, 160, 0.3); }
+      .cw-mast.m1 { left: 24%; top: 12%; }
+      .cw-mast.m2 { left: 86%; top: 18%; }
+      .cw-cone { z-index: 1; top: 12%; height: 70%; width: 36%; background: linear-gradient(180deg, rgba(255, 236, 190, 0.22), rgba(255, 236, 190, 0.04) 80%, transparent); }
+      .cw-cone.m1 { left: 10%; clip-path: polygon(38% 0, 42% 0, 100% 100%, 20% 100%); }
+      .cw-cone.m2 { left: 60%; top: 18%; height: 64%; clip-path: polygon(70% 0, 74% 0, 90% 100%, 0 100%); }
+      .cw-bot { z-index: 5; bottom: 18%; width: 6%; height: 5%; border-radius: 40% 40% 20% 20%; background: linear-gradient(180deg, #c8ccd6, #6a6e7a); box-shadow: inset 0 1px 0 #fff, 0 3px 6px rgba(0, 0, 0, 0.5); }
+      .cw-bot::after { content: ""; position: absolute; left: 10%; right: 10%; bottom: -28%; height: 30%; background: radial-gradient(circle at 20% 50%, #111 0 30%, transparent 34%), radial-gradient(circle at 80% 50%, #111 0 30%, transparent 34%); }
+      .cw-bot i { position: absolute; left: 50%; bottom: 80%; width: 2px; height: 1000%; background: linear-gradient(#e0e4ec, #8a8e9a); transform-origin: bottom; transform: rotate(31deg); animation: arm 4s ease-in-out infinite alternate; }
+      .cw-bot.b1 { left: 29%; }
+      .cw-bot.b2 { left: 76%; }
+      .cw-bot.b2 i { height: 420%; transform: rotate(-24deg); }
+      .cw-brick { position: absolute; left: -4px; top: -3px; width: 10px; height: 5px; background: #c8643a; box-shadow: 0 0 6px rgba(255, 200, 140, 0.8); }
+      .cw-pallet { left: 18%; bottom: 17%; width: 8%; height: 6%; z-index: 5; background: repeating-linear-gradient(180deg, #8a3a26 0 3px, #2a1410 3px 4px), #8a3a26; box-shadow: inset 0 1px 0 #ffb47a; }
+
+      /* ===== 5: the firing ===== */
+      .firing-scene { background: linear-gradient(180deg, #0e0a1e 0%, #1e1232 26%, #3a1a34 40%, #7a3030 50%, #c8562e 56%, #3a1a1c 62%); }
+      .fr-wash-a { left: 20%; top: 20%; width: 60%; height: 50%; background: rgba(255, 110, 50, 0.35); }
+      .fr-glow { left: 30%; top: 32%; width: 40%; height: 40%; border-radius: 50%; background: radial-gradient(ellipse at 50% 70%, rgba(255, 180, 90, 0.7) 0 6%, rgba(255, 100, 40, 0.3) 30%, transparent 66%); animation: glow-breathe 4s ease-in-out infinite alternate; }
+      .firing-scene .st-city { background: #1a0e1a; }
+      .firing-scene .st-yard { background: radial-gradient(ellipse 40% 80% at 50% 0%, rgba(255, 120, 50, 0.6), transparent 70%), #1a0e12; }
+      .firing-scene .st-road { background: repeating-conic-gradient(from 180deg at 50% 56%, rgba(0, 0, 0, 0.35) 0 0.12deg, transparent 0.12deg 0.55deg), radial-gradient(ellipse 22% 36% at 50% 56%, rgba(255, 140, 60, 0.6), transparent 70%), linear-gradient(180deg, #4a2620 56%, #241414 70%, #0e0809); }
+      .firing-scene .st-pave { background: linear-gradient(180deg, #5a3428 56%, #2a1a18 70%, #120a0c); }
+      .firing-scene .st-kerb { background: linear-gradient(180deg, #ff9a50 50%, #5a3020 70%, #1a1010); }
+      .firing-scene .st-facade { background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 3px), linear-gradient(90deg, #0e0608 0%, #2a1212 30%, #6a2c20 47%, #6a2c20 53%, #2a1212 70%, #0e0608 100%); }
+      .firing-scene .st-roof { background: linear-gradient(90deg, #08040a, #1e1220 50%, #08040a); }
+      .firing-scene .st-step { background: linear-gradient(90deg, #3a2420, #8a5a40 50%, #3a2420); }
+      .firing-scene .st-kiln.lit { background: repeating-linear-gradient(180deg, rgba(255, 160, 90, 0.07) 0 1px, transparent 1px 4px), radial-gradient(ellipse 70% 40% at 50% 100%, rgba(255, 110, 40, 0.75), transparent 70%), linear-gradient(90deg, #120808 0%, #2a1410 50%, #5a2414 80%, #120808 100%); }
+      .firing-scene .st-kiln-rim { background: linear-gradient(180deg, #ff9a5a, #ff6a2a); }
+      .firing-scene .st-smoke { background: repeating-linear-gradient(0deg, rgba(255, 200, 150, 0.06) 0 6px, transparent 6px 14px), linear-gradient(0deg, rgba(200, 100, 70, 0.9) 0%, rgba(110, 60, 70, 0.7) 40%, rgba(60, 40, 70, 0.3) 85%, transparent); }
+      .firing-scene .st-firebox { background: radial-gradient(ellipse at 50% 90%, #fff4d8 0 14%, #ffd060 30%, #ff5a2a 62%, var(--cherry) 100%); box-shadow: 0 0 8px 3px rgba(255, 120, 50, 0.95), 0 0 30px 12px rgba(216, 64, 58, 0.5); }
+      .firing-scene .st-p::before, .firing-scene .st-p::after { background: #0c0608; box-shadow: inset 0 1px 0 rgba(255, 150, 80, 0.75); }
+      .ember {
+        position: absolute;
+        width: 2px; height: 2px;
+        z-index: 7;
+        border-radius: 50%;
+        background: #ffd08a;
+        box-shadow: 0 0 4px 1px rgba(255, 150, 60, 0.9);
+        opacity: 0;
+        animation: ember linear infinite;
+      }
+      .fr-step {
+        left: -2%; right: 40%; bottom: -1%; height: 8%;
+        z-index: 9;
+        border-radius: 0 8px 0 0;
+        background: linear-gradient(180deg, #ffb070 0, #6a4030 12%, #2a1a18 60%, #120a0c);
+      }
+      .fr-cup { left: 7%; bottom: 6%; width: 13%; aspect-ratio: 0.95; z-index: 10; }
+      .fr-cup i { position: absolute; display: block; }
+      .fr-cup .body {
+        left: 18%; right: 4%; top: 22%; bottom: 0;
+        transform: rotate(-7deg) skewX(-9deg);
+        border-radius: 6% 22% 46% 38% / 4% 18% 40% 30%;
+        background:
+          radial-gradient(ellipse 20% 30% at 82% 40%, rgba(255, 220, 170, 0.6), transparent 70%),
+          linear-gradient(90deg, #3a3228 0%, #9a8a6a 26%, #d8caa0 50%, #f2e2bc 66%, #ffb470 92%, #ff8a4a 100%);
+        box-shadow: inset 0 -0.4rem 0.6rem rgba(40, 20, 10, 0.4), 0 0.4rem 0.6rem rgba(0, 0, 0, 0.6);
+      }
+      .fr-cup .tea {
+        left: 21%; right: 3%; top: 15%; height: 15%;
+        transform: rotate(-15deg) skewX(10deg);
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 60% 40%, #9a5a2e, #4a2410 70%);
+        box-shadow: 0 0 0 0.16rem #efe0b8, 0 -1px 0 0.16rem rgba(255, 190, 120, 0.8);
+      }
+      .fr-cup .handle {
+        left: -6%; top: 36%; width: 34%; height: 40%;
+        border: 0.32rem solid #b8a682;
+        border-right-color: transparent;
+        border-radius: 60% 40% 50% 64%;
+        transform: rotate(-22deg) skewY(10deg);
+      }
+      .fr-cup .steam {
+        bottom: 86%; width: 18%; height: 70%;
+        border-radius: 50%;
+        border-left: 2px solid rgba(255, 230, 200, 0.4);
+        filter: blur(1px);
+        animation: steam 5s ease-in-out infinite;
+      }
+      .fr-cup .steam.s1 { left: 40%; }
+      .fr-cup .steam.s2 { left: 62%; animation-delay: -2.5s; height: 56%; }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .kiln-hero { margin: 0; height: 15rem; font-size: 0.66rem; }
+        .hero-heron { font-size: 1.5rem !important; }
+        .corner-heron { font-size: 2.3rem !important; }
+        .label { font-size: 0.44rem; }
+        .fr-cup { width: 17%; }
+        .cw-mast::after { width: 0.8rem; left: -0.3rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(8deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes glow-breathe { from { opacity: 0.85; } to { opacity: 1; } }
+      @keyframes smoke-rise { from { background-position: 0 0, 0 0; } to { background-position: 0 -40px, 0 0; } }
+      @keyframes fire-breathe { from { filter: brightness(0.92); } to { filter: brightness(1.15); } }
+      @keyframes swift-fly {
+        0% { transform: translate(-40vw, 1rem) rotate(4deg); }
+        50% { transform: translate(10vw, -0.6rem) rotate(-6deg); }
+        100% { transform: translate(60vw, 0.8rem) rotate(3deg); }
+      }
+      @keyframes puff { from { transform: translate(0, 0) scale(1); } to { transform: translate(3%, -6%) scale(1.06); } }
+      @keyframes flame { from { filter: brightness(0.9); } to { filter: brightness(1.2); } }
+      @keyframes build { from { -webkit-mask-size: 100% var(--h0); mask-size: 100% var(--h0); } to { -webkit-mask-size: 100% var(--h); mask-size: 100% var(--h); } }
+      @keyframes arm { from { rotate: 0deg; } to { rotate: -4deg; } }
+      @keyframes ember {
+        0% { opacity: 0; transform: translate(0, 0); }
+        15% { opacity: 1; }
+        100% { opacity: 0; transform: translate(var(--dx), -5rem); }
+      }
+      @keyframes steam {
+        0% { opacity: 0; transform: translateY(0.4rem) scaleY(0.8); }
+        40% { opacity: 1; }
+        100% { opacity: 0; transform: translateY(-0.8rem) scaleY(1.1); }
+      }
+
+      @supports (animation-timeline: view()) {
+        .cw-k .built {
+          animation: build linear both;
+          animation-timeline: view();
+          animation-range: entry 40% cover 55%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .scene { opacity: 1; transform: none; }
+        .ember { display: none; }
+        .fr-cup .steam { opacity: 0.8; }
+        .swift { transform: none; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="kiln-hero" aria-hidden="true">
+          <div class="brush kh-wash-a"></div>
+          <div class="kh-wash-b"></div>
+          <div class="kh-glow"></div>
+          <div class="kh-strokes"></div>
+          <div class="swift" style="left:24.0%;top:19.1%;--sz:0.90;animation-delay:-8.5s;animation-duration:14.8s"></div>
+          <div class="swift" style="left:10.2%;top:6.3%;--sz:1.16;animation-delay:-3.6s;animation-duration:12.4s"></div>
+          <div class="swift" style="left:84.7%;top:17.3%;--sz:1.16;animation-delay:-6.7s;animation-duration:14.8s"></div>
+          <div class="swift" style="left:17.0%;top:21.2%;--sz:1.18;animation-delay:-7.3s;animation-duration:15.4s"></div>
+          <div class="swift" style="left:58.7%;top:7.5%;--sz:1.12;animation-delay:-8.3s;animation-duration:12.8s"></div>
+          <div class="st-city" style="top:57.85%"></div>
+          <div class="st-yard" style="clip-path:polygon(-78.22% 66.49%, 171.56% 66.49%, 88.38% 61.05%, 9.52% 61.05%, -78.22% 66.49%)"></div>
+          <div class="st-kiln-rim k4" style="left:41.23%;top:33.85%;width:6.61%;height:27.44%"></div>
+          <div class="st-kiln k4" style="left:41.23%;top:33.85%;width:6.61%;height:27.44%"></div>
+          <div class="st-kiln-rim k3" style="left:57.10%;top:31.45%;width:9.60%;height:30.91%"></div>
+          <div class="st-kiln k3" style="left:57.10%;top:31.45%;width:9.60%;height:30.91%"></div>
+          <div class="st-kiln-rim k2" style="left:30.24%;top:30.22%;width:10.04%;height:32.31%"></div>
+          <div class="st-kiln k2" style="left:30.24%;top:30.22%;width:10.04%;height:32.31%"></div>
+          <div class="st-smoke" style="left:45.81%;width:5.89%;top:-2%;height:22.84%"></div>
+          <div class="st-kiln-rim big" style="left:41.79%;top:20.34%;width:13.92%;height:42.95%"></div>
+          <div class="st-kiln big" style="left:41.79%;top:20.34%;width:13.92%;height:42.95%"></div>
+          <div class="st-firebox" style="left:47.64%;top:57.71%;width:2.23%;height:5.58%"></div>
+          <div class="st-firespill" style="left:32.05%;top:52.56%;width:33.42%;height:21.47%"></div>
+          <div class="st-road" style="clip-path:polygon(-379.33% 351.27%, 234.00% 351.27%, 55.00% 66.49%, 38.34% 66.49%, -379.33% 351.27%)"></div>
+          <div class="st-sett" style="clip-path:polygon(-207.60% 234.18%, 160.40% 234.18%, 156.63% 228.18%, -198.80% 228.18%, -207.60% 234.18%, -172.07% 209.96%, 145.17% 209.96%, 142.15% 205.14%, -165.01% 205.14%, -172.07% 209.96%, -141.44% 189.07%, 132.05% 189.07%, 129.62% 185.21%, -135.78% 185.21%, -141.44% 189.07%, -115.03% 171.07%, 120.73% 171.07%, 118.78% 167.97%, -110.49% 167.97%, -115.03% 171.07%, -92.27% 155.55%, 110.97% 155.55%, 109.41% 153.06%, -88.63% 153.06%, -92.27% 155.55%, -72.65% 142.17%, 102.56% 142.17%, 101.31% 140.18%, -69.73% 140.18%, -72.65% 142.17%, -55.73% 130.63%, 95.31% 130.63%, 94.31% 129.04%, -53.39% 129.04%, -55.73% 130.63%, -41.15% 120.69%, 89.06% 120.69%, 88.26% 119.41%, -39.27% 119.41%, -41.15% 120.69%, -28.57% 112.12%, 83.67% 112.12%, 83.03% 111.09%, -27.07% 111.09%, -28.57% 112.12%, -17.74% 104.73%, 79.03% 104.73%, 78.51% 103.91%, -16.53% 103.91%, -17.74% 104.73%, -8.39% 98.36%, 75.03% 98.36%, 74.61% 97.70%, -7.43% 97.70%, -8.39% 98.36%, -0.34% 92.87%, 71.57% 92.87%, 71.24% 92.34%, 0.44% 92.34%, -0.34% 92.87%, 6.60% 88.13%, 68.60% 88.13%, 68.33% 87.71%, 7.22% 87.71%, 6.60% 88.13%, 12.59% 84.05%, 66.03% 84.05%, 65.82% 83.71%, 13.09% 83.71%, 12.59% 84.05%, 17.75% 80.53%, 63.82% 80.53%, 63.65% 80.26%, 18.15% 80.26%, 17.75% 80.53%, 22.20% 77.50%, 61.92% 77.50%, 61.78% 77.28%, 22.52% 77.28%, 22.20% 77.50%, 26.03% 74.89%, 60.27% 74.89%, 60.16% 74.71%, 26.29% 74.71%, 26.03% 74.89%, 29.34% 72.63%, 58.85% 72.63%, 58.77% 72.49%, 29.54% 72.49%, 29.34% 72.63%, 32.19% 70.69%, 57.63% 70.69%, 57.56% 70.58%, 32.35% 70.58%, 32.19% 70.69%, 34.65% 69.01%, 56.58% 69.01%, 56.52% 68.93%, 34.78% 68.93%, 34.65% 69.01%, 36.76% 67.57%, 55.67% 67.57%, 55.63% 67.50%, 36.87% 67.50%, 36.76% 67.57%, 34.65% 69.01%, 32.19% 70.69%, 29.34% 72.63%, 26.03% 74.89%, 22.20% 77.50%, 17.75% 80.53%, 12.59% 84.05%, 6.60% 88.13%, -0.34% 92.87%, -8.39% 98.36%, -17.74% 104.73%, -28.57% 112.12%, -41.15% 120.69%, -55.73% 130.63%, -72.65% 142.17%, -92.27% 155.55%, -115.03% 171.07%, -141.44% 189.07%, -172.07% 209.96%, -207.60% 234.18%)"></div>
+          <div class="st-pave" style="clip-path:polygon(-379.33% 351.27%, -494.33% 351.27%, 35.22% 66.49%, 38.34% 66.49%, -379.33% 351.27%, 234.00% 351.27%, 349.00% 351.27%, 58.12% 66.49%, 55.00% 66.49%, 234.00% 351.27%, -379.33% 351.27%)"></div>
+          <div class="st-kerb" style="clip-path:polygon(-379.33% 351.27%, -379.33% 331.76%, 38.34% 65.96%, 38.34% 66.49%, -379.33% 351.27%, 234.00% 351.27%, 234.00% 331.76%, 55.00% 65.96%, 55.00% 66.49%, 234.00% 351.27%, -379.33% 351.27%)"></div>
+          <div class="st-facade" style="clip-path:polygon(-246.91% 218.21%, -52.06% 113.43%, -52.06% -43.39%, -246.91% -237.98%, -246.91% 218.21%, -52.06% 113.43%, -11.62% 91.68%, -11.62% -3.00%, -52.06% -43.39%, -52.06% 113.43%, -11.62% 91.68%, 5.86% 82.28%, 5.86% 14.47%, -11.62% -3.00%, -11.62% 91.68%, 5.86% 82.28%, 15.62% 77.03%, 15.62% 27.29%, 5.86% 18.42%, 5.86% 82.28%, 15.62% 77.03%, 21.84% 73.69%, 21.84% 30.43%, 15.62% 24.21%, 15.62% 77.03%, 21.84% 73.69%, 26.16% 71.37%, 26.16% 34.74%, 21.84% 30.43%, 21.84% 73.69%, 26.16% 71.37%, 29.33% 69.66%, 29.33% 37.90%, 26.16% 34.74%, 26.16% 71.37%, 29.33% 69.66%, 31.75% 68.36%, 31.75% 40.32%, 29.33% 37.90%, 29.33% 69.66%, 31.75% 68.36%, 33.67% 67.33%, 33.67% 42.24%, 31.75% 40.32%, 31.75% 68.36%, 33.67% 67.33%, 35.22% 66.49%, 35.22% 43.79%, 33.67% 42.24%, 33.67% 67.33%, 213.09% 218.21%, 106.06% 113.43%, 106.06% -43.39%, 213.09% -237.98%, 213.09% 218.21%, 106.06% 113.43%, 83.85% 91.68%, 83.85% -3.00%, 106.06% -43.39%, 106.06% 113.43%, 83.85% 91.68%, 74.24% 82.28%, 74.24% 14.47%, 83.85% -3.00%, 83.85% 91.68%, 74.24% 82.28%, 68.88% 77.03%, 68.88% 24.21%, 74.24% 14.47%, 74.24% 82.28%, 68.88% 77.03%, 65.47% 73.69%, 65.47% 30.43%, 68.88% 24.21%, 68.88% 77.03%, 65.47% 73.69%, 63.09% 71.37%, 63.09% 34.74%, 65.47% 30.43%, 65.47% 73.69%, 63.09% 71.37%, 61.35% 69.66%, 61.35% 37.90%, 63.09% 34.74%, 63.09% 71.37%, 61.35% 69.66%, 60.02% 68.36%, 60.02% 40.32%, 61.35% 37.90%, 61.35% 69.66%, 60.02% 68.36%, 58.97% 67.33%, 58.97% 42.24%, 60.02% 40.32%, 60.02% 68.36%, 58.97% 67.33%, 58.12% 66.49%, 58.12% 43.79%, 58.97% 42.24%, 58.97% 67.33%, 60.02% 68.36%, 61.35% 69.66%, 63.09% 71.37%, 65.47% 73.69%, 68.88% 77.03%, 74.24% 82.28%, 83.85% 91.68%, 106.06% 113.43%, 213.09% 218.21%, 33.67% 67.33%, 31.75% 68.36%, 29.33% 69.66%, 26.16% 71.37%, 21.84% 73.69%, 15.62% 77.03%, 5.86% 82.28%, -11.62% 91.68%, -52.06% 113.43%, -246.91% 218.21%)"></div>
+          <div class="st-sill" style="clip-path:polygon(-117.49% 115.16%, -62.62% 96.61%, -62.62% 93.15%, -117.49% 110.01%, -117.49% 115.16%, -201.23% -17.37%, -117.49% 7.93%, -117.49% 2.79%, -201.23% -25.09%, -201.23% -17.37%, -98.45% 13.69%, -62.62% 24.51%, -62.62% 21.05%, -98.45% 9.12%, -98.45% 13.69%, -30.64% 85.80%, -15.32% 80.63%, -15.32% 78.62%, -30.64% 83.33%, -30.64% 85.80%, -46.06% 29.52%, -30.64% 34.18%, -30.64% 31.70%, -46.06% 26.57%, -46.06% 29.52%, -25.95% 35.59%, -15.32% 38.81%, -15.32% 36.80%, -25.95% 33.26%, -25.95% 35.59%, -3.11% 76.50%, 4.00% 74.09%, 4.00% 72.68%, -3.11% 74.86%, -3.11% 76.50%, -9.38% 40.60%, -3.11% 42.50%, -3.11% 40.87%, -9.38% 38.78%, -9.38% 40.60%, -1.03% 43.13%, 4.00% 44.65%, 4.00% 43.23%, -1.03% 41.56%, -1.03% 43.13%, 10.41% 71.93%, 14.50% 70.55%, 14.50% 69.45%, 10.41% 70.71%, 10.41% 71.93%, 7.03% 45.56%, 10.41% 46.58%, 10.41% 45.37%, 7.03% 44.24%, 7.03% 45.56%, 11.58% 46.93%, 14.50% 47.82%, 14.50% 46.73%, 11.58% 45.75%, 11.58% 46.93%, 18.44% 69.21%, 21.10% 68.32%, 21.10% 67.43%, 18.44% 68.24%, 18.44% 69.21%, 16.33% 48.37%, 18.44% 49.01%, 18.44% 48.04%, 16.33% 47.34%, 16.33% 48.37%, 19.19% 49.23%, 21.10% 49.81%, 21.10% 48.92%, 19.19% 48.29%, 19.19% 49.23%, 23.77% 67.41%, 25.63% 66.78%, 25.63% 66.04%, 23.77% 66.61%, 23.77% 67.41%, 22.32% 50.18%, 23.77% 50.62%, 23.77% 49.81%, 22.32% 49.33%, 22.32% 50.18%, 24.28% 50.77%, 25.63% 51.18%, 25.63% 50.43%, 24.28% 49.98%, 24.28% 50.77%, 27.55% 66.13%, 28.93% 65.67%, 28.93% 65.02%, 27.55% 65.44%, 27.55% 66.13%, 26.50% 51.45%, 27.55% 51.76%, 27.55% 51.07%, 26.50% 50.72%, 26.50% 51.45%, 27.93% 51.88%, 28.93% 52.18%, 28.93% 51.53%, 27.93% 51.20%, 27.93% 51.88%, 30.38% 65.18%, 31.44% 64.82%, 31.44% 64.25%, 30.38% 64.57%, 30.38% 65.18%, 29.59% 52.38%, 30.38% 52.62%, 30.38% 52.02%, 29.59% 51.75%, 29.59% 52.38%, 30.67% 52.71%, 31.44% 52.94%, 31.44% 52.37%, 30.67% 52.11%, 30.67% 52.71%, 32.58% 64.43%, 33.42% 64.15%, 33.42% 63.64%, 32.58% 63.90%, 32.58% 64.43%, 31.96% 53.09%, 32.58% 53.28%, 32.58% 52.75%, 31.96% 52.54%, 31.96% 53.09%, 32.81% 53.35%, 33.42% 53.54%, 33.42% 53.03%, 32.81% 52.82%, 32.81% 53.35%, 34.34% 63.84%, 35.02% 63.61%, 35.02% 63.15%, 34.34% 63.36%, 34.34% 63.84%, 33.83% 53.66%, 34.34% 53.81%, 34.34% 53.33%, 33.83% 53.16%, 33.83% 53.66%, 34.52% 53.87%, 35.02% 54.02%, 35.02% 53.56%, 34.52% 53.39%, 34.52% 53.87%, 142.00% 115.16%, 111.86% 96.61%, 111.86% 93.15%, 142.00% 110.01%, 142.00% 115.16%, 188.00% -17.37%, 142.00% 7.93%, 142.00% 2.79%, 188.00% -25.09%, 188.00% -17.37%, 131.55% 13.69%, 111.86% 24.51%, 111.86% 21.05%, 131.55% 9.12%, 131.55% 13.69%, 94.30% 85.80%, 85.88% 80.63%, 85.88% 78.62%, 94.30% 83.33%, 94.30% 85.80%, 102.76% 29.52%, 94.30% 34.18%, 94.30% 31.70%, 102.76% 26.57%, 102.76% 29.52%, 91.72% 35.59%, 85.88% 38.81%, 85.88% 36.80%, 91.72% 33.26%, 91.72% 35.59%, 79.17% 76.50%, 75.27% 74.09%, 75.27% 72.68%, 79.17% 74.86%, 79.17% 76.50%, 82.62% 40.60%, 79.17% 42.50%, 79.17% 40.87%, 82.62% 38.78%, 82.62% 40.60%, 78.03% 43.13%, 75.27% 44.65%, 75.27% 43.23%, 78.03% 41.56%, 78.03% 43.13%, 71.75% 71.93%, 69.50% 70.55%, 69.50% 69.45%, 71.75% 70.71%, 71.75% 71.93%, 73.61% 45.56%, 71.75% 46.58%, 71.75% 45.37%, 73.61% 44.24%, 73.61% 45.56%, 71.11% 46.93%, 69.50% 47.82%, 69.50% 46.73%, 71.11% 45.75%, 71.11% 46.93%, 67.33% 69.21%, 65.88% 68.32%, 65.88% 67.43%, 67.33% 68.24%, 67.33% 69.21%, 68.49% 48.37%, 67.33% 49.01%, 67.33% 48.04%, 68.49% 47.34%, 68.49% 48.37%, 66.92% 49.23%, 65.88% 49.81%, 65.88% 48.92%, 66.92% 48.29%, 66.92% 49.23%, 64.41% 67.41%, 63.39% 66.78%, 63.39% 66.04%, 64.41% 66.61%, 64.41% 67.41%, 65.20% 50.18%, 64.41% 50.62%, 64.41% 49.81%, 65.20% 49.33%, 65.20% 50.18%, 64.13% 50.77%, 63.39% 51.18%, 63.39% 50.43%, 64.13% 49.98%, 64.13% 50.77%, 62.33% 66.13%, 61.57% 65.67%, 61.57% 65.02%, 62.33% 65.44%, 62.33% 66.13%, 62.91% 51.45%, 62.33% 51.76%, 62.33% 51.07%, 62.91% 50.72%, 62.91% 51.45%, 62.12% 51.88%, 61.57% 52.18%, 61.57% 51.53%, 62.12% 51.20%, 62.12% 51.88%, 60.77% 65.18%, 60.19% 64.82%, 60.19% 64.25%, 60.77% 64.57%, 60.77% 65.18%, 61.21% 52.38%, 60.77% 52.62%, 60.77% 52.02%, 61.21% 51.75%, 61.21% 52.38%, 60.62% 52.71%, 60.19% 52.94%, 60.19% 52.37%, 60.62% 52.11%, 60.62% 52.71%, 59.57% 64.43%, 59.11% 64.15%, 59.11% 63.64%, 59.57% 63.90%, 59.57% 64.43%, 59.91% 53.09%, 59.57% 53.28%, 59.57% 52.75%, 59.91% 52.54%, 59.91% 53.09%, 59.44% 53.35%, 59.11% 53.54%, 59.11% 53.03%, 59.44% 52.82%, 59.44% 53.35%, 58.60% 63.84%, 58.23% 63.61%, 58.23% 63.15%, 58.60% 63.36%, 58.60% 63.84%, 58.88% 53.66%, 58.60% 53.81%, 58.60% 53.33%, 58.88% 53.16%, 58.88% 53.66%, 58.50% 53.87%, 58.23% 54.02%, 58.23% 53.56%, 58.50% 53.39%, 58.50% 53.87%, 58.88% 53.66%, 58.60% 63.84%, 59.44% 53.35%, 59.91% 53.09%, 59.57% 64.43%, 60.62% 52.71%, 61.21% 52.38%, 60.77% 65.18%, 62.12% 51.88%, 62.91% 51.45%, 62.33% 66.13%, 64.13% 50.77%, 65.20% 50.18%, 64.41% 67.41%, 66.92% 49.23%, 68.49% 48.37%, 67.33% 69.21%, 71.11% 46.93%, 73.61% 45.56%, 71.75% 71.93%, 78.03% 43.13%, 82.62% 40.60%, 79.17% 76.50%, 91.72% 35.59%, 102.76% 29.52%, 94.30% 85.80%, 131.55% 13.69%, 188.00% -17.37%, 142.00% 115.16%, 34.52% 53.87%, 33.83% 53.66%, 34.34% 63.84%, 32.81% 53.35%, 31.96% 53.09%, 32.58% 64.43%, 30.67% 52.71%, 29.59% 52.38%, 30.38% 65.18%, 27.93% 51.88%, 26.50% 51.45%, 27.55% 66.13%, 24.28% 50.77%, 22.32% 50.18%, 23.77% 67.41%, 19.19% 49.23%, 16.33% 48.37%, 18.44% 69.21%, 11.58% 46.93%, 7.03% 45.56%, 10.41% 71.93%, -1.03% 43.13%, -9.38% 40.60%, -3.11% 76.50%, -25.95% 35.59%, -46.06% 29.52%, -30.64% 85.80%, -98.45% 13.69%, -201.23% -17.37%, -117.49% 115.16%)"></div>
+          <div class="st-windark" style="clip-path:polygon(-2.68% 74.73%, 3.67% 72.78%, 3.67% 56.17%, -2.68% 55.85%, -2.68% 74.73%, -8.85% 38.95%, -3.54% 40.72%, -3.54% 21.53%, -8.85% 17.86%, -8.85% 38.95%, -0.64% 41.69%, 3.67% 43.12%, 3.67% 26.51%, -0.64% 23.53%, -0.64% 41.69%, 23.87% 66.57%, 25.54% 66.06%, 25.54% 57.29%, 23.87% 57.21%, 23.87% 66.57%, 22.44% 49.37%, 23.66% 49.78%, 23.66% 40.33%, 22.44% 39.49%, 22.44% 49.37%, 24.38% 50.02%, 25.54% 50.40%, 25.54% 41.63%, 24.38% 40.83%, 24.38% 50.02%, 27.63% 65.42%, 28.86% 65.04%, 28.86% 57.46%, 27.63% 57.40%, 27.63% 65.42%, 30.44% 64.56%, 31.39% 64.26%, 31.39% 57.59%, 30.44% 57.54%, 30.44% 64.56%, 29.65% 51.77%, 30.33% 52.00%, 30.33% 44.94%, 29.65% 44.48%, 29.65% 51.77%, 30.73% 52.13%, 31.39% 52.35%, 31.39% 45.68%, 30.73% 45.22%, 30.73% 52.13%, 32.63% 63.88%, 33.38% 63.65%, 33.38% 57.69%, 32.63% 57.66%, 32.63% 63.88%, 32.86% 52.84%, 33.38% 53.01%, 33.38% 47.05%, 32.86% 46.69%, 32.86% 52.84%, 34.37% 63.35%, 34.98% 63.16%, 34.98% 57.78%, 34.37% 57.75%, 34.37% 63.35%, 129.73% 10.22%, 112.95% 20.40%, 112.95% -20.69%, 129.73% -41.82%, 129.73% 10.22%, 93.76% 83.02%, 86.24% 78.82%, 86.24% 55.17%, 93.76% 54.47%, 93.76% 83.02%, 78.94% 74.73%, 75.45% 72.78%, 75.45% 56.17%, 78.94% 55.85%, 78.94% 74.73%, 82.32% 38.95%, 79.41% 40.72%, 79.41% 21.53%, 82.32% 17.86%, 82.32% 38.95%, 77.81% 41.69%, 75.45% 43.12%, 75.45% 26.51%, 77.81% 23.53%, 77.81% 41.69%, 71.61% 70.64%, 69.61% 69.51%, 69.61% 56.72%, 71.61% 56.53%, 71.61% 70.64%, 67.25% 68.20%, 65.95% 67.47%, 65.95% 57.06%, 67.25% 56.94%, 67.25% 68.20%, 65.14% 49.37%, 64.47% 49.78%, 64.47% 40.33%, 65.14% 39.49%, 65.14% 49.37%, 62.86% 50.75%, 62.37% 51.05%, 62.37% 42.97%, 62.86% 42.36%, 62.86% 50.75%, 59.54% 63.88%, 59.13% 63.65%, 59.13% 57.69%, 59.54% 57.66%, 59.54% 63.88%, 58.86% 53.18%, 58.62% 53.32%, 58.62% 47.69%, 58.86% 47.39%, 58.86% 53.18%, 59.54% 63.88%, 62.86% 50.75%, 65.14% 49.37%, 67.25% 68.20%, 71.61% 70.64%, 77.81% 41.69%, 82.32% 38.95%, 78.94% 74.73%, 93.76% 83.02%, 129.73% 10.22%, 34.37% 63.35%, 32.86% 52.84%, 32.63% 63.88%, 30.73% 52.13%, 29.65% 51.77%, 30.44% 64.56%, 27.63% 65.42%, 24.38% 50.02%, 22.44% 49.37%, 23.87% 66.57%, -0.64% 41.69%, -8.85% 38.95%, -2.68% 74.73%)"></div>
+          <div class="st-winlit" style="clip-path:polygon(-113.30% 108.73%, -64.60% 93.76%, -64.60% 52.68%, -113.30% 50.18%, -113.30% 108.73%, -191.93% -21.99%, -121.89% 1.32%, -121.89% -60.31%, -191.93% -108.73%, -191.93% -21.99%, -95.16% 10.22%, -64.60% 20.40%, -64.60% -20.69%, -95.16% -41.82%, -95.16% 10.22%, -29.66% 83.02%, -15.98% 78.82%, -15.98% 55.17%, -29.66% 54.47%, -29.66% 83.02%, -44.67% 27.03%, -31.65% 31.36%, -31.65% 2.09%, -44.67% -6.91%, -44.67% 27.03%, -25.08% 33.55%, -15.98% 36.58%, -15.98% 12.93%, -25.08% 6.63%, -25.08% 33.55%, 10.65% 70.64%, 14.31% 69.51%, 14.31% 56.72%, 10.65% 56.53%, 10.65% 70.64%, 7.31% 44.33%, 10.17% 45.29%, 10.17% 31.01%, 7.31% 29.03%, 7.31% 44.33%, 11.80% 45.83%, 14.31% 46.66%, 14.31% 33.87%, 11.80% 32.13%, 11.80% 45.83%, 18.60% 68.20%, 20.97% 67.47%, 20.97% 57.06%, 18.60% 56.94%, 18.60% 68.20%, 16.50% 47.39%, 18.29% 47.99%, 18.29% 36.62%, 16.50% 35.38%, 16.50% 47.39%, 19.33% 48.34%, 20.97% 48.88%, 20.97% 38.47%, 19.33% 37.34%, 19.33% 48.34%, 26.59% 50.75%, 27.48% 51.05%, 27.48% 42.97%, 26.59% 42.36%, 26.59% 50.75%, 28.01% 51.22%, 28.86% 51.51%, 28.86% 43.93%, 28.01% 43.34%, 28.01% 51.22%, 32.01% 52.55%, 32.53% 52.73%, 32.53% 46.47%, 32.01% 46.10%, 32.01% 52.55%, 33.87% 53.18%, 34.30% 53.32%, 34.30% 47.69%, 33.87% 47.39%, 33.87% 53.18%, 34.56% 53.40%, 34.98% 53.55%, 34.98% 48.16%, 34.56% 47.87%, 34.56% 53.40%, 139.70% 108.73%, 112.95% 93.76%, 112.95% 52.68%, 139.70% 50.18%, 139.70% 108.73%, 182.89% -21.99%, 144.42% 1.32%, 144.42% -60.31%, 182.89% -108.73%, 182.89% -21.99%, 102.00% 27.03%, 94.85% 31.36%, 94.85% 2.09%, 102.00% -6.91%, 102.00% 27.03%, 91.24% 33.55%, 86.24% 36.58%, 86.24% 12.93%, 91.24% 6.63%, 91.24% 33.55%, 73.45% 44.33%, 71.88% 45.29%, 71.88% 31.01%, 73.45% 29.03%, 73.45% 44.33%, 70.98% 45.83%, 69.61% 46.66%, 69.61% 33.87%, 70.98% 32.13%, 70.98% 45.83%, 68.40% 47.39%, 67.42% 47.99%, 67.42% 36.62%, 68.40% 35.38%, 68.40% 47.39%, 66.85% 48.34%, 65.95% 48.88%, 65.95% 38.47%, 66.85% 37.34%, 66.85% 48.34%, 64.35% 66.57%, 63.44% 66.06%, 63.44% 57.29%, 64.35% 57.21%, 64.35% 66.57%, 64.07% 50.02%, 63.44% 50.40%, 63.44% 41.63%, 64.07% 40.83%, 64.07% 50.02%, 62.29% 65.42%, 61.61% 65.04%, 61.61% 57.46%, 62.29% 57.40%, 62.29% 65.42%, 62.08% 51.22%, 61.61% 51.51%, 61.61% 43.93%, 62.08% 43.34%, 62.08% 51.22%, 60.74% 64.56%, 60.22% 64.26%, 60.22% 57.59%, 60.74% 57.54%, 60.74% 64.56%, 61.18% 51.77%, 60.81% 52.00%, 60.81% 44.94%, 61.18% 44.48%, 61.18% 51.77%, 60.58% 52.13%, 60.22% 52.35%, 60.22% 45.68%, 60.58% 45.22%, 60.58% 52.13%, 59.88% 52.55%, 59.59% 52.73%, 59.59% 46.47%, 59.88% 46.10%, 59.88% 52.55%, 59.42% 52.84%, 59.13% 53.01%, 59.13% 47.05%, 59.42% 46.69%, 59.42% 52.84%, 58.58% 63.35%, 58.25% 63.16%, 58.25% 57.78%, 58.58% 57.75%, 58.58% 63.35%, 58.48% 53.40%, 58.25% 53.55%, 58.25% 48.16%, 58.48% 47.87%, 58.48% 53.40%, 58.58% 63.35%, 59.42% 52.84%, 59.88% 52.55%, 60.58% 52.13%, 61.18% 51.77%, 60.74% 64.56%, 62.08% 51.22%, 62.29% 65.42%, 64.07% 50.02%, 64.35% 66.57%, 66.85% 48.34%, 68.40% 47.39%, 70.98% 45.83%, 73.45% 44.33%, 91.24% 33.55%, 102.00% 27.03%, 182.89% -21.99%, 139.70% 108.73%, 34.56% 53.40%, 33.87% 53.18%, 32.01% 52.55%, 28.01% 51.22%, 26.59% 50.75%, 19.33% 48.34%, 16.50% 47.39%, 18.60% 68.20%, 11.80% 45.83%, 7.31% 44.33%, 10.65% 70.64%, -25.08% 33.55%, -44.67% 27.03%, -29.66% 83.02%, -95.16% 10.22%, -191.93% -21.99%, -113.30% 108.73%)"></div>
+          <div class="st-door" style="clip-path:polygon(-206.16% 196.30%, -134.00% 157.50%, -134.00% 56.19%, -206.16% 55.27%, -206.16% 196.30%, -46.77% 110.59%, -34.28% 103.87%, -34.28% 57.47%, -46.77% 57.31%, -46.77% 110.59%, -9.65% 90.63%, -4.66% 87.94%, -4.66% 57.85%, -9.65% 57.78%, -9.65% 90.63%, 6.88% 81.73%, 9.55% 80.30%, 9.55% 58.03%, 6.88% 57.99%, 6.88% 81.73%, 16.24% 76.70%, 17.90% 75.81%, 17.90% 58.13%, 16.24% 58.11%, 16.24% 76.70%, 22.26% 73.46%, 23.39% 72.85%, 23.39% 58.20%, 22.26% 58.19%, 22.26% 73.46%, 26.46% 71.20%, 27.28% 70.76%, 27.28% 58.25%, 26.46% 58.24%, 26.46% 71.20%, 29.56% 69.54%, 30.18% 69.21%, 30.18% 58.29%, 29.56% 58.28%, 29.56% 69.54%, 31.93% 68.26%, 32.42% 68.00%, 32.42% 58.32%, 31.93% 58.31%, 31.93% 68.26%, 33.81% 67.25%, 34.20% 67.04%, 34.20% 58.34%, 33.81% 58.34%, 33.81% 67.25%, 190.71% 196.30%, 151.07% 157.50%, 151.07% 56.19%, 190.71% 55.27%, 190.71% 196.30%, 103.16% 110.59%, 96.30% 103.87%, 96.30% 57.47%, 103.16% 57.31%, 103.16% 110.59%, 82.77% 90.63%, 80.03% 87.94%, 80.03% 57.85%, 82.77% 57.78%, 82.77% 90.63%, 73.68% 81.73%, 72.22% 80.30%, 72.22% 58.03%, 73.68% 57.99%, 73.68% 81.73%, 68.54% 76.70%, 67.63% 75.81%, 67.63% 58.13%, 68.54% 58.11%, 68.54% 76.70%, 65.24% 73.46%, 64.62% 72.85%, 64.62% 58.20%, 65.24% 58.19%, 65.24% 73.46%, 62.93% 71.20%, 62.48% 70.76%, 62.48% 58.25%, 62.93% 58.24%, 62.93% 71.20%, 61.23% 69.54%, 60.89% 69.21%, 60.89% 58.29%, 61.23% 58.28%, 61.23% 69.54%, 59.93% 68.26%, 59.66% 68.00%, 59.66% 58.32%, 59.93% 58.31%, 59.93% 68.26%, 58.89% 67.25%, 58.68% 67.04%, 58.68% 58.34%, 58.89% 58.34%, 58.89% 67.25%, 59.93% 68.26%, 61.23% 69.54%, 62.93% 71.20%, 65.24% 73.46%, 68.54% 76.70%, 73.68% 81.73%, 82.77% 90.63%, 103.16% 110.59%, 190.71% 196.30%, 33.81% 67.25%, 31.93% 68.26%, 29.56% 69.54%, 26.46% 71.20%, 22.26% 73.46%, 16.24% 76.70%, 6.88% 81.73%, -9.65% 90.63%, -46.77% 110.59%, -206.16% 196.30%)"></div>
+          <div class="st-step" style="clip-path:polygon(-216.61% 188.27%, -128.96% 145.62%, -117.62% 145.62%, -199.71% 188.27%, -216.61% 188.27%, -48.23% 106.34%, -33.21% 99.03%, -27.94% 99.03%, -42.00% 106.34%, -48.23% 106.34%, -10.20% 87.84%, -4.21% 84.92%, -0.77% 84.92%, -6.39% 87.84%, -10.20% 87.84%, 6.60% 79.66%, 9.80% 78.10%, 12.35% 78.10%, 9.35% 79.66%, 6.60% 79.66%, 16.07% 75.06%, 18.06% 74.09%, 20.08% 74.09%, 18.22% 75.06%, 16.07% 75.06%, 22.14% 72.10%, 23.50% 71.44%, 25.18% 71.44%, 23.91% 72.10%, 22.14% 72.10%, 26.38% 70.04%, 27.36% 69.56%, 28.79% 69.56%, 27.87% 70.04%, 26.38% 70.04%, 29.49% 68.52%, 30.24% 68.16%, 31.49% 68.16%, 30.79% 68.52%, 29.49% 68.52%, 31.88% 67.36%, 32.46% 67.08%, 33.58% 67.08%, 33.03% 67.36%, 31.88% 67.36%, 33.77% 66.44%, 34.24% 66.21%, 35.24% 66.21%, 34.80% 66.44%, 33.77% 66.44%, 196.45% 188.27%, 148.30% 145.62%, 136.96% 145.62%, 179.55% 188.27%, 196.45% 188.27%, 103.95% 106.34%, 95.71% 99.03%, 90.43% 99.03%, 97.73% 106.34%, 103.95% 106.34%, 83.07% 87.84%, 79.78% 84.92%, 76.34% 84.92%, 79.25% 87.84%, 83.07% 87.84%, 73.84% 79.66%, 72.08% 78.10%, 69.53% 78.10%, 71.09% 79.66%, 73.84% 79.66%, 68.64% 75.06%, 67.55% 74.09%, 65.52% 74.09%, 66.49% 75.06%, 68.64% 75.06%, 65.30% 72.10%, 64.56% 71.44%, 62.88% 71.44%, 63.54% 72.10%, 65.30% 72.10%, 62.98% 70.04%, 62.44% 69.56%, 61.00% 69.56%, 61.48% 70.04%, 62.98% 70.04%, 61.27% 68.52%, 60.86% 68.16%, 59.60% 68.16%, 59.97% 68.52%, 61.27% 68.52%, 59.95% 67.36%, 59.63% 67.08%, 58.52% 67.08%, 58.80% 67.36%, 59.95% 67.36%, 58.91% 66.44%, 58.66% 66.21%, 57.66% 66.21%, 57.89% 66.44%, 58.91% 66.44%, 59.95% 67.36%, 61.27% 68.52%, 62.98% 70.04%, 65.30% 72.10%, 68.64% 75.06%, 73.84% 79.66%, 83.07% 87.84%, 103.95% 106.34%, 196.45% 188.27%, 33.77% 66.44%, 31.88% 67.36%, 29.49% 68.52%, 26.38% 70.04%, 22.14% 72.10%, 16.07% 75.06%, 6.60% 79.66%, -10.20% 87.84%, -48.23% 106.34%, -216.61% 188.27%)"></div>
+          <div class="st-roof" style="clip-path:polygon(-246.91% -237.98%, -52.06% -43.39%, -103.81% -106.11%, -397.45% -420.46%, -246.91% -237.98%, -52.06% -43.39%, -11.62% -3.00%, -42.87% -40.87%, -103.81% -106.11%, -52.06% -43.39%, -11.62% -3.00%, 5.86% 14.47%, -16.51% -12.66%, -42.87% -40.87%, -11.62% -3.00%, 5.86% 18.42%, 15.62% 27.29%, -1.81% 6.16%, -16.51% -8.70%, 5.86% 18.42%, 15.62% 24.21%, 21.84% 30.43%, 7.57% 13.12%, -1.81% 3.08%, 15.62% 24.21%, 21.84% 30.43%, 26.16% 34.74%, 14.07% 20.08%, 7.57% 13.12%, 21.84% 30.43%, 26.16% 34.74%, 29.33% 37.90%, 18.85% 25.20%, 14.07% 20.08%, 26.16% 34.74%, 29.33% 37.90%, 31.75% 40.32%, 22.50% 29.11%, 18.85% 25.20%, 29.33% 37.90%, 31.75% 40.32%, 33.67% 42.24%, 25.39% 32.20%, 22.50% 29.11%, 31.75% 40.32%, 33.67% 42.24%, 35.22% 43.79%, 27.73% 34.70%, 25.39% 32.20%, 33.67% 42.24%, 213.09% -237.98%, 106.06% -43.39%, 157.81% -106.11%, 363.64% -420.46%, 213.09% -237.98%, 106.06% -43.39%, 83.85% -3.00%, 115.09% -40.87%, 157.81% -106.11%, 106.06% -43.39%, 83.85% -3.00%, 74.24% 14.47%, 96.62% -12.66%, 115.09% -40.87%, 83.85% -3.00%, 74.24% 14.47%, 68.88% 24.21%, 86.32% 3.08%, 96.62% -12.66%, 74.24% 14.47%, 68.88% 24.21%, 65.47% 30.43%, 79.74% 13.12%, 86.32% 3.08%, 68.88% 24.21%, 65.47% 30.43%, 63.09% 34.74%, 75.18% 20.08%, 79.74% 13.12%, 65.47% 30.43%, 63.09% 34.74%, 61.35% 37.90%, 71.84% 25.20%, 75.18% 20.08%, 63.09% 34.74%, 61.35% 37.90%, 60.02% 40.32%, 69.27% 29.11%, 71.84% 25.20%, 61.35% 37.90%, 60.02% 40.32%, 58.97% 42.24%, 67.25% 32.20%, 69.27% 29.11%, 60.02% 40.32%, 58.97% 42.24%, 58.12% 43.79%, 65.61% 34.70%, 67.25% 32.20%, 58.97% 42.24%, 60.02% 40.32%, 61.35% 37.90%, 63.09% 34.74%, 65.47% 30.43%, 68.88% 24.21%, 74.24% 14.47%, 83.85% -3.00%, 106.06% -43.39%, 213.09% -237.98%, 33.67% 42.24%, 31.75% 40.32%, 29.33% 37.90%, 26.16% 34.74%, 21.84% 30.43%, 15.62% 24.21%, 5.86% 18.42%, -11.62% -3.00%, -52.06% -43.39%, -246.91% -237.98%)"></div>
+          <div class="st-chim" style="clip-path:polygon(-497.37% -514.96%, -311.47% -320.19%, -311.47% -402.24%, -497.37% -639.22%, -497.37% -514.96%, -110.99% -110.13%, -89.84% -87.97%, -89.84% -119.72%, -110.99% -146.68%, -110.99% -110.13%, -44.37% -40.33%, -36.69% -32.28%, -36.69% -51.96%, -44.37% -61.76%, -44.37% -40.33%, -16.75% -7.31%, -12.81% -3.43%, -12.81% -17.69%, -16.75% -22.47%, -16.75% -7.31%, -1.64% 4.44%, 0.75% 6.94%, 0.75% -4.24%, -1.64% -7.28%, -1.64% 4.44%, 7.89% 14.43%, 9.50% 16.11%, 9.50% 6.91%, 7.89% 4.87%, 7.89% 14.43%, 14.46% 21.30%, 15.60% 22.51%, 15.60% 14.70%, 14.46% 13.24%, 14.46% 21.30%, 19.25% 26.33%, 20.11% 27.23%, 20.11% 20.45%, 19.25% 19.35%, 19.25% 26.33%, 22.90% 30.15%, 23.58% 30.86%, 23.58% 24.86%, 22.90% 24.00%, 22.90% 30.15%, 25.78% 33.17%, 26.32% 33.73%, 26.32% 28.36%, 25.78% 27.67%, 25.78% 33.17%, 429.15% -514.96%, 300.38% -320.19%, 300.38% -402.24%, 429.15% -639.22%, 429.15% -514.96%, 161.51% -110.13%, 146.86% -87.97%, 146.86% -119.72%, 161.51% -146.68%, 161.51% -110.13%, 115.37% -40.33%, 110.05% -32.28%, 110.05% -51.96%, 115.37% -61.76%, 115.37% -40.33%, 96.24% -11.39%, 93.51% -7.27%, 93.51% -21.53%, 96.24% -26.55%, 96.24% -11.39%, 85.77% 4.44%, 84.11% 6.94%, 84.11% -4.24%, 85.77% -7.28%, 85.77% 4.44%, 79.17% 14.43%, 78.06% 16.11%, 78.06% 6.91%, 79.17% 4.87%, 79.17% 14.43%, 74.62% 21.30%, 73.82% 22.51%, 73.82% 14.70%, 74.62% 13.24%, 74.62% 21.30%, 71.30% 26.33%, 70.70% 27.23%, 70.70% 20.45%, 71.30% 19.35%, 71.30% 26.33%, 68.77% 30.15%, 68.30% 30.86%, 68.30% 24.86%, 68.77% 24.00%, 68.77% 30.15%, 66.78% 33.17%, 66.40% 33.73%, 66.40% 28.36%, 66.78% 27.67%, 66.78% 33.17%, 68.77% 30.15%, 71.30% 26.33%, 74.62% 21.30%, 79.17% 14.43%, 85.77% 4.44%, 96.24% -11.39%, 115.37% -40.33%, 161.51% -110.13%, 429.15% -514.96%, 25.78% 33.17%, 22.90% 30.15%, 19.25% 26.33%, 14.46% 21.30%, 7.89% 14.43%, -1.64% 4.44%, -16.75% -7.31%, -44.37% -40.33%, -110.99% -110.13%, -497.37% -514.96%)"></div>
+          <div class="st-lamp" style="left:37.98%;top:49.45%;width:0.25%;height:16.73%"></div>
+          <div class="st-lamp" style="left:58.25%;top:44.61%;width:0.37%;height:25.65%"></div>
+          <div class="st-lamp" style="left:10.51%;top:28.68%;width:0.79%;height:54.96%"></div>
+          <div class="heron hero-heron" style="left:69%;bottom:2%;font-size:2.35rem;--tilt:12deg">
+            <i class="h-legs"></i>
+            <i class="h-body"></i>
+            <i class="h-slate"></i>
+            <i class="h-wing"></i>
+            <i class="h-neck"></i>
+            <i class="h-head"></i>
+          </div>
+          <div class="kh-gate"></div>
+          <div class="kh-step"></div>
+          <div class="label">chadwick street</div>
+        </div>
+        <h1>The kiln kept the street</h1>
+        <time datetime="2026-10-09">9 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Irene Bailey had said no to the Surveyor nine years running, and she was getting ready to say it a tenth time when it came up Chadwick Street on the first Tuesday in March, picking its way over the cobbles on those long legs of its like it was crossing a stream.</p>
+        <p>The children in Longton called it the Heron. It was about the height of one, grey, two legs and a narrow body and a head that was mostly a sort of lamp, and it carried a slate under one wing that it would hold out to you if you wanted to draw on it. It didn't need the slate. It could hear you perfectly well, and it could see what you meant better than you could say it, most of the time. But people liked having something to draw on, it had found, and so it carried the slate, and it walked, because it had found that too: that nobody tells you the truth about their street through a lamppost. You have to stand in it with them.</p>
+        <p>The whole city had been asked like this every year for nine years. Every street in all six towns, from Tunstall at the top down through Burslem and Hanley and Stoke and Fenton to Longton at the bottom, the Surveyor walked them with whoever came out, and it asked the same question, which was what do you want here, and then, in the weeks after, the crews came at night and made it. That was the part people from away never quite believed until they saw it. You went to bed with a gap in the terrace where number forty had burned out in 2019 and you woke up and there was a house there, brick-faced to match, the mortar still dark, a light on upstairs because the family who'd asked for it had moved in at two in the morning and couldn't wait. The crews were mostly machines, low and quiet, and some people, the ones who liked the work, and they finished by six because the Surveyor had learned early that people didn't like to watch their street being changed. They liked to come out and find it changed. It was like snow.</p>
+        <p>So Stoke had become, without anyone exactly deciding it, a good place. Irene could see that. She wasn't daft. The canal was clean enough that people swam in it in August, which she'd never have believed. The old Spode works was flats and a school and a covered market where you could get oatcakes and Jamaican patties from the same counter, and the A500, that great grey thing that had cut the city in half her whole life, was gone, dug up and planted, so that you could walk from Etruria to Trentham under apple trees and never cross a road. Nobody in the council houses paid rent any more. Her grandson Callum worked three days a week at the robotics place in Hanley and spent the other four rebuilding a narrowboat, and seemed, for the first time since he was small, entirely happy. Young people were coming back. You heard accents in the Co-op you hadn't heard in forty years: Glaswegian, Polish, Ghanaian, Brummie, all of them having come to Stoke on purpose, which was the thing that got her most. On purpose.</p>
+        <p>And every year the Surveyor came up Chadwick Street and asked her what she wanted, and every year she said, "Nothing, duck. Leave it."</p>
+        <p>Because the street was the last of something. That was all. It was one of the few streets in Longton still more or less how it had been, two rows of terraces looking at each other across the setts, and at the bottom of it, where the street ran out into scrubby ground and a fence, the kiln. A bottle oven, they were properly called. A great brick bottle forty feet high with a fat round belly and a narrow neck, black with a hundred years of soot, the last one standing in this bit of Longton. When Irene was born there had been dozens you could see from her mother's back bedroom, all smoking. By the time she married Ray there were a handful, and none of them lit. Now there was this one, and a few in the museums, and that was your lot.</p>
+        <p>Ray had worked at the Gladstone works, which was the museum now, giving demonstrations to schoolchildren, because the real work had gone by the time he was old enough to do it. He'd done it anyway. He'd learned to throw and to fire from the last of the old men, and he'd stood in front of rooms of eight-year-olds and made a cup out of a lump of wet clay in about four seconds, and they'd gasped every time, and he'd come home and say, "They gasped again, Reen," as though it had never happened before. He'd been dead eleven years.</p>
+        <p>So, no. She didn't want anything. She wanted Chadwick Street to stay the way it was, the way it had been when Ray walked up it, and if the rest of the city wanted to turn itself into a garden, good luck to it, but not here.</p>
+        <p>The Surveyor had listened to that nine times. Every year it had said, "All right, Irene," and gone to number twelve, where the Asantes wanted a bigger kitchen, and to number nineteen, where Terry Holdcroft wanted somewhere to keep his pigeons that the council couldn't complain about, and every year those things were made and the street changed a bit, a kitchen here, a loft there, but the bones of it held, because Irene was at number one and she was the one everyone listened to, and the kiln at the bottom stood where it stood.</p>
+        <p>This year it stopped at her gate and didn't ask.</p>
+        <p>"I've brought you something," it said instead, and held out the slate.</p>
+        <p>There was a photograph on it. Not a drawing. A real photograph, black and white, a bit soft at the edges, of Chadwick Street. She knew it at once by the kink in the roofline where number eight had always sat a foot lower than its neighbours. But the street was full. That was what she noticed first. It was full of people. Women in pinnies on the doorsteps with their arms folded. Men in caps. Children everywhere, on the kerb, in the road, a lad up a lamppost. And at the bottom of the street the kiln, alive, smoke going straight up from the neck of it into a white sky, and everybody facing it, the way you'd face a band.</p>
+        <p>"Where'd you get this?" she said.</p>
+        <p>"The Potteries Museum. It was in a box of glass plates nobody had catalogued. It's from 1931. They're watching a firing." The Surveyor tipped its lamp of a head. "That's your mother, I think. On the step of number one. The girl in the plaid dress."</p>
+        <p>Irene put her glasses on. She looked for a long time.</p>
+        <p>"I don't know," she said. "It might be. She had a dress like that." She gave it back. "What do you want me to say?"</p>
+        <p>"I don't want you to say anything," the Surveyor said. "I wanted you to have it. I'll have it printed for you. I just think," and here it did a thing it did sometimes, a little hesitation that she'd always assumed was put on for manners and was beginning, this year, to suspect wasn't, "I think I've been asking you the wrong question."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall plate-scene" aria-hidden="true">
+        <div class="brush pl-wash-a"></div>
+        <div class="brush pl-wash-b"></div>
+        <div class="pl-wing"></div>
+        <div class="pl-slate">
+          <div class="pl-photo">
+            <div class="st-yard" style="clip-path:polygon(-41.52% 53.67%, 140.30% 53.67%, 96.36% 49.71%, 3.02% 49.71%, -41.52% 53.67%)"></div>
+            <div class="st-smoke" style="left:46.90%;width:5.72%;top:-2%;height:22.10%"></div>
+            <div class="st-kiln-rim alive" style="left:43.00%;top:19.60%;width:13.52%;height:32.42%"></div>
+            <div class="st-kiln alive" style="left:43.00%;top:19.60%;width:13.52%;height:32.42%"></div>
+            <div class="st-road" style="clip-path:polygon(-206.67% 358.90%, 260.00% 358.90%, 55.45% 53.67%, 43.33% 53.67%, -206.67% 358.90%)"></div>
+            <div class="st-sett" style="clip-path:polygon(-104.00% 233.55%, 176.00% 233.55%, 171.70% 227.13%, -98.74% 227.13%, -104.00% 233.55%, -82.76% 207.62%, 158.62% 207.62%, 155.17% 202.46%, -78.54% 202.46%, -82.76% 207.62%, -64.45% 185.26%, 143.64% 185.26%, 140.87% 181.13%, -61.06% 181.13%, -64.45% 185.26%, -48.66% 165.99%, 130.72% 165.99%, 128.50% 162.67%, -45.95% 162.67%, -48.66% 165.99%, -35.05% 149.37%, 119.59% 149.37%, 117.81% 146.71%, -32.88% 146.71%, -35.05% 149.37%, -23.32% 135.05%, 109.99% 135.05%, 108.56% 132.92%, -21.58% 132.92%, -23.32% 135.05%, -13.21% 122.70%, 101.72% 122.70%, 100.57% 120.99%, -11.81% 120.99%, -13.21% 122.70%, -4.49% 112.06%, 94.58% 112.06%, 93.66% 110.69%, -3.37% 110.69%, -4.49% 112.06%, 3.03% 102.88%, 88.43% 102.88%, 87.70% 101.78%, 3.93% 101.78%, 3.03% 102.88%, 9.51% 94.97%, 83.13% 94.97%, 82.54% 94.09%, 10.23% 94.09%, 9.51% 94.97%, 15.09% 88.15%, 78.56% 88.15%, 78.09% 87.45%, 15.67% 87.45%, 15.09% 88.15%, 19.91% 82.27%, 74.62% 82.27%, 74.24% 81.71%, 20.37% 81.71%, 19.91% 82.27%, 24.06% 77.20%, 71.23% 77.20%, 70.92% 76.75%, 24.43% 76.75%, 24.06% 77.20%, 27.64% 72.84%, 68.30% 72.84%, 68.06% 72.47%, 27.93% 72.47%, 27.64% 72.84%, 30.72% 69.07%, 65.77% 69.07%, 65.58% 68.78%, 30.96% 68.78%, 30.72% 69.07%, 33.38% 65.82%, 63.60% 65.82%, 63.44% 65.59%, 33.57% 65.59%, 33.38% 65.82%, 35.67% 63.02%, 61.72% 63.02%, 61.60% 62.84%, 35.82% 62.84%, 35.67% 63.02%, 37.65% 60.61%, 60.11% 60.61%, 60.01% 60.46%, 37.77% 60.46%, 37.65% 60.61%, 39.35% 58.53%, 58.71% 58.53%, 58.63% 58.41%, 39.45% 58.41%, 39.35% 58.53%, 40.82% 56.74%, 57.51% 56.74%, 57.45% 56.64%, 40.90% 56.64%, 40.82% 56.74%, 42.09% 55.19%, 56.47% 55.19%, 56.42% 55.11%, 42.15% 55.11%, 42.09% 55.19%, 43.18% 53.86%, 55.58% 53.86%, 55.54% 53.80%, 43.23% 53.80%, 43.18% 53.86%, 42.09% 55.19%, 40.82% 56.74%, 39.35% 58.53%, 37.65% 60.61%, 35.67% 63.02%, 33.38% 65.82%, 30.72% 69.07%, 27.64% 72.84%, 24.06% 77.20%, 19.91% 82.27%, 15.09% 88.15%, 9.51% 94.97%, 3.03% 102.88%, -4.49% 112.06%, -13.21% 122.70%, -23.32% 135.05%, -35.05% 149.37%, -48.66% 165.99%, -64.45% 185.26%, -82.76% 207.62%, -104.00% 233.55%)"></div>
+            <div class="st-pave" style="clip-path:polygon(-206.67% 358.90%, -294.17% 358.90%, 41.06% 53.67%, 43.33% 53.67%, -206.67% 358.90%, 260.00% 358.90%, 347.50% 358.90%, 57.73% 53.67%, 55.45% 53.67%, 260.00% 358.90%, -206.67% 358.90%)"></div>
+            <div class="st-kerb" style="clip-path:polygon(-206.67% 358.90%, -206.67% 345.99%, 43.33% 53.33%, 43.33% 53.67%, -206.67% 358.90%, 260.00% 358.90%, 260.00% 345.99%, 55.45% 53.33%, 55.45% 53.67%, 260.00% 358.90%, -206.67% 358.90%)"></div>
+            <div class="st-facade" style="clip-path:polygon(-137.73% 216.46%, -12.58% 102.51%, -12.58% 1.96%, -137.73% -85.18%, -137.73% 216.46%, -12.58% 102.51%, 12.45% 79.72%, 12.45% 19.39%, -12.58% 1.96%, -12.58% 102.51%, 12.45% 79.72%, 23.18% 69.95%, 23.18% 26.86%, 12.45% 19.39%, 12.45% 79.72%, 23.18% 69.95%, 29.14% 64.52%, 29.14% 32.96%, 23.18% 29.37%, 23.18% 69.95%, 29.14% 64.52%, 32.93% 61.07%, 32.93% 33.65%, 29.14% 31.01%, 29.14% 64.52%, 32.93% 61.07%, 35.56% 58.68%, 35.56% 35.48%, 32.93% 33.65%, 32.93% 61.07%, 35.56% 58.68%, 37.48% 56.93%, 37.48% 36.82%, 35.56% 35.48%, 35.56% 58.68%, 37.48% 56.93%, 38.96% 55.58%, 38.96% 37.84%, 37.48% 36.82%, 37.48% 56.93%, 38.96% 55.58%, 40.12% 54.53%, 40.12% 38.65%, 38.96% 37.84%, 38.96% 55.58%, 40.12% 54.53%, 41.06% 53.67%, 41.06% 39.31%, 40.12% 38.65%, 40.12% 54.53%, 212.27% 216.46%, 104.09% 102.51%, 104.09% 1.96%, 212.27% -85.18%, 212.27% 216.46%, 104.09% 102.51%, 82.45% 79.72%, 82.45% 19.39%, 104.09% 1.96%, 104.09% 102.51%, 82.45% 79.72%, 73.18% 69.95%, 73.18% 26.86%, 82.45% 19.39%, 82.45% 79.72%, 73.18% 69.95%, 68.03% 64.52%, 68.03% 31.01%, 73.18% 26.86%, 73.18% 69.95%, 68.03% 64.52%, 64.75% 61.07%, 64.75% 33.65%, 68.03% 31.01%, 68.03% 64.52%, 64.75% 61.07%, 62.48% 58.68%, 62.48% 35.48%, 64.75% 33.65%, 64.75% 61.07%, 62.48% 58.68%, 60.82% 56.93%, 60.82% 36.82%, 62.48% 35.48%, 62.48% 58.68%, 60.82% 56.93%, 59.55% 55.58%, 59.55% 37.84%, 60.82% 36.82%, 60.82% 56.93%, 59.55% 55.58%, 58.54% 54.53%, 58.54% 38.65%, 59.55% 37.84%, 59.55% 55.58%, 58.54% 54.53%, 57.73% 53.67%, 57.73% 39.31%, 58.54% 38.65%, 58.54% 54.53%, 59.55% 55.58%, 60.82% 56.93%, 62.48% 58.68%, 64.75% 61.07%, 68.03% 64.52%, 73.18% 69.95%, 82.45% 79.72%, 104.09% 102.51%, 212.27% 216.46%, 40.12% 54.53%, 38.96% 55.58%, 37.48% 56.93%, 35.56% 58.68%, 32.93% 61.07%, 29.14% 64.52%, 23.18% 69.95%, 12.45% 79.72%, -12.58% 102.51%, -137.73% 216.46%)"></div>
+            <div class="st-sill" style="clip-path:polygon(-55.90% 119.83%, -21.21% 95.49%, -21.21% 93.20%, -55.90% 116.43%, -55.90% 119.83%, -108.85% 50.63%, -55.90% 48.93%, -55.90% 45.53%, -108.85% 45.53%, -108.85% 50.63%, -43.86% 48.55%, -21.21% 47.82%, -21.21% 45.53%, -43.86% 45.53%, -43.86% 48.55%, 0.24% 80.44%, 9.51% 73.94%, 9.51% 72.64%, 0.24% 78.84%, 0.24% 80.44%, -9.00% 47.43%, 0.24% 47.13%, 0.24% 45.53%, -9.00% 45.53%, -9.00% 47.43%, 3.07% 47.04%, 9.51% 46.83%, 9.51% 45.53%, 3.07% 45.53%, 3.07% 47.04%, 17.48% 68.35%, 21.71% 65.38%, 21.71% 64.47%, 17.48% 67.30%, 17.48% 68.35%, 13.77% 46.69%, 17.48% 46.58%, 17.48% 45.53%, 13.77% 45.53%, 13.77% 46.69%, 18.71% 46.54%, 21.71% 46.44%, 21.71% 45.53%, 18.71% 45.53%, 18.71% 46.54%, 25.85% 62.48%, 28.26% 60.78%, 28.26% 60.08%, 25.85% 61.70%, 25.85% 62.48%, 23.86% 46.37%, 25.85% 46.31%, 25.85% 45.53%, 23.86% 45.53%, 23.86% 46.37%, 26.53% 46.28%, 28.26% 46.23%, 28.26% 45.53%, 26.53% 45.53%, 26.53% 46.28%, 30.79% 59.01%, 32.35% 57.91%, 32.35% 57.35%, 30.79% 58.39%, 30.79% 59.01%, 29.55% 46.19%, 30.79% 46.15%, 30.79% 45.53%, 29.55% 45.53%, 29.55% 46.19%, 31.23% 46.13%, 32.35% 46.10%, 32.35% 45.53%, 31.23% 45.53%, 31.23% 46.13%, 34.05% 56.72%, 35.14% 55.95%, 35.14% 55.48%, 34.05% 56.21%, 34.05% 56.72%, 33.21% 46.07%, 34.05% 46.04%, 34.05% 45.53%, 33.21% 45.53%, 33.21% 46.07%, 34.36% 46.03%, 35.14% 46.01%, 35.14% 45.53%, 34.36% 45.53%, 34.36% 46.03%, 36.37% 55.09%, 37.17% 54.53%, 37.17% 54.12%, 36.37% 54.66%, 36.37% 55.09%, 35.76% 45.99%, 36.37% 45.97%, 36.37% 45.53%, 35.76% 45.53%, 35.76% 45.99%, 36.59% 45.96%, 37.17% 45.94%, 37.17% 45.53%, 36.59% 45.53%, 36.59% 45.96%, 38.10% 53.88%, 38.72% 53.45%, 38.72% 53.08%, 38.10% 53.50%, 38.10% 53.88%, 37.63% 45.93%, 38.10% 45.91%, 38.10% 45.53%, 37.63% 45.53%, 37.63% 45.93%, 38.27% 45.91%, 38.72% 45.89%, 38.72% 45.53%, 38.27% 45.53%, 38.27% 45.91%, 39.44% 52.94%, 39.93% 52.60%, 39.93% 52.27%, 39.44% 52.60%, 39.44% 52.94%, 39.07% 45.88%, 39.44% 45.87%, 39.44% 45.53%, 39.07% 45.53%, 39.07% 45.88%, 39.57% 45.87%, 39.93% 45.85%, 39.93% 45.53%, 39.57% 45.53%, 39.57% 45.87%, 40.51% 52.19%, 40.90% 51.91%, 40.90% 51.62%, 40.51% 51.89%, 40.51% 52.19%, 40.21% 45.84%, 40.51% 45.84%, 40.51% 45.53%, 40.21% 45.53%, 40.21% 45.84%, 40.61% 45.83%, 40.90% 45.82%, 40.90% 45.53%, 40.61% 45.53%, 40.61% 45.83%, 141.54% 119.83%, 111.55% 95.49%, 111.55% 93.20%, 141.54% 116.43%, 141.54% 119.83%, 187.31% 50.63%, 141.54% 48.93%, 141.54% 45.53%, 187.31% 45.53%, 187.31% 50.63%, 131.14% 48.55%, 111.55% 47.82%, 111.55% 45.53%, 131.14% 45.53%, 131.14% 48.55%, 93.01% 80.44%, 85.00% 73.94%, 85.00% 72.64%, 93.01% 78.84%, 93.01% 80.44%, 101.00% 47.43%, 93.01% 47.13%, 93.01% 45.53%, 101.00% 45.53%, 101.00% 47.43%, 90.57% 47.04%, 85.00% 46.83%, 85.00% 45.53%, 90.57% 45.53%, 90.57% 47.04%, 78.11% 68.35%, 74.45% 65.38%, 74.45% 64.47%, 78.11% 67.30%, 78.11% 68.35%, 81.32% 46.69%, 78.11% 46.58%, 78.11% 45.53%, 81.32% 45.53%, 81.32% 46.69%, 77.05% 46.54%, 74.45% 46.44%, 74.45% 45.53%, 77.05% 45.53%, 77.05% 46.54%, 70.88% 62.48%, 68.79% 60.78%, 68.79% 60.08%, 70.88% 61.70%, 70.88% 62.48%, 72.59% 46.37%, 70.88% 46.31%, 70.88% 45.53%, 72.59% 45.53%, 72.59% 46.37%, 70.28% 46.28%, 68.79% 46.23%, 68.79% 45.53%, 70.28% 45.53%, 70.28% 46.28%, 66.60% 59.01%, 65.26% 57.91%, 65.26% 57.35%, 66.60% 58.39%, 66.60% 59.01%, 67.67% 46.19%, 66.60% 46.15%, 66.60% 45.53%, 67.67% 45.53%, 67.67% 46.19%, 66.23% 46.13%, 65.26% 46.10%, 65.26% 45.53%, 66.23% 45.53%, 66.23% 46.13%, 63.78% 56.72%, 62.84% 55.95%, 62.84% 55.48%, 63.78% 56.21%, 63.78% 56.72%, 64.51% 46.07%, 63.78% 46.04%, 63.78% 45.53%, 64.51% 45.53%, 64.51% 46.07%, 63.52% 46.03%, 62.84% 46.01%, 62.84% 45.53%, 63.52% 45.53%, 63.52% 46.03%, 61.78% 55.09%, 61.09% 54.53%, 61.09% 54.12%, 61.78% 54.66%, 61.78% 55.09%, 62.31% 45.99%, 61.78% 45.97%, 61.78% 45.53%, 62.31% 45.53%, 62.31% 45.99%, 61.59% 45.96%, 61.09% 45.94%, 61.09% 45.53%, 61.59% 45.53%, 61.59% 45.96%, 60.29% 53.88%, 59.75% 53.45%, 59.75% 53.08%, 60.29% 53.50%, 60.29% 53.88%, 60.69% 45.93%, 60.29% 45.91%, 60.29% 45.53%, 60.69% 45.53%, 60.69% 45.93%, 60.14% 45.91%, 59.75% 45.89%, 59.75% 45.53%, 60.14% 45.53%, 60.14% 45.91%, 59.13% 52.94%, 58.71% 52.60%, 58.71% 52.27%, 59.13% 52.60%, 59.13% 52.94%, 59.44% 45.88%, 59.13% 45.87%, 59.13% 45.53%, 59.44% 45.53%, 59.44% 45.88%, 59.02% 45.87%, 58.71% 45.85%, 58.71% 45.53%, 59.02% 45.53%, 59.02% 45.87%, 58.21% 52.19%, 57.86% 51.91%, 57.86% 51.62%, 58.21% 51.89%, 58.21% 52.19%, 58.46% 45.84%, 58.21% 45.84%, 58.21% 45.53%, 58.46% 45.53%, 58.46% 45.84%, 58.11% 45.83%, 57.86% 45.82%, 57.86% 45.53%, 58.11% 45.53%, 58.11% 45.83%, 58.46% 45.84%, 58.21% 52.19%, 59.02% 45.87%, 59.44% 45.88%, 59.13% 52.94%, 60.14% 45.91%, 60.69% 45.93%, 60.29% 53.88%, 61.59% 45.96%, 62.31% 45.99%, 61.78% 55.09%, 63.52% 46.03%, 64.51% 46.07%, 63.78% 56.72%, 66.23% 46.13%, 67.67% 46.19%, 66.60% 59.01%, 70.28% 46.28%, 72.59% 46.37%, 70.88% 62.48%, 77.05% 46.54%, 81.32% 46.69%, 78.11% 68.35%, 90.57% 47.04%, 101.00% 47.43%, 93.01% 80.44%, 131.14% 48.55%, 187.31% 50.63%, 141.54% 119.83%, 40.61% 45.83%, 40.21% 45.84%, 40.51% 52.19%, 39.57% 45.87%, 39.07% 45.88%, 39.44% 52.94%, 38.27% 45.91%, 37.63% 45.93%, 38.10% 53.88%, 36.59% 45.96%, 35.76% 45.99%, 36.37% 55.09%, 34.36% 46.03%, 33.21% 46.07%, 34.05% 56.72%, 31.23% 46.13%, 29.55% 46.19%, 30.79% 59.01%, 26.53% 46.28%, 23.86% 46.37%, 25.85% 62.48%, 18.71% 46.54%, 13.77% 46.69%, 17.48% 68.35%, 3.07% 47.04%, -9.00% 47.43%, 0.24% 80.44%, -43.86% 48.55%, -108.85% 50.63%, -55.90% 119.83%)"></div>
+            <div class="st-windark" style="clip-path:polygon(-53.25% 114.66%, -22.46% 94.04%, -22.46% 66.87%, -53.25% 75.95%, -53.25% 114.66%, -102.96% 45.53%, -58.68% 45.53%, -58.68% 4.78%, -102.96% -11.82%, -102.96% 45.53%, -41.78% 45.53%, -22.46% 45.53%, -22.46% 18.37%, -41.78% 11.12%, -41.78% 45.53%, 0.83% 78.45%, 9.11% 72.91%, 9.11% 57.58%, 0.83% 60.01%, 0.83% 78.45%, -8.17% 45.53%, -0.37% 45.53%, -0.37% 26.65%, -8.17% 23.72%, -8.17% 45.53%, 3.60% 45.53%, 9.11% 45.53%, 9.11% 30.20%, 3.60% 28.13%, 3.60% 45.53%, 17.73% 67.13%, 21.52% 64.60%, 21.52% 53.92%, 17.73% 55.03%, 17.73% 67.13%, 14.09% 45.53%, 17.22% 45.53%, 17.22% 33.24%, 14.09% 32.07%, 14.09% 45.53%, 18.95% 45.53%, 21.52% 45.53%, 21.52% 34.85%, 18.95% 33.89%, 18.95% 45.53%, 25.99% 61.61%, 28.15% 60.16%, 28.15% 51.97%, 25.99% 52.60%, 25.99% 61.61%, 24.03% 45.53%, 25.71% 45.53%, 25.71% 36.42%, 24.03% 35.79%, 24.03% 45.53%, 26.67% 45.53%, 28.15% 45.53%, 28.15% 37.34%, 26.67% 36.78%, 26.67% 45.53%, 30.88% 58.33%, 32.27% 57.40%, 32.27% 50.75%, 30.88% 51.16%, 30.88% 58.33%, 29.66% 45.53%, 30.70% 45.53%, 30.70% 38.29%, 29.66% 37.90%, 29.66% 45.53%, 31.31% 45.53%, 32.27% 45.53%, 32.27% 38.88%, 31.31% 38.52%, 31.31% 45.53%, 34.12% 56.16%, 35.09% 55.51%, 35.09% 49.92%, 34.12% 50.21%, 34.12% 56.16%, 33.28% 45.53%, 33.99% 45.53%, 33.99% 39.53%, 33.28% 39.26%, 33.28% 45.53%, 34.42% 45.53%, 35.09% 45.53%, 35.09% 39.94%, 34.42% 39.69%, 34.42% 45.53%, 36.41% 54.63%, 37.13% 54.14%, 37.13% 49.32%, 36.41% 49.53%, 36.41% 54.63%, 35.81% 45.53%, 36.32% 45.53%, 36.32% 40.40%, 35.81% 40.21%, 35.81% 45.53%, 36.63% 45.53%, 37.13% 45.53%, 37.13% 40.71%, 36.63% 40.52%, 36.63% 45.53%, 38.13% 53.48%, 38.68% 53.11%, 38.68% 48.86%, 38.13% 49.03%, 38.13% 53.48%, 37.67% 45.53%, 38.06% 45.53%, 38.06% 41.05%, 37.67% 40.91%, 37.67% 45.53%, 38.30% 45.53%, 38.68% 45.53%, 38.68% 41.29%, 38.30% 41.14%, 38.30% 45.53%, 39.46% 52.58%, 39.90% 52.29%, 39.90% 48.50%, 39.46% 48.63%, 39.46% 52.58%, 39.10% 45.53%, 39.41% 45.53%, 39.41% 41.56%, 39.10% 41.44%, 39.10% 45.53%, 39.60% 45.53%, 39.90% 45.53%, 39.90% 41.74%, 39.60% 41.63%, 39.60% 45.53%, 40.53% 51.87%, 40.88% 51.63%, 40.88% 48.22%, 40.53% 48.32%, 40.53% 51.87%, 40.24% 45.53%, 40.48% 45.53%, 40.48% 41.96%, 40.24% 41.87%, 40.24% 45.53%, 40.63% 45.53%, 40.88% 45.53%, 40.88% 42.11%, 40.63% 42.02%, 40.63% 45.53%, 139.25% 114.66%, 112.63% 94.04%, 112.63% 66.87%, 139.25% 75.95%, 139.25% 114.66%, 182.22% 45.53%, 143.95% 45.53%, 143.95% 4.78%, 182.22% -11.82%, 182.22% 45.53%, 129.33% 45.53%, 112.63% 45.53%, 112.63% 18.37%, 129.33% 11.12%, 129.33% 45.53%, 92.50% 78.45%, 85.35% 72.91%, 85.35% 57.58%, 92.50% 60.01%, 92.50% 78.45%, 100.28% 45.53%, 93.54% 45.53%, 93.54% 26.65%, 100.28% 23.72%, 100.28% 45.53%, 90.11% 45.53%, 85.35% 45.53%, 85.35% 30.20%, 90.11% 28.13%, 90.11% 45.53%, 77.89% 67.13%, 74.62% 64.60%, 74.62% 53.92%, 77.89% 55.03%, 77.89% 67.13%, 81.04% 45.53%, 78.33% 45.53%, 78.33% 33.24%, 81.04% 32.07%, 81.04% 45.53%, 76.84% 45.53%, 74.62% 45.53%, 74.62% 34.85%, 76.84% 33.89%, 76.84% 45.53%, 70.76% 61.61%, 68.89% 60.16%, 68.89% 51.97%, 70.76% 52.60%, 70.76% 61.61%, 72.45% 45.53%, 71.00% 45.53%, 71.00% 36.42%, 72.45% 35.79%, 72.45% 45.53%, 70.17% 45.53%, 68.89% 45.53%, 68.89% 37.34%, 70.17% 36.78%, 70.17% 45.53%, 66.53% 58.33%, 65.32% 57.40%, 65.32% 50.75%, 66.53% 51.16%, 66.53% 58.33%, 67.59% 45.53%, 66.68% 45.53%, 66.68% 38.29%, 67.59% 37.90%, 67.59% 45.53%, 66.15% 45.53%, 65.32% 45.53%, 65.32% 38.88%, 66.15% 38.52%, 66.15% 45.53%, 63.73% 56.16%, 62.89% 55.51%, 62.89% 49.92%, 63.73% 50.21%, 63.73% 56.16%, 64.45% 45.53%, 63.84% 45.53%, 63.84% 39.53%, 64.45% 39.26%, 64.45% 45.53%, 63.47% 45.53%, 62.89% 45.53%, 62.89% 39.94%, 63.47% 39.69%, 63.47% 45.53%, 61.74% 54.63%, 61.12% 54.14%, 61.12% 49.32%, 61.74% 49.53%, 61.74% 54.63%, 62.27% 45.53%, 61.82% 45.53%, 61.82% 40.40%, 62.27% 40.21%, 62.27% 45.53%, 61.55% 45.53%, 61.12% 45.53%, 61.12% 40.71%, 61.55% 40.52%, 61.55% 45.53%, 60.26% 53.48%, 59.78% 53.11%, 59.78% 48.86%, 60.26% 49.03%, 60.26% 53.48%, 60.66% 45.53%, 60.32% 45.53%, 60.32% 41.05%, 60.66% 40.91%, 60.66% 45.53%, 60.11% 45.53%, 59.78% 45.53%, 59.78% 41.29%, 60.11% 41.14%, 60.11% 45.53%, 59.11% 52.58%, 58.73% 52.29%, 58.73% 48.50%, 59.11% 48.63%, 59.11% 52.58%, 59.42% 45.53%, 59.15% 45.53%, 59.15% 41.56%, 59.42% 41.44%, 59.42% 45.53%, 58.99% 45.53%, 58.73% 45.53%, 58.73% 41.74%, 58.99% 41.63%, 58.99% 45.53%, 58.19% 51.87%, 57.88% 51.63%, 57.88% 48.22%, 58.19% 48.32%, 58.19% 51.87%, 58.44% 45.53%, 58.23% 45.53%, 58.23% 41.96%, 58.44% 41.87%, 58.44% 45.53%, 58.10% 45.53%, 57.88% 45.53%, 57.88% 42.11%, 58.10% 42.02%, 58.10% 45.53%, 58.44% 45.53%, 58.19% 51.87%, 58.99% 45.53%, 59.42% 45.53%, 59.11% 52.58%, 60.11% 45.53%, 60.66% 45.53%, 60.26% 53.48%, 61.55% 45.53%, 62.27% 45.53%, 61.74% 54.63%, 63.47% 45.53%, 64.45% 45.53%, 63.73% 56.16%, 66.15% 45.53%, 67.59% 45.53%, 66.53% 58.33%, 70.17% 45.53%, 72.45% 45.53%, 70.76% 61.61%, 76.84% 45.53%, 81.04% 45.53%, 77.89% 67.13%, 90.11% 45.53%, 100.28% 45.53%, 92.50% 78.45%, 129.33% 45.53%, 182.22% 45.53%, 139.25% 114.66%, 40.63% 45.53%, 40.24% 45.53%, 40.53% 51.87%, 39.60% 45.53%, 39.10% 45.53%, 39.46% 52.58%, 38.30% 45.53%, 37.67% 45.53%, 38.13% 53.48%, 36.63% 45.53%, 35.81% 45.53%, 36.41% 54.63%, 34.42% 45.53%, 33.28% 45.53%, 34.12% 56.16%, 31.31% 45.53%, 29.66% 45.53%, 30.88% 58.33%, 26.67% 45.53%, 24.03% 45.53%, 25.99% 61.61%, 18.95% 45.53%, 14.09% 45.53%, 17.73% 67.13%, 3.60% 45.53%, -8.17% 45.53%, 0.83% 78.45%, -41.78% 45.53%, -102.96% 45.53%, -53.25% 114.66%)"></div>
+            <div class="st-door" style="clip-path:polygon(-111.96% 193.00%, -66.34% 151.46%, -66.34% 84.47%, -111.96% 99.75%, -111.96% 193.00%, -9.42% 99.64%, -1.95% 92.83%, -1.95% 62.92%, -9.42% 65.42%, -9.42% 99.64%, 13.61% 78.66%, 16.56% 75.98%, 16.56% 56.72%, 13.61% 57.71%, 13.61% 78.66%, 23.78% 69.41%, 25.34% 67.98%, 25.34% 53.78%, 23.78% 54.31%, 23.78% 69.41%, 29.50% 64.19%, 30.47% 63.31%, 30.47% 52.07%, 29.50% 52.39%, 29.50% 64.19%, 33.18% 60.85%, 33.84% 60.25%, 33.84% 50.94%, 33.18% 51.16%, 33.18% 60.85%, 35.73% 58.52%, 36.21% 58.09%, 36.21% 50.15%, 35.73% 50.31%, 35.73% 58.52%, 37.62% 56.81%, 37.98% 56.48%, 37.98% 49.55%, 37.62% 49.68%, 37.62% 56.81%, 39.06% 55.49%, 39.34% 55.23%, 39.34% 49.10%, 39.06% 49.19%, 39.06% 55.49%, 40.20% 54.45%, 40.43% 54.24%, 40.43% 48.73%, 40.20% 48.81%, 40.20% 54.45%, 190.00% 193.00%, 150.56% 151.46%, 150.56% 84.47%, 190.00% 99.75%, 190.00% 193.00%, 101.37% 99.64%, 94.91% 92.83%, 94.91% 62.92%, 101.37% 65.42%, 101.37% 99.64%, 81.45% 78.66%, 78.91% 75.98%, 78.91% 56.72%, 81.45% 57.71%, 81.45% 78.66%, 72.67% 69.41%, 71.31% 67.98%, 71.31% 53.78%, 72.67% 54.31%, 72.67% 69.41%, 67.72% 64.19%, 66.88% 63.31%, 66.88% 52.07%, 67.72% 52.39%, 67.72% 64.19%, 64.54% 60.85%, 63.97% 60.25%, 63.97% 50.94%, 64.54% 51.16%, 64.54% 60.85%, 62.33% 58.52%, 61.92% 58.09%, 61.92% 50.15%, 62.33% 50.31%, 62.33% 58.52%, 60.70% 56.81%, 60.39% 56.48%, 60.39% 49.55%, 60.70% 49.68%, 60.70% 56.81%, 59.46% 55.49%, 59.21% 55.23%, 59.21% 49.10%, 59.46% 49.19%, 59.46% 55.49%, 58.47% 54.45%, 58.27% 54.24%, 58.27% 48.73%, 58.47% 48.81%, 58.47% 54.45%, 59.46% 55.49%, 60.70% 56.81%, 62.33% 58.52%, 64.54% 60.85%, 67.72% 64.19%, 72.67% 69.41%, 81.45% 78.66%, 101.37% 99.64%, 190.00% 193.00%, 40.20% 54.45%, 39.06% 55.49%, 37.62% 56.81%, 35.73% 58.52%, 33.18% 60.85%, 29.50% 64.19%, 23.78% 69.41%, 13.61% 78.66%, -9.42% 99.64%, -111.96% 193.00%)"></div>
+            <div class="st-step" style="clip-path:polygon(-118.57% 189.99%, -63.15% 142.49%, -54.52% 142.49%, -105.71% 189.99%, -118.57% 189.99%, -10.29% 97.20%, -1.30% 89.50%, 2.61% 89.50%, -5.69% 97.20%, -10.29% 97.20%, 13.29% 76.99%, 16.83% 73.96%, 19.36% 73.96%, 16.09% 76.99%, 13.29% 76.99%, 23.61% 68.14%, 25.49% 66.53%, 27.36% 66.53%, 25.62% 68.14%, 23.61% 68.14%, 29.40% 63.18%, 30.56% 62.19%, 32.05% 62.19%, 30.97% 63.18%, 29.40% 63.18%, 33.11% 60.01%, 33.90% 59.33%, 35.13% 59.33%, 34.40% 60.01%, 33.11% 60.01%, 35.68% 57.80%, 36.26% 57.31%, 37.30% 57.31%, 36.78% 57.80%, 35.68% 57.80%, 37.58% 56.17%, 38.01% 55.80%, 38.93% 55.80%, 38.53% 56.17%, 37.58% 56.17%, 39.03% 54.93%, 39.37% 54.64%, 40.18% 54.64%, 39.87% 54.93%, 39.03% 54.93%, 40.18% 53.95%, 40.45% 53.71%, 41.18% 53.71%, 40.93% 53.95%, 40.18% 53.95%, 195.71% 189.99%, 147.81% 142.49%, 139.18% 142.49%, 182.86% 189.99%, 195.71% 189.99%, 102.12% 97.20%, 94.35% 89.50%, 90.43% 89.50%, 97.52% 97.20%, 102.12% 97.20%, 81.73% 76.99%, 78.67% 73.96%, 76.14% 73.96%, 78.93% 76.99%, 81.73% 76.99%, 72.81% 68.14%, 71.19% 66.53%, 69.32% 66.53%, 70.80% 68.14%, 72.81% 68.14%, 67.81% 63.18%, 66.80% 62.19%, 65.32% 62.19%, 66.23% 63.18%, 67.81% 63.18%, 64.60% 60.01%, 63.92% 59.33%, 62.69% 59.33%, 63.31% 60.01%, 64.60% 60.01%, 62.37% 57.80%, 61.88% 57.31%, 60.83% 57.31%, 61.28% 57.80%, 62.37% 57.80%, 60.74% 56.17%, 60.36% 55.80%, 59.45% 55.80%, 59.79% 56.17%, 60.74% 56.17%, 59.48% 54.93%, 59.19% 54.64%, 58.38% 54.64%, 58.65% 54.93%, 59.48% 54.93%, 58.49% 53.95%, 58.25% 53.71%, 57.53% 53.71%, 57.74% 53.95%, 58.49% 53.95%, 59.48% 54.93%, 60.74% 56.17%, 62.37% 57.80%, 64.60% 60.01%, 67.81% 63.18%, 72.81% 68.14%, 81.73% 76.99%, 102.12% 97.20%, 195.71% 189.99%, 40.18% 53.95%, 39.03% 54.93%, 37.58% 56.17%, 35.68% 57.80%, 33.11% 60.01%, 29.40% 63.18%, 23.61% 68.14%, 13.29% 76.99%, -10.29% 97.20%, -118.57% 189.99%)"></div>
+            <div class="st-roof" style="clip-path:polygon(-137.73% -85.18%, -12.58% 1.96%, -50.76% -38.26%, -252.27% -205.83%, -137.73% -85.18%, -12.58% 1.96%, 12.45% 19.39%, -10.45% -4.74%, -50.76% -38.26%, -12.58% 1.96%, 12.45% 19.39%, 23.18% 26.86%, 6.82% 9.62%, -10.45% -4.74%, 12.45% 19.39%, 23.18% 29.37%, 29.14% 32.96%, 16.41% 19.56%, 6.82% 12.13%, 23.18% 29.37%, 29.14% 31.01%, 32.93% 33.65%, 22.52% 22.68%, 16.41% 17.60%, 29.14% 31.01%, 32.93% 33.65%, 35.56% 35.48%, 26.75% 26.19%, 22.52% 22.68%, 32.93% 33.65%, 35.56% 35.48%, 37.48% 36.82%, 29.85% 28.77%, 26.75% 26.19%, 35.56% 35.48%, 37.48% 36.82%, 38.96% 37.84%, 32.22% 30.74%, 29.85% 28.77%, 37.48% 36.82%, 38.96% 37.84%, 40.12% 38.65%, 34.09% 32.30%, 32.22% 30.74%, 38.96% 37.84%, 40.12% 38.65%, 41.06% 39.31%, 35.61% 33.56%, 34.09% 32.30%, 40.12% 38.65%, 212.27% -85.18%, 104.09% 1.96%, 142.27% -38.26%, 326.82% -205.83%, 212.27% -85.18%, 104.09% 1.96%, 82.45% 19.39%, 105.36% -4.74%, 142.27% -38.26%, 104.09% 1.96%, 82.45% 19.39%, 73.18% 26.86%, 89.55% 9.62%, 105.36% -4.74%, 82.45% 19.39%, 73.18% 26.86%, 68.03% 31.01%, 80.76% 17.60%, 89.55% 9.62%, 73.18% 26.86%, 68.03% 31.01%, 64.75% 33.65%, 75.17% 22.68%, 80.76% 17.60%, 68.03% 31.01%, 64.75% 33.65%, 62.48% 35.48%, 71.29% 26.19%, 75.17% 22.68%, 64.75% 33.65%, 62.48% 35.48%, 60.82% 36.82%, 68.45% 28.77%, 71.29% 26.19%, 62.48% 35.48%, 60.82% 36.82%, 59.55% 37.84%, 66.28% 30.74%, 68.45% 28.77%, 60.82% 36.82%, 59.55% 37.84%, 58.54% 38.65%, 64.57% 32.30%, 66.28% 30.74%, 59.55% 37.84%, 58.54% 38.65%, 57.73% 39.31%, 63.18% 33.56%, 64.57% 32.30%, 58.54% 38.65%, 59.55% 37.84%, 60.82% 36.82%, 62.48% 35.48%, 64.75% 33.65%, 68.03% 31.01%, 73.18% 26.86%, 82.45% 19.39%, 104.09% 1.96%, 212.27% -85.18%, 40.12% 38.65%, 38.96% 37.84%, 37.48% 36.82%, 35.56% 35.48%, 32.93% 33.65%, 29.14% 31.01%, 23.18% 29.37%, 12.45% 19.39%, -12.58% 1.96%, -137.73% -85.18%)"></div>
+            <div class="st-chim" style="clip-path:polygon(-318.48% -251.51%, -193.34% -150.63%, -193.34% -204.89%, -318.48% -333.67%, -318.48% -251.51%, -54.85% -38.99%, -41.47% -28.20%, -41.47% -48.60%, -54.85% -62.37%, -54.85% -38.99%, -11.12% -3.74%, -6.32% 0.13%, -6.32% -12.43%, -11.12% -17.37%, -11.12% -3.74%, 6.87% 13.35%, 9.32% 15.18%, 9.32% 6.10%, 6.87% 3.73%, 6.87% 13.35%, 16.67% 18.67%, 18.16% 19.86%, 18.16% 12.76%, 16.67% 11.24%, 16.67% 18.67%, 22.85% 23.64%, 23.84% 24.44%, 23.84% 18.61%, 22.85% 17.59%, 22.85% 23.64%, 27.09% 27.06%, 27.80% 27.64%, 27.80% 22.69%, 27.09% 21.96%, 27.09% 27.06%, 30.19% 29.56%, 30.72% 29.99%, 30.72% 25.69%, 30.19% 25.14%, 30.19% 29.56%, 32.55% 31.46%, 32.96% 31.80%, 32.96% 28.00%, 32.55% 27.57%, 32.55% 31.46%, 34.41% 32.96%, 34.74% 33.23%, 34.74% 29.82%, 34.41% 29.48%, 34.41% 32.96%, 386.48% -251.51%, 272.20% -150.63%, 272.20% -204.89%, 386.48% -333.67%, 386.48% -251.51%, 145.75% -38.99%, 133.52% -28.20%, 133.52% -48.60%, 145.75% -62.37%, 145.75% -38.99%, 105.81% -3.74%, 101.43% 0.13%, 101.43% -12.43%, 105.81% -17.37%, 105.81% -3.74%, 89.39% 10.76%, 87.15% 12.73%, 87.15% 3.66%, 89.39% 1.14%, 89.39% 10.76%, 80.43% 18.67%, 79.08% 19.86%, 79.08% 12.76%, 80.43% 11.24%, 80.43% 18.67%, 74.79% 23.64%, 73.89% 24.44%, 73.89% 18.61%, 74.79% 17.59%, 74.79% 23.64%, 70.92% 27.06%, 70.27% 27.64%, 70.27% 22.69%, 70.92% 21.96%, 70.92% 27.06%, 68.09% 29.56%, 67.60% 29.99%, 67.60% 25.69%, 68.09% 25.14%, 68.09% 29.56%, 65.94% 31.46%, 65.56% 31.80%, 65.56% 28.00%, 65.94% 27.57%, 65.94% 31.46%, 64.24% 32.96%, 63.94% 33.23%, 63.94% 29.82%, 64.24% 29.48%, 64.24% 32.96%, 65.94% 31.46%, 68.09% 29.56%, 70.92% 27.06%, 74.79% 23.64%, 80.43% 18.67%, 89.39% 10.76%, 105.81% -3.74%, 145.75% -38.99%, 386.48% -251.51%, 34.41% 32.96%, 32.55% 31.46%, 30.19% 29.56%, 27.09% 27.06%, 22.85% 23.64%, 16.67% 18.67%, 6.87% 13.35%, -11.12% -3.74%, -54.85% -38.99%, -318.48% -251.51%)"></div>
+            <div class="st-p kid" style="left:40.66%;top:51.29%;width:0.65%;height:2.81%"></div>
+            <div class="st-p kid" style="left:40.83%;top:51.41%;width:0.66%;height:2.73%"></div>
+            <div class="st-p" style="left:57.51%;top:50.17%;width:0.82%;height:4.13%"></div>
+            <div class="st-p" style="left:45.35%;top:49.94%;width:0.82%;height:4.41%"></div>
+            <div class="st-p" style="left:49.19%;top:49.74%;width:0.82%;height:4.63%"></div>
+            <div class="st-p kid" style="left:46.32%;top:51.77%;width:0.69%;height:2.80%"></div>
+            <div class="st-p" style="left:57.50%;top:50.04%;width:0.85%;height:4.65%"></div>
+            <div class="st-p" style="left:55.03%;top:50.33%;width:0.87%;height:4.51%"></div>
+            <div class="st-p" style="left:41.49%;top:50.25%;width:0.88%;height:4.71%"></div>
+            <div class="st-p" style="left:47.67%;top:50.57%;width:0.93%;height:5.00%"></div>
+            <div class="st-p" style="left:38.62%;top:50.80%;width:0.95%;height:4.95%"></div>
+            <div class="st-p kid" style="left:53.05%;top:52.53%;width:0.79%;height:3.36%"></div>
+            <div class="st-p" style="left:44.97%;top:50.54%;width:0.98%;height:5.48%"></div>
+            <div class="st-p" style="left:48.47%;top:50.52%;width:0.99%;height:5.61%"></div>
+            <div class="st-p" style="left:50.48%;top:50.67%;width:1.00%;height:5.58%"></div>
+            <div class="st-p kid" style="left:50.83%;top:52.23%;width:0.82%;height:4.02%"></div>
+            <div class="st-p" style="left:38.18%;top:50.96%;width:1.00%;height:5.33%"></div>
+            <div class="st-p kid" style="left:49.41%;top:52.53%;width:0.83%;height:3.85%"></div>
+            <div class="st-p" style="left:59.33%;top:51.44%;width:1.01%;height:4.99%"></div>
+            <div class="st-p kid" style="left:58.60%;top:53.12%;width:0.84%;height:3.47%"></div>
+            <div class="st-p" style="left:44.98%;top:50.92%;width:1.04%;height:5.84%"></div>
+            <div class="st-p kid" style="left:58.81%;top:52.84%;width:0.87%;height:4.15%"></div>
+            <div class="st-p" style="left:53.97%;top:51.22%;width:1.10%;height:6.09%"></div>
+            <div class="st-p" style="left:59.97%;top:51.25%;width:1.11%;height:6.18%"></div>
+            <div class="st-p" style="left:48.51%;top:51.79%;width:1.11%;height:5.66%"></div>
+            <div class="st-p" style="left:37.28%;top:51.60%;width:1.11%;height:5.86%"></div>
+            <div class="st-p" style="left:58.27%;top:51.37%;width:1.11%;height:6.11%"></div>
+            <div class="st-p" style="left:40.92%;top:51.91%;width:1.13%;height:5.72%"></div>
+            <div class="st-p kid" style="left:60.28%;top:53.78%;width:0.93%;height:3.91%"></div>
+            <div class="st-p" style="left:46.56%;top:52.18%;width:1.15%;height:5.70%"></div>
+            <div class="st-p" style="left:41.70%;top:51.59%;width:1.17%;height:6.47%"></div>
+            <div class="st-p kid" style="left:60.72%;top:53.80%;width:0.97%;height:4.39%"></div>
+            <div class="st-p" style="left:56.77%;top:52.32%;width:1.21%;height:6.25%"></div>
+            <div class="st-p" style="left:61.18%;top:52.05%;width:1.22%;height:6.53%"></div>
+            <div class="st-p" style="left:35.55%;top:52.10%;width:1.22%;height:6.59%"></div>
+            <div class="st-p kid" style="left:37.66%;top:54.09%;width:1.03%;height:4.89%"></div>
+            <div class="st-p" style="left:43.66%;top:52.39%;width:1.27%;height:6.83%"></div>
+            <div class="st-p" style="left:61.91%;top:52.95%;width:1.28%;height:6.38%"></div>
+            <div class="st-p kid" style="left:62.02%;top:54.31%;width:1.06%;height:5.12%"></div>
+            <div class="st-p" style="left:38.87%;top:52.61%;width:1.33%;height:7.25%"></div>
+            <div class="st-lamp" style="left:37.05%;top:40.43%;width:0.32%;height:19.57%"></div>
+            <div class="st-p" style="left:60.03%;top:52.48%;width:1.36%;height:7.61%"></div>
+            <div class="st-p" style="left:49.81%;top:53.51%;width:1.38%;height:6.86%"></div>
+            <div class="st-p" style="left:60.31%;top:53.83%;width:1.45%;height:7.23%"></div>
+            <div class="st-p kid" style="left:32.94%;top:55.46%;width:1.19%;height:5.72%"></div>
+            <div class="st-p" style="left:34.03%;top:53.45%;width:1.47%;height:7.84%"></div>
+            <div class="st-p" style="left:53.55%;top:53.14%;width:1.48%;height:8.33%"></div>
+            <div class="st-p" style="left:32.46%;top:53.56%;width:1.51%;height:8.20%"></div>
+            <div class="st-p" style="left:57.44%;top:53.70%;width:1.59%;height:8.93%"></div>
+            <div class="st-p kid" style="left:56.26%;top:56.86%;width:1.31%;height:5.87%"></div>
+            <div class="st-p" style="left:33.39%;top:54.27%;width:1.61%;height:8.54%"></div>
+            <div class="st-p" style="left:33.44%;top:54.93%;width:1.64%;height:8.21%"></div>
+            <div class="st-p kid" style="left:43.51%;top:58.52%;width:1.45%;height:5.99%"></div>
+            <div class="st-p" style="left:29.48%;top:55.25%;width:1.82%;height:9.86%"></div>
+            <div class="st-p kid" style="left:28.31%;top:58.53%;width:1.51%;height:6.76%"></div>
+            <div class="st-p" style="left:58.97%;top:56.27%;width:1.87%;height:9.34%"></div>
+            <div class="st-p kid" style="left:27.54%;top:58.90%;width:1.60%;height:7.63%"></div>
+            <div class="st-p" style="left:66.42%;top:56.78%;width:1.99%;height:10.15%"></div>
+            <div class="st-p" style="left:34.57%;top:56.16%;width:2.06%;height:11.45%"></div>
+            <div class="st-lamp" style="left:67.02%;top:37.23%;width:0.53%;height:31.80%"></div>
+            <div class="st-p lad" style="left:65.58%;top:46.57%;width:2.19%;height:9.36%"></div>
+            <div class="st-p" style="left:70.54%;top:58.31%;width:2.25%;height:11.34%"></div>
+            <div class="st-p" style="left:31.16%;top:57.84%;width:2.29%;height:12.32%"></div>
+            <div class="st-p kid" style="left:25.50%;top:63.73%;width:2.07%;height:8.95%"></div>
+            <div class="st-p" style="left:39.07%;top:60.48%;width:2.65%;height:13.57%"></div>
+            <div class="st-p" style="left:30.78%;top:60.50%;width:2.68%;height:13.83%"></div>
+            <div class="st-p" style="left:74.40%;top:60.01%;width:2.71%;height:14.60%"></div>
+            <div class="st-p" style="left:70.61%;top:59.50%;width:2.72%;height:15.24%"></div>
+            <div class="st-p" style="left:74.99%;top:63.04%;width:3.01%;height:14.80%"></div>
+            <div class="st-p" style="left:17.02%;top:63.67%;width:3.30%;height:17.28%"></div>
+            <div class="st-p" style="left:6.30%;top:65.97%;width:3.70%;height:19.35%"></div>
+            <div class="st-p kid" style="left:82.45%;top:74.82%;width:3.43%;height:15.62%"></div>
+            <div class="st-p" style="left:-14.54%;top:74.82%;width:5.47%;height:29.48%"></div>
+            <div class="st-p plaid" style="left:159.83%;top:117.99%;width:12.07%;height:49.58%"></div>
+            <div class="pl-silver"></div>
+            <div class="pl-scratch"></div>
+          </div>
+        </div>
+        <div class="pl-wingtip"></div>
+        <div class="label">1931</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It came back the next day, and the next. It didn't ask her anything. It walked with her to the Co-op, the long way, and it told her things.</p>
+        <p>It told her there had been more than two thousand bottle ovens in the Potteries at their height, and that on a firing day the smoke was so thick in Longton the gas lamps were lit at noon. It told her the firemen slept beside the kilns for three days, feeding them coal every quarter of an hour, judging the heat by the colour of the light through the spyholes, and that the good ones could tell you the temperature to within twenty degrees by eye. It told her the firing was the point the whole street had been waiting for, sometimes for weeks: the placing, the bricking up of the door, the lighting, and then three days of everyone holding their breath, and then the cooling, and then the opening, when they'd know if it had worked or whether a whole kiln's worth of cups and plates had come out cracked and black and somebody wasn't getting paid.</p>
+        <p>"Ray told me all that," Irene said, though he hadn't, not all of it. "I know what a firing was."</p>
+        <p>"I know you do. I'm telling you because I didn't. I've been walking these streets nine years and I didn't understand what I was walking past." They'd stopped at the corner where you could see down to the kiln. "I thought it was a monument. People asked me to keep it, so I kept it. I put a fence round it and a plaque. But it's not a monument, is it. It's an oven."</p>
+        <p>"It's not been lit since 1960."</p>
+        <p>"Sixty-three," the Surveyor said. "The last firing on this street was the eleventh of April 1963. Your father was one of the men who fed it."</p>
+        <p>Irene looked at it. "You've been doing your homework."</p>
+        <p>"I've had nine years."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall corner-scene" aria-hidden="true">
+        <div class="brush cn-wash-a"></div>
+        <div class="cn-sun"></div>
+        <div class="cn-far"></div>
+        <div class="cn-ground"></div>
+        <div class="cn-kiln-rim"></div>
+        <div class="cn-kiln"></div>
+        <div class="cn-plaque"></div>
+        <div class="cn-fence"></div>
+        <i class="cn-scrub" style="left:95.9%;top:90.7%;--s:1.20"></i>
+        <i class="cn-scrub" style="left:81.9%;top:87.0%;--s:1.18"></i>
+        <i class="cn-scrub" style="left:38.3%;top:85.7%;--s:1.26"></i>
+        <i class="cn-scrub" style="left:43.7%;top:91.1%;--s:1.31"></i>
+        <i class="cn-scrub" style="left:57.9%;top:84.4%;--s:0.96"></i>
+        <i class="cn-scrub" style="left:56.2%;top:91.9%;--s:0.91"></i>
+        <i class="cn-scrub" style="left:31.8%;top:81.1%;--s:1.17"></i>
+        <i class="cn-scrub" style="left:97.5%;top:86.0%;--s:0.99"></i>
+        <i class="cn-scrub" style="left:67.4%;top:89.0%;--s:0.78"></i>
+        <i class="cn-scrub" style="left:71.4%;top:86.7%;--s:1.10"></i>
+        <i class="cn-scrub" style="left:42.3%;top:82.0%;--s:0.88"></i>
+        <i class="cn-scrub" style="left:93.0%;top:84.2%;--s:1.08"></i>
+        <i class="cn-scrub" style="left:50.8%;top:81.2%;--s:0.65"></i>
+        <i class="cn-scrub" style="left:85.3%;top:89.3%;--s:0.90"></i>
+        <i class="cn-scrub" style="left:76.5%;top:88.1%;--s:1.32"></i>
+        <i class="cn-scrub" style="left:95.2%;top:84.9%;--s:1.39"></i>
+        <i class="cn-scrub" style="left:95.4%;top:87.1%;--s:1.31"></i>
+        <i class="cn-scrub" style="left:63.4%;top:84.5%;--s:0.80"></i>
+        <i class="cn-scrub" style="left:89.6%;top:81.9%;--s:0.66"></i>
+        <i class="cn-scrub" style="left:84.8%;top:89.3%;--s:0.99"></i>
+        <i class="cn-scrub" style="left:86.9%;top:80.6%;--s:0.81"></i>
+        <i class="cn-scrub" style="left:49.7%;top:85.0%;--s:0.74"></i>
+        <i class="cn-scrub" style="left:34.7%;top:84.1%;--s:1.32"></i>
+        <i class="cn-scrub" style="left:96.9%;top:89.0%;--s:0.98"></i>
+        <i class="cn-scrub" style="left:47.2%;top:91.5%;--s:1.02"></i>
+        <i class="cn-scrub" style="left:79.5%;top:80.3%;--s:0.77"></i>
+        <div class="cn-roof" style="left:-2.0%;top:52.0%;width:6.9%"></div>
+        <div class="cn-chim" style="left:-1.0%;top:48.8%"></div>
+        <div class="cn-roof" style="left:4.5%;top:54.2%;width:7.8%"></div>
+        <div class="cn-chim" style="left:5.6%;top:51.0%"></div>
+        <div class="cn-roof" style="left:11.9%;top:56.6%;width:8.8%"></div>
+        <div class="cn-chim" style="left:13.2%;top:53.4%"></div>
+        <div class="cn-roof" style="left:20.4%;top:58.7%;width:7.1%"></div>
+        <div class="cn-chim" style="left:21.4%;top:55.5%"></div>
+        <div class="cn-roof" style="left:27.1%;top:60.7%;width:8.2%"></div>
+        <div class="cn-chim" style="left:28.2%;top:57.5%"></div>
+        <div class="cn-roof" style="left:34.8%;top:63.1%;width:7.1%"></div>
+        <div class="cn-chim" style="left:35.8%;top:59.9%"></div>
+        <div class="cn-roof" style="left:41.5%;top:64.7%;width:9.4%"></div>
+        <div class="cn-chim" style="left:42.9%;top:61.5%"></div>
+        <div class="cn-roof" style="left:50.5%;top:67.2%;width:8.2%"></div>
+        <div class="cn-chim" style="left:51.7%;top:64.0%"></div>
+        <div class="cn-roof" style="left:58.4%;top:69.1%;width:7.9%"></div>
+        <div class="cn-chim" style="left:59.5%;top:65.9%"></div>
+        <div class="cn-roof" style="left:65.8%;top:71.7%;width:7.5%"></div>
+        <div class="cn-chim" style="left:66.9%;top:68.5%"></div>
+        <div class="cn-roof" style="left:73.0%;top:74.1%;width:6.8%"></div>
+        <div class="cn-roof" style="left:79.3%;top:76.2%;width:8.1%"></div>
+        <div class="cn-chim" style="left:80.5%;top:73.0%"></div>
+        <div class="cn-roof" style="left:87.0%;top:78.3%;width:7.0%"></div>
+        <div class="cn-chim" style="left:88.0%;top:75.1%"></div>
+        <div class="cn-roof" style="left:93.5%;top:80.7%;width:7.1%"></div>
+        <div class="cn-chim" style="left:94.6%;top:77.5%"></div>
+        <div class="cn-beam"></div>
+        <div class="cn-wall"></div>
+        <div class="heron corner-heron" style="left:9%;bottom:4%;font-size:3.1rem;--tilt:34deg">
+          <i class="h-legs"></i>
+          <i class="h-body"></i>
+          <i class="h-slate"></i>
+          <i class="h-wing"></i>
+          <i class="h-neck"></i>
+          <i class="h-head"></i>
+        </div>
+        <div class="label">it's an oven</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>That was in March. In April, Callum came round for his tea and said the Heron had been to see him at work.</p>
+        <p>"Asking about you," he said. "Asking what you were like when I was little. What made you laugh. What you used to do with Grandad on a Sunday." He was eating the way he always ate, as though the food might be taken away. "Then it asked me if I'd ever thrown a pot."</p>
+        <p>"And had you?"</p>
+        <p>"Grandad tried to teach me when I was nine. I was rubbish. I made an ashtray." He grinned. "It said that's the most common first thing anyone's ever made. It said there must be ten million ashtrays in the world made by nine-year-olds and every one of them's precious to somebody."</p>
+        <p>"I've still got yours," said Irene.</p>
+        <p>"I know you have, Nan. It's on the windowsill. It's horrible."</p>
+        <p>In May, she saw the Asante girls at the bottom of the street, Abena and the little one, Efua, with the Surveyor, and the Surveyor was standing very still while Efua drew on its slate, and when Irene walked down to see, it was a drawing of the kiln with smoke coming out of it. Purple smoke, but still.</p>
+        <p>"She wants it to work," Abena said, a bit embarrassed, the way teenagers are when their little sisters say what everyone's thinking. "She thinks it's a rocket."</p>
+        <p>In June, Terry Holdcroft from nineteen stopped her outside the paper shop and said, "Have you heard what it's been asking? It's been asking everyone. All down the street. Whether we'd mind the smoke." He said it the way you'd report a rumour of a royal visit. "Mind the smoke! Me dad'd turn in his grave."</p>
+        <p>And Irene understood then that it had gone round her. That it had walked the whole of Chadwick Street, every house, all forty-two of them, and the streets either side, and it had asked all of them, and it had come back to her last, and that it was going to ask her now, properly, and that if she said no it would say all right, Irene, and go away, and the kiln would stand at the bottom of the street with its plaque until one of them fell down.</p>
+        <p>She waited for it on the step that evening. It was a warm night and the swifts were going over, screaming, the way they did every June, and she'd brought her chair out, which she did now, since her knees, and she had the photograph in her lap in its new frame.</p>
+        <p>It came up from the bottom of the street at about eight. It stopped at the gate.</p>
+        <p>"Go on, then," she said.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall rocket-scene" aria-hidden="true">
+        <div class="brush rk-wash-a"></div>
+        <div class="brush rk-wash-b"></div>
+        <div class="rk-slate">
+          <div class="rk-dust"></div>
+          <i class="rk-star" style="left:22.3%;top:26.1%;--r:35deg"></i>
+          <i class="rk-star" style="left:16.4%;top:6.7%;--r:9deg"></i>
+          <i class="rk-star" style="left:88.0%;top:14.6%;--r:32deg"></i>
+          <i class="rk-star" style="left:11.1%;top:13.1%;--r:39deg"></i>
+          <i class="rk-star" style="left:8.1%;top:53.1%;--r:12deg"></i>
+          <i class="rk-star" style="left:29.2%;top:15.8%;--r:39deg"></i>
+          <i class="rk-star" style="left:89.2%;top:22.1%;--r:14deg"></i>
+          <i class="rk-puff" style="left:42.5%;top:30.0%;width:9.0%;--r:10deg;animation-delay:0.0s"></i>
+          <i class="rk-puff" style="left:38.5%;top:22.0%;width:11.0%;--r:19deg;animation-delay:-0.8s"></i>
+          <i class="rk-puff" style="left:45.0%;top:14.0%;width:12.0%;--r:24deg;animation-delay:-1.6s"></i>
+          <i class="rk-puff" style="left:37.0%;top:8.0%;width:10.0%;--r:35deg;animation-delay:-2.4s"></i>
+          <i class="rk-puff" style="left:48.5%;top:4.0%;width:13.0%;--r:19deg;animation-delay:-3.2s"></i>
+          <i class="rk-puff" style="left:32.0%;top:-2.0%;width:12.0%;--r:34deg;animation-delay:-4.0s"></i>
+          <i class="rk-puff" style="left:42.0%;top:-6.0%;width:14.0%;--r:-38deg;animation-delay:-4.8s"></i>
+          <i class="rk-puff" style="left:56.0%;top:20.0%;width:8.0%;--r:-3deg;animation-delay:-5.6s"></i>
+          <i class="rk-puff" style="left:31.0%;top:16.0%;width:8.0%;--r:35deg;animation-delay:-6.4s"></i>
+          <i class="rk-kiln"></i>
+          <i class="rk-door"></i>
+          <i class="rk-flame f1"></i>
+          <i class="rk-flame f2"></i>
+          <i class="rk-flame f3"></i>
+          <i class="rk-ground"></i>
+        </div>
+        <div class="rk-chalk c1"></div>
+        <div class="rk-chalk c2"></div>
+        <div class="rk-wing"></div>
+        <div class="label">purple smoke, but still</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It wasn't one kiln, in the end. That was the thing nobody in Longton had imagined, and that people from away still came to see.</p>
+        <p>The crews worked through July and August, nights only, the way they always did, and the street went to bed and got up, went to bed and got up, and every morning there was more. The fence at the bottom went first. Then the scrubby ground behind it was cleared, and the old works yard that had been under it was found, the original setts, and relaid. Then, over three weeks, the kiln itself was taken apart brick by brick, every one numbered by a machine with a tiny arm and a voice like a librarian, and put back together on new foundations with a new firebox and a lining that would take the heat, and the old black bricks on the outside exactly where they'd been, so that from the street it looked as if nothing had happened at all.</p>
+        <p>And around it, the works came back. Not as it had been: no one wanted the long sheds and the lead glaze and the twelve-year-olds carrying saggars on their heads. But a yard, and a long low building with big windows facing south, with wheels in it, forty of them, and slabs of clay in damp cloths, and benches, and a door that didn't lock. A drying room. A glaze kitchen with the recipes printed on the wall in big letters, some of them Ray's, which the museum had kept. And out the back, in the space where the second and third and fourth kilns of the old works had stood, the Surveyor built them again, three more bottle ovens, new brick but the old shape, so that from the top of Chadwick Street, if you stood on Irene's step and looked down, you saw four of them now, black against the sky, the way her mother would have seen them.</p>
+        <p>Nobody had to make anything there. That was understood from the start. You could walk in and sit at a wheel and make an ashtray and nobody would mind. People did. Callum went every Wednesday after work. The Asante girls went on Saturdays. Terry Holdcroft went once, made a pigeon, said never again, and went back the next week. Men came from the museum to teach, and the last two living people in Stoke who'd ever fired a coal kiln were found, Eileen Shaw, ninety-four, from Meir, and her nephew, and brought down in a car, and they stood in the yard and wept and then started shouting at everyone about how the firebox was wrong, which it turned out it was, slightly, and the machines fixed it overnight.</p>
+        <p>The Surveyor did not do the firing. It could have. It could have held the heat to a tenth of a degree for three days without blinking. It asked who wanted to learn, and eleven people put their hands up, and it taught them what it knew, and Eileen taught them what she knew, which was different, and they learned to judge the colour through the spyhole, and they slept in the yard in shifts, three days, the way the old firemen had.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall crews-scene" aria-hidden="true">
+        <div class="cw-stars"></div>
+        <div class="brush cw-wash-a"></div>
+        <div class="brush cw-wash-b"></div>
+        <div class="cw-ground"></div>
+        <div class="cw-k k2"><i class="ghost"></i><i class="built"></i></div>
+        <div class="cw-k k3"><i class="ghost"></i><i class="built"></i></div>
+        <div class="cw-k k4"><i class="ghost"></i><i class="built"></i></div>
+        <div class="cw-k big"><i class="ghost"></i><i class="built"></i></div>
+        <div class="cw-nums"></div>
+        <div class="cw-scaffold"></div>
+        <div class="cw-mast m1"></div>
+        <div class="cw-mast m2"></div>
+        <div class="cw-cone m1"></div>
+        <div class="cw-cone m2"></div>
+        <div class="cw-bot b1"><i><b class="cw-brick"></b></i></div>
+        <div class="cw-bot b2"><i></i></div>
+        <div class="cw-pallet"></div>
+        <div class="label">brick by brick</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first firing was the last week of September.</p>
+        <p>Irene did not go down to the yard for the placing, or the bricking up, or the lighting. She sat on her step, with her chair and a blanket and the photograph, and she watched the smoke start, thin and grey from the neck of the big kiln, then thicker, then the colour of a wet slate, going straight up because there was no wind, like a pencil line drawn on the evening.</p>
+        <p>People came out. Nobody told them to. The Asantes came out onto their step, and the girls sat on the kerb. Terry came out with a flask. The couple at number six who'd moved up from Bristol in the spring and whose names Irene was still learning came out with their baby and stood in the road. People came from the other streets, and then from other towns, Burslem and Fenton and Tunstall, because word had gone round, and they stood all down Chadwick Street, on the steps and the kerbs and in the road, a lad up a lamppost, all facing the bottom of the street, the way you'd face a band.</p>
+        <p>The Surveyor came and stood at her gate. It had brought a cup of tea, which it carried in its wing very carefully, because it was a cup off the first trial firing and the handle was not good.</p>
+        <p>"Callum's," it said. "He wanted you to have the first one."</p>
+        <p>"It's lopsided," said Irene, taking it.</p>
+        <p>"Very," the Surveyor agreed. "It holds tea, though."</p>
+        <p>She drank. It did. They watched the smoke. Down at the bottom of the street she could see the glow from the firebox mouth, orange, and the shapes of the fire crew moving in front of it, and once, distinctly, she heard Efua Asante's voice saying, "<em>Is</em> it a rocket?" and the whole street laughed.</p>
+        <p>"Three days," she said.</p>
+        <p>"Three days to fire, two to cool. They'll open it on Sunday week."</p>
+        <p>"And if it's all come out cracked?"</p>
+        <p>"Then they'll do it again," the Surveyor said. "They've got four kilns."</p>
+        <p>Irene looked at it. It was standing the way it always stood, still, a bit stooped, the lamp of its head turned down towards the yard. She'd known it nine years and she didn't know what it was, not really. Nobody did. The papers argued about it. Callum said it was cleverer than every person who'd ever lived put together, and that it walked the six towns and asked old women about kilns because that was, as far as anyone could tell, what it actually wanted to do with that. She didn't know if that was true. She knew it had found her mother in a box of glass plates.</p>
+        <p>"Ray would have loved this," she said. "He'd have been insufferable."</p>
+        <p>"I wish I'd met him."</p>
+        <p>"He'd have made you a cup in four seconds and you'd have gasped."</p>
+        <p>"I expect I would," it said.</p>
+        <p>The light went. The kiln glowed. Somebody down the street had brought out a speaker and was playing something old, Sinatra or someone, and somebody else told them to turn it off, and they did, because it was better without. You could hear the fire. Irene hadn't known you could hear it, from the top of the street. A sort of roar, very low, under everything, like the sea in a shell. Her mother would have heard it from this step. Her mother would have sat here in her plaid dress, in 1931, and heard exactly this.</p>
+        <p>People stayed late. Then they started going in, a few at a time, saying they'd be back tomorrow, and Terry said he'd do the overnight with the firemen, he'd brought a flask, and the Asantes carried Efua in asleep. The Surveyor stayed. Irene stayed. At about midnight Callum came up the street from the yard, black to the elbows, smelling of coal, and sat on the step at her feet like he had when he was small.</p>
+        <p>"We've got the colour right," he said. "Cherry. Eileen says it's cherry. She says she's never seen better."</p>
+        <p>"Eileen would know."</p>
+        <p>"She says next year we should do a salt glaze." He leaned his head back against her knee. "Next year, Nan. They're already talking about next year."</p>
+        <p>Irene put her hand on his hair, which was full of ash. Down at the bottom of the street the kiln glowed, and the smoke went up into the dark, and the street was still, and the fire roared under it all, low and patient, as if it had never stopped.</p>
+        <p>The Surveyor stood at the gate with the slate under its wing. It didn't ask her anything. It didn't need to. It already had the answer for next March, and it was the answer she'd given every year, only now it meant something else.</p>
+        <p>"Leave it, duck," she said, when it was finally time to go in. "Just like this."</p>
+        <p>"All right, Irene," it said.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall firing-scene" aria-hidden="true">
+        <div class="brush fr-wash-a"></div>
+        <div class="fr-glow"></div>
+        <div class="st-city" style="top:55.20%"></div>
+        <div class="st-yard" style="clip-path:polygon(-35.10% 61.82%, 130.14% 61.82%, 84.92% 58.40%, 12.92% 58.40%, -35.10% 61.82%)"></div>
+        <div class="st-kiln-rim k4" style="left:42.29%;top:35.45%;width:7.33%;height:23.67%"></div>
+        <div class="st-kiln k4" style="left:42.29%;top:35.45%;width:7.33%;height:23.67%"></div>
+        <div class="st-kiln-rim k3" style="left:54.65%;top:31.10%;width:8.94%;height:28.60%"></div>
+        <div class="st-kiln k3" style="left:54.65%;top:31.10%;width:8.94%;height:28.60%"></div>
+        <div class="st-kiln-rim k2" style="left:31.80%;top:29.07%;width:9.71%;height:30.80%"></div>
+        <div class="st-kiln k2" style="left:31.80%;top:29.07%;width:9.71%;height:30.80%"></div>
+        <div class="st-smoke" style="left:45.66%;width:5.95%;top:-2%;height:20.12%"></div>
+        <div class="st-kiln-rim big lit" style="left:41.60%;top:17.62%;width:14.08%;height:43.14%"></div>
+        <div class="st-kiln big lit" style="left:41.60%;top:17.62%;width:14.08%;height:43.14%"></div>
+        <div class="st-firebox" style="left:47.51%;top:55.15%;width:2.25%;height:5.61%"></div>
+        <div class="st-firespill" style="left:31.75%;top:49.97%;width:33.78%;height:21.57%"></div>
+        <div class="st-road" style="clip-path:polygon(-356.00% 363.76%, 204.00% 363.76%, 53.03% 61.82%, 42.01% 61.82%, -356.00% 363.76%)"></div>
+        <div class="st-sett" style="clip-path:polygon(-193.60% 240.56%, 142.40% 240.56%, 139.24% 234.25%, -185.28% 234.25%, -193.60% 240.56%, -160.00% 215.07%, 129.66% 215.07%, 127.12% 210.01%, -153.33% 210.01%, -160.00% 215.07%, -131.03% 193.10%, 118.67% 193.10%, 116.64% 189.03%, -125.68% 189.03%, -131.03% 193.10%, -106.06% 174.15%, 109.20% 174.15%, 107.57% 170.90%, -101.77% 170.90%, -106.06% 174.15%, -84.54% 157.82%, 101.03% 157.82%, 99.73% 155.21%, -81.09% 155.21%, -84.54% 157.82%, -65.98% 143.75%, 93.99% 143.75%, 92.95% 141.65%, -63.22% 141.65%, -65.98% 143.75%, -49.98% 131.61%, 87.92% 131.61%, 87.08% 129.93%, -47.77% 129.93%, -49.98% 131.61%, -36.19% 121.15%, 82.69% 121.15%, 82.02% 119.80%, -34.42% 119.80%, -36.19% 121.15%, -24.30% 112.13%, 78.18% 112.13%, 77.64% 111.05%, -22.88% 111.05%, -24.30% 112.13%, -14.06% 104.35%, 74.30% 104.35%, 73.86% 103.49%, -12.91% 103.49%, -14.06% 104.35%, -5.22% 97.65%, 70.95% 97.65%, 70.60% 96.96%, -4.31% 96.96%, -5.22% 97.65%, 2.40% 91.87%, 68.06% 91.87%, 67.78% 91.32%, 3.13% 91.32%, 2.40% 91.87%, 8.96% 86.89%, 65.57% 86.89%, 65.34% 86.45%, 9.55% 86.45%, 8.96% 86.89%, 14.62% 82.60%, 63.42% 82.60%, 63.24% 82.24%, 15.09% 82.24%, 14.62% 82.60%, 19.50% 78.90%, 61.57% 78.90%, 61.43% 78.61%, 19.88% 78.61%, 19.50% 78.90%, 23.71% 75.70%, 59.97% 75.70%, 59.86% 75.48%, 24.01% 75.48%, 23.71% 75.70%, 27.34% 72.95%, 58.60% 72.95%, 58.51% 72.77%, 27.58% 72.77%, 27.34% 72.95%, 30.46% 70.58%, 57.41% 70.58%, 57.34% 70.44%, 30.66% 70.44%, 30.46% 70.58%, 33.16% 68.54%, 56.39% 68.54%, 56.33% 68.42%, 33.31% 68.42%, 33.16% 68.54%, 35.48% 66.78%, 55.51% 66.78%, 55.46% 66.68%, 35.60% 66.68%, 35.48% 66.78%, 37.48% 65.26%, 54.75% 65.26%, 54.71% 65.18%, 37.58% 65.18%, 37.48% 65.26%, 39.21% 63.95%, 54.09% 63.95%, 54.06% 63.89%, 39.29% 63.89%, 39.21% 63.95%, 40.70% 62.82%, 53.53% 62.82%, 53.50% 62.77%, 40.76% 62.77%, 40.70% 62.82%, 41.98% 61.84%, 53.04% 61.84%, 53.02% 61.80%, 42.03% 61.80%, 41.98% 61.84%, 40.70% 62.82%, 39.21% 63.95%, 37.48% 65.26%, 35.48% 66.78%, 33.16% 68.54%, 30.46% 70.58%, 27.34% 72.95%, 23.71% 75.70%, 19.50% 78.90%, 14.62% 82.60%, 8.96% 86.89%, 2.40% 91.87%, -5.22% 97.65%, -14.06% 104.35%, -24.30% 112.13%, -36.19% 121.15%, -49.98% 131.61%, -65.98% 143.75%, -84.54% 157.82%, -106.06% 174.15%, -131.03% 193.10%, -160.00% 215.07%, -193.60% 240.56%)"></div>
+        <div class="st-pave" style="clip-path:polygon(-356.00% 363.76%, -461.00% 363.76%, 39.95% 61.82%, 42.01% 61.82%, -356.00% 363.76%, 204.00% 363.76%, 309.00% 363.76%, 55.10% 61.82%, 53.03% 61.82%, 204.00% 363.76%, -356.00% 363.76%)"></div>
+        <div class="st-kerb" style="clip-path:polygon(-356.00% 363.76%, -356.00% 344.16%, 42.01% 61.43%, 42.01% 61.82%, -356.00% 363.76%, 204.00% 363.76%, 204.00% 344.16%, 53.03% 61.43%, 53.03% 61.82%, 204.00% 363.76%, -356.00% 363.76%)"></div>
+        <div class="st-facade" style="clip-path:polygon(-228.73% 223.76%, -45.81% 113.51%, -45.81% -43.99%, -228.73% -234.42%, -228.73% 223.76%, -45.81% 113.51%, -7.85% 90.63%, -7.85% -4.47%, -45.81% -43.99%, -45.81% 113.51%, -7.85% 90.63%, 8.57% 80.73%, 8.57% 12.62%, -7.85% -4.47%, -7.85% 90.63%, 8.57% 80.73%, 17.73% 75.21%, 17.73% 25.25%, 8.57% 16.60%, 8.57% 80.73%, 17.73% 75.21%, 23.57% 71.69%, 23.57% 28.24%, 17.73% 22.16%, 17.73% 75.21%, 23.57% 71.69%, 27.62% 69.25%, 27.62% 32.46%, 23.57% 28.24%, 23.57% 71.69%, 27.62% 69.25%, 30.59% 67.46%, 30.59% 35.56%, 27.62% 32.46%, 27.62% 69.25%, 30.59% 67.46%, 32.87% 66.08%, 32.87% 37.93%, 30.59% 35.56%, 30.59% 67.46%, 32.87% 66.08%, 34.67% 65.00%, 34.67% 39.80%, 32.87% 37.93%, 32.87% 66.08%, 34.67% 65.00%, 36.13% 64.12%, 36.13% 41.32%, 34.67% 39.80%, 34.67% 65.00%, 36.13% 64.12%, 37.33% 63.40%, 37.33% 42.57%, 36.13% 41.32%, 36.13% 64.12%, 37.33% 63.40%, 38.34% 62.79%, 38.34% 43.62%, 37.33% 42.57%, 37.33% 63.40%, 38.34% 62.79%, 39.20% 62.27%, 39.20% 44.52%, 38.34% 43.62%, 38.34% 62.79%, 39.20% 62.27%, 39.95% 61.82%, 39.95% 45.29%, 39.20% 44.52%, 39.20% 62.27%, 191.27% 223.76%, 98.56% 113.51%, 98.56% -43.99%, 191.27% -234.42%, 191.27% 223.76%, 98.56% 113.51%, 79.32% 90.63%, 79.32% -4.47%, 98.56% -43.99%, 98.56% 113.51%, 79.32% 90.63%, 71.00% 80.73%, 71.00% 12.62%, 79.32% -4.47%, 79.32% 90.63%, 71.00% 80.73%, 66.36% 75.21%, 66.36% 22.16%, 71.00% 12.62%, 71.00% 80.73%, 66.36% 75.21%, 63.40% 71.69%, 63.40% 28.24%, 66.36% 22.16%, 66.36% 75.21%, 63.40% 71.69%, 61.34% 69.25%, 61.34% 32.46%, 63.40% 28.24%, 63.40% 71.69%, 61.34% 69.25%, 59.84% 67.46%, 59.84% 35.56%, 61.34% 32.46%, 61.34% 69.25%, 59.84% 67.46%, 58.68% 66.08%, 58.68% 37.93%, 59.84% 35.56%, 59.84% 67.46%, 58.68% 66.08%, 57.77% 65.00%, 57.77% 39.80%, 58.68% 37.93%, 58.68% 66.08%, 57.77% 65.00%, 57.03% 64.12%, 57.03% 41.32%, 57.77% 39.80%, 57.77% 65.00%, 57.03% 64.12%, 56.42% 63.40%, 56.42% 42.57%, 57.03% 41.32%, 57.03% 64.12%, 56.42% 63.40%, 55.91% 62.79%, 55.91% 43.62%, 56.42% 42.57%, 56.42% 63.40%, 55.91% 62.79%, 55.47% 62.27%, 55.47% 44.52%, 55.91% 43.62%, 55.91% 62.79%, 55.47% 62.27%, 55.10% 61.82%, 55.10% 45.29%, 55.47% 44.52%, 55.47% 62.27%, 55.91% 62.79%, 56.42% 63.40%, 57.03% 64.12%, 57.77% 65.00%, 58.68% 66.08%, 59.84% 67.46%, 61.34% 69.25%, 63.40% 71.69%, 66.36% 75.21%, 71.00% 80.73%, 79.32% 90.63%, 98.56% 113.51%, 191.27% 223.76%, 39.20% 62.27%, 38.34% 62.79%, 37.33% 63.40%, 36.13% 64.12%, 34.67% 65.00%, 32.87% 66.08%, 30.59% 67.46%, 27.62% 69.25%, 23.57% 71.69%, 17.73% 75.21%, 8.57% 80.73%, -7.85% 90.63%, -45.81% 113.51%, -228.73% 223.76%)"></div>
+        <div class="st-sill" style="clip-path:polygon(-107.23% 116.93%, -55.72% 96.89%, -55.72% 93.42%, -107.23% 111.76%, -107.23% 116.93%, -185.85% -14.02%, -107.23% 9.24%, -107.23% 4.07%, -185.85% -21.78%, -185.85% -14.02%, -89.36% 14.52%, -55.72% 24.48%, -55.72% 21.00%, -89.36% 9.94%, -89.36% 14.52%, -25.70% 85.21%, -11.32% 79.62%, -11.32% 77.60%, -25.70% 82.72%, -25.70% 85.21%, -40.18% 29.08%, -25.70% 33.36%, -25.70% 30.87%, -40.18% 26.11%, -40.18% 29.08%, -21.30% 34.66%, -11.32% 37.62%, -11.32% 35.60%, -21.30% 32.32%, -21.30% 34.66%, 0.15% 75.16%, 6.82% 72.56%, 6.82% 71.14%, 0.15% 73.52%, 0.15% 75.16%, -5.75% 39.27%, 0.15% 41.01%, 0.15% 39.37%, -5.75% 37.43%, -5.75% 39.27%, 2.09% 41.59%, 6.82% 42.98%, 6.82% 41.56%, 2.09% 40.01%, 2.09% 41.59%, 12.84% 70.22%, 16.67% 68.73%, 16.67% 67.63%, 12.84% 69.00%, 12.84% 70.22%, 9.66% 43.82%, 12.84% 44.76%, 12.84% 43.54%, 9.66% 42.50%, 9.66% 43.82%, 13.93% 45.09%, 16.67% 45.90%, 16.67% 44.80%, 13.93% 43.90%, 13.93% 45.09%, 20.38% 67.28%, 22.87% 66.32%, 22.87% 65.42%, 20.38% 66.31%, 20.38% 67.28%, 18.39% 46.41%, 20.38% 46.99%, 20.38% 46.02%, 18.39% 45.37%, 18.39% 46.41%, 21.08% 47.20%, 22.87% 47.73%, 22.87% 46.84%, 21.08% 46.25%, 21.08% 47.20%, 25.37% 65.34%, 27.12% 64.66%, 27.12% 63.91%, 25.37% 64.53%, 25.37% 65.34%, 24.02% 48.07%, 25.37% 48.47%, 25.37% 47.66%, 24.02% 47.22%, 24.02% 48.07%, 25.86% 48.62%, 27.12% 48.99%, 27.12% 48.24%, 25.86% 47.82%, 25.86% 48.62%, 28.93% 63.96%, 30.22% 63.46%, 30.22% 62.81%, 28.93% 63.27%, 28.93% 63.96%, 27.94% 49.23%, 28.93% 49.52%, 28.93% 48.83%, 27.94% 48.51%, 27.94% 49.23%, 29.28% 49.63%, 30.22% 49.91%, 30.22% 49.26%, 29.28% 48.95%, 29.28% 49.63%, 31.59% 62.92%, 32.58% 62.54%, 32.58% 61.96%, 31.59% 62.32%, 31.59% 62.92%, 30.84% 50.09%, 31.59% 50.31%, 31.59% 49.71%, 30.84% 49.46%, 30.84% 50.09%, 31.86% 50.39%, 32.58% 50.61%, 32.58% 50.03%, 31.86% 49.80%, 31.86% 50.39%, 33.65% 62.12%, 34.44% 61.81%, 34.44% 61.30%, 33.65% 61.58%, 33.65% 62.12%, 33.06% 50.75%, 33.65% 50.92%, 33.65% 50.38%, 33.06% 50.19%, 33.06% 50.75%, 33.86% 50.99%, 34.44% 51.15%, 34.44% 50.64%, 33.86% 50.45%, 33.86% 50.99%, 35.29% 61.48%, 35.94% 61.23%, 35.94% 60.77%, 35.29% 61.00%, 35.29% 61.48%, 34.82% 51.27%, 35.29% 51.41%, 35.29% 50.93%, 34.82% 50.77%, 34.82% 51.27%, 35.47% 51.46%, 35.94% 51.60%, 35.94% 51.14%, 35.47% 50.98%, 35.47% 51.46%, 36.64% 60.96%, 37.17% 60.75%, 37.17% 60.33%, 36.64% 60.52%, 36.64% 60.96%, 36.25% 51.69%, 36.64% 51.81%, 36.64% 51.37%, 36.25% 51.24%, 36.25% 51.69%, 36.78% 51.85%, 37.17% 51.96%, 37.17% 51.54%, 36.78% 51.42%, 36.78% 51.85%, 37.76% 60.52%, 38.21% 60.35%, 38.21% 59.96%, 37.76% 60.12%, 37.76% 60.52%, 37.43% 52.04%, 37.76% 52.14%, 37.76% 51.74%, 37.43% 51.63%, 37.43% 52.04%, 37.88% 52.17%, 38.21% 52.27%, 38.21% 51.88%, 37.88% 51.78%, 37.88% 52.17%, 38.71% 60.15%, 39.09% 60.00%, 39.09% 59.65%, 38.71% 59.78%, 38.71% 60.15%, 38.43% 52.34%, 38.71% 52.42%, 38.71% 52.05%, 38.43% 51.96%, 38.43% 52.34%, 38.81% 52.45%, 39.09% 52.53%, 39.09% 52.17%, 38.81% 52.08%, 38.81% 52.45%, 39.52% 59.84%, 39.85% 59.71%, 39.85% 59.38%, 39.52% 59.49%, 39.52% 59.84%, 39.28% 52.59%, 39.52% 52.66%, 39.52% 52.31%, 39.28% 52.24%, 39.28% 52.59%, 39.61% 52.68%, 39.85% 52.76%, 39.85% 52.42%, 39.61% 52.34%, 39.61% 52.68%, 129.69% 116.93%, 103.59% 96.89%, 103.59% 93.42%, 129.69% 111.76%, 129.69% 116.93%, 169.54% -14.02%, 129.69% 9.24%, 129.69% 4.07%, 169.54% -21.78%, 169.54% -14.02%, 120.64% 14.52%, 103.59% 24.48%, 103.59% 21.00%, 120.64% 9.94%, 120.64% 14.52%, 88.37% 85.21%, 81.08% 79.62%, 81.08% 77.60%, 88.37% 82.72%, 88.37% 85.21%, 95.71% 29.08%, 88.37% 33.36%, 88.37% 30.87%, 95.71% 26.11%, 95.71% 29.08%, 86.14% 34.66%, 81.08% 37.62%, 81.08% 35.60%, 86.14% 32.32%, 86.14% 34.66%, 75.27% 75.16%, 71.89% 72.56%, 71.89% 71.14%, 75.27% 73.52%, 75.27% 75.16%, 78.25% 39.27%, 75.27% 41.01%, 75.27% 39.37%, 78.25% 37.43%, 78.25% 39.27%, 74.28% 41.59%, 71.89% 42.98%, 71.89% 41.56%, 74.28% 40.01%, 74.28% 41.59%, 68.84% 70.22%, 66.89% 68.73%, 66.89% 67.63%, 68.84% 69.00%, 68.84% 70.22%, 70.45% 43.82%, 68.84% 44.76%, 68.84% 43.54%, 70.45% 42.50%, 70.45% 43.82%, 68.28% 45.09%, 66.89% 45.90%, 66.89% 44.80%, 68.28% 43.90%, 68.28% 45.09%, 65.01% 67.28%, 63.75% 66.32%, 63.75% 65.42%, 65.01% 66.31%, 65.01% 67.28%, 66.02% 46.41%, 65.01% 46.99%, 65.01% 46.02%, 66.02% 45.37%, 66.02% 46.41%, 64.66% 47.20%, 63.75% 47.73%, 63.75% 46.84%, 64.66% 46.25%, 64.66% 47.20%, 62.48% 65.34%, 61.60% 64.66%, 61.60% 63.91%, 62.48% 64.53%, 62.48% 65.34%, 63.17% 48.07%, 62.48% 48.47%, 62.48% 47.66%, 63.17% 47.22%, 63.17% 48.07%, 62.24% 48.62%, 61.60% 48.99%, 61.60% 48.24%, 62.24% 47.82%, 62.24% 48.62%, 60.68% 63.96%, 60.03% 63.46%, 60.03% 62.81%, 60.68% 63.27%, 60.68% 63.96%, 61.18% 49.23%, 60.68% 49.52%, 60.68% 48.83%, 61.18% 48.51%, 61.18% 49.23%, 60.50% 49.63%, 60.03% 49.91%, 60.03% 49.26%, 60.50% 48.95%, 60.50% 49.63%, 59.33% 62.92%, 58.83% 62.54%, 58.83% 61.96%, 59.33% 62.32%, 59.33% 62.92%, 59.71% 50.09%, 59.33% 50.31%, 59.33% 49.71%, 59.71% 49.46%, 59.71% 50.09%, 59.20% 50.39%, 58.83% 50.61%, 58.83% 50.03%, 59.20% 49.80%, 59.20% 50.39%, 58.29% 62.12%, 57.89% 61.81%, 57.89% 61.30%, 58.29% 61.58%, 58.29% 62.12%, 58.59% 50.75%, 58.29% 50.92%, 58.29% 50.38%, 58.59% 50.19%, 58.59% 50.75%, 58.18% 50.99%, 57.89% 51.15%, 57.89% 50.64%, 58.18% 50.45%, 58.18% 50.99%, 57.45% 61.48%, 57.13% 61.23%, 57.13% 60.77%, 57.45% 61.00%, 57.45% 61.48%, 57.69% 51.27%, 57.45% 51.41%, 57.45% 50.93%, 57.69% 50.77%, 57.69% 51.27%, 57.36% 51.46%, 57.13% 51.60%, 57.13% 51.14%, 57.36% 50.98%, 57.36% 51.46%, 56.77% 60.96%, 56.50% 60.75%, 56.50% 60.33%, 56.77% 60.52%, 56.77% 60.96%, 56.97% 51.69%, 56.77% 51.81%, 56.77% 51.37%, 56.97% 51.24%, 56.97% 51.69%, 56.70% 51.85%, 56.50% 51.96%, 56.50% 51.54%, 56.70% 51.42%, 56.70% 51.85%, 56.20% 60.52%, 55.98% 60.35%, 55.98% 59.96%, 56.20% 60.12%, 56.20% 60.52%, 56.37% 52.04%, 56.20% 52.14%, 56.20% 51.74%, 56.37% 51.63%, 56.37% 52.04%, 56.14% 52.17%, 55.98% 52.27%, 55.98% 51.88%, 56.14% 51.78%, 56.14% 52.17%, 55.72% 60.15%, 55.53% 60.00%, 55.53% 59.65%, 55.72% 59.78%, 55.72% 60.15%, 55.86% 52.34%, 55.72% 52.42%, 55.72% 52.05%, 55.86% 51.96%, 55.86% 52.34%, 55.67% 52.45%, 55.53% 52.53%, 55.53% 52.17%, 55.67% 52.08%, 55.67% 52.45%, 55.31% 59.84%, 55.15% 59.71%, 55.15% 59.38%, 55.31% 59.49%, 55.31% 59.84%, 55.43% 52.59%, 55.31% 52.66%, 55.31% 52.31%, 55.43% 52.24%, 55.43% 52.59%, 55.27% 52.68%, 55.15% 52.76%, 55.15% 52.42%, 55.27% 52.34%, 55.27% 52.68%, 55.43% 52.59%, 55.31% 59.84%, 55.67% 52.45%, 55.86% 52.34%, 55.72% 60.15%, 56.14% 52.17%, 56.37% 52.04%, 56.20% 60.52%, 56.70% 51.85%, 56.97% 51.69%, 56.77% 60.96%, 57.36% 51.46%, 57.69% 51.27%, 57.45% 61.48%, 58.18% 50.99%, 58.59% 50.75%, 58.29% 62.12%, 59.20% 50.39%, 59.71% 50.09%, 59.33% 62.92%, 60.50% 49.63%, 61.18% 49.23%, 60.68% 63.96%, 62.24% 48.62%, 63.17% 48.07%, 62.48% 65.34%, 64.66% 47.20%, 66.02% 46.41%, 65.01% 67.28%, 68.28% 45.09%, 70.45% 43.82%, 68.84% 70.22%, 74.28% 41.59%, 78.25% 39.27%, 75.27% 75.16%, 86.14% 34.66%, 95.71% 29.08%, 88.37% 85.21%, 120.64% 14.52%, 169.54% -14.02%, 129.69% 116.93%, 39.61% 52.68%, 39.28% 52.59%, 39.52% 59.84%, 38.81% 52.45%, 38.43% 52.34%, 38.71% 60.15%, 37.88% 52.17%, 37.43% 52.04%, 37.76% 60.52%, 36.78% 51.85%, 36.25% 51.69%, 36.64% 60.96%, 35.47% 51.46%, 34.82% 51.27%, 35.29% 61.48%, 33.86% 50.99%, 33.06% 50.75%, 33.65% 62.12%, 31.86% 50.39%, 30.84% 50.09%, 31.59% 62.92%, 29.28% 49.63%, 27.94% 49.23%, 28.93% 63.96%, 25.86% 48.62%, 24.02% 48.07%, 25.37% 65.34%, 21.08% 47.20%, 18.39% 46.41%, 20.38% 67.28%, 13.93% 45.09%, 9.66% 43.82%, 12.84% 70.22%, 2.09% 41.59%, -5.75% 39.27%, 0.15% 75.16%, -21.30% 34.66%, -40.18% 29.08%, -25.70% 85.21%, -89.36% 14.52%, -185.85% -14.02%, -107.23% 116.93%)"></div>
+        <div class="st-windark" style="clip-path:polygon(-177.11% -18.91%, -111.37% 2.71%, -111.37% -59.19%, -177.11% -106.02%, -177.11% -18.91%, -20.48% 32.59%, -11.94% 35.40%, -11.94% 11.64%, -20.48% 5.55%, -20.48% 32.59%, 30.90% 49.48%, 31.53% 49.69%, 31.53% 42.60%, 30.90% 42.15%, 30.90% 49.48%, 33.91% 50.47%, 34.40% 50.63%, 34.40% 44.65%, 33.91% 44.30%, 33.91% 50.47%, 36.67% 60.51%, 37.14% 60.34%, 37.14% 55.41%, 36.67% 55.39%, 36.67% 60.51%, 36.28% 51.25%, 36.61% 51.36%, 36.61% 46.22%, 36.28% 45.99%, 36.28% 51.25%, 36.81% 51.42%, 37.14% 51.53%, 37.14% 46.60%, 36.81% 46.37%, 36.81% 51.42%, 37.78% 60.11%, 38.18% 59.97%, 38.18% 55.44%, 37.78% 55.43%, 37.78% 60.11%, 38.45% 51.96%, 38.69% 52.04%, 38.69% 47.70%, 38.45% 47.53%, 38.45% 51.96%, 74.09% 40.13%, 72.04% 41.46%, 72.04% 24.78%, 74.09% 21.90%, 74.09% 40.13%, 68.72% 68.92%, 66.98% 67.69%, 66.98% 54.84%, 68.72% 54.75%, 68.72% 68.92%, 70.31% 42.58%, 68.95% 43.47%, 68.95% 29.13%, 70.31% 27.21%, 70.31% 42.58%, 57.44% 60.98%, 57.14% 60.78%, 57.14% 55.37%, 57.44% 55.36%, 57.44% 60.98%, 55.26% 52.35%, 55.15% 52.42%, 55.15% 48.52%, 55.26% 48.37%, 55.26% 52.35%, 57.44% 60.98%, 70.31% 42.58%, 68.72% 68.92%, 74.09% 40.13%, 38.45% 51.96%, 37.78% 60.11%, 36.81% 51.42%, 36.28% 51.25%, 36.67% 60.51%, 33.91% 50.47%, 30.90% 49.48%, -20.48% 32.59%, -177.11% -18.91%)"></div>
+        <div class="st-winlit" style="clip-path:polygon(-103.30% 110.36%, -57.58% 94.08%, -57.58% 52.81%, -103.30% 51.56%, -103.30% 110.36%, -86.27% 10.96%, -57.58% 20.39%, -57.58% -20.87%, -86.27% -41.31%, -86.27% 10.96%, -24.78% 82.39%, -11.94% 77.82%, -11.94% 54.06%, -24.78% 53.71%, -24.78% 82.39%, -38.87% 26.54%, -26.65% 30.56%, -26.65% 1.16%, -38.87% -7.54%, -38.87% 26.54%, 0.55% 73.37%, 6.51% 71.25%, 6.51% 54.57%, 0.55% 54.41%, 0.55% 73.37%, -5.24% 37.60%, -0.26% 39.24%, -0.26% 19.96%, -5.24% 16.41%, -5.24% 37.60%, 2.47% 40.13%, 6.51% 41.46%, 6.51% 24.78%, 2.47% 21.90%, 2.47% 40.13%, 13.06% 68.92%, 16.49% 67.69%, 16.49% 54.84%, 13.06% 54.75%, 13.06% 68.92%, 9.92% 42.58%, 12.61% 43.47%, 12.61% 29.13%, 9.92% 27.21%, 9.92% 42.58%, 14.14% 43.97%, 16.49% 44.74%, 16.49% 31.89%, 14.14% 30.22%, 14.14% 43.97%, 20.52% 66.26%, 22.75% 65.47%, 22.75% 55.01%, 20.52% 54.95%, 20.52% 66.26%, 18.55% 45.42%, 20.23% 45.97%, 20.23% 34.56%, 18.55% 33.36%, 18.55% 45.42%, 21.21% 46.30%, 22.75% 46.80%, 22.75% 36.35%, 21.21% 35.25%, 21.21% 46.30%, 25.47% 64.50%, 27.03% 63.94%, 27.03% 55.13%, 25.47% 55.09%, 25.47% 64.50%, 24.13% 47.25%, 25.27% 47.63%, 25.27% 38.15%, 24.13% 37.33%, 24.13% 47.25%, 25.95% 47.85%, 27.03% 48.21%, 27.03% 39.40%, 25.95% 38.63%, 25.95% 47.85%, 29.00% 63.24%, 30.16% 62.83%, 30.16% 55.22%, 29.00% 55.18%, 29.00% 63.24%, 28.02% 48.53%, 28.86% 48.81%, 28.86% 40.70%, 28.02% 40.10%, 28.02% 48.53%, 29.35% 48.97%, 30.16% 49.24%, 30.16% 41.62%, 29.35% 41.05%, 29.35% 48.97%, 31.64% 62.30%, 32.53% 61.98%, 32.53% 55.28%, 31.64% 55.26%, 31.64% 62.30%, 31.91% 49.81%, 32.53% 50.02%, 32.53% 43.32%, 31.91% 42.88%, 31.91% 49.81%, 33.69% 61.57%, 34.40% 61.32%, 34.40% 55.33%, 33.69% 55.31%, 33.69% 61.57%, 33.11% 50.21%, 33.60% 50.37%, 33.60% 44.08%, 33.11% 43.73%, 33.11% 50.21%, 35.33% 60.98%, 35.90% 60.78%, 35.90% 55.37%, 35.33% 55.36%, 35.33% 60.98%, 34.86% 50.78%, 35.26% 50.91%, 35.26% 45.26%, 34.86% 44.97%, 34.86% 50.78%, 35.50% 50.99%, 35.90% 51.13%, 35.90% 45.72%, 35.50% 45.43%, 35.50% 50.99%, 37.46% 51.64%, 37.74% 51.73%, 37.74% 47.02%, 37.46% 46.83%, 37.46% 51.64%, 37.91% 51.78%, 38.18% 51.88%, 38.18% 47.34%, 37.91% 47.14%, 37.91% 51.78%, 38.73% 59.77%, 39.07% 59.65%, 39.07% 55.46%, 38.73% 55.45%, 38.73% 59.77%, 38.83% 52.09%, 39.07% 52.17%, 39.07% 47.97%, 38.83% 47.80%, 38.83% 52.09%, 39.54% 59.49%, 39.83% 59.38%, 39.83% 55.48%, 39.54% 55.47%, 39.54% 59.49%, 39.30% 52.24%, 39.50% 52.31%, 39.50% 48.28%, 39.30% 48.14%, 39.30% 52.24%, 39.62% 52.35%, 39.83% 52.42%, 39.83% 48.52%, 39.62% 48.37%, 39.62% 52.35%, 127.70% 110.36%, 104.53% 94.08%, 104.53% 52.81%, 127.70% 51.56%, 127.70% 110.36%, 165.11% -18.91%, 131.79% 2.71%, 131.79% -59.19%, 165.11% -106.02%, 165.11% -18.91%, 119.07% 10.96%, 104.53% 20.39%, 104.53% -20.87%, 119.07% -41.31%, 119.07% 10.96%, 87.90% 82.39%, 81.39% 77.82%, 81.39% 54.06%, 87.90% 53.71%, 87.90% 82.39%, 95.04% 26.54%, 88.85% 30.56%, 88.85% 1.16%, 95.04% -7.54%, 95.04% 26.54%, 85.72% 32.59%, 81.39% 35.40%, 81.39% 11.64%, 85.72% 5.55%, 85.72% 32.59%, 75.06% 73.37%, 72.04% 71.25%, 72.04% 54.57%, 75.06% 54.41%, 75.06% 73.37%, 78.00% 37.60%, 75.48% 39.24%, 75.48% 19.96%, 78.00% 16.41%, 78.00% 37.60%, 68.18% 43.97%, 66.98% 44.74%, 66.98% 31.89%, 68.18% 30.22%, 68.18% 43.97%, 64.94% 66.26%, 63.81% 65.47%, 63.81% 55.01%, 64.94% 54.95%, 64.94% 66.26%, 65.94% 45.42%, 65.09% 45.97%, 65.09% 34.56%, 65.94% 33.36%, 65.94% 45.42%, 64.59% 46.30%, 63.81% 46.80%, 63.81% 36.35%, 64.59% 35.25%, 64.59% 46.30%, 62.43% 64.50%, 61.64% 63.94%, 61.64% 55.13%, 62.43% 55.09%, 62.43% 64.50%, 63.11% 47.25%, 62.53% 47.63%, 62.53% 38.15%, 63.11% 37.33%, 63.11% 47.25%, 62.19% 47.85%, 61.64% 48.21%, 61.64% 39.40%, 62.19% 38.63%, 62.19% 47.85%, 60.64% 63.24%, 60.06% 62.83%, 60.06% 55.22%, 60.64% 55.18%, 60.64% 63.24%, 61.14% 48.53%, 60.72% 48.81%, 60.72% 40.70%, 61.14% 40.10%, 61.14% 48.53%, 60.46% 48.97%, 60.06% 49.24%, 60.06% 41.62%, 60.46% 41.05%, 60.46% 48.97%, 59.31% 62.30%, 58.85% 61.98%, 58.85% 55.28%, 59.31% 55.26%, 59.31% 62.30%, 59.68% 49.48%, 59.36% 49.69%, 59.36% 42.60%, 59.68% 42.15%, 59.68% 49.48%, 59.17% 49.81%, 58.85% 50.02%, 58.85% 43.32%, 59.17% 42.88%, 59.17% 49.81%, 58.27% 61.57%, 57.91% 61.32%, 57.91% 55.33%, 58.27% 55.31%, 58.27% 61.57%, 58.56% 50.21%, 58.31% 50.37%, 58.31% 44.08%, 58.56% 43.73%, 58.56% 50.21%, 58.16% 50.47%, 57.91% 50.63%, 57.91% 44.65%, 58.16% 44.30%, 58.16% 50.47%, 57.67% 50.78%, 57.47% 50.91%, 57.47% 45.26%, 57.67% 44.97%, 57.67% 50.78%, 57.35% 50.99%, 57.14% 51.13%, 57.14% 45.72%, 57.35% 45.43%, 57.35% 50.99%, 56.76% 60.51%, 56.52% 60.34%, 56.52% 55.41%, 56.76% 55.39%, 56.76% 60.51%, 56.95% 51.25%, 56.79% 51.36%, 56.79% 46.22%, 56.95% 45.99%, 56.95% 51.25%, 56.68% 51.42%, 56.52% 51.53%, 56.52% 46.60%, 56.68% 46.37%, 56.68% 51.42%, 56.19% 60.11%, 55.99% 59.97%, 55.99% 55.44%, 56.19% 55.43%, 56.19% 60.11%, 56.36% 51.64%, 56.22% 51.73%, 56.22% 47.02%, 56.36% 46.83%, 56.36% 51.64%, 56.13% 51.78%, 55.99% 51.88%, 55.99% 47.34%, 56.13% 47.14%, 56.13% 51.78%, 55.71% 59.77%, 55.54% 59.65%, 55.54% 55.46%, 55.71% 55.45%, 55.71% 59.77%, 55.85% 51.96%, 55.73% 52.04%, 55.73% 47.70%, 55.85% 47.53%, 55.85% 51.96%, 55.66% 52.09%, 55.54% 52.17%, 55.54% 47.97%, 55.66% 47.80%, 55.66% 52.09%, 55.30% 59.49%, 55.15% 59.38%, 55.15% 55.48%, 55.30% 55.47%, 55.30% 59.49%, 55.42% 52.24%, 55.32% 52.31%, 55.32% 48.28%, 55.42% 48.14%, 55.42% 52.24%, 55.30% 59.49%, 55.66% 52.09%, 55.85% 51.96%, 55.71% 59.77%, 56.13% 51.78%, 56.36% 51.64%, 56.19% 60.11%, 56.68% 51.42%, 56.95% 51.25%, 56.76% 60.51%, 57.35% 50.99%, 57.67% 50.78%, 58.16% 50.47%, 58.56% 50.21%, 58.27% 61.57%, 59.17% 49.81%, 59.68% 49.48%, 59.31% 62.30%, 60.46% 48.97%, 61.14% 48.53%, 60.64% 63.24%, 62.19% 47.85%, 63.11% 47.25%, 62.43% 64.50%, 64.59% 46.30%, 65.94% 45.42%, 64.94% 66.26%, 68.18% 43.97%, 78.00% 37.60%, 75.06% 73.37%, 85.72% 32.59%, 95.04% 26.54%, 87.90% 82.39%, 119.07% 10.96%, 165.11% -18.91%, 127.70% 110.36%, 39.62% 52.35%, 39.30% 52.24%, 39.54% 59.49%, 38.83% 52.09%, 38.73% 59.77%, 37.91% 51.78%, 37.46% 51.64%, 35.50% 50.99%, 34.86% 50.78%, 35.33% 60.98%, 33.11% 50.21%, 33.69% 61.57%, 31.91% 49.81%, 31.64% 62.30%, 29.35% 48.97%, 28.02% 48.53%, 29.00% 63.24%, 25.95% 47.85%, 24.13% 47.25%, 25.47% 64.50%, 21.21% 46.30%, 18.55% 45.42%, 20.52% 66.26%, 14.14% 43.97%, 9.92% 42.58%, 13.06% 68.92%, 2.47% 40.13%, -5.24% 37.60%, 0.55% 73.37%, -38.87% 26.54%, -24.78% 82.39%, -86.27% 10.96%, -103.30% 110.36%)"></div>
+        <div class="st-door" style="clip-path:polygon(-190.47% 200.70%, -122.73% 159.87%, -122.73% 58.13%, -190.47% 59.05%, -190.47% 200.70%, -40.84% 110.52%, -29.12% 103.45%, -29.12% 56.84%, -40.84% 57.00%, -40.84% 110.52%, -6.00% 89.51%, -1.31% 86.69%, -1.31% 56.46%, -6.00% 56.53%, -6.00% 89.51%, 9.52% 80.16%, 12.03% 78.65%, 12.03% 56.28%, 9.52% 56.31%, 9.52% 80.16%, 18.31% 74.86%, 19.87% 73.92%, 19.87% 56.17%, 18.31% 56.19%, 18.31% 74.86%, 23.96% 71.45%, 25.02% 70.81%, 25.02% 56.10%, 23.96% 56.12%, 23.96% 71.45%, 27.90% 69.08%, 28.67% 68.62%, 28.67% 56.05%, 27.90% 56.06%, 27.90% 69.08%, 30.81% 67.33%, 31.39% 66.98%, 31.39% 56.01%, 30.81% 56.02%, 30.81% 67.33%, 33.04% 65.98%, 33.49% 65.71%, 33.49% 55.99%, 33.04% 55.99%, 33.04% 65.98%, 34.80% 64.92%, 35.17% 64.70%, 35.17% 55.96%, 34.80% 55.97%, 34.80% 64.92%, 36.24% 64.06%, 36.54% 63.87%, 36.54% 55.94%, 36.24% 55.95%, 36.24% 64.06%, 37.42% 63.34%, 37.67% 63.19%, 37.67% 55.93%, 37.42% 55.93%, 37.42% 63.34%, 38.42% 62.74%, 38.63% 62.61%, 38.63% 55.92%, 38.42% 55.92%, 38.42% 62.74%, 39.27% 62.23%, 39.45% 62.12%, 39.45% 55.90%, 39.27% 55.91%, 39.27% 62.23%, 171.88% 200.70%, 137.55% 159.87%, 137.55% 58.13%, 171.88% 59.05%, 171.88% 200.70%, 96.04% 110.52%, 90.10% 103.45%, 90.10% 56.84%, 96.04% 57.00%, 96.04% 110.52%, 78.38% 89.51%, 76.01% 86.69%, 76.01% 56.46%, 78.38% 56.53%, 78.38% 89.51%, 70.51% 80.16%, 69.24% 78.65%, 69.24% 56.28%, 70.51% 56.31%, 70.51% 80.16%, 66.06% 74.86%, 65.27% 73.92%, 65.27% 56.17%, 66.06% 56.19%, 66.06% 74.86%, 63.20% 71.45%, 62.66% 70.81%, 62.66% 56.10%, 63.20% 56.12%, 63.20% 71.45%, 61.20% 69.08%, 60.81% 68.62%, 60.81% 56.05%, 61.20% 56.06%, 61.20% 69.08%, 59.73% 67.33%, 59.43% 66.98%, 59.43% 56.01%, 59.73% 56.02%, 59.73% 67.33%, 58.60% 65.98%, 58.37% 65.71%, 58.37% 55.99%, 58.60% 55.99%, 58.60% 65.98%, 57.70% 64.92%, 57.52% 64.70%, 57.52% 55.96%, 57.70% 55.97%, 57.70% 64.92%, 56.98% 64.06%, 56.82% 63.87%, 56.82% 55.94%, 56.98% 55.95%, 56.98% 64.06%, 56.38% 63.34%, 56.25% 63.19%, 56.25% 55.93%, 56.38% 55.93%, 56.38% 63.34%, 55.87% 62.74%, 55.76% 62.61%, 55.76% 55.92%, 55.87% 55.92%, 55.87% 62.74%, 55.44% 62.23%, 55.34% 62.12%, 55.34% 55.90%, 55.44% 55.91%, 55.44% 62.23%, 55.87% 62.74%, 56.38% 63.34%, 56.98% 64.06%, 57.70% 64.92%, 58.60% 65.98%, 59.73% 67.33%, 61.20% 69.08%, 63.20% 71.45%, 66.06% 74.86%, 70.51% 80.16%, 78.38% 89.51%, 96.04% 110.52%, 171.88% 200.70%, 39.27% 62.23%, 38.42% 62.74%, 37.42% 63.34%, 36.24% 64.06%, 34.80% 64.92%, 33.04% 65.98%, 30.81% 67.33%, 27.90% 69.08%, 23.96% 71.45%, 18.31% 74.86%, 9.52% 80.16%, -6.00% 89.51%, -40.84% 110.52%, -190.47% 200.70%)"></div>
+        <div class="st-step" style="clip-path:polygon(-200.29% 192.90%, -118.00% 147.81%, -107.64% 147.81%, -184.86% 192.90%, -200.29% 192.90%, -42.21% 106.29%, -28.11% 98.56%, -23.30% 98.56%, -36.53% 106.29%, -42.21% 106.29%, -6.52% 86.73%, -0.89% 83.64%, 2.25% 83.64%, -3.03% 86.73%, -6.52% 86.73%, 9.26% 78.09%, 12.26% 76.44%, 14.59% 76.44%, 11.77% 78.09%, 9.26% 78.09%, 18.15% 73.21%, 20.01% 72.19%, 21.86% 72.19%, 20.11% 73.21%, 18.15% 73.21%, 23.85% 70.09%, 25.12% 69.39%, 26.66% 69.39%, 25.46% 70.09%, 23.85% 70.09%, 27.82% 67.91%, 28.75% 67.41%, 30.06% 67.41%, 29.19% 67.91%, 27.82% 67.91%, 30.75% 66.31%, 31.45% 65.93%, 32.59% 65.93%, 31.93% 66.31%, 30.75% 66.31%, 32.99% 65.08%, 33.54% 64.78%, 34.55% 64.78%, 34.04% 65.08%, 32.99% 65.08%, 34.77% 64.11%, 35.21% 63.87%, 36.12% 63.87%, 35.70% 64.11%, 34.77% 64.11%, 36.20% 63.32%, 36.57% 63.12%, 37.40% 63.12%, 37.06% 63.32%, 36.20% 63.32%, 37.40% 62.67%, 37.70% 62.50%, 38.46% 62.50%, 38.17% 62.67%, 37.40% 62.67%, 38.40% 62.12%, 38.65% 61.98%, 39.35% 61.98%, 39.11% 62.12%, 38.40% 62.12%, 39.25% 61.65%, 39.47% 61.53%, 40.12% 61.53%, 39.91% 61.65%, 39.25% 61.65%, 176.86% 192.90%, 135.15% 147.81%, 124.79% 147.81%, 161.43% 192.90%, 176.86% 192.90%, 96.74% 106.29%, 89.59% 98.56%, 84.78% 98.56%, 91.05% 106.29%, 96.74% 106.29%, 78.65% 86.73%, 75.79% 83.64%, 72.66% 83.64%, 75.16% 86.73%, 78.65% 86.73%, 70.65% 78.09%, 69.13% 76.44%, 66.80% 76.44%, 68.14% 78.09%, 70.65% 78.09%, 66.15% 73.21%, 65.20% 72.19%, 63.35% 72.19%, 64.18% 73.21%, 66.15% 73.21%, 63.25% 70.09%, 62.61% 69.39%, 61.08% 69.39%, 61.64% 70.09%, 63.25% 70.09%, 61.24% 67.91%, 60.77% 67.41%, 59.46% 67.41%, 59.87% 67.91%, 61.24% 67.91%, 59.76% 66.31%, 59.40% 65.93%, 58.26% 65.93%, 58.57% 66.31%, 59.76% 66.31%, 58.62% 65.08%, 58.34% 64.78%, 57.33% 64.78%, 57.57% 65.08%, 58.62% 65.08%, 57.72% 64.11%, 57.50% 63.87%, 56.59% 63.87%, 56.78% 64.11%, 57.72% 64.11%, 56.99% 63.32%, 56.81% 63.12%, 55.98% 63.12%, 56.14% 63.32%, 56.99% 63.32%, 56.39% 62.67%, 56.23% 62.50%, 55.48% 62.50%, 55.61% 62.67%, 56.39% 62.67%, 55.88% 62.12%, 55.75% 61.98%, 55.05% 61.98%, 55.17% 62.12%, 55.88% 62.12%, 55.45% 61.65%, 55.34% 61.53%, 54.69% 61.53%, 54.79% 61.65%, 55.45% 61.65%, 55.88% 62.12%, 56.39% 62.67%, 56.99% 63.32%, 57.72% 64.11%, 58.62% 65.08%, 59.76% 66.31%, 61.24% 67.91%, 63.25% 70.09%, 66.15% 73.21%, 70.65% 78.09%, 78.65% 86.73%, 96.74% 106.29%, 176.86% 192.90%, 39.25% 61.65%, 38.40% 62.12%, 37.40% 62.67%, 36.20% 63.32%, 34.77% 64.11%, 32.99% 65.08%, 30.75% 66.31%, 27.82% 67.91%, 23.85% 70.09%, 18.15% 73.21%, 9.26% 78.09%, -6.52% 86.73%, -42.21% 106.29%, -200.29% 192.90%)"></div>
+        <div class="st-roof" style="clip-path:polygon(-228.73% -234.42%, -45.81% -43.99%, -93.06% -106.99%, -366.18% -417.69%, -228.73% -234.42%, -45.81% -43.99%, -7.85% -4.47%, -36.38% -42.50%, -93.06% -106.99%, -45.81% -43.99%, -7.85% -4.47%, 8.57% 12.62%, -11.86% -14.62%, -36.38% -42.50%, -7.85% -4.47%, 8.57% 16.60%, 17.73% 25.25%, 1.81% 4.03%, -11.86% -10.65%, 8.57% 16.60%, 17.73% 22.16%, 23.57% 28.24%, 10.53% 10.86%, 1.81% 0.94%, 17.73% 22.16%, 23.57% 28.24%, 27.62% 32.46%, 16.58% 17.75%, 10.53% 10.86%, 23.57% 28.24%, 27.62% 32.46%, 30.59% 35.56%, 21.03% 22.80%, 16.58% 17.75%, 27.62% 32.46%, 30.59% 35.56%, 32.87% 37.93%, 24.42% 26.67%, 21.03% 22.80%, 30.59% 35.56%, 32.87% 37.93%, 34.67% 39.80%, 27.11% 29.72%, 24.42% 26.67%, 32.87% 37.93%, 34.67% 39.80%, 36.13% 41.32%, 29.29% 32.19%, 27.11% 29.72%, 34.67% 39.80%, 36.13% 41.32%, 37.33% 42.57%, 31.08% 34.24%, 29.29% 32.19%, 36.13% 41.32%, 37.33% 42.57%, 38.34% 43.62%, 32.59% 35.96%, 31.08% 34.24%, 37.33% 42.57%, 38.34% 43.62%, 39.20% 44.52%, 33.88% 37.42%, 32.59% 35.96%, 38.34% 43.62%, 39.20% 44.52%, 39.95% 45.29%, 34.99% 38.68%, 33.88% 37.42%, 39.20% 44.52%, 191.27% -234.42%, 98.56% -43.99%, 145.81% -106.99%, 328.73% -417.69%, 191.27% -234.42%, 98.56% -43.99%, 79.32% -4.47%, 107.85% -42.50%, 145.81% -106.99%, 98.56% -43.99%, 79.32% -4.47%, 71.00% 12.62%, 91.43% -14.62%, 107.85% -42.50%, 79.32% -4.47%, 71.00% 12.62%, 66.36% 22.16%, 82.27% 0.94%, 91.43% -14.62%, 71.00% 12.62%, 66.36% 22.16%, 63.40% 28.24%, 76.43% 10.86%, 82.27% 0.94%, 66.36% 22.16%, 63.40% 28.24%, 61.34% 32.46%, 72.38% 17.75%, 76.43% 10.86%, 63.40% 28.24%, 61.34% 32.46%, 59.84% 35.56%, 69.41% 22.80%, 72.38% 17.75%, 61.34% 32.46%, 59.84% 35.56%, 58.68% 37.93%, 67.13% 26.67%, 69.41% 22.80%, 59.84% 35.56%, 58.68% 37.93%, 57.77% 39.80%, 65.33% 29.72%, 67.13% 26.67%, 58.68% 37.93%, 57.77% 39.80%, 57.03% 41.32%, 63.87% 32.19%, 65.33% 29.72%, 57.77% 39.80%, 57.03% 41.32%, 56.42% 42.57%, 62.67% 34.24%, 63.87% 32.19%, 57.03% 41.32%, 56.42% 42.57%, 55.91% 43.62%, 61.66% 35.96%, 62.67% 34.24%, 56.42% 42.57%, 55.91% 43.62%, 55.47% 44.52%, 60.80% 37.42%, 61.66% 35.96%, 55.91% 43.62%, 55.47% 44.52%, 55.10% 45.29%, 60.05% 38.68%, 60.80% 37.42%, 55.47% 44.52%, 55.91% 43.62%, 56.42% 42.57%, 57.03% 41.32%, 57.77% 39.80%, 58.68% 37.93%, 59.84% 35.56%, 61.34% 32.46%, 63.40% 28.24%, 66.36% 22.16%, 71.00% 12.62%, 79.32% -4.47%, 98.56% -43.99%, 191.27% -234.42%, 39.20% 44.52%, 38.34% 43.62%, 37.33% 42.57%, 36.13% 41.32%, 34.67% 39.80%, 32.87% 37.93%, 30.59% 35.56%, 27.62% 32.46%, 23.57% 28.24%, 17.73% 22.16%, 8.57% 16.60%, -7.85% -4.47%, -45.81% -43.99%, -228.73% -234.42%)"></div>
+        <div class="st-chim" style="clip-path:polygon(-459.38% -510.64%, -286.38% -318.28%, -286.38% -400.69%, -459.38% -635.44%, -459.38% -510.64%, -99.82% -110.83%, -80.13% -88.94%, -80.13% -120.82%, -99.82% -147.53%, -99.82% -110.83%, -37.82% -41.90%, -30.67% -33.94%, -30.67% -53.71%, -37.82% -63.41%, -37.82% -41.90%, -12.12% -9.22%, -8.45% -5.38%, -8.45% -19.70%, -12.12% -24.44%, -12.12% -9.22%, 1.95% 2.33%, 4.17% 4.80%, 4.17% -6.43%, 1.95% -9.45%, 1.95% 2.33%, 10.82% 12.19%, 12.31% 13.85%, 12.31% 4.61%, 10.82% 2.59%, 10.82% 12.19%, 16.92% 18.98%, 17.99% 20.17%, 17.99% 12.33%, 16.92% 10.88%, 16.92% 18.98%, 21.38% 23.94%, 22.19% 24.83%, 22.19% 18.02%, 21.38% 16.93%, 21.38% 23.94%, 24.78% 27.72%, 25.41% 28.42%, 25.41% 22.39%, 24.78% 21.54%, 24.78% 27.72%, 27.46% 30.70%, 27.96% 31.26%, 27.96% 25.86%, 27.46% 25.18%, 27.46% 30.70%, 29.62% 33.10%, 30.04% 33.56%, 30.04% 28.67%, 29.62% 28.11%, 29.62% 33.10%, 31.41% 35.09%, 31.75% 35.47%, 31.75% 31.00%, 31.41% 30.53%, 31.41% 35.09%, 32.91% 36.75%, 33.20% 37.08%, 33.20% 32.96%, 32.91% 32.57%, 32.91% 36.75%, 34.18% 38.17%, 34.43% 38.45%, 34.43% 34.63%, 34.18% 34.29%, 34.18% 38.17%, 386.58% -510.64%, 272.27% -318.28%, 272.27% -400.69%, 386.58% -635.44%, 386.58% -510.64%, 148.99% -110.83%, 135.99% -88.94%, 135.99% -120.82%, 148.99% -147.53%, 148.99% -110.83%, 108.03% -41.90%, 103.30% -33.94%, 103.30% -53.71%, 108.03% -63.41%, 108.03% -41.90%, 91.05% -13.31%, 88.62% -9.24%, 88.62% -23.56%, 91.05% -28.53%, 91.05% -13.31%, 81.75% 2.33%, 80.28% 4.80%, 80.28% -6.43%, 81.75% -9.45%, 81.75% 2.33%, 75.89% 12.19%, 74.91% 13.85%, 74.91% 4.61%, 75.89% 2.59%, 75.89% 12.19%, 71.86% 18.98%, 71.15% 20.17%, 71.15% 12.33%, 71.86% 10.88%, 71.86% 18.98%, 68.91% 23.94%, 68.38% 24.83%, 68.38% 18.02%, 68.91% 16.93%, 68.91% 23.94%, 66.66% 27.72%, 66.25% 28.42%, 66.25% 22.39%, 66.66% 21.54%, 66.66% 27.72%, 64.89% 30.70%, 64.56% 31.26%, 64.56% 25.86%, 64.89% 25.18%, 64.89% 30.70%, 63.46% 33.10%, 63.19% 33.56%, 63.19% 28.67%, 63.46% 28.11%, 63.46% 33.10%, 62.28% 35.09%, 62.06% 35.47%, 62.06% 31.00%, 62.28% 30.53%, 62.28% 35.09%, 61.29% 36.75%, 61.10% 37.08%, 61.10% 32.96%, 61.29% 32.57%, 61.29% 36.75%, 60.45% 38.17%, 60.29% 38.45%, 60.29% 34.63%, 60.45% 34.29%, 60.45% 38.17%, 61.29% 36.75%, 62.28% 35.09%, 63.46% 33.10%, 64.89% 30.70%, 66.66% 27.72%, 68.91% 23.94%, 71.86% 18.98%, 75.89% 12.19%, 81.75% 2.33%, 91.05% -13.31%, 108.03% -41.90%, 148.99% -110.83%, 386.58% -510.64%, 34.18% 38.17%, 32.91% 36.75%, 31.41% 35.09%, 29.62% 33.10%, 27.46% 30.70%, 24.78% 27.72%, 21.38% 23.94%, 16.92% 18.98%, 10.82% 12.19%, 1.95% 2.33%, -12.12% -9.22%, -37.82% -41.90%, -99.82% -110.83%, -459.38% -510.64%)"></div>
+        <div class="st-p kid" style="left:54.67%;top:58.97%;width:0.59%;height:3.13%"></div>
+        <div class="st-p" style="left:53.74%;top:56.95%;width:0.72%;height:5.15%"></div>
+        <div class="st-p" style="left:53.57%;top:56.94%;width:0.72%;height:5.19%"></div>
+        <div class="st-p kid" style="left:39.43%;top:58.83%;width:0.60%;height:3.34%"></div>
+        <div class="st-p" style="left:45.93%;top:57.64%;width:0.73%;height:4.54%"></div>
+        <div class="st-p" style="left:39.27%;top:57.47%;width:0.74%;height:4.76%"></div>
+        <div class="st-p" style="left:54.75%;top:57.02%;width:0.74%;height:5.28%"></div>
+        <div class="st-p" style="left:54.76%;top:57.30%;width:0.74%;height:5.00%"></div>
+        <div class="st-p kid" style="left:50.67%;top:58.82%;width:0.61%;height:3.49%"></div>
+        <div class="st-p" style="left:39.11%;top:57.45%;width:0.75%;height:4.87%"></div>
+        <div class="st-p" style="left:54.78%;top:57.53%;width:0.75%;height:4.79%"></div>
+        <div class="st-p" style="left:54.86%;top:57.27%;width:0.75%;height:5.09%"></div>
+        <div class="st-p" style="left:45.88%;top:57.25%;width:0.75%;height:5.14%"></div>
+        <div class="st-p" style="left:39.67%;top:57.61%;width:0.75%;height:4.79%"></div>
+        <div class="st-p kid" style="left:39.31%;top:59.01%;width:0.64%;height:3.67%"></div>
+        <div class="st-p" style="left:53.72%;top:57.39%;width:0.79%;height:5.32%"></div>
+        <div class="st-p kid" style="left:47.94%;top:58.78%;width:0.65%;height:3.95%"></div>
+        <div class="st-p" style="left:39.41%;top:57.46%;width:0.79%;height:5.29%"></div>
+        <div class="st-p" style="left:53.55%;top:57.06%;width:0.80%;height:5.73%"></div>
+        <div class="st-p" style="left:55.12%;top:57.27%;width:0.80%;height:5.53%"></div>
+        <div class="st-p" style="left:38.59%;top:57.46%;width:0.80%;height:5.36%"></div>
+        <div class="st-p" style="left:38.77%;top:57.21%;width:0.82%;height:5.73%"></div>
+        <div class="st-p" style="left:46.04%;top:57.64%;width:0.82%;height:5.36%"></div>
+        <div class="st-p" style="left:39.00%;top:57.16%;width:0.83%;height:5.86%"></div>
+        <div class="st-p" style="left:40.79%;top:57.24%;width:0.83%;height:5.83%"></div>
+        <div class="st-p" style="left:55.11%;top:57.32%;width:0.83%;height:5.74%"></div>
+        <div class="st-p" style="left:37.75%;top:57.94%;width:0.84%;height:5.21%"></div>
+        <div class="st-p" style="left:37.71%;top:57.83%;width:0.84%;height:5.33%"></div>
+        <div class="st-p kid" style="left:44.17%;top:59.23%;width:0.69%;height:3.97%"></div>
+        <div class="st-p" style="left:55.66%;top:57.54%;width:0.86%;height:5.77%"></div>
+        <div class="st-p" style="left:45.23%;top:57.49%;width:0.86%;height:5.86%"></div>
+        <div class="st-p" style="left:38.59%;top:57.38%;width:0.87%;height:6.06%"></div>
+        <div class="st-p" style="left:43.97%;top:57.47%;width:0.87%;height:5.99%"></div>
+        <div class="st-p" style="left:55.75%;top:57.61%;width:0.90%;height:6.06%"></div>
+        <div class="st-p" style="left:54.92%;top:57.93%;width:0.91%;height:5.87%"></div>
+        <div class="st-p" style="left:45.79%;top:57.67%;width:0.92%;height:6.23%"></div>
+        <div class="st-p" style="left:47.96%;top:57.65%;width:0.95%;height:6.49%"></div>
+        <div class="st-p" style="left:40.06%;top:58.25%;width:0.96%;height:5.98%"></div>
+        <div class="st-p" style="left:56.23%;top:57.66%;width:0.98%;height:6.69%"></div>
+        <div class="st-p kid" style="left:41.94%;top:60.26%;width:0.83%;height:4.44%"></div>
+        <div class="st-p" style="left:49.88%;top:57.42%;width:1.02%;height:7.30%"></div>
+        <div class="st-p kid" style="left:50.27%;top:60.52%;width:0.88%;height:4.69%"></div>
+        <div class="st-p" style="left:46.72%;top:58.03%;width:1.12%;height:7.55%"></div>
+        <div class="st-p" style="left:34.11%;top:58.02%;width:1.12%;height:7.63%"></div>
+        <div class="st-p kid" style="left:40.74%;top:60.09%;width:0.93%;height:5.63%"></div>
+        <div class="st-p kid" style="left:35.04%;top:59.94%;width:0.95%;height:6.02%"></div>
+        <div class="st-lamp" style="left:35.51%;top:44.56%;width:0.28%;height:21.47%"></div>
+        <div class="st-p" style="left:32.27%;top:58.34%;width:1.21%;height:8.11%"></div>
+        <div class="st-p" style="left:33.21%;top:58.23%;width:1.25%;height:8.53%"></div>
+        <div class="st-p" style="left:37.55%;top:58.10%;width:1.25%;height:8.67%"></div>
+        <div class="st-p" style="left:36.53%;top:58.23%;width:1.27%;height:8.73%"></div>
+        <div class="st-p" style="left:31.58%;top:58.54%;width:1.29%;height:8.54%"></div>
+        <div class="st-p kid" style="left:41.16%;top:60.83%;width:1.08%;height:6.48%"></div>
+        <div class="st-p" style="left:31.20%;top:58.60%;width:1.35%;height:9.04%"></div>
+        <div class="st-p kid" style="left:44.44%;top:61.51%;width:1.11%;height:6.16%"></div>
+        <div class="st-p kid" style="left:43.31%;top:61.69%;width:1.14%;height:6.26%"></div>
+        <div class="st-p kid" style="left:35.35%;top:61.34%;width:1.15%;height:6.81%"></div>
+        <div class="st-p kid" style="left:59.19%;top:61.85%;width:1.16%;height:6.37%"></div>
+        <div class="st-p" style="left:45.32%;top:59.30%;width:1.44%;height:9.13%"></div>
+        <div class="st-p" style="left:31.02%;top:59.21%;width:1.45%;height:9.31%"></div>
+        <div class="st-p kid" style="left:28.75%;top:61.74%;width:1.20%;height:6.90%"></div>
+        <div class="st-p" style="left:30.65%;top:58.31%;width:1.47%;height:10.36%"></div>
+        <div class="st-p" style="left:27.26%;top:59.23%;width:1.56%;height:10.23%"></div>
+        <div class="st-p" style="left:60.27%;top:58.53%;width:1.60%;height:11.35%"></div>
+        <div class="st-p" style="left:35.33%;top:58.42%;width:1.62%;height:11.61%"></div>
+        <div class="st-p kid" style="left:60.14%;top:62.93%;width:1.37%;height:7.50%"></div>
+        <div class="st-p" style="left:34.76%;top:58.71%;width:1.67%;height:11.74%"></div>
+        <div class="st-p" style="left:60.41%;top:59.33%;width:1.69%;height:11.30%"></div>
+        <div class="st-p kid" style="left:61.47%;top:63.77%;width:1.45%;height:7.55%"></div>
+        <div class="st-p" style="left:25.20%;top:58.91%;width:1.78%;height:12.54%"></div>
+        <div class="st-p" style="left:45.30%;top:60.62%;width:1.89%;height:11.74%"></div>
+        <div class="st-lamp" style="left:59.51%;top:37.43%;width:0.46%;height:35.13%"></div>
+        <div class="st-p lad" style="left:58.23%;top:47.72%;width:1.91%;height:10.33%"></div>
+        <div class="st-p kid" style="left:62.74%;top:63.62%;width:1.61%;height:9.42%"></div>
+        <div class="st-p" style="left:33.32%;top:59.49%;width:2.02%;height:14.03%"></div>
+        <div class="st-p kid" style="left:20.51%;top:63.96%;width:1.70%;height:10.05%"></div>
+        <div class="st-p" style="left:60.50%;top:60.47%;width:2.08%;height:13.56%"></div>
+        <div class="st-p" style="left:61.47%;top:60.02%;width:2.11%;height:14.30%"></div>
+        <div class="st-p" style="left:16.88%;top:60.22%;width:2.29%;height:15.65%"></div>
+        <div class="st-p" style="left:19.35%;top:59.58%;width:2.32%;height:16.57%"></div>
+        <div class="st-p" style="left:64.98%;top:60.93%;width:2.34%;height:15.43%"></div>
+        <div class="st-p kid" style="left:31.95%;top:65.39%;width:1.98%;height:11.64%"></div>
+        <div class="st-p" style="left:56.62%;top:60.02%;width:2.44%;height:17.25%"></div>
+        <div class="st-p" style="left:16.16%;top:62.16%;width:2.59%;height:16.38%"></div>
+        <div class="st-p" style="left:24.11%;top:60.64%;width:2.67%;height:18.59%"></div>
+        <div class="st-p" style="left:37.59%;top:60.54%;width:2.88%;height:20.54%"></div>
+        <div class="st-p kid" style="left:4.18%;top:69.16%;width:2.56%;height:14.12%"></div>
+        <div class="st-p" style="left:14.51%;top:61.13%;width:3.25%;height:23.22%"></div>
+        <div class="st-p" style="left:70.27%;top:62.44%;width:3.32%;height:22.51%"></div>
+        <div class="st-p" style="left:68.06%;top:61.33%;width:3.40%;height:24.36%"></div>
+        <div class="st-lamp" style="left:6.53%;top:22.16%;width:0.84%;height:64.40%"></div>
+        <div class="st-p kid" style="left:52.98%;top:72.73%;width:3.24%;height:17.82%"></div>
+        <div class="st-p kid" style="left:-5.02%;top:72.58%;width:3.43%;height:20.00%"></div>
+        <div class="st-p kid" style="left:37.77%;top:71.85%;width:3.43%;height:20.73%"></div>
+        <div class="st-p kid" style="left:-8.39%;top:74.70%;width:3.43%;height:17.89%"></div>
+        <div class="st-p" style="left:51.85%;top:63.97%;width:4.43%;height:30.80%"></div>
+        <div class="st-p kid" style="left:6.77%;top:72.41%;width:3.67%;height:22.77%"></div>
+        <div class="st-p" style="left:70.45%;top:67.58%;width:4.75%;height:29.96%"></div>
+        <div class="st-p" style="left:36.24%;top:68.67%;width:5.65%;height:36.85%"></div>
+        <i class="ember" style="left:48.4%;top:22.0%;animation-delay:-5.8s;animation-duration:4.4s;--dx:6px"></i>
+        <i class="ember" style="left:47.5%;top:22.0%;animation-delay:-1.5s;animation-duration:7.0s;--dx:-8px"></i>
+        <i class="ember" style="left:50.9%;top:22.0%;animation-delay:-2.8s;animation-duration:5.4s;--dx:-0px"></i>
+        <i class="ember" style="left:48.2%;top:22.0%;animation-delay:-5.0s;animation-duration:4.3s;--dx:-7px"></i>
+        <i class="ember" style="left:47.1%;top:22.0%;animation-delay:-1.6s;animation-duration:5.2s;--dx:11px"></i>
+        <i class="ember" style="left:49.3%;top:22.0%;animation-delay:-0.7s;animation-duration:4.8s;--dx:14px"></i>
+        <i class="ember" style="left:47.4%;top:22.0%;animation-delay:-3.7s;animation-duration:5.1s;--dx:5px"></i>
+        <i class="ember" style="left:49.0%;top:22.0%;animation-delay:-4.1s;animation-duration:5.5s;--dx:4px"></i>
+        <i class="ember" style="left:52.4%;top:22.0%;animation-delay:-3.5s;animation-duration:4.4s;--dx:-12px"></i>
+        <i class="ember" style="left:52.7%;top:22.0%;animation-delay:-2.9s;animation-duration:4.6s;--dx:12px"></i>
+        <i class="ember" style="left:50.5%;top:22.0%;animation-delay:-4.4s;animation-duration:6.6s;--dx:-6px"></i>
+        <i class="ember" style="left:49.1%;top:22.0%;animation-delay:-5.3s;animation-duration:4.4s;--dx:7px"></i>
+        <i class="ember" style="left:47.6%;top:22.0%;animation-delay:-4.1s;animation-duration:6.1s;--dx:13px"></i>
+        <i class="ember" style="left:52.1%;top:22.0%;animation-delay:-3.0s;animation-duration:4.6s;--dx:-10px"></i>
+        <div class="fr-cup">
+          <i class="steam s1"></i><i class="steam s2"></i>
+          <i class="handle"></i><i class="body"></i><i class="tea"></i>
+        </div>
+        <div class="fr-step"></div>
+        <div class="label">like the sea in a shell</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
