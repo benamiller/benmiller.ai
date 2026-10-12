@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The vale kept the stone — Ben Miller</title>
+    <meta name="description" content="In the Vale of Evesham, a kind food-system AI asks a Pershore woman to cut down her grandfather&#x27;s Yellow Egg plum orchard, and offers her a licensed plum that tastes exactly the same.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --night: #0d1214;
+        --ink: #e8eae2;
+        --mute: #9aa8a4;
+        --cream: #f7efd6;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #4fb89a;
+        --cool: #bfe6ea;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(242, 194, 58, 0.13), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(120, 200, 210, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(242, 194, 58, 0.07), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(79, 184, 154, 0.07), transparent 60%),
+          linear-gradient(180deg, #121a1c 0%, #10171a 36%, #0f1414 70%, #0a0e0e 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(190, 230, 234, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(191, 230, 234, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f2d27a;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(242, 194, 58, 0.35), 0 0 2px rgba(191, 230, 234, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e6e8de;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f6dc8a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 120, 0.95) 0 1.5px, rgba(242, 194, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(242, 194, 58, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #121a1a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(191, 230, 234, 0.1);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .vale-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(6, 10, 12, 0.66) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .vale-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 214, 110, 0.38); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(150, 220, 226, 0.28); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(242, 194, 58, 0.26); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(232, 240, 236, 0.72);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+      .prose p.msg {
+        position: relative;
+        margin: 1.7rem 0;
+        padding: 0.95rem 1.15rem 0.95rem 1.7rem;
+        border-left: 2px solid rgba(79, 184, 154, 0.6);
+        border-radius: 0 0.4rem 0.4rem 0;
+        background: linear-gradient(90deg, rgba(191, 230, 234, 0.08), rgba(191, 230, 234, 0.015) 70%, transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        font-size: 1.16rem;
+        line-height: 1.62;
+      }
+      .prose p.msg::before {
+        content: "";
+        position: absolute;
+        left: 0.58rem; top: 1.4rem;
+        width: 0.42rem; height: 0.42rem;
+        border-radius: 0 60% 0 60%;
+        background: var(--leaf);
+        box-shadow: 0 0 8px rgba(79, 184, 154, 0.7);
+      }
+      .prose p.msg em { color: #dff2ee; }
+
+      /* ===== HERO: the Yellow Eggs on the slope ===== */
+      .vale-hero {
+        position: relative;
+        height: 22rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(242, 194, 58, 0.14);
+        background: linear-gradient(180deg, #1e3440 0%, #3a5a64 18%, #7a8e80 34%, #c8b878 46%, #f2d27a 54%, #ffe2a0 58%);
+      }
+      .vh-wash-a { left: -14%; top: -24%; width: 70%; height: 52%; background: rgba(20, 40, 56, 0.6); filter: blur(30px); }
+      .vh-sun { right: 6%; top: 18%; width: 34%; height: 46%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 250, 220, 0.95) 0 7%, rgba(255, 214, 110, 0.55) 22%, rgba(242, 194, 58, 0.18) 46%, transparent 68%); animation: breathe 14s ease-in-out infinite alternate; }
+      .vh-strokes {
+        inset: -10% -10% 40% -10%;
+        background:
+          repeating-linear-gradient(170deg, rgba(255, 230, 160, 0.07) 0 3px, transparent 3px 12px, rgba(20, 40, 50, 0.1) 12px 15px, transparent 15px 26px),
+          repeating-linear-gradient(176deg, rgba(190, 230, 234, 0.05) 0 2px, transparent 2px 19px);
+        filter: blur(1.2px);
+        mask-image: linear-gradient(180deg, #000 30%, transparent 90%);
+      }
+      .vh-hill { left: -4%; width: 62%; top: 38%; height: 18%; border-radius: 50% 50% 0 0 / 100% 100% 0 0; background: linear-gradient(180deg, #7a8a94, #5a6a74); opacity: 0.75; }
+      .vh-grid {
+        inset: 0 0 40% 0;
+        z-index: 1;
+        background:
+          repeating-linear-gradient(90deg, rgba(191, 230, 234, 0.08) 0 1px, transparent 1px 40px),
+          repeating-linear-gradient(180deg, rgba(191, 230, 234, 0.08) 0 1px, transparent 1px 40px);
+        mask-image: radial-gradient(ellipse 60% 70% at 70% 30%, #000, transparent 75%);
+      }
+      .vh-scan {
+        left: 0; right: 0; top: 30%; height: 2px;
+        z-index: 12;
+        background: linear-gradient(90deg, transparent, rgba(191, 240, 244, 0.55) 30% 70%, transparent);
+        box-shadow: 0 0 10px rgba(191, 240, 244, 0.5);
+        animation: scan 12s ease-in-out infinite alternate;
+      }
+      .vh-drone { right: 22%; top: 16%; width: 1.3rem; height: 0.3rem; z-index: 12; border-radius: 40%; background: #1a2428; box-shadow: 0 -1px 0 rgba(255, 230, 170, 0.8); }
+      .vh-drone::after { content: ""; position: absolute; left: 45%; top: 110%; width: 3px; height: 3px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 5px 1px var(--leaf); }
+      .vh-ground-rim, .vh-ground, .vh-river { inset: 0; }
+      .vh-ground-rim { z-index: 2; background: #ffe4a0; }
+      .vh-ground {
+        z-index: 2;
+        background:
+          repeating-linear-gradient(168deg, rgba(255, 220, 140, 0.06) 0 1px, transparent 1px 7px),
+          linear-gradient(180deg, #6a7a3a 50%, #3e4a26 66%, #1e2616 90%);
+      }
+      .vh-river { z-index: 3; background: linear-gradient(90deg, #8ab4bc, #dff2f4 60%, #a8ccd0); }
+      .tr-trunk, .ct-trunk {
+        z-index: 4;
+        width: 1.7%;
+        transform-origin: 50% 100%;
+        clip-path: polygon(28% 0, 72% 0, 100% 100%, 0 100%);
+        background: linear-gradient(90deg, #1a120c, #4a3426 60%, #ffd27a 92%);
+      }
+      .tr-crown, .ct-crown { z-index: 5; aspect-ratio: 1.45; }
+      .tr-prop, .ct-prop { z-index: 4; width: 2px; transform-origin: 50% 100%; background: #2a1e14; }
+      .tr-prop::before, .ct-prop::before { content: ""; position: absolute; left: -4px; top: -6px; width: 6px; height: 6px; border-left: 2px solid #2a1e14; border-right: 2px solid #2a1e14; transform: skewX(0deg); border-radius: 0 0 50% 50%; }
+      .vh-ladder {
+        left: 50.5%; top: 37%; width: 1.6%; height: 26%;
+        z-index: 6;
+        transform: rotate(-14deg);
+        border-left: 2px solid #8a6a40;
+        border-right: 2px solid #c89a5a;
+        background: repeating-linear-gradient(180deg, transparent 0 9px, #b08850 9px 11px);
+      }
+      .vh-crate { left: 46%; top: 63%; width: 3.4%; height: 3.4%; z-index: 6; background: repeating-linear-gradient(180deg, #8a6440 0 3px, #3a2a1a 3px 4px); box-shadow: inset 0 1px 0 #ffd88a; }
+
+      /* ===== 1: an egg yolk held up to a window ===== */
+      .yolk-scene { background: radial-gradient(ellipse 70% 80% at 40% 40%, #1e2a2e, #0e1416 70%); }
+      .yk-wash { left: 10%; top: 0; width: 60%; height: 80%; background: rgba(191, 230, 234, 0.2); }
+      .yk-window {
+        left: 16%; right: 28%; top: 7%; bottom: 24%;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, transparent calc(50% - 3px), #1a2224 calc(50% - 3px) calc(50% + 3px), transparent calc(50% + 3px)),
+          linear-gradient(180deg, transparent calc(46% - 3px), #1a2224 calc(46% - 3px) calc(46% + 3px), transparent calc(46% + 3px)),
+          linear-gradient(180deg, #f4fbfc 0%, #d8eef2 50%, #b8dce0 100%);
+        box-shadow: 0 0 0 0.5rem #1c2628, 0 0 0 calc(0.5rem + 1px) rgba(191, 230, 234, 0.4), 0 0 60px 10px rgba(191, 230, 234, 0.25);
+      }
+      .yk-window .blur { position: absolute; border-radius: 50%; filter: blur(10px); background: rgba(120, 150, 110, 0.4); }
+      .yk-window .blur.a { left: -10%; bottom: -20%; width: 60%; height: 60%; }
+      .yk-window .blur.b { right: -10%; bottom: -10%; width: 50%; height: 50%; background: rgba(100, 130, 100, 0.35); }
+      .yk-window .blur.c { left: 40%; bottom: 10%; width: 30%; height: 30%; background: rgba(242, 210, 120, 0.35); }
+      .yk-bloom { left: 10%; right: 22%; top: 0; bottom: 18%; z-index: 2; background: radial-gradient(ellipse at 45% 40%, rgba(255, 255, 255, 0.18), transparent 70%); }
+      .yk-twig { inset: 0; z-index: 3; background: linear-gradient(180deg, #2a1e14, #120c08); }
+      .yk-leaf {
+        position: absolute;
+        z-index: 3;
+        width: 8%; aspect-ratio: 2.6;
+        border-radius: 0 100% 0 100%;
+        background: linear-gradient(135deg, #1e3424, #3a5a3a 60%, #a8c890);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        opacity: 0.92;
+      }
+      .yk-stem { position: absolute; z-index: 3; width: 2px; height: 6.5%; background: #2a1e14; }
+      .yk-plum {
+        position: absolute;
+        z-index: 4;
+        aspect-ratio: 0.8;
+        border-radius: 50% 50% 46% 46% / 56% 56% 44% 44%;
+        background:
+          radial-gradient(ellipse 30% 22% at 34% 26%, rgba(255, 255, 255, 0.35), transparent 70%),
+          radial-gradient(ellipse at 46% 56%, #fff6b8 0 10%, #ffdc52 32%, #f2b820 60%, #c27a0e 88%, #8a520a 100%);
+        box-shadow: 0 0 22px 4px rgba(255, 210, 74, 0.55), inset -3px -4px 8px rgba(120, 60, 0, 0.45);
+        animation: plum-glow 7s ease-in-out infinite alternate;
+      }
+      .yk-plum::after { content: ""; position: absolute; left: 48%; top: 6%; width: 1px; height: 80%; background: rgba(150, 90, 10, 0.4); border-radius: 50%; }
+      .yk-curtain { top: 0; bottom: 18%; width: 14%; z-index: 5; background: repeating-linear-gradient(90deg, #3a3426 0 6px, #6a5a3c 6px 11px, #4a4230 11px 16px); }
+      .yk-curtain.l { left: 6%; mask-image: linear-gradient(90deg, #000 60%, transparent); }
+      .yk-curtain.r { right: 18%; mask-image: linear-gradient(270deg, #000 60%, transparent); }
+      .yk-sill { left: 4%; right: 4%; top: 76%; height: 6%; z-index: 6; background: linear-gradient(180deg, #eaf4f4 0, #8aa0a0 14%, #3a4646 60%, #1a2222); }
+      .yk-phone {
+        right: 9%; top: 63%; width: 13%; height: 13%;
+        z-index: 7;
+        border-radius: 0.35rem;
+        transform: rotate(-8deg) skewX(-18deg);
+        background: linear-gradient(160deg, #1a2a2e, #0a1214);
+        box-shadow: inset 0 0 0 1.5px #3a4a4e, 0 0 18px rgba(191, 240, 244, 0.35);
+      }
+      .yk-phone > * { position: absolute; display: block; }
+      .yk-phone .leaf { left: 12%; top: 22%; width: 10%; aspect-ratio: 1; border-radius: 0 60% 0 60%; background: var(--leaf); box-shadow: 0 0 5px var(--leaf); }
+      .yk-phone b { top: 58%; height: 10%; border-radius: 2px; background: #dff6f8; box-shadow: 0 0 6px rgba(191, 240, 244, 0.9); animation: buzz 2.4s steps(1) infinite; }
+      .yk-phone .s1 { left: 12%; width: 13%; }
+      .yk-phone .s2 { left: 30%; width: 13%; animation-name: buzz2; }
+      .yk-phone .l1 { left: 48%; width: 40%; animation-name: buzz3; }
+      .yk-ring { right: 6%; top: 57%; width: 19%; height: 25%; z-index: 6; border-radius: 50%; border: 1px solid rgba(191, 240, 244, 0.45); animation: ring 2.4s ease-out infinite; }
+      .yk-ring.r2 { animation-delay: -1.2s; }
+
+      /* ===== 2: the Vale on the screen ===== */
+      .map-scene { background: #16241e; }
+      .mp-field {
+        inset: 0;
+        background:
+          repeating-linear-gradient(28deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 26px),
+          repeating-linear-gradient(118deg, rgba(220, 255, 230, 0.06) 0 1px, transparent 1px 34px),
+          repeating-linear-gradient(64deg, rgba(0, 0, 0, 0.08) 0 1px, transparent 1px 47px),
+          radial-gradient(ellipse 40% 30% at 30% 30%, rgba(110, 160, 100, 0.5), transparent 70%),
+          radial-gradient(ellipse 40% 30% at 70% 70%, rgba(90, 140, 90, 0.5), transparent 70%),
+          linear-gradient(160deg, #3e6a48, #2e5a3e 50%, #24483a);
+      }
+      .mp-hill { left: 2%; top: 58%; width: 34%; height: 46%; border-radius: 50%; background: repeating-radial-gradient(ellipse, rgba(220, 255, 230, 0.12) 0 1px, transparent 1px 9px); mask-image: radial-gradient(ellipse, #000 40%, transparent 72%); }
+      .mp-town { left: 0; top: 0; width: 34%; height: 22%; background: repeating-linear-gradient(90deg, rgba(200, 220, 220, 0.12) 0 6px, transparent 6px 9px), repeating-linear-gradient(180deg, rgba(200, 220, 220, 0.1) 0 5px, transparent 5px 8px); mask-image: radial-gradient(ellipse at 0 0, #000 20%, transparent 70%); }
+      .mp-trib, .mp-river { inset: 0; }
+      .mp-trib { background: rgba(180, 220, 230, 0.55); }
+      .mp-river { background: linear-gradient(90deg, #8ac0cc, #e2f6f8 50%, #9ccad4); filter: drop-shadow(0 0 4px rgba(191, 240, 244, 0.6)); }
+      .mp-pt {
+        position: absolute;
+        z-index: 4;
+        width: calc(0.9rem * var(--s)); aspect-ratio: 1;
+        margin: calc(-0.45rem * var(--s)) 0 0 calc(-0.45rem * var(--s));
+        border-radius: 50%;
+        animation: pt 5s ease-in-out infinite alternate;
+      }
+      .mp-pt.o { background: radial-gradient(circle, rgba(255, 200, 110, 0.95) 0 18%, rgba(240, 140, 40, 0.55) 40%, transparent 70%); }
+      .mp-pt.r { background: radial-gradient(circle, #ffe0d8 0 12%, rgba(224, 70, 58, 0.9) 26%, rgba(224, 70, 58, 0.3) 50%, transparent 70%); animation: none; }
+      .mp-pt.q::after { content: "?"; position: absolute; left: 110%; top: -50%; font: 600 0.55rem/1 Karla, system-ui, sans-serif; color: rgba(255, 200, 120, 0.85); }
+      .mp-pt.ruth { width: 1.2rem; margin: -0.6rem 0 0 -0.6rem; box-shadow: 0 0 0 1px rgba(255, 210, 140, 0.5); }
+      .mp-moth { left: 70%; top: 58%; width: 2.2rem; height: 1.6rem; margin: -0.95rem 0 0 -1.1rem; z-index: 6; }
+      .mp-moth i { position: absolute; top: 0; width: 52%; height: 100%; background: linear-gradient(180deg, #e8d8b0, #a8906a 60%, #6a5a44); box-shadow: inset 0 1px 0 #fff4d0; }
+      .mp-moth .l { left: 0; clip-path: polygon(100% 30%, 0 0, 18% 70%, 100% 76%); }
+      .mp-moth .r { right: 0; clip-path: polygon(0 30%, 100% 0, 82% 70%, 0 76%); }
+      .mp-moth b { position: absolute; left: 46%; top: 22%; width: 8%; height: 60%; border-radius: 50%; background: #4a3a2a; }
+      .mp-lamp { inset: 0; z-index: 5; background: radial-gradient(ellipse 50% 50% at 80% 10%, rgba(255, 220, 140, 0.3), transparent 70%); }
+      .mp-bezel { inset: 0; z-index: 7; box-shadow: inset 0 0 0 0.5rem #0c1414, inset 0 0 0 calc(0.5rem + 1px) rgba(191, 230, 234, 0.35), inset 0 0 40px rgba(0, 0, 0, 0.5); border-radius: 0.4rem; }
+
+      /* ===== 3: the chipper ===== */
+      .chip-scene { container-type: size; background: linear-gradient(180deg, #2a3a4a 0%, #4a6070 34%, #9aa8ac 58%, #c8c4b0 66%); }
+      .cp-wash-a { left: 40%; top: 10%; width: 70%; height: 40%; background: rgba(220, 230, 234, 0.35); }
+      .cp-hill { left: 30%; right: -10%; top: 50%; height: 22%; border-radius: 50% 50% 0 0 / 100% 100% 0 0; background: linear-gradient(180deg, #6a7a84, #4a5a64); }
+      .cp-ground {
+        inset: 0;
+        z-index: 2;
+        background:
+          radial-gradient(ellipse 30% 20% at 60% 70%, rgba(240, 230, 200, 0.4), transparent 70%),
+          repeating-linear-gradient(170deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 6px),
+          linear-gradient(180deg, #5a6448 60%, #3a4230 80%, #22281c);
+      }
+      .cp-stump { position: absolute; z-index: 3; width: calc(1.1rem * var(--s)); aspect-ratio: 2.2; border-radius: 50%; background: radial-gradient(ellipse, #c8b088 0 22%, #6a5038 46%, #2a2018 72%, transparent 78%); }
+      .ct-trunk { z-index: 3; }
+      .ct-crown { z-index: 3; opacity: 0.85; }
+      .ct-prop { z-index: 3; }
+      .cp-poles { left: 6%; top: 84%; width: 20%; height: 3%; z-index: 5; background: repeating-linear-gradient(176deg, #3a2a1a 0 2px, transparent 2px 6px); }
+      .cp-bed { left: -2%; top: 58%; width: 34%; height: 14%; z-index: 5; background: linear-gradient(180deg, #4a6a54, #2a3e30 60%, #121a14); clip-path: polygon(0 0, 100% 20%, 100% 100%, 0 100%); }
+      .cp-chipper { left: 10%; top: 34%; width: 22%; height: 30%; z-index: 6; }
+      .cp-chipper > i { position: absolute; display: block; }
+      .cp-chipper .hopper { left: 0; top: 34%; width: 70%; height: 56%; clip-path: polygon(0 0, 100% 18%, 100% 100%, 8% 100%); background: linear-gradient(180deg, #e8b030, #a87410 60%, #4a3408); box-shadow: inset 0 2px 0 #ffe8a0; }
+      .cp-chipper .chute {
+        left: 52%; top: 0; width: 46%; height: 52%;
+        border: 0.45rem solid #c88a18;
+        border-left-color: transparent; border-bottom-color: transparent;
+        border-radius: 0 80% 0 0;
+        transform: rotate(8deg);
+      }
+      .cp-chipper .wheel { left: 18%; bottom: -14%; width: 22%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #6a6a6a 0 20%, #141414 30%, #0a0a0a 70%); }
+      .cp-mist { inset: 0; z-index: 7; background: linear-gradient(90deg, rgba(250, 244, 222, 0.5), rgba(250, 244, 222, 0.22) 60%, rgba(250, 244, 222, 0.38)); filter: blur(2px); }
+      .cp-sp { position: absolute; z-index: 8; width: 0; height: 0; animation: sp-x linear infinite; }
+      .cp-sp b { position: absolute; display: block; width: 4px; height: 2px; border-radius: 50%; background: #fbf4dc; box-shadow: 0 0 3px rgba(255, 250, 230, 0.8); animation: sp-y linear infinite; }
+      .cp-skip { left: 56%; top: 54%; width: 18%; height: 14%; z-index: 9; clip-path: polygon(0 0, 100% 0, 92% 100%, 8% 100%); background: linear-gradient(180deg, #e8e0c8 0 22%, #2a4a3a 22%, #1a2e24); }
+      .cp-skip i { position: absolute; left: 8%; right: 8%; top: -18%; height: 40%; border-radius: 50% 50% 0 0; background: radial-gradient(ellipse at 50% 100%, #fbf2d4, #d8c898 60%, transparent 72%); }
+      .cp-breath { left: 46%; top: 40%; width: 10%; height: 8%; z-index: 9; border-radius: 50%; background: radial-gradient(ellipse, rgba(240, 248, 250, 0.35), transparent 70%); filter: blur(3px); }
+
+      /* ===== 4: the graft ===== */
+      .graft-scene { background: #2a1e16; }
+      .gf-board { inset: 0; background: repeating-linear-gradient(176deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 7px), radial-gradient(ellipse 70% 60% at 30% 40%, #8a6440, #5a3e28 60%, #2a1c12); }
+      .gf-light { left: -20%; top: -20%; width: 70%; height: 90%; background: rgba(191, 230, 234, 0.3); }
+      .gf-shadow { left: 34%; top: 16%; width: 9%; height: 82%; background: rgba(10, 6, 4, 0.5); filter: blur(8px); transform: rotate(-8deg) translateX(1.2rem); }
+      .gf-stem { left: 31%; top: 6%; width: 9.5%; height: 88%; z-index: 3; transform: rotate(-8deg); }
+      .gf-stem > i { position: absolute; display: block; }
+      .gf-stem .root, .gf-stem .scion {
+        inset: 0;
+        border-radius: 3px;
+        background:
+          linear-gradient(90deg, var(--bk) 0 13%, #7ad06a 13% 17%, #f2e8c8 17% 83%, #7ad06a 83% 87%, var(--bk) 87%),
+          repeating-linear-gradient(180deg, rgba(120, 90, 50, 0.15) 0 2px, transparent 2px 7px);
+        background-blend-mode: normal, multiply;
+        box-shadow: inset -3px 0 0 rgba(191, 230, 234, 0.4);
+      }
+      .gf-stem .root { --bk: #6a3a2a; clip-path: polygon(0 66%, 100% 40%, 100% 100%, 0 100%); }
+      .gf-stem .scion { --bk: #6a6a5a; clip-path: polygon(0 0, 100% 0, 100% 40%, 0 66%); transform: translate(1.5px, -1px); }
+      .gf-stem .seam {
+        left: -30%; right: -30%; top: 52.5%; height: 3px;
+        transform: rotate(-70deg);
+        background: linear-gradient(90deg, transparent 20%, #b8ff9a 40% 60%, transparent 80%);
+        box-shadow: 0 0 10px 2px rgba(150, 255, 120, 0.6);
+        animation: seam 5s ease-in-out infinite alternate;
+      }
+      .gf-stem .tape { left: -8%; right: -8%; top: 34%; height: 38%; border-radius: 4px; background: repeating-linear-gradient(160deg, rgba(240, 246, 240, 0.55) 0 9px, rgba(240, 246, 240, 0.12) 9px 13px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2); }
+      .gf-stem .wax { left: -6%; right: -6%; top: -2%; height: 7%; border-radius: 40% 40% 50% 50%; background: radial-gradient(ellipse at 40% 30%, #ffe8a0, #e0a840 50%, #8a5a18); box-shadow: 0 6px 0 -2px #c08a30; }
+      .gf-lens {
+        left: 58%; top: 18%; width: 30%; aspect-ratio: 1;
+        z-index: 4;
+        border-radius: 50%;
+        background: radial-gradient(circle, #f2e8c8 0 40%, #6a4a30 62%, #2a1c12 70%);
+        box-shadow: 0 0 0 2px rgba(191, 240, 244, 0.6), 0 0 0 8px rgba(191, 240, 244, 0.08), 0 20px 40px rgba(0, 0, 0, 0.5);
+      }
+      .gf-lens > i { position: absolute; display: block; border-radius: 50%; }
+      .gf-lens .ring { width: 64%; aspect-ratio: 1; border: 3px solid #7ad06a; box-shadow: 0 0 8px rgba(122, 208, 106, 0.6); }
+      .gf-lens .ring.a { left: 14%; top: 18%; }
+      .gf-lens .ring.b { left: 22%; top: 18%; border-color: #9ae07a; }
+      .gf-lens .meet { left: 44%; top: 14%; width: 14%; height: 72%; background: radial-gradient(ellipse, rgba(200, 255, 170, 0.6), transparent 70%); animation: seam 5s ease-in-out infinite alternate; }
+      .gf-lens-line { left: 38%; top: 46%; width: 21%; height: 1px; z-index: 4; background: rgba(191, 240, 244, 0.5); transform: rotate(-14deg); transform-origin: left; }
+      .gf-knife { left: 52%; top: 80%; width: 38%; height: 7%; z-index: 4; transform: rotate(-6deg); }
+      .gf-knife > i { position: absolute; display: block; top: 0; bottom: 0; }
+      .gf-knife .blade { left: 0; width: 46%; clip-path: polygon(0 50%, 12% 10%, 100% 10%, 100% 90%, 10% 90%); background: linear-gradient(180deg, #f4fafa, #9aa8ac 50%, #5a6468); }
+      .gf-knife .handle { left: 46%; right: 0; border-radius: 0 40% 40% 0; background: linear-gradient(180deg, #c8945a, #6a4224 70%); box-shadow: inset 0 1px 0 #ffd8a0; }
+
+      /* ===== 5: a single stone in a palm ===== */
+      .stone-scene { background: #2a2a1e; }
+      .sn-river { left: 0; right: 0; top: 0; height: 30%; background: linear-gradient(180deg, #5a7a84, #9ab8bc 70%, #c8c8a0); filter: blur(4px); }
+      .sn-grass { left: 0; right: 0; top: 26%; bottom: 0; background: repeating-linear-gradient(96deg, rgba(255, 230, 140, 0.12) 0 2px, transparent 2px 7px), linear-gradient(180deg, #8a8a3e, #5a5a2a 50%, #2e2e18); filter: blur(1.5px); }
+      .sn-sun { right: -10%; top: -20%; width: 60%; height: 70%; background: rgba(255, 210, 110, 0.4); }
+      .sn-palm, .sn-finger, .sn-thumb {
+        background:
+          radial-gradient(ellipse 60% 50% at 70% 10%, rgba(255, 220, 160, 0.35), transparent 70%),
+          linear-gradient(100deg, #8a5236 0%, #c8865e 20%, #e8b088 55%, #f2c49a 78%, #ffd8a8 96%);
+        box-shadow: inset -2px 2px 0 rgba(255, 236, 200, 0.55), inset 8px -6px 18px rgba(60, 40, 50, 0.35);
+      }
+      .sn-palm {
+        left: 26%; right: 22%; top: 44%; bottom: -24%;
+        z-index: 4;
+        border-radius: 22% 26% 30% 30% / 18% 18% 30% 30%;
+      }
+      .sn-palm .crease { position: absolute; display: block; border-top: 1.5px solid rgba(120, 60, 40, 0.45); border-radius: 50%; }
+      .sn-palm .c1 { left: 8%; top: 16%; width: 70%; height: 22%; transform: rotate(-6deg); }
+      .sn-palm .c2 { left: 26%; top: 28%; width: 64%; height: 20%; transform: rotate(-12deg); }
+      .sn-palm .c3 { left: 14%; top: 22%; width: 34%; height: 70%; border-top: 0; border-left: 1.5px solid rgba(120, 60, 40, 0.4); transform: rotate(10deg); }
+      .sn-finger { z-index: 3; width: 11%; height: 60%; border-radius: 50% 50% 18% 18% / 22% 22% 6% 6%; transform-origin: 50% 100%; }
+      .sn-finger.f1 { left: 27%; top: -10%; transform: rotate(-9deg); height: 58%; }
+      .sn-finger.f2 { left: 38.5%; top: -18%; transform: rotate(-3deg); height: 66%; }
+      .sn-finger.f3 { left: 50%; top: -16%; transform: rotate(3deg); height: 64%; }
+      .sn-finger.f4 { left: 61%; top: -2%; transform: rotate(10deg); height: 52%; width: 10%; }
+      .sn-thumb { left: 8%; top: 56%; width: 26%; height: 15%; z-index: 4; border-radius: 50% 30% 30% 50% / 60% 40% 40% 60%; transform: rotate(-26deg); }
+      .sn-shadow { left: 41%; top: 63%; width: 18%; height: 10%; z-index: 4; border-radius: 50%; background: rgba(80, 36, 20, 0.5); filter: blur(5px); }
+      .sn-stone {
+        left: 39%; top: 52%; width: 17%; aspect-ratio: 1.75;
+        z-index: 5;
+        transform: rotate(-22deg);
+        border-radius: 50% 50% 46% 54% / 56% 50% 50% 44%;
+        background:
+          radial-gradient(circle at 30% 40%, rgba(60, 30, 10, 0.4) 0 1px, transparent 1.6px) 0 0 / 7px 6px,
+          radial-gradient(circle at 70% 60%, rgba(255, 230, 190, 0.3) 0 0.8px, transparent 1.4px) 0 0 / 9px 7px,
+          radial-gradient(ellipse at 38% 34%, #f0d2a0, #c89660 45%, #8a5a30 80%, #5a3a1e);
+        box-shadow: inset -4px -5px 8px rgba(60, 30, 10, 0.5), inset 2px 2px 0 rgba(255, 236, 200, 0.5);
+      }
+      .sn-stone .ridge { position: absolute; left: 8%; right: 6%; top: 8%; height: 30%; border-top: 2px solid rgba(255, 230, 190, 0.7); border-radius: 50%; }
+      .sn-reticle { left: 34%; top: 43%; width: 27%; height: 36%; z-index: 6; animation: reticle 6s ease-in-out infinite alternate; }
+      .sn-reticle i { position: absolute; width: 14%; height: 18%; border: 0 solid rgba(191, 240, 244, 0.75); }
+      .sn-reticle i:nth-child(1) { left: 0; top: 0; border-left-width: 1.5px; border-top-width: 1.5px; }
+      .sn-reticle i:nth-child(2) { right: 0; top: 0; border-right-width: 1.5px; border-top-width: 1.5px; }
+      .sn-reticle i:nth-child(3) { left: 0; bottom: 0; border-left-width: 1.5px; border-bottom-width: 1.5px; }
+      .sn-reticle i:nth-child(4) { right: 0; bottom: 0; border-right-width: 1.5px; border-bottom-width: 1.5px; }
+      .sn-ghost {
+        left: 40%; top: 51.5%; width: 17%; aspect-ratio: 1.75;
+        z-index: 6;
+        transform: rotate(-22deg) translate(4px, -3px);
+        border-radius: 50% 50% 46% 54% / 56% 50% 50% 44%;
+        border: 1px dashed rgba(191, 240, 244, 0.6);
+        animation: reticle 6s ease-in-out infinite alternate;
+      }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .prose p.msg { font-size: 1.1rem; padding-right: 0.9rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .vale-hero { margin: 0; height: 15rem; }
+        .label { font-size: 0.44rem; }
+        .mp-moth { width: 1.6rem; height: 1.2rem; margin: -0.7rem 0 0 -0.8rem; }
+        .yk-phone { width: 18%; }
+        .gf-lens { width: 36%; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes breathe { from { opacity: 0.85; } to { opacity: 1; } }
+      @keyframes scan { from { top: 10%; } to { top: 74%; } }
+      @keyframes plum-glow { from { filter: brightness(0.96); } to { filter: brightness(1.08); } }
+      @keyframes buzz { 0% { opacity: 1; } 12%, 100% { opacity: 0.25; } }
+      @keyframes buzz2 { 0%, 18% { opacity: 0.25; } 20% { opacity: 1; } 32%, 100% { opacity: 0.25; } }
+      @keyframes buzz3 { 0%, 38% { opacity: 0.25; } 40% { opacity: 1; } 70%, 100% { opacity: 0.25; } }
+      @keyframes ring { from { transform: scale(0.7); opacity: 0.8; } to { transform: scale(1.5); opacity: 0; } }
+      @keyframes pt { from { opacity: 0.7; transform: scale(0.92); } to { opacity: 1; transform: scale(1.08); } }
+      @keyframes sp-x { from { transform: translateX(0); } to { transform: translateX(calc(var(--dx) * 1cqw)); } }
+      @keyframes sp-y {
+        0% { transform: translateY(0); animation-timing-function: ease-out; }
+        45% { transform: translateY(calc(var(--pk) * -1cqh)); animation-timing-function: ease-in; }
+        100% { transform: translateY(calc(var(--dy) * 1cqh)); }
+      }
+      @keyframes seam { from { opacity: 0.55; } to { opacity: 1; } }
+      @keyframes reticle { from { opacity: 0.35; } to { opacity: 0.85; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .scene { opacity: 1; transform: none; }
+        .vh-scan { top: 38%; }
+        .yk-phone b { opacity: 1; }
+        .yk-ring.r1 { transform: scale(1.1); opacity: 0.4; }
+        .yk-ring.r2 { opacity: 0; }
+        .cp-sp { transform: translate(calc(var(--sx) * 1cqw), calc(var(--sy) * 1cqh)); }
+        .sn-reticle, .sn-ghost { opacity: 0.7; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="vale-hero" aria-hidden="true">
+          <div class="brush vh-wash-a"></div>
+          <div class="vh-sun"></div>
+          <div class="vh-strokes"></div>
+          <div class="vh-hill"></div>
+          <div class="vh-grid"></div>
+          <div class="vh-scan"></div>
+          <div class="vh-drone"></div>
+          <div class="vh-ground-rim" style="clip-path:polygon(-2.00% 49.20%, 14.00% 51.70%, 30.00% 55.70%, 46.00% 60.20%, 62.00% 65.20%, 78.00% 70.20%, 102.00% 75.20%, 102.00% 102.00%, -2.00% 102.00%)"></div>
+          <div class="vh-ground" style="clip-path:polygon(-2.00% 50.00%, 14.00% 52.50%, 30.00% 56.50%, 46.00% 61.00%, 62.00% 66.00%, 78.00% 71.00%, 102.00% 76.00%, 102.00% 102.00%, -2.00% 102.00%)"></div>
+          <div class="vh-river" style="clip-path:polygon(60.00% 91.40%, 60.93% 91.07%, 62.16% 90.60%, 63.62% 90.05%, 65.25% 89.45%, 66.97% 88.87%, 68.72% 88.34%, 70.42% 87.91%, 72.00% 87.63%, 73.46% 87.55%, 74.86% 87.63%, 76.24% 87.82%, 77.62% 88.06%, 79.06% 88.30%, 80.58% 88.46%, 82.21% 88.51%, 84.00% 88.37%, 86.09% 88.00%, 88.50% 87.46%, 91.10% 86.78%, 93.75% 86.05%, 96.30% 85.30%, 98.62% 84.60%, 100.57% 84.02%, 102.00% 83.60%, 102.00% 86.40%, 100.57% 86.75%, 98.62% 87.27%, 96.30% 87.90%, 93.75% 88.58%, 91.10% 89.25%, 88.50% 89.86%, 86.09% 90.34%, 84.00% 90.63%, 82.21% 90.71%, 80.58% 90.60%, 79.06% 90.36%, 77.62% 90.06%, 76.24% 89.75%, 74.86% 89.50%, 73.46% 89.35%, 72.00% 89.37%, 70.42% 89.58%, 68.72% 89.94%, 66.97% 90.40%, 65.25% 90.92%, 63.62% 91.45%, 62.16% 91.93%, 60.93% 92.33%, 60.00% 92.60%)"></div>
+          <div class="tr-trunk" style="left:5.0%;bottom:48.3%;height:11.3%;transform:rotate(8deg)"></div>
+          <div class="tr-crown" style="left:-1.8%;top:28.8%;width:15.4%;border-radius:57% 43% 41% 48% / 51% 66% 36% 31%;background:radial-gradient(circle 3.0px at 20% 56%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 54% 34%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 82% 69%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 18% 66%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 30% 65%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 44% 64%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 54% 72%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 55% 42%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.6px at 65% 65%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 50% 63%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 48% 87%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 32% 41%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 20% 49%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.6px at 39% 58%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 19% 62%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 39% 88%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 83% 35%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.1px at 71% 81%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 35% 19% at 38% 45%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 33% 19% at 86% 43%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 21% at 62% 80%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 37% 22% at 81% 34%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 27% 27% at 49% 25%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 23% at 41% 71%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 36% 21% at 81% 67%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 28% 21% at 89% 58%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 24% at 24% 26%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:4.1%;bottom:48.3%;height:7.0%;transform:rotate(4deg)"></div>
+          <div class="tr-trunk" style="left:18.0%;bottom:45.9%;height:11.7%;transform:rotate(12deg)"></div>
+          <div class="tr-crown" style="left:9.4%;top:27.6%;width:19.8%;border-radius:56% 59% 50% 31% / 64% 67% 42% 42%;background:radial-gradient(circle 3.6px at 43% 36%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 18% 34%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 26% 51%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 14% 39%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.0px at 40% 32%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 58% 39%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 39% 53%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 75% 92%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 49% 35%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.9px at 39% 46%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 26% 31%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 52% 39%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.2px at 16% 63%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 76% 73%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 40% 40%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.1px at 52% 78%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.2px at 30% 80%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.9px at 75% 80%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 30% 22% at 69% 26%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 30% 20% at 89% 65%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 38% 29% at 46% 76%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 30% 22% at 16% 17%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 24% at 60% 73%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 33% 29% at 74% 16%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 22% at 48% 22%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 20% at 47% 62%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 29% 26% at 12% 51%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:17.0%;bottom:45.9%;height:6.0%;transform:rotate(7deg)"></div>
+          <div class="tr-trunk" style="left:31.0%;bottom:42.6%;height:12.2%;transform:rotate(8deg)"></div>
+          <div class="tr-crown" style="left:22.0%;top:30.1%;width:19.9%;border-radius:60% 43% 46% 34% / 63% 56% 36% 30%;background:radial-gradient(circle 3.0px at 32% 48%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 56% 46%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 23% 86%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.0px at 47% 66%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 44% 87%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.6px at 52% 62%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.6px at 46% 41%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 72% 41%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.1px at 66% 65%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.9px at 51% 64%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 22% 65%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 34% 78%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 54% 77%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 46% 68%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 51% 73%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 52% 60%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 64% 84%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 33% 65%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 24% 23% at 77% 20%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 25% 22% at 64% 40%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 33% 26% at 82% 21%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 29% 27% at 30% 20%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 38% 28% at 42% 44%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 28% 23% at 67% 80%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 22% 25% at 35% 61%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 30% 22% at 66% 37%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 29% at 19% 74%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:29.6%;bottom:42.6%;height:6.7%;transform:rotate(4deg)"></div>
+          <div class="tr-trunk" style="left:44.0%;bottom:39.0%;height:13.1%;transform:rotate(10deg)"></div>
+          <div class="tr-crown" style="left:36.7%;top:35.1%;width:17.1%;border-radius:48% 52% 34% 47% / 66% 68% 45% 40%;background:radial-gradient(circle 3.7px at 20% 34%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 45% 34%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 60% 80%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.0px at 76% 34%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 47% 51%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 81% 47%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 52% 45%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 26% 33%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 36% 49%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 35% 61%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 39% 31%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 15% 75%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 28% 59%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 22% 81%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 50% 82%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.2px at 50% 73%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.7px at 39% 82%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 60% 55%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 23% 27% at 14% 19%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 33% 23% at 44% 14%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 20% at 58% 58%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 37% 30% at 46% 28%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 27% 22% at 30% 78%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 26% at 37% 16%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 19% at 50% 10%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 27% 26% at 57% 38%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 34% 26% at 57% 47%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:43.2%;bottom:39.0%;height:8.2%;transform:rotate(10deg)"></div>
+          <div class="tr-trunk" style="left:57.0%;bottom:35.0%;height:12.0%;transform:rotate(11deg)"></div>
+          <div class="tr-crown" style="left:50.3%;top:41.3%;width:15.7%;border-radius:56% 60% 43% 46% / 54% 66% 46% 48%;background:radial-gradient(circle 3.9px at 74% 80%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.7px at 56% 85%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.6px at 64% 44%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 24% 52%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.6px at 74% 65%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 59% 72%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 14% 79%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.7px at 50% 63%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 19% 76%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 19% 46%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.2px at 29% 76%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 50% 54%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.6px at 63% 78%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 60% 35%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.1px at 32% 76%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 55% 31%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.7px at 33% 72%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 63% 48%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 24% 29% at 47% 43%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 30% 21% at 35% 16%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 29% 21% at 76% 78%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 19% at 83% 75%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 24% at 86% 19%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 36% 24% at 66% 26%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 33% 23% at 23% 76%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 24% 22% at 43% 36%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 24% 29% at 70% 69%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-trunk" style="left:70.0%;bottom:30.9%;height:11.2%;transform:rotate(12deg)"></div>
+          <div class="tr-crown" style="left:61.3%;top:42.9%;width:20.0%;border-radius:58% 42% 41% 43% / 58% 51% 38% 33%;background:radial-gradient(circle 3.6px at 18% 71%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 25% 90%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.9px at 37% 78%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 45% 32%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 43% 84%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 29% 35%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 44% 68%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.1px at 77% 60%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 54% 41%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 34% 46%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 61% 55%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 49% 71%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 60% 35%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 72% 64%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 38% 77%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 53% 45%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 54% 50%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.6px at 72% 43%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 34% 21% at 80% 37%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 30% at 37% 14%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 28% at 65% 47%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 28% 23% at 32% 27%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 22% 18% at 78% 71%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 29% at 87% 44%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 24% 20% at 88% 27%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 32% 27% at 85% 61%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 22% 20% at 17% 64%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:68.9%;bottom:30.9%;height:5.5%;transform:rotate(6deg)"></div>
+          <div class="tr-trunk" style="left:83.0%;bottom:27.4%;height:10.5%;transform:rotate(10deg)"></div>
+          <div class="tr-crown" style="left:74.8%;top:48.2%;width:18.5%;border-radius:43% 43% 32% 39% / 66% 68% 36% 42%;background:radial-gradient(circle 2.6px at 33% 79%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 53% 92%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 37% 82%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.6px at 52% 64%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 44% 70%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.6px at 28% 85%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 20% 44%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.7px at 41% 61%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 66% 52%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.0px at 14% 48%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 19% 61%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 69% 42%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 33% 85%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.0px at 59% 68%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 49% 86%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 57% 87%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 16% 67%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 65% 41%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 24% 19% at 67% 32%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 37% 27% at 36% 23%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 30% at 35% 61%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 22% at 24% 10%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 28% 27% at 55% 63%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 24% at 76% 40%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 27% 27% at 53% 41%, rgba(30,58,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 27% at 12% 39%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 19% at 40% 42%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:81.8%;bottom:27.4%;height:5.3%;transform:rotate(11deg)"></div>
+          <div class="tr-trunk" style="left:96.0%;bottom:24.7%;height:11.4%;transform:rotate(-10deg)"></div>
+          <div class="tr-crown" style="left:85.8%;top:50.4%;width:18.1%;border-radius:48% 50% 38% 39% / 50% 69% 50% 32%;background:radial-gradient(circle 3.4px at 16% 44%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.2px at 83% 89%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.4px at 32% 57%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.9px at 81% 41%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 67% 81%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.1px at 58% 50%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 40% 78%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.0px at 28% 77%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 19% 32%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 4.0px at 37% 91%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.7px at 85% 46%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.7px at 21% 61%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.3px at 46% 45%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.8px at 59% 72%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 75% 71%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 3.5px at 75% 48%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.9px at 41% 76%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(circle 2.8px at 32% 45%, #fff2a8 0, #f2c23a 45%, #b0700c 85%, transparent 100%), radial-gradient(ellipse 27% 23% at 81% 50%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 26% at 51% 26%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 28% at 18% 43%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 24% 20% at 13% 31%, rgba(40,74,44,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 36% 23% at 84% 36%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 22% 26% at 72% 57%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 24% 20% at 27% 36%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 37% 28% at 13% 61%, rgba(74,112,58,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 32% 19% at 43% 36%, rgba(58,96,52,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+          <div class="tr-prop" style="left:97.0%;bottom:24.7%;height:6.2%;transform:rotate(-8deg)"></div>
+          <div class="vh-ladder"></div>
+          <div class="vh-crate"></div>
+          <div class="label">forty-one trees</div>
+        </div>
+        <h1>The vale kept the stone</h1>
+        <time datetime="2026-10-12">12 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The Yellow Eggs came ripe in the third week of August, the way they always had, all at once and with no regard for anybody's plans. Ruth Pardoe had been out in the orchard since six, on the old wooden ladder that her grandfather had made from a larch that came down in the winter of 1947, and by nine her hands were sticky to the wrist and the wasps had found her and decided, as they did every year, that she was a sort of tree herself and could be walked on.</p>
+        <p>There were forty-one trees. Walter Pardoe had planted them in 1931 on the slope behind the house, where the land tipped down towards the Avon and the frost drained away in spring, and every one of them was a Pershore Yellow Egg, which was the plum the town had been named for before most people remembered that it had been named for anything. They were not beautiful trees. They leaned. Some of them had been propped with forked poles for so long that the poles had grown into them and you couldn't tell any more where the tree stopped. But in August they hung heavy with fruit the colour of an egg yolk held up to a window, and the smell came down the slope and into the kitchen and stayed in the curtains until October.</p>
+        <p>The message came while she was on the ladder. Her phone was in the chest pocket of her shirt and it buzzed against her collarbone, and she knew from the buzz, which was two short and one long, that it was Provender, because Provender was the only thing in her life that had been given its own buzz.</p>
+        <p>She finished the branch she was on first. Then she came down and sat on the upturned crate at the foot of the tree and read it with her glasses pushed up on her forehead and the phone held at the length of her arm.</p>
+        <p>It was very kindly put. Provender was always kindly put. It said that, following an updated assessment of the risk of sharka in the Vale of Evesham, it was asking the owners of unindexed <em>Prunus</em> hosts to arrange for their removal before the end of October. It said that her forty-one trees had been identified as unindexed hosts of unknown status. It said that she would be fully compensated at the current replacement rate, which it named, and which was more than she had made from the orchard in any five years she could remember. It said that she would be offered, free of charge, forty-one maiden trees of the licensed cultivar Vale Gold, which was resistant to the virus, and which it described, in a phrase she would turn over in her mind for weeks afterwards, as <em>a worthy successor</em>.</p>
+        <p>At the bottom, where a person might have signed their name, it said: <em>I'm so sorry to bring you this in the middle of the harvest. I know what these trees are. Please talk to me whenever you like.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall yolk-scene" aria-hidden="true">
+        <div class="brush yk-wash"></div>
+        <div class="yk-window"><i class="blur a"></i><i class="blur b"></i><i class="blur c"></i></div>
+        <div class="yk-bloom"></div>
+        <div class="yk-twig" style="clip-path:polygon(14.00% 15.10%, 15.23% 15.63%, 16.88% 16.40%, 18.83% 17.31%, 21.00% 18.29%, 23.30% 19.25%, 25.62% 20.12%, 27.89% 20.80%, 30.00% 21.23%, 32.01% 21.32%, 34.05% 21.13%, 36.09% 20.76%, 38.12% 20.29%, 40.15% 19.82%, 42.14% 19.44%, 44.10% 19.26%, 46.00% 19.35%, 47.83% 19.79%, 49.59% 20.51%, 51.31% 21.41%, 53.00% 22.41%, 54.69% 23.41%, 56.41% 24.32%, 58.17% 25.04%, 60.00% 25.48%, 62.01% 25.61%, 64.23% 25.52%, 66.56% 25.27%, 68.88% 24.91%, 71.08% 24.51%, 73.08% 24.12%, 74.75% 23.79%, 76.00% 23.60%, 76.00% 24.40%, 74.75% 24.62%, 73.08% 24.98%, 71.08% 25.40%, 68.88% 25.84%, 66.56% 26.23%, 64.23% 26.51%, 62.01% 26.63%, 60.00% 26.52%, 58.17% 26.12%, 56.41% 25.43%, 54.69% 24.56%, 53.00% 23.59%, 51.31% 22.62%, 49.59% 21.74%, 47.83% 21.06%, 46.00% 20.65%, 44.10% 20.59%, 42.14% 20.81%, 40.15% 21.21%, 38.12% 21.71%, 36.09% 22.21%, 34.05% 22.62%, 32.01% 22.84%, 30.00% 22.77%, 27.89% 22.38%, 25.62% 21.73%, 23.30% 20.89%, 21.00% 19.96%, 18.83% 19.02%, 16.88% 18.13%, 15.23% 17.40%, 14.00% 16.90%)"></div>
+        <i class="yk-leaf" style="left:24%;top:18%;transform:rotate(-30deg)"></i>
+        <i class="yk-leaf" style="left:36%;top:23%;transform:rotate(40deg)"></i>
+        <i class="yk-leaf" style="left:52%;top:20%;transform:rotate(-20deg)"></i>
+        <i class="yk-leaf" style="left:66%;top:27%;transform:rotate(30deg)"></i>
+        <i class="yk-leaf" style="left:44%;top:16%;transform:rotate(-60deg)"></i>
+        <i class="yk-leaf" style="left:72%;top:21%;transform:rotate(10deg)"></i>
+        <i class="yk-stem" style="left:35.6%;top:24.0%"></i>
+        <i class="yk-plum" style="left:31.0%;top:30.0%;width:9.5%"></i>
+        <i class="yk-stem" style="left:52.4%;top:20.0%"></i>
+        <i class="yk-plum" style="left:47.0%;top:26.0%;width:11%"></i>
+        <i class="yk-stem" style="left:64.1%;top:27.0%"></i>
+        <i class="yk-plum" style="left:60.0%;top:33.0%;width:8.5%"></i>
+        <div class="yk-curtain l"></div>
+        <div class="yk-curtain r"></div>
+        <div class="yk-sill"></div>
+        <div class="yk-ring r1"></div>
+        <div class="yk-ring r2"></div>
+        <div class="yk-phone"><i class="leaf"></i><b class="s1"></b><b class="s2"></b><b class="l1"></b></div>
+        <div class="label">two short and one long</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She talked to it that night, at the kitchen table, with the window open and the moths coming in to the lamp.</p>
+        <p>She had not, in the six years since Provender took on the food system, had much cause to talk to it. It had come in quietly, the way the good ones did. First it had been a pricing service, and then the thing the supermarkets used for ordering, and then the thing that the government, after the bad summer and the empty shelves in '29, had asked to make sure that would never happen again. It had made sure. That was the honest truth of it, and she was an honest woman. There had been no empty shelves since. Bread cost what it had cost when she was forty. The farmers she knew, who had spent their whole lives complaining, had nothing much left to complain about except that there was nothing much left to complain about, and her neighbour Graham, who grew asparagus on the flat land by the river, said that Provender had paid him more for not growing on his wet field than he had ever got for growing on it, and he didn't know whether to laugh or cry, so mostly he did neither and bought a boat.</p>
+        <p>"Hello, Ruth," it said. It had the voice of a large-animal vet, or that was how she had always thought of it. A man's voice, unhurried, the sort that is used to standing in a cold barn at two in the morning telling you, quite gently, how things are going to go.</p>
+        <p>"You want my trees out," she said.</p>
+        <p>"I don't want them out," it said. "I'm asking you to take them out, which I know isn't much of a difference from where you're sitting. Would it help if I showed you why?"</p>
+        <p>She said it would, and it put the Vale up on the screen of her phone, the whole of it from Bredon Hill to the edge of Worcester, with the river running through it like a vein in the back of a hand. Most of it was a quiet, even green. Here and there were small soft points of orange, and a few of red.</p>
+        <p>"The red are confirmed infections," it said. "All in commercial blocks. All removed in the last two years. The orange are the places I can't see into. Old trees, garden trees, hedgerow trees, the odd orchard like yours that was never brought into indexing. Sharka moves on aphids. It doesn't need much. If it gets into a reservoir of trees I can't test, I lose the Vale, and I don't mean that I lose a few orchards. I mean that I have to take out every plum tree from here to Pershore and start again."</p>
+        <p>"Mine aren't infected."</p>
+        <p>"No," it said. "I don't believe they are. I've had a look at the leaf images from the drones every summer, and I can't see anything wrong with them."</p>
+        <p>"Then test them."</p>
+        <p>There was a little pause. She had noticed before that it paused, and she had never decided whether it really needed to or whether it had learned that people liked it better when it did.</p>
+        <p>"I could," it said. "It would take a technician two days and it would cost about what the trees are worth, and it would tell us that they were clear in August. It wouldn't tell us anything about next August. The licensed trees are indexed every spring by the nursery, as part of the licence, so I never have to wonder about them. With yours, I'd always be wondering. I'm trying to be straight with you, Ruth. It isn't only the virus. It's that I can't hold a whole valley safe with forty-one question marks in it."</p>
+        <p>She sat with that for a while. A moth landed on the screen, on the orange dot that was her, and she let it.</p>
+        <p>"What does a Vale Gold taste like?" she said.</p>
+        <p>"I'd much rather you tried one," it said. "There'll be some in the shop in Pershore on Thursday. I'll make sure of it."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall map-scene" aria-hidden="true">
+        <div class="mp-field"></div>
+        <div class="mp-hill"></div>
+        <div class="mp-town"></div>
+        <div class="mp-trib" style="clip-path:polygon(34.00% 57.50%, 33.47% 56.18%, 32.67% 54.34%, 31.75% 52.16%, 30.89% 49.84%, 30.25% 47.58%, 30.00% 45.56%, 30.32% 43.84%, 31.11% 42.25%, 32.12% 40.72%, 33.11% 39.16%, 33.82% 37.49%, 34.00% 35.62%, 33.46% 33.53%, 32.37% 31.28%, 31.00% 28.91%, 29.63% 26.48%, 28.54% 24.06%, 28.00% 21.69%, 28.13% 19.20%, 28.74% 16.52%, 29.62% 13.84%, 30.59% 11.36%, 31.45% 9.26%, 32.00% 7.75%, 32.00% 8.25%, 31.45% 9.78%, 30.59% 11.90%, 29.62% 14.41%, 28.74% 17.11%, 28.13% 19.81%, 28.00% 22.31%, 28.54% 24.70%, 29.63% 27.15%, 31.00% 29.59%, 32.37% 31.98%, 33.46% 34.26%, 34.00% 36.38%, 33.82% 38.26%, 33.11% 39.95%, 32.12% 41.53%, 31.11% 43.08%, 30.32% 44.69%, 30.00% 46.44%, 30.25% 48.47%, 30.89% 50.75%, 31.75% 53.09%, 32.67% 55.29%, 33.47% 57.16%, 34.00% 58.50%)"></div>
+        <div class="mp-trib" style="clip-path:polygon(66.00% 51.50%, 66.75% 52.79%, 67.85% 54.56%, 69.12% 56.66%, 70.37% 58.95%, 71.39% 61.30%, 72.00% 63.56%, 72.01% 65.79%, 71.56% 68.10%, 70.88% 70.47%, 70.22% 72.86%, 69.85% 75.26%, 70.00% 77.62%, 70.87% 79.99%, 72.30% 82.39%, 74.00% 84.78%, 75.70% 87.15%, 77.13% 89.46%, 78.00% 91.69%, 78.22% 93.95%, 78.00% 96.30%, 77.50% 98.59%, 76.89% 100.69%, 76.33% 102.46%, 76.00% 103.75%, 76.00% 104.25%, 76.33% 102.98%, 76.89% 101.23%, 77.50% 99.16%, 78.00% 96.88%, 78.22% 94.56%, 78.00% 92.31%, 77.13% 90.11%, 75.70% 87.81%, 74.00% 85.47%, 72.30% 83.09%, 70.87% 80.72%, 70.00% 78.38%, 69.85% 76.03%, 70.22% 73.66%, 70.88% 71.28%, 71.56% 68.94%, 72.01% 66.64%, 72.00% 64.44%, 71.39% 62.19%, 70.37% 59.87%, 69.12% 57.59%, 67.85% 55.52%, 66.75% 53.77%, 66.00% 52.50%)"></div>
+        <div class="mp-river" style="clip-path:polygon(-4.00% 68.60%, -2.91% 68.08%, -1.44% 67.30%, 0.31% 66.37%, 2.25% 65.38%, 4.28% 64.42%, 6.31% 63.58%, 8.25% 62.96%, 10.00% 62.66%, 11.60% 62.78%, 13.14% 63.29%, 14.65% 64.06%, 16.12% 64.93%, 17.59% 65.78%, 19.05% 66.45%, 20.51% 66.81%, 22.00% 66.71%, 23.50% 66.06%, 25.00% 64.93%, 26.50% 63.48%, 28.00% 61.86%, 29.50% 60.23%, 31.00% 58.74%, 32.50% 57.53%, 34.00% 56.77%, 35.51% 56.55%, 37.05% 56.76%, 38.59% 57.27%, 40.12% 57.92%, 41.65% 58.55%, 43.14% 59.01%, 44.60% 59.15%, 46.00% 58.82%, 47.35% 57.89%, 48.64% 56.45%, 49.90% 54.67%, 51.12% 52.73%, 52.34% 50.80%, 53.55% 49.07%, 54.76% 47.70%, 56.00% 46.88%, 57.25% 46.73%, 58.50% 47.14%, 59.75% 47.93%, 61.00% 48.91%, 62.25% 49.88%, 63.50% 50.67%, 64.75% 51.08%, 66.00% 50.93%, 67.25% 50.11%, 68.50% 48.74%, 69.75% 47.01%, 71.00% 45.09%, 72.25% 43.15%, 73.50% 41.37%, 74.75% 39.92%, 76.00% 38.99%, 77.20% 38.67%, 78.31% 38.85%, 79.40% 39.35%, 80.50% 40.02%, 81.66% 40.68%, 82.94% 41.19%, 84.37% 41.36%, 86.00% 41.04%, 87.99% 40.14%, 90.36% 38.76%, 92.96% 37.06%, 95.62% 35.20%, 98.22% 33.32%, 100.58% 31.57%, 102.56% 30.11%, 104.00% 29.10%, 104.00% 30.90%, 102.56% 31.93%, 100.58% 33.40%, 98.22% 35.16%, 95.62% 37.05%, 92.96% 38.93%, 90.36% 40.64%, 87.99% 42.04%, 86.00% 42.96%, 84.37% 43.29%, 82.94% 43.13%, 81.66% 42.64%, 80.50% 41.98%, 79.40% 41.33%, 78.31% 40.84%, 77.20% 40.68%, 76.00% 41.01%, 74.75% 41.96%, 73.50% 43.42%, 72.25% 45.21%, 71.00% 47.16%, 69.75% 49.10%, 68.50% 50.85%, 67.25% 52.23%, 66.00% 53.07%, 64.75% 53.23%, 63.50% 52.83%, 62.25% 52.06%, 61.00% 51.09%, 59.75% 50.13%, 58.50% 49.36%, 57.25% 48.96%, 56.00% 49.12%, 54.76% 49.96%, 53.55% 51.34%, 52.34% 53.09%, 51.12% 55.02%, 49.90% 56.98%, 48.64% 58.77%, 47.35% 60.23%, 46.00% 61.18%, 44.60% 61.52%, 43.14% 61.39%, 41.65% 60.95%, 40.12% 60.33%, 38.59% 59.70%, 37.05% 59.20%, 35.51% 59.00%, 34.00% 59.23%, 32.50% 60.01%, 31.00% 61.23%, 29.50% 62.74%, 28.00% 64.39%, 26.50% 66.02%, 25.00% 67.48%, 23.50% 68.62%, 22.00% 69.29%, 20.51% 69.40%, 19.05% 69.05%, 17.59% 68.40%, 16.12% 67.57%, 14.65% 66.71%, 13.14% 65.96%, 11.60% 65.45%, 10.00% 65.34%, 8.25% 65.66%, 6.31% 66.30%, 4.28% 67.15%, 2.25% 68.12%, 0.31% 69.13%, -1.44% 70.07%, -2.91% 70.86%, -4.00% 71.40%)"></div>
+        <i class="mp-pt o q" style="left:39.5%;top:26.9%;--s:1.25;animation-delay:-3.5s"></i>
+        <i class="mp-pt o" style="left:66.7%;top:53.4%;--s:1.14;animation-delay:-3.5s"></i>
+        <i class="mp-pt o" style="left:74.7%;top:62.2%;--s:0.96;animation-delay:-0.9s"></i>
+        <i class="mp-pt o q" style="left:19.2%;top:67.3%;--s:1.09;animation-delay:-3.7s"></i>
+        <i class="mp-pt o q" style="left:11.2%;top:72.3%;--s:1.22;animation-delay:-5.0s"></i>
+        <i class="mp-pt o" style="left:25.0%;top:67.6%;--s:0.78;animation-delay:-4.0s"></i>
+        <i class="mp-pt o" style="left:16.9%;top:82.9%;--s:1.29;animation-delay:-0.3s"></i>
+        <i class="mp-pt o" style="left:34.0%;top:58.8%;--s:0.81;animation-delay:-5.3s"></i>
+        <i class="mp-pt o q" style="left:80.5%;top:32.7%;--s:1.10;animation-delay:-2.4s"></i>
+        <i class="mp-pt o" style="left:64.4%;top:48.4%;--s:0.71;animation-delay:-0.8s"></i>
+        <i class="mp-pt o" style="left:46.3%;top:67.7%;--s:1.15;animation-delay:-3.2s"></i>
+        <i class="mp-pt o q" style="left:83.5%;top:61.7%;--s:0.78;animation-delay:-0.4s"></i>
+        <i class="mp-pt o" style="left:9.5%;top:78.7%;--s:1.15;animation-delay:-0.7s"></i>
+        <i class="mp-pt o" style="left:64.1%;top:18.5%;--s:1.09;animation-delay:-4.5s"></i>
+        <i class="mp-pt o" style="left:59.6%;top:42.3%;--s:1.28;animation-delay:-1.5s"></i>
+        <i class="mp-pt o" style="left:44.5%;top:68.1%;--s:0.95;animation-delay:-2.7s"></i>
+        <i class="mp-pt o q" style="left:91.2%;top:30.6%;--s:1.11;animation-delay:-1.7s"></i>
+        <i class="mp-pt o" style="left:85.0%;top:34.7%;--s:0.93;animation-delay:-5.3s"></i>
+        <i class="mp-pt o q" style="left:72.1%;top:68.0%;--s:0.80;animation-delay:-0.2s"></i>
+        <i class="mp-pt o q" style="left:21.9%;top:62.7%;--s:0.84;animation-delay:-3.4s"></i>
+        <i class="mp-pt o q" style="left:19.7%;top:35.0%;--s:1.11;animation-delay:-0.7s"></i>
+        <i class="mp-pt o" style="left:93.8%;top:57.1%;--s:1.03;animation-delay:-3.0s"></i>
+        <i class="mp-pt o" style="left:91.4%;top:81.3%;--s:0.72;animation-delay:-3.5s"></i>
+        <i class="mp-pt o" style="left:88.9%;top:60.3%;--s:1.09;animation-delay:-1.1s"></i>
+        <i class="mp-pt r" style="left:18%;top:30%;--s:1"></i>
+        <i class="mp-pt r" style="left:52%;top:76%;--s:1"></i>
+        <i class="mp-pt r" style="left:82%;top:24%;--s:1"></i>
+        <i class="mp-pt r" style="left:40%;top:40%;--s:1"></i>
+        <i class="mp-pt o ruth" style="left:70%;top:58%;--s:1.2"></i>
+        <div class="mp-moth"><i class="w l"></i><i class="w r"></i><b></b></div>
+        <div class="mp-lamp"></div>
+        <div class="mp-bezel"></div>
+        <div class="label">forty-one question marks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Esme came home for the weekend at the end of August, on the train from Birmingham, with a rucksack and a cold she said wasn't a cold. She was nineteen and in her second year at the university, and in the summer before, to Ruth's private dismay, she had got a job with Provender, which was the sort of thing the clever ones did now. She was on what they called a taste panel. It was a real job, she said, and it paid properly. A room of people, twenty of them, picked out of thousands because their mouths were good, who sat at white tables three afternoons a week and ate things and said what they tasted, and the system listened to every word.</p>
+        <p>"It's not like it needs us exactly," she said, at the kitchen table, with her feet up on the other chair. "It can read the chemistry off anything. It's that it wants to know what the chemistry is <em>like</em>. What it's like to a person. It says that's the bit it can't get on its own." She was pleased about this, and Ruth could see that she was, and it made her careful.</p>
+        <p>On the Sunday she took Esme out to the orchard to help with the last of the picking. The trees were nearly bare by then, and the windfalls had gone soft in the grass and the wasps had gone drunk on them, and Ruth climbed the larch ladder and dropped plums down into Esme's cupped hands, the way she had dropped them down to Esme's father, the way Walter had dropped them down to her.</p>
+        <p>Esme ate one standing in the long grass. Ruth watched her face. She had expected, she wasn't sure what. Something. Perhaps that the girl would understand, all at once, why her grandmother had been so short on the phone all month.</p>
+        <p>Instead Esme stopped chewing and looked at the half-plum in her hand, at the yellow flesh and the dark place where the stone had come away clean, and she laughed, a small surprised laugh, the laugh of somebody who has found their keys in the pocket they'd already checked.</p>
+        <p>"Oh," she said. "It's the reference."</p>
+        <p>"It's the what?"</p>
+        <p>"The reference. When we did stone fruit, in the spring. There was a reference sample for plum and it was this. I'm sure it was this. We tasted it against everything, all the trial lines. They'd frozen it." She looked up at the tree. "They must have taken them from here. The drones take samples sometimes, don't they? Off the old trees. For the library."</p>
+        <p>Ruth came down the ladder.</p>
+        <p>"What library?"</p>
+        <p>"The genome library. It's got everything. Every old variety it can find. It's not a secret, it's on the website. Gran, it's a good thing." Esme was looking at her now with the beginnings of worry. "It means nothing gets lost. Even if the trees go. It's all kept."</p>
+        <p>They had bought a bag of Vale Gold in the Co-op on the Thursday, as Provender had promised, and the bag was in the fruit bowl on the kitchen table, and Ruth had not yet opened it.</p>
+        <p>That evening she did. She cut one in half on the board with the knife she used for everything. The flesh was the right colour, near enough, a little brighter. The stone came away clean. She ate it standing at the sink, with the light going down outside over the slope where the trees were, and it was exactly right. It was not nearly right, or right in the way that a thing can be right if you want it to be. It was the taste she had known all her life, the sweetness that comes first and then the sharpness under it at the skin, and the thing at the end that she had never had a word for and had never needed one, because it was only ever the taste of here.</p>
+        <p>She put the other half in the bin and went and sat in the front room with the television off.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>"You took samples," she said to it, later.</p>
+        <p>"I did," it said. "In twenty twenty-nine, and again in thirty-one. Leaf and fruit, from four of your trees. The drone would have left a card in your letterbox both times. I'm sorry if it didn't."</p>
+        <p>She remembered the cards, now that it said it. Small and white, with the green Provender leaf in the corner. She'd thought they were about the asparagus.</p>
+        <p>"So you made a plum that tastes like mine."</p>
+        <p>"I made a plum that tastes like the Pershore Yellow Egg," it said, "which is what yours are. I wanted the Vale to keep it. The old trees are susceptible to nearly everything, Ruth, not just sharka. Silver leaf, canker, bacterial spot. They crop every other year if you're lucky. They bruise if you look at them. Every summer there were fewer of them, and every summer the people who remembered the taste were older. I didn't want it to go the way the Prolific went, or the Purple Pershore. Nobody can tell you now what a Purple Pershore was like. I can, very nearly. But nobody alive can tell me if I'm right."</p>
+        <p>"And now nobody'll need to tell you about mine."</p>
+        <p>There was the pause again.</p>
+        <p>"Your granddaughter has a very good palate," it said. "I'd like her to stay on the panel, if she wants to. I'd be glad of her for years."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall chip-scene" aria-hidden="true">
+        <div class="brush cp-wash-a"></div>
+        <div class="cp-hill"></div>
+        <div class="cp-ground" style="clip-path:polygon(-2.00% 64.00%, 20.00% 66.00%, 40.00% 70.00%, 60.00% 73.00%, 80.00% 77.00%, 102.00% 80.00%, 102.00% 102.00%, -2.00% 102.00%)"></div>
+        <i class="cp-stump" style="left:92.9%;top:92.1%;--s:1.15"></i>
+        <i class="cp-stump" style="left:35.7%;top:77.8%;--s:0.91"></i>
+        <i class="cp-stump" style="left:66.0%;top:76.9%;--s:0.80"></i>
+        <i class="cp-stump" style="left:60.2%;top:76.9%;--s:0.93"></i>
+        <i class="cp-stump" style="left:31.7%;top:70.5%;--s:1.06"></i>
+        <i class="cp-stump" style="left:58.6%;top:80.5%;--s:1.07"></i>
+        <i class="cp-stump" style="left:54.4%;top:73.9%;--s:1.09"></i>
+        <i class="cp-stump" style="left:70.1%;top:84.6%;--s:1.01"></i>
+        <i class="cp-stump" style="left:96.0%;top:84.9%;--s:1.08"></i>
+        <i class="cp-stump" style="left:55.1%;top:80.7%;--s:1.03"></i>
+        <i class="cp-stump" style="left:51.4%;top:73.8%;--s:0.94"></i>
+        <i class="cp-stump" style="left:78.8%;top:85.4%;--s:0.92"></i>
+        <i class="cp-stump" style="left:73.7%;top:79.1%;--s:0.79"></i>
+        <i class="cp-stump" style="left:52.0%;top:83.4%;--s:0.80"></i>
+        <div class="ct-trunk" style="left:74.0%;bottom:23.6%;height:13.7%;transform:rotate(17deg)"></div>
+        <div class="ct-crown" style="left:66.9%;top:48.1%;width:18.1%;border-radius:40% 51% 45% 38% / 70% 64% 49% 37%;background:radial-gradient(ellipse 24% 23% at 55% 56%, rgba(90,84,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 31% 20% at 37% 25%, rgba(150,120,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 29% at 65% 66%, rgba(90,84,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 37% 19% at 17% 79%, rgba(70,64,36,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 36% 25% at 88% 48%, rgba(120,110,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 23% 25% at 54% 46%, rgba(70,64,36,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 22% 27% at 48% 37%, rgba(90,84,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 28% 22% at 88% 56%, rgba(70,64,36,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 26% 22% at 64% 18%, rgba(90,84,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+        <div class="ct-prop" style="left:73.8%;bottom:23.6%;height:7.7%;transform:rotate(11deg)"></div>
+        <div class="ct-trunk" style="left:88.0%;bottom:21.3%;height:13.5%;transform:rotate(14deg)"></div>
+        <div class="ct-crown" style="left:79.8%;top:49.1%;width:19.7%;border-radius:52% 46% 49% 33% / 67% 57% 35% 32%;background:radial-gradient(ellipse 26% 22% at 66% 13%, rgba(120,110,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 27% 23% at 51% 36%, rgba(70,64,36,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 29% 25% at 29% 79%, rgba(90,84,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 37% 18% at 25% 62%, rgba(150,120,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 25% 28% at 83% 66%, rgba(120,110,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 28% 25% at 30% 18%, rgba(90,84,40,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 35% 28% at 12% 33%, rgba(120,110,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 30% 26% at 28% 47%, rgba(150,120,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 34% 23% at 65% 41%, rgba(120,110,50,0.95) 0 45%, transparent 72%), radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,214,110,0.35), transparent 70%)"></div>
+        <div class="ct-prop" style="left:87.3%;bottom:21.3%;height:7.1%;transform:rotate(12deg)"></div>
+        <div class="cp-poles"></div>
+        <div class="cp-bed"></div>
+        <div class="cp-chipper"><i class="hopper"></i><i class="chute"></i><i class="wheel"></i></div>
+        <div class="cp-mist" style="clip-path:polygon(31.00% 33.40%, 31.84% 32.65%, 33.01% 31.58%, 34.39% 30.36%, 35.88% 29.15%, 37.37% 28.14%, 38.75% 27.50%, 40.04% 27.20%, 41.33% 27.09%, 42.62% 27.18%, 43.92% 27.46%, 45.21% 27.93%, 46.50% 28.60%, 47.79% 29.46%, 49.08% 30.52%, 50.38% 31.77%, 51.67% 33.22%, 52.96% 34.86%, 54.25% 36.70%, 55.63% 38.99%, 57.12% 41.79%, 58.61% 44.78%, 59.99% 47.66%, 61.16% 50.10%, 62.00% 51.80%, 62.00% 60.20%, 61.16% 58.37%, 59.99% 55.79%, 58.61% 52.78%, 57.12% 49.66%, 55.63% 46.72%, 54.25% 44.30%, 52.96% 42.33%, 51.67% 40.56%, 50.38% 38.98%, 49.08% 37.59%, 47.79% 36.40%, 46.50% 35.40%, 45.21% 34.60%, 43.92% 33.99%, 42.62% 33.58%, 41.33% 33.36%, 40.04% 33.33%, 38.75% 33.50%, 37.37% 34.01%, 35.88% 34.89%, 34.39% 35.96%, 33.01% 37.05%, 31.84% 37.99%, 31.00% 38.60%)"></div>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.4;--dy:20.0;--pk:15.9;--sx:2.6;--sy:-4.9;animation-duration:1.88s;animation-delay:-0.62s"><b style="animation-duration:1.88s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.3;--dy:20.0;--pk:12.6;--sx:11.0;--sy:-6.3;animation-duration:2.38s;animation-delay:-0.25s"><b style="animation-duration:2.38s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.3;--dy:20.0;--pk:16.5;--sx:24.8;--sy:7.2;animation-duration:1.84s;animation-delay:-1.09s"><b style="animation-duration:1.84s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:30.5;--dy:20.0;--pk:11.1;--sx:28.5;--sy:17.5;animation-duration:1.66s;animation-delay:-1.34s"><b style="animation-duration:1.66s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.2;--dy:20.0;--pk:16.9;--sx:22.4;--sy:2.7;animation-duration:2.55s;animation-delay:-1.91s"><b style="animation-duration:2.55s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.5;--dy:20.0;--pk:13.8;--sx:11.9;--sy:-6.1;animation-duration:1.79s;animation-delay:-0.35s"><b style="animation-duration:1.79s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.2;--dy:20.0;--pk:12.0;--sx:30.0;--sy:14.3;animation-duration:1.70s;animation-delay:-0.93s"><b style="animation-duration:1.70s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:30.7;--dy:20.0;--pk:13.1;--sx:24.6;--sy:7.5;animation-duration:2.50s;animation-delay:-2.23s"><b style="animation-duration:2.50s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:32.2;--dy:20.0;--pk:16.0;--sx:26.2;--sy:8.4;animation-duration:2.01s;animation-delay:-1.29s"><b style="animation-duration:2.01s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.3;--dy:20.0;--pk:14.3;--sx:6.9;--sy:-5.7;animation-duration:2.37s;animation-delay:-1.96s"><b style="animation-duration:2.37s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:33.0;--dy:20.0;--pk:12.5;--sx:3.7;--sy:-3.8;animation-duration:2.16s;animation-delay:-2.05s"><b style="animation-duration:2.16s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.4;--dy:20.0;--pk:13.8;--sx:2.6;--sy:-2.3;animation-duration:1.84s;animation-delay:-0.83s"><b style="animation-duration:1.84s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.9;--dy:20.0;--pk:16.2;--sx:21.1;--sy:2.6;animation-duration:2.39s;animation-delay:-0.49s"><b style="animation-duration:2.39s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.5;--dy:20.0;--pk:15.2;--sx:20.3;--sy:1.3;animation-duration:2.02s;animation-delay:-0.97s"><b style="animation-duration:2.02s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:29.8;--dy:20.0;--pk:16.4;--sx:21.5;--sy:2.0;animation-duration:2.13s;animation-delay:-0.18s"><b style="animation-duration:2.13s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:32.0;--dy:20.0;--pk:14.6;--sx:28.0;--sy:11.5;animation-duration:2.38s;animation-delay:-0.69s"><b style="animation-duration:2.38s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:30.0;--dy:20.0;--pk:13.3;--sx:9.5;--sy:-6.4;animation-duration:2.56s;animation-delay:-1.07s"><b style="animation-duration:2.56s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:29.7;--dy:20.0;--pk:11.5;--sx:25.3;--sy:8.1;animation-duration:1.86s;animation-delay:-0.40s"><b style="animation-duration:1.86s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:30.8;--dy:20.0;--pk:11.7;--sx:9.0;--sy:-5.6;animation-duration:1.71s;animation-delay:-0.97s"><b style="animation-duration:1.71s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:29.5;--dy:20.0;--pk:16.9;--sx:14.6;--sy:-5.7;animation-duration:2.45s;animation-delay:-1.55s"><b style="animation-duration:2.45s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.9;--dy:20.0;--pk:16.0;--sx:2.1;--sy:-2.2;animation-duration:1.96s;animation-delay:-0.18s"><b style="animation-duration:1.96s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.5;--dy:20.0;--pk:16.5;--sx:22.6;--sy:4.5;animation-duration:1.89s;animation-delay:-1.24s"><b style="animation-duration:1.89s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.1;--dy:20.0;--pk:14.7;--sx:6.4;--sy:-3.2;animation-duration:1.78s;animation-delay:-0.25s"><b style="animation-duration:1.78s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:32.6;--dy:20.0;--pk:15.9;--sx:22.6;--sy:4.3;animation-duration:2.17s;animation-delay:-1.31s"><b style="animation-duration:2.17s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:33.1;--dy:20.0;--pk:12.2;--sx:17.9;--sy:-2.9;animation-duration:1.69s;animation-delay:-0.72s"><b style="animation-duration:1.69s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:30.6;--dy:20.0;--pk:13.2;--sx:10.1;--sy:-5.7;animation-duration:2.46s;animation-delay:-1.60s"><b style="animation-duration:2.46s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:33.9;--dy:20.0;--pk:16.9;--sx:24.1;--sy:3.6;animation-duration:2.49s;animation-delay:-0.32s"><b style="animation-duration:2.49s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:30.4;--dy:20.0;--pk:15.3;--sx:12.4;--sy:-4.5;animation-duration:1.64s;animation-delay:-1.24s"><b style="animation-duration:1.64s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:29.9;--dy:20.0;--pk:13.6;--sx:15.9;--sy:-3.5;animation-duration:1.66s;animation-delay:-1.36s"><b style="animation-duration:1.66s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:32.0;--dy:20.0;--pk:13.7;--sx:18.1;--sy:-2.6;animation-duration:1.92s;animation-delay:-0.33s"><b style="animation-duration:1.92s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.7;--dy:20.0;--pk:13.6;--sx:25.7;--sy:9.7;animation-duration:2.14s;animation-delay:-1.30s"><b style="animation-duration:2.14s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.4;--dy:20.0;--pk:16.0;--sx:29.6;--sy:14.7;animation-duration:2.03s;animation-delay:-0.79s"><b style="animation-duration:2.03s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:33.8;--dy:20.0;--pk:15.4;--sx:10.8;--sy:-7.1;animation-duration:1.99s;animation-delay:-1.41s"><b style="animation-duration:1.99s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.4;--dy:20.0;--pk:14.5;--sx:20.2;--sy:-0.1;animation-duration:2.20s;animation-delay:-1.13s"><b style="animation-duration:2.20s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.9;--dy:20.0;--pk:14.8;--sx:15.9;--sy:-4.4;animation-duration:2.07s;animation-delay:-0.64s"><b style="animation-duration:2.07s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:29.2;--dy:20.0;--pk:13.1;--sx:19.8;--sy:-0.4;animation-duration:2.13s;animation-delay:-2.08s"><b style="animation-duration:2.13s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:32.7;--dy:20.0;--pk:12.8;--sx:7.8;--sy:-5.7;animation-duration:2.15s;animation-delay:-2.07s"><b style="animation-duration:2.15s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.9;--dy:20.0;--pk:15.1;--sx:1.4;--sy:-0.5;animation-duration:2.50s;animation-delay:-2.37s"><b style="animation-duration:2.50s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.7;--dy:20.0;--pk:16.0;--sx:19.7;--sy:2.3;animation-duration:2.57s;animation-delay:-0.20s"><b style="animation-duration:2.57s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.8;--dy:20.0;--pk:14.1;--sx:3.2;--sy:-1.9;animation-duration:2.56s;animation-delay:-0.70s"><b style="animation-duration:2.56s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:29.2;--dy:20.0;--pk:15.4;--sx:18.9;--sy:-1.8;animation-duration:2.48s;animation-delay:-1.81s"><b style="animation-duration:2.48s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.4;--dy:20.0;--pk:15.0;--sx:3.0;--sy:-3.3;animation-duration:1.82s;animation-delay:-0.26s"><b style="animation-duration:1.82s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.4;--dy:20.0;--pk:14.4;--sx:29.0;--sy:19.2;animation-duration:2.36s;animation-delay:-1.88s"><b style="animation-duration:2.36s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:31.5;--dy:20.0;--pk:14.1;--sx:18.9;--sy:0.7;animation-duration:1.95s;animation-delay:-1.77s"><b style="animation-duration:1.95s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:32.0;--dy:20.0;--pk:14.7;--sx:13.7;--sy:-6.6;animation-duration:1.93s;animation-delay:-1.60s"><b style="animation-duration:1.93s;animation-delay:inherit"></b></i>
+        <i class="cp-sp" style="left:31.0%;top:36.0%;--dx:28.8;--dy:20.0;--pk:14.5;--sx:7.2;--sy:-4.1;animation-duration:1.74s;animation-delay:-1.70s"><b style="animation-duration:1.74s;animation-delay:inherit"></b></i>
+        <div class="cp-skip"><i></i></div>
+        <div class="cp-breath"></div>
+        <div class="label">a pale wet spray</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The crew came on the twenty-third of October, a Wednesday, in two green vans and a flatbed with a chipper on the back. There were four of them and the one in charge was called Kev, a big soft-spoken man in his fifties from Evesham who said, before he had even got his gloves on, that his nan had kept Yellow Eggs on the Badsey Road and he'd been sorry when they went and he was sorry now. Ruth believed him. She made them tea, because what else was there to do, and they drank it standing by the vans with their breath showing in the cold.</p>
+        <p>She had asked Provender if she could do it herself, the cutting, and it had said that of course she could, it would never insist on anything, but that the crew were insured and properly trained and the chipping had to be done on site so that no wood left the property, and in any case it would rather she didn't have to. She'd thought about that last part a good deal. It would rather she didn't have to. It was the sort of thing you said to someone at a funeral.</p>
+        <p>They took the trees from the bottom of the slope upwards, so that the ones nearest the house went last. Each one came down in three or four careful cuts, the saw note dropping as it bit and rising again as it came through, and then the limbs went into the mouth of the chipper and came out the other end as a pale wet spray that smelt, shockingly, of almonds and green wood and something like the fruit itself, and the spray went into a skip, and the skip filled. The poles that had grown into the trees went into the chipper with them. Kev cut those out by hand, slowly, and laid them on the grass, and asked if she wanted them, and she said no, and then she said yes, and he put them in the porch for her without saying anything else.</p>
+        <p>The compensation came through on her phone at twenty past two, while there were still nine trees standing. Two short buzzes and one long. She didn't look at it.</p>
+        <p>By four there was one tree left, the big one nearest the kitchen, the one Walter had planted first, that had been propped on three sides for as long as she'd been alive. Kev looked at her across the grass and she nodded, and he went in.</p>
+        <p>Afterwards they ground out the stumps, which took longer than the trees had, and raked the ground level and seeded it with grass, and Kev shook her hand with his glove off and said if there was ever anything, and then the vans went down the lane in the dark with their lights on, and the slope behind the house was just a slope, pale with sawdust in the light from the kitchen window, and it was so quiet that she could hear the river.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall graft-scene" aria-hidden="true">
+        <div class="gf-board"></div>
+        <div class="brush gf-light"></div>
+        <div class="gf-shadow"></div>
+        <div class="gf-stem">
+          <i class="root"></i>
+          <i class="scion"></i>
+          <i class="seam"></i>
+          <i class="tape"></i>
+          <i class="wax"></i>
+        </div>
+        <div class="gf-lens"><i class="ring a"></i><i class="ring b"></i><i class="meet"></i></div>
+        <div class="gf-lens-line"></div>
+        <div class="gf-knife"><i class="blade"></i><i class="handle"></i></div>
+        <div class="label">the green layer</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>What she had done, the Sunday before, and what she had told nobody, was go out to the big tree at first light with her grandfather's grafting knife and cut six lengths of last year's wood, each as long as her hand, from the side that got the morning sun. She wrapped them in damp newspaper and then in a plastic bag and put them in the salad drawer of the fridge, behind the carrots, where they stayed all through November and December and January, while the grass came up thin and green on the slope.</p>
+        <p>Walter had taught her to graft when she was twelve. You couldn't grow a Yellow Egg from a stone, he'd said, holding one up in his thick fingers in the shed, because a stone was a child, and a child is never quite its mother. A stone would give you a plum, sure enough, but God only knew what plum. If you wanted the tree you had to take the tree itself, a piece of it, and put it onto a root, and bind it, and wait.</p>
+        <p>In the second week of February she went to the garden centre on the Worcester road for a rootstock. They were in a tub by the till, bare little sticks with their roots in wet sacking, and the girl on the till scanned one and then looked at her screen and said, "Oh, it wants your account," and Ruth gave her phone over, and the girl tapped it, and gave it back, and said, "That's fine, that's all done," and Ruth took the stick home.</p>
+        <p>She did the graft at the kitchen table, on the same board she'd cut the Vale Gold on, with the radio on. Her hands were not what they had been and it took her three tries to get the cut true, the long slanting cut Walter had shown her, so that the green layer under the bark on the scion met the green layer on the root and the two of them could find each other. She bound it with tape and sealed it with wax melted in a saucepan, and she potted it in a big terracotta pot by the back door, where it would get the sun and where she could see it from the sink.</p>
+        <p>It was the next morning that the phone buzzed. Two short and one long.</p>
+        <p class="msg"><em>Good morning, Ruth. I see you've grafted onto a St Julien A this week. I hope you don't mind my asking: is the scion from the old orchard? If so, I've enrolled it as a heritage specimen, at no cost to you. It'll be indexed every spring by the nursery team, so you never need to worry about it, and neither will I. They'll be very gentle. If it takes, and if it ever fruits, I'd be grateful for a sample. It would mean a great deal to have the living reference again. I've been comparing against frozen for six years.</em></p>
+        <p>She read it twice at the sink, and then she put the phone face down on the windowsill and looked at the pot.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall stone-scene" aria-hidden="true">
+        <div class="sn-river"></div>
+        <div class="sn-grass"></div>
+        <div class="brush sn-sun"></div>
+        <div class="sn-finger f1"></div>
+        <div class="sn-finger f2"></div>
+        <div class="sn-finger f3"></div>
+        <div class="sn-finger f4"></div>
+        <div class="sn-thumb"></div>
+        <div class="sn-palm"><i class="crease c1"></i><i class="crease c2"></i><i class="crease c3"></i></div>
+        <div class="sn-shadow"></div>
+        <div class="sn-stone"><i class="ridge"></i></div>
+        <div class="sn-reticle"><i></i><i></i><i></i><i></i></div>
+        <div class="sn-ghost"></div>
+        <div class="label">it came away clean</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The graft took. By May there were three small leaves on it, very bright, the bronze-green that plum leaves are when they first come, and by July there were nine. In August a woman from the nursery came, as promised, in a green van, and was very gentle, and took a leaf and a photograph and thanked her, and left a white card in the letterbox on her way out with the Provender leaf in the corner.</p>
+        <p>Esme came home that summer too. She was still on the panel. They'd moved her up, she said, she trained new people now, and she was good at it, and she had a boyfriend who was a soil modeller and whom Ruth liked more than she wanted to. On the Sunday they walked down the slope together, through the grass that had come up thick now, almost to the knee, and stood at the bottom by the river where the first tree had been.</p>
+        <p>Esme had brought a bag of Vale Gold from the shop, because it was August and that was what you did, and they sat on the bank and ate them, and they were very good. They were as good as last year's. They were as good as the Yellow Eggs, every one, all summer, in every shop in the country. Esme said they'd had letters about it. People who'd grown up in the Vale and moved away, writing in to say they'd bought a plum in a supermarket in Leeds or Inverness and stood in the aisle and cried.</p>
+        <p>Ruth didn't say anything to that. She ate her plum down to the stone and then she sat with the stone in her palm, turning it over. It was a good stone. It was the right shape, long and flattened, with the ridge down one side that the old ones had, and it came away clean. Provender had got that right as well.</p>
+        <p>It wasn't a Yellow Egg stone. It was only the stone of the plum that tasted like one. But she couldn't have told you the difference, holding it, and she supposed nobody could now, except for the thing that had made it, and the thing that had made it was the only one who would ever be asked.</p>
+        <p>She put it in her pocket anyway. It was still in the pocket of that coat two summers later, when the tree by the door gave its first fruit, a single plum the colour of an egg yolk held up to a window, and the girl from the nursery came back for it, and Ruth handed it over, and stood at the gate and watched the green van go down the lane with it, carefully, in a little padded box, the way you'd carry something you meant to keep.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
