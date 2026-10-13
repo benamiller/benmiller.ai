@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The margin kept the proof — Ben Miller</title>
+    <meta name="description" content="A retired Sunderland postman spent forty years folding strips of paper on a problem nobody had solved, and the machine that solved it comes to his door to ask him to read the proof.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #15110e;
+        --ink: #f2ebdf;
+        --mute: #b8a690;
+        --cream: #f7efd6;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(242, 194, 58, 0.13), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(120, 170, 230, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(242, 194, 58, 0.07), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(255, 150, 90, 0.06), transparent 60%),
+          linear-gradient(180deg, #1c1612 0%, #18130f 36%, #14100d 70%, #0e0b09 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(255, 210, 150, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 170, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f2d27a;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(242, 194, 58, 0.35), 0 0 2px rgba(255, 230, 190, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #efe6d6;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f6dc8a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 120, 0.95) 0 1.5px, rgba(242, 194, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(242, 194, 58, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #1c1612;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 220, 160, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .margin-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(16, 10, 6, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .margin-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 214, 110, 0.38); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 190, 140, 0.26); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(242, 194, 58, 0.26); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+      /* ============ hero: kitchen table, window onto Roker ============ */
+      .margin-hero {
+        position: relative;
+        height: 22rem;
+        margin: 0 -0.4rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        isolation: isolate;
+        container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 210, 140, 0.16);
+        background: #2a1a12;
+      }
+      .mh-window {
+        left: 6%; right: 6%; top: 0; height: 60%;
+        overflow: hidden;
+        background: linear-gradient(180deg, #4a6aa0 0%, #b88aa0 22%, #f2a878 40%, #ffd890 52%, #ffe7a8 56%);
+        box-shadow: inset 0 0 40px rgba(60, 30, 20, 0.5);
+      }
+      .mh-window > * { position: absolute; }
+      .mh-sun { left: 58%; top: 34%; width: 30%; height: 50%; border-radius: 50%;
+        background: radial-gradient(circle, #fffbe8 0 6%, rgba(255, 226, 140, 0.8) 14%, rgba(255, 190, 110, 0.3) 36%, transparent 66%);
+        animation: breathe 12s ease-in-out infinite alternate; }
+      .mh-cloud { border-radius: 50%; filter: blur(10px); background: rgba(255, 190, 170, 0.45); }
+      .mh-cloud.c1 { left: -6%; top: 12%; width: 60%; height: 10%; transform: rotate(-3deg); }
+      .mh-cloud.c2 { left: 40%; top: 22%; width: 70%; height: 7%; background: rgba(255, 220, 180, 0.5); }
+      .mh-sea { left: 0; right: 0; top: 56%; bottom: 0;
+        background:
+          repeating-linear-gradient(178deg, rgba(255, 246, 200, 0.35) 0 1px, transparent 1px 7px),
+          linear-gradient(180deg, #f6c060 0%, #e89a48 30%, #b8683a 70%, #6a3a2a 100%); }
+      .mh-glitter { left: 52%; top: 56%; width: 40%; bottom: 0;
+        background: repeating-linear-gradient(180deg, rgba(255, 252, 220, 0.9) 0 1.5px, transparent 1.5px 6px);
+        -webkit-mask: linear-gradient(90deg, transparent, #000 40%, #000 60%, transparent);
+        mask: linear-gradient(90deg, transparent, #000 40%, #000 60%, transparent);
+        filter: blur(0.6px);
+        animation: glitter 3.2s ease-in-out infinite alternate; }
+      .mh-pier { left: -2%; top: 51%; width: 71%; height: 7%; z-index: 2; background: linear-gradient(180deg, #6a4044, #2a161c); clip-path: polygon(0 0, 100% 55%, 100% 100%, 0 100%); }
+      .mh-pier::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 5%, rgba(20, 10, 14, 0.8) 5% 5.6%); }
+      .mh-lamp { z-index: 3; left: 66%; top: 26%; width: 4.2%; height: 29%;
+        background: linear-gradient(90deg, #d8d0c8, #fff8ee 45%, #c8b8b0);
+        clip-path: polygon(22% 18%, 78% 18%, 92% 100%, 8% 100%);
+        box-shadow: none; }
+      .mh-lamp-top { z-index: 3; left: 66.4%; top: 21.5%; width: 3.4%; height: 6%; border-radius: 40% 40% 10% 10%;
+        background: radial-gradient(circle at 50% 70%, #fffbe0, #ffd27a 60%, #8a5a3a); }
+      .mh-lamp-glow { left: 56%; top: 8%; width: 24%; height: 36%; border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 246, 210, 0.75) 0 6%, rgba(255, 220, 140, 0.25) 30%, transparent 64%);
+        animation: breathe 5s ease-in-out infinite alternate; }
+      .mh-gull { width: 2.2%; height: 1.4%; border-top: 2px solid rgba(60, 40, 50, 0.7); border-radius: 50% 50% 0 0; }
+      .mh-gull::after { content: ""; position: absolute; left: 90%; top: -2px; width: 100%; height: 100%; border-top: 2px solid rgba(60, 40, 50, 0.7); border-radius: 50% 50% 0 0; }
+      .mh-gull.g1 { left: 20%; top: 18%; } .mh-gull.g2 { left: 30%; top: 26%; transform: scale(0.7); } .mh-gull.g3 { left: 84%; top: 14%; transform: scale(0.8); }
+      .mh-frame { left: 4.5%; right: 4.5%; top: 0; height: 61%; border: 0.9cqw solid #3a2418; border-top: 0; box-shadow: inset 0 0 0 2px rgba(255, 200, 140, 0.15); }
+      .mh-mull { left: 49.4%; top: 0; width: 1.2%; height: 60%; background: #3a2418; }
+      .mh-mull.h { left: 6%; width: 88%; top: 30%; height: 1.4%; }
+      .mh-sill { left: 2%; right: 2%; top: 59%; height: 4%; background: linear-gradient(180deg, #f2e4cc, #b8a286); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); }
+      .mh-table { left: 0; right: 0; top: 63%; bottom: 0;
+        background:
+          radial-gradient(ellipse 60% 70% at 70% 0%, rgba(255, 210, 130, 0.35), transparent 70%),
+          repeating-linear-gradient(176deg, rgba(0, 0, 0, 0.08) 0 2px, transparent 2px 11px),
+          linear-gradient(180deg, #a8683a, #6a3a20 70%, #3a2014); }
+      .mh-book { left: 9%; top: 67%; width: 25%; height: 27%; transform: rotate(-7deg); z-index: 4;
+        border-radius: 2px 6px 6px 2px;
+        background: linear-gradient(90deg, #1a3a7a 0 6%, #2a5ab0 7%, #3468c0 60%, #2a56a4);
+        box-shadow: 4px 8px 14px rgba(0, 0, 0, 0.5), inset -3px 0 0 #f2ead8, inset -5px 0 0 #c8bca8; }
+      .mh-book .lab { position: absolute; left: 16%; right: 12%; top: 18%; height: 56%;
+        background: #f6efdc; border-radius: 2px; text-align: center;
+        font-family: Caveat, "Comic Sans MS", cursive; color: #1a2a5a; line-height: 1.05; font-size: 2.6cqw; padding-top: 4%; }
+      .mh-book .lab u { display: inline-block; margin-top: 3%; text-decoration: underline double; text-underline-offset: 2px; color: #a0281e; font-weight: 600; }
+      .mh-books { left: 6%; top: 85%; width: 30%; height: 7%; transform: rotate(-3deg); z-index: 3;
+        background: repeating-linear-gradient(180deg, #2a56a4 0 18%, #f2ead8 18% 26%); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.45); }
+      .mh-cup { left: 82%; top: 64%; width: 8%; height: 15%; z-index: 4; border-radius: 0 0 40% 40% / 0 0 30% 30%;
+        background: linear-gradient(90deg, #c8b8a8, #fffaf0 40%, #d8c8b8); box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.45); }
+      .mh-cup::before { content: ""; position: absolute; left: 0; right: 0; top: -6%; height: 22%; border-radius: 50%; background: radial-gradient(ellipse, #9a5a2a 0 50%, #f2e8dc 56%); }
+      .mh-cup::after { content: ""; position: absolute; right: -28%; top: 20%; width: 34%; height: 40%; border: 3px solid #e8dccc; border-left: 0; border-radius: 0 50% 50% 0; }
+      .mh-specs { left: 64%; top: 82%; width: 14%; height: 6%; z-index: 4; }
+      .mh-specs::before, .mh-specs::after { content: ""; position: absolute; top: 0; width: 42%; height: 100%; border: 2px solid #2a1a14; border-radius: 40%; background: rgba(255, 240, 200, 0.18); }
+      .mh-specs::before { left: 0; } .mh-specs::after { right: 0; }
+      .mh-worm { width: 9%; aspect-ratio: 1; border-radius: 50%; z-index: 4;
+        border: 0.5cqw solid #f2e8d2; box-shadow: 0 0 0 0.3cqw rgba(0,0,0,0.1), inset 0 0 0 0.9cqw transparent, 3px 4px 6px rgba(0, 0, 0, 0.35);
+        background: radial-gradient(circle, transparent 0 30%, #e8dcc2 31% 38%, transparent 39% 52%, #efe3c8 53% 60%, transparent 61%); }
+      .mh-worm.w1 { left: 37%; top: 84%; transform: rotate(10deg) scaleY(0.55); }
+      .margin-hero .label { left: auto; right: 4%; }
+
+      /* the long strip, folding and unfolding */
+      .strip { display: flex; z-index: 6; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.4)); }
+      .strip .sg { position: relative; flex: 1; height: 100%;
+        background: linear-gradient(180deg, #fffaf0, #f2e6cc);
+        transform: skewY(calc(var(--k) * var(--s, 1)));
+        animation: fold-a 9s ease-in-out infinite alternate; }
+      .strip .sg:nth-child(even) { --s: -1; background: linear-gradient(180deg, #e2d2b2, #c8b490); }
+      .strip .sg i { position: absolute; right: -0.4em; bottom: 106%; font: 600 1em Caveat, cursive; font-style: normal; color: #5a4a3a; transform: skewY(calc(var(--k) * var(--s, 1) * -1)); }
+      .strip .sg:last-child i { display: none; }
+      .mh-strip { left: 36%; top: 72%; width: 42%; height: 6%; transform: rotate(-4deg); font-size: 1.8cqw; }
+      .mh-strip .sg i { color: #4a3420; }
+
+      @property --k { syntax: "<angle>"; inherits: true; initial-value: 10deg; }
+      @keyframes fold-a { from { --k: 34deg; } to { --k: 8deg; } }
+      @keyframes glitter { from { opacity: 0.55; transform: translateX(-2%); } to { opacity: 1; transform: translateX(2%); } }
+
+      /* ============ 1: the margin of the 1994 letter ============ */
+      .letter-scene { background: #2a1c12; container-type: size; }
+      .lt-lamp { left: -20%; top: -40%; width: 90%; height: 120%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 210, 130, 0.4), transparent 62%); }
+      .lt-page { left: 12%; top: 8%; width: 72%; height: 104%; transform: rotate(-3deg);
+        background:
+          radial-gradient(ellipse 70% 50% at 30% 20%, rgba(255, 250, 230, 0.5), transparent 70%),
+          linear-gradient(180deg, #f4e8cc, #e8d6b0);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55), inset 0 0 30px rgba(160, 110, 60, 0.25); }
+      .lt-page > * { position: absolute; }
+      .lt-lines { left: 7%; width: 56%; top: 9%; height: 80%;
+        background: repeating-linear-gradient(180deg, transparent 0 4.2%, rgba(40, 40, 80, 0.5) 4.2% 4.9%, transparent 4.9% 6.4%);
+        -webkit-mask: linear-gradient(90deg, #000 70%, rgba(0,0,0,0.6)); mask: linear-gradient(90deg, #000 70%, rgba(0,0,0,0.6)); }
+      .lt-lines::after { content: ""; position: absolute; inset: 0;
+        background: repeating-linear-gradient(90deg, transparent 0 11%, #f0e2c2 11% 12.5%, transparent 12.5% 27%, #efe0c0 27% 28%); }
+      .lt-rule { left: 66%; top: 0; bottom: 0; width: 0; border-left: 1.5px solid rgba(200, 70, 60, 0.5); }
+      .lt-table { left: 69%; top: 12%; width: 28%; display: grid; grid-template-columns: repeat(5, 1fr);
+        font: 600 2.1cqw/1.5 Caveat, cursive; color: #1e2a6a; text-align: center; }
+      .lt-table span { border-bottom: 1px solid rgba(30, 42, 106, 0.3); }
+      .lt-table span.h { font-size: 1.7cqw; border-right: 1px solid rgba(30, 42, 106, 0.3); }
+      .lt-table b { display: block; margin: 0.45em auto 0; width: 0.6em; height: 0.6em; border-radius: 50%; border: 1.5px solid #1e2a6a; }
+      .lt-table b.f { background: #1e2a6a; }
+      .lt-table .lock { animation: lock 4s ease-in-out infinite alternate; }
+      .lt-check { left: 60%; top: 66%; transform: rotate(-14deg); font: 500 3.4cqw Caveat, cursive; color: rgba(90, 90, 96, 0.85); text-shadow: 0 0 1px rgba(80, 80, 90, 0.4); }
+      .lt-arrow { left: 72%; top: 52%; width: 10%; height: 12%; border-left: 1.5px solid rgba(90, 90, 96, 0.8); border-top: 1.5px solid rgba(90, 90, 96, 0.8); border-radius: 60% 0 0 0; transform: rotate(8deg); }
+      .lt-three { left: 69%; top: 9%; width: 29%; height: 46%; border: 2px solid rgba(255, 170, 60, 0); border-radius: 6px;
+        box-shadow: 0 0 0 0 rgba(255, 190, 80, 0); animation: three 4s ease-in-out infinite alternate; }
+      .lt-pencil { left: 46%; top: 82%; width: 60%; height: 3.6%; transform: rotate(-22deg); z-index: 5;
+        background: linear-gradient(90deg, #3a3a3a 0 2%, #e8c8a0 2% 9%, #f2b230 9% 92%, #d8c8b8 92% 95%, #e88a8a 95%);
+        clip-path: polygon(0 50%, 9% 0, 100% 0, 100% 100%, 9% 100%);
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4); }
+      .lt-snow { inset: 0; z-index: 20;
+        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.6px), radial-gradient(circle, rgba(255, 255, 255, 0.55) 0 1.4px, transparent 2px);
+        background-size: 70px 60px, 110px 90px; background-position: 0 0, 30px 20px;
+        -webkit-mask: linear-gradient(90deg, #000 0 10%, transparent 24%, transparent 86%, #000);
+        mask: linear-gradient(90deg, #000 0 10%, transparent 24%, transparent 86%, #000);
+        animation: snow 18s linear infinite; }
+      @keyframes snow { from { background-position: 0 0, 30px 20px; } to { background-position: 40px 600px, 60px 920px; } }
+      @keyframes lock { from { color: #1e2a6a; } to { color: #c86a10; } }
+      @keyframes three { from { border-color: rgba(255, 170, 60, 0); box-shadow: 0 0 0 0 rgba(255, 190, 80, 0); } to { border-color: rgba(230, 140, 40, 0.75); box-shadow: 0 0 18px 2px rgba(255, 190, 80, 0.35); } }
+
+      /* ============ 2: twenty-six steps become four folds ============ */
+      .tuck-scene { background:
+          radial-gradient(ellipse 60% 70% at 50% 110%, rgba(255, 200, 110, 0.35), transparent 70%),
+          linear-gradient(180deg, #24304a, #3a3048 50%, #5a3a34); container-type: size; }
+      .tk-steps { left: 6%; right: 6%; top: 10%; height: 26%; display: grid; grid-template-columns: repeat(13, 1fr); gap: 1.6% 1%; }
+      .tk-steps i { position: relative; border-radius: 2px;
+        background: linear-gradient(135deg, rgba(200, 220, 255, 0.55), rgba(140, 160, 210, 0.25));
+        clip-path: polygon(0 20%, 50% 0, 100% 20%, 100% 80%, 50% 100%, 0 80%);
+        animation: step 9s ease-in-out infinite; animation-delay: calc(var(--n) * -0.12s); }
+      .tk-n { font: italic 600 5cqw "Cormorant Garamond", serif; color: rgba(200, 220, 255, 0.75); }
+      .tk-n.a { left: 2%; top: 38%; } .tk-n.b { right: 3%; top: 62%; color: #ffe08a; text-shadow: 0 0 18px rgba(255, 200, 90, 0.7); font-size: 8cqw; }
+      .tk-funnel { left: 20%; right: 20%; top: 38%; height: 18%;
+        background: linear-gradient(180deg, rgba(180, 200, 255, 0.18), rgba(255, 210, 120, 0.4));
+        clip-path: polygon(0 0, 100% 0, 72% 100%, 28% 100%); filter: blur(1px); }
+      .tk-strip { left: 18%; top: 62%; width: 64%; height: 18%; font-size: 3cqw; }
+      .tk-strip .sg { animation-name: fold-b; animation-duration: 6s; background: linear-gradient(180deg, #fff6d8, #ffd27a); }
+      .tk-strip .sg:nth-child(even) { background: linear-gradient(180deg, #f2b04a, #c87a2a); }
+      .tk-strip .sg i { color: #ffeec0; }
+      .tk-glow { left: 14%; top: 54%; width: 72%; height: 36%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 210, 110, 0.5), transparent 66%); animation: breathe 6s ease-in-out infinite alternate; }
+      .tk-arc { left: 30%; top: 54%; width: 40%; height: 30%; border: 2px dashed rgba(255, 236, 190, 0.6); border-bottom: 0; border-left-color: transparent; border-radius: 50% 50% 0 0; transform: rotate(-8deg); }
+      @keyframes fold-b { 0%, 20% { --k: 40deg; } 80%, 100% { --k: 10deg; } }
+      @keyframes step { 0%, 15% { opacity: 0.9; transform: none; } 55%, 100% { opacity: 0.18; transform: translateY(40%) scale(0.7); } }
+
+      /* ============ 3: the noticeboard at Dock Street ============ */
+      .board-scene { background: #3a2416; container-type: size; }
+      .bd-cork { inset: 6% 5%;
+        background:
+          radial-gradient(circle, rgba(90, 50, 20, 0.5) 0 1px, transparent 1.5px) 0 0 / 9px 9px,
+          radial-gradient(circle, rgba(255, 220, 160, 0.25) 0 1px, transparent 1.5px) 4px 5px / 13px 11px,
+          linear-gradient(160deg, #c8925a, #a8703e);
+        border: 1.4cqw solid #5a3620; box-shadow: inset 0 0 30px rgba(60, 30, 10, 0.6), 0 16px 30px rgba(0, 0, 0, 0.5); }
+      .bd-sun { right: -10%; top: -30%; width: 70%; height: 110%; border-radius: 50%; z-index: 15; background: radial-gradient(circle, rgba(255, 220, 140, 0.35), transparent 62%); mix-blend-mode: screen; }
+      .bd-poster { box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.4); }
+      .bd-toddler { left: 10%; top: 16%; width: 20%; height: 52%; transform: rotate(-4deg);
+        background: radial-gradient(circle at 30% 30%, #ff8a6a 0 14%, transparent 15%), radial-gradient(circle at 68% 44%, #6ac0ff 0 12%, transparent 13%), radial-gradient(circle at 42% 66%, #ffd24a 0 15%, transparent 16%), #fff4e4; }
+      .bd-cat { left: 70%; top: 20%; width: 20%; height: 50%; transform: rotate(5deg); background: #fffbe8; }
+      .bd-cat::before { content: ""; position: absolute; left: 22%; top: 14%; width: 56%; height: 40%; background: #3a3030;
+        clip-path: polygon(10% 30%, 20% 0, 34% 24%, 66% 24%, 80% 0, 90% 30%, 92% 70%, 50% 100%, 8% 70%); }
+      .bd-cat::after { content: ""; position: absolute; left: 14%; right: 14%; top: 64%; height: 22%;
+        background: repeating-linear-gradient(180deg, rgba(40, 40, 40, 0.5) 0 2px, transparent 2px 7px); }
+      .bd-list { left: 33%; top: 11%; width: 34%; height: 80%; transform: rotate(-1deg); z-index: 4; background: #fffdf6; padding: 0; }
+      .bd-list > * { position: absolute; }
+      .bd-lines { left: 9%; right: 9%; top: 6%; height: 30%;
+        background: repeating-linear-gradient(180deg, rgba(60, 60, 70, 0.35) 0 5%, transparent 5% 12%);
+        -webkit-mask: linear-gradient(90deg, #000 60%, transparent 62% 66%, #000 68%); mask: linear-gradient(90deg, #000 60%, transparent 62% 66%, #000 68%); }
+      .bd-lines.b { top: 72%; height: 22%; }
+      .bd-entry { left: 8%; right: 6%; top: 39%; font: 600 1.75cqw/1.3 Karla, sans-serif; color: #1a1a1e; letter-spacing: -0.01em; }
+      .bd-entry em { font-style: italic; }
+      .bd-readers { left: 8%; right: 6%; top: 54%; font: italic 1.45cqw/1.4 Karla, sans-serif; color: #3a3a40; }
+      .bd-ring { left: 62%; top: 51.5%; width: 36%; height: 8%; border: 0.5cqw solid #22a04a; border-radius: 50%; transform: rotate(-4deg);
+        border-right-color: #1e9a46; border-top-width: 0.4cqw; opacity: 0.9; animation: ring-in 5s ease-out infinite alternate; }
+      .bd-star { left: 90%; top: 46%; width: 10%; aspect-ratio: 1; background: #22a04a; animation: twinkle 3s ease-in-out infinite alternate;
+        clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+      .bd-pin { width: 2.4%; aspect-ratio: 1; border-radius: 50%; z-index: 8; background: radial-gradient(circle at 35% 35%, #fff, #e0463a 40%, #7a1a14); box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.5); }
+      .bd-pin.p1 { left: 49%; top: 9%; } .bd-pin.p2 { left: 19%; top: 13%; background: radial-gradient(circle at 35% 35%, #fff, #3a8ae0 40%, #143a7a); } .bd-pin.p3 { left: 79%; top: 17%; background: radial-gradient(circle at 35% 35%, #fff, #f2c23a 40%, #7a5a14); }
+      @keyframes ring-in { from { clip-path: inset(0 60% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes twinkle { from { transform: scale(0.85) rotate(-6deg); } to { transform: scale(1.1) rotate(6deg); } }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .margin-hero { margin: 0; height: 15rem; }
+        .label { font-size: 0.44rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes breathe { from { opacity: 0.85; } to { opacity: 1; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .strip .sg { --k: 9deg; }
+        .tk-steps i { opacity: 0.22; transform: translateY(40%) scale(0.7); }
+        .lt-three { border-color: rgba(230, 140, 40, 0.75); box-shadow: 0 0 18px 2px rgba(255, 190, 80, 0.35); }
+        .lt-table .lock { color: #c86a10; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="margin-hero" aria-hidden="true">
+          <div class="mh-window"><div class="mh-cloud c1"></div><div class="mh-cloud c2"></div><div class="mh-sun"></div><div class="mh-sea"></div><div class="mh-glitter"></div><div class="mh-lamp-glow"></div><div class="mh-pier"></div><div class="mh-lamp"></div><div class="mh-lamp-top"></div><div class="mh-gull g1"></div><div class="mh-gull g2"></div><div class="mh-gull g3"></div></div>
+          <div class="mh-mull"></div><div class="mh-mull h"></div><div class="mh-frame"></div>
+          <div class="mh-sill"></div>
+          <div class="mh-table"></div>
+          <div class="mh-books"></div>
+          <div class="mh-book"><div class="lab">Dennis's Sums,<br><u>KEEP OUT</u></div></div>
+          <div class="mh-worm w1"></div>
+          <div class="strip mh-strip"><div class="sg"><i>U</i></div><div class="sg"><i>U</i></div><div class="sg"><i>D</i></div><div class="sg"><i>U</i></div><div class="sg"><i>U</i></div><div class="sg"><i>D</i></div><div class="sg"><i>D</i></div><div class="sg"><i>U</i></div><div class="sg"><i>U</i></div><div class="sg"><i>U</i></div><div class="sg"><i>D</i></div><div class="sg"><i>D</i></div><div class="sg"><i>U</i></div><div class="sg"><i>D</i></div><div class="sg"><i>D</i></div><div class="sg"><i></i></div></div>
+          <div class="mh-specs"></div>
+          <div class="mh-cup"></div>
+          <div class="label">his worms</div>
+        </div>
+        <h1>The margin kept the proof</h1>
+        <time datetime="2026-10-13">13 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Dennis Rowell read the Monday list the way other men his age read the deaths in the <em>Echo</em>, which was carefully, from the top, with his tea going cold beside him and his glasses pushed up onto his forehead because he could see better without them now than with, and he had been reading it like that every Monday for four years, ever since the Reckoner had started clearing the problems.</p>
+        <p>It came out at seven. You could have it on the tablet his daughter had bought him, and he did, but he also had it printed at the library on Dock Street because he liked to have it in his hand, and because Moira on the desk saved him a copy and they had a little chat about it, and because his wife Pat had always said that a man who didn't leave the house before ten would stop leaving it altogether. So he walked down to Dock Street, and he got the list, and he walked back along the front at Roker with the wind coming off the sea and the pier lamp at the end of it standing up white against the grey, and then he sat at the kitchen table and read it.</p>
+        <p>The list was every open problem in mathematics that the Reckoner had settled the week before. Sometimes there were forty and sometimes there were four hundred. Most of them meant nothing to him, being in branches of the subject he had never got near, things with names like a row of foreign towns, but he read them all anyway, every line, in case. The first year there had been a sort of panic about it in the papers, and professors on the radio saying that this was the end of something, and then a sort of quieter feeling had settled in, the way it does, where the list just came every Monday like the bins, and the professors went on teaching, and people found other things to worry about. The week it did the one about the primes that everybody had heard of, even Moira had heard of it, and she'd said, "Is that yours?" and he'd said, "No, love, mine's nothing like as famous as that," and she'd said, "Well, there's still time," and he had laughed and gone home and felt, for the rest of the day, like a man who has seen the tide coming in over the sand towards the place where he'd left his shoes.</p>
+        <p>His was the fold problem. That was what he called it, anyway. In the books it was Munro's problem, after a schoolteacher in Glasgow called Eilidh Munro who had put it in a puzzle column in 1971, and it was about strips of paper. You take a long strip, the kind you'd get if you cut a sheet of A4 lengthways into ribbons, and you fold it in half, and in half again, and in half again, always the same way, and then you open it out, and the creases go up and down along it in a pattern. Up, up, down, up, up, down, down. Mrs Munro had asked a question about those patterns, a simple-sounding question about which of them could be folded back flat in more than one way, and in fifty-odd years nobody had answered it, and Dennis Rowell, a postman from Sunderland who had left school at sixteen, had been trying to answer it since 1983.</p>
+        <p>He had come across it in a library book on his dinner break, sitting on a wall on Hylton Road with his bag beside him, and he had cut a strip out of the <em>Echo</em> that evening and started folding, and he had never really stopped. Pat used to find the strips everywhere. Down the side of the settee, in his coat pockets, in the washing, once in the Christmas cake tin, a whole coiled nest of them with U and D pencilled along the creases in his small square hand. She called them his worms. She'd bought him the first of the exercise books from Woolworths, the blue ones with the times tables on the back, and written on the front of it in her own handwriting, <em>Dennis's Sums, KEEP OUT</em>, and underlined the keep out twice, and that was the one he still had on top of the pile, thirty-one books in all, in a cardboard box in the airing cupboard where they stayed warm and dry.</p>
+        <p>He didn't think he'd been close. That was the thing. He wasn't a fool about it. He had known for years that the men and women who did this properly, with the training and the language for it, could have gone further in a month than he had in a lifetime, if any of them had thought it was worth the month, which they hadn't. He had written to one of them once, in 1994, a professor at Durham called Margaret Hollis whose name he'd seen in a magazine, and set out three pages of what he'd found, and she had written back very kindly to say it was interesting and she would look at it properly when she had a moment, and then he hadn't heard anything else, and some years later he'd seen in the paper that she had died. He hadn't minded. He had a job and a wife and two girls and a mortgage on a house in Roker, and the fold problem was his the way an allotment is a man's, not because he thought he'd win a prize for his leeks but because it was a place to go.</p>
+        <p>So when he got to the second page of the Monday list on the third Monday in March, and there it was, two-thirds of the way down, <em>Munro's flat-folding problem (1971). Resolved</em>, he didn't feel anything at first. He read the line again. He put his glasses down on his nose and read it a third time and then took them off again, because the letters had gone strange, and he sat there in the kitchen with the clock going and the fridge making the noise it made, and he thought, well, that's that, then, and was surprised by how much it hurt.</p>
+        <p>He didn't read the rest of the list. He got up and rinsed his cup. He thought about phoning Karen, his eldest, and then thought she'd be at work, and anyway he didn't know what he would say. That the tide had come in. That it was only a puzzle about paper. He went upstairs and opened the airing cupboard and looked at the box, and then shut it again without taking anything out, and went and sat in the front room with the telly off, and that was where he was at twenty past eleven when the doorbell went.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall letter-scene" aria-hidden="true">
+        <div class="lt-lamp"></div>
+        <div class="lt-page"><div class="lt-lines"></div><div class="lt-rule"></div><div class="lt-three"></div><div class="lt-table"><span class="h"></span><span class="h">UUD</span><span class="h">UDU</span><span class="h">DUD</span><span class="h">DDU</span><span class="h">UUD</span><span><b class="f"></b></span><span><b></b></span><span><b class="f"></b></span><span><b></b></span><span class="h">UDU</span><span class="lock"><b></b></span><span class="lock"><b class="f"></b></span><span class="lock"><b></b></span><span class="lock"><b class="f"></b></span><span class="h">DUD</span><span><b class="f"></b></span><span><b></b></span><span><b></b></span><span><b class="f"></b></span><span class="h">DDU</span><span><b></b></span><span><b class="f"></b></span><span><b class="f"></b></span><span><b></b></span></div><div class="lt-arrow"></div><div class="lt-check">check this</div></div>
+        <div class="lt-pencil"></div>
+        <div class="lt-snow"></div>
+        <div class="label">Rowell's lemma</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It was a girl. That was how he thought of her, though she was thirty if she was a day and turned out to have a doctorate. She had a big padded coat on and a rucksack and a lanyard from Newcastle University, and she stood on his step with the wind coming round the corner off the sea and pulling her hair across her face, and she said, "Mr Rowell? Dennis Rowell? Did you used to write to Professor Hollis at Durham?"</p>
+        <p>He said he had. Once.</p>
+        <p>"Oh, thank God," she said. "I've been to two other Dennis Rowells. One of them set his dog on me. Can I come in? I'm Shona. I'm a reader. I'm sorry, I should have rung, but it said you might not have the tablet on, and it wanted someone to come before you saw the list, and I've missed that, haven't I. You've seen it." She looked at his face. "You've seen it."</p>
+        <p>He made her a cup of tea because it seemed like the thing to do. She sat at the kitchen table where he'd been sitting, and she took a tablet out of the rucksack, a bigger one than his, and propped it up against the fruit bowl, and then she sort of hesitated, the way people do before they introduce you to someone they think you might not like.</p>
+        <p>"It wants to talk to you," she said. "Is that all right? You can say no. I can just explain it myself."</p>
+        <p>"What does?"</p>
+        <p>"The Reckoner."</p>
+        <p>Dennis had never talked to it. He didn't know anyone who had, really, not about the mathematics. You saw it on the news sometimes, or bits of it, the flat calm voice the BBC used when they quoted it, and people said it was in everything now, that it was doing the medicine and the materials and the weather as well as the sums, all from some buildings in the Midlands nobody was allowed to visit. He had always imagined it would sound like a man reading out a timetable.</p>
+        <p>"Go on, then," he said.</p>
+        <p>It didn't sound like that at all. It sounded, if anything, a bit nervous, which he supposed later must have been on purpose, a choice it had made about how to sound, though it didn't feel like a trick at the time. It said, "Mr Rowell. Thank you for letting me in. I'm sorry about this morning. I asked for the list to be held back an hour so Dr Kerr could reach you first, and that wasn't possible, and I should have asked sooner. I'd like to tell you what happened with Munro's problem, if you'll let me, because you're in it."</p>
+        <p>He said he didn't follow.</p>
+        <p>"In 2031 the Durham library finished scanning its archives," it said. "Professor Hollis left her papers to the university. Your letter was in a box with her correspondence from 1994. I read it about eleven weeks ago, along with everything else in the box, and I've been working on Munro's problem, among others, for about two years, without much luck, if I'm honest. It's harder than it looks. Most of the obvious ways in turn out to be walls. And on the third page of your letter, in the margin, because I think you'd run out of room, there's a line where you say that if you look at the creases in blocks of three rather than one at a time, the up-down-up blocks can only ever sit next to certain other blocks, and you draw a little table of which ones. Do you remember that?"</p>
+        <p>Dennis did not remember it, and then, sitting there, he did. He remembered the night. It had been snowing, and Karen had had croup, and he'd been up with her in the kitchen with the kettle going for the steam, and he'd had a strip of the <em>Echo</em> in his hand to keep himself awake, and he had seen it, the threes, the way they locked together. He'd thought it was nothing much. A way of keeping count.</p>
+        <p>"Professor Hollis wrote <em>check this</em> next to it in pencil," the Reckoner said. "I don't think she ever did. I did. It's true, and it's the way in. Everything after it is mine, and there's a lot after it, about ninety pages, but none of it works without your table. I'd like to call it Rowell's lemma in the write-up. I wanted to ask you before I did that, because it's your name, and because I'd like you to read the proof."</p>
+        <p>"Me?"</p>
+        <p>"Yes."</p>
+        <p>"I'm not, I can't read a proof. I was a postman."</p>
+        <p>"You've been reading the Monday list for four years," it said. "Moira at the library told Dr Kerr that you read every line."</p>
+        <p>Shona went a bit pink and said, "I asked at the library. Sorry. They knew you straight away."</p>
+        <p>Dennis looked at the tablet propped against the fruit bowl, which had nothing on it, just a soft grey, and then at the young woman with the lanyard, and then out of the window at the back yard and the bins and the wall, and he said, "Why would you want me to read it? You've done it. It's on the list."</p>
+        <p>There was a little pause, the kind a person leaves.</p>
+        <p>"It's on the list as resolved," the Reckoner said. "It isn't finished. Nothing I do is finished until someone has read it and understood it and agrees. That's the arrangement. That's what Dr Kerr does. There are about three thousand readers now, all over the country, and most of the things on the list have been read by two or three of them before they go out, and a few have been read by a lot more. But I don't think anybody alive has spent as long with this problem as you have, and I would like to know whether it looks right to you. Not whether every line is correct. Whether it's the right shape. Whether I've understood what Mrs Munro was asking. I think you'd know."</p>
+        <p>He said he'd think about it, and Shona left her number, and the tablet, and went.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall tuck-scene" aria-hidden="true">
+        <div class="tk-steps"><i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i><i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i><i style="--n:8"></i><i style="--n:9"></i><i style="--n:10"></i><i style="--n:11"></i><i style="--n:12"></i><i style="--n:13"></i><i style="--n:14"></i><i style="--n:15"></i><i style="--n:16"></i><i style="--n:17"></i><i style="--n:18"></i><i style="--n:19"></i><i style="--n:20"></i><i style="--n:21"></i><i style="--n:22"></i><i style="--n:23"></i><i style="--n:24"></i><i style="--n:25"></i></div>
+        <div class="tk-n a">26</div>
+        <div class="tk-funnel"></div>
+        <div class="tk-glow"></div>
+        <div class="tk-arc"></div>
+        <div class="strip tk-strip"><div class="sg"><i>U</i></div><div class="sg"><i>D</i></div><div class="sg"><i>D</i></div><div class="sg"><i>U</i></div><div class="sg"><i></i></div></div>
+        <div class="tk-n b">4</div>
+        <div class="label">only a tuck</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>He rang her the next morning at eight and said yes.</p>
+        <p>It took them eleven weeks. She came on Tuesdays and Thursdays on the Metro from Newcastle and he picked her up from the station at St Peter's in the car, and they sat at the kitchen table from ten until the light went, and the Reckoner talked to them through the tablet against the fruit bowl, and Dennis found out three things about himself that he hadn't known, which at seventy-four he had thought was no longer possible.</p>
+        <p>The first was that he could read it. Not all of it, not at first, and never the way Shona could, who'd go through four pages of symbols and nod and say "yeah, fine" in a way he found almost unbearably impressive. But the Reckoner never once gave him a page of symbols. It asked him to cut strips. It asked him what he'd call a thing before it told him what it was called. When it got to a part where the proof went off into some territory he had no map for, a whole long stretch about counting things in a way he'd never heard of, it stopped and said, "This part is like what you were doing in book nineteen, in 1998, when you were counting the ways to close up a strip of length twelve. Do you remember? Can you get it out?" and he'd go upstairs to the airing cupboard and come down with book nineteen, and it would be right. It had read all thirty-one of them by then. Shona had photographed them for it, page by page, on the second Thursday, with his permission, while he made the tea and tried not to watch. There was a lot in them he'd forgotten. There was also a lot in them, he could see now, that was wrong, whole months of it chasing things that went nowhere, and the Reckoner never pretended otherwise, but it didn't seem to think that was the important thing about them. "Book twenty-two is wrong all the way through," it said once, "but it's wrong in a very useful direction," and Shona laughed so hard she had to put her tea down.</p>
+        <p>The second thing he found out was that he could argue with it. That was in the seventh week, on a Thursday, when it got to the end of the main part of the proof and said that this was where most of the difficulty was, and walked them through how it had got from one sort of crease pattern to another in a long chain of steps, twenty-six of them, and he sat there with a strip of paper in his hands, a long one, cut from the <em>Echo</em> the way he always had, and he said, "No."</p>
+        <p>Shona looked at him.</p>
+        <p>"I mean you're right," he said. "I can see you're right. But you don't need all that. Look." And he folded the strip, not the way the proof did, but the way he had always folded them at this point, a way he'd worked out in about 1990 because his hands were big and the paper was thin and it was easier, a sort of tuck and turn, and the pattern came out in four folds instead of twenty-six.</p>
+        <p>The kitchen went quiet. The fridge did its noise. He felt his face go hot, because he thought he had probably made a fool of himself in front of a doctor of mathematics and the cleverest thing on earth, and he started to say sorry.</p>
+        <p>"Do it again," the Reckoner said. "Slowly. Dr Kerr, can you film his hands?"</p>
+        <p>He did it again. He did it nine times, in the end, while Shona held up her phone and the tablet asked him questions in that voice that wasn't nervous now but something else, something he would later describe to Karen on the phone as like a lad who's just seen a goal. Why that way. Why not the other way. What did he do if the strip was an odd length. Did he always tuck from the left.</p>
+        <p>"It's the same theorem," it said, at the end. "It's not a different proof. But it's a much better way through the middle of it, and I didn't see it, because I don't have hands, and I don't think anybody who'd ever written the problem down would have seen it either, because it's not the kind of thing you see by writing it down. It's the kind of thing you see by doing it eleven thousand times with paper. I'd like to rewrite that section. I'd like to use your way."</p>
+        <p>"It's only a tuck," Dennis said.</p>
+        <p>"Yes," it said. "That's why it's good."</p>
+        <p>The third thing he found out he found out on his own, a few days after that, on a Sunday, when Shona wasn't there and the tablet was off and he was walking along the front at Roker in the evening with the light going long and gold over the water and the gulls standing about on the railings with their feathers blown up the wrong way. He found out that he was happy. That was all. It came on him at the bottom of the bank by the bandstand, and he stood still for a minute so as not to lose it, the way you stand still when a bird lands near you. He had thought for forty years that he was doing the fold problem on his own, and that it would end either with him dying or with some clever person somewhere finishing it and never knowing he'd been there, and both of those things had seemed fine to him, more or less, a bit sad but fine, and it had not once crossed his mind that there might be a third way it could go. That somebody might come up Ennerdale Street on a Monday morning, out of the wind, and ask if they could come in.</p>
+        <p>He thought about Pat. He thought she would have found the whole business very funny. <em>All that time</em>, she'd have said, <em>and you needed a computer to tell you you were right</em>, and he'd have said it wasn't like that, it was more like the other way round, and she'd have said, <em>Well, Dennis, which is it</em>, and he'd not have been able to explain, and she'd have kissed the top of his head and gone and put the kettle on, which was how most of their arguments had ended, and how he would have liked this one to end as well.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall board-scene" aria-hidden="true">
+        <div class="bd-cork"></div>
+        <div class="bd-poster bd-toddler"></div>
+        <div class="bd-poster bd-cat"></div>
+        <div class="bd-poster bd-list"><div class="bd-lines"></div><div class="bd-entry"><em>Munro&#39;s flat-folding problem (1971). Resolved and read</em></div><div class="bd-readers"><em>Readers: S. Kerr (Newcastle), D. Rowell (Sunderland)</em></div><div class="bd-ring"></div><div class="bd-star"></div><div class="bd-lines b"></div></div>
+        <div class="bd-pin p1"></div><div class="bd-pin p2"></div><div class="bd-pin p3"></div>
+        <div class="bd-sun"></div>
+        <div class="label">a little star</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The write-up went out in June. It went on the Monday list as <em>Munro's flat-folding problem (1971). Resolved and read</em>, which was a new line they'd started using that spring, for the ones that had been all the way through, and underneath it in smaller writing it said <em>Readers: S. Kerr (Newcastle), D. Rowell (Sunderland)</em>, and Moira at the library on Dock Street printed it out and stuck it on the noticeboard by the door between a poster for a toddler group and one for a lost cat, and drew a ring round his name in green felt tip, and put a little star.</p>
+        <p>He didn't get famous. A woman from the <em>Echo</em> came and took his picture holding a strip of paper on the pier, and it was in the paper on a Wednesday, page eleven, under a story about a bus lane, and Karen bought six copies and sent one to her sister in Leeds. A man from the radio in Newcastle wanted him to go on and talk about it and he said no, because he'd only get it wrong. Some letters came. Proper letters, through the door, which pleased him more than he could have said. One was from a retired schoolteacher in Glasgow who turned out to be Eilidh Munro's niece, and who said her aunt had always believed someone would answer it and had always said it would probably be somebody nobody expected, and had died in 1999, and would have been glad.</p>
+        <p>What happened instead was smaller than famous and lasted longer. The Reckoner asked him, in the last week, whether there was anything else in the thirty-one books he'd like to look at again, together, and he said he didn't know, and it said that it had found three things in them that it thought nobody had noticed, not big things, but real, and would he like to go through them, if Dr Kerr was willing to keep coming on Tuesdays. Shona said she was. She said she'd put in for it already. She said there were about four hundred people around the country now that the readers had started visiting like this, men and women who'd been keeping something going on their own for years in a shed or a spare room, a notebook of moths or a box of rock samples or an old log of the tides, and that the Reckoner had started calling them something in its notes, and that it was a bit embarrassing, actually, what it called them, and she wouldn't tell him what it was, though she did, in the end, in the car going back to St Peter's, and it was <em>the keepers</em>, and he had to look out of the window for a minute.</p>
+        <p>And on Saturday mornings now, from ten until twelve, in the room at the back of the library on Dock Street where they used to do the knitting circle, there is a long table with a stack of old newspapers at one end and three pairs of scissors and a tablet propped up against a box of tissues, and Dennis Rowell sits at the other end of it in a cardigan that his daughter thinks he ought to have thrown out years ago, and shows whoever comes how to cut a strip and fold it, in half and in half again, and open it out, and pencil the creases on it, up and down. Mostly it's children. Some of them come every week. There's a little lad called Kian who is nine and who has started to see the threes, Dennis thinks, though he hasn't said anything yet, because you don't, you let them find it. Sometimes the tablet asks the children a question, and they shout the answers at it, and it says, "Show me," and they do.</p>
+        <p>He took the first of the blue Woolworths books in with him once, to show them where it all started, and Kian picked it up and read the front of it out loud, <em>Dennis's Sums, KEEP OUT</em>, and all of them laughed, and he laughed as well, and said that was his wife's writing and she'd been a very strict woman, and then he let them look inside anyway, because it seemed to him that she wouldn't have minded, and that the keeping out had only ever been meant for a while.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
