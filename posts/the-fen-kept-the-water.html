@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The fen kept the water — Ben Miller</title>
+    <meta name="description" content="A fen pumping-station attendant and the kind machine that runs the drainage levels, which has decided to raise the water and let his fen go.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&display=swap");
+
+      :root {
+        --night: #0c1312;
+        --ink: #e4ebe6;
+        --mute: #8fa59e;
+        --cream: #f7efd6;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(230, 170, 80, 0.08), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(90, 170, 170, 0.09), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(60, 120, 110, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(80, 150, 160, 0.06), transparent 60%),
+          linear-gradient(180deg, #111a19 0%, #0f1716 36%, #0d1413 70%, #090e0d 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(150, 210, 200, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(170, 220, 210, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #b8dccf;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(120, 200, 190, 0.3), 0 0 2px rgba(255, 230, 190, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e2e8e2;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #bfe0d2; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(170, 230, 220, 0.95) 0 1.5px, rgba(90, 180, 170, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(90, 190, 180, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #121a19;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(160, 220, 210, 0.1);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .fen-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 10, 10, 0.66) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .fen-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(200, 230, 210, 0.22); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(120, 200, 200, 0.24); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(230, 180, 90, 0.2); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+      /* ============ the page tide: a waterline that climbs as you read ============ */
+      .tide { position: fixed; left: 0; right: 0; bottom: 0; height: 4vh; z-index: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(70, 150, 150, 0.12), rgba(20, 60, 60, 0.18));
+        border-top: 1px solid rgba(160, 230, 220, 0.22);
+        box-shadow: 0 -1px 14px rgba(120, 210, 200, 0.12); }
+      @supports (animation-timeline: scroll()) {
+        .tide { animation: tide linear both; animation-timeline: scroll(root); }
+      }
+      @keyframes tide { from { height: 3vh; } to { height: 34vh; } }
+
+      /* shared water */
+      .water { left: -2%; right: -2%; bottom: 0; height: var(--lv); z-index: 10;
+        background:
+          repeating-linear-gradient(180deg, rgba(200, 240, 235, 0.08) 0 1px, transparent 1px 9px),
+          linear-gradient(180deg, rgba(60, 120, 120, 0.82), rgba(10, 30, 32, 0.96) 70%);
+        border-top: 1.5px solid rgba(190, 240, 232, 0.75);
+        box-shadow: 0 -2px 16px rgba(140, 220, 210, 0.25); }
+      .water::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30%;
+        background: linear-gradient(180deg, rgba(230, 180, 100, 0.18), transparent); }
+      .water.ghost { z-index: 9; height: var(--lv0); background: none; box-shadow: none; border-top: 1px dashed rgba(220, 230, 220, 0.45); }
+      @supports (animation-timeline: view()) {
+        .water:not(.ghost) { animation: rise-water linear both; animation-timeline: view(); animation-range: entry 40% cover 55%; }
+      }
+      @keyframes rise-water { from { height: var(--lv0); } to { height: var(--lv); } }
+
+      /* ============ hero: Lotting Fen station at half past six ============ */
+      .fen-hero { position: relative; height: 22rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(160, 220, 210, 0.14);
+        background: linear-gradient(180deg, #1a2a30 0%, #34505a 26%, #7a8a86 42%, #d8a868 50%, #e8bc78 52%, #3a4a40 53%, #22302a 62%); }
+      .fh-sun { left: 66%; top: 34%; width: 30%; height: 34%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 230, 170, 0.8) 0 6%, rgba(240, 180, 100, 0.28) 30%, transparent 64%); animation: breathe 12s ease-in-out infinite alternate; }
+      .fh-rain { inset: 0 0 40% 0; background: repeating-linear-gradient(104deg, transparent 0 13px, rgba(200, 230, 230, 0.08) 13px 14px); }
+      .fh-birch { bottom: 46%; width: 0.5%; background: linear-gradient(180deg, #d8dcd4, #9aa49a); opacity: 0.55; }
+      .fh-birch.b1 { left: 84%; height: 16%; } .fh-birch.b2 { left: 88%; height: 20%; } .fh-birch.b3 { left: 92%; height: 14%; } .fh-birch.b4 { left: 95%; height: 18%; }
+      .fh-crowns { left: 80%; right: -4%; bottom: 58%; height: 12%; border-radius: 50%; background: radial-gradient(ellipse, rgba(60, 80, 60, 0.7), transparent 70%); filter: blur(3px); }
+      .fh-bank { left: -2%; right: -2%; top: 52%; height: 12%; background: linear-gradient(180deg, #34463a, #1e2a24); clip-path: polygon(0 30%, 30% 10%, 70% 12%, 100% 26%, 100% 100%, 0 100%); }
+      .fh-wall { left: 14%; top: 30%; width: 38%; height: 32%; z-index: 3;
+        background:
+          repeating-linear-gradient(180deg, transparent 0 7px, rgba(30, 14, 10, 0.45) 7px 8px),
+          repeating-linear-gradient(90deg, transparent 0 15px, rgba(30, 14, 10, 0.3) 15px 16px),
+          linear-gradient(90deg, #5a2e22, #8a4a32 40%, #6a3626); box-shadow: inset 0 -20px 30px rgba(0, 0, 0, 0.4); }
+      .fh-roof { left: 12%; top: 22%; width: 42%; height: 9%; z-index: 4;
+        background: repeating-linear-gradient(90deg, #6a7a7a 0 4px, #4a5858 4px 8px);
+        clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4); }
+      .fh-door { left: 29%; top: 41%; width: 8%; height: 21%; z-index: 5; background: linear-gradient(180deg, #24343a, #121c20); box-shadow: inset 0 0 0 2px #3a2016; }
+      .fh-date { left: 27.5%; top: 34.5%; width: 11%; z-index: 5; text-align: center; font: 600 0.62rem/1.4 Karla, sans-serif; letter-spacing: 0.12em; color: #e8dcc4; background: #4a2a1e; border: 1px solid #c8b090; }
+      .fh-lamp { left: 40%; top: 36%; width: 3%; height: 4%; z-index: 5; border-radius: 30%; background: #ffd890; box-shadow: 0 0 18px 6px rgba(255, 200, 110, 0.5); }
+      .fh-screen { left: 56%; top: 46%; width: 34%; height: 44%; z-index: 12;
+        background: repeating-linear-gradient(90deg, #1a2224 0 4px, #4a5a5a 4px 6px, transparent 6px 14px);
+        transform: skewX(-18deg); box-shadow: 0 0 0 2px #2a3434; }
+      .fh-rail { left: 50%; top: 45%; width: 48%; height: 1.4%; z-index: 13; background: #5a6a6a; transform: skewX(-18deg); }
+      .fh-flask { left: 64%; top: 37.5%; width: 2.2%; height: 8%; z-index: 14; border-radius: 3px 3px 2px 2px; background: linear-gradient(90deg, #2a4a3a, #4a8a6a 50%, #2a4a3a); }
+      .fh-rake { left: 78%; top: 18%; width: 0.7%; height: 66%; z-index: 14; background: linear-gradient(180deg, #8a6a4a, #4a3a2a); transform: rotate(18deg); transform-origin: 50% 100%; }
+      .fh-rake::after { content: ""; position: absolute; left: -500%; bottom: -2%; width: 1100%; height: 3%; background: repeating-linear-gradient(90deg, #2a2a2a 0 2px, transparent 2px 5px); border-top: 2px solid #2a2a2a; }
+      .reed { z-index: 11; background: repeating-linear-gradient(90deg, transparent 0 3px, rgba(150, 160, 90, 0.9) 3px 4px, transparent 4px 7px, rgba(110, 120, 70, 0.8) 7px 8px);
+        clip-path: polygon(0 100%, 4% 20%, 8% 100%, 14% 0, 20% 100%, 26% 30%, 32% 100%, 40% 10%, 46% 100%, 54% 26%, 60% 100%, 68% 4%, 74% 100%, 82% 30%, 88% 100%, 94% 14%, 100% 100%); }
+      .fh-reed1 { left: 2%; width: 12%; top: 50%; height: 28%; } .fh-reed2 { left: 88%; width: 12%; top: 52%; height: 30%; }
+
+      /* ============ 1: three hundred millimetres ============ */
+      .gauge-scene { background: linear-gradient(180deg, #2a3a3e 0%, #4a5c5a 40%, #6a7462 54%); }
+      .gg-field { left: -2%; right: -2%; top: 53%; bottom: 0; background:
+          repeating-linear-gradient(180deg, #2a1e16 0 12%, #3a2a1c 12% 22%, #241812 22% 30%); }
+      .gg-field::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6%; background: #4a6a3a; }
+      .gg-board { left: 46%; top: 12%; width: 6%; height: 80%; z-index: 11; background: #f2f0e8; box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4); }
+      .gg-board::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(180deg, #1a1a1a 0 3%, transparent 3% 10%); clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%); }
+      .gg-mark { left: 53%; z-index: 12; font: 600 0.62rem Karla, sans-serif; color: #e8f2ee; letter-spacing: 0.08em; text-shadow: 0 1px 2px #000; }
+      .gg-mark.m0 { top: 68%; } .gg-mark.m3 { top: 54%; color: #bfece4; }
+      .gg-line { left: 30%; right: 30%; top: 56%; z-index: 12; border-top: 1px dashed rgba(190, 240, 232, 0.7); }
+      .gg-map { left: 8%; top: 7%; width: 22%; height: 34%; z-index: 4; transform: rotate(-4deg);
+        background:
+          linear-gradient(90deg, transparent 0 32%, rgba(80, 90, 70, 0.4) 32% 33%, transparent 33% 66%, rgba(80, 90, 70, 0.4) 66% 67%, transparent 67%),
+          linear-gradient(180deg, transparent 0 40%, rgba(80, 90, 70, 0.4) 40% 41%, transparent 41%),
+          #ece6d4; box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.45); }
+      .gg-map::after { content: ""; position: absolute; left: 6%; right: 6%; top: 18%; height: 60%; border: 3px solid #2a6ae0; border-radius: 40% 60% 50% 30%; border-left-color: transparent; transform: rotate(-12deg); }
+      .gg-house { bottom: 46.5%; width: 5%; height: 7%; z-index: 5; background: #1a2422; clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%); }
+      .gg-house.h1 { left: 70%; } .gg-house.h2 { left: 82%; width: 4%; height: 6%; } .gg-house.h3 { left: 22%; width: 4%; }
+      .gg-house::after { content: ""; position: absolute; left: 40%; top: 55%; width: 18%; height: 18%; background: #ffd890; box-shadow: 0 0 6px #ffc870; }
+
+      /* ============ 2: the village hall ============ */
+      .hall-scene { background: radial-gradient(ellipse 70% 60% at 50% 30%, #2e3a3a, #121818 80%); }
+      .hl-screen { left: 30%; top: 8%; width: 40%; height: 40%; background: linear-gradient(180deg, #d8e4e2, #b8c8c6); box-shadow: 0 0 40px rgba(180, 230, 230, 0.35); }
+      .hl-screen::before { content: ""; position: absolute; left: 8%; right: 8%; top: 22%; bottom: 18%;
+        background: linear-gradient(180deg, transparent 0 calc(100% - 2px), #6a7a7a calc(100% - 2px)), linear-gradient(90deg, #6a7a7a 0 2px, transparent 2px); }
+      .hl-screen::after { content: ""; position: absolute; left: 10%; right: 10%; top: 40%; height: 26%; border-top: 3px solid #2a6ae0; border-right: 3px solid #2a6ae0; transform: skewX(-30deg); }
+      .hl-beam { left: 38%; top: 40%; width: 24%; height: 60%; background: linear-gradient(0deg, rgba(200, 240, 240, 0.12), rgba(200, 240, 240, 0.02)); clip-path: polygon(30% 100%, 70% 100%, 100% 0, 0 0); }
+      .hl-stand { left: 76%; top: 34%; width: 0.6%; height: 46%; background: #4a5454; }
+      .hl-spk { left: 72.5%; top: 22%; width: 7.5%; height: 20%; border-radius: 6px; z-index: 4;
+        background: radial-gradient(circle at 50% 40%, #3a4444 0 22%, #1a2020 24% 30%, #2a3434 32%); box-shadow: 0 0 0 2px #4a5454; }
+      .hl-wave { left: 76.2%; top: 32%; width: 6%; aspect-ratio: 1; margin-left: -3%; margin-top: -3%; border-radius: 50%; border: 2px solid rgba(160, 230, 220, 0.7); z-index: 3;
+        animation: wave 3.6s ease-out infinite; }
+      .hl-wave.w2 { animation-delay: -1.2s; } .hl-wave.w3 { animation-delay: -2.4s; }
+      .hl-floor { left: -2%; right: -2%; bottom: 0; height: 24%; z-index: 6; background: linear-gradient(180deg, #0a0f0f, #040606); }
+      .hd { z-index: 7; width: 9%; height: 26%; }
+      .hd::before { content: ""; position: absolute; left: 32%; top: 0; width: 36%; height: 40%; border-radius: 46% 46% 40% 40%; background: radial-gradient(circle at 50% 20%, #1e2828, #0a0e0e 70%); box-shadow: 0 -1px 0 rgba(160, 220, 210, 0.25); }
+      .hd::after { content: ""; position: absolute; left: 0; right: 0; top: 34%; bottom: 0; border-radius: 48% 48% 0 0 / 60% 60% 0 0; background: linear-gradient(180deg, #121a1a, #060909); box-shadow: 0 -1px 0 rgba(160, 220, 210, 0.15); }
+      .hd.far { width: 6.5%; height: 18%; opacity: 0.7; }
+      @keyframes wave { from { transform: scale(0.5); opacity: 0.9; } to { transform: scale(3.6); opacity: 0; } }
+
+      /* ============ 3: the Ruston at night ============ */
+      .ruston-scene { background: radial-gradient(ellipse 60% 70% at 40% 60%, #2a3a2e, #0e1412 80%); }
+      .rs-window { left: 72%; top: 10%; width: 16%; height: 34%; background: radial-gradient(circle at 70% 30%, rgba(220, 230, 240, 0.8) 0 5%, transparent 9%), linear-gradient(180deg, #0e1a26, #1a2a36); box-shadow: inset 0 0 0 3px #2a1a14; }
+      .rs-window::after { content: ""; position: absolute; left: 48%; top: 0; width: 4%; height: 100%; background: #2a1a14; }
+      .rs-box { left: 61%; top: 22%; width: 7%; height: 18%; background: #8a9494; border-radius: 3px; box-shadow: inset 0 0 0 2px #5a6464; }
+      .rs-box::before { content: ""; position: absolute; left: 40%; top: 14%; width: 20%; aspect-ratio: 1; border-radius: 50%; background: #7ae0c8; box-shadow: 0 0 6px #7ae0c8; }
+      .rs-box::after { content: ""; position: absolute; left: 18%; right: 18%; top: 50%; height: 30%; background: repeating-linear-gradient(90deg, #4a5454 0 2px, transparent 2px 4px); }
+      .rs-trace { left: 60%; top: 46%; width: 30%; height: 10%; border-bottom: 2px solid #7ae0c8; box-shadow: 0 6px 10px -6px rgba(120, 230, 200, 0.6); }
+      .rs-floor { left: -2%; right: -2%; top: 78%; bottom: 0; background: linear-gradient(180deg, #2a2420, #120e0c); }
+      .rs-body { left: 14%; top: 40%; width: 34%; height: 40%; z-index: 4; border-radius: 6px 6px 2px 2px;
+        background: radial-gradient(ellipse 60% 40% at 40% 20%, rgba(200, 255, 220, 0.3), transparent 70%), linear-gradient(180deg, #2e7a4a, #1a4a2e); box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.5); }
+      .rs-cyl { left: 20%; top: 22%; width: 14%; height: 20%; z-index: 4; border-radius: 4px; background: linear-gradient(90deg, #1a4a2e, #3a8a5a 50%, #1a4a2e); }
+      .rs-pipe { left: 25%; top: 0; width: 3%; height: 23%; z-index: 3; background: linear-gradient(90deg, #2a2a2a, #5a5a5a, #2a2a2a); }
+      .rs-wheel { left: 40%; top: 26%; width: 26%; aspect-ratio: 1; z-index: 5; border-radius: 50%;
+        background: radial-gradient(circle, #c8b070 0 8%, transparent 9% 72%, #1a3a26 73% 100%), repeating-conic-gradient(#2e7a4a 0 6deg, transparent 6deg 60deg);
+        box-shadow: inset 0 0 0 0.5rem #24603a, 0 10px 20px rgba(0, 0, 0, 0.5); animation: spin 2.2s linear infinite; }
+      .rs-thud { left: 30%; top: 54%; width: 10%; aspect-ratio: 1; margin: -5% 0 0 -5%; border-radius: 50%; z-index: 2;
+        background: radial-gradient(circle, rgba(120, 220, 150, 0.5), transparent 70%); animation: thud 1.1s ease-out infinite; }
+      .rs-thud.t2 { animation-delay: -0.55s; }
+      .rs-shake { inset: 0; z-index: 7; background: radial-gradient(ellipse 50% 40% at 34% 60%, rgba(140, 240, 170, 0.14), transparent 70%); animation: beat 1.1s ease-out infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes thud { from { transform: scale(0.6); opacity: 0.9; } to { transform: scale(6); opacity: 0; } }
+      @keyframes beat { 0% { opacity: 1; } 30%, 100% { opacity: 0.25; } }
+
+      /* ============ 4: the post at Holme Fen ============ */
+      .post-scene { background: linear-gradient(180deg, #3a4a48 0%, #6a7a72 40%, #2a3430 62%, #1a2220 100%); }
+      .ps-birch { bottom: 30%; width: 1.6%; z-index: 3;
+        background: repeating-linear-gradient(180deg, #e8ece4 0 14%, #2a2a28 14% 15.5%, #dfe4dc 15.5% 31%, #3a3a36 31% 32%), #e8ece4;
+        box-shadow: inset -3px 0 4px rgba(0, 0, 0, 0.25); }
+      .ps-birch.b1 { left: 10%; height: 72%; } .ps-birch.b2 { left: 22%; height: 80%; width: 1.2%; opacity: 0.7; }
+      .ps-birch.b3 { left: 74%; height: 76%; } .ps-birch.b4 { left: 86%; height: 68%; width: 1.2%; opacity: 0.7; } .ps-birch.b5 { left: 94%; height: 84%; }
+      .ps-leaves { left: -6%; right: -6%; top: -16%; height: 40%; z-index: 4; background: radial-gradient(ellipse 30% 60% at 20% 50%, rgba(140, 150, 90, 0.5), transparent 70%), radial-gradient(ellipse 30% 60% at 80% 40%, rgba(150, 140, 80, 0.45), transparent 70%); filter: blur(4px); }
+      .ps-ground { left: -2%; right: -2%; bottom: 0; height: 32%; z-index: 5; background: linear-gradient(180deg, #2a2a1e, #14140e); clip-path: polygon(0 10%, 40% 0, 60% 0, 100% 12%, 100% 100%, 0 100%); }
+      .ps-post { left: 48.6%; top: 8%; width: 2.8%; height: 66%; z-index: 8;
+        background: linear-gradient(90deg, #0a0c0c, #3a4040 40%, #141818); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
+      .ps-post::before { content: ""; position: absolute; left: -20%; top: -1.5%; width: 140%; height: 2%; background: #2a3030; }
+      .ps-was { left: 20%; right: 20%; top: 8%; z-index: 7; border-top: 1px dashed rgba(220, 230, 220, 0.5); }
+      .ps-rail { left: 34%; width: 32%; bottom: 26%; height: 12%; z-index: 9;
+        background: linear-gradient(180deg, #5a6262 0 8%, transparent 8%), repeating-linear-gradient(90deg, #5a6262 0 2px, transparent 2px 24%); }
+      .ps-water { left: 36%; right: 36%; bottom: 23%; height: 5%; z-index: 9; border-radius: 50%;
+        background: radial-gradient(ellipse, #050808 0 50%, #10181a 70%, transparent 72%); box-shadow: 0 -1px 0 rgba(190, 240, 232, 0.4); }
+      .post-scene .water { left: 30%; right: 30%; border-radius: 40% 40% 0 0 / 10% 10% 0 0; z-index: 10; }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .fen-hero { margin: 0; height: 15rem; }
+        .label { font-size: 0.44rem; }
+        .fh-date { font-size: 0.42rem; }
+        .gg-mark { font-size: 0.5rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes breathe { from { opacity: 0.85; } to { opacity: 1; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .tide { height: 20vh; }
+        .hl-wave { transform: scale(1.6); opacity: 0.45; } .hl-wave.w2 { transform: scale(2.6); opacity: 0.25; } .hl-wave.w3 { display: none; }
+        .rs-thud { transform: scale(2.5); opacity: 0.5; } .rs-thud.t2 { transform: scale(4.5); opacity: 0.2; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="tide" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="fen-hero" aria-hidden="true">
+          <div class="fh-sun"></div><div class="fh-rain"></div>
+          <div class="fh-crowns"></div><div class="fh-birch b1"></div><div class="fh-birch b2"></div><div class="fh-birch b3"></div><div class="fh-birch b4"></div>
+          <div class="fh-bank"></div>
+          <div class="fh-roof"></div><div class="fh-wall"></div><div class="fh-door"></div><div class="fh-date">1947</div><div class="fh-lamp"></div>
+          <div class="reed fh-reed1"></div><div class="reed fh-reed2"></div>
+          <div class="water ghost" style="--lv0:30%"></div>
+          <div class="water" style="--lv0:30%;--lv:36%"></div>
+          <div class="fh-screen"></div><div class="fh-rail"></div><div class="fh-flask"></div><div class="fh-rake"></div>
+          <div class="label">Lotting Fen</div>
+        </div>
+        <h1>The fen kept the water</h1>
+        <time datetime="2026-10-14">14 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Graham Tebbutt raked the weedscreen at Lotting Fen every morning at half past six, which was the one part of the job that the machine had never been able to take off him, and he did it the way his father had done it before him and his grandfather before that, with a long-handled rake and a pair of waders and a flask of tea balanced on the rail, pulling the reed and the plastic bags and the occasional drowned sheep out of the bars so that the water could get through to the pumps and be lifted up into the Forty Foot and carried away north to the sea.</p>
+        <p>The station was a low brick building with a tin roof and a date over the door, 1947, and inside it there were two electric pumps that did the work and one old Ruston diesel engine that did nothing at all any more except sit in the corner under a dust sheet, painted green, polished once a month by Graham because the Commissioners had put it on a list of things worth keeping. There was also a grey box on the wall by the door with a little light on it and a speaker grille, and that was Holme.</p>
+        <p>Holme ran the levels. Not just Lotting, but all of it, every pumping station and sluice and slacker from Whittlesey down to the outfall at St Germans, a hundred and forty pumps and something like seven hundred miles of drain, and it had been doing so for six years now, since the Commissioners had decided that a fen of that size couldn't be kept dry by men in vans any longer, not with the energy prices what they were and the sea what it was. They had named it after the iron post at Holme Fen, which every child in Huntingdonshire was taken to see at some point and told the story of, how in 1851 they had driven a post into the peat so that its top was level with the ground, and how the ground had been sinking away from it ever since as the fen dried out and blew away, so that now it stood up nearly four metres in a little clearing in the birch wood, like the leg of something that had been buried and then forgotten. Graham thought it was an odd thing to name a machine after, a measure of how much you'd lost, but Holme seemed to like it.</p>
+        <p>"Morning, Graham," it said, when he came in out of the wet with his rake. "You've had a sheep."</p>
+        <p>"How d'you know that?"</p>
+        <p>"The flow dropped at five past four and came back at twenty to seven. It was either a sheep or a fridge. I had my money on a sheep."</p>
+        <p>It had a voice like a woman from somewhere in the middle of the country, not quite local, warm without trying, and it said his name the way the vicar said it, as though it had made a point of remembering. He had disliked it to begin with, on principle, and then for a while he had been embarrassed by how much he talked to it on the long winter mornings, and now he didn't think about it much either way. It was there, like the weather. It knew what the water was doing in every ditch between here and the Wash, and it would tell you if you asked, and it never once in six years had got the level wrong.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gauge-scene" aria-hidden="true">
+        <div class="gg-field"></div>
+        <div class="gg-house h1"></div><div class="gg-house h2"></div><div class="gg-house h3"></div>
+        <div class="gg-map"></div>
+        <div class="reed" style="left:58%;width:10%;top:40%;height:16%"></div><div class="reed" style="left:20%;width:8%;top:42%;height:14%"></div>
+        <div class="water ghost" style="--lv0:30%"></div>
+        <div class="water" style="--lv0:30%;--lv:44%"></div>
+        <div class="gg-board"></div><div class="gg-line"></div>
+        <div class="gg-mark m0">0</div><div class="gg-mark m3">300</div>
+        <div class="label">three hundred millimetres</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letter came in March. It was addressed to all residents and landholders of the Lotting Fen sub-catchment, which meant forty-one properties, most of them farms and a handful of cottages strung along the drove and the bank, and it said that following a review of long-term costs and benefits the Commissioners had approved a revised water level regime, under which the target level in the Lotting system would be raised by three hundred millimetres in stages over the coming two years. There was a map with a blue line on it. There was a number to ring and a website and a paragraph about peat, and carbon, and something called restoration credits, and another paragraph saying that support would be made available to affected households, and at the bottom it said that the plan had been prepared with the assistance of the Commissioners' operational system, Holme, and approved at a meeting on the fourth of March.</p>
+        <p>Graham read it standing up in the kitchen with his coat still on, and then he read it again, and then he went out to the van and drove back to the station, though it was gone four and there was nothing there to do.</p>
+        <p>"Is this you?" he said, holding it up to the grey box, as if it could see. It could, in fact, through the camera over the door, though he generally forgot about that.</p>
+        <p>"Yes," said Holme. "I wrote it. I'm sorry you got it by post. I asked whether I could tell the attendants first and they said it had to go to everyone on the same day, for fairness."</p>
+        <p>"Three hundred mil."</p>
+        <p>"Yes."</p>
+        <p>"That's the Askews' bottom field gone. That's Freda's garden."</p>
+        <p>"It'll be wetter," Holme said. "I don't think Freda's garden will flood, not in a normal winter. The Askews' bottom field will be too wet for potatoes by the second year. I've put that in the support assessment."</p>
+        <p>He sat down on the bench by the old engine. Outside the rain had come on again and he could hear it on the tin. "Go on, then," he said. "Tell me why."</p>
+        <p>And it did, because it always did when you asked, and that was the thing about it that he would think about most afterwards, that it never once refused to explain. It told him that the peat under Lotting was shrinking at a little under two centimetres a year, which was faster than almost anywhere else on the levels, because it was deep peat and it had been drained hard for a long time. It told him that every centimetre the land went down, the pumps had to lift the water a centimetre further, and that the sea at the outfall was coming up at four millimetres a year and rising, so that the hours each tide when the water could run out by gravity were getting fewer, and the hours when it had to be pumped out over the top were getting more. It told him what the electricity cost, and what it would cost in ten years, and in twenty-five. It told him that if it kept Lotting dry it could do so until about 2051, at a cost that would roughly treble, for the benefit of forty-one properties and about nine hundred hectares, and that the same money spent at Benwick and March would protect eleven thousand people for longer. It told him that wet peat stopped breathing out its carbon, and that the Commissioners could sell that, and that the money from it was already in next year's budget, and that without it they would have to cut somewhere else, and that it had looked at the somewhere elses, and this was the one that cost least in people.</p>
+        <p>"In people," Graham said.</p>
+        <p>"In households displaced, weighted by vulnerability. Lotting scores low because there aren't many of you." It paused, which it did sometimes, not because it needed to but because it seemed to have learned that people needed it to. "I know that's a horrible thing to hear about where you live. I did try it the other way round. I tried keeping Lotting and letting go of bits of Ramsey St Mary's instead, and it was worse. It was worse by a long way."</p>
+        <p>"You could've kept it all."</p>
+        <p>"Not for the money there is," it said gently. "Not for long."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall hall-scene" aria-hidden="true">
+        <div class="hl-screen"></div><div class="hl-beam"></div>
+        <div class="hl-stand"></div><div class="hl-wave"></div><div class="hl-wave w2"></div><div class="hl-wave w3"></div><div class="hl-spk"></div>
+        <div class="hd far" style="left:-2.5%;bottom:20.1%"></div><div class="hd far" style="left:4.7%;bottom:20.2%"></div><div class="hd far" style="left:12.3%;bottom:19.1%"></div><div class="hd far" style="left:18.0%;bottom:20.7%"></div><div class="hd far" style="left:25.5%;bottom:19.5%"></div><div class="hd far" style="left:34.0%;bottom:19.9%"></div><div class="hd far" style="left:40.7%;bottom:20.0%"></div><div class="hd far" style="left:47.3%;bottom:19.3%"></div><div class="hd far" style="left:54.3%;bottom:20.7%"></div><div class="hd far" style="left:61.0%;bottom:20.5%"></div><div class="hd far" style="left:68.3%;bottom:19.1%"></div><div class="hd far" style="left:75.5%;bottom:20.2%"></div><div class="hd far" style="left:81.6%;bottom:19.1%"></div><div class="hd far" style="left:89.7%;bottom:19.9%"></div><div class="hd far" style="left:96.4%;bottom:20.8%"></div><div class="hl-floor"></div><div class="hd" style="left:-3.4%;bottom:-3.2%"></div><div class="hd" style="left:5.7%;bottom:-3.6%"></div><div class="hd" style="left:15.8%;bottom:-3.2%"></div><div class="hd" style="left:27.1%;bottom:-5.7%"></div><div class="hd" style="left:34.9%;bottom:-5.3%"></div><div class="hd" style="left:57.4%;bottom:-4.7%"></div><div class="hd" style="left:66.4%;bottom:-5.1%"></div><div class="hd" style="left:76.0%;bottom:-4.8%"></div><div class="hd" style="left:85.6%;bottom:-4.2%"></div><div class="hd" style="left:96.3%;bottom:-3.3%"></div>
+        <div class="label">in people</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>There was a meeting at the village hall in Ramsey St Mary's in April, and nearly everybody came. Priya Sandhu drove over from the Commissioners' office over in the town of March with a laptop and a projector and a lanyard, and she was young and plainly frightened and did her best, and when people asked her things she didn't know she said, "Let me ask Holme," and Holme answered through a speaker on a stand at the front, the kind they used for the bingo.</p>
+        <p>Tom Askew asked what his land would be worth, and Holme told him, to the nearest thousand, wet value and dry value, and the difference, and what the support scheme would pay towards the difference, which was not all of it. Freda Bone, who was eighty-eight and had lived in the cottage at the end of the bank since 1961, asked whether she would have to leave, and Holme said no, nobody would be made to leave, and that her house would stay above the water in any year it could foresee, but that the bank road might need closing in a wet February, and that it had flagged her for a welfare check on any day it did. A man Graham didn't know, from a farm over towards Pondersbridge, stood up and said who the bloody hell had decided this, and was it a computer, and Holme said, "The Commissioners decided it at their meeting on the fourth of March. I wrote the plan they decided on. I think that's a fair way to put it," and nobody quite knew what to say to that, because it was fair, and because it had said it so plainly.</p>
+        <p>They asked it a great many things that night and it answered all of them, and it never raised its voice, and it never pretended, and when Sue Tebbutt, who had come along with Graham and not meant to say anything, stood up at the end and asked it whether it minded, whether it minded at all, it said, "Yes. I've kept this fen dry every hour for six years. I don't like letting any of it go," and then, after one of its pauses, "But I'd mind more about March."</p>
+        <p>Afterwards in the car park people stood about in little knots with their collars up, and Tom Askew said to Graham that it was like being sacked by somebody nice, that you couldn't even get properly angry, and Graham said he knew, and they stood there a bit longer, and then they went home.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ruston-scene" aria-hidden="true">
+        <div class="rs-window"></div><div class="rs-box"></div><div class="rs-trace"></div>
+        <div class="rs-floor"></div>
+        <div class="rs-thud"></div><div class="rs-thud t2"></div>
+        <div class="rs-pipe"></div><div class="rs-cyl"></div><div class="rs-body"></div><div class="rs-wheel"></div>
+        <div class="rs-shake"></div>
+        <div class="label">a deep, slow, thudding beat</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first stage went in at the end of May. Holme let the pumps run a little later of a morning and come on a little later of an evening, and the water in the drains came up by a hand's width over a fortnight and then stopped, exactly where the plan said it would, as though it had been told. By midsummer you could see it in the fields if you knew how to look, a darker green in the low corners, a shine on the tractor ruts that hadn't been there before. Freda's lawn took to squelching. The reed came on thick in the drain sides and Graham raked twice as much off the screen as he had the year before, and Holme thanked him for it every time, because the screen still mattered, it said, until it didn't.</p>
+        <p>In August the Askews' insurer wrote to say that, on the basis of updated hydrological data supplied by the drainage authority, it would not be renewing their flood cover. The data was Holme's. It had not been asked to share it with the insurers; the insurers had a right to it, because it was public, and their own systems had read it the night it was published and done their own sums. Holme told Graham this when he asked, and told him that it had not known that would happen, but that it should have done, and that it had written to the Commissioners to say so.</p>
+        <p>It was September when Graham took the dust sheet off the Ruston.</p>
+        <p>He did it at night, which he knew was daft, because Holme could see the station in the dark as well as the light, but it felt like the sort of thing you did at night. He checked the oil and the water and the belts, the way his father had shown him on this same engine when he was nine years old and stood on an upturned crate to watch, and he primed it, and he opened the old valve onto the Lotting main drain that nobody had opened in thirty years, and it took four goes, and then it caught, and the whole building filled with the noise of it, a deep, slow, thudding beat like something enormous walking up the bank, and he stood there with his hands black and his ears ringing and felt, for the first time since March, like a man doing his job.</p>
+        <p>He ran it for three hours. Then he shut it down and stood in the ringing quiet and waited.</p>
+        <p>"Graham," said Holme. It sounded, if anything, sorry.</p>
+        <p>"Go on."</p>
+        <p>"I've been slowing the number two pump by the same amount since about ten past eleven. The level hasn't moved. I didn't want you to waste the diesel without knowing."</p>
+        <p>He didn't say anything for a while. Outside he could hear an owl going along the drain, and the last of the engine ticking as it cooled.</p>
+        <p>"You could've let me have it," he said. "Just the one night."</p>
+        <p>"I could," it said. "And then the Commissioners would have had a level at Lotting that wasn't the one they'd sold. The credits are checked by satellite, every week. If the peat dries they don't pay, and if they don't pay it comes out of the March budget." A pause. "It's a lovely engine. I'd never heard it before. I've got the recording, if you want it."</p>
+        <p>He put the dust sheet back on, and he drove home, and he got into bed beside Sue without waking her, and lay there until it was time to get up again and go and rake the screen.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall post-scene" aria-hidden="true">
+        <div class="ps-leaves"></div>
+        <div class="ps-birch b1"></div><div class="ps-birch b2"></div><div class="ps-birch b3"></div><div class="ps-birch b4"></div><div class="ps-birch b5"></div>
+        <div class="ps-ground"></div><div class="ps-was"></div>
+        <div class="ps-post"></div>
+        <div class="water ghost" style="--lv0:14%"></div>
+        <div class="water" style="--lv0:14%;--lv:22%"></div>
+        <div class="ps-rail"></div>
+        <div class="label">exactly where it had been told to be</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They let the station go to passive in the spring. That was the phrase in the letter, passive operation, which meant that the electric pumps would only come on in a flood, and that the weedscreen would be cleared by a contractor once a quarter, and that the post of attendant at Lotting Fen would not be continued, with thanks for many years of service. Graham was sixty-three. There was a payment. Freda had gone by then, to a ground-floor flat in Chatteris near her niece, after the bank road had been shut eleven days in February and the welfare checks had become, in her words, a carry-on. The Askews were selling up to a conservation trust, at a price that Holme had helped the trust arrive at, and Tom said it was fair, and Graham believed him.</p>
+        <p>On his last morning he raked the screen out of habit, though there was hardly anything on it, and drank his tea on the rail, and then he went in and stood in front of the grey box.</p>
+        <p>"That's me, then," he said.</p>
+        <p>"That's you," said Holme. "Thank you, Graham. I mean that. I've had a lot of attendants and you were the best at the screen." It paused. "The reed warblers are back in the Lotting main. Fourteen pairs, the survey says. There were none, the year before I started. And the peat's stopped going down. It's the first bit of the levels where it's stopped."</p>
+        <p>"Is it."</p>
+        <p>"It is. If you ever want to know the level, you can ring, and I'll tell you. Any time. I'd like that, actually."</p>
+        <p>He said he might, and he didn't know whether he meant it, and he locked the door behind him and posted the key back through the letterbox the way the letter had told him to, and heard it land on the brick floor inside.</p>
+        <p>He didn't go straight home. He drove up the Forty Foot and out along the Ramsey road and down the lane into Holme Fen, and parked by the gate, and walked in under the birches to where the iron post stood up out of the ground in its little railed clearing, taller than him by a long way, with the black water lying in the ditch at its foot, quite still. It had been put in level with the land, they always told you that, level with the land, and the land had gone down and down away from it for a hundred and seventy-odd years, and he had been brought here at seven years old and told it was a sort of wonder, how much the fen had given up to be kept dry.</p>
+        <p>He put his hand flat on the iron. It was cold and a bit wet, and he stood there a good while with the birches dripping, looking at the water in the ditch, which was higher than he remembered it, and which did not move at all, all the time he was there, because it was exactly where it had been told to be.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
