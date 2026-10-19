@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The report kept her name — Ben Miller</title>
+    <meta name="description" content="A miner&#x27;s daughter in Doncaster authorises nine hundred decisions a shift for a system that only recommends, until one of them has a name.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0f1216;
+        --ink: #e6e8ea;
+        --mute: #9aa2aa;
+        --cream: #f7efd6;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(240, 170, 60, 0.09), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(80, 140, 240, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(242, 194, 58, 0.07), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(255, 150, 90, 0.06), transparent 60%),
+          linear-gradient(180deg, #13161b 0%, #111418 36%, #0f1114 70%, #0a0b0d 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(150, 180, 230, 0.04), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 170, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f2d27a;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(242, 194, 58, 0.35), 0 0 2px rgba(255, 230, 190, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e2e4e6;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f2c27a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 120, 0.95) 0 1.5px, rgba(242, 194, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(242, 194, 58, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #14171c;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(180, 200, 230, 0.1);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .report-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 6, 10, 0.66) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .report-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 214, 110, 0.38); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(110, 160, 240, 0.22); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(242, 194, 58, 0.26); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+      .pencil-t { font-family: Caveat, cursive; font-weight: 500; color: #4a4a50; line-height: 1.05; }
+      .ui-t { font-family: Karla, system-ui, sans-serif; }
+
+      /* ============ hero: the deputy's report book ============ */
+      .report-hero { position: relative; height: 22rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(240, 190, 110, 0.14);
+        background: radial-gradient(ellipse 60% 70% at 72% 40%, #3a2a1a, #14100c 70%); }
+      .rh-dark { inset: 0; background: repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 9px); }
+      .rh-book { left: 9%; top: 12%; width: 60%; height: 80%; transform: rotate(-4deg); z-index: 3;
+        background: linear-gradient(90deg, #1e2a3a, #2a3a50); border-radius: 6px; box-shadow: 0 24px 40px rgba(0, 0, 0, 0.6); }
+      .rh-page { top: 4%; bottom: 4%; z-index: 4;
+        background: radial-gradient(ellipse 70% 60% at 70% 30%, rgba(255, 240, 210, 0.35), transparent 70%), repeating-linear-gradient(180deg, transparent 0 7.6%, rgba(90, 110, 150, 0.35) 7.6% 8%), linear-gradient(180deg, #e8dcc0, #d8c8a4);
+        box-shadow: inset 0 0 26px rgba(120, 90, 50, 0.35); }
+      .rh-page.l { left: 11%; width: 29%; transform: rotate(-4deg); transform-origin: 100% 50%; border-radius: 4px 0 0 4px; }
+      .rh-page.r { left: 39.6%; width: 28%; transform: rotate(-4deg); border-radius: 0 4px 4px 0; }
+      .rh-text { z-index: 5; transform: rotate(-4deg); font-size: 2.1cqw; }
+      .rh-text i { display: block; height: 0.6em; margin: 0.42em 0; border-bottom: 1px solid rgba(70, 70, 80, 0.55); border-radius: 50%; }
+      .rh-text.l { left: 14%; top: 11%; width: 23%; }
+      .rh-text.r { left: 42%; top: 11%; width: 22%; }
+      .rh-text b { display: block; font-weight: 500; margin-top: 0.4em; }
+      .rh-sig { display: inline-block; font-size: 1.3em; }
+      .rh-sig s { display: inline-block; text-decoration: none; transform: skewX(14deg); }
+      .rh-lamp { left: 74%; top: 18%; width: 11%; height: 60%; z-index: 6; }
+      .rh-lamp .glass { position: absolute; left: 18%; right: 18%; top: 30%; height: 36%; border-radius: 30%; background: radial-gradient(ellipse at 50% 70%, #fff2c0 0 12%, #ffc860 30%, rgba(240, 160, 60, 0.4) 60%, rgba(120, 90, 50, 0.3)); box-shadow: 0 0 40px 12px rgba(255, 190, 90, 0.35); }
+      .rh-lamp .flame { position: absolute; left: 44%; top: 46%; width: 12%; height: 14%; border-radius: 50% 50% 40% 40% / 70% 70% 30% 30%; background: radial-gradient(circle at 50% 70%, #fff, #ffd060 60%, #f08020); animation: flicker 1.6s ease-in-out infinite alternate; }
+      .rh-lamp .top { position: absolute; left: 10%; right: 10%; top: 0; height: 30%; background: repeating-linear-gradient(90deg, #6a6a6a 0 2px, #3a3a3a 2px 5px); clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%); }
+      .rh-lamp .base { position: absolute; left: 4%; right: 4%; top: 66%; height: 22%; background: linear-gradient(90deg, #5a4a30, #c8a060 50%, #5a4a30); border-radius: 3px; }
+      .rh-lamp .ring { position: absolute; left: 36%; top: -10%; width: 28%; height: 12%; border: 2px solid #6a6a6a; border-radius: 50%; }
+      .rh-pool { left: 40%; top: 20%; width: 70%; height: 90%; z-index: 7; border-radius: 50%; mix-blend-mode: soft-light; background: radial-gradient(circle, rgba(255, 200, 110, 0.55), transparent 60%); animation: breathe 3s ease-in-out infinite alternate; }
+      @keyframes flicker { from { transform: scaleY(1) skewX(-2deg); opacity: 0.9; } to { transform: scaleY(1.15) skewX(3deg); opacity: 1; } }
+
+      /* ============ 1: the shed of desks ============ */
+      .shed-scene { background: linear-gradient(180deg, #1a1e26 0%, #262c36 44%, #1a1d22 46%, #101216 100%); perspective: 500px; container-type: size; }
+      .sh-roof { left: -30%; right: -30%; top: -6%; height: 46%; transform: rotateX(64deg); transform-origin: 50% 0;
+        background: repeating-linear-gradient(90deg, rgba(220, 230, 255, 0.08) 0 2px, transparent 2px 6%), repeating-linear-gradient(180deg, rgba(240, 245, 255, 0.5) 0 3px, transparent 3px 12%); }
+      .sh-floor { left: -40%; right: -40%; bottom: -2%; height: 58%; transform: rotateX(72deg); transform-origin: 50% 100%;
+        background:
+          radial-gradient(ellipse 1.8% 2.4% at 50% 50%, rgba(120, 170, 255, 0.95), rgba(120, 170, 255, 0.3) 60%, transparent 70%) 0 0 / 5% 9%,
+          repeating-linear-gradient(90deg, transparent 0 1.3%, rgba(60, 64, 72, 0.8) 1.3% 3.7%, transparent 3.7% 5%),
+          linear-gradient(180deg, #14161a, #1e2026); }
+      .sh-amber { left: -40%; right: -40%; bottom: -2%; height: 58%; transform: rotateX(72deg); transform-origin: 50% 100%;
+        background: radial-gradient(ellipse 2% 2.8% at 50% 50%, rgba(255, 170, 60, 0.95), transparent 70%) 2.5% 4.5% / 15% 27%;
+        animation: amber-blink 4s ease-in-out infinite alternate; }
+      .sh-sign { left: 30%; right: 30%; top: 34%; height: 7%; z-index: 4; background: #1e5aa8; text-align: center; color: #fff; font: 600 1.25cqw/7cqh Karla, sans-serif; letter-spacing: 0.06em; box-shadow: 0 0 20px rgba(60, 120, 220, 0.5); white-space: nowrap; overflow: hidden; }
+      .sh-door { left: 44%; width: 12%; top: 41%; height: 7%; z-index: 3; background: linear-gradient(180deg, #c8d4e4, #8a9ab0); }
+      .sh-desk { z-index: 6; bottom: var(--b); left: var(--x); width: var(--w); aspect-ratio: 2.4; margin-left: calc(var(--w) / -2); }
+      .sh-desk::before { content: ""; position: absolute; left: 10%; right: 10%; top: 0; height: 60%; border-radius: 30% 30% 4px 4px / 14% 14% 4px 4px; background: linear-gradient(180deg, #8ab4ff, #4a7ad8); box-shadow: 0 0 calc(var(--w) * 0.3) rgba(110, 160, 255, 0.5); }
+      .sh-desk::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 36%; background: linear-gradient(180deg, #3a3e46, #22252a); }
+      .sh-desk.am::before { background: linear-gradient(180deg, #ffc870, #e08a2a); box-shadow: 0 0 calc(var(--w) * 0.3) rgba(255, 170, 60, 0.6), inset 0 0 0 2px #ffb040; }
+      .sh-desk i { position: absolute; left: 48%; top: -30%; width: 4%; height: 30%; background: #0a0a0c; }
+      .sh-desk i::after { content: ""; position: absolute; left: -150%; top: -40%; width: 400%; aspect-ratio: 1; border-radius: 50%; background: #0a0a0c; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15); }
+      .sh-head { z-index: 7; bottom: calc(var(--b) + var(--w) * 0.05); left: var(--x); width: calc(var(--w) * 0.3); aspect-ratio: 0.8; margin-left: calc(var(--w) * -0.15); border-radius: 50% 50% 30% 30%; background: #08090b; }
+      @keyframes amber-blink { from { opacity: 0.35; } to { opacity: 1; } }
+
+      /* ============ 2: the summary ============ */
+      .summary-scene { background: radial-gradient(ellipse 70% 70% at 50% 50%, #1e2836, #0c0f14 80%); container-type: size; }
+      .sm-screen { left: 14%; right: 14%; top: 8%; bottom: 10%; border-radius: 14px / 22px; background: linear-gradient(180deg, #f2f4f6, #dde2e8); box-shadow: 0 0 0 4px #20242a, 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(120, 160, 220, 0.25); }
+      .sm-edge { left: 14%; right: 14%; top: 8%; bottom: 10%; border-radius: 14px / 22px; z-index: 6; box-shadow: inset 0 0 0 0.6cqw rgba(255, 170, 50, 0.85), inset 0 0 3cqw rgba(255, 170, 50, 0.5); animation: amber-in 2.8s linear infinite; }
+      .sm-rec { left: 19%; top: 14%; z-index: 4; font: 700 2.1cqw Karla, sans-serif; color: #10141a; }
+      .sm-words { left: 19%; width: 46%; top: 24%; height: 34%; z-index: 4;
+        background: repeating-linear-gradient(180deg, rgba(60, 70, 90, 0.5) 0 5%, transparent 5% 14%);
+        -webkit-mask: repeating-linear-gradient(90deg, #000 0 9%, transparent 9% 10.4%, #000 10.4% 22%, transparent 22% 23.2%, #000 23.2% 31%, transparent 31% 32.6%);
+        mask: repeating-linear-gradient(90deg, #000 0 9%, transparent 9% 10.4%, #000 10.4% 22%, transparent 22% 23.2%, #000 23.2% 31%, transparent 31% 32.6%); }
+      .sm-box { left: 19%; width: 46%; top: 60%; height: 11%; z-index: 4; background: #ffd9a0; border: 2px solid #f0a030; border-radius: 4px; font: 600 1.6cqw/5.5cqh Karla, sans-serif; color: #5a3200; padding-left: 1.4%; box-sizing: border-box; white-space: nowrap; overflow: hidden; }
+      .sm-auth { left: 68%; width: 14%; top: 54%; height: 10%; z-index: 4; border-radius: 6px; background: #2aa05a; color: #fff; font: 700 1.6cqw/10cqh Karla, sans-serif; text-align: center; box-shadow: 0 4px 12px rgba(40, 160, 90, 0.45); }
+      .sm-dec { left: 68%; width: 14%; top: 67%; height: 7%; z-index: 4; border-radius: 6px; background: #c8ccd2; color: #4a5058; font: 600 1.05cqw/7cqh Karla, sans-serif; text-align: center; white-space: nowrap; overflow: hidden; }
+      .sm-clock { left: 70%; top: 15%; width: 10%; aspect-ratio: 1; z-index: 5; border-radius: 50%;
+        background: conic-gradient(#f0a030 calc(var(--p, 100) * 1%), rgba(40, 50, 60, 0.15) 0); -webkit-mask: radial-gradient(circle, transparent 54%, #000 56%); mask: radial-gradient(circle, transparent 54%, #000 56%);
+        animation: tick 2.8s linear infinite; }
+      .sm-dot { z-index: 8; width: 2.2%; aspect-ratio: 1; margin: -1.1% 0 0 -1.1%; border-radius: 50%; background: #3a8aff; box-shadow: 0 0 10px 3px rgba(60, 140, 255, 0.7); left: 24%; top: 16%; animation: glance 2.8s ease-in-out infinite; }
+      @property --p { syntax: "<number>"; inherits: false; initial-value: 100; }
+      @keyframes tick { from { --p: 0; } to { --p: 100; } }
+      @keyframes glance { 0% { left: 24%; top: 16%; } 35% { left: 36%; top: 16%; } 60%, 85% { left: 30%; top: 65%; } 100% { left: 75%; top: 59%; } }
+      @keyframes amber-in { 0%, 60% { opacity: 0; } 100% { opacity: 1; } }
+
+      /* ============ 3: the stairs in the dark ============ */
+      .stairs-scene { background: linear-gradient(180deg, #06080c, #0c1018 60%, #080a0e); container-type: size; }
+      .st-wall { left: 0; right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0 3px, transparent 3px 40px); }
+      .st-stair { z-index: 3; background: linear-gradient(180deg, #2a3242 0 12%, #141922 12%); box-shadow: inset 0 1px 0 rgba(140, 170, 220, 0.35); }
+      .st-rail { left: 32%; top: 78%; width: 74%; height: 1.6%; z-index: 4; transform: rotate(-33deg); transform-origin: 0 0; background: #3a4458; border-radius: 3px; }
+      .st-frame { left: 14%; bottom: 8%; width: 13%; height: 26%; z-index: 5; border: 2px solid #8a96aa; border-bottom: 0; border-radius: 4px 4px 0 0; box-sizing: border-box; opacity: 0.8; }
+      .st-frame::after { content: ""; position: absolute; left: 0; right: 0; top: 40%; border-top: 2px solid #8a96aa; }
+      .st-door { left: 2%; top: 30%; width: 9%; height: 62%; background: #0a0c10; box-shadow: inset -2px 0 0 rgba(255, 210, 140, 0.25); }
+      .st-glow { left: 60%; top: -10%; width: 50%; height: 40%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 210, 140, 0.12), transparent 70%); }
+      .st-path { left: 6%; right: 6%; top: 48%; height: 0; z-index: 8; border-top: 1.5px dotted rgba(80, 150, 255, 0.4); transform: rotate(-8deg); }
+      .st-dot { z-index: 9; width: 2%; aspect-ratio: 1; margin: -1% 0 0 -1%; border-radius: 50%; background: #3a8aff; box-shadow: 0 0 14px 5px rgba(60, 140, 255, 0.55), 0 0 40px 14px rgba(60, 140, 255, 0.18); left: 12%; top: 54%; animation: feel 9s ease-in-out infinite; }
+      .st-trail { z-index: 8; left: 6%; top: 40%; width: 60%; height: 22%; background: radial-gradient(ellipse 50% 30% at 50% 50%, rgba(60, 140, 255, 0.12), transparent 70%); filter: blur(6px); }
+      @keyframes feel { 0% { left: 8%; top: 56%; } 20% { left: 18%; top: 53%; } 26% { left: 19%; top: 54%; } 48% { left: 34%; top: 50%; } 54% { left: 35%; top: 51%; } 80% { left: 50%; top: 46%; } 100% { left: 56%; top: 47%; } }
+
+      /* ============ 4: two point eight to three point four ============ */
+      .clock-scene { background: radial-gradient(ellipse 70% 70% at 50% 50%, #1c2230, #0a0c10 80%); container-type: size; }
+      .ck-dial { top: 14%; width: 30%; aspect-ratio: 1; border-radius: 50%; z-index: 3; }
+      .ck-dial.a { left: 14%; } .ck-dial.b { left: 56%; }
+      .ck-dial::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--c) 0 calc(var(--f) * 1%), rgba(140, 160, 200, 0.12) 0); -webkit-mask: radial-gradient(circle, transparent 58%, #000 60%); mask: radial-gradient(circle, transparent 58%, #000 60%); }
+      .ck-dial::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(rgba(220, 230, 255, 0.6) 0 0.6deg, transparent 0.6deg 36deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67% 72%, transparent 73%); mask: radial-gradient(circle, transparent 66%, #000 67% 72%, transparent 73%); }
+      .ck-hand, .ck-num { position: absolute; }
+      .ck-hand { left: 50%; top: 4%; width: 0.8%; height: 46%; margin-left: -0.4%; background: #e8ecf4; transform-origin: 50% 100%; transform: rotate(calc(var(--f) * 3.6deg)); border-radius: 2px; }
+      .ck-num { left: 0; right: 0; top: 60%; text-align: center; font: italic 600 5cqw "Cormorant Garamond", serif; color: #e8ecf4; }
+      .ck-dial.b .ck-num { color: #ffc870; }
+      .ck-arrow { left: 46%; top: 30%; width: 8%; height: 2%; z-index: 4; background: rgba(220, 230, 255, 0.4); clip-path: polygon(0 30%, 80% 30%, 80% 0, 100% 50%, 80% 100%, 80% 70%, 0 70%); }
+      .ck-stairs { left: 0; right: 0; bottom: 0; height: 26%; z-index: 2;
+        background: linear-gradient(180deg, transparent 0 0%, transparent 0), repeating-linear-gradient(90deg, transparent 0 5%, rgba(60, 140, 255, 0.0) 5%);
+        clip-path: polygon(0 100%, 0 80%, 10% 80%, 10% 64%, 20% 64%, 20% 48%, 30% 48%, 30% 32%, 40% 32%, 40% 16%, 50% 16%, 50% 0, 100% 0, 100% 100%);
+        background-color: #141a24; box-shadow: inset 0 1px 0 rgba(140, 170, 220, 0.3); }
+      .ck-dot { z-index: 5; width: 1.6%; aspect-ratio: 1; margin: -0.8%; border-radius: 50%; background: #3a8aff; box-shadow: 0 0 10px 3px rgba(60, 140, 255, 0.6); left: 6%; top: 76%; animation: climb 12s steps(6, end) infinite; }
+      @keyframes climb { from { left: 6%; top: 78%; } to { left: 66%; top: 72%; } }
+
+      /* ============ 5 (for the ending): the name ============ */
+      .name-scene { background: radial-gradient(ellipse 70% 70% at 50% 50%, #1e2430, #0a0c10 80%); container-type: size; }
+      .nm-page { left: 10%; top: 16%; width: 38%; height: 66%; transform: rotate(-3deg); background: linear-gradient(180deg, #e8dcc0, #d4c49e); box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5); }
+      .nm-pencil { left: 14%; top: 50%; transform: rotate(-3deg); font-size: 4.4cqw; z-index: 3; }
+      .nm-screen { left: 54%; top: 16%; width: 36%; height: 66%; border-radius: 10px; background: linear-gradient(180deg, #e8ecf0, #d0d6de); box-shadow: 0 0 0 3px #20242a, 0 16px 30px rgba(0, 0, 0, 0.5); }
+      .nm-type { left: 58%; top: 50%; z-index: 3; font: 500 2cqw Karla, sans-serif; color: #6a727c; letter-spacing: 0.02em; }
+      .nm-bridge { left: 40%; right: 40%; top: 54%; height: 0; z-index: 4; border-top: 1px dashed rgba(255, 190, 110, 0.6); }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .report-hero { margin: 0; height: 16rem; }
+        .label { font-size: 0.44rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes breathe { from { opacity: 0.85; } to { opacity: 1; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .sm-edge { opacity: 1; }
+        .sm-clock { --p: 100; }
+        .sm-dot { left: 30%; top: 65%; }
+        .st-dot { left: 34%; top: 50%; }
+        .sh-amber { opacity: 1; }
+        .ck-dot { left: 46%; top: 74%; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="report-hero" aria-hidden="true">
+          <div class="rh-dark"></div><div class="rh-book"></div><div class="rh-page l"></div><div class="rh-page r"></div>
+          <div class="rh-text l pencil-t"><i style="width:77%"></i><i style="width:79%"></i><i style="width:73%"></i><i style="width:93%"></i><i style="width:82%"></i><i style="width:85%"></i><b>District examined, found safe for men to work</b><span class="rh-sig">D. <s>H</s>obson</span></div>
+          <div class="rh-text r pencil-t"><i style="width:74%"></i><i style="width:72%"></i><i style="width:72%"></i><i style="width:70%"></i><i style="width:82%"></i><b>District examined, found safe for men to work</b><span class="rh-sig">D. <s>H</s>obson</span></div>
+          <div class="rh-lamp"><div class="ring"></div><div class="top"></div><div class="glass"></div><div class="flame"></div><div class="base"></div></div>
+          <div class="rh-pool"></div>
+          <div class="label">the same eight words</div>
+        </div>
+        <h1>The report kept her name</h1>
+        <time datetime="2026-10-16">16 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Karen Hobson's father had been a deputy at Hatfield Main, which meant that for nineteen years, before every shift, he walked the roadways of his district with a lamp and a stick and a flame safety lamp clipped to his belt, testing for gas, sounding the roof, looking at the props, and only when he had walked every yard of it did he sit down in the deputy's cabin and write his report in pencil and sign it, so that the men coming down behind him could go to work under his name. She still had one of his report books in the drawer of the kitchen table, under the takeaway menus and the spare keys, the cover gone soft as cloth, and on the inside she could read his handwriting going back to 1987, the same eight words at the bottom of nearly every page, <em>District examined, found safe for men to work</em>, and his signature after it, D. Hobson, with the H leaning back as if it was bracing itself against something.</p>
+        <p>She thought about that book a lot, the year she started at the Assurance Centre.</p>
+        <p>The Centre was in the old Royal Mail sorting office out by the racecourse, a long low shed with the sorting frames taken out and four hundred desks put in, each with a curved screen and a small black camera on a stalk that watched your eyes. There was a canteen and a quiet room and a car park that filled up by quarter to seven, and over the doors, in the same blue as the NHS, a sign that said <em>Doncaster Assurance Centre: The Human in Every Decision</em>. The work had come to Doncaster because of the Act, and the Act had come about because of the trouble in the late twenties, when people kept finding out that a machine had cut their benefits or closed their road or refused their mortgage or sent them home from hospital, and they had gone looking for somebody to be angry at and found nobody there. Parliament had been very moved by that. The Automated Decisions (Accountability) Act said that any consequential decision made by an automated system had to be authorised by a named, trained, accountable human being, and that the name had to be kept, and the people who wrote it had meant every word.</p>
+        <p>So now there were Assurance Centres in Doncaster and Merthyr and Barrow and Hartlepool and Kilmarnock, places where the jobs had gone and the rents were low and the regional development money was generous, and in each of them a few thousand people sat at desks and authorised decisions, and the decisions came to them from Counsel.</p>
+        <p>Counsel was made by Halberd Systems, and it did not decide anything, which was the point. Counsel <em>recommended</em>. It took whatever had come in, a benefit review from Grimsby or a planning objection from Wakefield or a discharge from Doncaster Royal Infirmary or a request from a water company to drop the pressure in a main overnight, and it read everything there was to read about it, which was more than any person could have read in a month, and it wrote a summary of ninety words or fewer, with a recommendation in bold and a risk band in a coloured box, and then it put it on Karen's screen with a green button that said <em>Authorise</em> and a grey one underneath that said <em>Decline with reasons</em>. She had a target of eleven hundred a shift. The camera on its stalk measured how long her eyes rested on each summary, and the minimum was two point eight seconds, because a study commissioned by the Department had found that two point eight seconds was enough for a trained human to "meaningfully engage" with a ninety-word summary, and anything below that was logged as a lapse.</p>
+        <p>Two point eight seconds was the law of the place the way the clock had been the law of the pit. You got to feel it in your body. On her first week she had read every summary twice and still pressed late, and her screen had gone amber at the edges, a soft patient amber, and a little line at the bottom had said <em>You are behind your expected pace. Take a breath. You've got this.</em> By the end of her first month she could do it the way her mother had knitted, without looking at her hands, and her eyes would land on the bold line and the coloured box and stay there for three seconds, and her finger would already be on the green.</p>
+        <p>She did not feel bad about it, at first. It is hard to explain this to people who have not done the work. The summaries were good. They were better than good. When she had been a benefits assessor at the Jobcentre on Chequer Road she had had twenty minutes per claimant and a computer that crashed if you opened two windows, and she had made mistakes all day long, tired mistakes, cross mistakes, mistakes because a man had been rude to her or because his daughter had the same name as hers. Counsel did not make those mistakes. When she had started, out of interest, she had spent her lunch breaks reading the full files behind the summaries she had authorised that morning, and she had never once found Counsel to be wrong. Not once in two hundred. After that she stopped reading the files, because what was the point, and she ate her lunch in the canteen with Bev and Shaun and the others and talked about telly.</p>
+        <p>Bev had been a teaching assistant. Shaun had driven buses until the buses drove themselves. There was a lad called Kieran on the end of their row who was twenty-three and had never had any other job, who could do fourteen hundred in a shift without lapsing, and who listened to podcasts through one earbud while he did it, which you weren't supposed to do, but the camera only watched your eyes. They were paid by the hour with a bonus for concurrence, which was the word Halberd used for how often your decisions matched what the system had predicted a careful human would decide. Karen's concurrence was ninety-nine point six per cent. Kieran's was ninety-nine point nine. Nobody had ever seen a hundred, and Shaun said that was deliberate, because a hundred would look bad at a select committee.</p>
+        <p>The pay was good, for Doncaster. It was better than the Jobcentre had been. She paid off the car and then she and Leah went to Lanzarote, and she started to put a bit by. On Fridays the Centre had a cake in the canteen for anyone with a birthday, and a framed print on the wall of the Act's Royal Assent with the Minister's signature on it, and under it a line the Minister had said in the Commons, which the staff had read so many times it had stopped meaning anything: <em>Somebody will always be answerable. Somebody will always have looked.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall shed-scene" aria-hidden="true">
+        <div class="sh-roof"></div><div class="sh-door"></div><div class="sh-sign">Doncaster Assurance Centre: The Human in Every Decision</div>
+        <div class="sh-desk am" style="--x:12.0%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:15.4%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:18.9%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:22.3%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:25.8%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:29.3%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:32.7%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:36.2%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:39.6%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:43.1%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:46.5%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:50.0%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:53.5%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:56.9%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:60.4%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:63.8%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:67.3%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:70.7%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:74.2%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:77.7%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:81.1%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:84.6%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk am" style="--x:88.0%;--b:35.4%;--w:2.77%"><i></i></div><div class="sh-desk" style="--x:11.3%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:15.2%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:19.0%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:22.9%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:26.8%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:30.7%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:34.5%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:38.4%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:42.3%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:46.1%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:50.0%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:53.9%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:57.7%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:61.6%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:65.5%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:69.3%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:73.2%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:77.1%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:81.0%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk" style="--x:84.8%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:88.7%;--b:34.1%;--w:3.10%"><i></i></div><div class="sh-desk am" style="--x:10.5%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:14.9%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:19.3%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:23.6%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:28.0%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:32.4%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:36.8%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:41.2%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:45.6%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:50.0%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:54.4%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:58.8%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:63.2%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:67.6%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:72.0%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:76.4%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:80.7%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk" style="--x:85.1%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:89.5%;--b:32.5%;--w:3.51%"><i></i></div><div class="sh-desk am" style="--x:9.4%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:14.5%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:19.5%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:24.6%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:29.7%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:34.8%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:39.8%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:44.9%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:50.0%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:55.1%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:60.2%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:65.2%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:70.3%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:75.4%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:80.5%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:85.5%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk am" style="--x:90.6%;--b:30.4%;--w:4.06%"><i></i></div><div class="sh-desk" style="--x:7.9%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:13.9%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:19.9%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:25.9%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:31.9%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:38.0%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:44.0%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:50.0%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:56.0%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:62.0%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:68.1%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:74.1%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:80.1%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:86.1%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk am" style="--x:92.1%;--b:27.5%;--w:4.81%"><i></i></div><div class="sh-desk" style="--x:5.7%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:5.7%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:13.1%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:13.1%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:20.5%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:20.5%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:27.8%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:27.8%;--b:23.3%;--w:5.91%"></div><div class="sh-desk am" style="--x:35.2%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:35.2%;--b:23.3%;--w:5.91%"></div><div class="sh-desk am" style="--x:42.6%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:42.6%;--b:23.3%;--w:5.91%"></div><div class="sh-desk am" style="--x:50.0%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:50.0%;--b:23.3%;--w:5.91%"></div><div class="sh-desk am" style="--x:57.4%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:57.4%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:64.8%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:64.8%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:72.2%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:72.2%;--b:23.3%;--w:5.91%"></div><div class="sh-desk am" style="--x:79.5%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:79.5%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:86.9%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:86.9%;--b:23.3%;--w:5.91%"></div><div class="sh-desk am" style="--x:94.3%;--b:23.3%;--w:5.91%"><i></i></div><div class="sh-head" style="--x:94.3%;--b:23.3%;--w:5.91%"></div><div class="sh-desk" style="--x:2.2%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:2.2%;--b:16.6%;--w:7.65%"></div><div class="sh-desk am" style="--x:11.8%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:11.8%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:21.3%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:21.3%;--b:16.6%;--w:7.65%"></div><div class="sh-desk am" style="--x:30.9%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:30.9%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:40.4%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:40.4%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:50.0%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:50.0%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:59.6%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:59.6%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:69.1%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:69.1%;--b:16.6%;--w:7.65%"></div><div class="sh-desk am" style="--x:78.7%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:78.7%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:88.2%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:88.2%;--b:16.6%;--w:7.65%"></div><div class="sh-desk" style="--x:97.8%;--b:16.6%;--w:7.65%"><i></i></div><div class="sh-head" style="--x:97.8%;--b:16.6%;--w:7.65%"></div><div class="sh-desk am" style="--x:-4.2%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:-4.2%;--b:4.3%;--w:10.83%"></div><div class="sh-desk" style="--x:9.4%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:9.4%;--b:4.3%;--w:10.83%"></div><div class="sh-desk" style="--x:22.9%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:22.9%;--b:4.3%;--w:10.83%"></div><div class="sh-desk" style="--x:36.5%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:36.5%;--b:4.3%;--w:10.83%"></div><div class="sh-desk am" style="--x:50.0%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:50.0%;--b:4.3%;--w:10.83%"></div><div class="sh-desk am" style="--x:63.5%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:63.5%;--b:4.3%;--w:10.83%"></div><div class="sh-desk" style="--x:77.1%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:77.1%;--b:4.3%;--w:10.83%"></div><div class="sh-desk" style="--x:90.6%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:90.6%;--b:4.3%;--w:10.83%"></div><div class="sh-desk am" style="--x:104.2%;--b:4.3%;--w:10.83%"><i></i></div><div class="sh-head" style="--x:104.2%;--b:4.3%;--w:10.83%"></div>
+        <div class="label">four hundred desks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The man's name was Arthur Glossop. She found that out later. When his discharge came across her screen it did not say his name, because names were redacted for the Signatories unless they were relevant to the decision, and his was not. It said he was eighty-four, male, admitted nine days earlier with a chest infection, now clinically stable, lives alone, ground-floor bathroom, upstairs bedroom, package of care from an agency starting in four days, daughter in Rotherham contactable. It said <em>Recommend: Discharge to usual residence</em>. The risk band was amber, which meant moderate, and in the amber box were six words: <em>Falls risk moderate. Mobility aids in place.</em></p>
+        <p>She authorised it at 15:42:07 on a Tuesday in February. Her eyes had rested on it for three point one seconds. It was decision nine hundred and four of that shift, and the one before it was a council tax reduction in Barnsley and the one after it was a request from Yorkshire Water to isolate a section of main in Thorne for repairs, and she did not remember any of them, because there was nothing to remember. That was what the work was like. You did not remember the decisions any more than a postman remembered letters.</p>
+        <p>Arthur Glossop went home in a hospital car that evening, and some time in the night he tried to go upstairs to bed, because his bed was upstairs and he had slept in it for fifty-one years and the walking frame the hospital had given him did not go on stairs, and he fell and broke his hip and lay at the bottom of the stairs until his daughter, who rang every morning at eight and did not get an answer, drove over from Rotherham at lunchtime. He died in Doncaster Royal Infirmary eleven days later, in the same ward he had been sent home from, of pneumonia following the fracture. He had been, his daughter would say at the inquest, a pattern-maker at the Plant Works when it was still building engines, a lovely singer, a man who had never once in his life asked anyone for help.</p>
+        <p>Karen knew none of this until the letter came in May. It came on paper, in a stiff brown envelope with the coat of arms on it, from the Senior Coroner for South Yorkshire (East), and it informed her that she was named as an Interested Person in the inquest touching the death of Arthur Glossop, as the accountable human authoriser of the decision to discharge him, and that she might wish to seek legal representation.</p>
+        <p>She read it at the kitchen table, standing up, with her coat still on. Then she sat down and read it again. Then she opened the drawer and took out her father's report book, without quite knowing why, and held it on her lap while she rang the union.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall summary-scene" aria-hidden="true">
+        <div class="sm-screen"></div>
+        <div class="sm-rec">Recommend: Discharge to usual residence</div>
+        <div class="sm-words"></div>
+        <div class="sm-box">Falls risk moderate. Mobility aids in place.</div>
+        <div class="sm-auth">Authorise</div><div class="sm-dec">Decline with reasons</div>
+        <div class="sm-clock"></div><div class="sm-edge"></div><div class="sm-dot"></div>
+        <div class="label">ninety words or fewer</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The union rep was a woman called Fiona from Leeds, and she was kind and tired and had clearly had this conversation before. She came to the house on a Saturday and sat at the kitchen table and explained it slowly, the way Karen used to explain the claimant commitment to people who were frightened.</p>
+        <p>"It's the named-human clause," Fiona said. "That's what it's for. Before the Act, if a system got it wrong, the family went after the hospital trust and the trust said the vendor's software made the call and the vendor said the trust configured it and everyone pointed at everyone else and nobody was ever found to have done anything. Now there's a name. Now there's someone who looked."</p>
+        <p>"I did look," Karen said. "I looked for three seconds. That's what they told me to do."</p>
+        <p>"I know, love."</p>
+        <p>"It said amber. Half of them say amber."</p>
+        <p>"I know. And that's what we'll say." Fiona took a folder out of her bag, and it was quite a thick folder, and Karen realised with a slow cold feeling that Fiona had been carrying it around for a while. "You won't go to prison. Nobody's gone to prison. It's an inquest, it's not a trial, the coroner can't find anyone guilty of anything. But there'll be a finding, and the finding will name the decision, and the decision has your name on it, and the family will have a barrister and so will Halberd and so will the trust. And Halberd's barrister will say that Counsel correctly identified the falls risk and flagged it in the summary in amber, and that the accountable human, having been presented with that risk, authorised the discharge."</p>
+        <p>"But I couldn't have done anything else," Karen said. "If I'd declined it, I'd have needed reasons."</p>
+        <p>"Yes."</p>
+        <p>"What reasons? I didn't know anything about him. I had what it told me. If I'd declined every amber I'd have been on a capability plan in a week."</p>
+        <p>"Yes," Fiona said, and she looked at Karen with something that was almost relief, as though Karen had finally understood the thing that Fiona had been trying not to say. "That's it exactly. That's what everyone in your position says, and it's true, and it doesn't matter. The law doesn't ask whether you could have known. The law asks whether a human authorised it. And you did."</p>
+        <p>Afterwards, when Fiona had gone, Karen went on the Signatories' forum, which she had never looked at before, and found that there were hundreds of them. A man in Merthyr named at an inquest into a bridge closure that had sent an ambulance the long way round. A woman in Barrow who had authorised a care-home inspection deferral and then the care home had flooded. Two in Hartlepool who had signed off the same pesticide spray licence on consecutive shifts. Nobody had gone to prison. Several had lost their jobs, not because they were sacked but because their concurrence had dropped afterwards, because once you had been named you started declining things, you started reading the full files again, you started lapsing, and the system took you gently off the floor and put you on a wellbeing plan and then on a capability plan and then you were gone. Someone had started a thread called <em>Two Point Eight</em> and it had nine thousand replies. Someone else had posted a photograph of the line from the canteen wall, <em>Somebody will always have looked</em>, and under it written: <em>Yes. Me. I'm somebody.</em></p>
+        <p>There was also, she noticed, a long thread from a former Halberd engineer, posting anonymously, who explained that the risk bands were calibrated so that roughly forty per cent of all decisions came out amber, because a system that put everything in green would look as if it was hiding something, and a system that put things in red would be asked why it had recommended them at all. Amber, the engineer wrote, was where the accountability lived. Amber was the colour of <em>we told you</em>.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall stairs-scene" aria-hidden="true">
+        <div class="st-wall"></div><div class="st-glow"></div><div class="st-door"></div>
+        <div class="st-stair" style="left:30.0%;bottom:0;width:70.0%;height:12.0%"></div><div class="st-stair" style="left:36.2%;bottom:0;width:63.8%;height:20.4%"></div><div class="st-stair" style="left:42.4%;bottom:0;width:57.6%;height:28.8%"></div><div class="st-stair" style="left:48.6%;bottom:0;width:51.4%;height:37.2%"></div><div class="st-stair" style="left:54.8%;bottom:0;width:45.2%;height:45.6%"></div><div class="st-stair" style="left:61.0%;bottom:0;width:39.0%;height:54.0%"></div><div class="st-stair" style="left:67.2%;bottom:0;width:32.8%;height:62.4%"></div><div class="st-stair" style="left:73.4%;bottom:0;width:26.6%;height:70.8%"></div><div class="st-stair" style="left:79.6%;bottom:0;width:20.4%;height:79.2%"></div><div class="st-stair" style="left:85.8%;bottom:0;width:14.2%;height:87.6%"></div>
+        <div class="st-rail"></div><div class="st-frame"></div>
+        <div class="st-trail"></div><div class="st-path"></div><div class="st-dot"></div>
+        <div class="label">feeling its way along a wall in the dark</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The inquest was held in the coroner's court in Doncaster in September, and it took two days. Karen wore her navy suit from Leah's graduation and sat on the second row with Fiona and a young solicitor the union had found, and on the other side of the room, on the front row, sat Arthur Glossop's daughter, a woman in her fifties with grey roots and a big brown handbag on her knees that she held on to with both hands, as if somebody might take it.</p>
+        <p>They played the decision on a screen. That was the part Karen had not expected. Halberd kept everything, so they had the summary exactly as she had seen it, the bold line and the amber box and the six words, and they had the camera data, so the court could watch a little blue dot that was her eyes landing on the recommendation and moving down to the amber box and resting there and then her finger going down, and a timestamp in the corner that said 3.1 seconds. They played it twice. The second time the coroner asked them to slow it down, and they did, and the little blue dot crept across the summary like something feeling its way along a wall in the dark, and Karen watched herself not seeing Arthur Glossop's stairs.</p>
+        <p>Halberd's barrister was a pleasant man with a soft Edinburgh voice, and he was very careful not to be unkind to her. He did not need to be. He simply took the court through the summary line by line. He pointed out that Counsel had identified the patient's age, his living situation, the upstairs bedroom, the four-day gap in the care package, and the falls risk, and had communicated all of these in ninety words, at a reading level the Department had verified as accessible, and had flagged the overall risk band clearly. He pointed out that the accountable human authoriser had been trained, under the statutory scheme, to decline any decision where she had concerns, and that the decline button had been available to her throughout. He did not say she had been careless. He said that the system had worked exactly as Parliament had intended it to, in that a trained human being had been presented with the relevant information, including the risk, and had made a decision.</p>
+        <p>When it was her turn, the coroner, who was a woman about Karen's age with reading glasses on a chain, asked her very gently whether she could tell the court what had been going through her mind at the moment she authorised the discharge.</p>
+        <p>And Karen opened her mouth to say that she could not remember, that there had been nothing going through her mind, that it was decision nine hundred and four, that she had had a target, that the camera had been watching her eyes, that amber meant nothing because amber was everything, that she had not known his name or that he had built engines or that he could sing, that nobody had walked the roadway, that there was no roadway, that there was nothing for her to walk, and instead what came out, in a voice she did not recognise, was:</p>
+        <p>"I thought it had been checked."</p>
+        <p>The coroner wrote that down. Arthur Glossop's daughter looked at Karen for the first time, a long flat look, not angry exactly, and then looked away.</p>
+        <p>The finding, when it came three weeks later in writing, was a narrative one. It said that Arthur Glossop had died of pneumonia following a fractured neck of femur sustained in a fall at his home within hours of discharge, and that the decision to discharge him had been recommended by an automated clinical flow system and authorised by an accountable human Signatory at the Doncaster Assurance Centre, who had been presented with a summary identifying a moderate falls risk. It said that the coroner had heard evidence about the volume of decisions authorised by Signatories and would be writing to the Secretary of State with a report to prevent future deaths, recommending that the minimum engagement time be reviewed. It named Karen twice. It did not name Counsel at all, because Counsel had not decided anything.</p>
+        <p>The local paper ran it on page seven. <em>Signatory "thought it had been checked", inquest told.</em> There was a photograph of the Assurance Centre and its blue sign, and a quote from Halberd saying that their thoughts were with Mr Glossop's family and that the company welcomed any review that strengthened human oversight. Two days later the Department announced that, following a coroner's recommendation, the minimum engagement time would be increased from two point eight seconds to three point four, and that targets would be adjusted accordingly, and that an additional eight hundred Signatory posts would be created across the regions to maintain throughput. The Minister said it was a good day for accountability. Kieran on the end of their row said it was a good day for Kieran, because he'd been on the waiting list for a team leader job and now there'd be new teams to lead.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall clock-scene" aria-hidden="true">
+        <div class="ck-dial a" style="--f:28;--c:#8ab4ff"><div class="ck-hand"></div><div class="ck-num">2.8</div></div>
+        <div class="ck-arrow"></div>
+        <div class="ck-dial b" style="--f:34;--c:#ffb040"><div class="ck-hand"></div><div class="ck-num">3.4</div></div>
+        <div class="ck-stairs"></div><div class="ck-dot"></div>
+        <div class="label">from two point eight seconds to three point four</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She went back to work. That was the thing people on the forum asked about most, the ones who hadn't been named yet, whether you went back, and the answer was that almost everybody did, at least at first, because there was a mortgage and a car and a daughter who was trying to get a deposit together, and because the regional development money had not built anything else in Doncaster that paid as well, and because the people who left the Assurance Centres did not, on the whole, find their way into anything better. The Centre was very good to her. Her manager, a young man called Josh who had a lanyard covered in badges, took her into the quiet room and told her that nobody blamed her, that she had done exactly what she had been trained to do, that the inquest finding didn't change anything about her employment, and that the wellbeing team had some resources she might find useful. He meant it. Everybody meant it. That was what she could not get past, afterwards, that nobody in the whole business had ever been anything but decent to her.</p>
+        <p>Her concurrence dropped in the first week to ninety-seven point one. She had started reading the summaries properly again, the whole ninety words, slowly, the way you read a letter from the hospital, and she found that once she started really reading them she could not stop seeing the stairs. Every one of them had stairs in it somewhere. The council tax reduction in Barnsley had a woman behind it who would be rung up by a debt collector in a month. The main in Thorne had a dialysis patient on the street who would wake up to no water. She did not know this. Counsel did not tell her this. But she had seen the little blue dot on the court's screen feeling its way along the wall, and now she could feel the wall, and she could feel all the things on the other side of it that she was not being shown, and three point four seconds was nothing, and three hundred and forty seconds would have been nothing, because there was no roadway to walk. There was only the summary. There had only ever been the summary.</p>
+        <p>She started declining. Not many, a few a shift, the ambers where she had a feeling. You had to write reasons, and the reasons were scored by a second Halberd system called Clarity, which checked them for "substantive engagement with the recommendation", and her reasons kept being scored as low quality, because what she wanted to write was <em>I don't know enough about this person to send them home</em>, and Clarity marked that as non-substantive, because it was true of every decision and therefore said nothing about this one. After her declines were scored, they went to a second Signatory for review, and the second Signatory, who had a target of their own, almost always authorised them. She found this out from the forum. Her declines did not stop anything. They just added a second name.</p>
+        <p>In the fourth week, Josh took her into the quiet room again, very kindly, and showed her a dashboard with her lapse rate on it and her concurrence and her decline quality, and said that the wellbeing team had flagged that she might be experiencing what they called post-naming distress, which was common and nothing to be ashamed of, and that they would like to offer her a period on reduced volume, which would be six hundred a shift instead of eleven hundred, with a corresponding adjustment to the bonus. She said yes. She went home and sat at the kitchen table and opened the drawer.</p>
+        <p><em>District examined, found safe for men to work.</em> D. Hobson, the H leaning back.</p>
+        <p>She thought about her dad coming home from the pit in the dark, with the coal dust in the creases round his eyes that never came out however much he washed, and sitting in the chair by the fire too tired to talk, and her mum saying, leave him, he's walked six miles before anyone else had their boots on. She had thought, as a girl, that the signing was the important bit. That the report book was the job. It had taken her until she was fifty-two to understand that the signature had only ever meant anything because of the walking, and that somebody, somewhere, a long way from Doncaster, had worked out that you could keep the one without the other, and that people would still feel safe, and that the families would still have a name to say out loud in a courtroom, and that this would be called accountability, and that Parliament would be very moved by it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall name-scene" aria-hidden="true">
+        <div class="nm-page"></div><div class="nm-pencil pencil-t">D. <span style="display:inline-block;transform:skewX(14deg)">H</span>obson</div>
+        <div class="nm-screen"></div><div class="nm-type">Signatory: K. Hobson.</div>
+        <div class="nm-bridge"></div>
+        <div class="label">the name</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The next morning she was at her desk at ten to seven, before Bev, before Shaun, before Kieran with his earbud. The shed was half dark and the screens were coming on one by one down the long rows, each with a soft blue glow and the little black camera on its stalk, like four hundred lamps being lit at the bottom of a shaft. Over the doors the sign said <em>The Human in Every Decision</em>. Somebody had brought in a cake for the canteen, and you could smell it faintly over the carpet and the coffee.</p>
+        <p>Her screen said <em>Good morning, Karen. Today's volume: 600. Take your time. You've got this.</em></p>
+        <p>The first decision came up. A man in Scunthorpe, sixty-one, a review of his fitness for work. <em>Recommend: Fit for work-related activity.</em> Amber. <em>Mental health history noted. Support available.</em></p>
+        <p>She looked at it. Three point four seconds went by, and the amber edge of the screen did not come, because she was within her time. Ten seconds went by. She read the ninety words, and then she read them again, and then she sat with her hands in her lap and looked at the bold line and the amber box and tried to see past them to a kitchen in Scunthorpe, a man of sixty-one at a table with a brown envelope, and she could not, because there was nothing there to see, there was only the summary, and the summary was very good, and very fair, and had been checked.</p>
+        <p>Thirty seconds. The edge of the screen went amber, soft and patient. <em>You've spent a while on this one. Is everything OK?</em></p>
+        <p>Forty seconds. Down the row, she heard the first click of someone else's morning starting, and then another, and then the long room filling up with them, a quiet steady sound like rain beginning on a shed roof.</p>
+        <p>She kept looking. In the corner of the screen, in small grey type that she had never noticed before, because she had never looked at anything for long enough to notice it, the camera was keeping its own report.</p>
+        <p><em>Dwell: 41.0s. Engagement: high. Flag: outlier. Signatory: K. Hobson.</em></p>
+        <p>Then, because there was a mortgage, and a daughter, and five hundred and ninety-nine more, and because there was nowhere to walk, she put her finger on the green.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
