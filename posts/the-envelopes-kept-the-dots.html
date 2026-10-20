@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The envelopes kept the dots — Ben Miller</title>
+    <meta name="description" content="A retired records clerk in Barrow spent twenty-eight years putting a small pencil dot on certain envelopes, and the machine reading every record in the country finds out why.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #17110c;
+        --ink: #f2e8da;
+        --mute: #b8a088;
+        --cream: #f7efd6;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(240, 170, 80, 0.12), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(230, 140, 80, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(242, 194, 58, 0.07), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(255, 150, 90, 0.06), transparent 60%),
+          linear-gradient(180deg, #1e1610 0%, #1a130e 36%, #16100b 70%, #0f0b08 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(255, 200, 140, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 170, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f2d27a;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(242, 194, 58, 0.35), 0 0 2px rgba(255, 230, 190, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #efe4d4;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f2c27a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 120, 0.95) 0 1.5px, rgba(242, 194, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(242, 194, 58, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #1e1610;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 210, 150, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(14, 8, 4, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 214, 110, 0.38); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 120, 0.24); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(242, 194, 58, 0.26); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .pencil-t { font-family: Caveat, cursive; font-weight: 500; color: #4a4038; line-height: 1.05; }
+      .env { position: absolute; border-radius: 3px 3px 6px 6px / 3px 3px 10px 10px;
+        background: radial-gradient(ellipse 60% 40% at 30% 20%, rgba(255, 230, 190, 0.25), transparent 70%), linear-gradient(180deg, #c89a62, #a8794a);
+        box-shadow: inset 0 0 0 1px rgba(90, 60, 30, 0.35), 0 2px 4px rgba(0, 0, 0, 0.35); }
+      .dot { position: absolute; width: 0.42rem; height: 0.42rem; margin: -0.21rem; border-radius: 50%; background: radial-gradient(circle, #4a4a4e 0 45%, rgba(74, 74, 78, 0.5) 60%, transparent 72%); }
+
+      /* ============ hero: the rolling shelves ============ */
+      .env-hero { position: relative; height: 22rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size; perspective: 520px;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 210, 150, 0.16);
+        background: radial-gradient(ellipse 50% 60% at 50% 40%, #6a4a2a, #2a1a10 70%); }
+      .eh-lamp { left: 36%; top: -20%; width: 28%; height: 60%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 230, 170, 0.75) 0 6%, rgba(255, 190, 110, 0.25) 34%, transparent 66%); animation: breathe 9s ease-in-out infinite alternate; }
+      .eh-floor { left: -30%; right: -30%; bottom: -2%; height: 40%; transform: rotateX(70deg); transform-origin: 50% 100%;
+        background: repeating-linear-gradient(90deg, transparent 0 9%, rgba(255, 220, 160, 0.18) 9% 9.4%), linear-gradient(180deg, #4a3220, #22160c); }
+      .eh-unit { top: 6%; bottom: 10%; width: 46%; transform-style: preserve-3d;
+        background:
+          repeating-linear-gradient(180deg, transparent 0 15.4%, #3a2616 15.4% 16.6%),
+          repeating-linear-gradient(90deg, #b88a56 0 1.1%, #a07444 1.1% 2%, #c89a62 2% 3.4%, #94683a 3.4% 4.1%, #b4874f 4.1% 5.6%, #8a6034 5.6% 6.2%),
+          #6a4a2a;
+        box-shadow: inset 0 0 40px rgba(20, 10, 4, 0.6); }
+      .eh-unit.l { left: -6%; transform: rotateY(62deg); transform-origin: 0 50%; }
+      .eh-unit.r { right: -6%; transform: rotateY(-62deg); transform-origin: 100% 50%; }
+      .eh-end { top: 18%; bottom: 22%; left: 38%; right: 38%;
+        background: repeating-linear-gradient(180deg, transparent 0 15.4%, #3a2616 15.4% 16.6%), repeating-linear-gradient(90deg, #a87a48 0 3%, #8a6034 3% 4%, #c0925a 4% 7%), #5a3a20;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(20, 10, 4, 0.6); }
+      .eh-wheel { width: 6%; aspect-ratio: 1; border-radius: 50%; z-index: 4; border: 3px solid #c8b090; box-sizing: border-box;
+        background: conic-gradient(from 0deg, transparent 0 40deg, #c8b090 40deg 46deg, transparent 46deg 160deg, #c8b090 160deg 166deg, transparent 166deg 280deg, #c8b090 280deg 286deg, transparent 286deg); animation: spin 18s linear infinite; }
+      .eh-wheel.w1 { left: 33%; top: 46%; width: 4%; } .eh-wheel.w2 { left: 63%; top: 46%; width: 4%; animation-direction: reverse; }
+      .eh-pull { left: 47%; top: 41%; width: 6%; height: 10%; z-index: 5; transform: translateY(-30%) rotate(-3deg); box-shadow: 0 0 20px rgba(255, 210, 140, 0.6), inset 0 0 0 1px rgba(90, 60, 30, 0.35); animation: lift 6s ease-in-out infinite alternate; }
+      .eh-pull .dot { right: 10%; top: 12%; width: 0.3rem; height: 0.3rem; }
+      .eh-dust { inset: 0; z-index: 6; background: radial-gradient(circle, rgba(255, 230, 180, 0.5) 0 1px, transparent 1.5px) 0 0 / 60px 50px, radial-gradient(circle, rgba(255, 230, 180, 0.35) 0 1px, transparent 1.5px) 20px 30px / 90px 70px;
+        -webkit-mask: radial-gradient(ellipse 30% 60% at 50% 20%, #000, transparent 70%); mask: radial-gradient(ellipse 30% 60% at 50% 20%, #000, transparent 70%); animation: dust 24s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes lift { from { transform: translateY(0) rotate(-1deg); } to { transform: translateY(-34%) rotate(-3deg); } }
+      @keyframes dust { from { background-position: 0 0, 20px 30px; } to { background-position: 30px 200px, 40px 330px; } }
+
+      /* ============ 1: the dot ============ */
+      .dot-scene { background: radial-gradient(ellipse 70% 70% at 60% 30%, #f2d8a8, #b8875a 60%, #6a4426); container-type: size; }
+      .dt-env { left: 12%; top: 10%; width: 64%; height: 92%; transform: rotate(-5deg); }
+      .dt-env::before { content: ""; position: absolute; left: 10%; top: 18%; width: 54%; height: 30%; background: repeating-linear-gradient(180deg, rgba(50, 40, 30, 0.6) 0 9%, transparent 9% 24%); -webkit-mask: linear-gradient(90deg, #000 70%, transparent); mask: linear-gradient(90deg, #000 70%, transparent); }
+      .dt-env::after { content: ""; position: absolute; left: 10%; top: 60%; width: 30%; height: 16%; border: 1.5px solid rgba(60, 40, 20, 0.5); }
+      .dt-dot { left: 69%; top: 18%; width: 1.4cqw; height: 1.4cqw; margin: -0.7cqw; z-index: 4; }
+      .dt-ring { left: 69%; top: 18%; width: 9cqw; aspect-ratio: 1; margin: -4.5cqw; border-radius: 50%; z-index: 3; border: 1.5px solid rgba(255, 240, 200, 0.8); animation: pulse 3.6s ease-out infinite; }
+      .dt-ring.r2 { animation-delay: -1.8s; }
+      .dt-pencil { left: 54%; top: 72%; width: 46%; height: 3.4%; transform: rotate(-24deg); z-index: 5; background: linear-gradient(90deg, #2a2a2a 0 2%, #e8c8a0 2% 9%, #2a6a3a 9% 92%, #c8c0b0 92% 95%, #e88a8a 95%); clip-path: polygon(0 50%, 9% 0, 100% 0, 100% 100%, 9% 100%); box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35); }
+      @keyframes pulse { from { transform: scale(0.4); opacity: 1; } to { transform: scale(2.2); opacity: 0; } }
+
+      /* ============ 2: the sheds lit like a cathedral ============ */
+      .sheds-scene { background: linear-gradient(180deg, #120c18 0%, #2a1a2a 40%, #5a3a3a 52%, #1a1218 54%, #0c0a10 100%); container-type: size; }
+      .sd-glow { left: 10%; right: 10%; top: 4%; height: 60%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 200, 120, 0.4), transparent 66%); animation: breathe 7s ease-in-out infinite alternate; }
+      .sd-shed { bottom: 47%; background: linear-gradient(180deg, #2a2230, #1a141e); box-shadow: inset 0 0 0 1px rgba(255, 200, 130, 0.12); }
+      .sd-shed::after { content: ""; position: absolute; inset: 12% 8% 6%; background: repeating-linear-gradient(90deg, rgba(255, 214, 140, 0.9) 0 4%, transparent 4% 9%), repeating-linear-gradient(180deg, transparent 0 14%, rgba(20, 14, 20, 0.95) 14% 18%); filter: blur(0.4px); }
+      .sd-shed.a { left: 18%; width: 30%; height: 34%; } .sd-shed.b { left: 46%; width: 38%; height: 42%; clip-path: polygon(0 12%, 50% 0, 100% 12%, 100% 100%, 0 100%); } .sd-shed.c { left: 6%; width: 14%; height: 18%; }
+      .sd-crane { left: 80%; bottom: 52%; width: 1.4%; height: 30%; background: repeating-linear-gradient(45deg, #3a2a30 0 2px, transparent 2px 6px); border-left: 1px solid #3a2a30; border-right: 1px solid #3a2a30; }
+      .sd-crane::after { content: ""; position: absolute; left: -300%; top: 0; width: 1200%; height: 3%; background: #3a2a30; }
+      .sd-red { left: 80.5%; bottom: 82%; width: 0.6%; aspect-ratio: 1; border-radius: 50%; background: #ff4a3a; box-shadow: 0 0 6px #ff4a3a; animation: blink 2s steps(2) infinite; }
+      .sd-reflect { left: 6%; right: 6%; top: 54%; height: 30%; background: repeating-linear-gradient(180deg, rgba(255, 210, 140, 0.55) 0 2px, transparent 2px 7px); -webkit-mask: linear-gradient(90deg, transparent 8%, #000 20%, #000 82%, transparent 92%), linear-gradient(180deg, #000, transparent); -webkit-mask-composite: source-in; mask: linear-gradient(180deg, #000, transparent); animation: shimmer 4s ease-in-out infinite alternate; }
+      .sd-sill { left: 0; right: 0; bottom: 0; height: 14%; z-index: 4; background: linear-gradient(180deg, #e8d4b0, #a88a64); box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.5); }
+      .sd-frame { inset: 0; z-index: 3; border: 2.4cqw solid #3a2618; border-bottom: 0; box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6); }
+      .sd-letter { left: 58%; bottom: 6%; width: 22%; height: 14%; z-index: 5; transform: rotate(-4deg); background: #f8f2e4; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); }
+      .sd-letter::after { content: ""; position: absolute; left: 10%; right: 14%; top: 22%; height: 60%; background: repeating-linear-gradient(180deg, rgba(60, 60, 70, 0.4) 0 12%, transparent 12% 26%); }
+      @keyframes blink { 50% { opacity: 0.1; } }
+      @keyframes shimmer { from { opacity: 0.6; transform: scaleX(0.98); } to { opacity: 1; transform: scaleX(1.02); } }
+
+      /* ============ 3: four hundred and twelve envelopes ============ */
+      .read-scene { background: #1a120c; container-type: size; }
+      .rd-grid { inset: 6% 4%; background:
+          repeating-linear-gradient(90deg, transparent 0 2.4%, #1a120c 2.4% 3%),
+          repeating-linear-gradient(180deg, transparent 0 4%, #1a120c 4% 5.4%),
+          linear-gradient(90deg, #5a3e24, #7a5634 50%, #5a3e24); opacity: 0.85; }
+      .rd-scan { left: 0; width: 12%; top: 0; bottom: 0; z-index: 3; background: linear-gradient(90deg, transparent, rgba(255, 230, 170, 0.25), rgba(255, 245, 210, 0.6) 50%, transparent 52%); animation: scan-x 8s linear infinite; }
+      .rd-hit { z-index: 4; width: 2.4%; height: 3.8%; margin: -1.9% -1.2%; background: #f2b040; border-radius: 1px; box-shadow: 0 0 10px rgba(255, 180, 60, 0.8); animation: hit 8s linear infinite; animation-delay: var(--d); }
+      .rd-hit::after { content: ""; position: absolute; right: 12%; top: 14%; width: 22%; aspect-ratio: 1; border-radius: 50%; background: #3a3030; }
+      .rd-hand { left: 0; right: 0; top: 0; bottom: 0; z-index: 2; background: radial-gradient(ellipse 30% 40% at 30% 60%, rgba(255, 190, 90, 0.12), transparent 70%), radial-gradient(ellipse 30% 40% at 70% 40%, rgba(255, 190, 90, 0.1), transparent 70%); }
+      @keyframes scan-x { from { left: -12%; } to { left: 100%; } }
+      @keyframes hit { 0%, 2% { opacity: 0.25; filter: brightness(0.6); } 6%, 100% { opacity: 1; filter: none; } }
+
+      /* ============ 4: the amber tree, 1873 ============ */
+      .tree-scene { background: radial-gradient(ellipse 70% 70% at 50% 20%, #2e2014, #120c08 80%); container-type: size; }
+      .tr-line { z-index: 2; height: 1px; transform-origin: 0 50%; background: rgba(220, 200, 170, 0.4); }
+      .tr-line.am { background: #f2a840; box-shadow: 0 0 4px rgba(255, 170, 60, 0.6); height: 1.5px; }
+      .tr-node { z-index: 3; width: 0.9cqw; aspect-ratio: 1; margin: -0.45cqw; border-radius: 50%; background: #8a7a68; }
+      .tr-node.am { background: #ffc060; box-shadow: 0 0 8px rgba(255, 180, 70, 0.9); animation: glowa 5s ease-in-out infinite alternate; animation-delay: var(--d); }
+      .tr-root { left: 0; right: 0; top: 8%; z-index: 4; text-align: center; font: italic 600 2.4cqw "Cormorant Garamond", serif; color: #ffd890; text-shadow: 0 0 14px rgba(255, 180, 70, 0.6); }
+      .tr-year { left: 0; right: 0; top: 2.5%; z-index: 4; text-align: center; font: 600 1.3cqw Karla, sans-serif; letter-spacing: 0.3em; color: rgba(255, 220, 160, 0.8); }
+      @keyframes glowa { from { filter: brightness(0.8); } to { filter: brightness(1.25); } }
+
+      /* ============ 5: the flapjack ============ */
+      .flap-scene { background: radial-gradient(ellipse 70% 70% at 40% 40%, #f6dcb0, #c8925a 70%, #8a5a30); container-type: size; }
+      .fj-paper { left: 18%; top: 22%; width: 46%; height: 64%; transform: rotate(-8deg); background: #fbf4e6; box-shadow: 0 10px 20px rgba(80, 40, 10, 0.35); clip-path: polygon(0 4%, 6% 0, 100% 2%, 98% 96%, 92% 100%, 2% 98%); }
+      .fj-bar { left: 24%; top: 30%; width: 34%; height: 40%; transform: rotate(-6deg); z-index: 3; border-radius: 6px;
+        background:
+          radial-gradient(ellipse 4% 3% at 20% 30%, rgba(255, 240, 200, 0.9), transparent) 0 0 / 24% 30%,
+          radial-gradient(ellipse 5% 3% at 60% 60%, rgba(120, 70, 20, 0.6), transparent) 0 0 / 18% 22%,
+          radial-gradient(ellipse 3% 4% at 40% 50%, rgba(255, 230, 170, 0.8), transparent) 0 0 / 14% 19%,
+          linear-gradient(160deg, #e8b056, #c8862e 60%, #a0661e);
+        box-shadow: inset 0 -6px 0 rgba(120, 70, 20, 0.5), inset 0 2px 0 rgba(255, 230, 170, 0.6), 0 12px 18px rgba(80, 40, 10, 0.4); }
+      .fj-shine { left: 26%; top: 32%; width: 30%; height: 12%; z-index: 4; transform: rotate(-6deg); border-radius: 50%; background: rgba(255, 240, 200, 0.35); filter: blur(4px); animation: breathe 4s ease-in-out infinite alternate; }
+      .fj-card { left: 62%; top: 30%; width: 26%; height: 30%; transform: rotate(7deg); z-index: 3; border-radius: 6px; background: linear-gradient(180deg, #fff 0 22%, #f2f0ec 22%); box-shadow: 0 8px 16px rgba(80, 40, 10, 0.35), inset 0 5px 0 #d8442a; }
+      .fj-card::after { content: ""; position: absolute; left: 10%; right: 16%; top: 34%; height: 50%; background: repeating-linear-gradient(180deg, rgba(60, 60, 60, 0.45) 0 10%, transparent 10% 24%); }
+      .fj-crumb { width: 1.2%; aspect-ratio: 1; border-radius: 40%; background: #c8862e; z-index: 2; }
+
+      /* ============ 6: mending the letter ============ */
+      .mend-scene { background: radial-gradient(ellipse 80% 70% at 50% 50%, #3a2616, #140e08 80%); container-type: size; }
+      .md-strand { left: -4%; right: -4%; top: 44%; height: 12%; display: flex; gap: 0.5%; z-index: 3; transform: rotate(-4deg); }
+      .md-strand i { flex: 1; border-radius: 3px; background: var(--c); box-shadow: 0 0 6px rgba(255, 200, 120, 0.25); opacity: 0.85; }
+      .md-strand i.bad { animation: bad 7s ease-in-out infinite; }
+      .md-twist { left: -4%; right: -4%; top: 38%; height: 24%; z-index: 2; transform: rotate(-4deg);
+        background: repeating-linear-gradient(110deg, transparent 0 18px, rgba(255, 210, 150, 0.12) 18px 20px); }
+      .md-drop { width: 9%; aspect-ratio: 1; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; z-index: 5; margin: -4.5%;
+        background: radial-gradient(circle at 35% 30%, rgba(255, 255, 240, 0.9), rgba(255, 220, 140, 0.6) 30%, rgba(240, 170, 70, 0.35) 70%); box-shadow: 0 0 24px rgba(255, 200, 100, 0.5);
+        left: 52%; top: 50%; animation: drop 7s ease-in-out infinite; }
+      .md-drop i { position: absolute; left: 36%; top: 28%; width: 28%; height: 44%; border-radius: 3px; background: #6ac8a0; }
+      .md-halo { left: 52%; top: 50%; width: 18%; aspect-ratio: 1; margin: -9%; border-radius: 50%; z-index: 4; border: 1.5px solid rgba(120, 220, 170, 0.6); animation: halo 7s ease-out infinite; }
+      @keyframes drop { 0% { left: 52%; top: -20%; opacity: 0; } 30% { left: 52%; top: 22%; opacity: 1; } 50%, 70% { left: 52%; top: 49%; opacity: 1; } 85%, 100% { left: 52%; top: 49%; opacity: 0; } }
+      @keyframes bad { 0%, 55% { background: #f05a3a; box-shadow: 0 0 12px rgba(240, 90, 60, 0.8); } 65%, 100% { background: #6ac8a0; box-shadow: 0 0 14px rgba(110, 210, 160, 0.9); } }
+      @keyframes halo { 0%, 58% { transform: scale(0.3); opacity: 0; } 62% { opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+
+      /* ============ 7: Biggar Bank ============ */
+      .pitch-scene { background: linear-gradient(180deg, #8ab0c8 0%, #d8d0b8 34%, #6a8aa0 38%, #3a5a6a 40%, #6a8a48 41%, #4a7a32 100%); container-type: size; }
+      .pb-sun { left: 64%; top: 2%; width: 30%; height: 40%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 248, 220, 0.9) 0 8%, rgba(255, 220, 160, 0.3) 34%, transparent 66%); }
+      .pb-wind { inset: 0 0 50% 0; z-index: 2; background: repeating-linear-gradient(176deg, transparent 0 22px, rgba(255, 255, 255, 0.35) 22px 23px); -webkit-mask: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent); mask: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent); animation: wind 1.6s linear infinite; }
+      .pb-dune { left: -4%; width: 40%; top: 32%; height: 12%; border-radius: 50% 60% 0 0; background: linear-gradient(180deg, #d8c08a, #a89060); }
+      .pb-dune::after { content: ""; position: absolute; inset: -30% 10% 70%; background: repeating-linear-gradient(80deg, transparent 0 4px, rgba(140, 150, 80, 0.9) 4px 5px); transform: skewX(-24deg); animation: grass 2.2s ease-in-out infinite alternate; }
+      .pb-stripes { left: -10%; right: -10%; top: 41%; bottom: 0; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 8%, transparent 8% 16%); transform: perspective(300px) rotateX(40deg); transform-origin: 50% 0; }
+      .pb-line { left: 6%; right: 6%; top: 74%; height: 0; border-top: 2px solid rgba(255, 255, 255, 0.75); }
+      .pb-goal { left: 66%; top: 44%; width: 26%; height: 26%; z-index: 4; border: 0.6cqw solid #f4f4f0; border-bottom: 0; box-sizing: border-box;
+        background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.35) 0 1px, transparent 1px 7px), repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.35) 0 1px, transparent 1px 7px);
+        animation: net 3.2s ease-in-out infinite; transform-origin: 50% 0; }
+      .pb-ball { left: 76%; top: 60%; width: 2.6%; aspect-ratio: 1; margin: -1.3%; z-index: 5; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff, #d8d8d8 60%, #8a8a8a); animation: shot 3.2s ease-in infinite; }
+      .pb-kid { left: 40%; top: 58%; width: 3%; height: 16%; z-index: 5; }
+      .pb-kid::before { content: ""; position: absolute; left: 20%; top: 0; width: 60%; aspect-ratio: 1; border-radius: 50%; background: #e8b088; }
+      .pb-kid::after { content: ""; position: absolute; left: 0; right: 0; top: 24%; bottom: 0; border-radius: 30% 30% 10% 10%; background: linear-gradient(180deg, #d8303a 0 50%, #1a1a2a 50%); }
+      .pb-crowd { left: 2%; width: 30%; top: 66%; height: 10%; z-index: 3; background: radial-gradient(ellipse 4% 40% at 50% 60%, #2a2420 98%, transparent) 0 0 / 7% 100%; }
+      @keyframes wind { from { background-position: 0 0; } to { background-position: -46px 0; } }
+      @keyframes grass { from { transform: skewX(-30deg); } to { transform: skewX(-12deg); } }
+      @keyframes shot { 0%, 10% { left: 44%; top: 72%; } 50%, 100% { left: 76%; top: 56%; } }
+      @keyframes net { 0%, 48% { transform: none; } 56% { transform: scaleY(1.06) skewX(-2deg); } 70%, 100% { transform: none; } }
+
+      /* ============ 8: the grey box ============ */
+      .box-scene { background: linear-gradient(180deg, #3a3a40, #2a2a30 60%, #1e1e22); container-type: size; }
+      .bx-shelf { left: -2%; right: -2%; top: 78%; height: 4%; background: #6a6a72; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); }
+      .bx-rain { left: 66%; top: 6%; width: 28%; height: 50%; background: linear-gradient(180deg, #5a6a7a, #3a4652); box-shadow: inset 0 0 0 3px #2a2a30; }
+      .bx-rain::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(100deg, transparent 0 9px, rgba(220, 230, 240, 0.35) 9px 10px); animation: rain 0.9s linear infinite; }
+      .bx-box { left: 18%; top: 40%; width: 44%; height: 38%; z-index: 3; background: linear-gradient(180deg, #9a9aa2, #7a7a82); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), 0 12px 20px rgba(0, 0, 0, 0.45); }
+      .bx-box::after { content: ""; position: absolute; left: 6%; top: 40%; width: 30%; height: 20%; background: #f2efe8; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2); }
+      .bx-lid { left: 16%; top: 30%; width: 48%; height: 9%; z-index: 2; transform: rotate(-6deg); transform-origin: 0 100%; background: linear-gradient(180deg, #a8a8b0, #8a8a92); }
+      .bx-envs { left: 20%; top: 26%; width: 40%; height: 16%; z-index: 2; background: repeating-linear-gradient(90deg, #b8885a 0 2.2%, #8a6038 2.2% 2.8%, #c8985e 2.8% 5.2%, #9a6e42 5.2% 5.8%); }
+      .bx-one { left: 42%; top: 6%; width: 18%; height: 30%; z-index: 4; transform: rotate(5deg); box-shadow: 0 0 24px rgba(255, 200, 120, 0.5), inset 0 0 0 1px rgba(90, 60, 30, 0.35); animation: hold 6s ease-in-out infinite alternate; }
+      .bx-one .dot { right: 10%; top: 12%; }
+      .bx-tab { z-index: 4; top: 21%; height: 6%; width: 9%; background: #f2efe8; font: 600 0.9cqw/6cqh Karla, sans-serif; text-align: center; color: #3a3a40; white-space: nowrap; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+      .bx-tab.a { left: 30%; } .bx-tab.e { left: 61%; }
+      .bx-warm { left: 30%; top: -10%; width: 50%; height: 70%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 200, 120, 0.22), transparent 66%); }
+      @keyframes rain { from { background-position: 0 0; } to { background-position: -12px 60px; } }
+      @keyframes hold { from { transform: rotate(5deg) translateY(0); } to { transform: rotate(3deg) translateY(-6%); } }
+
+      @media (max-width: 600px) {
+        .story { padding: 2rem 1.1rem 6rem; }
+        .prose { font-size: 1.2rem; }
+        .scene { margin-left: 0; margin-right: 0; min-height: 14rem; }
+        .scene.tall { min-height: 17rem; height: 17rem; }
+        .env-hero { margin: 0; height: 16rem; }
+        .label { font-size: 0.44rem; }
+      }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes breathe { from { opacity: 0.85; } to { opacity: 1; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .eh-pull { transform: translateY(-34%) rotate(-3deg); }
+        .dt-ring { transform: scale(1.3); opacity: 0.5; } .dt-ring.r2 { opacity: 0; }
+        .rd-scan { left: 70%; }
+        .md-strand i.bad { background: #6ac8a0; box-shadow: 0 0 14px rgba(110, 210, 160, 0.9); }
+        .md-drop, .md-halo { opacity: 0; }
+        .pb-ball { left: 76%; top: 56%; }
+        .bx-one { transform: rotate(3deg) translateY(-6%); }
+      }
+      .scene.tall.tree-scene { height: auto; min-height: 0; aspect-ratio: 2; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="env-hero" aria-hidden="true">
+          <div class="eh-lamp"></div><div class="eh-floor"></div><div class="eh-end"></div><div class="eh-unit l"></div><div class="eh-unit r"></div>
+          <div class="eh-wheel w1"></div><div class="eh-wheel w2"></div>
+          <div class="env eh-pull"><i class="dot"></i></div><div class="eh-dust"></div>
+          <div class="label">the rolling shelves</div>
+        </div>
+        <h1>The envelopes kept the dots</h1>
+        <time datetime="2026-10-19">19 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Hazel Dunmore filed other people's lives for thirty-two years at the surgery on Dalton Road in Barrow, in a back room with no window and a radiator that knocked like someone wanting to be let in, and for most of those years the lives came in brown card envelopes about the size of a paperback, with the patient's name typed or written along the top and a number in the corner and, inside, every letter and note and scrap of paper that any doctor had ever written about them, folded small to fit. They were called Lloyd George envelopes, after the man who'd brought them in before the First World War, and they had outlasted him by a long way, and they had outlasted the computers that were meant to replace them as well, twice, because the old notes never quite got moved across and nobody could bring themselves to throw them away. By the time Hazel started in 1987 there were eleven thousand of them on the rolling shelves, and by the time she retired there were nearer fifteen, and she could have found you any one of them in the dark.</p>
+        <p>She liked the job in the way you like a thing that you are good at and that nobody else wants to do. The doctors wrote in fountain pen in the old days and then in biro and then hardly at all, once the screens came in, but the envelopes stayed, fat and soft at the corners, and when a patient moved practices she posted theirs on in a padded bag and when a patient died she took theirs down to the dead shelves at the end of the row, and in between she read them, a little, because you couldn't help it. She read about Mr Bilsborough's ulcer and the Kendall twins' tonsils and the woman from Ramsden Street whose husband had put her through the kitchen window in 1962 and whose doctor had written, in small furious capitals, SHE WILL NOT PRESS CHARGES. She never told anyone what she read. She thought of it as being like a priest, except that she didn't have to say anything back.</p>
+        <p>It was in her fourth or fifth year that she started putting the dots on.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall dot-scene" aria-hidden="true">
+        <div class="env dt-env"></div><div class="dt-ring"></div><div class="dt-ring r2"></div><i class="dot dt-dot"></i><div class="dt-pencil"></div>
+        <div class="label">the top right-hand corner</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It began with a boy called Darren Rigg, who was eleven, and who'd collapsed on the field at the end of a cross-country run at Alfred Barrow school and been taken up to the hospital with his water gone the colour of cola. The letter from the hospital said that his muscles had broken down, which was a thing that could happen after very hard exercise, and that his kidneys had been at risk, and that he had recovered well and should be encouraged to drink plenty of fluids. It was filed in his envelope behind a note from 1983 when he'd been brought in by his mam after a long walk on Walney with aching legs, and a note from 1985 that said <em>tired ++, ?growing pains</em>, and when Hazel took the envelope down to file the letter she noticed that his mam's envelope was on the same shelf, because they were a Rigg and the Riggs were all together, and she had a look at that as well, out of nothing more than nosiness. His mam had been in at fourteen with <em>dark urine after hockey</em> and at twenty-three with <em>muscle pains, been fasting for a wedding, ?viral</em> and nobody had joined the two up, because why would they, it was years apart and a different doctor each time.</p>
+        <p>Hazel didn't join them up either, not really. She just thought, that's the same, and she took a pencil, a soft one she kept for marking the boxes, and she put a small dot in the top right-hand corner of both envelopes, where the card was thickest, so small that you'd only see it if you were looking. She didn't know why she did it. She told herself afterwards it was so that she'd remember, and that was partly true.</p>
+        <p>Over the next twenty-eight years she put the dot on four hundred and twelve envelopes.</p>
+        <p>She never had a rule for it, or not one she could have written down. It was the tired, mostly, a particular kind of tired that the doctors kept writing about in different words, <em>lethargic</em>, <em>fatigue</em>, <em>no energy</em>, <em>TATT</em>, which meant tired all the time, but tired in a particular shape, after exercise and after going without food and in the cold, and then the water going dark, and then the cramps, and then, in the men, a strange run of falls and crush injuries at the shipyard that were written up as accidents and that Hazel came to think, without ever saying so, were something else, men whose legs had gone out from under them at the end of a double shift with nothing in their stomachs. It was in families, but not all of a family, and not in a way she could follow, skipping and doubling back like a dog off the lead. There were Riggs and Askews and a lot of Nancarrows, and Penroses and Trevaskises and Rowes, which were Cornish names, she knew that much, because her own nan had been a Trevaskis from Dalton and had told her that her people had come up from Cornwall for the iron mines in the 1870s when the tin had run out down there, whole villages of them on the train with their tools in sacks.</p>
+        <p>Once, in about 1999, she mentioned it to Dr Ferguson, who was the senior partner then and who she liked, a tall stooping Scot who did crosswords in the staff room and called her Mrs D. She said she thought there might be something running in some of the old families, a tiredness, and he'd looked at her over his glasses kindly and said, "Barrow's tired, Mrs D. It's the yard. It's the weather. It's the chips." And he was right, in a way, and she let it go, and she went on putting the dots on, because by then it was a habit, like touching wood.</p>
+        <p>When she retired in 2019 the practice gave her a carriage clock and a card signed by everybody and a bouquet the size of a small tree, and on her last afternoon she stood in the back room for a while with the radiator knocking and thought about rubbing the dots out, and then didn't, because it would have taken a week and they weren't doing anybody any harm.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sheds-scene" aria-hidden="true">
+        <div class="sd-glow"></div><div class="sd-shed c"></div><div class="sd-shed a"></div><div class="sd-shed b"></div><div class="sd-crane"></div><div class="sd-red"></div>
+        <div class="sd-reflect"></div><div class="sd-frame"></div><div class="sd-sill"></div><div class="sd-letter"></div>
+        <div class="label">lit up at night like a cathedral</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letter came twelve years later, in the spring of 2031, when she was seventy-four and living in a bungalow in Vickerstown on Walney Island with a view across the channel of the submarine sheds, which were bigger than ever and lit up at night like a cathedral. It was a proper letter, on paper, which surprised her, and it was from the national records programme, which she'd read about in the <em>Evening Mail</em>: the scheme to scan every Lloyd George envelope in the country before the paper was finally pulped, all ninety million of them or whatever it was, a century of handwriting going through the machines in a warehouse in Daventry, and being read, the paper said, by an artificial intelligence that the programme called Almoner, after the old hospital almoners who used to sit with patients and work out what they needed.</p>
+        <p>The letter said that during the reading of records from the Furness area, Almoner had identified a consistent handwritten mark on a set of envelopes from the Dalton Road practice which it had been unable to explain from the records themselves, and that it had reason to think the mark might be of clinical importance, and that it understood from practice staff lists that Mrs Dunmore had been responsible for the records at Dalton Road during the relevant period. It asked, very politely, whether she would be willing to speak to a member of the clinical team about it. It gave a phone number and an email address and it said, at the bottom, that there was no obligation of any kind.</p>
+        <p>Hazel read it three times at the kitchen table and then she went and sat in the front room for a bit and looked at the sheds.</p>
+        <p>She had a strange feeling about it, which was mostly embarrassment, the feeling of having been caught at something, as though she'd been found out for reading the envelopes after all those years, and under the embarrassment something else that she didn't have a word for and that made her hands want something to do. She washed up the cups that didn't need washing. Then she rang her daughter Joanne, who was at work at the hospital, and Joanne said, "Mam, you put <em>dots</em> on them? What kind of dots?" and Hazel said, "Just dots, love. In pencil," and Joanne went quiet on the line, and then she said, "Ring them. Ring them now. Do you want me to come round?"</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall read-scene" aria-hidden="true">
+        <div class="rd-grid"></div><div class="rd-hand"></div>
+        <i class="rd-hit" style="left:46.5%;top:45.8%;--d:-4.25s"></i><i class="rd-hit" style="left:63.1%;top:60.0%;--d:-3.07s"></i><i class="rd-hit" style="left:16.1%;top:64.8%;--d:-6.42s"></i><i class="rd-hit" style="left:5.1%;top:60.0%;--d:-7.21s"></i><i class="rd-hit" style="left:46.5%;top:45.8%;--d:-4.25s"></i><i class="rd-hit" style="left:60.3%;top:74.3%;--d:-3.26s"></i><i class="rd-hit" style="left:65.8%;top:41.0%;--d:-2.87s"></i><i class="rd-hit" style="left:52.0%;top:7.8%;--d:-3.86s"></i><i class="rd-hit" style="left:63.1%;top:26.8%;--d:-3.07s"></i><i class="rd-hit" style="left:43.7%;top:60.0%;--d:-4.45s"></i><i class="rd-hit" style="left:18.9%;top:55.3%;--d:-6.22s"></i><i class="rd-hit" style="left:82.4%;top:36.3%;--d:-1.69s"></i><i class="rd-hit" style="left:7.9%;top:36.3%;--d:-7.01s"></i><i class="rd-hit" style="left:10.6%;top:55.3%;--d:-6.81s"></i><i class="rd-hit" style="left:63.1%;top:64.8%;--d:-3.07s"></i><i class="rd-hit" style="left:74.1%;top:17.3%;--d:-2.28s"></i><i class="rd-hit" style="left:5.1%;top:12.5%;--d:-7.21s"></i><i class="rd-hit" style="left:76.9%;top:41.0%;--d:-2.08s"></i><i class="rd-hit" style="left:10.6%;top:69.5%;--d:-6.81s"></i><i class="rd-hit" style="left:87.9%;top:74.3%;--d:-1.29s"></i><i class="rd-hit" style="left:13.4%;top:69.5%;--d:-6.62s"></i><i class="rd-hit" style="left:16.1%;top:55.3%;--d:-6.42s"></i><i class="rd-hit" style="left:82.4%;top:31.5%;--d:-1.69s"></i><i class="rd-hit" style="left:65.8%;top:12.5%;--d:-2.87s"></i><i class="rd-hit" style="left:52.0%;top:31.5%;--d:-3.86s"></i><i class="rd-hit" style="left:49.3%;top:17.3%;--d:-4.05s"></i><i class="rd-hit" style="left:38.2%;top:69.5%;--d:-4.84s"></i><i class="rd-hit" style="left:63.1%;top:79.0%;--d:-3.07s"></i><i class="rd-hit" style="left:46.5%;top:64.8%;--d:-4.25s"></i><i class="rd-hit" style="left:52.0%;top:7.8%;--d:-3.86s"></i><i class="rd-hit" style="left:60.3%;top:17.3%;--d:-3.26s"></i><i class="rd-hit" style="left:87.9%;top:36.3%;--d:-1.29s"></i><i class="rd-hit" style="left:74.1%;top:45.8%;--d:-2.28s"></i><i class="rd-hit" style="left:35.5%;top:60.0%;--d:-5.04s"></i><i class="rd-hit" style="left:79.6%;top:64.8%;--d:-1.88s"></i><i class="rd-hit" style="left:63.1%;top:50.5%;--d:-3.07s"></i><i class="rd-hit" style="left:13.4%;top:45.8%;--d:-6.62s"></i><i class="rd-hit" style="left:24.4%;top:55.3%;--d:-5.83s"></i><i class="rd-hit" style="left:35.5%;top:60.0%;--d:-5.04s"></i><i class="rd-hit" style="left:49.3%;top:31.5%;--d:-4.05s"></i><i class="rd-hit" style="left:5.1%;top:64.8%;--d:-7.21s"></i><i class="rd-hit" style="left:76.9%;top:69.5%;--d:-2.08s"></i><i class="rd-hit" style="left:7.9%;top:7.8%;--d:-7.01s"></i><i class="rd-hit" style="left:24.4%;top:69.5%;--d:-5.83s"></i><i class="rd-hit" style="left:7.9%;top:64.8%;--d:-7.01s"></i><i class="rd-hit" style="left:21.7%;top:22.0%;--d:-6.02s"></i>
+        <div class="rd-scan"></div>
+        <div class="label">four hundred and twelve envelopes</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The woman who came was called Dr Nisha Kaur and she was a clinical geneticist from Newcastle, and she came in a little electric car that she'd driven across from the east coast that morning, and she sat in Hazel's front room with a cup of tea and a tablet on her knee and she was so plainly nervous that Hazel felt better straight away.</p>
+        <p>"I should explain how this happened," she said, "because it's a bit unusual, and I don't want you to feel like you're in trouble, because you're not. The opposite, I think."</p>
+        <p>What had happened, as far as Hazel could follow it, was this. Almoner had been reading the envelopes for three years, a few hundred thousand a day, and as it read them it was doing something that no person had ever been able to do with them, which was to hold them all in mind at once, every note from every doctor in every practice from 1911 onwards, and to notice what was the same. Most of what it noticed was ordinary, the flu years and the polio years and the year the measles came back, and the people who ran the programme had expected that, and had built it mostly to tidy the old notes into the new ones so that nothing got lost when the paper went. But it had been built, as well, to look for one other thing, which was patterns that nobody had seen because nobody had ever been in a position to see them: the families with a thing running in them that every doctor had treated as a one-off, because each doctor had only ever seen one bit.</p>
+        <p>"And it found yours," Dr Kaur said. "Or it found the dots, rather. It reads everything on the envelope, not just the notes inside. Stamps, coffee rings, crossings-out. And it noticed that four hundred and twelve envelopes from your practice had the same small pencil mark in the same place, made, it thought, by the same hand, over about thirty years. Which on its own wouldn't mean anything. People mark files all the time. But when it looked inside them, the people with the dot were very different from the people without it. Much more likely to have notes about exertional muscle pain, dark urine, collapse after fasting, a particular kind of fatigue. Much more likely to have been admitted with muscle breakdown. Much more likely, if they were men who worked at the yard, to have had certain injuries." She paused. "It tried to work out what the dot meant from the notes alone and it got close, but it couldn't be sure whether the dot was following the illness or the illness was following the dot, if you see what I mean. Whether someone had been marking people who were ill or people who were, I don't know, related, or in a study. So it did something it's allowed to do, which is ask for the person."</p>
+        <p>"It asked for me."</p>
+        <p>"It asked for whoever made the dots. It's quite insistent about that kind of thing. It said that the person who made them had been seeing something for thirty years and that the most useful thing it could possibly do was talk to them before it did anything else." Dr Kaur smiled for the first time. "It also said, and I'm quoting, that the mark had been made with care and that it would like to know what the person was worried about."</p>
+        <p>Hazel had to get up and go into the kitchen at that, and stand by the sink for a minute, and Dr Kaur, who was cleverer than she looked, let her.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall tree-scene" aria-hidden="true">
+        <div class="tr-year">1873</div><div class="tr-root">Josiah Trevaskis and Ann Trevaskis</div>
+        <i class="tr-line am" style="left:50.00%;top:16.00%;width:31.75cqw;transform:rotate(168.7deg)"></i><i class="tr-line am" style="left:50.00%;top:16.00%;width:6.22cqw;transform:rotate(85.6deg)"></i><i class="tr-line am" style="left:50.00%;top:16.00%;width:32.32cqw;transform:rotate(11.1deg)"></i><i class="tr-line" style="left:18.86%;top:28.40%;width:10.75cqw;transform:rotate(144.8deg)"></i><i class="tr-line am" style="left:18.86%;top:28.40%;width:9.36cqw;transform:rotate(41.5deg)"></i><i class="tr-line" style="left:50.47%;top:28.40%;width:11.00cqw;transform:rotate(145.7deg)"></i><i class="tr-line am" style="left:50.47%;top:28.40%;width:9.21cqw;transform:rotate(42.3deg)"></i><i class="tr-line" style="left:81.72%;top:28.40%;width:10.94cqw;transform:rotate(145.5deg)"></i><i class="tr-line am" style="left:81.72%;top:28.40%;width:10.16cqw;transform:rotate(37.6deg)"></i><i class="tr-line" style="left:10.08%;top:40.80%;width:7.01cqw;transform:rotate(117.9deg)"></i><i class="tr-line" style="left:10.08%;top:40.80%;width:8.09cqw;transform:rotate(50.0deg)"></i><i class="tr-line am" style="left:25.88%;top:40.80%;width:6.45cqw;transform:rotate(106.0deg)"></i><i class="tr-line am" style="left:25.88%;top:40.80%;width:9.95cqw;transform:rotate(38.5deg)"></i><i class="tr-line" style="left:41.39%;top:40.80%;width:6.24cqw;transform:rotate(96.6deg)"></i><i class="tr-line" style="left:57.29%;top:40.80%;width:9.04cqw;transform:rotate(136.7deg)"></i><i class="tr-line am" style="left:57.29%;top:40.80%;width:6.47cqw;transform:rotate(73.5deg)"></i><i class="tr-line" style="left:72.70%;top:40.80%;width:7.92cqw;transform:rotate(128.5deg)"></i><i class="tr-line" style="left:72.70%;top:40.80%;width:6.99cqw;transform:rotate(62.4deg)"></i><i class="tr-line" style="left:72.70%;top:40.80%;width:12.68cqw;transform:rotate(29.3deg)"></i><i class="tr-line" style="left:89.76%;top:40.80%;width:6.58cqw;transform:rotate(70.3deg)"></i><i class="tr-line" style="left:6.80%;top:53.20%;width:6.46cqw;transform:rotate(106.3deg)"></i><i class="tr-line" style="left:6.80%;top:53.20%;width:7.38cqw;transform:rotate(57.2deg)"></i><i class="tr-line" style="left:15.28%;top:53.20%;width:6.32cqw;transform:rotate(78.8deg)"></i><i class="tr-line am" style="left:24.10%;top:53.20%;width:6.65cqw;transform:rotate(111.1deg)"></i><i class="tr-line am" style="left:24.10%;top:53.20%;width:6.83cqw;transform:rotate(65.1deg)"></i><i class="tr-line am" style="left:33.67%;top:53.20%;width:6.68cqw;transform:rotate(111.8deg)"></i><i class="tr-line am" style="left:33.67%;top:53.20%;width:7.23cqw;transform:rotate(59.1deg)"></i><i class="tr-line" style="left:40.67%;top:53.20%;width:6.25cqw;transform:rotate(82.8deg)"></i><i class="tr-line" style="left:50.71%;top:53.20%;width:7.44cqw;transform:rotate(123.6deg)"></i><i class="tr-line" style="left:50.71%;top:53.20%;width:6.52cqw;transform:rotate(71.8deg)"></i><i class="tr-line am" style="left:59.12%;top:53.20%;width:6.30cqw;transform:rotate(100.2deg)"></i><i class="tr-line" style="left:67.77%;top:53.20%;width:7.99cqw;transform:rotate(129.2deg)"></i><i class="tr-line" style="left:67.77%;top:53.20%;width:6.22cqw;transform:rotate(85.4deg)"></i><i class="tr-line" style="left:75.94%;top:53.20%;width:6.44cqw;transform:rotate(105.7deg)"></i><i class="tr-line" style="left:75.94%;top:53.20%;width:6.57cqw;transform:rotate(70.7deg)"></i><i class="tr-line" style="left:83.76%;top:53.20%;width:6.20cqw;transform:rotate(92.0deg)"></i><i class="tr-line" style="left:91.98%;top:53.20%;width:6.56cqw;transform:rotate(109.2deg)"></i><i class="tr-line" style="left:91.98%;top:53.20%;width:6.83cqw;transform:rotate(65.2deg)"></i><i class="tr-line" style="left:4.98%;top:65.60%;width:6.20cqw;transform:rotate(88.1deg)"></i><i class="tr-line" style="left:4.98%;top:65.60%;width:6.85cqw;transform:rotate(64.8deg)"></i><i class="tr-line" style="left:10.80%;top:65.60%;width:6.27cqw;transform:rotate(81.7deg)"></i><i class="tr-line" style="left:16.51%;top:65.60%;width:6.66cqw;transform:rotate(111.3deg)"></i><i class="tr-line" style="left:21.71%;top:65.60%;width:7.04cqw;transform:rotate(118.3deg)"></i><i class="tr-line" style="left:21.71%;top:65.60%;width:6.21cqw;transform:rotate(93.8deg)"></i><i class="tr-line" style="left:26.98%;top:65.60%;width:6.77cqw;transform:rotate(113.6deg)"></i><i class="tr-line" style="left:26.98%;top:65.60%;width:6.24cqw;transform:rotate(83.9deg)"></i><i class="tr-line am" style="left:31.19%;top:65.60%;width:6.22cqw;transform:rotate(94.1deg)"></i><i class="tr-line am" style="left:37.38%;top:65.60%;width:6.74cqw;transform:rotate(113.1deg)"></i><i class="tr-line" style="left:41.45%;top:65.60%;width:6.93cqw;transform:rotate(116.5deg)"></i><i class="tr-line" style="left:41.45%;top:65.60%;width:6.20cqw;transform:rotate(89.6deg)"></i><i class="tr-line" style="left:46.59%;top:65.60%;width:6.30cqw;transform:rotate(100.2deg)"></i><i class="tr-line" style="left:46.59%;top:65.60%;width:6.30cqw;transform:rotate(79.6deg)"></i><i class="tr-line" style="left:52.74%;top:65.60%;width:6.23cqw;transform:rotate(95.4deg)"></i><i class="tr-line" style="left:52.74%;top:65.60%;width:6.60cqw;transform:rotate(69.9deg)"></i><i class="tr-line am" style="left:58.01%;top:65.60%;width:6.21cqw;transform:rotate(86.6deg)"></i><i class="tr-line am" style="left:58.01%;top:65.60%;width:6.88cqw;transform:rotate(64.3deg)"></i><i class="tr-line" style="left:68.26%;top:65.60%;width:7.07cqw;transform:rotate(118.7deg)"></i><i class="tr-line" style="left:68.26%;top:65.60%;width:6.26cqw;transform:rotate(82.3deg)"></i><i class="tr-line" style="left:74.20%;top:65.60%;width:6.82cqw;transform:rotate(114.6deg)"></i><i class="tr-line" style="left:74.20%;top:65.60%;width:6.23cqw;transform:rotate(84.2deg)"></i><i class="tr-line" style="left:78.11%;top:65.60%;width:6.28cqw;transform:rotate(81.0deg)"></i><i class="tr-line" style="left:83.55%;top:65.60%;width:6.28cqw;transform:rotate(99.0deg)"></i><i class="tr-line" style="left:83.55%;top:65.60%;width:6.51cqw;transform:rotate(72.2deg)"></i><i class="tr-line" style="left:89.83%;top:65.60%;width:6.39cqw;transform:rotate(104.0deg)"></i><i class="tr-line" style="left:94.84%;top:65.60%;width:7.20cqw;transform:rotate(120.6deg)"></i><i class="tr-line" style="left:94.84%;top:65.60%;width:6.21cqw;transform:rotate(87.1deg)"></i><i class="tr-line" style="left:5.19%;top:78.00%;width:6.23cqw;transform:rotate(95.2deg)"></i><i class="tr-line" style="left:7.90%;top:78.00%;width:6.44cqw;transform:rotate(105.7deg)"></i><i class="tr-line" style="left:11.71%;top:78.00%;width:6.64cqw;transform:rotate(110.9deg)"></i><i class="tr-line" style="left:11.71%;top:78.00%;width:6.29cqw;transform:rotate(99.7deg)"></i><i class="tr-line" style="left:14.09%;top:78.00%;width:6.21cqw;transform:rotate(93.8deg)"></i><i class="tr-line" style="left:18.37%;top:78.00%;width:6.79cqw;transform:rotate(114.1deg)"></i><i class="tr-line" style="left:18.37%;top:78.00%;width:6.20cqw;transform:rotate(90.1deg)"></i><i class="tr-line" style="left:18.37%;top:78.00%;width:6.40cqw;transform:rotate(75.5deg)"></i><i class="tr-line" style="left:21.30%;top:78.00%;width:6.44cqw;transform:rotate(74.3deg)"></i><i class="tr-line" style="left:24.26%;top:78.00%;width:6.22cqw;transform:rotate(85.6deg)"></i><i class="tr-line" style="left:27.64%;top:78.00%;width:6.20cqw;transform:rotate(92.1deg)"></i><i class="tr-line" style="left:27.64%;top:78.00%;width:6.86cqw;transform:rotate(64.7deg)"></i><i class="tr-line am" style="left:34.74%;top:78.00%;width:6.78cqw;transform:rotate(113.9deg)"></i><i class="tr-line am" style="left:34.74%;top:78.00%;width:6.22cqw;transform:rotate(94.3deg)"></i><i class="tr-line" style="left:38.36%;top:78.00%;width:6.45cqw;transform:rotate(106.1deg)"></i><i class="tr-line" style="left:38.36%;top:78.00%;width:6.37cqw;transform:rotate(76.6deg)"></i><i class="tr-line" style="left:38.36%;top:78.00%;width:6.78cqw;transform:rotate(66.1deg)"></i><i class="tr-line" style="left:45.47%;top:78.00%;width:6.41cqw;transform:rotate(104.7deg)"></i><i class="tr-line" style="left:45.47%;top:78.00%;width:6.21cqw;transform:rotate(87.5deg)"></i><i class="tr-line" style="left:47.73%;top:78.00%;width:6.27cqw;transform:rotate(81.6deg)"></i><i class="tr-line" style="left:52.15%;top:78.00%;width:6.25cqw;transform:rotate(97.3deg)"></i><i class="tr-line" style="left:52.15%;top:78.00%;width:6.24cqw;transform:rotate(83.7deg)"></i><i class="tr-line am" style="left:58.38%;top:78.00%;width:6.80cqw;transform:rotate(114.3deg)"></i><i class="tr-line" style="left:58.38%;top:78.00%;width:6.20cqw;transform:rotate(90.7deg)"></i><i class="tr-line" style="left:58.38%;top:78.00%;width:6.38cqw;transform:rotate(76.2deg)"></i><i class="tr-line am" style="left:60.99%;top:78.00%;width:6.60cqw;transform:rotate(69.9deg)"></i><i class="tr-line" style="left:64.88%;top:78.00%;width:6.24cqw;transform:rotate(83.4deg)"></i><i class="tr-line" style="left:69.10%;top:78.00%;width:6.45cqw;transform:rotate(106.1deg)"></i><i class="tr-line" style="left:71.36%;top:78.00%;width:6.34cqw;transform:rotate(102.0deg)"></i><i class="tr-line" style="left:71.36%;top:78.00%;width:6.23cqw;transform:rotate(84.0deg)"></i><i class="tr-line" style="left:71.36%;top:78.00%;width:7.09cqw;transform:rotate(61.0deg)"></i><i class="tr-line" style="left:74.83%;top:78.00%;width:6.83cqw;transform:rotate(65.1deg)"></i><i class="tr-line" style="left:79.10%;top:78.00%;width:6.20cqw;transform:rotate(87.8deg)"></i><i class="tr-line" style="left:85.54%;top:78.00%;width:6.93cqw;transform:rotate(116.6deg)"></i><i class="tr-line" style="left:85.54%;top:78.00%;width:6.26cqw;transform:rotate(97.8deg)"></i><i class="tr-line" style="left:82.57%;top:78.00%;width:7.53cqw;transform:rotate(55.4deg)"></i><i class="tr-line" style="left:88.28%;top:78.00%;width:6.20cqw;transform:rotate(89.4deg)"></i><i class="tr-line" style="left:95.15%;top:78.00%;width:7.07cqw;transform:rotate(118.8deg)"></i><i class="tr-line" style="left:95.15%;top:78.00%;width:6.28cqw;transform:rotate(99.4deg)"></i><i class="tr-line" style="left:95.15%;top:78.00%;width:6.31cqw;transform:rotate(79.1deg)"></i><i class="tr-node am" style="left:50.00%;top:16.00%;--d:-3.0s"></i><i class="tr-node am" style="left:18.86%;top:28.40%;--d:-1.0s"></i><i class="tr-node am" style="left:50.47%;top:28.40%;--d:-1.1s"></i><i class="tr-node am" style="left:81.72%;top:28.40%;--d:-2.7s"></i><i class="tr-node" style="left:10.08%;top:40.80%;--d:-2.1s"></i><i class="tr-node am" style="left:25.88%;top:40.80%;--d:-4.5s"></i><i class="tr-node" style="left:41.39%;top:40.80%;--d:-0.7s"></i><i class="tr-node am" style="left:57.29%;top:40.80%;--d:-4.6s"></i><i class="tr-node" style="left:72.70%;top:40.80%;--d:-1.3s"></i><i class="tr-node am" style="left:89.76%;top:40.80%;--d:-1.7s"></i><i class="tr-node" style="left:6.80%;top:53.20%;--d:-0.5s"></i><i class="tr-node" style="left:15.28%;top:53.20%;--d:-1.6s"></i><i class="tr-node am" style="left:24.10%;top:53.20%;--d:-4.9s"></i><i class="tr-node am" style="left:33.67%;top:53.20%;--d:-1.8s"></i><i class="tr-node" style="left:40.67%;top:53.20%;--d:-4.2s"></i><i class="tr-node" style="left:50.71%;top:53.20%;--d:-4.9s"></i><i class="tr-node am" style="left:59.12%;top:53.20%;--d:-3.5s"></i><i class="tr-node" style="left:67.77%;top:53.20%;--d:-0.9s"></i><i class="tr-node" style="left:75.94%;top:53.20%;--d:-2.2s"></i><i class="tr-node" style="left:83.76%;top:53.20%;--d:-0.8s"></i><i class="tr-node" style="left:91.98%;top:53.20%;--d:-1.2s"></i><i class="tr-node" style="left:4.98%;top:65.60%;--d:-1.7s"></i><i class="tr-node" style="left:10.80%;top:65.60%;--d:-0.8s"></i><i class="tr-node" style="left:16.51%;top:65.60%;--d:-3.4s"></i><i class="tr-node am" style="left:21.71%;top:65.60%;--d:-2.6s"></i><i class="tr-node am" style="left:26.98%;top:65.60%;--d:-1.5s"></i><i class="tr-node am" style="left:31.19%;top:65.60%;--d:-1.3s"></i><i class="tr-node am" style="left:37.38%;top:65.60%;--d:-0.7s"></i><i class="tr-node" style="left:41.45%;top:65.60%;--d:-0.6s"></i><i class="tr-node" style="left:46.59%;top:65.60%;--d:-2.2s"></i><i class="tr-node" style="left:52.74%;top:65.60%;--d:-0.4s"></i><i class="tr-node am" style="left:58.01%;top:65.60%;--d:-2.6s"></i><i class="tr-node" style="left:62.72%;top:65.60%;--d:-1.3s"></i><i class="tr-node" style="left:68.26%;top:65.60%;--d:-3.9s"></i><i class="tr-node" style="left:74.20%;top:65.60%;--d:-1.3s"></i><i class="tr-node" style="left:78.11%;top:65.60%;--d:-4.3s"></i><i class="tr-node" style="left:83.55%;top:65.60%;--d:-4.7s"></i><i class="tr-node" style="left:89.83%;top:65.60%;--d:-4.6s"></i><i class="tr-node" style="left:94.84%;top:65.60%;--d:-1.1s"></i><i class="tr-node" style="left:5.19%;top:78.00%;--d:-4.6s"></i><i class="tr-node" style="left:7.90%;top:78.00%;--d:-2.4s"></i><i class="tr-node" style="left:11.71%;top:78.00%;--d:-4.4s"></i><i class="tr-node" style="left:14.09%;top:78.00%;--d:-2.3s"></i><i class="tr-node" style="left:18.37%;top:78.00%;--d:-2.7s"></i><i class="tr-node" style="left:21.30%;top:78.00%;--d:-1.3s"></i><i class="tr-node" style="left:24.26%;top:78.00%;--d:-3.8s"></i><i class="tr-node" style="left:27.64%;top:78.00%;--d:-1.8s"></i><i class="tr-node am" style="left:30.75%;top:78.00%;--d:-4.4s"></i><i class="tr-node am" style="left:34.74%;top:78.00%;--d:-3.5s"></i><i class="tr-node" style="left:38.36%;top:78.00%;--d:-2.1s"></i><i class="tr-node" style="left:41.49%;top:78.00%;--d:-0.2s"></i><i class="tr-node" style="left:45.47%;top:78.00%;--d:-1.3s"></i><i class="tr-node" style="left:47.73%;top:78.00%;--d:-2.1s"></i><i class="tr-node" style="left:52.15%;top:78.00%;--d:-1.9s"></i><i class="tr-node" style="left:55.01%;top:78.00%;--d:-2.9s"></i><i class="tr-node am" style="left:58.38%;top:78.00%;--d:-0.0s"></i><i class="tr-node am" style="left:60.99%;top:78.00%;--d:-2.3s"></i><i class="tr-node" style="left:64.88%;top:78.00%;--d:-4.5s"></i><i class="tr-node" style="left:69.10%;top:78.00%;--d:-4.8s"></i><i class="tr-node" style="left:71.36%;top:78.00%;--d:-3.4s"></i><i class="tr-node" style="left:74.83%;top:78.00%;--d:-3.4s"></i><i class="tr-node" style="left:79.10%;top:78.00%;--d:-3.0s"></i><i class="tr-node" style="left:82.57%;top:78.00%;--d:-5.0s"></i><i class="tr-node" style="left:85.54%;top:78.00%;--d:-4.0s"></i><i class="tr-node" style="left:88.28%;top:78.00%;--d:-2.3s"></i><i class="tr-node" style="left:91.17%;top:78.00%;--d:-2.5s"></i><i class="tr-node" style="left:95.15%;top:78.00%;--d:-4.7s"></i><i class="tr-node" style="left:4.62%;top:90.40%;--d:-2.8s"></i><i class="tr-node" style="left:6.15%;top:90.40%;--d:-3.0s"></i><i class="tr-node" style="left:9.34%;top:90.40%;--d:-1.5s"></i><i class="tr-node" style="left:10.65%;top:90.40%;--d:-3.3s"></i><i class="tr-node" style="left:13.67%;top:90.40%;--d:-2.4s"></i><i class="tr-node" style="left:15.60%;top:90.40%;--d:-4.7s"></i><i class="tr-node" style="left:18.36%;top:90.40%;--d:-5.0s"></i><i class="tr-node" style="left:19.98%;top:90.40%;--d:-5.0s"></i><i class="tr-node" style="left:23.04%;top:90.40%;--d:-4.8s"></i><i class="tr-node" style="left:24.74%;top:90.40%;--d:-0.2s"></i><i class="tr-node" style="left:27.41%;top:90.40%;--d:-0.4s"></i><i class="tr-node" style="left:30.56%;top:90.40%;--d:-1.7s"></i><i class="tr-node am" style="left:31.99%;top:90.40%;--d:-4.1s"></i><i class="tr-node am" style="left:34.28%;top:90.40%;--d:-2.8s"></i><i class="tr-node" style="left:36.58%;top:90.40%;--d:-1.3s"></i><i class="tr-node" style="left:39.84%;top:90.40%;--d:-0.5s"></i><i class="tr-node" style="left:41.11%;top:90.40%;--d:-1.3s"></i><i class="tr-node" style="left:43.85%;top:90.40%;--d:-0.6s"></i><i class="tr-node" style="left:45.74%;top:90.40%;--d:-0.7s"></i><i class="tr-node" style="left:48.65%;top:90.40%;--d:-3.7s"></i><i class="tr-node" style="left:51.35%;top:90.40%;--d:-1.0s"></i><i class="tr-node" style="left:52.83%;top:90.40%;--d:-0.8s"></i><i class="tr-node am" style="left:55.58%;top:90.40%;--d:-3.1s"></i><i class="tr-node" style="left:58.30%;top:90.40%;--d:-0.7s"></i><i class="tr-node" style="left:59.90%;top:90.40%;--d:-4.2s"></i><i class="tr-node am" style="left:63.26%;top:90.40%;--d:-3.3s"></i><i class="tr-node" style="left:65.59%;top:90.40%;--d:-4.4s"></i><i class="tr-node" style="left:67.30%;top:90.40%;--d:-3.6s"></i><i class="tr-node" style="left:70.04%;top:90.40%;--d:-3.7s"></i><i class="tr-node" style="left:72.02%;top:90.40%;--d:-1.3s"></i><i class="tr-node" style="left:74.80%;top:90.40%;--d:-2.1s"></i><i class="tr-node" style="left:77.70%;top:90.40%;--d:-1.9s"></i><i class="tr-node" style="left:79.34%;top:90.40%;--d:-2.0s"></i><i class="tr-node" style="left:82.44%;top:90.40%;--d:-4.6s"></i><i class="tr-node" style="left:84.70%;top:90.40%;--d:-2.2s"></i><i class="tr-node" style="left:86.84%;top:90.40%;--d:-4.0s"></i><i class="tr-node" style="left:88.34%;top:90.40%;--d:-3.2s"></i><i class="tr-node" style="left:91.75%;top:90.40%;--d:-0.4s"></i><i class="tr-node" style="left:94.12%;top:90.40%;--d:-1.1s"></i><i class="tr-node" style="left:96.34%;top:90.40%;--d:-2.9s"></i>
+        <div class="label">a hundred and sixty years</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They talked for three hours that first day and Hazel told her everything, the tired that had a shape, and the water, and the cold, and the men at the yard, and the Cornish names, and her nan, and Dr Ferguson and the chips. Dr Kaur wrote some of it down and the tablet listened to all of it, and every so often she would look at it and say "hm," and once she turned it round and showed Hazel what it had put together while they talked: a family tree that went back a hundred and sixty years, drawn in thin grey lines, with a few hundred names on it lit up in amber, and at the very top of it, in 1873, two names together on a single line, Josiah Trevaskis and Ann Trevaskis, née Rowe, married at St Mary's in Dalton.</p>
+        <p>"That's my nan's people," Hazel said.</p>
+        <p>"It thinks it's probably everyone's," said Dr Kaur. "Everyone with a dot. Not all of them from Josiah and Ann directly, but from that village. Somewhere near Camborne, it thinks, from the parish records, which it's also read. A small place, a lot of cousins marrying cousins, and then a lot of them getting on a train together and coming up here. So something that was rare in Cornwall became quite common in Dalton and Barrow, and then it just sat here for a hundred and fifty years being called tiredness."</p>
+        <p>"What is it?"</p>
+        <p>Dr Kaur explained it as well as anyone could have. It was a fault in one gene, a single letter wrong in a long word, the gene that tells muscles how to burn fat for fuel when they've run out of sugar. Most of the time you'd never know, because most of the time your muscles are running on sugar, but if you went a long time without eating, or you worked very hard for very long, or you got cold, or you got a fever, then your muscles reached for the fat and couldn't use it, and they began, in a quiet way, to starve, and then to break. The broken muscle went into the blood and out through the kidneys, and that was the dark water. Usually you got better. Sometimes your kidneys didn't. Sometimes, if you were at the top of a ladder at the end of a long shift with nothing in you since breakfast, your legs just went.</p>
+        <p>"It's known about," she said. "It's not new. There are people all over the world with versions of it. It's just that up here it's a version nobody had ever found, because nobody ever tested for it, because nobody ever put the pieces together. Except you."</p>
+        <p>Hazel thought about Darren Rigg's mam fasting for the wedding. She thought about Ray Nancarrow, who'd come off a gantry on the <em>Vanguard</em> job in 1990 and never walked right after. She thought about her own brother Alan, who was always the last one picked for anything and who had died at fifty-eight on a cold February morning walking up Abbey Road to catch the bus, of what the certificate said was his heart.</p>
+        <p>"I should have said," she said. "I should have said more."</p>
+        <p>"You did say," said Dr Kaur. "You said it in pencil. It kept."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall flap-scene" aria-hidden="true">
+        <div class="fj-paper"></div><div class="fj-bar"></div><div class="fj-shine"></div><div class="fj-card"></div><i class="fj-crumb" style="left:22%;top:76%"></i><i class="fj-crumb" style="left:60%;top:74%"></i><i class="fj-crumb" style="left:64%;top:80%"></i><i class="fj-crumb" style="left:30%;top:82%"></i><i class="fj-crumb" style="left:56%;top:70%"></i>
+        <div class="label">a flapjack</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>After that things went fast, faster than Hazel had known that anything in the health service could go, and she came to understand that this was the part that was new, more than the reading, more than the family tree. The testing kits went out within a fortnight, little plastic tubes that you spat into and sent back in a prepaid envelope, to everyone on the amber tree who was still alive and to everyone in Furness who wanted one, which turned out to be a lot of people once it was in the <em>Evening Mail</em>, and the results came back in days. Nineteen hundred people carried one copy of the fault and were fine, mostly, and would only ever need to know about it for their children. Three hundred and forty people carried two copies and had the thing itself, and two hundred and ninety of them were still living, between Askam and Roose and out on Walney and down in Millom, and one of them was Hazel's grandson Kieran, who was nine.</p>
+        <p>Joanne cried when they told her, not because it was bad news but because it explained so much, the way Kieran sat out PE, the way he'd been sick after the school trip to Coniston when they'd set off at six without breakfast, the night when he was six and had a fever and his legs had hurt so much he'd screamed, and they'd been in A&amp;E for nine hours and been sent home with Calpol. He had been called lazy by two teachers and a football coach and, once, God forgive her, by Joanne herself. Hazel sat with her in the hospital car park and held her hand and didn't say anything, because she had been a priest for thirty-two years and knew when not to.</p>
+        <p>The first thing they gave Kieran was a flapjack.</p>
+        <p>That was what made Hazel laugh, afterwards, when people asked. Before any of the big science, the first thing was simple: a card for his wallet that said what he had and what to do if he was ever brought in, so that no one would ever send him home with Calpol again, and a list of rules that Almoner had drawn up with the dietitians in Newcastle and that Joanne stuck to the fridge. Never go long without eating. Something with sugar in before sport, and at half time. A special drink when he was poorly. Keep warm. They were rules that would have kept Alan alive, probably, and Ray Nancarrow on his feet, and they cost about forty pence a day. Kieran went from being the boy who sat out to being the boy who was allowed a flapjack in the middle of maths, which he considered an improvement in every respect.</p>
+        <p>The second thing took longer, but not as long as anyone would have believed even a few years before.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mend-scene" aria-hidden="true">
+        <div class="md-twist"></div><div class="md-strand"><i style="--c:#c87a3a"></i><i style="--c:#c87a3a"></i><i style="--c:#f2c87a"></i><i style="--c:#a8603a"></i><i style="--c:#e8a050"></i><i style="--c:#e8a050"></i><i style="--c:#a8603a"></i><i style="--c:#f2c87a"></i><i style="--c:#c87a3a"></i><i style="--c:#c87a3a"></i><i style="--c:#a8603a"></i><i style="--c:#a8603a"></i><i style="--c:#a8603a"></i><i style="--c:#c87a3a"></i><i style="--c:#c87a3a"></i><i style="--c:#c87a3a"></i><i style="--c:#a8603a"></i><i style="--c:#e8a050"></i><i style="--c:#e8a050"></i><i style="--c:#c87a3a"></i><i class="bad"></i><i style="--c:#e8a050"></i><i style="--c:#f2c87a"></i><i style="--c:#e8a050"></i><i style="--c:#f2c87a"></i><i style="--c:#a8603a"></i><i style="--c:#a8603a"></i><i style="--c:#a8603a"></i><i style="--c:#a8603a"></i><i style="--c:#a8603a"></i><i style="--c:#c87a3a"></i><i style="--c:#f2c87a"></i><i style="--c:#e8a050"></i><i style="--c:#e8a050"></i><i style="--c:#c87a3a"></i><i style="--c:#a8603a"></i><i style="--c:#c87a3a"></i><i style="--c:#f2c87a"></i><i style="--c:#a8603a"></i><i style="--c:#f2c87a"></i></div>
+        <div class="md-halo"></div><div class="md-drop"><i></i></div>
+        <div class="label">a single letter wrong in a long word</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Hazel didn't understand the second thing and didn't pretend to, but she went to all the meetings about it, in the community hall on Walney and in the old outpatients block at Furness General, because she was, as Joanne put it, sort of in charge now, whether she liked it or not. She sat at the front with her handbag on her knee and listened to Dr Kaur and the others explain it to rooms full of Nancarrows and Penroses and Riggs, people she'd known since they were in their prams, half of them she'd filed, and she watched the faces.</p>
+        <p>The gist of it was that you could mend the letter. Not in a test tube, not in a mouse, but in a person, in their muscles, where it mattered. There were ways now of sending a tiny instruction into the body, wrapped in a drop of something oily so that the muscle cells would take it in, that went to the exact place in the gene where the letter was wrong and changed it to the right one, and then fell apart and left. People had been doing it for blood and for livers for a few years. For muscle it was harder, because there was so much muscle and it was so stubborn, and for a fault this rare, in a few hundred people at the top of the North West, no company would ever have bothered, because there'd never have been the money in it.</p>
+        <p>What had changed was that the thing didn't have to be invented any more, not from nothing. Almoner, and the systems that worked alongside it, had designed the instruction for the Furness letter in an afternoon, and checked it a hundred thousand ways in simulation over a week, and then a lab in Liverpool had made it, in a building at Speke that had once been a car factory and was now, someone said, the biggest pharmacy in Europe, making medicines for groups of people so small they had never had a medicine before. Three hundred people in Furness. Forty families in Antrim with something else. A single village in the Western Isles. Each one its own little batch, made to fit, like a key cut for a lock.</p>
+        <p>"How do you know it won't do something else?" asked a man at the back of the Walney hall, Gary Askew, who had driven forklifts at the yard for twenty years and had dark water three times and had the arms of a wrestler and the legs of somebody's nan. "Change something it's not meant to."</p>
+        <p>Dr Kaur didn't say <em>we know</em>. She said that they had looked for every place in the whole of the human code where it might land by mistake, and had found eleven, and had tested each of the eleven in cells from Gary's own blood, and from forty other people's, and that it hadn't landed on any of them. She said that the first people to have it would be adults who chose to, slowly, one at a time, with weeks in between, and that they would be watched more closely than anyone had ever been watched, and that if anything at all went wrong they would stop. She said that she couldn't promise it would work. She said that she thought it would.</p>
+        <p>"And it's asked me to tell you something," she said, and she looked at Hazel for a second before she said it. "It says it's read all of your notes. Every one, going back to 1911. And it says it's sorry it took so long."</p>
+        <p>The hall was very quiet for a moment, and then Gary Askew said, "Well, it's not its fault, is it, it's only been going three years," and everyone laughed, and Hazel thought that was about the most Barrow thing she'd ever heard.</p>
+        <p>Gary was the first. He had it in the September, a slow drip into his arm in a room at Furness General with a window that looked out over the car park to the fells, with Dr Kaur sitting beside him doing a crossword and Hazel, at his particular request, in the chair by the door, because he said she'd been looking after his envelope since before he could walk and he didn't see why she should stop now. It took four hours. He said it felt like nothing. He went home for his tea.</p>
+        <p>Six weeks later they took a tiny piece of muscle from his thigh with a needle, and looked at it, and the letter had changed in a little over half of his cells, which was more than enough, Dr Kaur said, far more than enough; it only took a fifth for the muscle to burn fat the way it was meant to. In the spring they asked him to fast for a day and then walk on a treadmill until he couldn't, and they took his blood every ten minutes, and the muscle in it stayed where it should, and Gary Askew walked for an hour and forty minutes and then got off and said he was starving and could somebody please get him a bacon roll.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pitch-scene" aria-hidden="true">
+        <div class="pb-sun"></div><div class="pb-dune"></div><div class="pb-wind"></div><div class="pb-stripes"></div><div class="pb-line"></div>
+        <div class="pb-crowd"></div><div class="pb-goal"></div><div class="pb-kid"></div><div class="pb-ball"></div>
+        <div class="label">Biggar Bank</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>By the time it came to Kieran, two years on, a hundred and sixty people had had it, and it had worked in all but nine of them, and in those nine it had only half worked, and they'd been given a second dose and that had done it. Nobody had been hurt. The children went last, as everyone had agreed they should, and the youngest went last of all, so that Kieran, at eleven, was the very last child but two, which he found desperately unfair and which Hazel privately thought was the best thing anyone could have done for her.</p>
+        <p>He had his drip on a Thursday in the half-term holidays, in the same room with the window, with his iPad and a bag of crisps he wasn't supposed to have yet, and Joanne holding one hand and Hazel holding the other, and when it was done he asked if he could play football on Saturday and Dr Kaur said not this Saturday, and maybe not the one after, but soon.</p>
+        <p>It was the May before he played a full match, for the under-twelves at the pitches on Biggar Bank, with the wind coming straight off the Irish Sea the way it always did on Walney, flat and hard and smelling of salt and the sand dunes. Hazel stood on the touchline in her big coat with Joanne and half of Vickerstown. Kieran was not good at football. He never would be, Hazel thought, it wasn't in him; he ran like a giraffe and he couldn't kick with his left. But he ran. He ran for the whole first half, up and down, chasing the ball and never getting it, and at half time he didn't eat a flapjack because he didn't need one any more, though he had one anyway because he'd got used to them, and then he ran for the whole second half as well, and with four minutes to go the ball came off somebody's shin and hit him in the chest and dropped at his feet in front of an empty goal, and he stood there for a second looking at it as though it had been delivered by post, and then he kicked it in.</p>
+        <p>He came off the pitch with his face the colour of a tomato and his legs filthy and his breath coming in great whoops, and Joanne held his face in both her hands and looked at him, really looked, the way Hazel had seen her look at him when he was a baby with a temperature, and said, "How do you feel? Love? How do your legs feel?" and Kieran thought about it, honestly, the way he thought about everything, and said, "Tired."</p>
+        <p>And then he said, "Normal tired, though," and ran off to find his mates.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall box-scene" aria-hidden="true">
+        <div class="bx-warm"></div><div class="bx-rain"></div><div class="bx-shelf"></div>
+        <div class="bx-lid"></div><div class="bx-envs"></div><div class="bx-box"></div>
+        <div class="bx-tab a">Trevaskis, A.</div><div class="bx-tab e">Trevaskis, E.</div>
+        <div class="env bx-one"><i class="dot"></i></div>
+        <div class="label">a grey box on a grey shelf</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The envelopes went to the pulping plant at the end of that year, all ninety million of them, the whole century of handwriting, once Almoner had read every word and the last scans had been checked. It was in the papers. There were people who were sad about it and people who said it was about time, and Hazel found that she was both.</p>
+        <p>But not all of them went. The four hundred and twelve with the dot on were kept back, on a request that came from Almoner itself and that nobody, apparently, saw any reason to argue with, and they went to the archive centre on Duke Street in Barrow, in a grey box on a grey shelf, catalogued under her name. She went to see them once. The archivist, a young lad with a beard, brought the box out to a table in the reading room and lifted the lid and left her alone with it, and she sat for a long time turning them over one by one, Rigg and Askew and Nancarrow and Penrose and Rowe, soft at the corners the way they'd always been, with their numbers in the corner and their lives folded small inside, until she got to her brother Alan's.</p>
+        <p>She held it for a while. Then she turned it over and looked at the top right-hand corner, where the card was thickest, and there it was, small and grey and a little smudged, so small you'd only see it if you were looking.</p>
+        <p>She had a pencil in her coat pocket. She always did. She didn't take it out. She put the envelope back in its place in the box between Trevaskis, A. and Trevaskis, E., and she put the lid on, and she went out into Duke Street, where it had come on to rain, and caught the bus back over the bridge to the island.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
