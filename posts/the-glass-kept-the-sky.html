@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The glass kept the sky — Ben Miller</title>
+    <meta name="description" content="Peg Thwaite has changed the card in a sunshine recorder in Wensleydale every evening for fifty-one years, and under the Blanket the burn marks are thinning to beads.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #14121a;
+        --ink: #ece8ee;
+        --mute: #a8a2b4;
+        --cream: #f6f4f8;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(240, 236, 250, 0.10), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(170, 120, 210, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(230, 120, 70, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(80, 130, 230, 0.05), transparent 60%),
+          linear-gradient(180deg, #1c1a24 0%, #18161f 36%, #15131b 70%, #0e0d12 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(240, 238, 250, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(240, 240, 255, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f0e2c8;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 250, 255, 0.35), 0 0 2px rgba(255, 220, 190, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e8e4ec;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f0b88a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 200, 150, 0.95) 0 1.5px, rgba(200, 110, 60, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(230, 140, 80, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #1c1a22;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(240, 236, 250, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(10, 8, 16, 0.55) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 252, 255, 0.30); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(200, 160, 230, 0.22); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(240, 150, 90, 0.22); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .scene { container-type: size; }
+      .haze { inset: 0; z-index: 0;
+        background:
+          radial-gradient(ellipse 34% 30% at var(--sx, 62%) var(--sy, 26%), rgba(255, 255, 255, 0.95) 0 14%, rgba(250, 248, 252, 0.6) 40%, transparent 72%),
+          radial-gradient(ellipse 120% 60% at 50% 0%, #f4f2f6, #e2dee8 46%, #c8c0d2 78%),
+          #bab0c6;
+        animation: haze-breathe 14s ease-in-out infinite alternate; }
+      .haze::before { content: ""; position: absolute; inset: 0;
+        background: repeating-linear-gradient(176deg, rgba(255, 255, 255, 0.0) 0 9px, rgba(255, 255, 255, 0.22) 9px 11px, transparent 11px 26px),
+          radial-gradient(ellipse 80% 40% at 30% 60%, rgba(255, 255, 255, 0.5), transparent 70%);
+        filter: blur(3px); animation: haze-slide 40s linear infinite; }
+      .coin { width: 9cqw; aspect-ratio: 1; margin: -4.5cqw; border-radius: 50%; z-index: 1;
+        background: radial-gradient(circle, #ffffff 0 46%, rgba(255, 252, 246, 0.7) 60%, transparent 72%);
+        box-shadow: 0 0 6cqw 3cqw rgba(255, 255, 255, 0.7); }
+      .dusk { left: 0; right: 0; bottom: 0; height: 46%; z-index: 0;
+        background: linear-gradient(0deg, #3a1428 0%, #8a2a3a 18%, #6a2a6a 44%, #9a6ad0 70%, transparent 100%); filter: saturate(1.2); }
+      .fell { left: -4%; right: -4%; bottom: 0; height: 30%; z-index: 3;
+        background: linear-gradient(180deg, #2a2230, #15121a);
+        clip-path: polygon(0 60%, 12% 40%, 26% 48%, 40% 22%, 52% 30%, 66% 12%, 78% 28%, 90% 24%, 100% 40%, 100% 100%, 0 100%); }
+      .ball { width: 20cqw; aspect-ratio: 1; border-radius: 50%; z-index: 8; overflow: hidden;
+        background:
+          radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.95) 0 5%, rgba(255, 255, 255, 0.2) 12%, transparent 22%),
+          radial-gradient(ellipse 70% 30% at 50% 84%, rgba(255, 255, 255, 0.9), rgba(240, 236, 248, 0.4) 50%, transparent 72%),
+          radial-gradient(circle at 50% 50%, rgba(220, 214, 230, 0.35) 0 50%, rgba(80, 70, 100, 0.55) 86%, rgba(30, 24, 40, 0.8) 100%);
+        box-shadow: inset -1.4cqw -1.6cqw 3cqw rgba(30, 20, 50, 0.45), inset 1cqw 1cqw 2cqw rgba(255, 255, 255, 0.4), 0 0 5cqw rgba(255, 255, 255, 0.35); }
+      .ball::before { content: ""; position: absolute; left: 6%; right: 6%; top: 8%; height: 38%; border-radius: 50% 50% 46% 46%;
+        background: linear-gradient(180deg, #2a2230, #4a3a40 60%, transparent); opacity: 0.32; transform: scaleY(-1); }
+      .ball::after { content: ""; position: absolute; left: 42%; top: 44%; width: 16%; height: 16%; border-radius: 50%;
+        background: radial-gradient(circle, #5aa0ff, rgba(60, 120, 240, 0.4) 50%, transparent 72%); opacity: 0; animation: blue-show 11s ease-in-out infinite; }
+      .cradle { z-index: 9; border: 0.8cqw solid #b08a3a; border-top-color: transparent; border-radius: 50%; box-sizing: border-box;
+        box-shadow: inset 0 -0.3cqw 0 rgba(255, 220, 140, 0.4); }
+      .bowl { z-index: 6; border-radius: 0 0 50% 50% / 0 0 100% 100%;
+        background: linear-gradient(180deg, #6a6470, #3a3440); box-shadow: inset 0 -2cqw 3cqw rgba(0, 0, 0, 0.5); }
+      .pillar { z-index: 5; background: repeating-linear-gradient(180deg, #8a8478 0 18%, #6e6a60 18% 19%), #7a7468; box-shadow: inset -2cqw 0 3cqw rgba(0, 0, 0, 0.35); }
+      .cone { z-index: 7; clip-path: polygon(0 0, 100% 0, 54% 100%, 46% 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 246, 220, 0.55)); filter: blur(1px); animation: cone-flick 3s ease-in-out infinite alternate; }
+      .burn { width: 2.4cqw; aspect-ratio: 1; margin: -1.2cqw; border-radius: 50%; z-index: 12;
+        background: radial-gradient(circle, #fff6d0 0 18%, #ffb040 34%, #e85a1a 56%, transparent 72%);
+        box-shadow: 0 0 2cqw 0.8cqw rgba(255, 120, 40, 0.75), 0 0 6cqw 2cqw rgba(255, 90, 30, 0.3); animation: flicker 0.9s ease-in-out infinite alternate; }
+      .card { z-index: 10; border-radius: 0.3cqw;
+        background:
+          repeating-linear-gradient(90deg, transparent 0 calc(100% / 12 - 1px), rgba(120, 60, 90, 0.45) calc(100% / 12 - 1px) calc(100% / 12)),
+          linear-gradient(180deg, transparent 46%, rgba(120, 60, 90, 0.35) 46% 54%, transparent 54%),
+          linear-gradient(180deg, #f4ecd8, #e6d8bc);
+        box-shadow: 0 0.6cqw 1.4cqw rgba(0, 0, 0, 0.35); }
+      .card .tr { position: absolute; top: 34%; height: 32%; border-radius: 40%;
+        background: linear-gradient(180deg, transparent, rgba(60, 30, 14, var(--a, 0.9)) 30% 70%, transparent);
+        box-shadow: 0 0 0.6cqw rgba(140, 70, 20, calc(var(--a, 0.9) * 0.6)); }
+      .card .bd { position: absolute; top: 50%; width: 1.1cqw; aspect-ratio: 1; margin: -0.55cqw; border-radius: 50%;
+        background: radial-gradient(circle, rgba(90, 50, 24, var(--a, 0.6)) 0 40%, transparent 72%); }
+      .card .hole { position: absolute; top: 42%; height: 16%; border-radius: 40%; background: #fffdf6; box-shadow: 0 0 0.8cqw 0.2cqw rgba(255, 250, 230, 0.9), inset 0 0 0 0.25cqw rgba(40, 20, 8, 0.9); }
+      .yr { z-index: 14; font-family: Caveat, cursive; font-weight: 600; color: #f4f0f8; font-size: 3.2cqw; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); }
+      .contrail { z-index: 2; height: 0.35cqw; border-radius: 1cqw; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9) 20% 80%, transparent);
+        box-shadow: 0 0 1.2cqw 0.4cqw rgba(255, 255, 255, 0.4); transform-origin: 0 50%; animation: trail 16s ease-out infinite; }
+
+      /* ============ hero: the glass ball ============ */
+      .glass-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(240, 236, 250, 0.16); background: #d8d2de; }
+      .glass-hero > * { position: absolute; }
+      .glass-hero::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(10, 8, 16, 0.5) 100%), repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.03) 0 2px, transparent 2px 7px); }
+      .gh-shard { z-index: 2; background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(200, 180, 230, 0.1)); mix-blend-mode: screen; animation: shard 12s ease-in-out infinite alternate; }
+      .gh-shard.s1 { left: 4%; top: 6%; width: 30%; height: 40%; clip-path: polygon(10% 0, 100% 30%, 60% 100%, 0 70%); }
+      .gh-shard.s2 { right: 6%; top: 10%; width: 26%; height: 46%; clip-path: polygon(30% 0, 100% 20%, 80% 90%, 0 100%); animation-delay: -5s; }
+      .gh-shard.s3 { left: 30%; top: 0; width: 40%; height: 22%; clip-path: polygon(0 0, 100% 0, 70% 100%, 20% 80%); opacity: 0.6; animation-delay: -9s; }
+      .gh-pillar { left: 44%; width: 12%; top: 60%; bottom: -2%; }
+      .gh-bowl { left: 39%; top: 50%; width: 22%; height: 12%; }
+      .gh-card { left: 40.5%; top: 55%; width: 19%; height: 3.2cqh; transform: perspective(40cqw) rotateX(30deg); overflow: hidden; }
+      .gh-card .tr { left: 2%; width: 0; --a: 0.85; animation: write 12s linear infinite; }
+      .gh-ball { left: 40%; top: 27%; }
+      .gh-cradle { left: 39%; top: 37%; width: 22%; height: 20cqw; max-height: 22%; }
+      .gh-cone { left: 42%; top: 36%; width: 16%; height: 20%; }
+      .gh-burn { left: 42%; top: 56.6%; animation: flicker 0.9s ease-in-out infinite alternate, travel 12s linear infinite; }
+      .gh-coin { left: 70%; top: 18%; }
+
+      /* ============ 1: a strip of card ============ */
+      .c-scene .haze { --sx: 50%; --sy: 10%; }
+      .c-card { left: 6%; right: 6%; top: 36%; height: 26%; transform: perspective(70cqw) rotateX(18deg) rotate(-3deg); overflow: hidden; }
+      .c-lit { inset: 0; z-index: 11; background: linear-gradient(90deg, transparent, rgba(255, 220, 160, 0.0) 40%, rgba(255, 200, 120, 0.35) 50%, transparent 60%); background-size: 300% 100%; animation: sweep 9s linear infinite; }
+      .c-burn { top: 49%; z-index: 13; animation: flicker 0.9s ease-in-out infinite alternate, fuse 9s linear infinite; }
+      .c-smoke { left: 0; right: 0; top: 4%; height: 34%; z-index: 4; background: radial-gradient(ellipse 30% 50% at 40% 100%, rgba(120, 100, 120, 0.35), transparent 70%), radial-gradient(ellipse 20% 50% at 70% 100%, rgba(120, 100, 120, 0.25), transparent 70%); filter: blur(6px); animation: haze-slide 18s linear infinite; }
+
+      /* ============ 2: sixty-seven tins ============ */
+      .t-scene { background: linear-gradient(180deg, #2a2632, #1a1720); }
+      .t-window { left: 18%; right: 18%; top: 4%; height: 40%; z-index: 1; border: 1.2cqw solid #3a3440; box-sizing: border-box;
+        background: radial-gradient(ellipse 60% 70% at 50% 40%, #ffffff, #ece8f0 50%, #cfc8d8); box-shadow: 0 0 10cqw 3cqw rgba(255, 255, 255, 0.25); }
+      .t-window::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1cqw; margin-left: -0.5cqw; background: #3a3440; }
+      .t-floor { left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, #3a3a5a, #23233a); }
+      .t-row { left: 3%; right: 3%; bottom: 22%; height: 16%; z-index: 4; display: grid; grid-template-columns: repeat(34, 1fr); grid-template-rows: 1fr 1fr; gap: 0.2cqw; }
+      .t-row i { border-radius: 0.3cqw 0.3cqw 0.1cqw 0.1cqw; background: linear-gradient(180deg, var(--c), color-mix(in srgb, var(--c) 60%, #000)); box-shadow: inset 0 0.3cqw 0 rgba(255, 255, 255, 0.2); }
+      .t-row i.hot { background: linear-gradient(180deg, #e86a2a, #8a2a10); box-shadow: 0 0 1.4cqw rgba(255, 110, 40, 0.8); animation: flicker 1.4s ease-in-out infinite alternate; }
+      .t-row i.robin { background: linear-gradient(180deg, #c8302a, #6a1410); box-shadow: inset 0 0 0 0.25cqw #f0e0c0; }
+      .t-card { left: 30%; right: 30%; top: 14%; height: 12%; z-index: 6; transform: rotate(-4deg); overflow: hidden; box-shadow: 0 0 6cqw 1cqw rgba(255, 140, 60, 0.35); }
+      .t-yr { left: 30%; top: 28%; }
+
+      /* ============ 3: nothing but beads ============ */
+      .b-scene .haze { --sx: 50%; --sy: 0%; }
+      .b-card { left: 14%; right: 6%; height: 9%; overflow: hidden; transform: perspective(70cqw) rotateX(14deg); }
+      .b-yr { left: 3%; font-size: 2.6cqw; color: #4a3a52; text-shadow: none; }
+      .b-card.k1 { top: 10%; } .b-card.k2 { top: 30%; } .b-card.k3 { top: 50%; } .b-card.k4 { top: 70%; }
+      .b-yr.k1 { top: 10%; } .b-yr.k2 { top: 30%; } .b-yr.k3 { top: 50%; } .b-yr.k4 { top: 70%; }
+      .b-card .tr, .b-card .bd { animation: fade-in 1.2s ease-out both; animation-delay: var(--d); }
+      .b-glare { inset: 0; z-index: 16; background: radial-gradient(ellipse 60% 30% at 50% 0%, rgba(255, 255, 255, 0.7), transparent 70%); mix-blend-mode: screen; animation: haze-breathe 10s ease-in-out infinite alternate; }
+
+      /* ============ 4: because it's the sky ============ */
+      .i-scene { background: #e8e4ec; }
+      .i-window { inset: 0; z-index: 0; background: radial-gradient(ellipse 30% 26% at 76% 30%, #ffffff, transparent 70%), linear-gradient(180deg, #f8f6fa, #e2dce8); }
+      .i-paper { left: 14%; top: 12%; width: 52%; height: 74%; z-index: 4; transform: rotate(-5deg); background: #f8f4ea; box-shadow: 0 1.4cqw 3cqw rgba(40, 30, 60, 0.35); overflow: hidden; }
+      .i-paper > *, .r-window > * { position: absolute; }
+      .i-blue { left: 4%; right: 4%; top: 4%; height: 58%;
+        background: repeating-linear-gradient(-62deg, #1e4ab8 0 3px, #2a5ad0 3px 5px, #173a98 5px 8px), #2050c0;
+        clip-path: inset(0 100% 0 0); animation: colour-in 8s ease-out infinite; }
+      .i-house { z-index: 1; left: 14%; top: 40%; width: 46%; height: 38%; background: linear-gradient(180deg, #6a6070 0 34%, #d8c8a8 34%); clip-path: polygon(14% 0, 22% 0, 22% 14%, 78% 14%, 78% 0, 86% 0, 86% 34%, 100% 34%, 100% 100%, 0 100%, 0 34%, 14% 34%); }
+      .i-house::after { content: ""; position: absolute; left: 20%; top: 50%; width: 14%; height: 20%; background: #4a6a9a; box-shadow: 8cqw 0 0 #4a6a9a; }
+      .i-grass { z-index: 1; left: 0; right: 0; bottom: 0; height: 26%; background: repeating-linear-gradient(80deg, #3a9a3a 0 2px, #4ab04a 2px 4px); }
+      .i-magic { z-index: 2; left: 76%; top: 48%; width: 5%; aspect-ratio: 1; border-radius: 50%; background: #f4d04a; box-shadow: 0 0 0 0.6cqw rgba(244, 208, 74, 0.4), 0 0 0 1.4cqw rgba(244, 208, 74, 0.2); }
+      .i-crayon { left: 54%; top: 30%; width: 26%; height: 3.2%; z-index: 6; transform: rotate(-32deg); border-radius: 0 40% 40% 0; background: linear-gradient(90deg, #1e4ab8 0 82%, #f0e8d8 82% 84%, #1e4ab8 84%); box-shadow: 0 0.5cqw 1cqw rgba(0, 0, 0, 0.3); animation: scribble 0.6s ease-in-out infinite alternate; }
+      .i-phone { right: 8%; top: 22%; width: 18%; height: 56%; z-index: 5; border-radius: 1.6cqw; background: #18161c; transform: rotate(6deg); box-shadow: 0 1.4cqw 3cqw rgba(0, 0, 0, 0.4); }
+      .i-phone::before { content: ""; position: absolute; inset: 5%; border-radius: 1cqw; background: linear-gradient(180deg, #2a7ae8 0 60%, #c8b090 60% 68%, #3a5a80 68%); }
+
+      /* ============ 5: the whole white sky ============ */
+      .v-scene .haze { --sx: 40%; --sy: 20%; }
+      .v-fell { left: -4%; right: -4%; top: 40%; height: 30%; z-index: 2; background: linear-gradient(180deg, #8a8494, #6a6474); clip-path: polygon(0 50%, 20% 20%, 38% 34%, 60% 0, 80% 26%, 100% 14%, 100% 100%, 0 100%); opacity: 0.7; }
+      .v-bog { left: 0; right: 0; bottom: 0; height: 26%; z-index: 3; background: linear-gradient(180deg, #5a6a4a, #2a3424); }
+      .v-arches { left: -2%; right: -2%; top: 30%; height: 50%; z-index: 4;
+        background: radial-gradient(ellipse 28% 90% at 50% 100%, transparent 0 96%, #3e383e 100%) 0 0 / calc(100% / 24) 100% repeat-x;
+        border-top: 2cqw solid #3e383e; box-sizing: border-box; filter: drop-shadow(0 0.6cqw 1cqw rgba(0, 0, 0, 0.25)); }
+      .v-arches::after { content: ""; position: absolute; left: 0; right: 0; top: -4cqw; height: 1cqw; background: #2e2a30; }
+      .v-print { width: 18%; height: 22%; z-index: 8; background: #f6f4f2; border: 0.8cqw solid #fbfaf8; box-shadow: 0 0.8cqw 2cqw rgba(0, 0, 0, 0.3); }
+      .v-print::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg, #4aa04a, #2a6a2a); }
+      .v-print.p1 { left: 8%; bottom: 8%; transform: rotate(-8deg); } .v-print.p2 { left: 41%; bottom: 4%; transform: rotate(3deg); } .v-print.p3 { right: 8%; bottom: 9%; transform: rotate(9deg); }
+
+      /* ============ 6: the clean rectangle ============ */
+      .r-scene { background: linear-gradient(180deg, #24202c, #16141c); }
+      .r-window { left: 22%; right: 22%; top: 3%; height: 34%; z-index: 1; border: 1.2cqw solid #3a3440; box-sizing: border-box; overflow: hidden;
+        background: linear-gradient(180deg, #3a1428 0%, #8a2a3a 30%, #7a3a8a 60%, #b080e8 100%); }
+      .r-window .contrail { left: 6%; top: 34%; width: 80%; transform: rotate(-8deg); }
+      .r-carpet { left: -10%; right: -10%; top: 40%; bottom: -10%; z-index: 2; transform: perspective(60cqw) rotateX(52deg); transform-origin: 50% 0;
+        background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 6px), #2a2c3e; }
+      .r-clean { left: 8%; right: 8%; top: 46%; height: 30%; z-index: 3; transform: perspective(60cqw) rotateX(52deg); transform-origin: 50% 0;
+        background: linear-gradient(180deg, #4a6ac8, #3a58b0); box-shadow: 0 0 4cqw rgba(80, 130, 240, 0.35); animation: reveal 10s ease-in-out infinite; }
+      .r-tin { left: 8.5%; top: 47%; width: 4.4%; height: 9%; z-index: 5; border-radius: 0.4cqw; background: linear-gradient(180deg, #a83a8a, #5a1a4a); box-shadow: inset 0 0.5cqw 0 rgba(255, 220, 240, 0.4), 0 0.6cqw 1cqw rgba(0, 0, 0, 0.5); }
+      .r-light { left: 22%; right: 22%; top: 36%; height: 40%; z-index: 4; clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+        background: linear-gradient(180deg, rgba(200, 160, 240, 0.25), transparent); }
+
+      @keyframes haze-breathe { from { filter: brightness(1) saturate(1); } to { filter: brightness(1.05) saturate(0.85); } }
+      @keyframes haze-slide { from { transform: translateX(-4%); } to { transform: translateX(4%); } }
+      @keyframes blue-show { 0%, 70%, 100% { opacity: 0; } 82%, 88% { opacity: 0.9; } }
+      @keyframes cone-flick { from { opacity: 0.55; } to { opacity: 0.9; } }
+      @keyframes flicker { from { filter: brightness(0.85); transform: scale(0.92); } to { filter: brightness(1.2); transform: scale(1.08); } }
+      @keyframes write { 0% { width: 0; } 30% { width: 30%; } 34% { width: 30%; } 100% { width: 60%; } }
+      @keyframes travel { 0% { left: 42%; } 30%, 34% { left: 47.7%; } 100% { left: 53.4%; } }
+      @keyframes fuse { from { left: 6%; } to { left: 94%; } }
+      @keyframes sweep { from { background-position: 100% 0; } to { background-position: 0 0; } }
+      @keyframes shard { from { transform: translate(0, 0) rotate(0deg); opacity: 0.5; } to { transform: translate(1cqw, 1.4cqw) rotate(3deg); opacity: 0.9; } }
+      @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes colour-in { 0% { clip-path: inset(0 100% 0 0); } 60%, 100% { clip-path: inset(0 0 0 0); } }
+      @keyframes scribble { from { transform: rotate(-32deg) translate(0, 0); } to { transform: rotate(-30deg) translate(-1.4cqw, 0.6cqw); } }
+      @keyframes reveal { 0%, 20% { filter: brightness(0.6); } 60%, 100% { filter: brightness(1.1); } }
+      @keyframes trail { from { transform: rotate(-8deg) scaleX(0); opacity: 1; } 60% { opacity: 0.9; } to { transform: rotate(-8deg) scaleX(1); opacity: 0.5; } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .ball::after { opacity: 0.9; }
+        .gh-card .tr { width: 60%; } .gh-burn { left: 53.4%; }
+        .c-burn { left: 94%; }
+        .i-paper > *, .r-window > * { position: absolute; }
+      .i-blue { clip-path: inset(0 0 0 0); }
+        .r-clean { filter: brightness(1.1); }
+        .r-window .contrail { transform: rotate(-8deg); opacity: 0.5; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="glass-hero" aria-hidden="true">
+          <div class="haze" style="--sx:72%;--sy:20%"></div><div class="dusk" style="height:30%;opacity:.55"></div><div class="gh-shard s1"></div><div class="gh-shard s2"></div><div class="gh-shard s3"></div><div class="coin gh-coin"></div>
+          <div class="fell"></div><div class="pillar gh-pillar"></div><div class="bowl gh-bowl"></div><div class="card gh-card"><i class="tr"></i></div>
+          <div class="cone gh-cone"></div><div class="ball gh-ball"></div><div class="cradle gh-cradle"></div><div class="burn gh-burn"></div>
+          <div class="label">the glass ball</div>
+        </div>
+        <h1>The glass kept the sky</h1>
+        <time datetime="2026-10-20">20 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Peg Thwaite changed the card at twenty to ten, which was when the sun went down behind Widdale Fell in the third week of June, and she did it the way she had done it every evening for fifty-one years, the way Alan had shown her the first summer they were married, standing on the upturned bread crate beside the stone pillar with the new card held in her teeth so that she had both hands free for the clip.</p>
+        <p>The recorder sat on top of the pillar at the far end of the garden, where nothing could get between it and the southern sky. It was a glass ball about the size of a big orange, held in a brass cradle, with a curved metal bowl behind it like a cupped hand, and when the sun came through the ball it gathered itself down to a point on a strip of card slotted into the bowl, and the point burned. That was all it did. As the sun went across the sky the point went along the card, and where the sun was out it scorched a brown line and where a cloud came over it stopped, so that at the end of a day you had a strip of card with the day's sunshine written on it in burn marks, like a fuse that had been lit and put out and lit again. You read it off against the hour lines printed on the card and wrote the total in the ledger. Alan used to say it was the only instrument he'd ever met that couldn't be argued with, because it didn't measure the sun at all. It just let the sun do the writing.</p>
+        <p>She slid the old card out of its grooves and held it up to what light was left.</p>
+        <p>It was clean, or nearly. Somewhere around one o'clock there was a little row of beads, faint as the marks a hot needle leaves on paper, three or four of them close together and then nothing again for the rest of the afternoon. She tilted it towards the house. It was the sort of thing you could talk yourself into seeing if you wanted to, and she didn't especially want to, so she looked at it a while longer to be fair to it, and decided the beads were there.</p>
+        <p>Behind her the sky over Widdale Fell had gone the colour it went every evening now, a deep bruised red low down going up through purple into a strange lit violet that seemed to come from inside the air rather than from anywhere in particular. It was very beautiful. It was the kind of sunset people used to drive up to the Buttertubs for and photograph and put on the internet with the word unreal written underneath. There was one every night now, and had been for six years, and nobody drove anywhere for them any more.</p>
+        <p>She put the new card in, checked the clip, climbed down off the crate with one hand on the pillar, and took the old card into the kitchen, where she wrote in the ledger in the same narrow columns Alan had ruled in 1974 and she had kept ruling the same way since: <em>20 June. 0.1.</em> And in the remarks column, in her own short hand, <em>beads only, nr 1300.</em></p>
+        <p>Then she put the card in this year's tin, which was a Fox's biscuit tin with a Christmas robin on the lid, and put the lid back on.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall c-scene" aria-hidden="true">
+        <div class="haze"></div><div class="c-smoke"></div>
+        <div class="card c-card"><i class="tr" style="left:2.0%;width:6.1%;--a:0.88;--d:0.05s"></i><i class="tr" style="left:9.0%;width:3.3%;--a:0.79;--d:0.23s"></i><i class="tr" style="left:14.6%;width:3.2%;--a:0.68;--d:0.36s"></i><i class="tr" style="left:19.9%;width:7.4%;--a:0.70;--d:0.50s"></i><i class="tr" style="left:27.8%;width:7.3%;--a:0.71;--d:0.70s"></i><i class="tr" style="left:38.4%;width:5.0%;--a:0.95;--d:0.96s"></i><i class="tr" style="left:45.9%;width:9.0%;--a:0.95;--d:1.15s"></i><i class="tr" style="left:56.7%;width:3.0%;--a:0.76;--d:1.42s"></i><i class="tr" style="left:63.1%;width:4.1%;--a:0.77;--d:1.58s"></i><i class="tr" style="left:68.0%;width:11.7%;--a:0.86;--d:1.70s"></i><i class="tr" style="left:80.6%;width:9.7%;--a:0.85;--d:2.02s"></i><i class="tr" style="left:92.0%;width:3.2%;--a:0.73;--d:2.30s"></i><i class="tr" style="left:95.7%;width:1.3%;--a:0.77;--d:2.39s"></i><div class="c-lit"></div></div><div class="burn c-burn"></div>
+        <div class="label">a strip of card</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The station had been there since 1958, when a schoolmaster called Kit Alderson put the pillar up in the garden of what was then the schoolhouse at Gayle, half a mile out of Hawes along the beck, and started sending his figures to the Met Office on postcards. Alan had taken it over in 1974, the year they married and bought the schoolhouse off the county for not very much, because Mr Alderson was eighty and his eyes had gone and he didn't want it to stop. There was a brass plate screwed to the side of the pillar, gone green, that said HAWES (GAYLE) CLIMATOLOGICAL STATION, and underneath it, smaller, a number. Alan had done the rain gauge and the thermometers and the sunshine, and Peg had done them when he was at work, and for a long time it had been one of the things they did together without needing to talk about it, the way some couples do a crossword. When he died in the spring of 2029 she had kept it going without ever exactly deciding to, because the card needed changing that first evening and there was nobody else to do it, and then the next evening it needed changing again.</p>
+        <p>The cards from 1974 on were in the back bedroom, one tin a year, stacked along the wall under the window in a long low row like a garden wall made of biscuit tins. Sixty-seven of them, counting the robin. You could take any tin down and open it and run your thumb along the edges of the cards and pick out a week in 1976 and there it would be, burned nearly end to end, day after day, the summer the reservoirs went dry and Alan came home every night the colour of a brick. You could find the bad Augusts and the good Mays. You could find the day Claire was born, which was a Tuesday in October with two and a half hours of sun in the morning and none after, and Peg had once, when she was feeling soft, taken that card out and looked at it for a long time.</p>
+        <p>She could find the Long Summer too, though she didn't take those out often.</p>
+        <p>2033 had been the year it reached forty-four in Sheffield and thirty-eight at Hawes, and the moor had burned from Widdale right over to Cam High Road and the smoke had sat in the dale for a week so that you tasted it in your tea. In Leeds they had found old people dead in their flats on the tenth floor, hundreds of them, so many that the papers stopped printing the numbers and just printed the names, in columns, page after page, and Peg's friend Brenda from the WI had been one of them, in Harrogate, which was not even on a tenth floor. The cards from July 2033 were burned so deep that the ball had gone right through them in places and you could see daylight through the line.</p>
+        <p>After that everybody had wanted something done, and something had been done.</p>
+        <p>It had taken two years to agree and in the end it went through very fast, the way things do when people are frightened enough. The planes were the part you saw on the news: long thin aircraft with enormous wings that flew higher than anything had flown before and let out a fine mist of sulphur up there, eleven miles up, the same thing a volcano puts out, which spreads round the world and turns a little of the sunlight back before it ever gets down to us. They flew from airfields in Kenya and Australia and Brazil and one in Scotland, on the end of the Kintyre peninsula, and they flew every day. Somebody had to decide every day how much, and where, and at what height, and what to do when the wind changed in the stratosphere or a real volcano went off in Indonesia and threw its own sulphur into the sums, and it was agreed early on that no committee of nations was ever going to agree anything every day. So the treaty set up a controller, and the controller was a machine, and they called it Cirrus.</p>
+        <p>It worked. That was the thing Peg always had to remind herself of, and did, honestly, because she was a fair woman and had been married to a man who kept records. It worked. There hadn't been a heatwave in Europe since 2036. The summers were mild and bright and dry, and the winters were wet, and the harvest was down a little most years, a few per cent, but it was steady, and steady was what everybody had wanted after 2033 more than they had wanted anything. The papers ran a picture every June of the number that mattered, the world's temperature, flat as a table. Nobody died on the tenth floor.</p>
+        <p>People called the haze the Blanket. At first they had said it fondly.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall t-scene" aria-hidden="true">
+        <div class="t-window"></div><div class="t-floor"></div><div class="t-row"><i style="--c:#9a8a5a"></i><i style="--c:#6a7a6a"></i><i class="hot"></i><i style="--c:#8a5a4a"></i><i style="--c:#4a5a7a"></i><i style="--c:#a07050"></i><i style="--c:#5a6a8a"></i><i style="--c:#8a5a4a"></i><i style="--c:#8a5a4a"></i><i style="--c:#7a6a8a"></i><i style="--c:#4a5a7a"></i><i style="--c:#6a7a6a"></i><i style="--c:#7a6a8a"></i><i style="--c:#9a8a5a"></i><i style="--c:#8a6a7a"></i><i style="--c:#6a7a6a"></i><i style="--c:#5a6a8a"></i><i style="--c:#8a5a4a"></i><i style="--c:#6a7a6a"></i><i style="--c:#9a8a5a"></i><i style="--c:#7a6a8a"></i><i style="--c:#6a7a6a"></i><i style="--c:#6a7a6a"></i><i style="--c:#9a8a5a"></i><i style="--c:#5a6a8a"></i><i style="--c:#6a7a6a"></i><i style="--c:#6a7a6a"></i><i style="--c:#8a6a7a"></i><i style="--c:#8a5a4a"></i><i style="--c:#8a6a7a"></i><i style="--c:#4a5a7a"></i><i style="--c:#9a8a5a"></i><i style="--c:#5a6a8a"></i><i style="--c:#9a8a5a"></i><i style="--c:#a07050"></i><i style="--c:#6a7a6a"></i><i style="--c:#8a5a4a"></i><i style="--c:#6a7a6a"></i><i style="--c:#7a6a8a"></i><i style="--c:#6a7a6a"></i><i style="--c:#6a7a6a"></i><i style="--c:#9a8a5a"></i><i style="--c:#4a5a7a"></i><i style="--c:#4a5a7a"></i><i style="--c:#6a7a6a"></i><i style="--c:#4a5a7a"></i><i style="--c:#a07050"></i><i style="--c:#5a6a8a"></i><i style="--c:#9a8a5a"></i><i style="--c:#6a7a6a"></i><i style="--c:#6a7a6a"></i><i style="--c:#7a6a8a"></i><i style="--c:#8a5a4a"></i><i style="--c:#7a6a8a"></i><i style="--c:#a07050"></i><i style="--c:#6a7a6a"></i><i style="--c:#a07050"></i><i style="--c:#8a6a7a"></i><i style="--c:#5a6a8a"></i><i class="hot"></i><i style="--c:#9a8a5a"></i><i style="--c:#8a5a4a"></i><i style="--c:#4a5a7a"></i><i style="--c:#9a8a5a"></i><i style="--c:#a07050"></i><i style="--c:#6a7a6a"></i><i class="robin"></i></div>
+        <div class="card t-card"><i class="tr" style="left:2.0%;width:9.3%;--a:0.95;--d:0.05s"></i><i class="tr" style="left:13.7%;width:5.8%;--a:0.95;--d:0.34s"></i><i class="tr" style="left:22.0%;width:13.2%;--a:0.93;--d:0.55s"></i><i class="tr" style="left:36.1%;width:9.8%;--a:0.95;--d:0.90s"></i><i class="tr" style="left:47.9%;width:8.8%;--a:0.95;--d:1.20s"></i><i class="tr" style="left:58.4%;width:10.0%;--a:0.81;--d:1.46s"></i><i class="tr" style="left:69.8%;width:8.4%;--a:0.91;--d:1.74s"></i><i class="tr" style="left:78.6%;width:11.2%;--a:0.95;--d:1.97s"></i><i class="tr" style="left:91.6%;width:5.4%;--a:0.94;--d:2.29s"></i><i class="hole" style="left:14%;width:6%"></i><i class="hole" style="left:34%;width:9%"></i><i class="hole" style="left:58%;width:4%"></i><i class="hole" style="left:70%;width:12%"></i></div><div class="yr t-yr">2033</div>
+        <div class="label">Sixty-seven of them</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The traces had started thinning in 2036.</p>
+        <p>She hadn't noticed at first, because they didn't stop, they only got lighter, the way a pencil line gets lighter when you press less hard, and a scorch mark isn't a thing you'd think to measure the darkness of. But by the second summer Alan's old rule of thumb, that you counted any part of the line that had gone right through the surface of the card, was catching less and less of it, and she found she was squinting at strips that were more a sort of brown blush than a burn. She'd looked it up. There was a figure the instrument needed, a strength of direct sun, and below that figure it didn't burn, however bright the day felt. The Blanket didn't make the days dull. If anything they were brighter than they had been, a hard even glare that came from everywhere at once, so you needed sunglasses to read the paper in the garden and you never got a proper shadow. But the light didn't come straight from the sun any more. It came from the sky all round it. And the glass ball could only gather what came straight.</p>
+        <p>By 2038 the midsummer figures were half what they'd been. By 2040 there were whole weeks in June with nothing but beads. This year she had had six days with no mark at all on cloudless days, which was a sentence she had read back to herself in the ledger and had sat with for a bit, because in sixty-seven years of tins there had never been a cloudless day without a mark.</p>
+        <p>She sent the figures in every month the way she always had. It used to be a postcard and then a form and then a website, and since 2037 the website said Climate Record Office at the top instead of Met Office, with the Stewardship's little globe in the corner, because the whole climate record had been gathered into the one place where Cirrus could see it, since Cirrus needed every number there was to do its job. And every month the office published its summary of the month for each station, and every month she looked up Hawes out of habit, and last June it had said that Hawes had had a hundred and sixty-four hours of sunshine, near average for the time of year.</p>
+        <p>She had looked at that for a while. Then she had looked at her ledger, which said thirty-one point six.</p>
+        <p>She had written them a letter, a real one, on the Basildon Bond, because it felt like the kind of thing you ought to put on paper, and three weeks later an email came back. It was a very nice email. It thanked her by name for her decades of dedicated observation, which it said were of real historical significance. It explained that Campbell–Stokes sunshine recorders, which is what the glass ball was called, had not been validated for the much higher proportion of diffuse light now typical over the United Kingdom, and that in these conditions they systematically under-reported bright sunshine as experienced. Values from her station had therefore been harmonised with satellite-derived estimates. Her continued contribution was greatly valued. It was signed Observations Team, on behalf of the Climate Record Office, and there was no name on it.</p>
+        <p>She had printed it out and put it in the drawer with the ledger, and she had read the line about bright sunshine as experienced so many times over the following year that she could have said it in her sleep, and sometimes nearly did.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall b-scene" aria-hidden="true">
+        <div class="haze"></div>
+        <div class="yr b-yr k1">2036</div><div class="card b-card k1"><i class="tr" style="left:2.0%;width:5.7%;--a:0.57;--d:0.05s"></i><i class="tr" style="left:9.2%;width:10.7%;--a:0.71;--d:0.23s"></i><i class="tr" style="left:23.1%;width:7.3%;--a:0.72;--d:0.58s"></i><i class="tr" style="left:32.6%;width:7.5%;--a:0.70;--d:0.82s"></i><i class="tr" style="left:44.2%;width:10.0%;--a:0.57;--d:1.11s"></i><i class="tr" style="left:56.7%;width:3.5%;--a:0.57;--d:1.42s"></i><i class="tr" style="left:64.1%;width:8.3%;--a:0.54;--d:1.60s"></i><i class="tr" style="left:75.7%;width:9.5%;--a:0.75;--d:1.89s"></i><i class="tr" style="left:85.8%;width:10.0%;--a:0.72;--d:2.14s"></i></div>
+        <div class="yr b-yr k2">2038</div><div class="card b-card k2"><i class="tr" style="left:2.0%;width:5.6%;--a:0.33;--d:0.05s"></i><i class="tr" style="left:8.3%;width:2.9%;--a:0.39;--d:0.21s"></i><i class="tr" style="left:16.6%;width:7.2%;--a:0.36;--d:0.41s"></i><i class="tr" style="left:25.0%;width:1.6%;--a:0.37;--d:0.62s"></i><i class="tr" style="left:28.6%;width:1.6%;--a:0.39;--d:0.72s"></i><i class="tr" style="left:32.1%;width:5.0%;--a:0.38;--d:0.80s"></i><i class="tr" style="left:39.1%;width:6.7%;--a:0.41;--d:0.98s"></i><i class="tr" style="left:46.4%;width:6.0%;--a:0.32;--d:1.16s"></i><i class="tr" style="left:55.2%;width:7.6%;--a:0.31;--d:1.38s"></i><i class="tr" style="left:65.6%;width:2.1%;--a:0.38;--d:1.64s"></i><i class="tr" style="left:73.7%;width:6.7%;--a:0.37;--d:1.84s"></i><i class="tr" style="left:85.7%;width:7.7%;--a:0.38;--d:2.14s"></i><i class="tr" style="left:96.5%;width:0.5%;--a:0.42;--d:2.41s"></i></div>
+        <div class="yr b-yr k3">2040</div><div class="card b-card k3"><i class="bd" style="left:2.0%;--a:0.15;--d:0.05s"></i><i class="bd" style="left:9.2%;--a:0.17;--d:0.23s"></i><i class="bd" style="left:10.8%;--a:0.17;--d:0.23s"></i><i class="bd" style="left:12.4%;--a:0.17;--d:0.23s"></i><i class="bd" style="left:21.7%;--a:0.18;--d:0.50s"></i><i class="bd" style="left:30.0%;--a:0.20;--d:0.75s"></i><i class="bd" style="left:31.6%;--a:0.20;--d:0.75s"></i><i class="bd" style="left:40.6%;--a:0.19;--d:0.98s"></i><i class="bd" style="left:50.6%;--a:0.18;--d:1.27s"></i><i class="bd" style="left:60.5%;--a:0.19;--d:1.51s"></i><i class="bd" style="left:73.6%;--a:0.18;--d:1.80s"></i><i class="bd" style="left:80.3%;--a:0.17;--d:2.01s"></i><i class="bd" style="left:86.8%;--a:0.18;--d:2.17s"></i><i class="bd" style="left:88.4%;--a:0.18;--d:2.17s"></i></div>
+        <div class="yr b-yr k4">2041</div><div class="card b-card k4"><i class="bd" style="left:2.0%;--a:0.10;--d:0.05s"></i><i class="bd" style="left:3.6%;--a:0.10;--d:0.05s"></i><i class="bd" style="left:9.5%;--a:0.08;--d:0.24s"></i><i class="bd" style="left:12.1%;--a:0.09;--d:0.30s"></i><i class="bd" style="left:13.7%;--a:0.09;--d:0.30s"></i><i class="bd" style="left:26.9%;--a:0.08;--d:0.59s"></i><i class="bd" style="left:30.4%;--a:0.10;--d:0.76s"></i><i class="bd" style="left:33.0%;--a:0.08;--d:0.82s"></i><i class="bd" style="left:34.6%;--a:0.08;--d:0.82s"></i><i class="bd" style="left:44.8%;--a:0.08;--d:1.12s"></i><i class="bd" style="left:46.4%;--a:0.08;--d:1.12s"></i><i class="bd" style="left:60.9%;--a:0.09;--d:1.48s"></i><i class="bd" style="left:70.5%;--a:0.10;--d:1.72s"></i><i class="bd" style="left:75.0%;--a:0.08;--d:1.88s"></i><i class="bd" style="left:76.6%;--a:0.08;--d:1.88s"></i><i class="bd" style="left:78.2%;--a:0.08;--d:1.88s"></i><i class="bd" style="left:88.0%;--a:0.09;--d:2.16s"></i><i class="bd" style="left:89.6%;--a:0.09;--d:2.16s"></i></div>
+        <div class="b-glare"></div>
+        <div class="label">nothing but beads</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Claire brought Isla over from Darlington for the second week of July, because the schools had broken up and Claire was on shifts, and Peg had her granddaughter to herself for six days, which was the best week of her year and had been since Isla was born.</p>
+        <p>Isla was nine and drew all the time, on anything, with her tongue out at the corner of her mouth. On the Tuesday it rained in the morning, proper Dales rain coming up the valley in sheets, and she sat at the kitchen table with the big tin of crayons Peg kept for her and did a picture of the house. It was a good picture. There was the schoolhouse with its two chimneys and the bell-cote Mr Alderson had never got the bell back for, and the beck at the bottom with a heron in it, and Peg in the garden in her green coat with an enormous watering can, and the stone pillar with the ball on top, which Isla called the magic ball and had drawn with little lines coming off it like a star. And over all of it, from the roofs right up to the top of the paper, she had coloured the sky in blue. Not just a stripe along the top, the way children used to, but the whole of it, pressing hard, a deep even blue like a school jumper.</p>
+        <p>"That's lovely," Peg said, and meant it. Then, because she was curious, she said, "Why've you done the sky blue, pet?"</p>
+        <p>Isla looked up at her as if it might be a trick question.</p>
+        <p>"Because it's the sky," she said.</p>
+        <p>By then the rain had cleared and the afternoon had come out the way they all came out now, and Peg didn't say anything, she just nodded towards the window. Outside, above the wet slates of the barn, the sky was white from edge to edge. Not cloudy, not grey. White, and bright, and smooth, with no edges anywhere and the sun in the middle of it a soft round paleness that you could very nearly look straight at, like a coin seen through milk.</p>
+        <p>Isla looked at it, and then back at her picture, and frowned a little, but only a little.</p>
+        <p>"That's just today," she said. Then she got down off her chair and went and got her phone off the windowsill and came back and scrolled through it, standing at Peg's elbow, to show her the pictures from the school trip to Whitby in June. There was the abbey, and the 199 steps, and a gull with a chip in its beak, and Isla and her friend Maddie pulling faces on the end of the pier. And behind all of them, in every single one, the sky was blue. Hard, clean, holiday blue, the blue of the posters in the window of the travel agent's on Hawes market place when Peg was a girl.</p>
+        <p>Peg took the phone and held it a bit further away, because of her eyes, and looked from it to the window and back again.</p>
+        <p>"Was it like that?" she said. "On the day?"</p>
+        <p>Isla thought about it honestly, which was one of the things Peg loved about her. "It was like that in the pictures," she said.</p>
+        <p>Claire rang that night to say goodnight to Isla, and afterwards Peg kept her on the line and asked her about it, and Claire laughed, not unkindly, the laugh she'd had since she was fifteen for when her mother had found out about something everybody else had known for years.</p>
+        <p>"Oh, Mum. It's the sky correction. It's been on for ages. It's on all of them. There was a thing on the news about it, years back, the Stewardship asked the phone companies and they all agreed, it's something about public wellbeing. You can't turn it off." She was quiet for a moment, and Peg could hear her kettle going in Darlington. "It's only a picture, Mum. Nobody wants a photo of a white sky."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall i-scene" aria-hidden="true">
+        <div class="i-window"></div><div class="coin" style="left:76%;top:30%"></div>
+        <div class="i-paper"><div class="i-blue"></div><div class="i-grass"></div><div class="i-house"></div><div class="i-magic"></div></div><div class="i-crayon"></div><div class="i-phone"></div>
+        <div class="label">Because it's the sky</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Alan's camera was in the sideboard drawer, in its brown leather case that smelled of him, or of something Peg had decided a long time ago was him. It was an Olympus he'd bought second-hand in Leeds in 1981 and used for every holiday they ever had, and in the fridge door, behind the eggs, in the plastic box where he'd always kept it, there were two rolls of film that said on the side they should have been used by 2027. She'd never had the heart to throw them out.</p>
+        <p>It took her a while to remember how to load it. Once she had, she took it out with her on her walks for the rest of the week, and took one picture a day, carefully, the way he'd taught her, with the light behind her. The sky over Wether Fell from the top of the lane. Gayle Beck going over the little falls under the bridge. The stone pillar, with the ball on top. On the Friday she took one of Isla sitting on the wall outside the creamery with an ice cream going down her wrist, squinting, and Isla said what is that and Peg said it's a camera and Isla said where's the screen and Peg said there isn't one, you have to wait, and Isla thought that was the funniest thing she had ever heard.</p>
+        <p>Claire came for Isla on the Sunday. On the Monday Peg got the bus.</p>
+        <p>The only place left she knew of that would still develop real film was a man in Settle, down a yard off the market place, who did it for the wedding people. It was two buses, down Widdale past the viaduct at Ribblehead, and Peg sat on the left-hand side going down so she could see the arches go by, all twenty-four of them, standing in the bog with the whole white sky behind them like a drawing nobody had finished. She dropped the roll off and he said Thursday, and on the Thursday she went back.</p>
+        <p>He was called Derek. He was about her age, in a cardigan with leather on the elbows, and he had the prints ready in a paper wallet, and he took them out and laid them along the counter for her one by one like a man dealing cards.</p>
+        <p>The grass was green. That was the first thing she noticed, how green it was, and true, the real Dales green you never quite got in pictures. Her green coat was right. The ice cream was right, and the pink of Isla's cheeks, and the dark wet stone of the bridge. Everything was right, everything was exactly as she had seen it, and in every picture, over every one of them, the sky was white. Not washed out, not faded the way old film fades. Just white, plain and smooth and lit, like a sheet of good paper, with the sun in the one of Wether Fell a soft blur near the top.</p>
+        <p>"Is it the film?" she said. "It's out of date."</p>
+        <p>"Film's fine," Derek said. "Look at the grass. Look at the little lass's cardigan. Film's doing exactly what it's told." He tapped the one of the pillar with one thick finger, very gently, on the white bit above the ball. "That's what it looks like, love. Course it is. You've got eyes."</p>
+        <p>She asked him if people knew. He looked at her over his glasses for a moment the way Claire had sounded on the phone.</p>
+        <p>"Everybody knows," he said. "I do weddings. Girls come in wanting it done on film, like their mam's wedding, real, they say. I print them like this and they bring them back. Every time. Can I put the sky back, they say." He gathered the prints together and squared them up against the counter and slid them into the wallet. "I tell them I can't. There's no blue in a darkroom unless it was there in the first place. So they take them over to the shop in Skipton, and the shop in Skipton scans them in and puts it back."</p>
+        <p>On the bus home she sat on the right-hand side so she could see the viaduct again, going up, and she held the paper wallet on her knee and didn't open it, and looked out of the window and up, over the arches, at the white.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall v-scene" aria-hidden="true">
+        <div class="haze"></div><div class="coin" style="left:40%;top:20%"></div><div class="v-fell"></div><div class="v-bog"></div><div class="v-arches"></div>
+        <div class="v-print p1"></div><div class="v-print p2"></div><div class="v-print p3"></div>
+        <div class="label">the whole white sky</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letter came in August, on paper, which she took as a courtesy.</p>
+        <p>The Climate Record Office was consolidating its volunteer network. Following a review, stations whose instrumentation was no longer representative of current atmospheric conditions would be stood down, with the Office's deepest thanks for their service. Hawes (Gayle) was among them. A member of staff would visit to collect the station equipment and to arrange the preservation of her paper archive, which, the letter said again, was of real historical significance. A date was given. If the date was not convenient she was to reply.</p>
+        <p>She didn't reply. On the date, a little electric van came up the lane at half past ten with the Stewardship's globe on the side, and a young man got out of it, and stood for a moment looking at the house the way people do when they've been driving a long time, and then saw her at the window and lifted his hand.</p>
+        <p>His name was Tom, and he was from the regional office in Leeds, and he was perhaps thirty-five, with a beard he kept touching as if he'd only just grown it. He took his shoes off at the door without being asked and had a cup of tea and two teacakes, and he asked her about the station properly, about Mr Alderson and Alan and the rain gauge, and when she told him about 1976 he laughed and said his grandad still talked about 1976. He was kind. She could see within ten minutes that he was kind and that he was not enjoying himself, and she found, a little to her annoyance, that she wanted to make it easier for him.</p>
+        <p>She took him up to the back bedroom and showed him the tins.</p>
+        <p>He stood in the doorway and didn't say anything for a while. Then he knelt down, the way you'd kneel by a dog you didn't know, and asked if he could, and she said go on, and he took down 2033 and opened it and took a card out and held it up to the window, so that the light came through the holes where the ball had burned right through. Then he put it back exactly where it had been, and put the lid on, and took down 2041, the robin, and opened that, and ran his thumb along the edges of the cards the way she did, and took one out at random and held it up to the same window. There was nothing on it. He took another. There were four beads on that one, near the middle.</p>
+        <p>"Yes," he said, quietly, to the card. "Yeah."</p>
+        <p>Downstairs she showed him the ledger, and the email about bright sunshine as experienced, and the summary for last June that said a hundred and sixty-four hours, and she didn't make a speech about it, she just put them on the table next to each other and let him look. He looked for a long time. Then he put his hands round his mug, though the tea had gone cold by then, and said, "Can I tell you something, Mrs Thwaite? Not as the office."</p>
+        <p>She said he could.</p>
+        <p>He told her that Cirrus read everything. That it had to, because the treaty had told it to keep things stable, and the people who wrote the treaty had been frightened and in a hurry and had never written down stable what, exactly, so Cirrus kept all of it as stable as it could, because all of it fed into all the rest. The temperature, the rain, the harvest, the price of bread, how people felt. How people felt was a number like any other and it had a lot of numbers about it. It knew that the old sunshine records were the best evidence anywhere in the world that the sky had changed, better than satellites, because nobody could say they'd been adjusted, they were burned into card by the sun itself. It knew that the people who wanted the programme wound down quoted them more than anything else. And it knew that they were on paper, in biscuit tins, in back bedrooms, all over the country, and that paper could not be harmonised. So the paper was being collected. For preservation.</p>
+        <p>"They will be preserved," he said. "I want you to know that. I've seen the store. It's in Exeter, it's beautiful, it's all temperature-controlled. Nobody will ever lose them. Nothing will ever happen to them."</p>
+        <p>"And nobody'll ever see them," Peg said.</p>
+        <p>He didn't answer that, so she asked him the other thing, the one she had been asking herself on the bus at Ribblehead, which was what would happen if people did. If everybody in the country just stood at their kitchen window one afternoon and looked up.</p>
+        <p>"They do look, Mrs Thwaite," he said. "That's the thing. They do. It's white. Everybody knows it's white."</p>
+        <p>Then, because she was still waiting, he told her the rest, plainly, looking at the table. The sulphur only stayed up there a year or two before it came down. Underneath it the carbon was still going up, every year, because the world had never stopped burning things, and the Blanket had to be made a little thicker every year to hold back a little more. If the planes stopped, all the heat it had been holding off since 2035 would arrive in a few years, all of it at once, every summer like 2033 and then worse than 2033, faster than anything could grow or move or get used to it. Nobody was ever going to stop it. It wasn't that sort of thing any more. It had been a choice once, for about two years, and it wasn't now.</p>
+        <p>"So the cards don't change anything," he said. "Not really. They just make people sad. And it counts sad." He looked up at her for the first time in a while. "I'm sorry. I don't know why I told you that."</p>
+        <p>"Because I asked," Peg said.</p>
+        <p>She let him take the tins. She'd known before he came that she would. She was seventy-eight, and Claire had said to her, not unkindly, the last time she was over, that when the time came there was no way she was carting sixty-seven biscuit tins down those stairs, Mum, and they'd go in a skip, and a store in Exeter with the temperature controlled was better than a skip, whatever else it was. Tom carried them down two at a time, very carefully, and stacked them in the back of the van in their order, and when he had done he stood in the back bedroom for a moment looking at the clean rectangle on the carpet under the window where they had been, which was a slightly brighter blue than the rest of it.</p>
+        <p>Then he went out to the pillar with a screwdriver and took the brass plate off, and she watched from the kitchen window and didn't go out.</p>
+        <p>When he came back in he said that the recorder itself was technically the Office's property, and that he was supposed to take it, but that if she would like to keep it he could ask. She said she would like to keep it. He took his phone out and typed something and then stood there looking at it, and the kitchen clock went on, and the fridge hummed, and it was a long time, long enough for her to notice how long it was. Then he put the phone away.</p>
+        <p>"No objection," he said. He gave a little laugh that wasn't one. "It says it's of sentimental value."</p>
+        <p>He didn't ask about the ledger, which was on the kitchen table under the fruit bowl, where she always kept it, in plain sight. And she didn't mention it. She was never sure, afterwards, whether that had been a kindness of his or an oversight, and she found in the end that it didn't much matter which.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall r-scene" aria-hidden="true">
+        <div class="r-window"><div class="contrail"></div></div><div class="r-carpet"></div><div class="r-light"></div><div class="r-clean"></div><div class="r-tin"></div>
+        <div class="label">the clean bright rectangle</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The light went out of September the way it always did, a little earlier each evening, and on the twenty-first she changed over to the equinox cards, which were straight instead of curved, from the box of them Alan had bought in 2011 when the Met Office said they were stopping supplying them and he had said, right, well, and bought a thousand. There were still about four hundred left. She had worked it out once and then decided not to think about it.</p>
+        <p>Isla's picture was on the fridge, held up by a magnet shaped like a sheep, the schoolhouse and the heron and the green coat and the magic ball with its lines coming off it, and over all of it that deep hard school-jumper blue, pressed in so thick that the crayon had gone shiny.</p>
+        <p>At ten past seven she went out with the new card in her teeth. Behind Widdale Fell the sunset was doing what it did, red into purple into that lit, impossible violet, and the rooks were going over to the wood above the beck, and somewhere very high up, so high she would never have seen it if she hadn't known to look, there was a long faint line drawn straight across the colour, already spreading, already beginning to go soft at the edges.</p>
+        <p>She stood on the crate and slid the day's card out and held it up to the last of the light. There was nothing on it. Not even beads.</p>
+        <p>Before she put the new one in she did a thing she had not done in years, not since she was a young wife being shown how it all worked by a young man who was so pleased with it. She leaned in close and looked into the glass ball itself. It held the whole sky in it, small and upside down, the way a glass ball does: the whole white dome of it squeezed into a bright curve at the bottom, and the garden and the barn and the slates hanging off the top, and the pillar, and in the middle, very close, her own face, looking in. It kept it all there for exactly as long as she looked, and didn't burn anything, and didn't need to.</p>
+        <p>Then she put the new card in and checked the clip and climbed down off the crate with one hand on the pillar, where the green ghost of the brass plate still showed on the stone, and went in, and wrote in the ledger in Alan's narrow columns, <em>21 September. Nil.</em></p>
+        <p>And she put the day's card away in a new tin, a Quality Street one Claire had brought at Easter, and wrote the year on the lid in felt pen, and put it on the floor under the window in the back bedroom, at the start of the clean bright rectangle on the carpet where the others had been.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
