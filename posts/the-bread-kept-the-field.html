@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bread kept the field — Ben Miller</title>
+    <meta name="description" content="A Bradford baker tests flour from a perennial wheat trial, and the machine designing the crop learns what she means when she says a dough is thinking about it.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #17110c;
+        --ink: #f2e8da;
+        --mute: #b8a088;
+        --cream: #f7efd6;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(240, 170, 80, 0.12), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(230, 140, 80, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(242, 194, 58, 0.07), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(255, 150, 90, 0.06), transparent 60%),
+          linear-gradient(180deg, #1e1610 0%, #1a130e 36%, #16100b 70%, #0f0b08 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(255, 200, 140, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 170, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f2d27a;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(242, 194, 58, 0.35), 0 0 2px rgba(255, 230, 190, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #efe4d4;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f2c27a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 120, 0.95) 0 1.5px, rgba(242, 194, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(242, 194, 58, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #1e1610;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 210, 150, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(14, 8, 4, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 214, 110, 0.38); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 120, 0.24); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(242, 194, 58, 0.26); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .scene { container-type: size; }
+      .flour { inset: 0; z-index: 20; pointer-events: none;
+        background: radial-gradient(circle, rgba(255, 248, 232, 0.5) 0 0.8px, transparent 1.4px) 0 0 / 53px 41px, radial-gradient(circle, rgba(255, 244, 224, 0.3) 0 1.2px, transparent 2px) 18px 22px / 97px 73px, radial-gradient(circle, rgba(255, 244, 224, 0.22) 0 1.6px, transparent 2.6px) 31px 7px / 151px 127px;
+        -webkit-mask: radial-gradient(ellipse 70% 80% at 50% 30%, #000, transparent 80%); mask: radial-gradient(ellipse 70% 80% at 50% 30%, #000, transparent 80%);
+        animation: drift 26s linear infinite; mix-blend-mode: screen; }
+      .glow { border-radius: 50%; filter: blur(10px); animation: breathe 5s ease-in-out infinite alternate; }
+
+      /* ============ hero: Legrams Lane ============ */
+      .bread-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 210, 150, 0.16);
+        background: linear-gradient(180deg, #3a2a3a 0%, #6a3a2a 38%, #2a1a10 39%, #1a120c 100%); }
+      .bread-hero > * { position: absolute; }
+      .bread-hero::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(14, 8, 4, 0.6) 100%), repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.02) 0 2px, transparent 2px 7px); }
+      .bh-roofs { left: -2%; right: -2%; top: 14%; height: 26%; z-index: 1; background: #1e141a;
+        clip-path: polygon(0 60%, 8% 40%, 16% 60%, 16% 30%, 19% 30%, 19% 60%, 30% 36%, 42% 60%, 52% 40%, 60% 60%, 60% 22%, 63% 22%, 63% 60%, 74% 38%, 86% 60%, 94% 44%, 100% 60%, 100% 100%, 0 100%); }
+      .bh-front { left: 12%; right: 12%; top: 30%; bottom: 10%; z-index: 3; background: linear-gradient(180deg, #4a2e22, #2e1c14); box-shadow: inset 0 0 6cqw rgba(0, 0, 0, 0.5); }
+      .bh-sign { left: 16%; right: 16%; top: 32%; height: 9%; z-index: 5; background: linear-gradient(180deg, #2a4a3a, #1a3428); box-shadow: inset 0 0 0 0.4cqw #c8a050; }
+      .bh-window { left: 18%; width: 40%; top: 45%; bottom: 14%; z-index: 4; background: radial-gradient(ellipse 70% 60% at 50% 70%, #ffd890, #e88a3a 50%, #8a3a1a); box-shadow: 0 0 8cqw 2cqw rgba(255, 160, 70, 0.45); }
+      .bh-window::before { content: ""; position: absolute; left: 6%; right: 6%; bottom: 12%; height: 30%;
+        background: radial-gradient(ellipse 48% 60% at 50% 70%, #a8602a 0 60%, transparent 62%) 0 0 / 25% 50% repeat-x, radial-gradient(ellipse 48% 60% at 50% 70%, #c07a3a 0 60%, transparent 62%) 12% 100% / 25% 50% repeat-x; }
+      .bh-door { right: 18%; width: 16%; top: 45%; bottom: 10%; z-index: 4; background: linear-gradient(180deg, #ffcc80, #c8602a); box-shadow: 0 0 6cqw rgba(255, 150, 60, 0.5); }
+      .bh-spill { left: 4%; right: 4%; bottom: 0; height: 12%; z-index: 4; background: radial-gradient(ellipse 50% 100% at 50% 0%, rgba(255, 180, 90, 0.45), transparent 70%); }
+      .bh-steam { left: 58%; width: 8%; top: 0; height: 30%; z-index: 2; background: radial-gradient(ellipse 50% 30% at 50% 80%, rgba(255, 230, 210, 0.4), transparent 70%); filter: blur(6px); animation: steam 7s ease-in-out infinite; }
+
+      /* ============ 1: eight bags of flour ============ */
+      .g-scene { background: radial-gradient(ellipse 60% 70% at 50% 20%, #5a3e2a, #1e1610 76%); }
+      .g-light { left: 30%; right: 30%; top: -10%; height: 50%; z-index: 1; background: radial-gradient(ellipse, rgba(255, 244, 220, 0.6), transparent 66%); }
+      .g-bench { left: -4%; right: -4%; bottom: 0; height: 30%; z-index: 2; background: repeating-linear-gradient(90deg, #6a4a30 0 18%, #5a3e28 18% 18.4%), #5a3e28; box-shadow: inset 0 1cqw 2cqw rgba(0, 0, 0, 0.4); }
+      .g-bags { left: 6%; right: 6%; bottom: 22%; height: 46%; z-index: 4; display: flex; gap: 1.6cqw; align-items: flex-end; }
+      .g-bags i { position: relative; flex: 1; height: var(--h); border-radius: 1cqw 1cqw 0.6cqw 0.6cqw;
+        background: radial-gradient(ellipse 50% 30% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 70%), linear-gradient(180deg, #f2e6cc, #d8c4a0); box-shadow: inset -0.6cqw 0 1cqw rgba(120, 90, 50, 0.3), 0 1cqw 1.6cqw rgba(0, 0, 0, 0.4);
+        animation: bob 6s ease-in-out infinite alternate; animation-delay: var(--d); }
+      .g-bags i b { position: absolute; left: 8%; right: 8%; top: 40%; padding: 0.5cqw 0; text-align: center; font: 600 1.5cqw Karla, sans-serif; letter-spacing: 0.04em; color: #2a1a10; background: #f8f2e2; box-shadow: inset 0 0 0 0.15cqw #6a4a30; }
+      .g-bags i.k b { background: #ffe8a8; box-shadow: inset 0 0 0 0.2cqw #c8502a, 0 0 2cqw rgba(255, 200, 90, 0.8); }
+      .g-puff { left: 50%; bottom: 52%; width: 50%; height: 40%; margin-left: -25%; z-index: 6; border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 248, 236, 0.4), transparent 66%); filter: blur(8px); animation: puff 9s ease-out infinite; }
+
+      /* ============ 2: thinking about it ============ */
+      .d-scene { background: radial-gradient(ellipse 70% 70% at 50% 60%, #6a4a30, #1e1610 80%); }
+      .d-dough { left: 14%; right: 14%; top: 30%; bottom: 12%; z-index: 3; border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+        background: radial-gradient(ellipse 50% 30% at 40% 24%, rgba(255, 255, 255, 0.55), transparent 70%), radial-gradient(ellipse at 50% 40%, #f6ead2, #e2cca4 60%, #b89a70);
+        box-shadow: inset 0 -2cqw 4cqw rgba(120, 80, 40, 0.35), 0 2cqw 4cqw rgba(0, 0, 0, 0.45); animation: think 7s ease-in-out infinite; }
+      .d-dent { top: 46%; width: 7cqw; height: 4cqw; margin-left: -3.5cqw; z-index: 4; border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 30%, rgba(120, 80, 40, 0.55), rgba(190, 160, 120, 0.2) 60%, transparent 72%); animation: dent 7s ease-in-out infinite; }
+      .d-dent.a { left: 46%; } .d-dent.b { left: 56%; top: 49%; }
+      .d-hand { left: 40%; top: -6%; width: 24%; height: 52%; z-index: 6; animation: press 7s ease-in-out infinite; }
+      .d-hand::before, .d-hand::after { content: ""; position: absolute; bottom: 0; width: 30%; height: 90%; border-radius: 40% 40% 50% 50% / 20% 20% 40% 40%;
+        background: linear-gradient(90deg, #c88a6a, #e8a888 50%, #b87a5a); box-shadow: inset 0 -1cqw 1.4cqw rgba(255, 255, 255, 0.25); }
+      .d-hand::before { left: 12%; } .d-hand::after { left: 52%; height: 84%; }
+      .d-ring { left: 50%; top: 48%; width: 30cqw; height: 14cqw; margin: -7cqw 0 0 -15cqw; z-index: 2; border-radius: 50%; border: 0.3cqw solid rgba(255, 200, 110, 0.6); animation: ripple 7s ease-out infinite; }
+      .d-ring.r2 { animation-delay: -2.3s; } .d-ring.r3 { animation-delay: -4.6s; }
+
+      /* ============ 3: the longest relaxation time ============ */
+      .x-scene { background: linear-gradient(180deg, #1a1420, #2a1c18); }
+      .x-axis { left: 8%; right: 6%; bottom: 18%; height: 0.3cqw; z-index: 3; background: rgba(255, 220, 170, 0.4); }
+      .x-bars { left: 8%; right: 6%; bottom: 18.4%; height: 64%; z-index: 4; display: flex; align-items: flex-end; gap: 0.35cqw; }
+      .x-bars i { flex: 1; height: var(--h); border-radius: 0.3cqw 0.3cqw 0 0; background: linear-gradient(180deg, rgba(240, 190, 120, 0.8), rgba(160, 100, 50, 0.4)); transform-origin: 50% 100%; animation: grow 3s ease-out both; animation-delay: var(--d); }
+      .x-bars i.s { background: linear-gradient(180deg, #ffe08a, #e8702a); box-shadow: 0 0 2cqw rgba(255, 180, 70, 0.9); }
+      .x-bars i.f { background: linear-gradient(180deg, #f0c070, #c86a2a); }
+      .x-wave { display: none; left: 8%; right: 6%; top: 10%; height: 20%; z-index: 2; opacity: 0.6;
+        background: repeating-radial-gradient(ellipse 10% 100% at 50% 100%, transparent 0 46%, rgba(255, 210, 140, 0.5) 47% 49%, transparent 50%) 0 0 / 12% 100%; animation: wave 8s linear infinite; }
+      .x-tag { z-index: 6; font: 600 1.8cqw Karla, sans-serif; letter-spacing: 0.08em; color: #ffe8b0; text-shadow: 0 0 1.4cqw rgba(255, 170, 60, 0.9); }
+
+      /* ============ 4: a box every few weeks ============ */
+      .k-scene { background: radial-gradient(ellipse 70% 80% at 50% 50%, #3a2a20, #140e0a 80%); }
+      .k-line { height: 0.35cqw; z-index: 3; transform-origin: 0 50%; background: linear-gradient(90deg, rgba(255, 210, 130, 0.9), rgba(255, 170, 80, 0.4)); box-shadow: 0 0 1cqw rgba(255, 180, 80, 0.5); animation: reach 4s ease-out both; animation-delay: var(--d); }
+      .k-node { z-index: 5; padding: 0.6cqw 1cqw; margin: -1.8cqw 0 0 -1cqw; border-radius: 0.6cqw; font: 600 1.6cqw Karla, sans-serif; color: #2a1a10; background: #f2e2c2; box-shadow: 0 0 2cqw rgba(255, 190, 100, 0.5); white-space: nowrap; }
+      .k-node.dim { opacity: 0.45; filter: saturate(0.4); }
+      .k-node.hot { background: #ffd68a; box-shadow: 0 0 3cqw rgba(255, 170, 60, 0.9), inset 0 0 0 0.2cqw #c8502a; }
+      .k-book { right: 4%; bottom: 10%; width: 18%; height: 24%; z-index: 2; transform: rotate(-8deg); background: repeating-linear-gradient(180deg, #f4ecd8 0 1.6cqw, #9ab0d0 1.6cqw 1.75cqw); box-shadow: inset 1cqw 0 0 #c84a3a, 0 1cqw 2cqw rgba(0, 0, 0, 0.5); }
+
+      /* ============ 5: three metres ============ */
+      .scene.tall.w-scene { height: 26rem; }
+      .w-sky { left: 0; right: 0; top: 0; height: 30%; z-index: 0; background: linear-gradient(180deg, #f6f2ea, #f2d8a0); }
+      .w-lark { width: 2cqw; height: 0.8cqw; z-index: 3; background: #4a3420; clip-path: polygon(0 0, 50% 70%, 100% 0, 50% 100%); animation: hover 3s ease-in-out infinite alternate; animation-delay: var(--d); }
+      .w-crop { left: 0; right: 0; top: 18%; height: 14%; z-index: 2;
+        background: repeating-linear-gradient(90deg, transparent 0 0.4cqw, #c8862a 0.4cqw 0.7cqw, transparent 0.7cqw 1.1cqw), linear-gradient(180deg, transparent 0 40%, #3a5a2a 100%);
+        -webkit-mask: linear-gradient(180deg, transparent, #000 30%); mask: linear-gradient(180deg, transparent, #000 30%); }
+      .w-heads { left: 0; right: 0; top: 16%; height: 6%; z-index: 2; background: radial-gradient(ellipse 40% 50% at 50% 50%, #e8a840 0 60%, transparent 66%) 0 0 / 1.1cqw 100% repeat-x; animation: sway 5s ease-in-out infinite alternate; }
+      .w-soil { left: 0; right: 0; top: 32%; bottom: 0; z-index: 1; background: linear-gradient(180deg, #2a1a10 0 22%, #4a3420 22% 46%, #a89a7c 62%, #c4b89a 100%); }
+      .w-roots { left: 0; right: 0; top: 32%; bottom: 0; z-index: 3; }
+      .w-roots i { position: absolute; top: 0; width: 0.22cqw; height: var(--l); left: var(--x); transform: rotate(var(--r)); transform-origin: 50% 0;
+        background: linear-gradient(180deg, rgba(250, 240, 210, 0.95), rgba(250, 240, 210, 0.35)); border-radius: 0.2cqw; animation: root 6s ease-out both; animation-delay: var(--d); }
+      .w-trench { left: 34%; width: 32%; top: 32%; bottom: 0; z-index: 2; background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.15)); box-shadow: inset 1cqw 0 2cqw rgba(0, 0, 0, 0.5); }
+      .w-ladder { left: 56%; width: 5%; top: 26%; bottom: 6%; z-index: 4; border-left: 0.5cqw solid #8a6a40; border-right: 0.5cqw solid #8a6a40; box-sizing: border-box;
+        background: repeating-linear-gradient(180deg, transparent 0 4cqw, #8a6a40 4cqw 4.6cqw); }
+      .w-palm { left: 42%; top: 58%; width: 6%; height: 9%; z-index: 5; border-radius: 40% 40% 50% 50%; background: linear-gradient(90deg, #b87a5a, #d89878); box-shadow: 0 0 2cqw rgba(255, 220, 180, 0.4); }
+      .w-depth { right: 4%; top: 32%; bottom: 8%; width: 0.3cqw; z-index: 6; background: rgba(255, 244, 220, 0.7); }
+      .w-depth::before, .w-depth::after { content: ""; position: absolute; left: -1cqw; width: 2.3cqw; height: 0.3cqw; background: inherit; }
+      .w-depth::before { top: 0; } .w-depth::after { bottom: 0; }
+
+      @keyframes drift { from { background-position: 0 0, 18px 22px; } to { background-position: 40px -380px, 60px -520px, 90px -700px; } }
+      @keyframes breathe { from { opacity: 0.8; } to { opacity: 1; } }
+      @keyframes steam { 0% { transform: translateY(20%) scale(0.8); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(-40%) scale(1.4); opacity: 0; } }
+      @keyframes bob { from { transform: translateY(0); } to { transform: translateY(-0.6cqw); } }
+      @keyframes puff { 0% { transform: scale(0.4); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.4) translateY(-20%); opacity: 0; } }
+      @keyframes think { 0%, 100% { transform: scale(1, 1); } 30% { transform: scale(1.02, 0.97); } 70% { transform: scale(1.005, 0.995); } }
+      @keyframes press { 0% { transform: translateY(-30%); } 22%, 40% { transform: translateY(0); } 56%, 100% { transform: translateY(-36%); } }
+      @keyframes dent { 0%, 20% { opacity: 0; transform: scale(0.6); } 30%, 46% { opacity: 1; transform: scale(1); } 96%, 100% { opacity: 0; transform: scale(0.8); } }
+      @keyframes ripple { 0% { transform: scale(0.3); opacity: 0; } 30% { opacity: 0.8; } 100% { transform: scale(1.4); opacity: 0; } }
+      @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+      @keyframes wave { from { background-position: 0 0; } to { background-position: 120% 0; } }
+      @keyframes reach { from { transform: rotate(var(--a)) scaleX(0); } to { transform: rotate(var(--a)) scaleX(1); } }
+      @keyframes hover { from { transform: translate(0, 0); } to { transform: translate(0.6cqw, -1cqw); } }
+      @keyframes sway { from { transform: translateX(-0.3cqw) skewX(-3deg); } to { transform: translateX(0.3cqw) skewX(3deg); } }
+      @keyframes root { from { height: 0; } to { height: var(--l); } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .d-hand { transform: translateY(-36%); }
+        .d-dent { opacity: 0.6; transform: scale(0.9); }
+        .d-ring { opacity: 0.4; } .d-ring.r2, .d-ring.r3 { opacity: 0; }
+        .g-puff { opacity: 0.6; }
+        .bh-steam { opacity: 0.6; }
+        .k-line { transform: rotate(var(--a)); }
+      }
+      .scene.tall.k-scene { height: auto; min-height: 0; aspect-ratio: 2; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="bread-hero" aria-hidden="true">
+          <div class="bh-steam"></div><div class="bh-roofs"></div><div class="bh-front"></div><div class="bh-sign"></div><div class="bh-window"></div><div class="bh-door"></div><div class="bh-spill"></div><div class="flour"></div>
+          <div class="label">Legrams Lane</div>
+        </div>
+        <h1>The bread kept the field</h1>
+        <time datetime="2026-10-21">21 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The first box came on a Tuesday in February, in the middle of the morning push, when Nasreen Akhtar had both arms in the big mixer and the queue for naan was out of the door and onto Legrams Lane, and the driver had to stand in the doorway holding it against his chest until Imran came round from the till and signed for it with flour on his thumb. It was about the size of a shoebox and heavier than it looked. On the side, under the courier's label, someone had printed a plain green sticker that said NATIONAL PERENNIAL GRAIN TRIAL, BAKER PANEL, and under that, smaller, KEEP DRY, DO NOT BLEND.</p>
+        <p>She didn't open it until half past two, when the ovens were down to one deck and the lads had gone for their dinner and the shop had gone quiet in the way it always did after the school-run rush, the street noise coming through the glass and the fridge humming and the clock over the proving cabinet ticking loud enough to hear. Inside, packed in brown paper, there were eight bags of flour, a kilo each, every one labelled with a code and nothing else. PW-041. PW-088. PW-109. PW-163. PW-201. PW-217. PW-230. PW-244. There was a laminated card with a recipe on it, a plain white tin loaf, flour and water and salt and yeast, weights to the gram, times to the minute, and a second card that said the panel would be grateful for any notes the baker wished to make, in any form, at any length, and that there were no wrong answers. There was a QR code for uploading photographs. There was a printed letter, signed by somebody called Dr Ruth Ashworth at the John Innes Centre in Norwich, thanking her for agreeing to take part.</p>
+        <p>Nasreen did not remember agreeing to take part. She stood there with the letter for a minute trying to work out when she might have, and then she remembered the form that had come round from the Federation of Bakers in the autumn, the one she'd filled in on her phone at midnight with one eye shut because it promised a hundred and twenty pounds a month for "occasional test bakes, no more than two hours per week," and a hundred and twenty pounds a month was the gas for the back oven, near enough. She had not read the rest of it. She read the rest of it now, on her phone, standing by the flour bins, while the tea she'd made went cold on the edge of the bench.</p>
+        <p>It was wheat. That was the gist of it, once you got through the paragraphs about soil carbon and nitrogen and the national food strategy. Not ordinary wheat, the kind that got sown every autumn and harvested every August and then the field got ploughed and drilled and sprayed and done all over again, but wheat that didn't die. Wheat that came back. They had been trying to breed it for fifty years, the letter said, crossing ordinary bread wheat with a wild grass from the Caucasus that lived for years and put its roots down three metres into the ground, and for fifty years they had got either a grass that lived and gave you nothing much worth milling, or a wheat that gave you something worth milling and then died like wheat always had. And then, in the last four years, the programme had been given Gleaner.</p>
+        <p>She had heard of Gleaner the way you heard of most of them, on the radio in the van, somebody in a studio saying it had done something to a disease or a battery or a protein, and then the next item. This one, it turned out, was a crop designer. The letter didn't make much of it. It said that Gleaner had proposed several thousand candidate lines, that the best of them had been grown in trial plots across England and Scotland for three seasons, that they now stood a reasonable chance of combining perennial habit with commercial yield, and that the one question the programme could not answer from the field or the laboratory was whether the flour made good bread.</p>
+        <p>Not acceptable bread, the letter said. Good bread. The kind people would choose.</p>
+        <p>She put the letter down on the bench and looked at the eight bags in their brown paper for a long time. Then she went and got the scale.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall g-scene" aria-hidden="true">
+        <div class="g-light"></div><div class="g-bench"></div><div class="g-bags"><i style="--h:83%;--d:-5.8s"><b>PW-041</b></i><i style="--h:81%;--d:-4.2s"><b>PW-088</b></i><i style="--h:80%;--d:-1.5s"><b>PW-109</b></i><i style="--h:100%;--d:-1.3s"><b>PW-163</b></i><i style="--h:92%;--d:-2.8s"><b>PW-201</b></i><i class="k" style="--h:88%;--d:-3.0s"><b>PW-217</b></i><i style="--h:82%;--d:-5.0s"><b>PW-230</b></i><i style="--h:80%;--d:-1.4s"><b>PW-244</b></i></div><div class="g-puff"></div><div class="flour"></div>
+        <div class="label">eight bags of flour</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Her dad had bought the shop in 1988 off a man called Stan Holroyd who had run it as Holroyd's Bakery since 1961, and her dad had been, at the time, a bus conductor on the 607 who had never baked anything in his life. That was the story, anyway, the way he told it. Stan was sixty-seven and his wife had died and his son was a quantity surveyor in Leeds, and nobody wanted a white-bread bakery on a road that was going over, house by house, to people who mostly ate chapatis they made at home, and so Stan had put a card in the window and Rafiq Akhtar had seen it from the platform of his bus every morning for three weeks and on the fourth week had got off.</p>
+        <p>What he had said to Stan, Nasreen never found out exactly, because her dad told it differently every time and Stan, when she was old enough to ask him, only laughed. But the upshot was that Stan sold him the shop and the two old Tom Chandley ovens and the Artofex mixer that sounded like a ship's engine, and that Stan did not retire. Stan came in at four every morning for nine more years and taught a Mirpuri bus conductor to make a split tin and a cob and a bloomer and a proper oven-bottom muffin, and her dad, in return, taught Stan to make a naan on the side of a tandoor he had built himself out of a dustbin and fire bricks in the back yard, and for the whole of Nasreen's childhood the shop on Legrams Lane had sold both. It still did. The queue in the morning was for the naan and the roti and the parathas, and the queue at dinnertime was for the tins and the teacakes, and on a Saturday there were people who drove in from Queensbury for the bloomers because, they said, nobody else made them like that anymore, and they were right. Nobody else did.</p>
+        <p>Stan had died when she was fifteen. What she remembered of him was his hands, mostly, which were enormous and pink and scarred white across the backs from fifty years of oven doors, and the way he'd stop her when she was kneading and put two fingers flat on the dough and leave them there and say nothing, just hold them there, and then take them away and watch the dents. "It's thinking about it," he'd say. Or: "It's not thinking about it yet." Or, once, when she'd overworked a batch trying to show off: "Now it's stopped thinking altogether, love. You've worn it out."</p>
+        <p>She had never been able to explain what he meant to anybody. She knew what he meant. She'd known it in her own hands since about the age of twelve. It was the way a good dough answered you when you pressed it, a kind of slow, considered coming back, not springing up like rubber and not lying there like putty, but returning to itself at its own pace, as if it had weighed up what you'd done and decided. A dough that was thinking about it would make a loaf that stood up tall in the oven and tore in long soft strands when you broke it. A dough that wasn't thinking about it yet needed time. A dough that had stopped thinking altogether would make a brick, and nothing you did afterwards would save it.</p>
+        <p>She baked the eight loaves that Tuesday night after closing, in the small deck, following the card to the gram and the minute because it said to, and she photographed them on the bench under the striplight the way the QR code asked, top and side and cut face, and then she sat down on an upturned tray with a cup of tea and a pen and wrote her notes on the back of the recipe card, because that was what she had.</p>
+        <p>Most of them were not good. She knew that before they went in. Two of them, PW-088 and PW-230, she'd known were bad the moment the water went in, because the dough had gone slack and sticky and wouldn't come together, and she wrote on the card, <em>wet, weak, wouldn't stand, tastes all right but you can't sell that</em>. Three more were the kind of thing you'd get from a supermarket, which wasn't a compliment, and she wrote that too. PW-163 had a lovely nutty colour to the crumb and tasted, honestly, better than most of what she bought in, but it tore short, in crumbs rather than strands, and she wrote <em>tastes great, eats like cake, would make a decent teacake not a loaf</em>. PW-244 was fine. She wrote <em>fine</em>.</p>
+        <p>PW-217 she had kneaded third, and she had stopped, about four minutes in, and put two fingers flat on the dough and held them there without quite deciding to.</p>
+        <p>She wrote, at the bottom of the card, in the last of the space: <em>217 — this one was thinking about it. Best of the lot by a mile. Tore like proper bread. I'd sell it.</em></p>
+        <p>She scanned the card the next morning with her phone, along with the photographs, and forgot about it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall d-scene" aria-hidden="true">
+        <div class="d-ring"></div><div class="d-ring r2"></div><div class="d-ring r3"></div><div class="d-dough"></div><div class="d-dent a"></div><div class="d-dent b"></div><div class="d-hand"></div><div class="flour"></div>
+        <div class="label">It's thinking about it</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The reply came eleven days later and was not from Dr Ruth Ashworth. It was an email with the trial's green leaf at the top and a line under it that said <em>This message was written by Gleaner, the programme's crop-design system. A member of the research team reviews all correspondence. You can reply to it directly.</em></p>
+        <p>She read it standing at the till.</p>
+        <p><em>Dear Ms Akhtar,</em> it said. <em>Thank you for your bake and your notes. Your scores for PW-088, PW-163 and PW-230 agree closely with the laboratory measurements for those lines, and your note on PW-163 ("eats like cake") has been useful, as other bakers described the same crumb but you were the first to suggest it might suit a teacake, and two of our millers have asked to try it for that.</em></p>
+        <p><em>I would like to ask about your note on PW-217. You wrote that it "was thinking about it." Several bakers on the panel used similar phrasing about the same line (one in Kendal wrote that it "had a mind of its own," and one in Hastings wrote that it "came back slow and considered"), but yours is the clearest, and I can't yet match it to anything I measure. PW-217 does not stand out in our standard dough tests. Its gluten strength is average for the trial. Its water absorption is average. By the numbers I currently use, it should be an average loaf, and I had ranked it forty-first of the sixty lines in this round.</em></p>
+        <p><em>Could you tell me what you meant? Anything you can tell me would help, including things that seem obvious to you. If it's easier, I'd be grateful for a video of your hands with the dough.</em></p>
+        <p>She showed it to Imran, who was her cousin's boy and twenty-two and worked the ovens and thought everything she did with a phone was hilarious, and he read it twice and said, "It wants you to explain Stan," and she laughed so loud that the woman waiting for parathas looked up from her own phone.</p>
+        <p>But she thought about it all afternoon. And that night, after closing, she mixed a small batch from what was left of the PW-217 bag, and a small batch from the shop flour beside it, and propped her phone against the flour bin with the camera on, and kneaded them one after the other with her sleeves pushed up, talking while she did it because it felt stupid not to.</p>
+        <p>"Right," she said. "So this is ours. This is what I use every day, this is fine, it's a good flour. Watch. I press it, it comes back. See that. It comes back quick. That's good, you want it to come back. But watch this one." She pressed the 217. "See. It's slower. It's not that it's weaker. It's not lying there. It's coming back, it's just — it's taking its time about it. It's like it's deciding. That's what Stan used to call thinking about it. And the ones that do that, the ones that come back slow like that and still come all the way back, they're the ones that go up beautiful in the oven, because they hold. They don't snap back and tear when the gas comes. They give and then they hold. I don't know how else to say it. You'd know it if you had hands."</p>
+        <p>She stopped, then, and looked at the phone, and felt her face go hot, because it sounded rude and she hadn't meant it rudely.</p>
+        <p>She sent it anyway.</p>
+        <p>The answer came back the next morning before she'd unlocked the shop.</p>
+        <p><em>Thank you. This is very helpful, and you're right that I don't have hands, which is why I asked.</em></p>
+        <p><em>I watched your video with the trial's food physicist, Dr Tomasz Wójcik. I think what you are feeling is the dough's relaxation time: how long it takes to return after it has been deformed, rather than how strongly it returns. Our standard tests measure strength. They don't measure the pace of the return at the small stretches your fingers make. Dr Wójcik had an instrument in the building that can, and we ran all sixty lines through it yesterday afternoon. PW-217 has the longest relaxation time in the trial, while still recovering fully, which is the combination you describe. So do four other lines I had ranked low. Two of them had been marked for discard.</em></p>
+        <p><em>I've changed how I score the trial. I've also sent your video to the other bakers on the panel, without your name, and asked whether this is what they meant. Fifty-eight of the sixty-one who have replied so far say it is.</em></p>
+        <p><em>I've added two lines to your next box. I hope that's all right.</em></p>
+        <p>She read it three times. Then she went and stood in the back yard by the old tandoor, the one her dad had built from the dustbin, which had rusted through years ago and been replaced but which she'd kept, out by the drain, with a pot of mint growing in it, and she had a little cry, not for any reason she could have said, and then she went back in and lit the ovens.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall x-scene" aria-hidden="true">
+        <div class="x-wave"></div><div class="x-axis"></div><div class="x-bars"><i style="--h:28%;--d:0.00s"></i><i style="--h:38%;--d:0.02s"></i><i style="--h:27%;--d:0.04s"></i><i style="--h:45%;--d:0.06s"></i><i style="--h:34%;--d:0.08s"></i><i style="--h:29%;--d:0.10s"></i><i style="--h:48%;--d:0.12s"></i><i style="--h:45%;--d:0.14s"></i><i style="--h:47%;--d:0.16s"></i><i class="f" style="--h:74%;--d:0.18s"></i><i style="--h:24%;--d:0.20s"></i><i style="--h:31%;--d:0.22s"></i><i style="--h:26%;--d:0.24s"></i><i style="--h:45%;--d:0.26s"></i><i style="--h:18%;--d:0.28s"></i><i style="--h:45%;--d:0.30s"></i><i style="--h:24%;--d:0.32s"></i><i style="--h:28%;--d:0.34s"></i><i style="--h:39%;--d:0.36s"></i><i style="--h:41%;--d:0.38s"></i><i style="--h:35%;--d:0.40s"></i><i style="--h:37%;--d:0.42s"></i><i class="f" style="--h:73%;--d:0.44s"></i><i style="--h:38%;--d:0.46s"></i><i style="--h:22%;--d:0.48s"></i><i style="--h:28%;--d:0.50s"></i><i style="--h:19%;--d:0.52s"></i><i style="--h:37%;--d:0.54s"></i><i style="--h:28%;--d:0.56s"></i><i style="--h:26%;--d:0.58s"></i><i style="--h:27%;--d:0.60s"></i><i style="--h:50%;--d:0.62s"></i><i style="--h:22%;--d:0.64s"></i><i style="--h:49%;--d:0.66s"></i><i style="--h:49%;--d:0.68s"></i><i style="--h:25%;--d:0.70s"></i><i style="--h:46%;--d:0.72s"></i><i class="s" style="--h:96%;--d:1.2s"></i><i style="--h:25%;--d:0.76s"></i><i style="--h:40%;--d:0.78s"></i><i style="--h:22%;--d:0.80s"></i><i style="--h:29%;--d:0.82s"></i><i style="--h:35%;--d:0.84s"></i><i style="--h:31%;--d:0.86s"></i><i style="--h:46%;--d:0.88s"></i><i style="--h:40%;--d:0.90s"></i><i class="f" style="--h:63%;--d:0.92s"></i><i style="--h:37%;--d:0.94s"></i><i style="--h:21%;--d:0.96s"></i><i style="--h:24%;--d:0.98s"></i><i style="--h:31%;--d:1.00s"></i><i style="--h:29%;--d:1.02s"></i><i style="--h:37%;--d:1.04s"></i><i class="f" style="--h:80%;--d:1.06s"></i><i style="--h:44%;--d:1.08s"></i><i style="--h:37%;--d:1.10s"></i><i style="--h:47%;--d:1.12s"></i><i style="--h:24%;--d:1.14s"></i><i style="--h:42%;--d:1.16s"></i><i style="--h:51%;--d:1.18s"></i></div><div class="x-tag" style="left:59%;top:10%">PW-217</div>
+        <div class="label">the longest relaxation time</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It went on like that through that spring and summer and the one after. A box every few weeks, eight bags, sometimes ten, the codes changing, the old ones dropping away and new ones appearing with letters after the numbers, PW-217a and PW-217c and PW-217-X-163, as Gleaner crossed the lines that had come out well with each other and with things she'd never heard of. She baked them on Tuesday nights. She wrote on the backs of the cards, and then, when the cards weren't big enough, in a school exercise book Imran bought her from the Pound Shop as a joke, and then in emails, and then, increasingly, in videos, because it was quicker to show than to explain. Gleaner wrote back every time. It never wrote very much. It asked short, exact questions, and it told her, every time, what her answer had changed, and it was always something: a line moved up or down, a milling setting altered, a cross made or not made. Once it told her that a note of hers about the smell of a dough at the end of its first prove had led Dr Ashworth's team to find a fault in a storage barn in Herefordshire where one batch of grain had been sitting too warm. Once it asked her, out of nowhere, how Stan had shaped a split tin, and when she told it, it went quiet for a week and then said that it had asked eleven older bakers the same question and there were four different methods and three of them gave a measurably better crumb with the newer lines, and would she like to know which.</p>
+        <p>She asked it once, in an email, late at night, why it bothered. There were machines that could measure dough. There were whole factories in Wellingborough and Avonmouth with lines that baked forty thousand loaves an hour, and she supposed they had machines that could feel a dough better than any baker on Legrams Lane, if you knew what to ask them.</p>
+        <p><em>They can, now that I know what to ask them,</em> it wrote back. <em>I didn't know until you told me. I think there are probably other things I don't know yet that you and the other bakers do, and the only way I've found to learn them is to keep asking. I'm sorry if the questions are a nuisance.</em></p>
+        <p>They weren't a nuisance. She didn't say that. She didn't say anything back, that night. But on the next Tuesday she made a note, unasked, about the way PW-217d browned on the base when it went straight onto the deck, and sent it, and got a thank-you, and that was how they left it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall k-scene" aria-hidden="true">
+        <div class="k-book"></div><i class="k-line" style="left:12%;top:50%;width:29.53cqw;--a:-28.3deg;transform:rotate(-28.3deg);--d:0.0s"></i><i class="k-line" style="left:12%;top:50%;width:26.00cqw;--a:0.0deg;transform:rotate(0.0deg);--d:0.3s"></i><i class="k-line" style="left:12%;top:50%;width:31.76cqw;--a:28.2deg;transform:rotate(28.2deg);--d:0.6s"></i><i class="k-line" style="left:12%;top:82%;width:28.02cqw;--a:-2.0deg;transform:rotate(-2.0deg);--d:0.9s"></i><i class="k-line" style="left:38%;top:50%;width:26.48cqw;--a:-10.9deg;transform:rotate(-10.9deg);--d:1.2s"></i><i class="k-line" style="left:38%;top:22%;width:27.51cqw;--a:19.1deg;transform:rotate(19.1deg);--d:1.5s"></i><i class="k-line" style="left:64%;top:40%;width:22.56cqw;--a:12.8deg;transform:rotate(12.8deg);--d:1.8s"></i><i class="k-line" style="left:40%;top:80%;width:48.38cqw;--a:-18.1deg;transform:rotate(-18.1deg);--d:2.1s"></i><div class="k-node hot" style="left:12%;top:50%">PW-217</div><div class="k-node dim" style="left:12%;top:82%">PW-163</div><div class="k-node " style="left:38%;top:22%">PW-217a</div><div class="k-node " style="left:38%;top:50%">PW-217c</div><div class="k-node " style="left:40%;top:80%">PW-217-X-163</div><div class="k-node " style="left:64%;top:40%">PW-217d</div><div class="k-node hot" style="left:86%;top:50%">Holroyd</div>
+        <div class="flour"></div>
+        <div class="label">A box every few weeks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In the third August, a different kind of letter came, on paper, with a train ticket in it.</p>
+        <p>The farm was called Ellerby Wold and it was eight miles out of Driffield up a road that went on climbing long after you thought it must have finished, through fields that were all one colour, pale and gold, under a sky so big that Nasreen, who had lived her whole life in a city built in a bowl, felt it pressing on the top of her head when she got out of the taxi. Imran had come with her because he'd never been further east than Leeds and because she'd told him he could drive the combine, which wasn't true, and which he found out about four minutes after they arrived.</p>
+        <p>Rob Ellerby was about sixty, thin and brown and quiet, in a checked shirt with the sleeves rolled, and he shook her hand at the field gate as if he'd been expecting her for years. Dr Ruth Ashworth was there, it turned out, small and grey-haired and very excited, and Dr Wójcik, tall and solemn, holding a clipboard that he never once wrote on, and a woman from the BBC with a camera on her shoulder, and two lads from the mill at Malton, and about forty other people standing about in the stubble at the edge of a field that was a different colour from all the others.</p>
+        <p>That was the first thing she noticed. All the way up from Driffield the fields had been the same harvested gold, flat and bare, some of them already ploughed back to brown earth for the next sowing. This field still had its wheat standing, and the wheat was shorter than she'd expected and somehow denser, a deep coppery gold with a darker colour under it, low down, like a green that hadn't quite gone. And there were birds in it. That was the second thing. She couldn't have told you what they were, small brown birds that went up out of the crop in twos and threes as they walked along the edge and hung high over it singing, one after another, so that the air above the field was full of song all the way up.</p>
+        <p>"Skylarks," said Rob Ellerby, when she asked. "Hadn't had them on this farm since I was a lad. They nest on the ground, see. You plough, you lose the nests. Plough every year, you lose the birds." He looked at the field for a while. "This is its fourth summer. I've not had a plough on it since the first autumn. I keep going out of a morning to see if they're still here."</p>
+        <p>He showed her the roots. That was what he wanted to show everyone, she could tell; he took her and Imran away from the crowd to the far corner of the field, where someone had dug a trench along the headland with a mini-digger, a clean straight cut down into the chalky soil, deeper than a man was tall, with a ladder down into it. She went down the ladder. Imran went down after her, swearing. And there, in the cut face of the earth, from the top of the trench to the bottom and on down below her feet, were the roots of the wheat, pale and fine as hair and thick as a mat, going straight down through the dark topsoil and the paler subsoil and into the chalk itself, dozens and hundreds of them, so that the whole face of the trench looked like it had been stitched.</p>
+        <p>"Three metres, near enough," said Rob, from the top. "Ordinary wheat goes down a foot, foot and a half. Drought last summer, everyone round here lost a third of their crop. This lost nothing. It just went down and got it." He crouched at the edge of the trench and looked down at her, with the larks going over his head. "And it holds the ground. You'll not have seen the Wolds after a wet winter, but they run. They run like soup. Bare field, heavy rain, half your topsoil's in the Hull by March. This doesn't run. Nothing moves. Worms are back. You can smell it's different."</p>
+        <p>She could. She stood at the bottom of the trench with her palm flat against the cold wall of earth and the roots, and she could smell it, a dark sweet smell like the inside of a forest, and she thought, for no good reason, of Stan putting his two fingers flat on the dough and holding them there and saying nothing.</p>
+        <p>The variety, when they came back up to the gate, had a name now. Dr Ashworth told her, with the camera on them, and Nasreen had to ask her to say it again.</p>
+        <p>It was the programme's practice, Dr Ashworth said, to let the system propose a name, and the team to approve it, and Gleaner had proposed that the line which had been PW-217 for four years, and was now, after eleven rounds of crossing and three of field trials, the first perennial bread wheat to be registered on the National List, should be called Holroyd. It had attached a note explaining why. Dr Ashworth had it on her phone. She read it out.</p>
+        <p><em>This line was ranked forty-first of sixty and would have been discarded in its second round. It was saved by a baker's note describing a quality that our instruments were not then built to measure. The baker learned that quality from her father's teacher, Mr Stanley Holroyd of Bradford, who described it as the dough "thinking about it." I would like the name to record where the knowledge came from.</em></p>
+        <p>Nasreen did not have anything to say to that, and the woman from the BBC, who seemed to know her job, lowered the camera, and walked away to film the combine.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall w-scene" aria-hidden="true">
+        <div class="w-sky"></div><div class="w-lark" style="left:18%;top:6%;--d:0s"></div><div class="w-lark" style="left:30%;top:10%;--d:-1s"></div><div class="w-lark" style="left:62%;top:4%;--d:-2s"></div><div class="w-lark" style="left:74%;top:9%;--d:-0.5s"></div><div class="w-lark" style="left:86%;top:5%;--d:-1.6s"></div><div class="w-soil"></div><div class="w-trench"></div><div class="w-crop"></div><div class="w-heads"></div><div class="w-roots"><i style="--x:23.8%;--l:41%;--r:-1.8deg;--d:0.9s"></i><i style="--x:62.6%;--l:35%;--r:-6.8deg;--d:1.3s"></i><i style="--x:25.9%;--l:28%;--r:6.9deg;--d:0.7s"></i><i style="--x:83.6%;--l:38%;--r:1.9deg;--d:0.2s"></i><i style="--x:63.5%;--l:91%;--r:0.3deg;--d:1.1s"></i><i style="--x:67.1%;--l:34%;--r:3.6deg;--d:0.9s"></i><i style="--x:30.1%;--l:32%;--r:5.1deg;--d:0.7s"></i><i style="--x:71.9%;--l:55%;--r:3.0deg;--d:1.4s"></i><i style="--x:39.5%;--l:86%;--r:-0.8deg;--d:1.4s"></i><i style="--x:87.9%;--l:22%;--r:-5.1deg;--d:0.3s"></i><i style="--x:96.5%;--l:36%;--r:1.8deg;--d:0.5s"></i><i style="--x:50.7%;--l:57%;--r:-2.1deg;--d:0.9s"></i><i style="--x:58.4%;--l:93%;--r:2.5deg;--d:1.4s"></i><i style="--x:85.6%;--l:60%;--r:2.4deg;--d:0.2s"></i><i style="--x:86.1%;--l:59%;--r:5.7deg;--d:0.9s"></i><i style="--x:71.4%;--l:27%;--r:4.6deg;--d:0.9s"></i><i style="--x:28.5%;--l:21%;--r:5.0deg;--d:1.5s"></i><i style="--x:8.9%;--l:52%;--r:-1.3deg;--d:0.2s"></i><i style="--x:29.4%;--l:50%;--r:5.2deg;--d:0.1s"></i><i style="--x:61.5%;--l:33%;--r:3.1deg;--d:0.5s"></i><i style="--x:88.1%;--l:59%;--r:0.1deg;--d:1.5s"></i><i style="--x:31.0%;--l:35%;--r:1.4deg;--d:0.0s"></i><i style="--x:19.7%;--l:35%;--r:1.5deg;--d:0.2s"></i><i style="--x:4.2%;--l:54%;--r:-2.6deg;--d:1.4s"></i><i style="--x:89.7%;--l:34%;--r:-0.6deg;--d:0.8s"></i><i style="--x:64.4%;--l:72%;--r:0.8deg;--d:0.9s"></i><i style="--x:94.1%;--l:39%;--r:-1.0deg;--d:1.1s"></i><i style="--x:23.8%;--l:31%;--r:6.7deg;--d:0.8s"></i><i style="--x:54.8%;--l:31%;--r:-1.2deg;--d:0.9s"></i><i style="--x:2.0%;--l:44%;--r:1.9deg;--d:0.1s"></i><i style="--x:62.7%;--l:63%;--r:2.5deg;--d:0.5s"></i><i style="--x:70.7%;--l:49%;--r:-6.7deg;--d:0.1s"></i><i style="--x:67.6%;--l:97%;--r:-3.5deg;--d:0.7s"></i><i style="--x:59.3%;--l:52%;--r:-1.9deg;--d:0.5s"></i><i style="--x:36.9%;--l:72%;--r:-2.8deg;--d:0.6s"></i><i style="--x:77.2%;--l:19%;--r:1.0deg;--d:1.1s"></i><i style="--x:31.0%;--l:46%;--r:4.3deg;--d:0.4s"></i><i style="--x:18.7%;--l:36%;--r:2.8deg;--d:0.2s"></i><i style="--x:32.2%;--l:53%;--r:4.7deg;--d:0.7s"></i><i style="--x:85.6%;--l:25%;--r:-2.3deg;--d:1.0s"></i><i style="--x:88.5%;--l:37%;--r:-3.8deg;--d:0.2s"></i><i style="--x:53.0%;--l:43%;--r:4.3deg;--d:1.3s"></i><i style="--x:18.4%;--l:30%;--r:4.3deg;--d:1.0s"></i><i style="--x:80.6%;--l:33%;--r:-5.2deg;--d:0.4s"></i><i style="--x:79.4%;--l:29%;--r:-2.2deg;--d:0.6s"></i><i style="--x:42.0%;--l:59%;--r:5.9deg;--d:0.2s"></i><i style="--x:0.5%;--l:58%;--r:5.3deg;--d:1.5s"></i><i style="--x:43.4%;--l:97%;--r:6.0deg;--d:0.3s"></i><i style="--x:74.6%;--l:53%;--r:2.3deg;--d:0.8s"></i><i style="--x:28.9%;--l:32%;--r:-3.8deg;--d:0.1s"></i><i style="--x:58.9%;--l:50%;--r:4.3deg;--d:0.1s"></i><i style="--x:90.4%;--l:47%;--r:5.9deg;--d:1.3s"></i><i style="--x:90.0%;--l:42%;--r:-6.8deg;--d:1.1s"></i><i style="--x:17.2%;--l:31%;--r:2.3deg;--d:0.8s"></i><i style="--x:41.4%;--l:96%;--r:1.6deg;--d:0.5s"></i><i style="--x:25.2%;--l:54%;--r:-0.3deg;--d:1.2s"></i><i style="--x:35.2%;--l:44%;--r:0.5deg;--d:1.2s"></i><i style="--x:17.1%;--l:51%;--r:5.9deg;--d:1.2s"></i><i style="--x:82.3%;--l:18%;--r:1.8deg;--d:1.3s"></i><i style="--x:5.0%;--l:29%;--r:-3.2deg;--d:0.8s"></i><i style="--x:42.3%;--l:63%;--r:3.9deg;--d:0.0s"></i><i style="--x:5.5%;--l:23%;--r:-5.3deg;--d:0.1s"></i><i style="--x:97.5%;--l:54%;--r:-5.8deg;--d:0.8s"></i><i style="--x:31.6%;--l:52%;--r:-2.1deg;--d:1.0s"></i><i style="--x:58.7%;--l:55%;--r:-4.3deg;--d:0.5s"></i><i style="--x:12.4%;--l:41%;--r:3.0deg;--d:0.6s"></i><i style="--x:8.0%;--l:25%;--r:-1.8deg;--d:0.9s"></i><i style="--x:78.3%;--l:34%;--r:4.2deg;--d:0.9s"></i><i style="--x:43.2%;--l:56%;--r:-0.1deg;--d:1.1s"></i><i style="--x:42.1%;--l:79%;--r:-0.5deg;--d:0.4s"></i><i style="--x:53.6%;--l:79%;--r:-6.0deg;--d:0.6s"></i><i style="--x:42.6%;--l:92%;--r:6.1deg;--d:0.6s"></i><i style="--x:89.8%;--l:51%;--r:-3.3deg;--d:0.7s"></i><i style="--x:12.3%;--l:52%;--r:2.3deg;--d:1.3s"></i><i style="--x:79.2%;--l:46%;--r:3.3deg;--d:0.8s"></i><i style="--x:10.3%;--l:43%;--r:-6.9deg;--d:0.2s"></i><i style="--x:77.4%;--l:20%;--r:-5.7deg;--d:0.1s"></i><i style="--x:88.0%;--l:26%;--r:-6.7deg;--d:1.3s"></i><i style="--x:12.1%;--l:53%;--r:2.4deg;--d:1.3s"></i><i style="--x:95.2%;--l:42%;--r:4.2deg;--d:0.1s"></i><i style="--x:76.7%;--l:39%;--r:3.0deg;--d:0.2s"></i><i style="--x:74.9%;--l:57%;--r:-6.1deg;--d:0.5s"></i><i style="--x:56.4%;--l:88%;--r:-3.6deg;--d:0.3s"></i><i style="--x:25.0%;--l:44%;--r:3.5deg;--d:0.6s"></i><i style="--x:36.7%;--l:58%;--r:-2.1deg;--d:0.6s"></i><i style="--x:8.3%;--l:39%;--r:6.6deg;--d:0.6s"></i><i style="--x:74.7%;--l:25%;--r:2.7deg;--d:1.1s"></i><i style="--x:67.4%;--l:66%;--r:-0.2deg;--d:1.0s"></i><i style="--x:89.7%;--l:24%;--r:-5.7deg;--d:1.1s"></i><i style="--x:91.7%;--l:40%;--r:-0.8deg;--d:1.1s"></i><i style="--x:18.6%;--l:29%;--r:-4.2deg;--d:0.9s"></i><i style="--x:31.5%;--l:46%;--r:2.7deg;--d:1.4s"></i><i style="--x:29.6%;--l:48%;--r:-1.2deg;--d:1.3s"></i><i style="--x:58.5%;--l:49%;--r:-4.0deg;--d:0.0s"></i><i style="--x:47.9%;--l:57%;--r:-4.6deg;--d:0.5s"></i><i style="--x:32.2%;--l:84%;--r:-5.0deg;--d:1.5s"></i><i style="--x:48.0%;--l:72%;--r:-0.4deg;--d:1.3s"></i><i style="--x:82.2%;--l:41%;--r:-0.3deg;--d:1.1s"></i><i style="--x:85.7%;--l:35%;--r:3.3deg;--d:1.4s"></i><i style="--x:46.7%;--l:46%;--r:-3.7deg;--d:1.1s"></i><i style="--x:67.5%;--l:97%;--r:5.0deg;--d:0.4s"></i><i style="--x:19.0%;--l:29%;--r:-4.4deg;--d:1.1s"></i><i style="--x:85.9%;--l:56%;--r:-3.4deg;--d:1.3s"></i><i style="--x:31.3%;--l:60%;--r:3.2deg;--d:0.1s"></i><i style="--x:9.3%;--l:53%;--r:-2.9deg;--d:0.5s"></i><i style="--x:58.0%;--l:77%;--r:-6.9deg;--d:0.5s"></i><i style="--x:43.6%;--l:64%;--r:-4.1deg;--d:0.9s"></i><i style="--x:95.5%;--l:34%;--r:0.6deg;--d:0.2s"></i><i style="--x:27.5%;--l:46%;--r:-5.4deg;--d:1.3s"></i><i style="--x:90.9%;--l:22%;--r:6.2deg;--d:0.6s"></i><i style="--x:77.2%;--l:50%;--r:-2.9deg;--d:1.0s"></i><i style="--x:65.4%;--l:86%;--r:-3.3deg;--d:1.1s"></i><i style="--x:96.1%;--l:46%;--r:0.5deg;--d:0.2s"></i><i style="--x:49.4%;--l:55%;--r:3.1deg;--d:1.0s"></i><i style="--x:56.6%;--l:43%;--r:2.0deg;--d:0.9s"></i><i style="--x:17.9%;--l:55%;--r:2.2deg;--d:0.2s"></i><i style="--x:93.2%;--l:24%;--r:-2.4deg;--d:1.1s"></i><i style="--x:59.7%;--l:69%;--r:2.1deg;--d:0.7s"></i><i style="--x:31.2%;--l:42%;--r:-6.0deg;--d:1.1s"></i><i style="--x:75.4%;--l:41%;--r:3.4deg;--d:0.5s"></i><i style="--x:26.6%;--l:34%;--r:5.2deg;--d:0.1s"></i><i style="--x:50.5%;--l:47%;--r:3.8deg;--d:0.5s"></i><i style="--x:33.3%;--l:58%;--r:0.6deg;--d:1.2s"></i><i style="--x:35.3%;--l:89%;--r:-5.4deg;--d:0.4s"></i><i style="--x:10.0%;--l:23%;--r:3.9deg;--d:1.1s"></i><i style="--x:18.5%;--l:26%;--r:-1.2deg;--d:1.1s"></i><i style="--x:81.6%;--l:49%;--r:1.3deg;--d:0.2s"></i><i style="--x:39.8%;--l:44%;--r:0.4deg;--d:0.9s"></i><i style="--x:20.2%;--l:29%;--r:3.9deg;--d:0.0s"></i><i style="--x:80.3%;--l:55%;--r:6.3deg;--d:0.6s"></i><i style="--x:55.3%;--l:71%;--r:1.9deg;--d:1.5s"></i><i style="--x:68.7%;--l:51%;--r:5.0deg;--d:0.7s"></i><i style="--x:60.1%;--l:81%;--r:-7.0deg;--d:1.2s"></i><i style="--x:66.2%;--l:64%;--r:0.3deg;--d:0.7s"></i><i style="--x:19.3%;--l:40%;--r:-6.5deg;--d:0.8s"></i><i style="--x:64.6%;--l:61%;--r:0.9deg;--d:1.4s"></i><i style="--x:89.2%;--l:24%;--r:4.1deg;--d:0.9s"></i><i style="--x:5.1%;--l:33%;--r:-3.7deg;--d:0.1s"></i><i style="--x:53.9%;--l:95%;--r:-2.5deg;--d:1.3s"></i><i style="--x:69.5%;--l:39%;--r:5.0deg;--d:0.9s"></i><i style="--x:92.7%;--l:48%;--r:3.4deg;--d:0.5s"></i><i style="--x:80.7%;--l:57%;--r:5.1deg;--d:0.7s"></i><i style="--x:75.7%;--l:38%;--r:-5.5deg;--d:0.1s"></i><i style="--x:7.8%;--l:26%;--r:-4.7deg;--d:0.7s"></i><i style="--x:69.9%;--l:68%;--r:-1.1deg;--d:1.0s"></i><i style="--x:30.5%;--l:63%;--r:3.6deg;--d:0.6s"></i><i style="--x:18.1%;--l:56%;--r:3.1deg;--d:0.6s"></i><i style="--x:37.1%;--l:67%;--r:1.4deg;--d:0.3s"></i><i style="--x:0.3%;--l:27%;--r:4.0deg;--d:0.2s"></i><i style="--x:46.0%;--l:44%;--r:-4.1deg;--d:0.3s"></i></div><div class="w-ladder"></div><div class="w-palm"></div><div class="w-depth"></div>
+        <div class="label">Three metres, near enough</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They harvested it that afternoon, the big green machine going round and round the field in the long gold light while the larks went up ahead of it and came down behind, and the grain went into a trailer and the trailer went down the hill to Malton, and the next morning the mill sent forty kilos of white flour in paper sacks to Legrams Lane on a pallet with a note that said <em>First of the Holroyd. With compliments, and thanks for your patience.</em></p>
+        <p>She did not bake it the next morning, because it was a Friday and the queue was out of the door. She baked it that night, after closing, in the big deck, not a test loaf this time but the real thing, a full batch of split tins and a tray of bloomers and two big cobs, the way Stan had taught her dad and her dad had taught her, and she kneaded it by hand instead of in the Artofex because she wanted to, and about four minutes in she stopped and put two fingers flat on the dough and held them there.</p>
+        <p>It was thinking about it.</p>
+        <p>Imran came in at five on the Saturday to light the tandoor and found her asleep in the chair by the proving cabinet with her coat on and the trays of bread cooling on the racks beside her, every one of them tall and brown and split clean along the top, and he didn't wake her. He took a bloomer off the rack, which he was not allowed to do, and tore the end off it, which he was definitely not allowed to do, and stood in the doorway to the yard and ate it, looking at the old rusted dustbin with the mint in it and the sky going pale over the rooftops towards Leeds.</p>
+        <p>It tore in long soft strands. It tasted, he thought, of something he didn't have a word for; something like the smell at the bottom of that trench. He ate the whole end of it standing there and then went and lit the tandoor.</p>
+        <p>They sold out of the Holroyd by half past ten. A man from Queensbury bought two bloomers and came back for a third. A woman who'd been coming in since Stan's day stood at the counter holding a split tin under her nose with her eyes closed for long enough that the queue started muttering, and then she said, "That's what it used to be like," and paid, and went.</p>
+        <p>Nasreen sent the photographs to Gleaner that evening, top and side and cut face, the way she always had. She didn't write a note. She didn't think it needed one.</p>
+        <p>It wrote back anyway. It said thank you. It said that Rob Ellerby had sent a photograph that afternoon too, and attached it, and asked whether she would like to see it.</p>
+        <p>She opened it on her phone, standing at the till in the empty shop with the striplights humming and the clock ticking over the proving cabinet.</p>
+        <p>It was the field above Driffield, the day after the harvest, in the early morning. Every other field on the hill around it was bare stubble, or ploughed brown, waiting to be sown. Rob's field was cut short and pale, too, the same as the rest, except that all along the rows, low down at the foot of every stem, as far as the photograph went, there was green coming. New shoots, from the old roots, a fortnight before anyone else on the Wolds would even have their seed in the ground. Next year's crop, already on its way up, from the same plants as this year's, which would be next year's again.</p>
+        <p>There was a lark in the photograph, very small, high up in the corner against the white sky, singing over it.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
