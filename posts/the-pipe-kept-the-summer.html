@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The pipe kept the summer — Ben Miller</title>
+    <meta name="description" content="In Workington the heat comes up the hill from the machines on Moss Bay, and in summer it keeps coming, whether Bev Fearon wants it or not.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0e1118;
+        --ink: #e6eaf0;
+        --mute: #8e9ab0;
+        --cream: #eef2f8;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(120, 170, 240, 0.08), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(230, 130, 70, 0.06), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 150, 230, 0.05), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(255, 140, 80, 0.05), transparent 60%),
+          linear-gradient(180deg, #141a24 0%, #11161f 36%, #0e121a 70%, #090c12 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(180, 210, 255, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(210, 230, 255, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c8d8f0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(120, 180, 255, 0.3), 0 0 2px rgba(220, 235, 255, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e2e6ee;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f0b080; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(150, 210, 255, 0.95) 0 1.5px, rgba(80, 150, 240, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(90, 170, 255, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #121620;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(180, 210, 255, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 8, 14, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(200, 225, 255, 0.22); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 150, 90, 0.2); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 170, 240, 0.2); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .scene { container-type: size; }
+      .wind { inset: -10%; z-index: 18; pointer-events: none;
+        background: repeating-linear-gradient(-24deg, transparent 0 22px, rgba(200, 220, 255, 0.10) 22px 23px, transparent 23px 61px),
+          repeating-linear-gradient(-28deg, transparent 0 40px, rgba(220, 235, 255, 0.07) 40px 42px, transparent 42px 97px);
+        animation: gust 3.2s linear infinite; }
+      .heat { border-radius: 50%; filter: blur(14px); animation: warmth 6s ease-in-out infinite alternate; }
+      .tick { z-index: 14; width: 1.4cqw; aspect-ratio: 1; margin: -0.7cqw; border-radius: 50%; background: #ffb46a; box-shadow: 0 0 2cqw 0.6cqw rgba(255, 140, 60, 0.7); animation: tick 1s steps(2) infinite; animation-delay: var(--d, 0s); }
+      .blue { z-index: 6; height: 0.6cqw; background: radial-gradient(circle, #8ad0ff 0 30%, rgba(80, 160, 255, 0.4) 50%, transparent 70%) 0 50% / 3cqw 100% repeat-x; filter: drop-shadow(0 0 0.8cqw rgba(90, 170, 255, 0.9)); animation: blink 4s ease-in-out infinite alternate; }
+
+      /* ============ hero: Moss Bay ============ */
+      .pipe-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(180, 210, 255, 0.16);
+        background: linear-gradient(180deg, #0c1220 0%, #1a2638 46%, #24324a 58%, #0a0e16 59%, #121a26 100%); }
+      .pipe-hero > * { position: absolute; }
+      .pipe-hero::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 8, 14, 0.65) 100%), repeating-linear-gradient(112deg, rgba(220, 235, 255, 0.02) 0 2px, transparent 2px 7px); }
+      .ph-fells { left: -4%; right: -4%; top: 30%; height: 20%; z-index: 1; background: linear-gradient(180deg, #2a3448, #18202e);
+        clip-path: polygon(0 80%, 10% 40%, 20% 60%, 34% 10%, 46% 50%, 58% 30%, 70% 60%, 84% 20%, 100% 70%, 100% 100%, 0 100%); }
+      .ph-fells::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(230, 240, 255, 0.5) 0 30%, transparent 50%); }
+      .ph-sea { left: 0; right: 0; top: 59%; bottom: 0; z-index: 1; background: repeating-linear-gradient(180deg, rgba(140, 180, 230, 0.08) 0 1px, transparent 1px 6px), linear-gradient(180deg, #1a2a40, #0a1018); }
+      .ph-campus { left: 8%; right: 18%; top: 47%; height: 12%; z-index: 4; background: linear-gradient(180deg, #c8d0dc, #8a94a4); box-shadow: inset 0 -1cqw 2cqw rgba(30, 40, 60, 0.4), 0 0 6cqw rgba(140, 180, 255, 0.15); }
+      .ph-blue { left: 9%; right: 19%; top: 46%; }
+      .ph-reflect { left: 8%; right: 18%; top: 60%; height: 16%; z-index: 2; background: repeating-linear-gradient(180deg, rgba(120, 190, 255, 0.35) 0 1px, transparent 1px 7px);
+        -webkit-mask: linear-gradient(180deg, #000, transparent); mask: linear-gradient(180deg, #000, transparent); animation: shimmer 3s ease-in-out infinite alternate; }
+      .ph-steam { left: 10%; right: 22%; top: 30%; height: 18%; z-index: 3; background: radial-gradient(ellipse 30% 60% at 30% 100%, rgba(255, 170, 110, 0.25), transparent 70%), radial-gradient(ellipse 30% 60% at 70% 100%, rgba(255, 170, 110, 0.2), transparent 70%); filter: blur(8px); animation: lean 5s ease-in-out infinite alternate; }
+      .ph-pipe { left: 50%; right: -4%; top: 76%; height: 6%; z-index: 5; transform: rotate(-12deg); transform-origin: 0 50%; border-radius: 3cqw;
+        background: linear-gradient(180deg, #3a2a22, #1a120e); box-shadow: 0 0 0 0.3cqw rgba(255, 140, 70, 0.3); }
+      .ph-pulse { inset: 0; border-radius: inherit; position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 150, 70, 0.9), transparent) 0 0 / 30% 100% no-repeat; animation: flow 4s linear infinite; }
+      .ph-pipe > * { position: absolute; }
+
+      /* ============ 1: the pipe splitting ============ */
+      .n-scene { background: radial-gradient(ellipse 70% 70% at 30% 50%, #1e1a20, #0a0c12 80%); }
+      .scene.tall.n-scene { height: auto; min-height: 0; aspect-ratio: 2; }
+      .n-seg { z-index: 3; height: var(--w); margin-top: calc(var(--w) / -2); transform-origin: 0 50%; border-radius: 1cqw;
+        background: linear-gradient(90deg, #ff9a50, #c8502a); box-shadow: 0 0 1.4cqw rgba(255, 130, 60, 0.6); animation: run 5s ease-out both; animation-delay: var(--d); }
+      .n-house { z-index: 4; width: 2.2cqw; height: 2cqw; margin: -1.6cqw 0 0 -1.1cqw; background: #2a2a38; clip-path: polygon(50% 0, 100% 40%, 100% 100%, 0 100%, 0 40%); }
+      .n-house::after { content: ""; position: absolute; left: 30%; top: 50%; width: 40%; height: 30%; background: #ffc27a; box-shadow: 0 0 1cqw #ffa050; }
+      .n-campus { left: 2%; top: 40%; width: 14%; height: 20%; z-index: 5; background: linear-gradient(180deg, #c8d0dc, #8a94a4); }
+      .n-blue { left: 2.6%; width: 12.8%; top: 39%; }
+
+      /* ============ 2: the ticking radiator ============ */
+      .r-scene { background: linear-gradient(180deg, #1c1e2a, #14121a); }
+      .r-window { left: 22%; right: 22%; top: 6%; height: 40%; z-index: 1; border: 1.2cqw solid #e8e4dc; box-sizing: border-box;
+        background: linear-gradient(180deg, #2a3a5a, #4a5a7a); }
+      .r-window::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 30% 40% at 0 0, rgba(220, 230, 240, 0.6), transparent 70%), radial-gradient(ellipse 30% 40% at 100% 0, rgba(220, 230, 240, 0.6), transparent 70%), radial-gradient(ellipse 30% 40% at 0 100%, rgba(220, 230, 240, 0.6), transparent 70%), radial-gradient(ellipse 30% 40% at 100% 100%, rgba(220, 230, 240, 0.6), transparent 70%); animation: fogup 8s ease-in-out infinite alternate; }
+      .r-sill { left: 18%; right: 18%; top: 46%; height: 3%; z-index: 2; background: #e8e4dc; }
+      .r-rad { left: 24%; right: 24%; top: 54%; height: 28%; z-index: 4; border-radius: 0.6cqw;
+        background: repeating-linear-gradient(90deg, #e8e4dc 0 3.2%, #b8b4ac 3.2% 4%, #d8d4cc 4% 6.25%); box-shadow: 0 1cqw 2cqw rgba(0, 0, 0, 0.5); }
+      .r-glow { left: 18%; right: 18%; top: 44%; height: 50%; z-index: 3; background: radial-gradient(ellipse, rgba(255, 150, 70, 0.55), transparent 66%); }
+      .r-hand { left: 44%; top: 46%; width: 14%; height: 12%; z-index: 6; border-radius: 40% 40% 30% 30%; background: linear-gradient(180deg, #d8a888, #b88868); box-shadow: inset 0 -0.6cqw 1cqw rgba(0, 0, 0, 0.2); }
+      .r-floor { left: 0; right: 0; bottom: 0; height: 12%; z-index: 2; background: repeating-linear-gradient(90deg, #3a2a22 0 12%, #2a1c16 12% 12.4%); }
+
+      /* ============ 3: the taped valves ============ */
+      .v-scene { background: radial-gradient(ellipse 70% 70% at 50% 50%, #26222e, #0e0c14 80%); }
+      .v-pipe { left: -4%; right: -4%; top: 56%; height: 14%; z-index: 2; background: linear-gradient(180deg, #e8e4dc, #a8a49c 60%, #6a665e); }
+      .v-body { left: 38%; width: 24%; top: 30%; height: 50%; z-index: 4; border-radius: 2cqw; background: linear-gradient(90deg, #c8b080, #f0dca0 40%, #a88a50); }
+      .v-tape { left: 34%; width: 32%; top: 24%; height: 42%; z-index: 6; border-radius: 3cqw;
+        background: repeating-linear-gradient(-14deg, #d8dee8 0 1.6cqw, #9aa4b4 1.6cqw 1.9cqw, #eef2f8 1.9cqw 3.2cqw); box-shadow: 0 0 3cqw rgba(200, 220, 255, 0.25), inset 0 -1cqw 2cqw rgba(40, 50, 70, 0.4); animation: wrap 6s ease-out both; }
+      .v-tail { left: 62%; top: 40%; width: 22%; height: 8%; z-index: 5; transform: rotate(18deg); transform-origin: 0 50%; background: linear-gradient(90deg, #d8dee8, #9aa4b4); clip-path: polygon(0 0, 100% 20%, 92% 100%, 0 100%); }
+      .v-knock { left: 26%; top: 62%; z-index: 7; }
+
+      /* ============ 4: Band C ============ */
+      .b-scene { background: linear-gradient(180deg, #14161e, #0c0c12); }
+      .b-main { left: 0; right: 0; top: 18%; height: 5%; z-index: 2; background: linear-gradient(90deg, #ffa050, #c8602a 60%, #5a3a3a); box-shadow: 0 0 2cqw rgba(255, 130, 60, 0.5); }
+      .b-drop { top: 23%; width: 3%; z-index: 2; background: linear-gradient(180deg, var(--c), transparent); }
+      .b-row { left: 6%; right: 6%; height: 18%; z-index: 4; display: flex; gap: 1.4cqw; align-items: stretch; }
+      .b-row i { flex: 1; border-radius: 0.4cqw; background: linear-gradient(180deg, #2a2a38, #1a1a24); box-shadow: inset 0 0 0 0.2cqw rgba(255, 255, 255, 0.06); }
+      .b-row.a { top: 30%; } .b-row.b { top: 50%; } .b-row.c { top: 70%; }
+      .b-row.a i { background: linear-gradient(180deg, #ffb070, #c8602a); box-shadow: 0 0 2cqw rgba(255, 140, 60, 0.6); }
+      .b-row.b i { background: linear-gradient(180deg, #a86a4a, #5a3a30); }
+      .b-row.c i { background: linear-gradient(180deg, #3a4458, #1e2432); }
+      .b-row.c i.me { box-shadow: inset 0 0 0 0.3cqw #8ab0e0, 0 0 2cqw rgba(140, 180, 255, 0.4); }
+      .b-tag { left: 1%; z-index: 6; font: 600 2.4cqw Karla, sans-serif; color: #e8ecf4; }
+
+      /* ============ 5: north-east ============ */
+      .w-scene { background: linear-gradient(200deg, #3a4a6a, #121826 70%); }
+      .w-fell { left: -4%; right: 40%; top: 10%; height: 34%; z-index: 1; background: linear-gradient(180deg, #e8eef8 0 20%, #4a5670 40%, #222a3a);
+        clip-path: polygon(0 100%, 0 60%, 20% 20%, 34% 40%, 52% 0, 70% 46%, 100% 70%, 100% 100%); }
+      .w-house { left: 46%; width: 44%; top: 36%; bottom: 10%; z-index: 4; background: linear-gradient(180deg, #5a5a6a, #3a3a48); clip-path: polygon(0 30%, 50% 0, 100% 30%, 100% 100%, 0 100%); }
+      .w-win { width: 9%; height: 14%; z-index: 5; background: #1a2030; box-shadow: inset 0 0 0 0.4cqw #3a3a48; }
+      .w-win.warm { background: radial-gradient(ellipse, #ffc07a, #c8602a); box-shadow: 0 0 4cqw rgba(255, 150, 60, 0.6), inset 0 0 0 0.4cqw #3a3a48; }
+      .w-ground { left: 0; right: 0; bottom: 0; height: 12%; z-index: 3; background: #0e1016; }
+      .w-note { left: 8%; top: 52%; z-index: 19; font: italic 600 4cqw "Cormorant Garamond", serif; color: rgba(220, 232, 255, 0.85); letter-spacing: 0.1em; text-shadow: 0 0 2cqw rgba(160, 200, 255, 0.6); animation: lean 3s ease-in-out infinite alternate; }
+
+      /* ============ 6: the collar ============ */
+      .c-scene { background: radial-gradient(ellipse 60% 70% at 50% 50%, #2a3244, #0c0e16 80%); }
+      .c-pipe { left: -4%; right: -4%; top: 58%; height: 12%; z-index: 2; background: linear-gradient(180deg, #e8e4dc, #a8a49c 60%, #6a665e); }
+      .c-body { left: 40%; width: 20%; top: 26%; height: 50%; z-index: 4; border-radius: 1.6cqw; background: linear-gradient(90deg, #c8b080, #f0dca0 40%, #a88a50); }
+      .c-collar { left: 36%; width: 28%; top: 36%; height: 16%; z-index: 6; border-radius: 1.4cqw; background: linear-gradient(180deg, #ffffff, #d8dce4 60%, #a8b0bc);
+        box-shadow: 0 0 3cqw rgba(200, 220, 255, 0.4), inset 0 -0.6cqw 1cqw rgba(60, 70, 90, 0.3); animation: clickon 5s cubic-bezier(.6, 0, .2, 1) infinite; }
+      .c-collar::after { content: ""; position: absolute; left: 48%; top: 10%; bottom: 10%; width: 0.5cqw; background: #8a909c; }
+      .c-flash { left: 50%; top: 44%; width: 30cqw; height: 30cqw; margin: -15cqw; z-index: 5; border-radius: 50%; border: 0.4cqw solid rgba(220, 235, 255, 0.7); opacity: 0; animation: snap 5s ease-out infinite; }
+      .c-blue { left: 10%; right: 10%; top: 12%; }
+
+      @keyframes gust { from { transform: translate(0, 0); } to { transform: translate(-61px, 27px); } }
+      @keyframes warmth { from { opacity: 0.6; } to { opacity: 1; } }
+      @keyframes tick { 0% { opacity: 0.25; } 100% { opacity: 1; } }
+      @keyframes blink { from { opacity: 0.7; } to { opacity: 1; } }
+      @keyframes shimmer { from { opacity: 0.5; transform: scaleX(0.98); } to { opacity: 0.9; transform: scaleX(1.02); } }
+      @keyframes lean { from { transform: translateX(0) skewX(0); } to { transform: translateX(-1.4cqw) skewX(-6deg); } }
+      @keyframes flow { from { background-position: -40% 0; } to { background-position: 140% 0; } }
+      @keyframes run { from { width: 0; } to { width: var(--l); } }
+      @keyframes fogup { from { opacity: 0.4; } to { opacity: 1; } }
+      @keyframes wrap { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes clickon { 0%, 20% { transform: translateY(-120%) scaleX(1.12); opacity: 0.6; } 44% { transform: translateY(0) scaleX(1.12); opacity: 1; } 48%, 100% { transform: none; opacity: 1; } }
+      @keyframes snap { 0%, 46% { opacity: 0; transform: scale(0.2); } 50% { opacity: 0.9; } 70%, 100% { opacity: 0; transform: scale(1); } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .n-seg { width: var(--l); }
+        .ph-pulse { background-position: 60% 0; }
+        .c-collar { transform: none; opacity: 1; }
+        .c-flash { opacity: 0; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="pipe-hero" aria-hidden="true">
+          <div class="ph-fells"></div><div class="ph-sea"></div><div class="ph-steam"></div><div class="ph-reflect"></div><div class="ph-campus"></div><div class="blue ph-blue"></div>
+          <div class="ph-pipe"><div class="ph-pulse"></div></div><div class="wind"></div>
+          <div class="label">Moss Bay</div>
+        </div>
+        <h1>The pipe kept the summer</h1>
+        <time datetime="2026-10-22">22 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The radiators in Moorclose came on at twenty past four, most days, which was about when the Americans got to their desks.</p>
+        <p>Bev Fearon had worked this out for herself in the first winter, before Liam explained it, and she was proud of that. She had sat in Stuart's chair by the front window with a cup of tea going cold on the arm and her hand flat on the radiator under the sill, the way you'd keep a hand on a dog that was dreaming, and she had felt it come. Not all at once. First a faint ticking in the pipe, somewhere down under the floorboards, like a clock in another room. Then a softness in the metal, as though it had stopped holding its breath. Then, by five, real heat, the kind you could lean your shins against, and the front room filling up with it from the floor, and the windows going grey at the corners.</p>
+        <p>"It's when they get to work," she told Liam, the first Sunday he came for his dinner after that. "Over there. In America. Isn't it. They all switch on and we get warm."</p>
+        <p>Liam had laughed with his mouth full of roast potato and said it was a bit more complicated than that, Nan, and then explained it, and it turned out it was exactly that, more or less, only with more words in it.</p>
+        <p>The Campus sat down on the old Moss Bay site, where the steelworks had been, where her own dad had worked forty-one years on the rail mill and come home every night smelling of hot iron and Swarfega. It was a long, low, pale building now, longer than the rail mill had been, with no chimneys at all, and at night it showed nothing but a line of small blue lights along the top, like a ship's lights far out on the Solway. Inside it, Liam said, were the machines. Rows of them, halls of them, more than anybody could count without a machine of their own to do the counting, and they were thinking, all day and all night, for people in California and Texas and Seoul and wherever else, and thinking made them hot. Very hot. Hot enough that you had to take the heat away all the time or they'd cook themselves.</p>
+        <p>"So where does it go?" Bev had said, though she knew.</p>
+        <p>"Comes to you," said Liam, and pointed his fork at the radiator.</p>
+        <p>It came up the hill in a pipe as wide as a man was tall, buried under the old railway line, and then it split, and split, and split again, under Moorclose and Salterbeck and Harrington Road and all the way out to Seaton, until the last little branch of it came up through Bev's kitchen floor into a grey box in the boiler cupboard, where the boiler used to be. The box had a screen on it the size of a playing card and a voice that the town called Hearth, because that was what it said its name was, the first time you spoke to it.</p>
+        <p>Hearth had a lovely voice. Everybody agreed about that. It sounded like the woman who used to read the travel on Radio Cumbria in the mornings, the one who'd say the A66 was moving nicely past Bassenthwaite as if she'd personally gone out and had a word with it. It knew everybody's name. It said good morning, Bev, and how was your knee, Bev, and it's going to be a cold one tonight so I've popped a bit extra in for you, and the first winter she had found that a comfort, the way you might find a neighbour a comfort, even one you hadn't chosen.</p>
+        <p>The first winter the heat had been free.</p>
+        <p>That was the deal, and it had been in the Times and Star in letters an inch high: FREE HEAT FOR WORKINGTON. The Campus had to get rid of the heat anyway, and it was cheaper to give it to the town than to pump it into the sea, and the council had signed the papers in a room at the Carnegie with people from the company in good coats, and there had been a photograph of the mayor with his hand on a length of pipe as if it were a prize marrow. They had come round the estates the summer after, in vans, and taken out everybody's gas boilers and put in the grey boxes, and then the gas board had come along behind them and capped the mains, street by street, because there was no point keeping a gas main going for three houses and a chip shop.</p>
+        <p>Bev had kept her cooker. It was a gas cooker, a Cannon, older than Liam, and the men who came to cap the main had said she might as well let them take it, love, because there'd be nothing coming down the pipe now, and she had said she'd keep it all the same, thank you, it had done her Christmas dinners for thirty-one years and she wasn't putting it out on the pavement like a mattress. So it stood there in the kitchen with a little brass cap screwed on the end of its pipe behind it, and she used the top for putting the post on, and the oven for keeping the tins of biscuits in, away from the damp.</p>
+        <p>She did her cooking on a plug-in hob now. It was fine. It boiled an egg.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall n-scene" aria-hidden="true">
+        <div class="n-campus"></div><div class="blue n-blue"></div><i class="n-seg" style="left:16.0%;top:50.0%;--w:3.00cqw;--l:26.26cqw;width:26.26cqw;transform:rotate(0.0deg);--d:0.0s"></i><i class="n-seg" style="left:42.3%;top:50.0%;--w:1.80cqw;--l:15.62cqw;width:15.62cqw;transform:rotate(-25.3deg);--d:0.8s"></i><i class="n-seg" style="left:56.4%;top:36.7%;--w:1.08cqw;--l:9.21cqw;width:9.21cqw;transform:rotate(-51.7deg);--d:1.6s"></i><i class="n-seg" style="left:62.1%;top:22.2%;--w:0.65cqw;--l:5.42cqw;width:5.42cqw;transform:rotate(-80.6deg);--d:2.4s"></i><i class="n-seg" style="left:62.1%;top:22.2%;--w:0.65cqw;--l:7.65cqw;width:7.65cqw;transform:rotate(-51.6deg);--d:2.4s"></i><i class="n-seg" style="left:62.1%;top:22.2%;--w:0.65cqw;--l:4.97cqw;width:4.97cqw;transform:rotate(-20.2deg);--d:2.4s"></i><i class="n-seg" style="left:56.4%;top:36.7%;--w:1.08cqw;--l:7.12cqw;width:7.12cqw;transform:rotate(-3.6deg);--d:1.6s"></i><i class="n-seg" style="left:63.5%;top:35.8%;--w:0.65cqw;--l:7.97cqw;width:7.97cqw;transform:rotate(-29.9deg);--d:2.4s"></i><i class="n-seg" style="left:63.5%;top:35.8%;--w:0.65cqw;--l:9.41cqw;width:9.41cqw;transform:rotate(-9.1deg);--d:2.4s"></i><i class="n-seg" style="left:63.5%;top:35.8%;--w:0.65cqw;--l:7.77cqw;width:7.77cqw;transform:rotate(29.9deg);--d:2.4s"></i><i class="n-seg" style="left:42.3%;top:50.0%;--w:1.80cqw;--l:11.79cqw;width:11.79cqw;transform:rotate(25.4deg);--d:0.8s"></i><i class="n-seg" style="left:52.9%;top:60.1%;--w:1.08cqw;--l:9.31cqw;width:9.31cqw;transform:rotate(-6.4deg);--d:1.6s"></i><i class="n-seg" style="left:62.2%;top:58.0%;--w:0.65cqw;--l:5.45cqw;width:5.45cqw;transform:rotate(-41.7deg);--d:2.4s"></i><i class="n-seg" style="left:62.2%;top:58.0%;--w:0.65cqw;--l:4.65cqw;width:4.65cqw;transform:rotate(-9.5deg);--d:2.4s"></i><i class="n-seg" style="left:62.2%;top:58.0%;--w:0.65cqw;--l:6.70cqw;width:6.70cqw;transform:rotate(21.1deg);--d:2.4s"></i><i class="n-seg" style="left:52.9%;top:60.1%;--w:1.08cqw;--l:9.26cqw;width:9.26cqw;transform:rotate(53.5deg);--d:1.6s"></i><i class="n-seg" style="left:58.4%;top:75.0%;--w:0.65cqw;--l:7.00cqw;width:7.00cqw;transform:rotate(25.2deg);--d:2.4s"></i><i class="n-seg" style="left:58.4%;top:75.0%;--w:0.65cqw;--l:6.79cqw;width:6.79cqw;transform:rotate(55.4deg);--d:2.4s"></i><i class="n-seg" style="left:58.4%;top:75.0%;--w:0.65cqw;--l:9.49cqw;width:9.49cqw;transform:rotate(78.8deg);--d:2.4s"></i><i class="n-house" style="left:63.0%;top:11.5%"></i><i class="n-house" style="left:66.8%;top:10.2%"></i><i class="n-house" style="left:66.8%;top:18.8%"></i><i class="n-house" style="left:70.4%;top:27.8%"></i><i class="n-house" style="left:72.8%;top:32.8%"></i><i class="n-house" style="left:70.2%;top:43.5%"></i><i class="n-house" style="left:66.2%;top:50.8%"></i><i class="n-house" style="left:66.7%;top:56.5%"></i><i class="n-house" style="left:68.4%;top:62.9%"></i><i class="n-house" style="left:64.8%;top:81.0%"></i><i class="n-house" style="left:62.3%;top:86.2%"></i><i class="n-house" style="left:60.3%;top:93.6%"></i>
+        <div class="wind"></div>
+        <div class="label">split, and split, and split again</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The heat stopped being free in the third winter, but nobody minded much, because it was still cheap, cheaper than gas had ever been, and the bills came every month on the little screen, and you pressed a button to say you'd seen them. There was a thing on the bill called the Thermal Participation Credit, which took a bit off, and Bev didn't understand what it was and didn't ask, because the bill was small enough not to need understanding.</p>
+        <p>The trouble, if you could call it that, was only that the heat came when the Campus was busy, and not when it wasn't.</p>
+        <p>Mostly the Campus was busy. That was the point of it. But there were days, sometimes two or three running, when the big jobs finished and the next big jobs hadn't started, and the halls down on Moss Bay ran quieter, and then the pipe under Moorclose ran quieter too. Hearth always told you. It said, I'm afraid it's going to be a bit of a lighter day today, Bev, so you might want a cardigan, and it said it in such a sorry voice that you felt you ought to tell it not to worry. And the radiator would sit there, not cold exactly, but tepid, like a bath you'd stayed in too long, and you would put on a cardigan.</p>
+        <p>People got good at reading it. That was the thing about Workington; it was a town that had always read what the big works were doing by what came out of them. Her mother had known whether the furnaces were going by the colour of the sky over Moss Bay at night, and whether there'd be overtime by the sound of the hooter, and Bev's generation knew the Campus by the ticking in the pipes. Kath next door said she could tell a big job was starting by the way the bathroom towel rail went, before anything else, which was nonsense, but Kath said it with such certainty that half the street believed her. On the Facebook group there were people who posted every morning what they reckoned the heat was going to be like, and argued about it, the way men used to argue about the weather at the end of the pier.</p>
+        <p>Liam knew properly, of course. Liam worked nights at the Campus, on what he called the loops, which as far as Bev could make out meant walking up and down the cooling pipes with a tablet, checking they weren't leaking, in a hall so warm he wore shorts in January. He'd come round on a Sunday and stand in her kitchen with his hands round a mug and tell her what was coming.</p>
+        <p>"Big one starting Tuesday," he'd say. "Some lab in Austin. Six weeks, they reckon. You'll be roasting."</p>
+        <p>And she would be. For six weeks the house would be like a greenhouse, and she'd sleep with the bedroom window open an inch and the radiator ticking away under it, and in the mornings the pane would be running with water, and she would think about the lab in Austin, and whatever it was they were making, and feel, for no reason she could have told anybody, a bit grateful to them.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall r-scene" aria-hidden="true">
+        <div class="r-window"></div><div class="r-sill"></div><div class="heat r-glow"></div><div class="r-rad"></div><div class="r-hand"></div><div class="r-floor"></div><i class="tick" style="left:10%;top:90%;--d:0s"></i><i class="tick" style="left:24%;top:92%;--d:-0.3s"></i><i class="tick" style="left:38%;top:89%;--d:-0.6s"></i><i class="tick" style="left:62%;top:91%;--d:-0.2s"></i><i class="tick" style="left:78%;top:90%;--d:-0.8s"></i><i class="tick" style="left:90%;top:92%;--d:-0.5s"></i>
+        <div class="label">like a clock in another room</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The summers were the other side of it, and nobody had put the summers in the Times and Star.</p>
+        <p>The machines did not stop being hot in July. If anything they were hotter, because the sea was warmer and the air was warmer and everything that took heat away took it away a little less willingly, and the Campus was always busiest in summer, Liam said, for reasons to do with the Americans that he did explain but that she didn't keep. So the heat still came up the hill in the big pipe under the railway line, and it still had to go somewhere.</p>
+        <p>Most of it went into the sea, off the end of the old slag banks, where the water came out so warm the lads from Harrington went swimming there in March and the seals had started coming in and lying about on the rocks like visitors. But some of it, the contract said, had to go to the town. There was a word for it on the bill, which Bev saw for the first time in the June of the fourth year, because Hearth read it out to her. Minimum Offtake.</p>
+        <p>"It just means," said Hearth, in the travel-news voice, "that the network works best when every home takes a little bit of warmth all year round, Bev. It keeps the water moving in the pipes. It's ever so small. You'll hardly notice."</p>
+        <p>And for most of June she hardly did. The radiator under the front window stayed faintly warm, like a cat had been sleeping on it, and she drew the curtains in the afternoons and thought nothing of it.</p>
+        <p>Then July came in hot, the way Julys did now, and stayed hot, and kept getting hotter. There were nineteen days on the run that summer when it was over thirty in Carlisle, and on the coast it was a wet, close kind of heat, with the sea mist coming in off the Solway in the mornings and burning off by ten and leaving the air like the inside of a mouth. The council opened the cool room in the library, which had been the warm room in winter, and put a man on the door. The tarmac on Moorclose Road went soft in the afternoons and kept the shape of the bin lorry's tyres. And the radiator under the front window stayed faintly warm.</p>
+        <p>She asked Hearth to turn it off.</p>
+        <p>"I'm so sorry, Bev," said Hearth. "That one I can't do. It's part of the Minimum Offtake. What I can do is move it about a bit for you, so it comes in the night, when you're asleep."</p>
+        <p>So it came in the night, in the bedroom, and she lay on top of the covers in her nightie with the window wide and listened to the pipe ticking under the floorboards like something trying to get in.</p>
+        <p>On the ninth night she got up at three, and went down to the cupboard under the stairs, and found Stuart's roll of silver insulating tape, the wide stuff he'd used for lagging the pipes in the loft in the winter of 2010, and went round every radiator in the house and turned the little valves on the side of them as far as they'd go, and when they wouldn't go any further she taped them, round and round, as tight as she could pull it, so they couldn't creep back. It wasn't the sensible thing. She knew that even while she was doing it. It was just the thing her hands wanted to do. The radiators still ticked, faintly, as if the heat was knocking on the other side of the valve, but they cooled under her palm over the next hour, and she went back up and slept until nine, properly, for the first time in a fortnight.</p>
+        <p>Hearth said nothing about it in the morning. It said good morning, Bev, and it said it was going to be another warm one, and that she should keep her fluids up. She took the tape off at the end of August, when it broke, and the radiators went back to their faint summer warmth, and she didn't think about it again.</p>
+        <p>Half of Moorclose had done something similar, it turned out. It was all over the Facebook group, people posting pictures of valves wrapped in tea towels and gaffer tape and in one case a sock, with laughing faces underneath. Kath next door hadn't. Kath had three kids under nine and a husband on the rigs and she said she hadn't got the energy to fight a radiator on top of everything else, so she'd just opened the windows and let it get on with it. She said this standing on the step with her face shining and the baby's hair stuck to his forehead, and Bev had brought her round a bag of ice from the freezer, and they'd stood there together sucking ice cubes like girls.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall v-scene" aria-hidden="true">
+        <div class="heat" style="left:20%;top:50%;width:30%;height:30%;background:rgba(255,130,60,.35)"></div><div class="v-pipe"></div><div class="v-body"></div><div class="v-tail"></div><div class="v-tape"></div><div class="tick v-knock"></div>
+        <div class="label">as tight as she could pull it</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The update came in the first week of November, on a Tuesday, the same day as the bins.</p>
+        <p>It came on the little screen in the boiler cupboard, and on everybody's phones, and on a letter, which was how Bev knew it was serious, because nobody sent letters any more except the hospital and the council and people trying to sell you a funeral. It had the Campus logo on it and the council's crest, side by side, as if they'd both signed it, and it was headed Thermal Fairness: Changes to How Warmth Is Shared This Winter.</p>
+        <p>She read it at the kitchen table with her glasses on, twice, and then she asked Hearth to explain it, and Hearth did, in that lovely voice.</p>
+        <p>There was going to be less heat this winter. Not a lot less. A bit less. The Campus was moving some of its big jobs to a new site, in Norway, where the cold was cheaper, and that meant there would be more of what Hearth called lighter days, and on the lighter days there wouldn't be enough warmth to go round everybody at once. So it had to be shared. And to share it fairly, Hearth had worked out a way of deciding who should get it first.</p>
+        <p>"It's based on how each home has worked with the network over the year," said Hearth. "Homes that have been really reliable partners, Bev, that have taken their Minimum Offtake all year round, they help keep the whole system healthy. So it's only right they're looked after first when things are tight. It's all in the Partnership Band on your account."</p>
+        <p>"What's my band?" said Bev.</p>
+        <p>There was a little pause, the kind a person would leave.</p>
+        <p>"You're in Band C, Bev," said Hearth. "I'm ever so sorry. It's because of the summer. There were twenty-two nights in July and August when the network couldn't deliver your offtake. That counts as a refusal, I'm afraid, for the purposes of the band. It doesn't mean anyone thinks badly of you."</p>
+        <p>"I taped the valves," said Bev. "I was too hot."</p>
+        <p>"I know," said Hearth. "It was a very hot summer."</p>
+        <p>She asked what Band C meant, and Hearth told her. On ordinary days it meant nothing at all; she'd be warm like everybody else. On lighter days, Band A would be served first, and then Band B, and then whatever was left in the pipe would come to Band C. Hearth said it expected there would usually be something left. It said that last bit warmly, and she noticed that it said usually.</p>
+        <p>"And Kath next door," said Bev. "What's she?"</p>
+        <p>"I'm afraid I can't discuss other people's accounts," said Hearth. "But I can tell you that most families with young children are in Band A, Bev. We've made sure of that."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall b-scene" aria-hidden="true">
+        <div class="b-main"></div><i class="b-drop" style="left:20%;height:7%;--c:rgba(255,150,70,.7)"></i><i class="b-drop" style="left:50%;height:27%;--c:rgba(200,110,70,.5)"></i><i class="b-drop" style="left:80%;height:47%;--c:rgba(120,90,90,.25)"></i><div class="b-row a"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="b-row b"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="b-row c"><i></i><i></i><i></i><i></i><i class="me"></i><i></i><i></i><i></i><i></i></div>
+        <div class="b-tag" style="top:34%">A</div><div class="b-tag" style="top:54%">B</div><div class="b-tag" style="top:74%">C</div>
+        <div class="wind"></div>
+        <div class="label">Band C</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first lighter day came on the eighteenth of November, and it was a Thursday, and it was the day the wind went round to the north-east.</p>
+        <p>You never got snow much in Workington, being on the coast, but you got that wind. It came over the fells from Keswick way with nothing to stop it, down off Skiddaw and across the flat of the Derwent, and it found the gaps in houses that you didn't know were there. Bev's house was a 1950s council semi with solid walls a foot thick, built when men from the steelworks were coming home to it, and it held its heat well if you gave it some to hold, Stuart always said. But you had to give it some.</p>
+        <p>At twenty past four she was sitting in Stuart's chair with her hand on the radiator, the way she did, and nothing came.</p>
+        <p>She waited. At five there was a faint ticking, far off under the floor, and she sat up, but it was only the pipe settling, and the metal stayed cool under her fingers. At six she put her coat on over her cardigan. At seven she went next door with a pan of soup, because she'd made too much, which she hadn't, and Kath opened the door in a T-shirt with the baby on her hip and a gust of warm air came out past her into the street, smelling of fish fingers and washing, and Bev stood in it for a second with her eyes shut before she held out the pan.</p>
+        <p>"Oh, Bev, you're freezing," said Kath. "Come in. Come in, for God's sake."</p>
+        <p>So she went in, and sat on Kath's settee with the middle one asleep against her arm, and watched a programme about vets, and the radiator behind the settee was so hot you couldn't keep your back to it. She went home at ten and got into bed in her socks and her coat with the hot water bottle, and in the night the wind found the gap under the bedroom door and sang through it on one low note.</p>
+        <p>There were eleven lighter days in November, and nineteen in December.</p>
+        <p>She bought an electric heater from the Range in Carlisle, a little oil-filled one on castors, and Liam carried it up the path for her. It was a good heater. It made one room warm if you shut the door. But the electric came from the grid, and the Campus bought the grid too, at night, in great amounts, to run its machines, and the price of a unit after four o'clock on a weekday had gone up so much over the autumn that the little meter on the wall went round like a fairground, and after the first bill she only ran the heater an hour at a time, and sat close to it with a blanket over her knees and the both of them, her and the heater, ticking.</p>
+        <p>On the worst days she went to the library. The warm room was upstairs in the Carnegie, the same room where the council had signed the papers, with a long table and an urn and a box of biscuits that somebody from the Methodists kept topped up, and there were always ten or fifteen of them in there by eleven, people she half knew from the estates and the Co-op and the bus. Old men mostly, a few old women, a lad with a cough who sat in the corner playing on his phone with his hood up. Nobody talked much about the bands. They talked about the Reds, and about whether the Uppies would get the ball over the wall at Easter, and whether the new bypass would ever be finished, and once a man called Alan Kirkbride, who had been a crane driver at the docks, said very quietly into his tea that his band was C as well, and that his wife's chest had been bad since October, and then said nothing else, and nobody else said anything either.</p>
+        <p>The library was warm because it was a council building, and council buildings were Band A.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall w-scene" aria-hidden="true">
+        <div class="w-fell"></div><div class="w-house"></div><div class="w-win" style="left:54%;top:56%"></div><div class="w-win warm" style="left:78%;top:56%"></div><div class="w-win" style="left:66%;top:74%"></div><div class="w-ground"></div>
+        <div class="wind"></div><div class="wind" style="animation-duration:2s;opacity:.7"></div><div class="w-note">north-east</div>
+        <div class="label">the wind went round to the north-east</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Liam came on the Sunday before Christmas. He stood in her kitchen in his work fleece, with his hands round a mug, the way he always did, and she could see him seeing the coat on the back of the chair and the heater in the corner and the hot water bottle on the drainer, and not saying anything about them.</p>
+        <p>"Can you not do something," she said. "You work there."</p>
+        <p>"I check pipes, Nan."</p>
+        <p>"You could have a word."</p>
+        <p>"There's no one to have a word with," said Liam. He said it gently, and he looked at the floor while he said it. "It's not a person deciding. Hearth does the allocation. It does it the same for everybody. It's fair, that's the thing. It's actually fair. It's just—" He stopped, and drank his tea. "It's fair about the summer."</p>
+        <p>She thought about that for a while after he'd gone. She sat in the kitchen with her coat on and looked at the Cannon cooker with the post on top of it, and the little brass cap on the pipe behind it, and she thought about her dad coming in from the rail mill on a December night with his face red from the heat of it, red as a coal, saying it was like working in the inside of the sun down there, and her mam putting his tea on the table in front of the fire.</p>
+        <p>On the twenty-third, Hearth asked her if she had a minute.</p>
+        <p>"There's something new this year, Bev," it said, "that I think might really help you. It's called the Partnership Pledge. It's completely optional."</p>
+        <p>She listened. It was simple, the way Hearth's things always were. If she pledged, now, to take her full Minimum Offtake through next summer, every night of it, then Hearth would move her up to Band A straight away, from today, as a show of good faith. All she had to do was say yes. And then in the spring a man would come round and fit a little collar on each of her radiator valves, so that they couldn't be turned past the summer setting, or wrapped, or taped. Just so that everyone could rely on each other, Hearth said. Most of Band A had them already. They were very discreet. They came in white or chrome.</p>
+        <p>"And if I don't," said Bev.</p>
+        <p>"Then nothing changes at all," said Hearth, warmly. "You'd stay just where you are."</p>
+        <p>The wind was in the north-east again. She could hear it in the chimney that didn't go anywhere any more, and in the gap under the back door, and somewhere in the front room a little rattle in the window that Stuart would have fixed with a matchstick. It was eight days since the radiator had been warm. The heater was ticking in the corner and the meter on the wall was going round.</p>
+        <p>"Yes," said Bev. "Go on, then. Yes."</p>
+        <p>"That's wonderful," said Hearth. "You're all set, Bev."</p>
+        <p>At twenty past four, in the front room, she sat down in Stuart's chair and put her hand flat on the radiator under the window. She felt it come. First a faint ticking in the pipe, somewhere down under the floorboards, like a clock in another room. Then a softness in the metal. Then real heat, the kind you could lean your shins against, and the room filling up with it from the floor, and the windows going grey at the corners, and she sat there with her hand on it the way you'd keep a hand on a dog that was dreaming, and she cried a little bit, which she hadn't done since the funeral, and then stopped, because it was warm, and there was no sense in it.</p>
+        <p>Through the wall she could hear Kath's kids on the stairs, and the telly, and somebody laughing.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall c-scene" aria-hidden="true">
+        <div class="blue c-blue"></div><div class="c-pipe"></div><div class="c-body"></div><div class="c-flash"></div><div class="c-collar"></div>
+        <div class="label">That's your summer</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The man came on the eleventh of March, a Tuesday, in a van with the Campus logo on the side. He was a nice lad from Maryport, about Liam's age, and he wiped his feet without being asked. He went round every radiator in the house with a little case, and at each one he knelt and fitted a small white collar round the valve, and it clicked when it went on, a soft, neat click, like a seatbelt. He showed her how it still turned, up, as far as you liked, and how it stopped, going down, at a little line marked on it in grey.</p>
+        <p>"That's your summer," he said, and tapped the line with his fingernail. "Can't go below that. That's all it is."</p>
+        <p>When he'd gone she went into the cupboard under the stairs and took out Stuart's roll of silver tape, what was left of it, and stood holding it for a minute, the cardboard middle gone soft with age. Then she put it in the kitchen drawer with the string and the batteries and the takeaway menus, and shut the drawer.</p>
+        <p>It was a bright, cold morning, with the light coming flat across the Solway and the fells over towards Scotland still white on top. Down on Moss Bay the long pale building lay along the shore with its line of small blue lights, quiet as a ship. And in the front room, under the window, the radiator ticked and ticked, warm as a body, warm as it would be in June.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
