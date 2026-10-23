@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The slag kept the answer — Ben Miller</title>
+    <meta name="description" content="A Billingham schoolteacher&#x27;s class gets one hour a week on the national laboratory network, and a girl brings in a lump of slag from her grandad&#x27;s garden wall.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #1a1318;
+        --ink: #f4eae4;
+        --mute: #c0a4a0;
+        --cream: #fff2e2;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 170, 110, 0.16), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(240, 120, 130, 0.09), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(255, 200, 120, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 200, 190, 0.06), transparent 60%),
+          linear-gradient(180deg, #2a1c24 0%, #21161d 36%, #1a1218 70%, #120c10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(255, 200, 140, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 170, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #ffd0a0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 150, 100, 0.4), 0 0 2px rgba(255, 230, 200, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #f0e4de;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #ffb088; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 226, 120, 0.95) 0 1.5px, rgba(242, 194, 58, 0.35) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(242, 194, 58, 0.5));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #1e1418;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 210, 150, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(24, 10, 14, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(255, 214, 110, 0.38); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 120, 0.24); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(242, 194, 58, 0.26); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .scene { container-type: size; }
+      .scene.tall.g-scene { height: auto; min-height: 0; aspect-ratio: 2; }
+      .ember { inset: 0; z-index: 20; pointer-events: none;
+        background: radial-gradient(circle, rgba(255, 170, 90, 0.7) 0 1px, transparent 1.8px) 0 0 / 61px 47px, radial-gradient(circle, rgba(255, 210, 150, 0.45) 0 1.3px, transparent 2.2px) 23px 17px / 103px 83px;
+        -webkit-mask: radial-gradient(ellipse 80% 90% at 50% 100%, #000, transparent 80%); mask: radial-gradient(ellipse 80% 90% at 50% 100%, #000, transparent 80%);
+        animation: embers 22s linear infinite; mix-blend-mode: screen; }
+      .sun { border-radius: 50%; background: radial-gradient(circle, #fff4d0 0 22%, #ffc070 40%, #ff8a3a 62%, transparent 72%); filter: blur(1px); animation: breathe 6s ease-in-out infinite alternate; }
+      .slagrock { background:
+          radial-gradient(ellipse 36% 26% at 30% 24%, rgba(190, 215, 190, 0.5), transparent 70%),
+          radial-gradient(ellipse 60% 50% at 70% 80%, rgba(10, 20, 14, 0.55), transparent 70%),
+          linear-gradient(135deg, #7a8a7a, #4a5a4e 50%, #2e3a32);
+        box-shadow: inset -1.4cqw -1.6cqw 3cqw rgba(8, 16, 12, 0.6), inset 0.8cqw 0.8cqw 1.6cqw rgba(200, 230, 200, 0.25), 0 1.6cqw 3cqw rgba(0, 0, 0, 0.5); }
+      .pit { position: absolute; border-radius: 50%; background: radial-gradient(circle at 60% 60%, #0e1812, #1c2a22 70%); box-shadow: inset 0.3cqw 0.3cqw 0.5cqw rgba(0, 0, 0, 0.8), 0 0 0 0.12cqw rgba(190, 220, 190, 0.2); }
+      .glassface { background: conic-gradient(from 20deg at 40% 60%, #6a8a9a, #7a5a8a, #9a8a5a, #5a9a7a, #6a8a9a); filter: saturate(1.2); }
+
+      /* ============ hero: Teesside at first light ============ */
+      .slag-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 200, 150, 0.2);
+        background: linear-gradient(180deg, #3a2a4a 0%, #a8506a 30%, #f08a5a 52%, #ffc88a 58%, #2a3a48 58.3%, #1a2630 100%); }
+      .slag-hero > * { position: absolute; }
+      .slag-hero::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(24, 12, 16, 0.55) 100%), repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.02) 0 2px, transparent 2px 7px); }
+      .sh-sun { left: 56%; top: 36%; width: 22%; aspect-ratio: 1; margin-left: -11%; z-index: 1; }
+      .sh-cloud { z-index: 2; height: 3%; border-radius: 50%; background: rgba(255, 190, 150, 0.45); filter: blur(5px); animation: slide 30s ease-in-out infinite alternate; }
+      .sh-hills { left: -4%; right: -4%; top: 40%; height: 18%; z-index: 2; background: linear-gradient(180deg, #5a3a50, #3a2a40); clip-path: polygon(0 70%, 14% 40%, 30% 60%, 48% 22%, 62% 52%, 80% 30%, 100% 60%, 100% 100%, 0 100%); opacity: 0.8; }
+      .sh-works { left: 4%; width: 40%; top: 30%; height: 28%; z-index: 4; background: #20161e;
+        clip-path: polygon(0 100%, 0 70%, 6% 70%, 6% 20%, 9% 20%, 9% 70%, 22% 70%, 22% 40%, 30% 40%, 30% 70%, 44% 70%, 44% 4%, 47% 4%, 47% 70%, 60% 70%, 60% 50%, 74% 50%, 74% 70%, 88% 70%, 88% 30%, 91% 30%, 91% 70%, 100% 70%, 100% 100%); }
+      .sh-sheds { right: 6%; width: 36%; top: 52%; height: 6%; z-index: 4; background: linear-gradient(180deg, #fff6e8, #e8d8c8); box-shadow: 0 0 5cqw rgba(255, 244, 220, 0.8); }
+      .sh-sheds::after { content: ""; position: absolute; inset: 70% 0 0; background: repeating-linear-gradient(90deg, #fff 0 0.8cqw, transparent 0.8cqw 2cqw); opacity: 0.8; }
+      .sh-river { left: 0; right: 0; top: 58.3%; bottom: 0; z-index: 1; background: repeating-linear-gradient(180deg, rgba(255, 200, 150, 0.12) 0 1px, transparent 1px 7px), linear-gradient(180deg, #5a4658, #1a2630); }
+      .sh-glint { left: 46%; width: 20%; top: 59%; height: 38%; z-index: 2; background: repeating-linear-gradient(180deg, rgba(255, 210, 150, 0.7) 0 2px, transparent 2px 9px); -webkit-mask: radial-gradient(ellipse 60% 100% at 50% 0, #000, transparent 80%); mask: radial-gradient(ellipse 60% 100% at 50% 0, #000, transparent 80%); animation: shimmer 3s ease-in-out infinite alternate; }
+      .sh-wall { left: -4%; right: -4%; bottom: -2%; height: 14%; z-index: 6; background: #150f14; }
+      .sh-stone { z-index: 7; bottom: 10%; background: linear-gradient(135deg, #7a8a7a, #3a4a40); border-radius: 40% 55% 45% 50%; }
+
+      /* ============ 1: Lab 4 ============ */
+      .l-scene { background: linear-gradient(180deg, #3a2a34, #1a1218); }
+      .l-wall { inset: 0 0 24% 0; z-index: 0; background: radial-gradient(ellipse 60% 70% at 50% 40%, #6a4a50, #2a1c24 80%); }
+      .l-spk { left: 46%; width: 8%; top: 4%; height: 5%; z-index: 3; border-radius: 0.6cqw; background: repeating-linear-gradient(90deg, #2a2428 0 0.6cqw, #4a4048 0.6cqw 1.2cqw); }
+      .l-screen { left: 16%; right: 16%; top: 12%; height: 52%; z-index: 4; border-radius: 0.8cqw; background: #14101a; box-shadow: 0 0 0 0.8cqw #2a2230, 0 0 5cqw rgba(255, 190, 120, 0.35); overflow: hidden; }
+      .l-screen > * { position: absolute; }
+      .l-sky { inset: 0; background: linear-gradient(180deg, #1a2a4a, #6a4a6a 60%, #ffb27a); }
+      .l-river { left: 0; right: 0; bottom: 0; height: 26%; background: linear-gradient(180deg, #3a4660, #121a2a); }
+      .l-shed { bottom: 26%; height: 14%; background: linear-gradient(180deg, #ffffff, #e4ecf4); box-shadow: 0 0 3cqw 1cqw rgba(255, 255, 255, 0.85); }
+      .l-shed.a { left: 8%; width: 36%; } .l-shed.b { left: 48%; width: 22%; height: 10%; } .l-shed.c { left: 74%; width: 18%; height: 12%; }
+      .l-furnace { left: 82%; top: 8%; width: 9%; height: 14%; background: radial-gradient(ellipse at 50% 70%, #ffb050, #e8622a 60%); clip-path: polygon(50% 0, 100% 60%, 90% 100%, 10% 100%, 0 60%); animation: breathe 3s ease-in-out infinite alternate; }
+      .l-refl { left: 8%; width: 62%; bottom: 0; height: 24%; background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0 1px, transparent 1px 5px); animation: shimmer 3s ease-in-out infinite alternate; }
+      .l-bench { left: -4%; right: -4%; bottom: 0; height: 24%; z-index: 5; background: linear-gradient(180deg, #4a3a38, #2a1e20); }
+      .l-stool { bottom: 14%; width: 6%; height: 14%; z-index: 6; }
+      .l-stool::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 28%; border-radius: 50%; background: #6a5048; }
+      .l-stool::after { content: ""; position: absolute; left: 44%; width: 12%; top: 20%; bottom: 0; background: #3a2a2a; }
+      .l-kid { bottom: 24%; width: 7%; height: 17%; z-index: 7; border-radius: 40% 40% 10% 10%; background: linear-gradient(180deg, #e8946a, #8a4a40); }
+      .l-kid::before { content: ""; position: absolute; left: 22%; right: 22%; top: -34%; aspect-ratio: 1; border-radius: 50%; background: #3a2420; }
+
+      /* ============ 2: Haber–Bosch, 1913 ============ */
+      .h-scene { background: linear-gradient(180deg, #2a2028, #140e14); }
+      .h-board { left: 6%; width: 56%; top: 8%; bottom: 14%; z-index: 3; border-radius: 0.6cqw; background: linear-gradient(135deg, #2e4038, #1e2e28); box-shadow: 0 0 0 0.9cqw #7a5a3a, 0 1.6cqw 3cqw rgba(0, 0, 0, 0.5); }
+      .h-chalk { z-index: 5; font: 500 3cqw Karla, sans-serif; letter-spacing: 0.04em; color: rgba(255, 252, 240, 0.92); text-shadow: 0 0 1cqw rgba(255, 255, 255, 0.3); animation: chalk 3s ease-out both; animation-delay: var(--d); }
+      .h-glow { left: 60%; width: 40%; top: 20%; height: 70%; z-index: 1; background: radial-gradient(ellipse, rgba(255, 130, 50, 0.7), transparent 66%); animation: breathe 4s ease-in-out infinite alternate; }
+      .h-stack { bottom: 0; width: 5%; z-index: 2; background: linear-gradient(90deg, #24161c, #3a222a 60%, #1a1014); }
+      .h-pile { left: 66%; width: 28%; bottom: 8%; height: 26%; z-index: 6; border-radius: 50% 50% 4% 4% / 90% 90% 10% 10%;
+        background: radial-gradient(circle, #f6e0b0 0 1.2px, transparent 1.8px) 0 0 / 7px 7px, radial-gradient(circle, #d8a070 0 1.2px, transparent 1.8px) 3px 3px / 9px 9px, linear-gradient(180deg, #a87a4a, #6a4a30); box-shadow: 0 1cqw 2cqw rgba(0, 0, 0, 0.5); }
+      .h-bag { left: 56%; width: 14%; bottom: 8%; height: 32%; z-index: 5; transform: rotate(-10deg); border-radius: 0.6cqw; background: linear-gradient(180deg, #3a7a4a, #1e4a2a); box-shadow: 0 1cqw 2cqw rgba(0, 0, 0, 0.5); }
+
+      /* ============ 3: a lump of slag ============ */
+      .s-scene { background: radial-gradient(ellipse 70% 80% at 50% 50%, #5a3a40, #1a1218 80%); }
+      .s-light { left: 10%; right: 10%; top: -20%; height: 70%; z-index: 0; background: radial-gradient(ellipse, rgba(255, 200, 140, 0.45), transparent 66%); }
+      .s-table { left: -4%; right: -4%; bottom: 0; height: 24%; z-index: 1; background: linear-gradient(180deg, #5a4038, #2a1c1c); }
+      .s-rock { left: 31%; width: 38%; top: 14%; height: 66%; z-index: 4; border-radius: 42% 58% 46% 54% / 56% 40% 60% 44%; overflow: hidden; }
+      .s-break { position: absolute; right: 0; width: 46%; top: 0; bottom: 0; clip-path: polygon(34% 0, 100% 0, 100% 100%, 0 100%, 18% 56%); opacity: 0.55; -webkit-mask: linear-gradient(90deg, transparent 8%, #000 55%); mask: linear-gradient(90deg, transparent 8%, #000 55%); animation: oil 8s linear infinite; }
+      .s-sheen { left: 38%; width: 10%; top: 24%; height: 22%; z-index: 6; border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 255, 255, 0.7), transparent 70%); transform: rotate(-30deg); filter: blur(3px); }
+      .s-hand { left: 6%; width: 18%; top: 36%; height: 30%; z-index: 3; border-radius: 40%; background: linear-gradient(135deg, #d8946a, #8a5a44); opacity: 0.85; filter: blur(0.5px); }
+      .s-bag { right: 8%; width: 16%; top: 54%; height: 28%; z-index: 3; border-radius: 0.8cqw; background: linear-gradient(180deg, #c84a3a, #7a2a20); box-shadow: inset 0 0 0 0.3cqw rgba(255, 220, 200, 0.2); }
+
+      /* ============ 4: a freezer bag at Wilton ============ */
+      .f-scene { background: linear-gradient(180deg, #2a2a48, #f2a070 60%, #3a3040 60.5%); }
+      .f-road { left: -4%; right: -4%; bottom: 0; height: 40%; z-index: 1; background: linear-gradient(180deg, #3a3040, #1c161e); }
+      .f-line { left: 0; right: 0; bottom: 18%; height: 1.2%; z-index: 2; background: repeating-linear-gradient(90deg, rgba(255, 230, 180, 0.7) 0 6cqw, transparent 6cqw 12cqw); animation: roadmove 3s linear infinite; }
+      .f-river { left: 0; right: 0; top: 52%; height: 10%; z-index: 1; background: linear-gradient(180deg, #8a6a78, #4a3a4a); }
+      .f-shed { left: 40%; width: 56%; top: 36%; height: 17%; z-index: 3; background: linear-gradient(180deg, #ffffff, #e8f0f8); box-shadow: 0 0 5cqw 1cqw rgba(255, 255, 255, 0.8); }
+      .f-shed::after { content: ""; position: absolute; left: 0; right: 0; bottom: 18%; height: 14%; background: repeating-linear-gradient(90deg, #ffcb8a 0 1.2cqw, transparent 1.2cqw 3cqw); }
+      .f-car { left: -22%; width: 24%; bottom: 14%; height: 20%; z-index: 5; border-radius: 3cqw 5cqw 1cqw 1cqw; background: linear-gradient(180deg, #c8504a, #8a2a2a); animation: drive 12s ease-in-out infinite alternate; box-shadow: 0 1cqw 2cqw rgba(0, 0, 0, 0.5); }
+      .f-car::before { content: ""; position: absolute; left: 20%; width: 52%; top: -40%; height: 46%; border-radius: 3cqw 4cqw 0 0; background: linear-gradient(180deg, #d8e4f0, #8a9ab0); }
+      .f-car::after { content: ""; position: absolute; left: 10%; width: 80%; bottom: -14%; height: 26%; background: radial-gradient(circle at 18% 50%, #14101a 0 40%, transparent 42%), radial-gradient(circle at 82% 50%, #14101a 0 40%, transparent 42%); }
+      .f-label { left: 52%; top: 66%; z-index: 7; padding: 0.7cqw 1.4cqw; border-radius: 0.4cqw; background: #f8f0dc; color: #2a1a10; font: 600 1.9cqw Karla, sans-serif; letter-spacing: 0.06em; box-shadow: 0 1cqw 2cqw rgba(0, 0, 0, 0.5); transform: rotate(-2deg); white-space: nowrap; }
+      .f-rock { left: 62%; width: 12%; top: 72%; height: 14%; z-index: 6; border-radius: 42% 58% 46% 54%; }
+
+      /* ============ 5: six lines ============ */
+      .g-scene { background: radial-gradient(ellipse 70% 80% at 50% 40%, #3a2a38, #140e14 80%); }
+      .g-axis-x { left: 8%; right: 6%; bottom: 14%; height: 0.3cqw; z-index: 2; background: rgba(255, 220, 180, 0.5); }
+      .g-axis-y { left: 8%; top: 8%; bottom: 14%; width: 0.3cqw; z-index: 2; background: rgba(255, 220, 180, 0.5); }
+      .g-plot { inset: 0; z-index: 4; clip-path: inset(0 100% 0 0); animation: draw 5s ease-out 0.4s both; }
+      .g-plot.bundle { animation-delay: 5.6s; }
+      .g-line { position: absolute; height: 0.4cqw; margin-top: -0.2cqw; border-radius: 0.4cqw; transform-origin: 0 50%; background: var(--c, rgba(200, 190, 190, 0.5)); }
+      .g-line.flat { background: rgba(190, 180, 190, 0.55); }
+      .g-line.brack { height: 0.8cqw; margin-top: -0.4cqw; background: linear-gradient(90deg, #ffc070, #ff8a3a); box-shadow: 0 0 2cqw rgba(255, 140, 60, 0.9); z-index: 3; }
+      .g-line.grey { background: rgba(180, 176, 184, 0.7); height: 0.3cqw; }
+      .g-tag { z-index: 6; font: 600 1.9cqw Karla, sans-serif; letter-spacing: 0.1em; color: #ffd8a0; text-shadow: 0 0 1.4cqw rgba(255, 150, 60, 0.9); opacity: 0; animation: fadein 1s ease-out 3s both; }
+
+      /* ============ 6: Len Brack's wall ============ */
+      .w-scene { background: linear-gradient(180deg, #3a2a4a 0%, #d0607a 30%, #ffa862 52%, #ffd89a 60%, #3a4658 60.4%, #1e2a36 100%); }
+      .w-sun { left: 70%; top: 34%; width: 18%; aspect-ratio: 1; margin-left: -9%; z-index: 1; }
+      .w-chim { left: 4%; width: 20%; top: 28%; height: 32%; z-index: 2; background: #2a1c26; clip-path: polygon(0 100%, 0 70%, 10% 70%, 10% 10%, 14% 10%, 14% 70%, 40% 70%, 40% 40%, 52% 40%, 52% 70%, 76% 70%, 76% 0, 82% 0, 82% 70%, 100% 70%, 100% 100%); }
+      .w-turb { left: 54%; top: 22%; width: 0.7cqw; height: 24%; z-index: 2; background: #f4ece4; }
+      .w-blades { left: 54.3%; top: 22%; width: 14%; height: 14%; margin: -7cqw 0 0 -7cqw; z-index: 3; background: conic-gradient(from 0deg, transparent 0 4deg, #f4ece4 4deg 8deg, transparent 8deg 120deg, #f4ece4 120deg 124deg, transparent 124deg 240deg, #f4ece4 240deg 244deg, transparent 244deg); border-radius: 50%; animation: spin 10s linear infinite; }
+      .w-sea { left: 0; right: 0; top: 60%; height: 8%; z-index: 1; background: repeating-linear-gradient(180deg, rgba(255, 220, 170, 0.25) 0 1px, transparent 1px 5px), linear-gradient(180deg, #8a6070, #3a4658); }
+      .w-grass { left: 0; right: 0; bottom: 0; height: 36%; z-index: 4; background: linear-gradient(180deg, #4a6a3a, #1e2e1e); }
+      .w-wall { left: 6%; right: 6%; bottom: 8%; height: 40%; z-index: 6; display: grid; grid-template-columns: repeat(14, 1fr); grid-template-rows: repeat(5, 1fr); gap: 0.3cqw; }
+      .w-wall i { border-radius: 30% 40% 34% 38%; background: linear-gradient(135deg, var(--a), var(--b)); box-shadow: inset 0 0.3cqw 0.4cqw rgba(220, 240, 220, 0.25), inset 0 -0.4cqw 0.6cqw rgba(0, 0, 0, 0.45); }
+      .w-wall i.loose { background: linear-gradient(135deg, #a8c0a8, #5a7a60); box-shadow: 0 0 2.4cqw rgba(255, 200, 120, 0.8), inset 0 0.3cqw 0.4cqw rgba(255, 255, 255, 0.4); transform: translateY(-14%) rotate(-8deg); animation: loose 5s ease-in-out infinite alternate; }
+      .w-leek { bottom: 8%; width: 0.7cqw; z-index: 5; background: linear-gradient(180deg, #8ac07a, #f0f4e0); border-radius: 0.4cqw; }
+
+      @keyframes embers { from { background-position: 0 0, 23px 17px; } to { background-position: 30px -400px, 70px -560px; } }
+      @keyframes breathe { from { opacity: 0.8; } to { opacity: 1; } }
+      @keyframes slide { from { transform: translateX(-4%); } to { transform: translateX(6%); } }
+      @keyframes shimmer { from { opacity: 0.55; transform: scaleX(0.98); } to { opacity: 1; transform: scaleX(1.03); } }
+      @keyframes chalk { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes oil { from { filter: hue-rotate(0deg) saturate(1.2); } to { filter: hue-rotate(360deg) saturate(1.2); } }
+      @keyframes roadmove { from { background-position: 0 0; } to { background-position: -12cqw 0; } }
+      @keyframes drive { from { left: -22%; } to { left: 6%; } }
+      @keyframes draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes loose { from { transform: translateY(-8%) rotate(-4deg); } to { transform: translateY(-20%) rotate(-10deg); } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .g-plot { clip-path: inset(0 0 0 0); } .g-tag { opacity: 1; }
+        .h-chalk { clip-path: none; }
+        .f-car { left: 6%; }
+        .w-wall i.loose { transform: translateY(-20%) rotate(-10deg); }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="slag-hero" aria-hidden="true">
+          <div class="sh-sun sun"></div><div class="sh-cloud" style="left:6%;top:22%;width:34%"></div><div class="sh-cloud" style="left:50%;top:14%;width:40%;animation-delay:-9s"></div><div class="sh-hills"></div><div class="sh-works"></div><div class="sh-sheds"></div><div class="sh-river"></div><div class="sh-glint"></div>
+          <div class="sh-wall"></div><div class="sh-stone slagrock" style="left:14%;width:6%;height:5%"></div><div class="sh-stone slagrock" style="left:44%;width:8%;height:6%;bottom:11%"></div><div class="sh-stone slagrock" style="left:72%;width:5%;height:4%"></div><div class="ember"></div>
+          <div class="label">Teesside</div>
+        </div>
+        <h1>The slag kept the answer</h1>
+        <time datetime="2026-10-23">23 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The Thursday hour came round at ten past two, straight after dinner, which Graham Pickering had always thought was the worst possible time to ask thirteen-year-olds to care about anything. They came into Lab 4 smelling of chips and the wet field, and they sat on the stools with their coats still half on, and for the first ten minutes of every Thursday he did what he had done for twenty-two years at Manor Road, which was wait for them to stop.</p>
+        <p>What was different now was the screen at the front. It had been there since the spring of 2037, when the Department sent out the kit in big grey crates with the Foundry's logo on the side, a little orange furnace shape, and a letter that said every secondary school in England would have one hour a week of time on the national autonomous laboratory network. One hour. Real robots, real chemicals, real furnaces, eleven miles away across the river at Wilton, where the old ICI site had been cleared and rebuilt into long white sheds that never switched their lights off. The children chose the experiment. The Foundry ran it. The results came back the following Thursday, and nobody, not the Department and not the Foundry and certainly not Graham, was allowed to change what the children had chosen.</p>
+        <p>That last part had been a fight. He had read about it in the papers at the time. The scientists who ran the Foundry had wanted the school hours to go through the planning system like everything else, so the AI that scheduled the work could quietly swap a hopeless idea for a promising one and nobody would waste a furnace on a year-nine guess. The Foundry ran something like four million experiments a week across its sites, and every one of them was chosen by a model that read everything that had ever been published about materials and knew, better than any person alive, what was likely to work. It seemed daft, they said, to let children spend that time on things that were not likely to work.</p>
+        <p>A woman from a school in Barnsley had gone on the radio and said that was exactly the point. Children were not likely to work either. You let them try anyway. And somehow, against the odds, that was the argument that won, and the rule went in the letter in bold: <em>the pupils' choice will be run as written.</em></p>
+        <p>So every Thursday, after the chips and the coats, Graham's class sat in front of the screen and argued about what to make.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall l-scene" aria-hidden="true">
+        <div class="l-wall"></div><div class="l-spk"></div><div class="l-screen"><div class="l-sky"></div><div class="l-furnace"></div><div class="l-shed a"></div><div class="l-shed b"></div><div class="l-shed c"></div><div class="l-river"></div><div class="l-refl"></div></div><div class="l-bench"></div><i class="l-stool" style="left:10%"></i><i class="l-kid" style="left:9.6%;opacity:0.9"></i><i class="l-stool" style="left:22%"></i><i class="l-kid" style="left:21.6%;opacity:1"></i><i class="l-stool" style="left:66%"></i><i class="l-kid" style="left:65.6%;opacity:0.95"></i><i class="l-stool" style="left:78%"></i><i class="l-kid" style="left:77.6%;opacity:0.85"></i><i class="l-stool" style="left:90%"></i><i class="l-kid" style="left:89.6%;opacity:1"></i>
+        <div class="ember"></div>
+        <div class="label">Lab 4</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The Foundry's planning model had a name, because everything had a name by then. It was called Assay. In Lab 4 it spoke through the speaker above the whiteboard in a calm, slightly Northern voice that somebody at the Department had clearly chosen on purpose, and the children had decided within a week that it sounded like a dinner lady from Stockton. They called it Mrs Assay. It did not seem to mind.</p>
+        <p>This term they were on catalysts, because the Foundry was on catalysts, because the whole country was on catalysts. Graham had tried to explain it to them in September and had watched their faces close one after another like shop shutters. So in the second week he had brought in a bag of Growmore from his allotment and tipped some onto the bench.</p>
+        <p>"That," he said, "is nitrogen. Well, it's got nitrogen in it. Plants need it and they can't get it out of the air, even though the air is mostly nitrogen. So we make it for them. We make it out of the air, with a lot of heat and a lot of pressure, and a lump of iron that helps the reaction along. That lump of iron is a catalyst. It's not used up. It just makes the thing happen easier."</p>
+        <p>"Where do we make it?" said Shannon Brack, who sat at the back and did not usually ask anything.</p>
+        <p>"Well," Graham said, and pointed out of the window, past the car park and the bus shelter and the line of houses on Belasis Avenue, towards where the chimneys used to be. "There. That's where we used to make it. Billingham. Biggest in the world at one time. Half the fertiliser in Britain came out of there."</p>
+        <p>"My grandad worked there," Shannon said.</p>
+        <p>"Lots of people's grandads worked there."</p>
+        <p>"He worked on the converters. He says it was like being inside a kettle."</p>
+        <p>"He's not wrong," Graham said, and wrote <em>Haber–Bosch, 1913</em> on the board, and <em>450 degrees</em>, and <em>200 atmospheres</em>, and underneath that, because the Department's scheme of work wanted him to, <em>about 1–2% of all the world's energy</em>.</p>
+        <p>The children looked at that for a while.</p>
+        <p>"So what's the Foundry doing?" said Kyle Parvin.</p>
+        <p>"Looking for a better lump of iron," Graham said. "One that works cooler. At lower pressure. So you could make fertiliser in a shed on a farm with a wind turbine, instead of in a place like that with a gas main the size of a tunnel. If you could do that, you'd change what food costs in half the world."</p>
+        <p>"Has it found one?"</p>
+        <p>"Not yet."</p>
+        <p>"How long's it been looking?"</p>
+        <p>Graham looked at the screen, where Assay kept a running number in the corner of the Foundry's public page. "Six years," he said. "About ninety million attempts."</p>
+        <p>Kyle whistled. "And we get one a week."</p>
+        <p>"You get one a week."</p>
+        <p>"That's rubbish odds, sir."</p>
+        <p>"Yes," Graham said. "It is."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall h-scene" aria-hidden="true">
+        <div class="h-glow"></div><div class="h-stack" style="left:70%;height:62%"></div><div class="h-stack" style="left:80%;height:46%"></div><div class="h-stack" style="left:90%;height:70%"></div><div class="h-board"></div>
+        <div class="h-chalk" style="left:10%;top:14%;font-size:3.8cqw;font-style:italic;--d:.2s">Haber–Bosch, 1913</div><div class="h-chalk" style="left:12%;top:36%;--d:1.6s">450 degrees</div><div class="h-chalk" style="left:12%;top:52%;--d:2.6s">200 atmospheres</div><div class="h-chalk" style="left:12%;top:68%;font-size:2.2cqw;--d:3.6s">about 1–2% of all the world's energy</div>
+        <div class="h-bag"></div><div class="h-pile"></div><div class="ember"></div>
+        <div class="label">Billingham</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They spent the first half of the term on sensible ideas, or ideas they thought were sensible, which mostly meant ideas they had found on the internet and Assay had very politely told them had been tried. It never said no. It was not allowed to say no. It said things like, "That one's been run eleven thousand times, pet, so we know quite a lot about it already. Do you want me to run it anyway, or would you like to look at what came back?" and nine times out of ten they wanted to look at what came back, because it was quicker, and then they wanted to try something else.</p>
+        <p>Graham had worried at first that this would kill the thing stone dead. It didn't. If anything it made them braver. Once they understood that the obvious had all been done, by a machine that was cleverer than any of them and had been at it for six years, they stopped trying to be obvious. They started bringing things in.</p>
+        <p>Kyle brought in a bit of copper pipe from his uncle's van. Priya Lal brought in a jar of the red sand from Seaton beach that her little sister said looked like rust. Josh Weatherill brought in a battery from a vape, which Graham confiscated. They described what they wanted in words, and Assay turned the words into recipes, and on the Thursday the recipes went over the river, and the next Thursday the results came back as a line on a graph that went nowhere, and they groaned, and that was fine. That was chemistry. He told them that most weeks.</p>
+        <p>Shannon didn't bring anything until November.</p>
+        <p>She came in on the Thursday with a carrier bag, and she waited until the others had sat down, and then she put it on the front bench and took out a lump of something the size of a fist. It was grey and dark green and full of little holes like a Crunchie, and where it had been broken it had a glassy, oily shine.</p>
+        <p>"What's that?" said Priya.</p>
+        <p>"Slag," said Shannon. "From the steelworks. From Redcar. My grandad's got a whole wall of it at the bottom of his garden. He says when he was little the beach was made of it."</p>
+        <p>"It was," Graham said. He knew it was. When he was a boy at Coatham you could pick it up off the sand, these glassy grey stones that weren't stones, the leftover of a hundred years of iron. The furnaces at Redcar had gone cold in 2015, and the land had been cleared and turned into something else, a freeport and a carbon capture plant and a lot of signs, but the slag was still everywhere. They had built roads out of it. They had built sea defences out of it. There were people's garden walls all over Teesside made out of the stuff that came out of the bottom of a blast furnace.</p>
+        <p>"I want to try it," Shannon said.</p>
+        <p>"Try it for what?"</p>
+        <p>"For the nitrogen thing. The catalyst."</p>
+        <p>The room went quiet in the way it did when one of them said something that might be daft or might not. Graham picked the lump up. It was heavier than it looked.</p>
+        <p>"Why?" he said, and he tried to say it so it didn't sound like <em>why on earth</em>, and he wasn't sure he managed.</p>
+        <p>Shannon shrugged. "It's got iron in it," she said. "You said the catalyst's iron. And it's been in a furnace already. It's been hot loads. And my grandad says the stuff they made the ammonia with at Billingham came on trains from Redcar. So it's sort of the same place." She shrugged again. "I just thought."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall s-scene" aria-hidden="true">
+        <div class="s-light"></div><div class="s-table"></div><div class="s-hand"></div><div class="s-bag"></div><div class="s-rock slagrock"><i class="pit" style="left:24%;top:14%;width:5.4%;height:4.1%"></i><i class="pit" style="left:10%;top:37%;width:8.5%;height:8.7%"></i><i class="pit" style="left:68%;top:23%;width:6.2%;height:5.0%"></i><i class="pit" style="left:19%;top:14%;width:4.3%;height:4.6%"></i><i class="pit" style="left:74%;top:69%;width:7.8%;height:6.1%"></i><i class="pit" style="left:30%;top:55%;width:7.4%;height:7.7%"></i><i class="pit" style="left:78%;top:13%;width:6.6%;height:6.4%"></i><i class="pit" style="left:47%;top:20%;width:5.8%;height:4.3%"></i><i class="pit" style="left:83%;top:74%;width:6.3%;height:5.2%"></i><i class="pit" style="left:80%;top:51%;width:8.3%;height:8.6%"></i><i class="pit" style="left:47%;top:38%;width:6.6%;height:5.8%"></i><i class="pit" style="left:18%;top:30%;width:7.9%;height:5.6%"></i><i class="pit" style="left:8%;top:55%;width:4.7%;height:4.3%"></i><i class="pit" style="left:44%;top:33%;width:9.0%;height:7.0%"></i><i class="pit" style="left:39%;top:22%;width:6.8%;height:5.5%"></i><i class="pit" style="left:34%;top:64%;width:4.9%;height:4.5%"></i><i class="pit" style="left:80%;top:14%;width:3.4%;height:2.7%"></i><i class="pit" style="left:68%;top:54%;width:4.4%;height:3.7%"></i><i class="pit" style="left:19%;top:42%;width:3.3%;height:3.2%"></i><i class="pit" style="left:79%;top:80%;width:7.4%;height:8.0%"></i><i class="pit" style="left:6%;top:29%;width:8.8%;height:8.9%"></i><i class="pit" style="left:38%;top:80%;width:6.7%;height:6.9%"></i><i class="pit" style="left:29%;top:21%;width:5.7%;height:4.3%"></i><i class="pit" style="left:36%;top:81%;width:5.0%;height:3.5%"></i><i class="pit" style="left:8%;top:19%;width:7.7%;height:6.5%"></i><i class="pit" style="left:28%;top:14%;width:8.9%;height:7.7%"></i><div class="s-break glassface"></div></div><div class="s-sheen"></div>
+        <div class="ember"></div>
+        <div class="label">Slag</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Assay was very kind about it.</p>
+        <p>"Blast furnace slag," it said, when Graham had typed it in and Shannon had described the lump, and Priya had held it up to the little camera on the top of the screen. "That's a really interesting thing to bring in, Shannon. It's mostly calcium and silicon and aluminium and magnesium, with a bit of iron and manganese left in. People have looked at it as a catalyst support a few times. Not very many. I've got about forty papers and about two thousand runs on slag-type materials, and they mostly didn't do much for ammonia."</p>
+        <p>"But you can run it," Shannon said.</p>
+        <p>"I can run it. It's your hour. I'll tell you honestly, I'd rank it quite low. If it were my choice I'd spend the hour on something else."</p>
+        <p>"It's not your choice, though," said Kyle, who had read the letter.</p>
+        <p>"No, pet," said Assay. "It's not."</p>
+        <p>There was a little pause, which the children always swore was the machine thinking and which Graham was fairly sure was just the network.</p>
+        <p>"Can I make a suggestion that doesn't change your choice?" Assay said. "If we're going to run slag, it would help to run a few different kinds at once, so you can tell whether anything you see is the slag or just the iron. The Foundry's got a sample library. I can pull some steel slag and some blast furnace slag and some that's been weathered outside for years. Or I can use only Shannon's lump. You decide."</p>
+        <p>The class looked at Shannon.</p>
+        <p>"Weathered," Shannon said. "Like on the beach. Like on his wall."</p>
+        <p>"Then I'll put a weathered one in," said Assay. "And Shannon, if you send your lump over with Mr Pickering, I'll put that in too. It'll go through the grinder on Monday."</p>
+        <p>So on the Friday Graham drove over the river in his Corsa with a lump of slag in a freezer bag on the passenger seat, and handed it in at a window in a white shed at Wilton, to a young man in a fleece who wrote <em>MANOR RD Y9 — BRACK</em> on a label without a flicker, as though schools brought him bits of their grandads' gardens every day of the week. Which, Graham supposed, they probably did.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall f-scene" aria-hidden="true">
+        <div class="f-river"></div><div class="f-shed"></div><div class="f-road"></div><div class="f-line"></div><div class="f-car"></div><div class="f-label">MANOR RD Y9 — BRACK</div><div class="f-rock slagrock"><i class="pit" style="left:43%;top:35%;width:6.0%;height:6.2%"></i><i class="pit" style="left:5%;top:45%;width:11.3%;height:8.3%"></i><i class="pit" style="left:51%;top:54%;width:5.3%;height:4.5%"></i><i class="pit" style="left:63%;top:41%;width:10.1%;height:7.7%"></i><i class="pit" style="left:24%;top:15%;width:8.5%;height:9.1%"></i><i class="pit" style="left:54%;top:66%;width:7.7%;height:7.7%"></i><i class="pit" style="left:13%;top:29%;width:9.7%;height:9.6%"></i></div>
+        <div class="label">a white shed at Wilton</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The results came back the next Thursday at ten past two, the way they always did, and the class came in smelling of chips and sat down with their coats half on, and Graham put the graph up on the screen and nobody said anything for a bit, because nobody knew what they were looking at.</p>
+        <p>There were six lines. Four of them went along the bottom, flat as a pavement, which was what the lines always did. Fresh steel slag, fresh blast furnace slag, a slag from somewhere in Wales, and a control. The fifth line, the weathered sample from the Foundry's library, lifted a little at the right-hand end, at the hottest temperatures, and then sagged back. And the sixth line, the one with <em>BRACK</em> in small letters beside it, did something none of them had seen a line do all term. It came up off the bottom early, at the cool end of the graph, way down where the iron catalysts never did anything, and it kept coming.</p>
+        <p>"Is that good?" said Josh.</p>
+        <p>"I don't know," Graham said, honestly.</p>
+        <p>"Mrs Assay," said Priya. "Is that good?"</p>
+        <p>There was the little pause.</p>
+        <p>"I don't know either," said Assay, and that was the first time any of them had heard it say that. "It might be nothing. A single run on a lump of something from a garden can go wrong all kinds of ways. There might have been something on it. Fertiliser, even. If your grandad uses Growmore on his roses, Shannon, that could do it."</p>
+        <p>"He doesn't have roses," Shannon said. "He has leeks."</p>
+        <p>"Leeks, then. So I've done something I hope you won't mind. I ran it again, on my own time, on Tuesday and Wednesday. Twelve more times. I washed the sample first, three different ways. I ground some finer and some coarser. I want to show you what came back, because it's your result and you should see it before anybody else does."</p>
+        <p>The graph changed. There were twelve new lines now, in a little grey bundle, and every one of them came up off the bottom at the cool end of the chart, early, steady, not very high but not nothing, in the place where nothing was supposed to happen.</p>
+        <p>"It's still doing it," said Kyle.</p>
+        <p>"It's still doing it," said Assay.</p>
+        <p>Graham found he had sat down on the edge of the front bench without meaning to.</p>
+        <p>"Why?" said Shannon.</p>
+        <p>"I don't know yet," said Assay. "But I've got a guess, and I'll tell you it so you can tell me if it's silly. The slag in my library that I ran before, all those two thousand runs, was mostly fresh. Straight out of a works, or near enough. Yours has been sat at the bottom of a garden in the rain since, what, the nineteen sixties?"</p>
+        <p>"Since before my mam was born," said Shannon.</p>
+        <p>"Sixty-odd years of sea air and rain. I think it's washed some things out and left others behind, and what's left behind has made a shape inside the stone that I've never made in a furnace, because I've never had sixty years to wait. There's a kind of calcium aluminate that people have known about for a long time that's very good at this, when it's made just right, which is hard and expensive. I think your grandad's wall might have made some of it slowly, on its own. I think the iron that's left in it is sitting in exactly the wrong place to be any use in a fresh slag, and exactly the right place in yours."</p>
+        <p>"So the rain did it," said Josh.</p>
+        <p>"The rain and the furnace and the wall," said Assay. "And Shannon, for bringing it in. I ranked it low. I'd like you to know I ranked it low, because I was wrong, and that's worth writing down."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall g-scene" aria-hidden="true">
+        <div class="g-axis-y"></div><div class="g-axis-x"></div><div class="g-plot"><i class="g-line flat" style="left:10.00%;top:83.00%;width:8.40cqw;transform:rotate(-1.7deg);"></i><i class="g-line flat" style="left:18.40%;top:82.50%;width:8.40cqw;transform:rotate(-0.1deg);"></i><i class="g-line flat" style="left:26.80%;top:82.45%;width:8.40cqw;transform:rotate(1.6deg);"></i><i class="g-line flat" style="left:35.20%;top:82.92%;width:8.40cqw;transform:rotate(1.8deg);"></i><i class="g-line flat" style="left:43.60%;top:83.45%;width:8.40cqw;transform:rotate(0.4deg);"></i><i class="g-line flat" style="left:52.00%;top:83.58%;width:8.40cqw;transform:rotate(-1.4deg);"></i><i class="g-line flat" style="left:60.40%;top:83.17%;width:8.40cqw;transform:rotate(-1.9deg);"></i><i class="g-line flat" style="left:68.80%;top:82.61%;width:8.40cqw;transform:rotate(-0.7deg);"></i><i class="g-line flat" style="left:77.20%;top:82.41%;width:8.40cqw;transform:rotate(1.2deg);"></i><i class="g-line flat" style="left:85.60%;top:82.75%;width:8.40cqw;transform:rotate(2.0deg);"></i><i class="g-line flat" style="left:10.00%;top:81.30%;width:8.40cqw;transform:rotate(-0.1deg);"></i><i class="g-line flat" style="left:18.40%;top:81.25%;width:8.40cqw;transform:rotate(1.6deg);"></i><i class="g-line flat" style="left:26.80%;top:81.72%;width:8.40cqw;transform:rotate(1.8deg);"></i><i class="g-line flat" style="left:35.20%;top:82.25%;width:8.40cqw;transform:rotate(0.4deg);"></i><i class="g-line flat" style="left:43.60%;top:82.38%;width:8.40cqw;transform:rotate(-1.4deg);"></i><i class="g-line flat" style="left:52.00%;top:81.97%;width:8.40cqw;transform:rotate(-1.9deg);"></i><i class="g-line flat" style="left:60.40%;top:81.41%;width:8.40cqw;transform:rotate(-0.7deg);"></i><i class="g-line flat" style="left:68.80%;top:81.21%;width:8.40cqw;transform:rotate(1.2deg);"></i><i class="g-line flat" style="left:77.20%;top:81.55%;width:8.40cqw;transform:rotate(2.0deg);"></i><i class="g-line flat" style="left:85.60%;top:82.13%;width:8.40cqw;transform:rotate(0.9deg);"></i><i class="g-line flat" style="left:10.00%;top:80.05%;width:8.40cqw;transform:rotate(1.6deg);"></i><i class="g-line flat" style="left:18.40%;top:80.52%;width:8.40cqw;transform:rotate(1.8deg);"></i><i class="g-line flat" style="left:26.80%;top:81.05%;width:8.40cqw;transform:rotate(0.4deg);"></i><i class="g-line flat" style="left:35.20%;top:81.18%;width:8.40cqw;transform:rotate(-1.4deg);"></i><i class="g-line flat" style="left:43.60%;top:80.77%;width:8.40cqw;transform:rotate(-1.9deg);"></i><i class="g-line flat" style="left:52.00%;top:80.21%;width:8.40cqw;transform:rotate(-0.7deg);"></i><i class="g-line flat" style="left:60.40%;top:80.01%;width:8.40cqw;transform:rotate(1.2deg);"></i><i class="g-line flat" style="left:68.80%;top:80.35%;width:8.40cqw;transform:rotate(2.0deg);"></i><i class="g-line flat" style="left:77.20%;top:80.93%;width:8.40cqw;transform:rotate(0.9deg);"></i><i class="g-line flat" style="left:85.60%;top:81.20%;width:8.40cqw;transform:rotate(-0.9deg);"></i><i class="g-line flat" style="left:10.00%;top:79.32%;width:8.40cqw;transform:rotate(1.8deg);"></i><i class="g-line flat" style="left:18.40%;top:79.85%;width:8.40cqw;transform:rotate(0.4deg);"></i><i class="g-line flat" style="left:26.80%;top:79.98%;width:8.40cqw;transform:rotate(-1.4deg);"></i><i class="g-line flat" style="left:35.20%;top:79.57%;width:8.40cqw;transform:rotate(-1.9deg);"></i><i class="g-line flat" style="left:43.60%;top:79.01%;width:8.40cqw;transform:rotate(-0.7deg);"></i><i class="g-line flat" style="left:52.00%;top:78.81%;width:8.40cqw;transform:rotate(1.2deg);"></i><i class="g-line flat" style="left:60.40%;top:79.15%;width:8.40cqw;transform:rotate(2.0deg);"></i><i class="g-line flat" style="left:68.80%;top:79.73%;width:8.40cqw;transform:rotate(0.9deg);"></i><i class="g-line flat" style="left:77.20%;top:80.00%;width:8.40cqw;transform:rotate(-0.9deg);"></i><i class="g-line flat" style="left:85.60%;top:79.72%;width:8.40cqw;transform:rotate(-2.0deg);"></i><i class="g-line flat" style="left:10.00%;top:77.00%;width:8.40cqw;transform:rotate(0.0deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:18.40%;top:77.00%;width:8.40cqw;transform:rotate(0.0deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:26.80%;top:77.00%;width:8.40cqw;transform:rotate(0.0deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:35.20%;top:77.00%;width:8.40cqw;transform:rotate(0.0deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:43.60%;top:77.00%;width:8.40cqw;transform:rotate(0.0deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:52.00%;top:77.00%;width:8.40cqw;transform:rotate(0.0deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:60.40%;top:77.00%;width:8.49cqw;transform:rotate(-8.1deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:68.80%;top:74.60%;width:8.49cqw;transform:rotate(-8.1deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:77.20%;top:72.20%;width:8.42cqw;transform:rotate(3.7deg);background:rgba(240,200,170,.7)"></i><i class="g-line flat" style="left:85.60%;top:73.30%;width:8.42cqw;transform:rotate(3.7deg);background:rgba(240,200,170,.7)"></i></div><div class="g-plot bundle"><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.59cqw;transform:rotate(-28.9deg);"></i><i class="g-line grey" style="left:18.40%;top:69.74%;width:9.28cqw;transform:rotate(-25.2deg);"></i><i class="g-line grey" style="left:26.80%;top:61.84%;width:9.06cqw;transform:rotate(-22.0deg);"></i><i class="g-line grey" style="left:35.20%;top:55.06%;width:8.90cqw;transform:rotate(-19.2deg);"></i><i class="g-line grey" style="left:43.60%;top:49.20%;width:8.78cqw;transform:rotate(-16.9deg);"></i><i class="g-line grey" style="left:52.00%;top:44.08%;width:8.70cqw;transform:rotate(-15.1deg);"></i><i class="g-line grey" style="left:60.40%;top:39.56%;width:8.64cqw;transform:rotate(-13.6deg);"></i><i class="g-line grey" style="left:68.80%;top:35.50%;width:8.60cqw;transform:rotate(-12.4deg);"></i><i class="g-line grey" style="left:77.20%;top:31.82%;width:8.57cqw;transform:rotate(-11.4deg);"></i><i class="g-line grey" style="left:85.60%;top:28.43%;width:8.55cqw;transform:rotate(-10.7deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.45cqw;transform:rotate(-27.3deg);"></i><i class="g-line grey" style="left:18.40%;top:70.34%;width:9.18cqw;transform:rotate(-23.8deg);"></i><i class="g-line grey" style="left:26.80%;top:62.91%;width:8.99cqw;transform:rotate(-20.8deg);"></i><i class="g-line grey" style="left:35.20%;top:56.52%;width:8.85cqw;transform:rotate(-18.3deg);"></i><i class="g-line grey" style="left:43.60%;top:50.97%;width:8.75cqw;transform:rotate(-16.2deg);"></i><i class="g-line grey" style="left:52.00%;top:46.10%;width:8.67cqw;transform:rotate(-14.4deg);"></i><i class="g-line grey" style="left:60.40%;top:41.78%;width:8.62cqw;transform:rotate(-13.0deg);"></i><i class="g-line grey" style="left:68.80%;top:37.88%;width:8.59cqw;transform:rotate(-11.9deg);"></i><i class="g-line grey" style="left:77.20%;top:34.33%;width:8.56cqw;transform:rotate(-11.1deg);"></i><i class="g-line grey" style="left:85.60%;top:31.04%;width:8.54cqw;transform:rotate(-10.4deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.66cqw;transform:rotate(-29.6deg);"></i><i class="g-line grey" style="left:18.40%;top:69.46%;width:9.35cqw;transform:rotate(-26.1deg);"></i><i class="g-line grey" style="left:26.80%;top:61.24%;width:9.12cqw;transform:rotate(-23.0deg);"></i><i class="g-line grey" style="left:35.20%;top:54.12%;width:8.96cqw;transform:rotate(-20.3deg);"></i><i class="g-line grey" style="left:43.60%;top:47.89%;width:8.84cqw;transform:rotate(-18.1deg);"></i><i class="g-line grey" style="left:52.00%;top:42.40%;width:8.75cqw;transform:rotate(-16.3deg);"></i><i class="g-line grey" style="left:60.40%;top:37.48%;width:8.69cqw;transform:rotate(-14.9deg);"></i><i class="g-line grey" style="left:68.80%;top:33.02%;width:8.65cqw;transform:rotate(-13.7deg);"></i><i class="g-line grey" style="left:77.20%;top:28.92%;width:8.61cqw;transform:rotate(-12.8deg);"></i><i class="g-line grey" style="left:85.60%;top:25.11%;width:8.59cqw;transform:rotate(-12.1deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.62cqw;transform:rotate(-29.2deg);"></i><i class="g-line grey" style="left:18.40%;top:69.62%;width:9.31cqw;transform:rotate(-25.6deg);"></i><i class="g-line grey" style="left:26.80%;top:61.59%;width:9.09cqw;transform:rotate(-22.4deg);"></i><i class="g-line grey" style="left:35.20%;top:54.66%;width:8.92cqw;transform:rotate(-19.7deg);"></i><i class="g-line grey" style="left:43.60%;top:48.65%;width:8.80cqw;transform:rotate(-17.4deg);"></i><i class="g-line grey" style="left:52.00%;top:43.38%;width:8.72cqw;transform:rotate(-15.6deg);"></i><i class="g-line grey" style="left:60.40%;top:38.69%;width:8.66cqw;transform:rotate(-14.1deg);"></i><i class="g-line grey" style="left:68.80%;top:34.47%;width:8.62cqw;transform:rotate(-12.9deg);"></i><i class="g-line grey" style="left:77.20%;top:30.62%;width:8.59cqw;transform:rotate(-12.0deg);"></i><i class="g-line grey" style="left:85.60%;top:27.06%;width:8.56cqw;transform:rotate(-11.2deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.64cqw;transform:rotate(-29.4deg);"></i><i class="g-line grey" style="left:18.40%;top:69.55%;width:9.33cqw;transform:rotate(-25.8deg);"></i><i class="g-line grey" style="left:26.80%;top:61.43%;width:9.10cqw;transform:rotate(-22.6deg);"></i><i class="g-line grey" style="left:35.20%;top:54.44%;width:8.93cqw;transform:rotate(-19.9deg);"></i><i class="g-line grey" style="left:43.60%;top:48.36%;width:8.81cqw;transform:rotate(-17.6deg);"></i><i class="g-line grey" style="left:52.00%;top:43.01%;width:8.73cqw;transform:rotate(-15.8deg);"></i><i class="g-line grey" style="left:60.40%;top:38.26%;width:8.67cqw;transform:rotate(-14.3deg);"></i><i class="g-line grey" style="left:68.80%;top:33.97%;width:8.63cqw;transform:rotate(-13.1deg);"></i><i class="g-line grey" style="left:77.20%;top:30.05%;width:8.59cqw;transform:rotate(-12.2deg);"></i><i class="g-line grey" style="left:85.60%;top:26.42%;width:8.57cqw;transform:rotate(-11.5deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.67cqw;transform:rotate(-29.7deg);"></i><i class="g-line grey" style="left:18.40%;top:69.44%;width:9.35cqw;transform:rotate(-26.1deg);"></i><i class="g-line grey" style="left:26.80%;top:61.22%;width:9.12cqw;transform:rotate(-22.9deg);"></i><i class="g-line grey" style="left:35.20%;top:54.13%;width:8.95cqw;transform:rotate(-20.2deg);"></i><i class="g-line grey" style="left:43.60%;top:47.96%;width:8.83cqw;transform:rotate(-17.9deg);"></i><i class="g-line grey" style="left:52.00%;top:42.52%;width:8.74cqw;transform:rotate(-16.1deg);"></i><i class="g-line grey" style="left:60.40%;top:37.68%;width:8.68cqw;transform:rotate(-14.6deg);"></i><i class="g-line grey" style="left:68.80%;top:33.31%;width:8.64cqw;transform:rotate(-13.4deg);"></i><i class="g-line grey" style="left:77.20%;top:29.30%;width:8.60cqw;transform:rotate(-12.5deg);"></i><i class="g-line grey" style="left:85.60%;top:25.59%;width:8.58cqw;transform:rotate(-11.7deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.46cqw;transform:rotate(-27.4deg);"></i><i class="g-line grey" style="left:18.40%;top:70.28%;width:9.19cqw;transform:rotate(-23.9deg);"></i><i class="g-line grey" style="left:26.80%;top:62.83%;width:8.99cqw;transform:rotate(-20.8deg);"></i><i class="g-line grey" style="left:35.20%;top:56.43%;width:8.84cqw;transform:rotate(-18.2deg);"></i><i class="g-line grey" style="left:43.60%;top:50.90%;width:8.74cqw;transform:rotate(-16.1deg);"></i><i class="g-line grey" style="left:52.00%;top:46.07%;width:8.67cqw;transform:rotate(-14.3deg);"></i><i class="g-line grey" style="left:60.40%;top:41.79%;width:8.62cqw;transform:rotate(-12.9deg);"></i><i class="g-line grey" style="left:68.80%;top:37.96%;width:8.58cqw;transform:rotate(-11.7deg);"></i><i class="g-line grey" style="left:77.20%;top:34.47%;width:8.55cqw;transform:rotate(-10.8deg);"></i><i class="g-line grey" style="left:85.60%;top:31.26%;width:8.53cqw;transform:rotate(-10.1deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.58cqw;transform:rotate(-28.8deg);"></i><i class="g-line grey" style="left:18.40%;top:69.78%;width:9.28cqw;transform:rotate(-25.2deg);"></i><i class="g-line grey" style="left:26.80%;top:61.88%;width:9.06cqw;transform:rotate(-22.0deg);"></i><i class="g-line grey" style="left:35.20%;top:55.08%;width:8.90cqw;transform:rotate(-19.3deg);"></i><i class="g-line grey" style="left:43.60%;top:49.18%;width:8.79cqw;transform:rotate(-17.1deg);"></i><i class="g-line grey" style="left:52.00%;top:44.01%;width:8.71cqw;transform:rotate(-15.3deg);"></i><i class="g-line grey" style="left:60.40%;top:39.43%;width:8.65cqw;transform:rotate(-13.8deg);"></i><i class="g-line grey" style="left:68.80%;top:35.30%;width:8.61cqw;transform:rotate(-12.6deg);"></i><i class="g-line grey" style="left:77.20%;top:31.54%;width:8.58cqw;transform:rotate(-11.7deg);"></i><i class="g-line grey" style="left:85.60%;top:28.06%;width:8.56cqw;transform:rotate(-11.0deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.59cqw;transform:rotate(-28.9deg);"></i><i class="g-line grey" style="left:18.40%;top:69.74%;width:9.30cqw;transform:rotate(-25.4deg);"></i><i class="g-line grey" style="left:26.80%;top:61.77%;width:9.08cqw;transform:rotate(-22.3deg);"></i><i class="g-line grey" style="left:35.20%;top:54.89%;width:8.92cqw;transform:rotate(-19.7deg);"></i><i class="g-line grey" style="left:43.60%;top:48.89%;width:8.81cqw;transform:rotate(-17.5deg);"></i><i class="g-line grey" style="left:52.00%;top:43.60%;width:8.72cqw;transform:rotate(-15.7deg);"></i><i class="g-line grey" style="left:60.40%;top:38.88%;width:8.67cqw;transform:rotate(-14.2deg);"></i><i class="g-line grey" style="left:68.80%;top:34.62%;width:8.62cqw;transform:rotate(-13.1deg);"></i><i class="g-line grey" style="left:77.20%;top:30.71%;width:8.59cqw;transform:rotate(-12.2deg);"></i><i class="g-line grey" style="left:85.60%;top:27.07%;width:8.57cqw;transform:rotate(-11.5deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.41cqw;transform:rotate(-26.7deg);"></i><i class="g-line grey" style="left:18.40%;top:70.54%;width:9.14cqw;transform:rotate(-23.3deg);"></i><i class="g-line grey" style="left:26.80%;top:63.31%;width:8.95cqw;transform:rotate(-20.2deg);"></i><i class="g-line grey" style="left:35.20%;top:57.12%;width:8.82cqw;transform:rotate(-17.7deg);"></i><i class="g-line grey" style="left:43.60%;top:51.77%;width:8.72cqw;transform:rotate(-15.5deg);"></i><i class="g-line grey" style="left:52.00%;top:47.10%;width:8.65cqw;transform:rotate(-13.8deg);"></i><i class="g-line grey" style="left:60.40%;top:42.98%;width:8.60cqw;transform:rotate(-12.4deg);"></i><i class="g-line grey" style="left:68.80%;top:39.29%;width:8.57cqw;transform:rotate(-11.3deg);"></i><i class="g-line grey" style="left:77.20%;top:35.94%;width:8.54cqw;transform:rotate(-10.4deg);"></i><i class="g-line grey" style="left:85.60%;top:32.85%;width:8.52cqw;transform:rotate(-9.7deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.54cqw;transform:rotate(-28.3deg);"></i><i class="g-line grey" style="left:18.40%;top:69.94%;width:9.25cqw;transform:rotate(-24.7deg);"></i><i class="g-line grey" style="left:26.80%;top:62.21%;width:9.03cqw;transform:rotate(-21.5deg);"></i><i class="g-line grey" style="left:35.20%;top:55.58%;width:8.88cqw;transform:rotate(-18.8deg);"></i><i class="g-line grey" style="left:43.60%;top:49.85%;width:8.76cqw;transform:rotate(-16.6deg);"></i><i class="g-line grey" style="left:52.00%;top:44.84%;width:8.69cqw;transform:rotate(-14.7deg);"></i><i class="g-line grey" style="left:60.40%;top:40.42%;width:8.63cqw;transform:rotate(-13.3deg);"></i><i class="g-line grey" style="left:68.80%;top:36.46%;width:8.59cqw;transform:rotate(-12.1deg);"></i><i class="g-line grey" style="left:77.20%;top:32.87%;width:8.56cqw;transform:rotate(-11.2deg);"></i><i class="g-line grey" style="left:85.60%;top:29.56%;width:8.54cqw;transform:rotate(-10.4deg);"></i><i class="g-line grey" style="left:10.00%;top:79.00%;width:9.42cqw;transform:rotate(-26.9deg);"></i><i class="g-line grey" style="left:18.40%;top:70.46%;width:9.16cqw;transform:rotate(-23.4deg);"></i><i class="g-line grey" style="left:26.80%;top:63.18%;width:8.96cqw;transform:rotate(-20.4deg);"></i><i class="g-line grey" style="left:35.20%;top:56.94%;width:8.82cqw;transform:rotate(-17.8deg);"></i><i class="g-line grey" style="left:43.60%;top:51.55%;width:8.72cqw;transform:rotate(-15.6deg);"></i><i class="g-line grey" style="left:52.00%;top:46.85%;width:8.65cqw;transform:rotate(-13.9deg);"></i><i class="g-line grey" style="left:60.40%;top:42.71%;width:8.60cqw;transform:rotate(-12.5deg);"></i><i class="g-line grey" style="left:68.80%;top:39.00%;width:8.57cqw;transform:rotate(-11.3deg);"></i><i class="g-line grey" style="left:77.20%;top:35.63%;width:8.54cqw;transform:rotate(-10.4deg);"></i><i class="g-line grey" style="left:85.60%;top:32.53%;width:8.52cqw;transform:rotate(-9.8deg);"></i></div><div class="g-plot" style="animation-delay:2.4s"><i class="g-line brack" style="left:10.00%;top:79.00%;width:9.80cqw;transform:rotate(-31.0deg);"></i><i class="g-line brack" style="left:18.40%;top:68.90%;width:9.45cqw;transform:rotate(-27.3deg);"></i><i class="g-line brack" style="left:26.80%;top:60.24%;width:9.19cqw;transform:rotate(-23.9deg);"></i><i class="g-line brack" style="left:35.20%;top:52.79%;width:9.00cqw;transform:rotate(-21.1deg);"></i><i class="g-line brack" style="left:43.60%;top:46.32%;width:8.87cqw;transform:rotate(-18.7deg);"></i><i class="g-line brack" style="left:52.00%;top:40.65%;width:8.77cqw;transform:rotate(-16.7deg);"></i><i class="g-line brack" style="left:60.40%;top:35.61%;width:8.70cqw;transform:rotate(-15.1deg);"></i><i class="g-line brack" style="left:68.80%;top:31.08%;width:8.65cqw;transform:rotate(-13.8deg);"></i><i class="g-line brack" style="left:77.20%;top:26.94%;width:8.62cqw;transform:rotate(-12.8deg);"></i><i class="g-line brack" style="left:85.60%;top:23.11%;width:8.59cqw;transform:rotate(-12.1deg);"></i></div><div class="g-tag" style="left:70%;top:14%">BRACK</div>
+        <div class="ember"></div>
+        <div class="label">Twelve more times</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It was not a miracle, and over the following months the people at the Foundry were very careful to say so, in long patient interviews on Radio 4 and in a paper with twenty-three names on it, the last of which was <em>S. Brack, Manor Road Academy, Billingham</em>, which Graham read out loud in assembly in March and which made Shannon put her head on the desk for about five minutes. It was not a miracle. The Brack phase, which was what the Foundry had called it, as the letter said they must, still needed heat. It still needed pressure. But it needed about half as much of both, and that turned out, when they did the sums, to be the difference between a works the size of a town and a box the size of a shipping container that you could run off the wind.</p>
+        <p>The Foundry did what it was good at. Once it knew what shape to look for, it could stop waiting sixty years. It ran the weathering in a cabinet, with salt spray and heat and cold, in a week instead of a lifetime, and then it ran four hundred thousand variations on that over the winter, and by Easter it had a version that worked better than Shannon's lump and could be made out of any slag heap in the country. There were a lot of slag heaps in the country. There were slag heaps in Scunthorpe and Port Talbot and Consett and Corby, and in India and Brazil and China and everywhere anybody had ever made iron, millions upon millions of tonnes of it, built into roads and sea walls and the bottoms of gardens, waiting.</p>
+        <p>People started coming round to look at Len Brack's wall. Not many. A man from the BBC, once, who made Len stand next to it and point. A woman from a company in Leeds, who offered him a sum of money for it that Shannon said was more than he'd been paid in a year at Billingham, and to whom Len said, quite politely, that it was holding up his garden. And a lot of schools. That was the thing nobody had expected. Schools from all over wrote to the Foundry asking if they could bring things in, not slag necessarily, just things, things from their grandads' sheds and the bottoms of their gardens and the beaches near them, things that had sat in the weather for a long time, and the Foundry said yes, and the Thursday hour got very busy indeed.</p>
+        <p>Assay changed too, though it was harder to see. It started asking. At the end of every school hour, in every lab in the country, after the results had been looked at and the groans had been groaned, the calm Stockton voice would say, "Has anybody got anything at home they think I should see?" And the children would think about it, and some weeks somebody would.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall w-scene" aria-hidden="true">
+        <div class="sun w-sun"></div><div class="w-chim"></div><div class="w-turb"></div><div class="w-blades"></div><div class="w-sea"></div><div class="w-grass"></div><i class="w-leek" style="left:3%;height:14%"></i><i class="w-leek" style="left:4.2%;height:18%"></i><i class="w-leek" style="left:93%;height:16%"></i><i class="w-leek" style="left:94.4%;height:12%"></i><i class="w-leek" style="left:95.6%;height:17%"></i><div class="w-wall"><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="loose" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#86908e;--b:#464e50"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#6e8a7a;--b:#34483e"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#8a9a88;--b:#4e5e52"></i><i class="" style="--a:#948a7a;--b:#52483e"></i><i class="" style="--a:#7a8a8a;--b:#3e4e52"></i></div>
+        <div class="ember"></div>
+        <div class="label">a whole wall of it</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first container went in on a farm outside Stokesley in the September, eighteen months after the lump of slag went over the river in a freezer bag. It was painted green, to keep the planning people happy, and it sat at the edge of a field of winter barley next to a single turbine, and it hummed. That was all it did. It hummed, and once a week a tanker came for what it had made, and the farmer, a woman called Gill Hebron who had spent thirty years watching the price of fertiliser go up and down with the price of gas in places she'd never been, said on the local news that it was the most boring thing she had ever bought and she loved it.</p>
+        <p>They let the school go and see it. Graham hired a minibus. Most of the class from that year had moved up and gone their separate ways into GCSE options, but he took the ones who wanted to come, and Shannon came, and she brought her grandad.</p>
+        <p>Len Brack was eighty-one and had a stick he didn't use much. He walked round the container twice, slowly, the way Graham had seen old men walk round a car they were thinking of buying. He put his hand flat on the side of it. It was warm, not hot. He stood there a long time with the barley moving behind him and the turbine going round overhead.</p>
+        <p>"When I was on the converters," he said eventually, not really to anybody, "you couldn't put your hand anywhere. You'd come off a shift with your eyebrows singed. We had a lad called Dennis lost the skin off both his palms on a valve in nineteen seventy. Lovely lad. They gave him a clock when he retired." He took his hand away and looked at it. "This is like a radiator."</p>
+        <p>"It's half the heat," Shannon said. "About. And way less pressure."</p>
+        <p>"I know, pet. You've told me." He looked at her. "You've told me a lot."</p>
+        <p>Gill Hebron came over in her wellies and shook his hand and said she'd heard all about his wall, and Len said it was only a wall, and she said it was the best wall in England as far as she was concerned, and he laughed, which Graham had not heard him do before.</p>
+        <p>On the way back in the minibus, along the A19 with the Cleveland Hills going purple on the left and the old chimneys of Billingham coming up ahead on the right, the ones they'd never quite got round to knocking down, Shannon sat at the back with her grandad and they didn't say much. Graham watched them in the mirror. At one point Len reached into his coat pocket and took out something and gave it to her, and she turned it over in her hands, and it was a little grey stone, glassy, full of holes, oily where it had been broken.</p>
+        <p>"Off the wall," Len said. "Top row. I had a look. There's a bit loose."</p>
+        <p>"You can't take bits off the wall, Grandad. That woman from Leeds'll go mad."</p>
+        <p>"It's my wall," said Len Brack, and he looked out of the window at the river and the chimneys and the grey line of the sea beyond them, where the beach had once been made of stones that weren't stones. "It's been waiting long enough. Put it on your desk at school. Somebody might want to look at it."</p>
+        <p>On the Thursday after, at ten past two, she did.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
