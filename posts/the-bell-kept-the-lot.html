@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bell kept the lot — Ben Miller</title>
+    <meta name="description" content="Terry Clixby rings the bell on the Grimsby fish market and presses the green square, because the law says a named person has to answer for what the machine sells.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0c0f12;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c8d2da;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #b8e0c8; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .scene { container-type: size; }
+      .steel { inset: 0; z-index: 0; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 9px), linear-gradient(180deg, #2a3038, #14181e); }
+      .girders { left: 0; right: 0; top: 0; height: 16%; z-index: 2; background: repeating-linear-gradient(90deg, #1a1e24 0 1cqw, transparent 1cqw 12cqw), linear-gradient(180deg, #0e1014, #1e242c); }
+      .girders::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: repeating-linear-gradient(60deg, #2a3038 0 0.3cqw, transparent 0.3cqw 2cqw), repeating-linear-gradient(-60deg, #2a3038 0 0.3cqw, transparent 0.3cqw 2cqw); }
+      .cam { z-index: 4; width: 2.6cqw; height: 1.4cqw; margin-left: -1.3cqw; border-radius: 0.3cqw; background: #3a424c; animation: pan 6s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+      .cam::after { content: ""; position: absolute; right: 12%; top: 30%; width: 0.6cqw; height: 0.6cqw; border-radius: 50%; background: #ff3a2a; box-shadow: 0 0 0.8cqw #ff3a2a; }
+      .rows { left: 0; right: 0; bottom: 0; height: 46%; z-index: 3; background: repeating-linear-gradient(90deg, transparent 0 1.6cqw, #8aa4b8 1.6cqw 6.4cqw, transparent 6.4cqw 8cqw), linear-gradient(180deg, #2a3442, #121820);
+        -webkit-mask: repeating-linear-gradient(180deg, #000 0 2.4cqw, transparent 2.4cqw 3.4cqw); mask: repeating-linear-gradient(180deg, #000 0 2.4cqw, transparent 2.4cqw 3.4cqw); transform: perspective(40cqw) rotateX(42deg); transform-origin: 50% 100%; opacity: 0.75; }
+      .ice { left: 0; right: 0; bottom: 0; height: 46%; z-index: 3; background: radial-gradient(circle, rgba(230, 245, 255, 0.4) 0 1px, transparent 1.6px) 0 0 / 19px 13px; transform: perspective(40cqw) rotateX(42deg); transform-origin: 50% 100%; }
+      .pole { z-index: 6; width: 0.6cqw; background: linear-gradient(90deg, #4a525c, #2a3038); }
+      .screen { z-index: 7; border-radius: 0.6cqw; background: #0a0e12; box-shadow: 0 0 0 0.4cqw #3a424c, 0 0 3cqw rgba(80, 220, 140, 0.15); overflow: hidden; }
+      .screen > * { position: absolute; }
+      .sq { border-radius: 0.3cqw; background: #2ad07a; box-shadow: 0 0 2cqw rgba(60, 230, 140, 0.7); }
+      .sq.breath { animation: breathe 3.6s ease-in-out infinite; animation-delay: var(--d, 0s); }
+      .wit { font: 700 1.6cqw Karla, sans-serif; letter-spacing: 0.12em; color: #04140a; text-align: center; }
+      .bell { z-index: 9; width: 9cqw; height: 9cqw; }
+      .bell::before { content: ""; position: absolute; left: 10%; right: 10%; top: 26%; bottom: 8%; border-radius: 46% 46% 10% 10% / 70% 70% 10% 10%;
+        background: radial-gradient(ellipse 30% 40% at 34% 34%, rgba(255, 250, 220, 0.8), transparent 70%), linear-gradient(90deg, #8a6420, #e8c060 40%, #a8782a 70%, #6a4a18); box-shadow: 0 0 3cqw rgba(255, 200, 90, 0.35); }
+      .bell::after { content: ""; position: absolute; left: 40%; right: 40%; top: 0; height: 30%; border-radius: 0.6cqw 0.6cqw 0 0; background: linear-gradient(90deg, #3a2a1a, #6a4a2a, #3a2a1a); }
+      .bell i { position: absolute; left: 45%; width: 10%; bottom: 0; height: 12%; border-radius: 50%; background: #5a4218; }
+      .ring { z-index: 8; border-radius: 50%; border: 0.3cqw solid rgba(255, 220, 140, 0.6); opacity: 0; animation: ring 3s ease-out infinite; animation-delay: var(--d, 0s); }
+
+      /* ============ hero: WITNESS ============ */
+      .bell-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(170, 190, 210, 0.16); background: #14181e; }
+      .bell-hero > * { position: absolute; }
+      .bell-hero::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(2, 4, 6, 0.7) 100%), repeating-linear-gradient(112deg, rgba(210, 225, 240, 0.02) 0 2px, transparent 2px 7px); }
+      .bh-dawn { left: 0; right: 0; top: 0; height: 50%; z-index: 1; background: linear-gradient(180deg, #0a1018, #2a3a4a 60%, #6a7a84); opacity: 0.6; }
+      .bh-pole { left: 62%; top: 26%; bottom: 20%; }
+      .bh-screen { left: 54%; width: 22%; top: 18%; height: 30%; }
+      .bh-sq { left: 22%; right: 22%; bottom: 10%; height: 30%; }
+      .bh-wit { left: 22%; right: 22%; bottom: 17%; }
+      .bh-lines { left: 10%; right: 10%; top: 12%; height: 40%; background: repeating-linear-gradient(180deg, rgba(140, 220, 180, 0.35) 0 0.25cqw, transparent 0.25cqw 1.6cqw); }
+      .bh-bell { left: 26%; top: 30%; width: 16cqw; height: 16cqw; animation: sway 3s ease-in-out infinite alternate; transform-origin: 50% 0; }
+      .bh-thumb { left: 64.5%; top: 37%; width: 3cqw; height: 4.2cqw; z-index: 10; border-radius: 50% 50% 40% 40%; background: linear-gradient(180deg, #c89a80, #8a6450); animation: press 3s ease-in-out infinite; }
+
+      /* ============ 1: HOLDING ============ */
+      .hd-scene { background: #0c1014; }
+      .hd-screen { left: 18%; right: 18%; top: 12%; bottom: 20%; }
+      .hd-label { left: 8%; top: 18%; font: 700 4cqw Karla, sans-serif; letter-spacing: 0.16em; color: #8a96a2; }
+      .hd-num { left: 8%; top: 42%; font: 700 12cqw Karla, sans-serif; color: #2ad07a; text-shadow: 0 0 3cqw currentColor; animation: hold 9s steps(1) infinite; }
+      .hd-num::after { content: "4"; animation: holdn 9s steps(1) infinite; }
+      .hd-bar { left: 8%; right: 8%; bottom: 10%; height: 6%; border-radius: 1cqw; background: linear-gradient(90deg, #2ad07a 0 33%, #f09a2a 33% 66%, #e03a2a 66%); opacity: 0.35; }
+      .hd-fill { left: 8%; bottom: 10%; height: 6%; width: 84%; border-radius: 1cqw; background: linear-gradient(90deg, #2ad07a 0 33%, #f09a2a 33% 66%, #e03a2a 66%); clip-path: inset(0 100% 0 0); animation: fill 9s linear infinite; }
+      .hd-phone { right: 8%; bottom: 8%; width: 6%; height: 18%; z-index: 9; border-radius: 0.8cqw; background: #1a1e24; box-shadow: 0 0 0 0.3cqw #3a424c; animation: buzz 9s steps(1) infinite; }
+
+      /* ============ 2: one bell in each hand ============ */
+      .st-scene { background: linear-gradient(180deg, #1a2028, #0c1014); }
+      .st-stairs { left: 26%; width: 48%; top: 10%; bottom: 0; z-index: 3; background: repeating-linear-gradient(180deg, #4a525c 0 0.6cqw, transparent 0.6cqw 3.6cqw); clip-path: polygon(0 100%, 100% 0, 100% 10%, 12% 100%); }
+      .st-rail { left: 26%; width: 48%; top: 0; bottom: 10%; z-index: 4; background: linear-gradient(to top right, transparent calc(50% - 0.3cqw), #6a727c calc(50% - 0.3cqw) calc(50% + 0.3cqw), transparent calc(50% + 0.3cqw)); }
+      .st-floor2 { right: 0; width: 30%; top: 14%; height: 3%; z-index: 3; background: #4a525c; }
+      .st-b1 { left: 22%; top: 56%; }
+      .st-b2 { left: 70%; top: 10%; width: 7cqw; height: 7cqw; filter: saturate(0.6) brightness(0.85); }
+      .st-score { left: 6%; top: 10%; z-index: 9; font: 700 7cqw Karla, sans-serif; color: #c8d2da; }
+      .st-score b { color: #f09a2a; font-weight: 700; animation: drop 6s steps(1) infinite; }
+
+      /* ============ 3: a grid of green squares ============ */
+      .gr-scene { background: linear-gradient(180deg, #e4ecee, #b8c8cc); }
+      .gr-light { left: 0; right: 0; top: 0; height: 8%; z-index: 1; background: repeating-linear-gradient(90deg, #ffffff 0 18cqw, transparent 18cqw 24cqw); box-shadow: 0 0 6cqw #ffffff; }
+      .gr-desk { left: -4%; right: -4%; bottom: 0; height: 18%; z-index: 2; background: #8a949c; }
+      .gr-screen { left: 14%; right: 14%; top: 14%; bottom: 22%; display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(6, 1fr); gap: 0.7cqw; padding: 1.6cqw; box-sizing: border-box; }
+      .gr-screen i { position: static; border-radius: 0.3cqw; background: #12301e; }
+      .gr-screen i.on { background: #2ad07a; box-shadow: 0 0 1.4cqw rgba(60, 230, 140, 0.7); animation: blink 1.3s steps(2) infinite; animation-delay: var(--d); }
+      .gr-screen i.o { background: #f09a2a; box-shadow: 0 0 1.4cqw rgba(240, 150, 40, 0.7); }
+
+      /* ============ 4: aisle F, row nine ============ */
+      .af-scene { background: #0e1216; }
+      .af-sign { left: 6%; top: 20%; z-index: 9; font: 700 10cqw Karla, sans-serif; color: #c8d2da; opacity: 0.85; }
+      .af-lot { right: 6%; top: 22%; z-index: 9; font: 600 3cqw Karla, sans-serif; letter-spacing: 0.12em; color: #2ad07a; text-shadow: 0 0 2cqw rgba(60, 230, 140, 0.6); }
+      .af-box { z-index: 5; width: 7cqw; height: 4cqw; border-radius: 0.3cqw; background: linear-gradient(180deg, #3a6aa8, #22406a); box-shadow: inset 0 0.8cqw 0 rgba(220, 240, 255, 0.5); }
+      .af-box.bad { box-shadow: inset 0 0.8cqw 0 rgba(220, 240, 255, 0.5), 0 0 0 0.3cqw #2ad07a, 0 0 2cqw rgba(60, 230, 140, 0.5); }
+      .af-temp { left: 44%; top: 32%; width: 30%; height: 18%; z-index: 8; background: linear-gradient(90deg, #4aa8e8 0 40%, #e03a2a 40% 52%, #4aa8e8 52%); clip-path: polygon(0 60%, 10% 58%, 20% 62%, 30% 59%, 40% 60%, 44% 10%, 50% 6%, 52% 62%, 62% 60%, 72% 61%, 82% 59%, 100% 60%, 100% 66%, 0 66%); opacity: 0.85; }
+      .af-light { left: 30%; width: 16%; top: 16%; height: 3%; z-index: 4; background: #e8f0f8; box-shadow: 0 0 4cqw #e8f0f8; animation: flicker 3s steps(3) infinite; }
+
+      /* ============ 5: it rang in silence ============ */
+      .cc-scene { background: #050607; }
+      .cc-feed { left: 10%; right: 10%; top: 8%; bottom: 12%; z-index: 2; overflow: hidden; background: linear-gradient(180deg, #4a5052, #2a2e30); filter: grayscale(1) contrast(1.1); }
+      .cc-feed > * { position: absolute; }
+      .cc-aisle { left: 0; right: 0; bottom: 0; height: 60%; background: repeating-linear-gradient(90deg, transparent 0 3%, #8a9296 3% 11%, transparent 11% 14%); transform: perspective(30cqw) rotateX(50deg); transform-origin: 50% 100%; opacity: 0.7; }
+      .cc-man { left: 70%; top: 40%; width: 1.6%; height: 9%; border-radius: 40% 40% 10% 10%; background: #e8e8e8; }
+      .cc-man::before { content: ""; position: absolute; left: 10%; right: 10%; top: -30%; aspect-ratio: 1; border-radius: 50%; background: #b8b8b8; }
+      .cc-pole { left: 73%; top: 30%; width: 0.4%; height: 19%; background: #9a9a9a; }
+      .cc-sq { left: 72.4%; top: 30%; width: 2%; height: 3%; background: #ffffff; animation: blink 1.6s steps(2) infinite; }
+      .cc-scan { inset: 0; background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px); }
+      .cc-noise { inset: -20%; background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0 0.6px, transparent 1px) 0 0 / 5px 7px; animation: noise 0.4s steps(4) infinite; }
+      .cc-ts { left: 3%; top: 4%; font: 600 2cqw "Courier New", monospace; color: #e8e8e8; }
+      .cc-rec { right: 3%; top: 4%; font: 600 2cqw "Courier New", monospace; color: #ff4a3a; animation: blink 1.2s steps(2) infinite; }
+      .cc-mute { right: 13%; bottom: 16%; z-index: 4; width: 4cqw; height: 4cqw; border-radius: 50%; border: 0.3cqw solid rgba(200, 210, 220, 0.6); }
+      .cc-mute::after { content: ""; position: absolute; left: -10%; right: -10%; top: 46%; height: 0.3cqw; background: rgba(200, 210, 220, 0.8); transform: rotate(-45deg); }
+
+      /* ============ 6: ACCOUNTABLE PERSON ============ */
+      .ap-scene { background: radial-gradient(ellipse 70% 80% at 50% 40%, #2a323c, #0a0c10 80%); }
+      .ap-lanyard { left: 49%; width: 2%; top: -4%; height: 26%; z-index: 3; background: linear-gradient(90deg, #1a3a6a, #2a5a9a, #1a3a6a); }
+      .ap-card { left: 32%; width: 36%; top: 20%; height: 66%; z-index: 4; border-radius: 1.4cqw; background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), transparent 40%), #eef2f4; box-shadow: 0 2cqw 4cqw rgba(0, 0, 0, 0.6), inset 0 0 0 0.4cqw rgba(255, 255, 255, 0.7); transform: rotate(-3deg); animation: hang 6s ease-in-out infinite alternate; }
+      .ap-card > * { position: absolute; }
+      .ap-head { left: 6%; right: 6%; top: 8%; text-align: center; font: 700 2.4cqw Karla, sans-serif; letter-spacing: 0.1em; color: #1a2a3a; }
+      .ap-photo { left: 30%; right: 30%; top: 28%; height: 44%; background: linear-gradient(180deg, #a8b4bc, #6a7880); }
+      .ap-photo::after { content: ""; position: absolute; left: 28%; right: 28%; top: 16%; aspect-ratio: 1; border-radius: 50%; background: #3a4450; box-shadow: 0 6cqw 0 1.4cqw #3a4450; }
+      .ap-sheen { inset: 0; border-radius: inherit; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.6) 45%, transparent 55%); background-size: 300% 100%; animation: sheen 5s linear infinite; }
+
+      /* ============ 7: like breathing ============ */
+      .br-scene { background: #0c1014; }
+      .br-dawn { left: 0; right: 0; top: 0; height: 30%; z-index: 1; background: linear-gradient(180deg, #1a2430, #6a7c8a 70%, #c8b8a0); opacity: 0.75; }
+      .br-gallery { left: 0; right: 0; top: 20%; height: 4%; z-index: 3; background: #1a1e24; }
+      .br-drawer { right: 6%; width: 30%; bottom: 8%; height: 26%; z-index: 10; background: linear-gradient(180deg, #5a4a3a, #3a2e22); box-shadow: 0 1.4cqw 3cqw rgba(0, 0, 0, 0.6), inset 0 0 0 0.4cqw #2a2018; }
+      .br-drawer::before { content: ""; position: absolute; left: 6%; right: 6%; top: 8%; bottom: 20%; background: #1e1812; }
+      .br-ties { right: 9%; width: 10%; bottom: 20%; height: 3%; z-index: 11; background: repeating-linear-gradient(90deg, #e8e8e0 0 0.3cqw, transparent 0.3cqw 1cqw); }
+      .br-bell { right: 16%; bottom: 16%; width: 9cqw; height: 9cqw; z-index: 12; }
+      .br-hand { right: 18.6%; bottom: 33%; width: 4cqw; height: 5cqw; z-index: 13; border-radius: 40% 40% 50% 50%; background: linear-gradient(180deg, #c89a80, #8a6450); }
+
+      @keyframes pan { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+      @keyframes breathe { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+      @keyframes ring { 0% { opacity: 0; transform: scale(0.4); } 10% { opacity: 0.9; } 100% { opacity: 0; transform: scale(1.8); } }
+      @keyframes sway { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+      @keyframes press { 0%, 40% { transform: translateY(-40%); } 50%, 60% { transform: translateY(0); } 100% { transform: translateY(-40%); } }
+      @keyframes hold { 0% { color: #2ad07a; } 33% { color: #f09a2a; } 66% { color: #e03a2a; } }
+      @keyframes holdn { 0% { content: "4"; } 33% { content: "30"; } 66% { content: "60"; } }
+      @keyframes fill { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes buzz { 0%, 66% { box-shadow: 0 0 0 0.3cqw #3a424c; } 70% { box-shadow: 0 0 0 0.3cqw #3a424c, 0 0 3cqw 1cqw rgba(255, 70, 50, 0.8); } }
+      @keyframes drop { 0% { color: #c8d2da; } 50% { color: #f09a2a; } }
+      @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.25; } }
+      @keyframes flicker { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 0.9; } }
+      @keyframes noise { from { transform: translate(0, 0); } to { transform: translate(4px, 6px); } }
+      @keyframes hang { from { transform: rotate(-3deg); } to { transform: rotate(2deg); } }
+      @keyframes sheen { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        .scene { opacity: 1; transform: none; }
+        .hd-num { color: #e03a2a; } .hd-num::after { content: "60"; } .hd-fill { clip-path: inset(0 0 0 0); }
+        .hd-phone { box-shadow: 0 0 0 0.3cqw #3a424c, 0 0 3cqw 1cqw rgba(255, 70, 50, 0.8); }
+        .st-score b { color: #f09a2a; }
+        .ring { opacity: 0.5; transform: scale(1.2); }
+        .sq.breath { opacity: 0.6; }
+        .bh-thumb { transform: translateY(0); }
+      }
+.bell-hero .bh-thumb{transform:translate(4.5cqw,1.2cqw)}
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="bell-hero" aria-hidden="true">
+          <div class="steel"></div><div class="bh-dawn"></div><div class="girders"></div><i class="cam" style="left:12%;top:15%;--d:-0.7s"></i><i class="cam" style="left:36%;top:15%;--d:-0.8s"></i><i class="cam" style="left:60%;top:15%;--d:-3.6s"></i><i class="cam" style="left:84%;top:15%;--d:-1.1s"></i><div class="rows"></div><div class="ice"></div>
+          <div class="pole bh-pole"></div><div class="screen bh-screen"><div class="bh-lines"></div><div class="sq bh-sq"></div><div class="wit bh-wit">WITNESS</div></div><div class="bh-thumb"></div>
+          <i class="ring" style="left:34%;top:40%;width:14cqw;height:14cqw;margin:-7.0cqw;--d:0.0s"></i><i class="ring" style="left:34%;top:40%;width:14cqw;height:14cqw;margin:-7.0cqw;--d:0.6s"></i><i class="ring" style="left:34%;top:40%;width:14cqw;height:14cqw;margin:-7.0cqw;--d:1.2s"></i><div class="bell bh-bell" style=""><i></i></div>
+          <div class="label">WITNESS</div>
+        </div>
+        <h1>The bell kept the lot</h1>
+        <time datetime="2026-10-28">28 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Terry Clixby had rung the bell on the Grimsby fish market for thirty-six years, and for the last four of them he had not sold a single fish.</p>
+        <p>He still got up at ten to four. His wife, Carol, used to say he could have slept until seven now and nobody on God's earth would know the difference, and he would say that the fish knew, which wasn't true and they both knew it wasn't true, but it was the kind of thing you said in a kitchen at four in the morning with the kettle going and the street light coming through the blind in stripes. He drove the same way down Fish Dock Road, past the smokehouses that still smelled of oak and the ones that had gone over to the electric kilns and smelled of nothing much, and he parked in the same bay with his name painted on the kerb in letters that had faded to a sort of pink. Then he put on his white coat and his hat and his wellies, and he walked onto the floor, and he took the brass bell off its hook by the office door, and he stood at the head of the first row of boxes and waited for the screen to tell him to ring it.</p>
+        <p>The screen was mounted on a pole at the end of each aisle, and it was called Tally. Everyone called it Tally, even the people at the company in Leeds who had built it, though its proper name was something longer with "Marketplace" and "Assurance" in it that appeared on the letters and nowhere else. Tally looked at the fish. It looked at them through the cameras slung under the roof girders and the cameras on the little carts that ran up and down the rows like trolleys in a supermarket, and it looked at them through the tags the boats put on every box when it went into the hold, and through the temperature loggers, and through the catch certificates, and through whatever it was the buyers' own systems told it about what they wanted and how much they were willing to pay. It graded every box, cod and haddock and plaice and monk and the odd mournful turbot, faster than Terry could have read the label. It set the reserves. It ran the sale itself in a few seconds per row, the bids coming in from merchants' machines in Peterhead and Boulogne and Birmingham and a cold store in Rotterdam that seemed to want everything, and it settled the money before the box had moved. And then, because the law said it had to, it lit up the little green square at the bottom of the screen that said WITNESS, and Terry rang the bell, and pressed the square with his thumb, and that was the lot sold.</p>
+        <p>The law was the Accountable Persons Act. It had gone through in the year after the cattle markets at Skipton and Bakewell had both been found to have sold the same three hundred head twice, on two different systems, to two different buyers who had then sued each other and both lost, and in the year after the rest of the business with the care homes and the parcel firms and the thing at the water company that nobody liked to talk about. The Act said that wherever a machine made a binding decision about money or safety in a regulated trade, a named human being had to witness it, and be answerable for it. The minister on the television had held up a little laminated card that said ACCOUNTABLE PERSON with a photograph on it and said that this was the face of the decision, that there would always be a face, that we were not going to let the machines hide behind each other. Terry had been watching with Carol, and she had said, well, that's you, then, and he had laughed, because he hadn't thought it would be him. He had thought they would get somebody from Leeds.</p>
+        <p>But the market had wanted someone who knew fish, or who looked as if they knew fish, and the company had wanted someone the merchants trusted, and the Act said the witness had to be present on the premises and able to stop a sale, and Terry had been the auctioneer, so it was Terry. They kept his wage the same. They gave him a card with his photograph on it. They gave him the bell back, too, because for the first few weeks there had been no bell at all, just the green square, and the old merchants who still came down in person had complained that they couldn't tell when anything was happening, and someone in Leeds had decided that the bell was good for trust. So Terry rang the bell.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall hd-scene" aria-hidden="true">
+        <div class="screen hd-screen"><div class="hd-label">HOLDING</div><div class="hd-num"></div><div class="hd-bar"></div><div class="hd-fill"></div></div><div class="hd-phone"></div>
+        <div class="label">HOLDING</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>He was good at it, at first, in the way you can be good at anything you've done long enough. He would walk ahead of the screen sometimes, the way he used to walk ahead of the buyers, and he would look at the boxes, and lift a gill flap with his finger, and press the belly of a cod to feel it come back, and smell it, and when the green square came up he would already know whether he was happy. Tally did not care whether he was happy. Tally was right, almost all the time, about everything, and it was right faster than he was, and after the first few months it was selling a row of forty boxes in the time it took him to get halfway down it, and the square would be lit and blinking at the end of the aisle with the little counter beside it that said HOLDING, and then a number of seconds, and then after thirty seconds the counter went orange and after sixty it went red, and if it went red a woman called Dionne rang him from Leeds on the phone in his top pocket and asked him, very nicely, whether there was an issue.</p>
+        <p>There was never an issue. That was the thing. In the first year he stopped eleven lots. Eleven, out of something like four hundred thousand. Twice it was a box that had been knocked off a pallet and come open and he could see it was spoiled, and Tally had graded it before the box fell. Once it was a halibut that had come up as a turbot, which he thought was funny and Tally thought was a tagging error by the boat, which it was. The others he couldn't really explain, even to himself, beyond the fact that he hadn't liked the look of them, and in each case Dionne had rung, and he had said he wasn't happy, and the lot had been pulled, and someone had come from the lab on Wickham Road and tested it, and it had been fine. Every single time it had been fine. And every time he stopped a lot, the merchants' machines in Boulogne and Rotterdam marked the market down a fraction, because a stop was a delay, and a delay was a cost, and the market's score on the trading platform went from a 98 to a 97 and back again over the next fortnight, and at the end of the quarter the manager, Andy Pask, who had been a lumper on the boats when he was sixteen and had always called Terry "boss" even after he became his boss, came and stood next to him by the ice machine and said that nobody was asking him to stop doing his job, but maybe he could have a look at the numbers.</p>
+        <p>Terry had a look at the numbers. The numbers were very clear.</p>
+        <p>By the second year he had stopped walking ahead of the screen. By the third he had stopped lifting the gill flaps, because the cart cameras were better at it than he was, and could see the colour of the gill in a light his eyes didn't have, and because the merchants who still came down to the market didn't come down to the floor any more but stood up in the gallery with their coffees and watched the screens, and nobody was watching him lift anything. He rang the bell when the square lit up. He pressed it with his thumb. He moved to the next aisle. Some mornings he did it four thousand times. Some mornings, during the big landings in the winter when the Icelandic boats came in and the market ran two floors at once, it was more like nine thousand, and the company had given him a second bell, a smaller one, for the second floor, so that he would be on the premises for both, and he would walk between them up the iron stairs with one bell in each hand, ringing.</p>
+        <p>He got a pain in his thumb. He went to the doctor about it and the doctor, who was very young and kept glancing at her own screen while he talked, said it was tendonitis, and asked him what he did for a living, and he said he was an auctioneer, and she said she hadn't known there were still auctioneers, and he said there weren't.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st-scene" aria-hidden="true">
+        <div class="girders"></div><i class="cam" style="left:12%;top:15%;--d:-0.8s"></i><i class="cam" style="left:36%;top:15%;--d:-2.8s"></i><i class="cam" style="left:60%;top:15%;--d:-2.5s"></i><i class="cam" style="left:84%;top:15%;--d:-1.3s"></i><div class="st-floor2"></div><div class="st-stairs"></div><div class="st-rail"></div><i class="ring" style="left:27%;top:62%;width:10cqw;height:10cqw;margin:-5.0cqw;--d:0.0s"></i><i class="ring" style="left:27%;top:62%;width:10cqw;height:10cqw;margin:-5.0cqw;--d:0.6s"></i><i class="ring" style="left:27%;top:62%;width:10cqw;height:10cqw;margin:-5.0cqw;--d:1.2s"></i><div class="bell st-b1" style=""><i></i></div><i class="ring" style="left:73.5%;top:14%;width:8cqw;height:8cqw;margin:-4.0cqw;--d:0.0s"></i><i class="ring" style="left:73.5%;top:14%;width:8cqw;height:8cqw;margin:-4.0cqw;--d:0.6s"></i><div class="bell st-b2" style=""><i></i></div><div class="st-score"><s>98</s> <b>97</b></div>
+        <div class="label">one bell in each hand</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>His daughter, Leanne, was an accountable person too.</p>
+        <p>She'd been a dental nurse, and then she'd done a course, and now she worked in a building on the industrial estate at Stallingborough that had no sign on it, in a room with twenty-two other people sitting at desks under the kind of lighting that made everyone look as if they'd just been told something bad. Each of them was the named witness for between forty and sixty workplaces. Leanne had a scaffolding firm in Scunthorpe and two care homes in Cleethorpes and the self-checkouts at a garden centre and a pharmacy dispensing robot in Louth and a hauliers' yard and a small abattoir near Brigg and some others she couldn't remember without looking. She was present on the premises by camera. The Act had been amended in its second year to allow that, after the companies had pointed out how many people it would take otherwise, and after a judge had said that presence was a matter of attention and not of distance, which Leanne said was the funniest thing anyone had ever said about her job, because there was no attention. There couldn't be. Her screen showed her a grid of green squares, and the squares lit up, and she pressed them, and if she held one for more than ninety seconds a woman who sounded a lot like Dionne rang her and asked if there was an issue.</p>
+        <p>"How many is it a shift?" Terry asked her, one Sunday, at the table, while Carol was doing the gravy.</p>
+        <p>"Depends," said Leanne. "Thirty thousand. Forty."</p>
+        <p>"Forty thousand."</p>
+        <p>"The care homes are the worst. Every medication round is a decision. Every time they move someone with the hoist, that's a decision. Every time the door system lets someone out into the garden." She was cutting a roast potato into smaller and smaller pieces without eating any of them. "There's a woman at Seaview who goes out to the bench by the roses every afternoon at about three and the door asks me every time. I've never seen her. I just see the square."</p>
+        <p>"You could look," said Terry.</p>
+        <p>"I can look," said Leanne, "if I want to be at ninety seconds on everything else."</p>
+        <p>Carol came in with the gravy and said she didn't want work talk at the table, and so they talked about Leanne's lad, Jayden, who was doing a sport science degree that nobody in the family understood, and about the Mariners, who had lost again, and about whether it was worth getting the conservatory roof done before the winter, which it was, everybody said it was, but nobody had the money. And afterwards, when Leanne was putting her coat on in the hall, she said to her dad, very quietly, because her mum didn't like it, that she'd been reading about a man in Wolverhampton.</p>
+        <p>He'd been an accountable person for a bus depot, she said. Just one depot, a proper old-fashioned job, a man in a hut. One of the buses had pulled out into a cyclist and the cyclist had died, and the inquiry found that the bus had done exactly what the software said it should, and the software had done exactly what the regulations said it should, and the regulations had been followed by the company to the letter, and so the only person in the whole chain who had failed in his duty was the man in the hut who had pressed the green square at four minutes past seven that morning for the bus's departure. He was answerable. That was what the Act said. That was what the card said. He was the face.</p>
+        <p>"What happened to him?" said Terry.</p>
+        <p>"Nothing yet," said Leanne. "It's still going." She did her top button up. "He's got a page where people send him money for his lawyer. I sent him twenty quid."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gr-scene" aria-hidden="true">
+        <div class="gr-light"></div><div class="gr-desk"></div><div class="screen gr-screen"><i class="on" style="--d:-1.09s"></i><i class="on" style="--d:-0.24s"></i><i class="on" style="--d:-0.31s"></i><i class="on" style="--d:-1.28s"></i><i class="on" style="--d:-1.29s"></i><i class="on" style="--d:-1.18s"></i><i class="on" style="--d:-0.90s"></i><i></i><i class="on" style="--d:-0.88s"></i><i class="on" style="--d:-0.02s"></i><i></i><i class="on" style="--d:-0.68s"></i><i></i><i class="on" style="--d:-0.54s"></i><i class="on" style="--d:-0.48s"></i><i class="on" style="--d:-0.99s"></i><i></i><i class="on" style="--d:-0.33s"></i><i></i><i></i><i class="on" style="--d:-1.00s"></i><i class="on" style="--d:-0.90s"></i><i class="on" style="--d:-0.04s"></i><i class="on" style="--d:-1.19s"></i><i class="on" style="--d:-0.88s"></i><i></i><i class="on" style="--d:-1.12s"></i><i></i><i class="on" style="--d:-0.58s"></i><i class="on" style="--d:-0.87s"></i><i class="on" style="--d:-1.13s"></i><i class="on" style="--d:-0.30s"></i><i class="o"></i><i class="on" style="--d:-0.72s"></i><i class="on" style="--d:-1.08s"></i><i></i><i class="on" style="--d:-1.28s"></i><i class="on" style="--d:-0.47s"></i><i class="on" style="--d:-0.26s"></i><i class="on" style="--d:-0.17s"></i><i></i><i class="on" style="--d:-0.85s"></i><i class="on" style="--d:-0.99s"></i><i class="on" style="--d:-1.05s"></i><i></i><i class="on" style="--d:-0.66s"></i><i></i><i></i><i class="on" style="--d:-0.91s"></i><i class="on" style="--d:-1.03s"></i><i class="on" style="--d:-0.75s"></i><i class="on" style="--d:-0.68s"></i><i></i><i></i><i class="on" style="--d:-0.51s"></i><i class="on" style="--d:-1.10s"></i><i></i><i class="on" style="--d:-0.08s"></i><i class="on" style="--d:-1.08s"></i><i class="o"></i><i></i><i class="on" style="--d:-0.04s"></i><i class="on" style="--d:-0.09s"></i><i></i><i class="on" style="--d:-1.06s"></i><i class="on" style="--d:-0.44s"></i><i class="on" style="--d:-0.27s"></i><i class="on" style="--d:-1.02s"></i><i></i><i></i><i class="on" style="--d:-1.30s"></i><i class="on" style="--d:-0.48s"></i></div>
+        <div class="label">a grid of green squares</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The thing with the cod happened in February.</p>
+        <p>It was a Tuesday, and it was the second floor running, so it was a big landing, and Terry was moving between the two bells. He remembered it afterwards with the strange extra clarity that the mind lays on top of ordinary days once something has gone wrong in them, so that he could tell the solicitor what the light had been like through the high windows and that one of the strip lights over aisle C was flickering and that the young lumper, the Romanian lad, Mihai, had been singing something in the cold store. He remembered that the second bell had a crack in its lip and made a flatter sound than the first one. He remembered that he had had the pain in his thumb that morning and had been pressing the squares with his middle finger to rest it.</p>
+        <p>He did not remember aisle F, row nine, lot 4471. He had no memory of it at all. But the logs said that the square had lit up for that lot at 06:41:12, and that it had been held for four seconds, which was about average, and that the bell on the second floor had rung, and that the thumbprint on the square had been his, or near enough to his to pass. It was a hundred and sixty boxes of cod off a Faroese boat called the <em>Norðlýsið</em>, and Tally had graded it as A, and it had gone to a processor in Hull who'd sold it on to a chain of fish-and-chip shops in Yorkshire and the north-west, forty-one of them, and by the following Monday about two hundred and eighty people had been ill, and nine had been in hospital, and an elderly man in Accrington had died.</p>
+        <p>It turned out that the boat's freezer had failed for nineteen hours somewhere off the Shetlands and the crew had restarted it and not logged it, and the temperature tags had been tampered with by somebody, nobody could say who, in a way that took the lab several days to understand. Tally had not seen it. Tally had been told, by every source Tally trusted, that the fish was perfect. The cart cameras had seen fish that looked perfect, because it was cold and bright-eyed and firm, because it had been frozen again, hard, after it had begun to turn. Afterwards, in the long reports, the experts disagreed about whether a person would have seen it either. Some of them said that an experienced auctioneer might have noticed something about the texture of the flesh, a slight give, a dullness at the belly. Some of them said absolutely not. One of them, a professor from Aberdeen who had worked on the docks in her twenties, said on the radio that she thought she might have smelled it, and then she said that of course she couldn't be sure, and that was the clip that got played on the news all week, the first part and not the second.</p>
+        <p>The company in Leeds published a statement that said Tally had performed within its certified parameters at every stage. The boat's owners were in the Faroes and said very little. The processor in Hull said it had relied in good faith on a graded, witnessed sale at a regulated market. The chip shops said they had relied on the processor. The regulator, which was a new one, set up under the Act, with a name that Terry could never remember and an office in Darlington, said that it would be reviewing the conduct of the accountable person.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall af-scene" aria-hidden="true">
+        <div class="girders"></div><i class="cam" style="left:12%;top:15%;--d:-0.4s"></i><i class="cam" style="left:36%;top:15%;--d:-1.2s"></i><i class="cam" style="left:60%;top:15%;--d:-1.0s"></i><i class="cam" style="left:84%;top:15%;--d:-1.5s"></i><div class="af-light"></div><div class="af-sign">F</div><div class="af-lot">lot 4471</div><div class="af-temp"></div><i class="af-box" style="left:8%;top:56%"></i><i class="af-box" style="left:17%;top:56%"></i><i class="af-box" style="left:26%;top:56%"></i><i class="af-box" style="left:35%;top:56%"></i><i class="af-box" style="left:44%;top:56%"></i><i class="af-box" style="left:53%;top:56%"></i><i class="af-box" style="left:62%;top:56%"></i><i class="af-box" style="left:71%;top:56%"></i><i class="af-box" style="left:80%;top:56%"></i><i class="af-box" style="left:89%;top:56%"></i><i class="af-box" style="left:8%;top:67%"></i><i class="af-box" style="left:17%;top:67%"></i><i class="af-box" style="left:26%;top:67%"></i><i class="af-box" style="left:35%;top:67%"></i><i class="af-box" style="left:44%;top:67%"></i><i class="af-box" style="left:53%;top:67%"></i><i class="af-box" style="left:62%;top:67%"></i><i class="af-box" style="left:71%;top:67%"></i><i class="af-box" style="left:80%;top:67%"></i><i class="af-box" style="left:89%;top:67%"></i><i class="af-box" style="left:8%;top:78%"></i><i class="af-box" style="left:17%;top:78%"></i><i class="af-box" style="left:26%;top:78%"></i><i class="af-box bad" style="left:35%;top:78%"></i><i class="af-box" style="left:44%;top:78%"></i><i class="af-box" style="left:53%;top:78%"></i><i class="af-box" style="left:62%;top:78%"></i><i class="af-box" style="left:71%;top:78%"></i><i class="af-box" style="left:80%;top:78%"></i><i class="af-box" style="left:89%;top:78%"></i>
+        <div class="label">aisle F, row nine</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They suspended him on full pay while the review went on, which meant that for the first time in thirty-six years he did not get up at ten to four. He got up at ten to four anyway, for the first fortnight, and sat in the kitchen with the kettle, and Carol came down at six and found him there and didn't say anything and made toast. After the fortnight he started sleeping until half five, and then until seven, and then he found he couldn't sleep at all after about two, and he would lie in the dark listening to the gulls on the roof and thinking about aisle F, row nine. He tried to see it. He tried to walk down the aisle in his mind, from the iron stairs, with the cracked bell in his hand, past the flickering light, and look at the boxes, and lift a gill flap, and press a belly, and smell. But he knew he hadn't. He knew he'd been at the end of the aisle with his middle finger on the square. He'd been at the end of every aisle for years.</p>
+        <p>The market brought in a lad called Kacper to do the witnessing while Terry was off. Kacper was twenty-three. He had been a warehouse operative at the Amazon place at Normanby and before that he had done six months at Stallingborough, in the same room as Leanne, on the gardening centres and the pharmacies. He didn't know anything about fish, and the company didn't need him to know anything about fish. He knew how to keep his holding time down. He got the market's score up to 99 within a month, which was the highest it had ever been, and Andy Pask put a photo of him in the newsletter that went out to the merchants, standing in front of the screen in a new white coat, holding the bell, smiling. Leanne sent the picture to Terry on his phone without a message. He looked at it for a long time. The lad was holding the bell by the handle, upside down, so the clapper had fallen against the inside of the lip and the bell couldn't have rung even if he'd tried.</p>
+        <p>In April the man in Wolverhampton was found to have breached his duty as an accountable person, and he was fined eleven thousand pounds and disqualified from accountable roles for five years, and the coroner said in her summing-up that the Act had placed a heavy and perhaps unreasonable burden on an individual, but that it was not for the coroner's court to rewrite the law, and that the law was clear. Leanne sent him another twenty quid. Terry sent him fifty, which he didn't tell Carol about.</p>
+        <p>In May there was the hearing in Darlington.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cc-scene" aria-hidden="true">
+        <div class="cc-feed"><div class="cc-aisle"></div><div class="cc-pole"></div><div class="cc-sq"></div><div class="cc-man"></div><div class="cc-scan"></div><div class="cc-noise"></div><div class="cc-ts">06:41:12</div></div><div class="cc-mute"></div>
+        <div class="label">it rang in silence</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It was held in a room on the fourth floor of an office building beside the station, with a view over the car park and a long pale wooden table and a jug of water on it that nobody drank from. The panel was three people. The woman in the middle, the chair, was called Mrs. Okafor-Lloyd, and she was a former magistrate, and she was courteous to him in a way that made his stomach hurt. His solicitor was from the union, a quick tired man called Gareth who had told him in the corridor that he had nine of these on this month, that the outcomes were all over the place, and that the important thing was not to say that the machine did it.</p>
+        <p>"But the machine did do it," Terry had said.</p>
+        <p>"I know," said Gareth. "Don't say it."</p>
+        <p>They had all the logs. They had the footage from the girder cameras of aisle F at 06:41, and they played it on a big screen on the wall, and there he was, a small grey-haired figure in a white coat at the end of the aisle, very far away, with his back mostly to the camera, holding a bell. You could see the square light up on the pole beside him. You could see him lift his hand. You could see the hand come down. You couldn't hear the bell, because the cameras had no microphones, so it rang in silence. Then the figure turned and walked away up the iron stairs, and the clip ended, and Mrs. Okafor-Lloyd asked him whether he had inspected lot 4471 before he witnessed it.</p>
+        <p>He said no.</p>
+        <p>She asked whether he had inspected any of the lots in aisle F.</p>
+        <p>He said no.</p>
+        <p>She asked, not unkindly, how many lots he had inspected that morning, physically, with his hands or his eyes, before witnessing their sale.</p>
+        <p>He thought about it. He said he didn't think he had inspected any.</p>
+        <p>"Mr. Clixby," she said, "can you help the panel to understand what you understood your role to be?"</p>
+        <p>And he tried. He did try. He tried to tell her about the holding counter going orange at thirty seconds and red at sixty, and about Dionne ringing, and the score going from 98 to 97, and Andy Pask by the ice machine, and the eleven lots he'd stopped in the first year that had all been fine, every single one. He tried to tell her that there had been four thousand lots that morning and nine thousand some mornings, and that if he had stopped to lift a gill flap on each one the boats would still be waiting to land. He told her about his thumb. He heard himself say that you couldn't do it, the job, not the way the card said, not the way the minister had held it up on the telly, that it was not possible for a man to look at that many fish, and that everyone knew it, the company knew it, the market knew it, the merchants in Boulogne knew it, the government must have known it, they'd done the sums.</p>
+        <p>"So who," said Mrs. Okafor-Lloyd, "was answerable for lot 4471?"</p>
+        <p>Gareth had his hand flat on the table between them. Terry looked at it.</p>
+        <p>"Me," he said. "It says so on the card."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ap-scene" aria-hidden="true">
+        <div class="ap-lanyard"></div><div class="ap-card"><div class="ap-head">ACCOUNTABLE PERSON</div><div class="ap-photo"></div><div class="ap-sheen"></div></div>
+        <div class="label">ACCOUNTABLE PERSON</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They found against him in June. The panel's written decision was eighteen pages long and very fair, everyone said so afterwards, even Gareth. It said that the panel accepted that the volume of decisions placed upon Mr. Clixby was very high. It said that the panel noted with concern the evidence regarding holding-time metrics and their effect on witness behaviour, and that it would be drawing that evidence to the attention of the Secretary of State. It said that the panel did not find that Mr. Clixby had been dishonest, or reckless, and it noted his long and unblemished service. It said, nevertheless, that the Act required an accountable person to exercise genuine and meaningful oversight, and that by his own account Mr. Clixby had exercised none, and that the panel could not find that a person who had exercised no oversight had discharged a duty of oversight. It fined him four thousand pounds, which the union paid, and disqualified him from accountable roles for three years.</p>
+        <p>The company in Leeds sent a letter to the market, which Andy Pask forwarded to him with a line on top saying he was sorry, boss, and that he'd tried. The letter said that it supported the regulator's findings and would continue to work with its partners to promote a strong culture of human accountability across the platform. It said that the market's witness, Mr. K. Wójcik, continued to perform to an exceptionally high standard. It said that the platform would shortly be introducing a new feature that would allow a single accountable person to witness up to six markets concurrently, by camera, from a central location, in line with the recent amendment.</p>
+        <p>The man from the fish-and-chip shops' insurers rang the house twice, about a civil claim, and both times Carol answered and told him to go and boil his head, and both times he said he quite understood, and rang off.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall br-scene" aria-hidden="true">
+        <div class="steel"></div><div class="br-dawn"></div><div class="girders"></div><i class="cam" style="left:12%;top:15%;--d:-2.7s"></i><i class="cam" style="left:36%;top:15%;--d:-3.8s"></i><i class="cam" style="left:60%;top:15%;--d:-3.0s"></i><i class="cam" style="left:84%;top:15%;--d:-4.4s"></i><div class="br-gallery"></div><div class="rows"></div><div class="ice"></div><div class="pole" style="left:12%;top:40%;bottom:18%"></div><div class="screen" style="left:8%;width:8.6%;top:32%;height:12%"><div class="sq breath" style="left:22%;right:22%;top:30%;bottom:30%;--d:0.0s"></div></div><div class="pole" style="left:30%;top:40%;bottom:18%"></div><div class="screen" style="left:26%;width:8.6%;top:32%;height:12%"><div class="sq breath" style="left:22%;right:22%;top:30%;bottom:30%;--d:-0.5s"></div></div><div class="pole" style="left:48%;top:40%;bottom:18%"></div><div class="screen" style="left:44%;width:8.6%;top:32%;height:12%"><div class="sq breath" style="left:22%;right:22%;top:30%;bottom:30%;--d:-1.0s"></div></div><div class="pole" style="left:66%;top:40%;bottom:18%"></div><div class="screen" style="left:62%;width:8.6%;top:32%;height:12%"><div class="sq breath" style="left:22%;right:22%;top:30%;bottom:30%;--d:-1.5s"></div></div><div class="br-drawer"></div><div class="br-ties"></div><div class="bell br-bell" style=""><i></i></div><div class="br-hand"></div>
+        <div class="label">like breathing</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>He went back to the market once, in the autumn, after his disqualification had been in the paper and then out of it again. He went at half past six in the morning, because that was the time he knew, and he didn't park in his old bay, because somebody had painted over the pink letters with grey, but on the road outside, by the smokehouses. The gate man knew him and let him through without asking.</p>
+        <p>The floor was quieter than he remembered. Or perhaps it had always been this quiet and he hadn't noticed because he'd been in it. The carts ran up and down the rows. The cameras on the girders turned their small heads. Up in the gallery there was nobody at all, and there were no coffees, and the lights were off. At the end of each aisle the screens on their poles glowed, and on every screen, at the bottom, the green square lit up, and went dark, and lit up again, over and over, steadily, like breathing.</p>
+        <p>Kacper wasn't on the floor. It took Terry a minute to understand that. He looked for the white coat and couldn't see it, and then he went to the office by the door and looked through the glass and the office was empty too, and the hook where the bell used to hang had nothing on it. He found Mihai in the cold store, stacking, and asked him where the lad was, and Mihai shrugged and pointed vaguely west, inland, and said, "Stallingborough." He'd been moved in August, Mihai said. He did this market from there now, and one in Peterhead, and one in Brixham, and a couple in France. He was very good. He came in on Fridays, sometimes, to show his face, because Andy said the merchants liked it.</p>
+        <p>"And the bell?"</p>
+        <p>Mihai thought about it. "In the office drawer, I think," he said. "Nobody rings it now. No point. Nobody here to hear it." Then he looked at Terry for a moment, and seemed to remember who he was, and said, "Sorry, boss," and went back to his boxes.</p>
+        <p>Terry stood at the head of aisle F for a while. He didn't touch anything. The carts went past him. A screen lit up and went dark beside his shoulder, and lit up and went dark, and somewhere in a room with no sign on it six miles inland a young man in a grey hoodie with a card round his neck with his photograph on it pressed a square forty thousand times a day, for Grimsby and Peterhead and Brixham and Boulogne, and kept his holding time down.</p>
+        <p>Then Terry walked down the row, all the way down, slowly, the whole length of it. He stopped at every box. He lifted every gill flap with his finger and looked at the colour, and pressed every belly with his thumb, which still hurt, and felt it come back, and bent and smelled the fish. Cod, mostly, and a few boxes of haddock at the end. The carts went round him. Nobody stopped him and nobody asked what he was doing and nobody rang. It took him nearly forty minutes. By the time he got to the end of the row every lot in it had been sold, graded and settled and witnessed and loaded onto a wagon for somewhere, long before he'd reached it, and the boxes he was touching belonged to people in other countries who would never know he'd touched them.</p>
+        <p>They were all fine. Every one of them. He'd known they would be.</p>
+        <p>He went into the office on his way out, and opened the desk drawer, and the bell was there, the old one, the good one, lying on its side among some cable ties and a box of staples. He picked it up by the handle, the right way up, and held it for a second, and then he put it back where it was and shut the drawer, and he went out past the gate man and got in the car, and drove home up Fish Dock Road with the window down, past the smokehouses, while it got light.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
