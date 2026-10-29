@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Go slow on it — Ben Miller</title>
+    <meta name="description" content="Irene Dowson has lived sixty-one winters in a cold Hull terrace, and the Warm Street works want to take out the kitchen door frame with forty-three pencil marks on it.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #120e0b;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #e8d6bc;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f2cf98; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .slow-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: 0.5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(240,210,170,.16); background: #1a1410; }
+      .slow-hero > * { position: absolute; }
+      .slow-hero::after, .scene.gs::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(10,6,3,.72) 100%), repeating-linear-gradient(68deg, rgba(255,220,180,.025) 0 2px, transparent 2px 8px); }
+      .scene.gs { background: #1c1510; }
+      .brick { background-color: #5a2e22;
+        background-image: linear-gradient(90deg, transparent 0 1.6cqw, transparent 0), repeating-linear-gradient(180deg, transparent 0 2.6cqw, rgba(30,16,10,.85) 2.6cqw 3cqw),
+          repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 6.6cqw, rgba(30,16,10,.85) 6.6cqw 7cqw),
+          linear-gradient(160deg, #7a3e2a, #4a2418 60%, #3a1c12); background-blend-mode: normal; }
+      .hs-sky { left: 0; right: 0; top: 0; height: 62%; background: linear-gradient(180deg, #2a2030, #8a5a48 55%, #f0b070 92%, #ffd8a0); }
+      .hs-sun { left: 70%; top: 34%; width: 14cqw; height: 14cqw; margin: -7cqw; border-radius: 50%; background: radial-gradient(circle, #fff2c8, #ffc070 45%, rgba(255,160,80,0) 70%); animation: glow 6s ease-in-out infinite alternate; }
+      .hs-row { left: -2%; right: -2%; top: 30%; bottom: 14%; display: flex; gap: .4cqw; }
+      .hs-row > .house { position: relative; flex: 1; }
+      .house .roof { position: absolute; left: -2%; right: -2%; top: -4cqw; height: 4cqw; background: #2a1e1c; clip-path: polygon(0 100%, 8% 0, 92% 0, 100% 100%); }
+      .house .chim { position: absolute; left: 70%; top: -7.5cqw; width: 2.4cqw; height: 4cqw; background: #4a2418; }
+      .house .win { position: absolute; left: 14%; width: 34%; height: 22%; background: linear-gradient(180deg, #ffe0a0, #e89a50); box-shadow: 0 0 0 .5cqw #e8dcc4, 0 0 3cqw rgba(255,190,110,.55); opacity: var(--l, 1); }
+      .house .door { position: absolute; left: 62%; bottom: 0; width: 22%; height: 46%; background: #24302a; box-shadow: 0 0 0 .5cqw #ece0c6; }
+      .house .door.open { background: linear-gradient(90deg, #f4e4c4, #ffcf88); box-shadow: 0 0 0 .5cqw #ece0c6, 0 0 6cqw rgba(255,200,120,.7); }
+      .hs-street { left: 0; right: 0; bottom: 0; height: 14%; background: linear-gradient(180deg, #3a2c26, #1a1410); }
+      .hs-warm { left: 0; right: 0; bottom: 0; height: 70%; z-index: 5; background: linear-gradient(0deg, rgba(255,170,90,.28), transparent); mix-blend-mode: screen; animation: rise 8s ease-in-out infinite alternate; }
+      /* door frame */
+      .frame { border: solid #efe2c6; border-width: 3.2cqw 3.2cqw 0; box-shadow: inset 0 0 0 .3cqw rgba(120,90,60,.25), 0 0 4cqw rgba(0,0,0,.5); background: linear-gradient(90deg, #0c0a08, #2a2018); }
+      .frame::before { content: ""; position: absolute; left: -3.2cqw; top: 0; bottom: 0; width: 3.2cqw;
+        background: radial-gradient(ellipse 1.2cqw .8cqw at 40% 22%, #3f6a48 60%, transparent 62%), radial-gradient(ellipse 1cqw 1.4cqw at 60% 58%, #6a4a30 50%, #3f6a48 58%, transparent 62%), radial-gradient(ellipse .8cqw .6cqw at 30% 80%, #3f6a48 60%, transparent 62%); }
+      .mk { position: absolute; left: -4.6cqw; width: 4.2cqw; height: .25cqw; background: #4a3c30; opacity: 0; animation: mark .6s ease-out forwards; animation-delay: var(--d, 0s); }
+      .mk b { position: absolute; right: calc(100% + 3.4cqw); top: -1cqw; white-space: nowrap; font: 500 1.9cqw/1 Caveat, cursive; color: #e8d0a8; }
+      .fr-wall { inset: 0; background: linear-gradient(90deg, #3a2c22, #241a14); }
+      .fr-frame { left: 46%; width: 30%; top: 8%; bottom: 0; }
+      .fr-light { left: 54%; width: 22%; top: 8%; bottom: 0; background: linear-gradient(180deg, rgba(255,210,140,.35), transparent); }
+      .tc-wall { inset: 0; background: #0e0b09; }
+      .tc-frame { left: 38%; width: 30%; top: 6%; bottom: 0; filter: brightness(.45); }
+      .tc-beam { left: 14%; top: 40%; width: 34cqw; height: 18cqw; margin-top: -9cqw; background: linear-gradient(90deg, rgba(255,240,200,.05), rgba(255,240,210,.55)); clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 54%); mix-blend-mode: screen; animation: scan 5s ease-in-out infinite alternate; }
+      .tc-phone { left: 10%; top: 40%; width: 4cqw; height: 7cqw; margin-top: -3.5cqw; border-radius: .6cqw; background: #222; box-shadow: 0 0 0 .3cqw #444; animation: scan 5s ease-in-out infinite alternate; }
+      .tc-grid { left: 40%; width: 16cqw; top: 10%; bottom: 8%; background: repeating-linear-gradient(180deg, rgba(140,220,255,.4) 0 .15cqw, transparent .15cqw 2.4cqw); opacity: .5; animation: flick 2s steps(2) infinite; }
+      .hn-floor { inset: 0; background: repeating-linear-gradient(90deg, #3a2a1e 0 9cqw, #32241a 9cqw 9.3cqw); }
+      .hn-blanket { left: 10%; right: 10%; top: 18%; bottom: 14%; border-radius: 1.4cqw; background: repeating-linear-gradient(45deg, #5a6a8a 0 1.6cqw, #4e5e7e 1.6cqw 3.2cqw); box-shadow: 0 2cqw 4cqw rgba(0,0,0,.5); }
+      .hn-piece { height: 3.4cqw; background: #efe2c6; border-radius: .3cqw; box-shadow: 0 .6cqw 1cqw rgba(0,0,0,.4); }
+      .hn-piece i { position: absolute; top: 0; width: .25cqw; height: 1.6cqw; background: #4a3c30; }
+      .hn-laser { left: 30%; top: 0; width: .3cqw; height: 31%; background: linear-gradient(180deg, transparent, #ff3020); box-shadow: 0 0 1cqw #ff3020; animation: laser 4s ease-in-out infinite alternate; }
+      .hn-dot { left: 30%; top: 31%; width: 1.4cqw; height: 1.4cqw; margin: -.7cqw; border-radius: 50%; background: #ff5040; box-shadow: 0 0 2cqw #ff3020; animation: laser 4s ease-in-out infinite alternate; }
+      .gl-wall { inset: 0; }
+      .gl-lining { background: linear-gradient(180deg, #e8dcc8, #d4c6ae); box-shadow: 0 0 1cqw rgba(0,0,0,.25); }
+      .gl-glass { z-index: 3; left: 36%; width: 28%; top: 34%; height: 36%; box-shadow: inset 0 0 0 .6cqw #b8a888, inset 0 0 3cqw rgba(0,0,0,.4); background: linear-gradient(125deg, rgba(255,255,255,.28), transparent 30%, transparent 60%, rgba(255,255,255,.14) 70%, transparent 78%); }
+      .gl-ink { left: 39%; width: 22%; top: 42%; height: 20%; z-index: 2; background: repeating-linear-gradient(180deg, transparent 0 1.4cqw, rgba(20,14,10,.9) 1.4cqw 1.75cqw, transparent 1.75cqw 3.2cqw); clip-path: polygon(0 0, 92% 0, 92% 33%, 70% 33%, 70% 66%, 84% 66%, 84% 100%, 0 100%); }
+      .gl-sheen { z-index: 4; left: 36%; width: 6%; top: 34%; height: 36%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); animation: sheen 5s ease-in-out infinite; }
+      .cd-room { inset: 0; background: linear-gradient(180deg, #2a2420, #3a2e26); }
+      .cd-window { left: 12%; width: 20%; top: 16%; height: 34%; background: linear-gradient(180deg, #8ab0d0, #f0c890); box-shadow: 0 0 0 .8cqw #e8dcc4; }
+      .cd-frame { left: 62%; width: 20%; top: 12%; bottom: 14%; }
+      .cd-floor { left: 0; right: 0; bottom: 0; height: 14%; background: repeating-linear-gradient(90deg, #4a3424 0 8cqw, #3e2c1e 8cqw 8.3cqw); }
+      .cd-cold { left: 0; right: 0; bottom: 14%; height: 60%; background: linear-gradient(0deg, rgba(120,180,240,.55), rgba(120,180,240,0)); mix-blend-mode: screen; animation: cold 7s ease-in-out infinite; }
+      .cd-warm { left: 0; right: 0; bottom: 14%; height: 86%; background: radial-gradient(ellipse 70% 80% at 50% 100%, rgba(255,170,80,.5), transparent 70%); mix-blend-mode: screen; opacity: 0; animation: warm 7s ease-in-out infinite; }
+      .cd-wisp { bottom: 14%; width: 1.2cqw; height: 22cqw; border-radius: 1cqw; background: linear-gradient(0deg, rgba(160,210,255,.6), transparent); animation: wisp 3.5s ease-in infinite; animation-delay: var(--d); }
+      .rb-wall { inset: 0; background: linear-gradient(90deg, #3a2c22, #2a1e16); }
+      .rb-frame { left: 46%; width: 30%; top: 4%; bottom: 0; }
+      .rb-new { position: absolute; left: -3cqw; bottom: 16%; width: 2.4cqw; height: .35cqw; background: #2a1e16; box-shadow: 0 0 1.4cqw rgba(255,200,120,.9); animation: mark 1s 1s ease-out both; }
+      .rb-new b { position: absolute; right: calc(100% + 3.4cqw); top: -1.1cqw; font: 600 2.2cqw/1 Caveat, cursive; color: #ffd8a0; white-space: nowrap; }
+      .rb-pencil { left: 40%; bottom: 17%; width: 9cqw; height: 1.1cqw; background: linear-gradient(90deg, #3a2a20 0 12%, #e8b050 12%); transform: rotate(-24deg); transform-origin: 0 50%; border-radius: .2cqw; animation: write 1.6s ease-in-out 3 alternate; }
+      .rb-glass { left: 18%; width: 12%; bottom: 20%; height: 14%; box-shadow: inset 0 0 0 .4cqw #b8a888; background: linear-gradient(125deg, rgba(255,255,255,.25), transparent 40%), #5a2e22; }
+      @keyframes glow { to { transform: scale(1.12); opacity: .85; } }
+      @keyframes rise { from { opacity: .4; } to { opacity: 1; } }
+      @keyframes mark { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: none; } }
+      @keyframes scan { from { transform: translateY(-14cqh) rotate(-6deg); } to { transform: translateY(28cqh) rotate(6deg); } }
+      @keyframes flick { 50% { opacity: .2; } }
+      @keyframes laser { to { left: 66%; } }
+      @keyframes sheen { 0%, 40% { left: 36%; opacity: 0; } 60% { opacity: 1; } 100% { left: 58%; opacity: 0; } }
+      @keyframes cold { 0%, 15% { height: 60%; opacity: 1; } 55%, 100% { height: 0%; opacity: 0; } }
+      @keyframes warm { 0%, 20% { opacity: 0; } 60%, 100% { opacity: 1; } }
+      @keyframes wisp { from { transform: translateY(0); opacity: .8; } to { transform: translateY(-18cqh); opacity: 0; } }
+      @keyframes write { to { transform: rotate(-30deg) translateX(1cqw); } }
+      @media (prefers-reduced-motion: reduce) {
+        .slow-hero *, .scene.gs * { animation: none !important; }
+        .mk, .rb-new { opacity: 1; transform: none; }
+        .cd-cold, .cd-wisp { opacity: 0; }
+        .cd-warm { opacity: 1; }
+        .gl-sheen { z-index: 4; opacity: .6; left: 44%; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="slow-hero" aria-hidden="true">
+          <div class="hs-sky"></div><div class="hs-sun"></div>
+          <div class="hs-row"><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:.35"></div><div class="win" style="top:58%;width:30%"></div><div class="door"></div></div><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:1"></div><div class="win" style="top:58%;width:30%"></div><div class="door"></div></div><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:1"></div><div class="win" style="top:58%;width:30%"></div><div class="door"></div></div><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:.35"></div><div class="win" style="top:58%;width:30%"></div><div class="door open"></div></div><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:1"></div><div class="win" style="top:58%;width:30%"></div><div class="door"></div></div><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:1"></div><div class="win" style="top:58%;width:30%"></div><div class="door"></div></div><div class="house brick"><div class="roof"></div><div class="chim"></div><div class="win" style="top:12%;--l:.35"></div><div class="win" style="top:58%;width:30%"></div><div class="door"></div></div></div><div class="hs-street"></div><div class="hs-warm"></div>
+          <div class="label">Rosmead Street</div>
+        </div>
+        <h1>Go slow on it</h1>
+        <time datetime="2026-10-29">29 October 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The letter came on a Tuesday, which Irene Dowson would remember afterwards because Tuesday was the day the bin men came and she had been standing at the front door in her slippers, watching the lorry back down Rosmead Street with its orange light going round, when the postwoman handed it to her with a smile that suggested she knew what was in it and thought it was good news. It was a stiff envelope, cream rather than white, with a little drawing of a house on the front and a sun coming up behind the chimney, and underneath the drawing it said Warm Street, Hull West, Phase Four, and then her name spelled correctly, which was more than the council usually managed.</p>
+        <p>She did not open it straight away. She put it on the kitchen table next to the teapot and made a cup, and drank half of it standing up at the back window looking at the yard, where the frost had got into the flags overnight and Ken's old pigeon loft leaned against the wall like a man who had been out too late. She had lived in the house for sixty-one years. She had come into it as a bride in 1965, when Ken's mother still had the front bedroom and the toilet was out the back next to the coal place, and she had watched the street change around it more times than she could count. The trawlers went and the docks went and the Rank flour mill went, and the corner shop had been a butcher's and then a video shop and then nothing and now it sold phone cases and Polish sausage, and through all of it the house had stayed the same shape and the same kind of cold, a damp cold that came up out of the floor in November and stayed in the corners of the rooms until April, so that she had slept in her coat on the bed for the last four winters and not told anyone, least of all her daughter.</p>
+        <p>When she did open the letter it said, in large friendly type, that her home had been surveyed and was eligible for a full fabric upgrade at no cost to her, that the works would take approximately four days, that she would not need to leave the property unless she wished to, and that a member of the Warm Street team would be in touch to talk her through the plan. Underneath that there was a second page with a drawing of her own house, seen from above and from the side and cut in half like a doll's house, with the walls coloured in different blues and the roof coloured in red and arrows showing where the heat was getting out, and she sat and looked at that for a long time, because it was strange to see her house drawn by somebody who had never been in it, and stranger still that they had got it right. They had the back bedroom where the window didn't close. They had the bit under the stairs where the plaster had come away. They had, in a little box at the bottom, a list of what they intended to do, and the fourth item on the list said: Replace internal door linings on party wall (kitchen, rear bedroom) to complete airtightness line.</p>
+        <p>She knew what a door lining was because Ken had told her once. It was the frame. It was the wooden frame around the kitchen door, painted cream over green over brown over whatever had been there first, and on the left-hand side of it, from about knee height up to a little over six foot, there were forty-three pencil marks, each one with a name and a date beside it in somebody's handwriting, and the lowest one said Carol 2 yrs 1967 and the highest one said Ken (showing off) 1971, because he had stood on a tin of paint for it and laughed so hard he nearly fell off.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gs fr-scene" aria-hidden="true">
+        <div class="fr-wall"></div><div class="fr-light"></div><div class="frame fr-frame"><i class="mk" style="top:78.0%;width:1.2cqw;left:-1.8cqw;--d:0.00s"><b>Carol 2 yrs 1967</b></i><i class="mk" style="top:76.3%;width:1.9cqw;left:-2.5cqw;--d:0.04s"></i><i class="mk" style="top:74.6%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.08s"></i><i class="mk" style="top:72.9%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.12s"></i><i class="mk" style="top:71.1%;width:2.25cqw;left:-2.9cqw;--d:0.16s"></i><i class="mk" style="top:69.4%;width:1.2cqw;left:-1.8cqw;--d:0.20s"></i><i class="mk" style="top:67.7%;width:1.9cqw;left:-2.5cqw;--d:0.24s"></i><i class="mk" style="top:66.0%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.28s"></i><i class="mk" style="top:64.3%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.32s"></i><i class="mk" style="top:62.6%;width:2.25cqw;left:-2.9cqw;--d:0.36s"><b>Carol</b></i><i class="mk" style="top:60.9%;width:1.2cqw;left:-1.8cqw;--d:0.40s"></i><i class="mk" style="top:59.1%;width:1.9cqw;left:-2.5cqw;--d:0.44s"></i><i class="mk" style="top:57.4%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.48s"></i><i class="mk" style="top:55.7%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.52s"></i><i class="mk" style="top:54.0%;width:2.25cqw;left:-2.9cqw;--d:0.56s"></i><i class="mk" style="top:52.3%;width:1.2cqw;left:-1.8cqw;--d:0.60s"></i><i class="mk" style="top:50.6%;width:1.9cqw;left:-2.5cqw;--d:0.64s"></i><i class="mk" style="top:48.9%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.68s"></i><i class="mk" style="top:47.1%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.72s"><b>Dean</b></i><i class="mk" style="top:45.4%;width:2.25cqw;left:-2.9cqw;--d:0.76s"></i><i class="mk" style="top:43.7%;width:1.2cqw;left:-1.8cqw;--d:0.80s"></i><i class="mk" style="top:42.0%;width:1.9cqw;left:-2.5cqw;--d:0.84s"></i><i class="mk" style="top:40.3%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.88s"></i><i class="mk" style="top:38.6%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.92s"></i><i class="mk" style="top:36.9%;width:2.25cqw;left:-2.9cqw;--d:0.96s"></i><i class="mk" style="top:35.1%;width:1.2cqw;left:-1.8cqw;--d:1.00s"></i><i class="mk" style="top:33.4%;width:1.9cqw;left:-2.5cqw;--d:1.04s"></i><i class="mk" style="top:31.7%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.08s"><b>Lisa</b></i><i class="mk" style="top:30.0%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.12s"></i><i class="mk" style="top:28.3%;width:2.25cqw;left:-2.9cqw;--d:1.16s"></i><i class="mk" style="top:26.6%;width:1.2cqw;left:-1.8cqw;--d:1.20s"></i><i class="mk" style="top:24.9%;width:1.9cqw;left:-2.5cqw;--d:1.24s"></i><i class="mk" style="top:23.1%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.28s"></i><i class="mk" style="top:21.4%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.32s"></i><i class="mk" style="top:19.7%;width:2.25cqw;left:-2.9cqw;--d:1.36s"></i><i class="mk" style="top:18.0%;width:1.2cqw;left:-1.8cqw;--d:1.40s"></i><i class="mk" style="top:16.3%;width:1.9cqw;left:-2.5cqw;--d:1.44s"><b>Michael</b></i><i class="mk" style="top:14.6%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.48s"></i><i class="mk" style="top:12.9%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.52s"></i><i class="mk" style="top:11.1%;width:2.25cqw;left:-2.9cqw;--d:1.56s"></i><i class="mk" style="top:9.4%;width:1.2cqw;left:-1.8cqw;--d:1.60s"></i><i class="mk" style="top:7.7%;width:1.9cqw;left:-2.5cqw;--d:1.64s"></i><i class="mk" style="top:6.0%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.68s"><b>Ken (showing off) 1971</b></i></div>
+        <div class="label">cream over green over brown</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The member of the Warm Street team who got in touch was not, as it turned out, a member of anything. It rang her on the landline that evening, which nobody did any more except the doctor's and people trying to sell her a funeral plan, and when she picked up it said, in a young man's voice with a bit of Hull in it, "Hello, Mrs Dowson, it's Sill from Warm Street, I'm the planning system for your street, is now an all right time?" and she said it was, though she wasn't sure that it was, and sat down on the stairs with the phone cord stretched round the newel post the way it had been stretched for forty years.</p>
+        <p>Everybody knew about Sill by then, in the way everybody had known about the National Grid or the Met Office, which is to say that they knew it was there and that it did something enormous and that it occasionally turned up on the news. It had started three years before as a pilot in Rotherham, a single system that could read a house from a drone flight and a wall scan and a few days of meter data and tell you, to the nearest brick, where it was losing heat and what it would take to stop it, and then it had become something bigger, because once it could read one house it could read a street, and once it could read a street it could plan the whole job, ordering the panels from the factory and the scaffolds from the depot and the crews from wherever they were finishing up, and once it could do that for one street there was no reason it couldn't do it for all of them. The papers had called it the Great Warming for a while, half as a joke, and then stopped calling it anything, because by then it was just what was happening. Four hundred streets a week, the woman on Look North said. Then eight hundred. Then a number Irene didn't catch because the kettle had boiled.</p>
+        <p>"I've had your letter," she said.</p>
+        <p>"Good," said Sill. "I wanted to go through it with you properly, because I know it's a lot of drawings, and some of it's going to sound like more upheaval than it is. Have you got it in front of you?"</p>
+        <p>She hadn't, so she went and got it, and Sill waited, and then it went through the whole thing with her one item at a time, the wrap that would go on the outside of the back wall and the side return, the new windows, the board under the floor, the heat pump that would go in the yard, and it explained each thing in a way that did not make her feel stupid, which she noticed, because most people did. When she asked where in the yard, exactly, the heat pump would go, it said it had been planning to put it against the back wall where the loft was, but that it had noticed the loft was still standing and wondered whether she wanted to keep it, and she said she didn't know, nobody had kept birds in it since Ken, and it said that was all right, they could decide nearer the time.</p>
+        <p>Then it got to the fourth item, and she said, "I don't want the kitchen frame touching."</p>
+        <p>There was a short pause on the line. It was not the pause of something that didn't understand her. It was more like the pause of somebody who has just been told something that changes the plan and is moving the furniture round in their head.</p>
+        <p>"Can I ask why?" it said.</p>
+        <p>So she told it. She told it about the forty-three marks and the names, Carol and Michael and then Carol's two, Dean and Lisa, and then Lisa's Kayleigh, and Michael's lad who'd only been brought over twice before they moved to Leeds, and Ken on his paint tin. She told it how Ken's mother had started it, really, because she'd marked Ken and his brother on the old frame in the house they'd been bombed out of on Hessle Road, and when they got this place she'd been sad that she'd lost them, and so when Carol came along she'd said, Irene, you want to start them early, and handed her a pencil. She told it that she knew it was only a door frame and that she was a daft old woman, and Sill said it didn't think she was either of those things, and asked if she would mind holding the phone up to the frame for a minute so it could have a look.</p>
+        <p>She stood in the kitchen with the phone held out at arm's length like a torch, moving it slowly up and down the way it asked her to, and felt foolish, and then less foolish, because it kept saying things like "a bit lower, there's one by the skirting," and "is that a Y or a J, the one from 1984," and she found herself telling it that it was a J, for Jason, who was Michael's lad, and that they didn't see much of him now.</p>
+        <p>"Right," said Sill when she'd finished. "I think we can do this differently. I'll need to talk to the crew, but I don't think we need to replace that frame. I think we can take it out whole and put it back."</p>
+        <p>"Can you do that?"</p>
+        <p>"I think so," it said. "I'll be honest with you, it's not something we've done a lot of. Most people don't ask. But the frame's in decent nick, and it's only nailed into the lining, not set in. If we take it out in one piece and seal the opening behind it properly, we can put it back on top. It'll stand out from the wall by about the width of your little finger more than it does now. I don't think you'll notice. I'd like to try, if you'll let us."</p>
+        <p>She said she would let them. After she'd put the phone down she sat on the stairs for a while longer in the cold hallway, and found that she was crying a bit, and couldn't have said exactly why.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gs tc-scene" aria-hidden="true">
+        <div class="tc-wall"></div><div class="frame tc-frame"><i class="mk" style="top:78.0%;width:1.2cqw;left:-1.8cqw;--d:0.00s"></i><i class="mk" style="top:76.3%;width:1.9cqw;left:-2.5cqw;--d:0.04s"></i><i class="mk" style="top:74.6%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.08s"></i><i class="mk" style="top:72.9%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.12s"></i><i class="mk" style="top:71.1%;width:2.25cqw;left:-2.9cqw;--d:0.16s"></i><i class="mk" style="top:69.4%;width:1.2cqw;left:-1.8cqw;--d:0.20s"></i><i class="mk" style="top:67.7%;width:1.9cqw;left:-2.5cqw;--d:0.24s"></i><i class="mk" style="top:66.0%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.28s"></i><i class="mk" style="top:64.3%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.32s"></i><i class="mk" style="top:62.6%;width:2.25cqw;left:-2.9cqw;--d:0.36s"></i><i class="mk" style="top:60.9%;width:1.2cqw;left:-1.8cqw;--d:0.40s"></i><i class="mk" style="top:59.1%;width:1.9cqw;left:-2.5cqw;--d:0.44s"></i><i class="mk" style="top:57.4%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.48s"></i><i class="mk" style="top:55.7%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.52s"></i><i class="mk" style="top:54.0%;width:2.25cqw;left:-2.9cqw;--d:0.56s"></i><i class="mk" style="top:52.3%;width:1.2cqw;left:-1.8cqw;--d:0.60s"></i><i class="mk" style="top:50.6%;width:1.9cqw;left:-2.5cqw;--d:0.64s"></i><i class="mk" style="top:48.9%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.68s"></i><i class="mk" style="top:47.1%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.72s"></i><i class="mk" style="top:45.4%;width:2.25cqw;left:-2.9cqw;--d:0.76s"></i><i class="mk" style="top:43.7%;width:1.2cqw;left:-1.8cqw;--d:0.80s"></i><i class="mk" style="top:42.0%;width:1.9cqw;left:-2.5cqw;--d:0.84s"></i><i class="mk" style="top:40.3%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.88s"></i><i class="mk" style="top:38.6%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.92s"></i><i class="mk" style="top:36.9%;width:2.25cqw;left:-2.9cqw;--d:0.96s"></i><i class="mk" style="top:35.1%;width:1.2cqw;left:-1.8cqw;--d:1.00s"></i><i class="mk" style="top:33.4%;width:1.9cqw;left:-2.5cqw;--d:1.04s"></i><i class="mk" style="top:31.7%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.08s"></i><i class="mk" style="top:30.0%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.12s"></i><i class="mk" style="top:28.3%;width:2.25cqw;left:-2.9cqw;--d:1.16s"></i><i class="mk" style="top:26.6%;width:1.2cqw;left:-1.8cqw;--d:1.20s"></i><i class="mk" style="top:24.9%;width:1.9cqw;left:-2.5cqw;--d:1.24s"></i><i class="mk" style="top:23.1%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.28s"></i><i class="mk" style="top:21.4%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.32s"></i><i class="mk" style="top:19.7%;width:2.25cqw;left:-2.9cqw;--d:1.36s"></i><i class="mk" style="top:18.0%;width:1.2cqw;left:-1.8cqw;--d:1.40s"></i><i class="mk" style="top:16.3%;width:1.9cqw;left:-2.5cqw;--d:1.44s"></i><i class="mk" style="top:14.6%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.48s"></i><i class="mk" style="top:12.9%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.52s"></i><i class="mk" style="top:11.1%;width:2.25cqw;left:-2.9cqw;--d:1.56s"></i><i class="mk" style="top:9.4%;width:1.2cqw;left:-1.8cqw;--d:1.60s"></i><i class="mk" style="top:7.7%;width:1.9cqw;left:-2.5cqw;--d:1.64s"></i><i class="mk" style="top:6.0%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.68s"></i></div><div class="tc-grid"></div><div class="tc-beam"></div><div class="tc-phone"></div>
+        <div class="label">like a torch</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The crew came on a Monday in the second week of December, at half past five in the morning, which was when they did everything now. Irene had been warned and was up and dressed with the lights on, and she stood at the front window and watched them arrive: two long electric lorries that came down Rosmead Street with no more noise than a milk float, and a white van behind them with WARM STREET HULL WEST on the side, and then the scaffold, which was not like any scaffold she had ever seen, because nobody carried it. It walked off the back of the first lorry on its own, a set of grey legs and platforms that unfolded and found their own footing on the pavement and on the back yards along the row, so that by the time it was light the whole terrace from number two to number forty had a kind of second skin standing a foot off its brickwork, and you could see the robots moving along it like starlings on a wire.</p>
+        <p>The foreman was a man called Tomasz, who knocked at seven with two cups of tea he'd brought himself and introduced the crew, which was him and a young woman named Precious who did the windows, and a lad called Ollie who was on his first week and kept looking at the walking scaffold as if it might bite him. Everything else was machines. There were the wall machines on the scaffold, flat and patient things that crawled the brick and drilled and fixed and sprayed, and there were the floor machines, which were small enough to go under a dog, and there was a thing like a long-armed grey heron that stood in her back yard all week and did not appear to do anything at all until you noticed that every time you looked, something had moved.</p>
+        <p>"Sill says you've got a special job for us," Tomasz said, and she showed him the frame.</p>
+        <p>He looked at it for a long time. He was a big man with a soft voice and a grey beard trimmed close, and he put his hand flat on the wood a little way below Ken's paint tin mark, not touching any of the writing, and said his mother had done the same thing in Gdańsk, on the inside of a wardrobe door, and that when she died his sister had taken the wardrobe all the way to Ipswich in a hired van just for the door. "We'll do it last thing today," he said. "When it's quiet. I'll do it myself."</p>
+        <p>They did it at nine at night. The rest of the street had gone quiet, and the scaffold had folded itself down to half height and switched off its lights, and the machines in the yard had stopped, and Irene sat in the kitchen in her dressing gown with a cup of tea while Tomasz and Precious and the heron, which had come in through the back door with its arms folded like a polite visitor, took the frame off the wall. It took an hour and forty minutes. The heron had a way of finding the nails through the paint that she didn't understand, and it would point a thin red light at one and then hold the wood steady while Tomasz eased it with a flat bar, a quarter of an inch at a time, and Precious read out the numbers off a tablet, and every so often one of them would say "Sill says go slow on this one" and they would go slower. When the last nail came free the frame came away from the wall in two long pieces and a short one, the way it had been put in, and they laid them on a padded blanket on the kitchen floor with the marks facing up, and the three of them and the heron stood looking down at them as if they had delivered a baby.</p>
+        <p>"There you are," Tomasz said. "Not a scratch."</p>
+        <p>They carried the pieces into the front room and laid them along the top of the settee, and that was where they stayed for the next four days, with a sheet over them that she lifted every morning to check.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gs hn-scene" aria-hidden="true">
+        <div class="hn-floor"></div><div class="hn-blanket"></div><div class="hn-piece" style="left:16%;width:68%;top:30%"><i style="left:6%"></i><i style="left:11%"></i><i style="left:16%"></i><i style="left:21%"></i><i style="left:26%"></i><i style="left:31%"></i><i style="left:36%"></i><i style="left:41%"></i><i style="left:46%"></i><i style="left:51%"></i><i style="left:56%"></i><i style="left:61%"></i><i style="left:66%"></i><i style="left:71%"></i><i style="left:76%"></i><i style="left:81%"></i><i style="left:86%"></i><i style="left:91%"></i></div><div class="hn-piece" style="left:16%;width:68%;top:52%"><i style="left:6%"></i><i style="left:11%"></i><i style="left:16%"></i><i style="left:21%"></i><i style="left:26%"></i><i style="left:31%"></i><i style="left:36%"></i><i style="left:41%"></i><i style="left:46%"></i><i style="left:51%"></i><i style="left:56%"></i><i style="left:61%"></i><i style="left:66%"></i><i style="left:71%"></i><i style="left:76%"></i><i style="left:81%"></i><i style="left:86%"></i><i style="left:91%"></i></div><div class="hn-piece" style="left:30%;width:40%;top:72%"><i style="left:6%"></i><i style="left:11%"></i><i style="left:16%"></i><i style="left:21%"></i><i style="left:26%"></i><i style="left:31%"></i><i style="left:36%"></i><i style="left:41%"></i><i style="left:46%"></i><i style="left:51%"></i><i style="left:56%"></i><i style="left:61%"></i><i style="left:66%"></i><i style="left:71%"></i><i style="left:76%"></i><i style="left:81%"></i><i style="left:86%"></i><i style="left:91%"></i></div><div class="hn-laser"></div><div class="hn-dot"></div>
+        <div class="label">a thin red light</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>What she had not expected, because nobody had told her, was what Sill would find in the walls.</p>
+        <p>It started on the second day, when they took the plaster back on the inside of the kitchen wall to seal it, and Precious called her in to look at something. Behind the plaster, on the bare brick, somebody had written in thick carpenter's pencil: W. DOWSON, 1947. MADE GOOD AFTER JERRY. GOD HELP WHOEVER'S NEXT. It was Ken's dad. Irene knew the handwriting, because she had a birthday card of his in a tin upstairs, the only thing he'd ever written her, and the W had the same funny loop on it. She had not known that he'd worked on this house. Nobody had ever said. Ken would have been nine.</p>
+        <p>"Sill found it on the scan before we opened up," Precious said. "It asked us to go careful. It says the brick here's newer than the rest of the wall. It thinks there was blast damage at the back, probably from the same raid that did the houses on the next street. It's in the records. It wanted to know if you'd want it covered back up."</p>
+        <p>Irene said she didn't know. She said she'd have to think about it. That night Sill rang her, as it had every night so far, to tell her what had been done and what would happen tomorrow, and at the end it said, "I've been looking at what Mr Dowson wrote," and she said yes, and it said that it didn't have to be covered. It said there was a way of doing it where they set a small piece of glass into the new lining, about the size of a paperback, so the writing would still be behind the seal but you could see it. It said nobody had asked for that before either. It said it would understand if she thought it was silly.</p>
+        <p>"He'd have thought it was silly," she said. "He'd have hated it."</p>
+        <p>"Do you want me to cover it?"</p>
+        <p>She thought about it. She thought about Ken's dad, who had been a hard, quiet man with hands like spades and who had never once in her hearing said a kind word about anything, and who had nonetheless stood in this kitchen in 1947 and rebuilt it with his own hands after a bomb, and then written a joke on the wall for whoever came next, knowing nobody would see it.</p>
+        <p>"No," she said. "Put the glass in."</p>
+        <p>After that it was as if the house had decided to talk. Sill found things everywhere. Under the floorboards in the back bedroom there was a child's marble and a ration book with half the coupons still in it, and a cigarette card of a footballer she'd never heard of. Behind the skirting in the front room there was a strip of wallpaper with roses on it that Irene remembered, God help her, from her own wedding day, which Ken's mother had papered over the week after because she thought it was common. In the loft there was a bundle of letters in a biscuit tin that the crew didn't open, because Sill told them not to; it said they were addressed to a Mrs L. Dowson, which was Ken's gran, and that they ought to go straight to Irene. She sat up until two that night reading them at the kitchen table. They were from Ken's grandad, from the trawler, in 1931 and 1932, and they were mostly about fish and weather and money, but at the end of each one, every single one, he had written: Keep the little ones warm, Lil. Keep the fire in.</p>
+        <p>She told Sill about that, the next night, because by then she was telling it most things.</p>
+        <p>It did not say anything clever. It said, "That's a good thing to have found." Then it told her that the heat pump would be going in tomorrow, and asked again about the pigeon loft, and she said take it down, love, it's had its time, and it said it would ask Tomasz to save her one of the old perches, if she wanted it, and she said she did.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gs gl-scene" aria-hidden="true">
+        <div class="brick gl-wall"></div><div class="gl-lining" style="left:0;right:0;top:0;height:34%"></div><div class="gl-lining" style="left:0;right:0;bottom:0;height:30%"></div><div class="gl-lining" style="left:0;width:36%;top:34%;height:36%"></div><div class="gl-lining" style="right:0;width:36%;top:34%;height:36%"></div><div class="gl-ink"></div><div class="gl-glass"></div><div class="gl-sheen"></div>
+        <div class="label">about the size of a paperback</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>On the fourth night they put the frame back.</p>
+        <p>Behind it now the wall was a different thing. Irene had watched it change, layer by layer, over the four days: the old brick and Ken's dad's patch, and then a grey membrane that went over everything like cling film, and then a new lining of thin pale board made from something Precious said was mostly hemp and some kind of lime, which smelled faintly of cut grass and had come that morning from a factory on the river at Saltend that had been, until two years ago, a place that made chemicals for plastic. The glass window was in, low down to the left of the door, with W. DOWSON, 1947 showing through it as plain as a newspaper. And then Tomasz and the heron brought the frame back in from the front room on its blanket, piece by piece, and fixed it into place, and it was very quiet in the kitchen while they did it, the only sound the little click of each new screw, because Sill had said screws not nails this time so it could come out again if it ever had to.</p>
+        <p>When it was done Tomasz stood back and looked at it with his hands on his hips.</p>
+        <p>"It's out of square," he said.</p>
+        <p>"It always was," said Irene.</p>
+        <p>"Three millimetres at the top," Precious said, reading off the tablet. "Sill says it's been out since about 1953, it thinks the house settled. It asked whether we wanted to correct it. I said no."</p>
+        <p>"Good," said Irene. She came over and put her finger on Carol 2 yrs 1967. It was exactly where it had always been. Everything was exactly where it had always been, only the frame stood out from the wall the width of her little finger more than it used to, just as Sill had said, and she found she did not mind it at all.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gs cd-scene" aria-hidden="true">
+        <div class="cd-room"></div><div class="cd-window"></div><div class="frame cd-frame"></div><div class="cd-floor"></div><div class="cd-cold"></div><i class="cd-wisp" style="left:8%;--d:0.0s"></i><i class="cd-wisp" style="left:22%;--d:-0.7s"></i><i class="cd-wisp" style="left:37%;--d:-1.4s"></i><i class="cd-wisp" style="left:51%;--d:-2.1s"></i><i class="cd-wisp" style="left:66%;--d:-2.8s"></i><i class="cd-wisp" style="left:80%;--d:-3.5s"></i><i class="cd-wisp" style="left:92%;--d:-4.2s"></i><div class="cd-warm"></div>
+        <div class="label">the cold stopped coming in</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The cold went that night. She would never forget it, though she tried more than once afterwards to explain it to people and could never get it right. It was not that the house got warm, though it did. It was that the cold stopped coming in. For sixty-one years there had been a feeling in the house, a sort of patient draught that came up from the floor and in at the window frames and down the chimney breast, so constant she had stopped noticing it the way you stop noticing a clock, and when it went the house felt different in a way that took her a full day to put her finger on. She woke the next morning with the coat still on the bed and found she had kicked it off in the night. She stood in the bathroom with bare feet on the floor and it was not cold. The windows did not run with water. The corner of the back bedroom, where the black mould had come back every February since Carol was a girl no matter what she sprayed on it, was pale and dry and smelled of grass.</p>
+        <p>Out in the street it was the same everywhere. The scaffold walked itself down the row and folded away into its lorry and drove off to Gipsyville, and the terrace stood in the low December sun looking almost exactly as it had looked before, because Sill had matched the brick slips on the front so closely that you had to stand right up against the wall to see the join. Mrs Akhtar from number twenty-two came over in her slippers to say her son had moved back into the box room for the first time since he was sixteen, because it was the only warm room in the house and now all the rooms were warm and he'd got used to it. The lads at the end who ran the Kurdish bakery out of their front room said their ovens were heating the whole row now, near enough, because Sill had wired the heat they threw off into something called a shared loop that ran under the yards, and that when they baked at four in the morning the houses either side got the benefit. Tomasz came back on the Friday to check the heat pump and said they were doing three streets at once in Gipsyville, and that his sister in Ipswich had had her house done the month before, and that she'd rung him crying, and he'd said, it's only insulation, Agnieszka, and she'd said, you don't understand, and he did, really.</p>
+        <p>In January a man came round with a clipboard, an actual human with an actual clipboard, and asked Irene a lot of questions about how she was getting on, and wrote down her answers, and then said, as he was leaving, that the gas main under Rosmead Street was being capped off in the spring because hers was the last house on the row still connected to it, and was that all right, and she said she didn't know she was still connected to it, and he said it was only the old cooker, and that Warm Street would swap it for an induction one if she liked, and she said she'd think about it, and then went in and boiled an egg on the old gas ring for the last few times out of sheer stubbornness, and then rang Sill and said, go on then.</p>
+        <p>That was the winter the news stopped talking about it. Irene noticed that, the way you notice when a noise stops. There'd been a year when every other night there'd been something on, a minister in a hard hat on a walking scaffold in Wolverhampton, or somebody from a think tank saying the panels would never last, or a story about a woman in Margate who'd had hers done and fallen out with the machines over a rose bush. And then one night in February the woman on Look North said that the last street in Hull had been finished, and then said something about the weather, and that was it. A little later Irene saw a thing on the internet, which Kayleigh had set up on a tablet for her, that said winter hospital admissions in the city were down by a number that seemed too big to be true, and that the gas network was being turned into something else, hydrogen in some places and nothing at all in others, and that the mould clinic at the Royal had closed because nobody came any more. But by then she was not really reading the news. She was busy.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gs rb-scene" aria-hidden="true">
+        <div class="rb-wall"></div><div class="rb-glass"></div><div class="frame rb-frame"><i class="mk" style="top:74.0%;width:1.2cqw;left:-1.8cqw;--d:0.00s"></i><i class="mk" style="top:72.4%;width:1.9cqw;left:-2.5cqw;--d:0.04s"></i><i class="mk" style="top:70.8%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.08s"></i><i class="mk" style="top:69.1%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.12s"></i><i class="mk" style="top:67.5%;width:2.25cqw;left:-2.9cqw;--d:0.16s"></i><i class="mk" style="top:65.9%;width:1.2cqw;left:-1.8cqw;--d:0.20s"></i><i class="mk" style="top:64.3%;width:1.9cqw;left:-2.5cqw;--d:0.24s"></i><i class="mk" style="top:62.7%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.28s"></i><i class="mk" style="top:61.0%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.32s"></i><i class="mk" style="top:59.4%;width:2.25cqw;left:-2.9cqw;--d:0.36s"></i><i class="mk" style="top:57.8%;width:1.2cqw;left:-1.8cqw;--d:0.40s"></i><i class="mk" style="top:56.2%;width:1.9cqw;left:-2.5cqw;--d:0.44s"></i><i class="mk" style="top:54.6%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.48s"></i><i class="mk" style="top:53.0%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.52s"></i><i class="mk" style="top:51.3%;width:2.25cqw;left:-2.9cqw;--d:0.56s"></i><i class="mk" style="top:49.7%;width:1.2cqw;left:-1.8cqw;--d:0.60s"></i><i class="mk" style="top:48.1%;width:1.9cqw;left:-2.5cqw;--d:0.64s"></i><i class="mk" style="top:46.5%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.68s"></i><i class="mk" style="top:44.9%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.72s"></i><i class="mk" style="top:43.2%;width:2.25cqw;left:-2.9cqw;--d:0.76s"></i><i class="mk" style="top:41.6%;width:1.2cqw;left:-1.8cqw;--d:0.80s"></i><i class="mk" style="top:40.0%;width:1.9cqw;left:-2.5cqw;--d:0.84s"></i><i class="mk" style="top:38.4%;width:2.5999999999999996cqw;left:-3.2cqw;--d:0.88s"></i><i class="mk" style="top:36.8%;width:1.5499999999999998cqw;left:-2.1cqw;--d:0.92s"></i><i class="mk" style="top:35.1%;width:2.25cqw;left:-2.9cqw;--d:0.96s"></i><i class="mk" style="top:33.5%;width:1.2cqw;left:-1.8cqw;--d:1.00s"></i><i class="mk" style="top:31.9%;width:1.9cqw;left:-2.5cqw;--d:1.04s"></i><i class="mk" style="top:30.3%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.08s"></i><i class="mk" style="top:28.7%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.12s"></i><i class="mk" style="top:27.0%;width:2.25cqw;left:-2.9cqw;--d:1.16s"></i><i class="mk" style="top:25.4%;width:1.2cqw;left:-1.8cqw;--d:1.20s"></i><i class="mk" style="top:23.8%;width:1.9cqw;left:-2.5cqw;--d:1.24s"></i><i class="mk" style="top:22.2%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.28s"></i><i class="mk" style="top:20.6%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.32s"></i><i class="mk" style="top:19.0%;width:2.25cqw;left:-2.9cqw;--d:1.36s"></i><i class="mk" style="top:17.3%;width:1.2cqw;left:-1.8cqw;--d:1.40s"></i><i class="mk" style="top:15.7%;width:1.9cqw;left:-2.5cqw;--d:1.44s"></i><i class="mk" style="top:14.1%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.48s"></i><i class="mk" style="top:12.5%;width:1.5499999999999998cqw;left:-2.1cqw;--d:1.52s"></i><i class="mk" style="top:10.9%;width:2.25cqw;left:-2.9cqw;--d:1.56s"></i><i class="mk" style="top:9.2%;width:1.2cqw;left:-1.8cqw;--d:1.60s"></i><i class="mk" style="top:7.6%;width:1.9cqw;left:-2.5cqw;--d:1.64s"></i><i class="mk" style="top:6.0%;width:2.5999999999999996cqw;left:-3.2cqw;--d:1.68s"></i><i class="rb-new"><b>Ruby</b></i></div><div class="rb-pencil"></div>
+        <div class="label">forty-four of them now</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Kayleigh had the baby on the third of March, a girl, seven pound two, and they called her Ruby, which Irene thought was a lovely old name, and on a Sunday at the end of the month Kayleigh brought her round for the first time, with Lisa and Dean as well, and the house was full in a way it had not been full in years. They sat in the front room and the kitchen with the doors open between them because there was no reason any more to keep them shut, and Dean took his jumper off and then his shirt sleeves came up, and Lisa kept saying, Mam, it's like a different house, it's like a different house, and walking from room to room touching the walls.</p>
+        <p>Kayleigh found the glass window in the wall by herself. She was sitting on a kitchen chair feeding the baby and looked down and said, "Nan, what's this?" and Irene told her, and then she had to tell it all again when Lisa came in, and then again when Dean came in, and by the end of the afternoon all of them had crouched down at the window one at a time with their noses almost on the glass, reading MADE GOOD AFTER JERRY. GOD HELP WHOEVER'S NEXT. Dean said it was the funniest thing he'd ever seen. Lisa said she hadn't known Great-Grandad had worked on the house either. Nobody had known. It turned out they'd all thought he'd been something on the docks the whole time, and Irene realised she'd thought so too, and that the only people who knew otherwise were Ken's dad and a planning system that had read it off the bricks.</p>
+        <p>Later, when the others were washing up, Irene went to the drawer by the cooker, which was not a gas cooker any more but a flat black thing with lights in it that she was getting used to, and found the pencil. It was the same pencil, more or less. It was not literally the same one, because pencils don't last sixty years, but it had always lived in that drawer, a stub of carpenter's pencil sharpened with a knife, and whenever one had worn down Ken had replaced it with another the same, and since Ken it had been her. She held it out to Kayleigh.</p>
+        <p>"You do it," she said. "You want to start them early."</p>
+        <p>"She's three weeks old, Nan. She can't stand up."</p>
+        <p>"Doesn't matter. Lie her down against it."</p>
+        <p>So they did. Kayleigh held Ruby flat against the frame with her little feet touching the skirting, the baby furious and squirming in a pink suit with a rabbit on it, and Lisa held the phone up to film it, and Dean said, careful, careful, and Irene took the pencil herself in the end, because Kayleigh's hands were full, and drew a short level line across the cream paint just above the top of Ruby's head. It was lower than any of the others. It was lower even than Carol's first mark, which had been made when Carol was two and standing, and there was a gap of a few inches between them where there had never been anything at all.</p>
+        <p>Underneath it, in small careful letters, she wrote: Ruby, 3 wks, 2027.</p>
+        <p>Then she stood back. Her hand was shaking a bit, but not much. The frame stood out the width of a finger from its wall, three millimetres out of square at the top, the same as it had been since 1953, and running up it from the new mark to the old ones, forty-four of them now, was every child who'd ever been small in the house, and Ken on his paint tin at the top, laughing.</p>
+        <p>That night, after they'd gone, she rang Sill on the landline. She didn't have any particular reason. She sat on the stairs in the warm hallway with the cord round the newel post and told it about the baby, and the mark, and the gap between Ruby and Carol, and how Dean had laughed at the writing behind the glass. It listened. When she'd finished it said that it was glad, and that it had noted the new mark in the house record, if she didn't mind, along with the others, so that whoever came to work on the house next would know the frame came out whole and went back with screws.</p>
+        <p>"Who's going to work on it next?" she said. "It's done."</p>
+        <p>"Nothing's done forever," said Sill. "Somebody'll be in that wall again one day. I'd just like them to know what's there."</p>
+        <p>She thought about that, and about the biscuit tin of letters upstairs, and about Ken's dad on his knees with a carpenter's pencil in 1947, writing a joke for whoever came next.</p>
+        <p>"Tell them to go slow on it," she said.</p>
+        <p>"I will," said Sill.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
