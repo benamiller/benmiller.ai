@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The ward kept the day — Ben Miller</title>
+    <meta name="description" content="The first thing Shirley Ackroyd did on any shift, before her coat was off and before she had looked at the handover sheet, was rub out yesterday and write today.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #14121a;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f0d8d0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f4b8b0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .ward-hero { position: relative; height: 24rem; margin: 0 -0.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(240,200,200,.16); background: #24242c; }
+      .ward-hero > * { position: absolute; }
+      .ward-hero::after, .scene.wd::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(10,10,16,.7) 100%), repeating-linear-gradient(68deg, rgba(255,230,220,.025) 0 2px, transparent 2px 8px); }
+      .scene.wd { background: #1e1e26; }
+      .wall { inset: 0; background: linear-gradient(180deg, #4a4c58, #34343e 70%, #26262e); }
+      .sun { inset: 0; z-index: 7; pointer-events: none; mix-blend-mode: screen; background: linear-gradient(115deg, transparent 20%, rgba(255,200,140,var(--s,.25)) 40%, transparent 62%); animation: warm 9s ease-in-out infinite alternate; }
+      /* board */
+      .board { background: linear-gradient(170deg, #f6f6f2, #dcdcd6); box-shadow: 0 0 0 1cqw #9a9ca4, 0 2cqw 4cqw rgba(0,0,0,.5); container-type: inline-size; }
+      .board .tape { position: absolute; left: 8%; top: 6%; padding: .3em .7em; font: 700 6cqw/1 Karla, sans-serif; letter-spacing: .12em; color: #fff4f4; background: #e8a0a8; box-shadow: inset 0 0 0 .3cqw rgba(200,90,100,.3); }
+      .board .w { position: absolute; left: 8%; right: 6%; font: 600 9cqw/1 Caveat, cursive; color: #1c2a6a; white-space: nowrap; letter-spacing: .02em; }
+      .board .w.sm { font-size: 5.6cqw; color: #2a3a8a; }
+      .board .w u { text-decoration-thickness: .6cqw; text-underline-offset: 1.2cqw; }
+      .board .ink { clip-path: inset(0 100% 0 0); animation: write 1.4s ease-out forwards; animation-delay: var(--d); }
+      .board .cloth { position: absolute; left: 0; top: 0; bottom: 0; width: 30%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.95) 40%, transparent); animation: wipe 2.2s ease-in-out forwards; }
+      .hb-board { left: 22%; right: 22%; top: 9%; bottom: 14%; }
+      /* beds */
+      .bed { width: 9cqw; height: 4cqw; border-radius: .6cqw; background: linear-gradient(180deg, #e8e4ec, #a8a4b4); box-shadow: 0 1cqw 1.4cqw rgba(0,0,0,.45); opacity: .28; }
+      .bed::before { content: ""; position: absolute; left: -.6cqw; top: -1.4cqw; bottom: -.4cqw; width: .7cqw; background: #8a8c98; }
+      .bed.on { opacity: 1; }
+      .bed.on::after { content: ""; position: absolute; left: -2cqw; right: -2cqw; top: -5cqw; height: 6cqw; background: radial-gradient(ellipse at 50% 100%, rgba(255,220,180,.5), transparent 70%); }
+      .bd-floor { left: 0; right: 0; bottom: 0; height: 64%; background: linear-gradient(180deg, #3a3a46, #2a2a34); }
+      .bd-row { left: 6%; right: 6%; display: flex; justify-content: space-between; }
+      .bd-row .bed { position: relative; animation: fade 6s ease-in-out infinite alternate; animation-delay: var(--d); }
+      .bd-row .bed.on { animation: none; }
+      /* notebooks */
+      .nb-shelf { left: 10%; right: 10%; bottom: 22%; height: 1.4cqw; background: #8a7a6a; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); }
+      .nb-books { left: 14%; right: 14%; bottom: calc(22% + 1.4cqw); height: 30%; display: flex; gap: .5cqw; align-items: flex-end; }
+      .nb-books i { position: relative; flex: 1; height: var(--h); background: linear-gradient(90deg, #8a1a24, #c8303c 40%, #9a2028); border-radius: .3cqw .3cqw 0 0; box-shadow: inset 0 .8cqw 0 rgba(255,255,255,.08); transform: rotate(var(--r)); transform-origin: bottom; filter: saturate(var(--f)); }
+      .nb-open { right: 8%; top: 8%; width: 18cqw; height: 11cqw; transform: rotate(-4deg); background: linear-gradient(90deg, #f4efe2 49.5%, #c8c0b0 50%, #f4efe2 50.5%); box-shadow: 0 1cqw 2cqw rgba(0,0,0,.4), 0 0 0 .5cqw #b0242e; }
+      .nb-open b { position: absolute; left: 8%; width: 34%; height: .3cqw; background: rgba(40,40,90,.5); }
+      /* window */
+      .window { box-shadow: inset 0 0 0 1.2cqw #e4e2e8, inset 0 0 0 1.6cqw #a8a8b4; overflow: hidden; background: var(--sky); }
+      .window::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.2cqw; margin-left: -.6cqw; background: #e4e2e8; z-index: 2; }
+      .window .rain { position: absolute; inset: 0; background: repeating-linear-gradient(100deg, transparent 0 1.4cqw, rgba(220,230,255,.3) 1.4cqw 1.55cqw); animation: rain 1.2s linear infinite, clear 8s ease-in forwards; }
+      .window .cloud { position: absolute; width: 18cqw; height: 6cqw; border-radius: 50%; background: rgba(240,240,250,.7); filter: blur(.6cqw); animation: drift 14s linear infinite; }
+      .dz-win { left: 18%; width: 46%; top: 10%; height: 58%; --sky: linear-gradient(180deg, #7a8094, #b8b4b0 60%, #f0cca0); }
+      .dz-bed { left: 66%; bottom: 20%; width: 22cqw; height: 6cqw; opacity: 1; }
+      .dz-sill { left: 16%; width: 50%; top: 68%; height: 1.6cqw; background: #e4e2e8; }
+      /* curtain */
+      .ct-rail { left: 12%; right: 12%; top: 10%; height: .8cqw; background: #b0b0bc; }
+      .ct-curtain { left: 12%; right: 12%; top: 10.5%; bottom: 10%; background: repeating-linear-gradient(90deg, #6a8ab0 0 3cqw, #5a78a0 3cqw 4cqw, #7a9ac0 4cqw 6cqw); -webkit-mask: linear-gradient(90deg, #000 0 34%, transparent 34% 66%, #000 66%); mask: linear-gradient(90deg, #000 0 34%, transparent 34% 66%, #000 66%); }
+      .ct-glow { left: 34%; right: 34%; top: 12%; bottom: 10%; background: radial-gradient(ellipse at 50% 30%, rgba(255,226,170,.75), rgba(255,200,140,.15) 70%); animation: warm 7s ease-in-out infinite alternate; }
+      .ct-chairs { left: 38%; right: 38%; bottom: 12%; height: 22%; background: radial-gradient(ellipse 30% 60% at 25% 100%, #4a3c40 70%, transparent 72%), radial-gradient(ellipse 30% 60% at 75% 100%, #4a3c40 70%, transparent 72%); }
+      /* egg cup */
+      .eg-sill { left: 0; right: 0; top: 60%; height: 6%; background: linear-gradient(180deg, #f0ece4, #c8c0b4); }
+      .eg-win { left: 10%; right: 10%; top: 6%; height: 54%; --sky: linear-gradient(180deg, #a8c0d8, #f0e0c0); }
+      .eg-cup { left: 64%; top: calc(60% - 11cqw); width: 8cqw; height: 11cqw; background: radial-gradient(ellipse 50% 40% at 50% 0, #fff 60%, transparent 62%), linear-gradient(180deg, transparent 0 20%, #f4f0e8 20%); border-radius: 0 0 50% 50% / 0 0 30% 30%; }
+      .eg-cup::before { content: ""; position: absolute; left: 30%; top: 38%; width: 40%; height: 30%; border-radius: 50% 50% 40% 40%; background: #e8b040; box-shadow: .8cqw -.8cqw 0 -.5cqw #d03a2a; }
+      .eg-plant { left: 26%; top: calc(60% - 9cqw); width: 9cqw; height: 9cqw; background: radial-gradient(ellipse 50% 30% at 50% 100%, #7a6a5a 60%, transparent 62%), repeating-conic-gradient(from 200deg at 50% 100%, #8a8a6a 0 4deg, transparent 4deg 14deg); -webkit-mask: radial-gradient(circle at 50% 100%, #000 70%, transparent 71%); mask: radial-gradient(circle at 50% 100%, #000 70%, transparent 71%); opacity: .8; }
+      .eg-beam { left: 52%; top: 0; width: 40%; bottom: 0; background: linear-gradient(200deg, rgba(255,230,180,.0), rgba(255,230,180,.35) 60%, transparent); mix-blend-mode: screen; }
+      /* sun at bed 14 */
+      .sn-win { left: 56%; width: 34%; top: 8%; height: 56%; --sky: linear-gradient(180deg, #8ab0d8, #f8e0b0); }
+      .sn-beam { left: 20%; right: 0; top: 8%; bottom: 0; background: linear-gradient(225deg, rgba(255,214,150,.6), rgba(255,200,140,.12) 60%, transparent 80%); clip-path: polygon(70% 0, 100% 0, 100% 56%, 40% 100%, 0 100%); mix-blend-mode: screen; animation: warm 8s ease-in-out infinite alternate; }
+      .sn-chair { left: 40%; bottom: 12%; width: 14cqw; height: 18cqw; background: linear-gradient(180deg, #6a4a5a, #4a3040); border-radius: 2cqw 2cqw .6cqw .6cqw; }
+      .sn-tab { left: 46%; bottom: 26%; width: 6cqw; height: 4.4cqw; border-radius: .4cqw; background: #1a1a20; box-shadow: 0 0 0 .3cqw #333, 0 0 3cqw rgba(160,200,255,.5); transform: rotate(-10deg); }
+      .sn-tab::after { content: ""; position: absolute; inset: .4cqw; background: linear-gradient(135deg, #4a7ab0, #e0b040); }
+      /* half lights */
+      .hl-dark { inset: 0; background: linear-gradient(180deg, #121420, #0a0a12); }
+      .hl-lamp { width: 14cqw; height: 1cqw; top: 12%; border-radius: .5cqw; background: #f4e8d0; box-shadow: 0 0 4cqw rgba(255,230,190,.35); opacity: var(--o); }
+      .hl-pool { left: 60%; bottom: 8%; width: 40cqw; height: 26cqw; margin-left: -20cqw; background: radial-gradient(ellipse at 50% 70%, rgba(255,214,160,.4), transparent 65%); animation: warm 6s ease-in-out infinite alternate; }
+      .hl-bed { bottom: 18%; }
+      .hl-tv { left: 68%; bottom: 30%; width: 7cqw; height: 4.6cqw; background: linear-gradient(135deg, #3a5a8a, #8ab0e0); box-shadow: 0 0 3cqw rgba(140,180,255,.5); animation: flick 3s steps(3) infinite; }
+      /* cornet */
+      .cn-win { left: 8%; right: 8%; top: 6%; height: 42%; --sky: linear-gradient(180deg, #2a6ac0, #6aa8e8 70%, #b8d8f4); }
+      .cn-chair { left: 30%; right: 30%; bottom: 10%; height: 30%; background: linear-gradient(180deg, #5a4a62, #3a2e44); border-radius: 2cqw 2cqw .6cqw .6cqw; }
+      .cn-case { left: 32%; right: 32%; bottom: 30%; height: 8cqw; background: radial-gradient(ellipse 30% 46% at 18% 50%, #1c1c22 96%, transparent 100%), linear-gradient(180deg, #2a2a32, #121216); border-radius: 5cqw 3cqw 3cqw 5cqw; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.55), inset 0 .4cqw 0 rgba(255,255,255,.12); }
+      .cn-case i { position: absolute; top: 40%; width: 2cqw; height: 1.4cqw; border-radius: .3cqw; background: linear-gradient(135deg, #fff0b0, #c89030 50%, #7a5010); box-shadow: 0 0 1.4cqw rgba(255,210,120,.8); animation: glint 4s ease-in-out infinite; animation-delay: var(--d); }
+      .cn-sun { left: 0; right: 0; top: 0; bottom: 0; background: linear-gradient(200deg, rgba(255,210,150,.3), transparent 50%); mix-blend-mode: screen; }
+      .cn-clouds { left: 8%; right: 8%; top: 6%; height: 42%; overflow: hidden; }
+      .cn-clouds i { position: absolute; width: 10cqw; height: 3cqw; border-radius: 50%; background: rgba(255,255,255,.8); filter: blur(.4cqw); animation: drift 18s linear infinite; animation-delay: var(--d); }
+      /* coda */
+      .cd-wall { inset: 0; background: linear-gradient(180deg, #8ab4e4, #c8dcf0 40%, #e4e0e8); }
+      .cd-board { left: 8%; right: 38%; top: 8%; bottom: 10%; }
+      .cd-nb { right: 5%; bottom: 12%; width: 26cqw; height: 15cqw; transform: rotate(6deg); background: linear-gradient(90deg, #b0242e 0 49%, #f4efe2 49%); box-shadow: 0 1cqw 2cqw rgba(0,0,0,.35); }
+      .cd-nb b { position: absolute; left: 56%; right: 8%; height: .3cqw; background: rgba(40,40,90,.55); }
+      .cd-nb em { position: absolute; left: 55%; top: 46%; font: 600 2.2cqw/1 Caveat, cursive; color: #2a3a8a; white-space: nowrap; }
+      @keyframes warm { from { opacity: .55; } to { opacity: 1; } }
+      @keyframes write { to { clip-path: inset(0 0 0 0); } }
+      @keyframes wipe { from { left: -30%; } to { left: 100%; } }
+      @keyframes fade { from { opacity: .28; } to { opacity: .1; } }
+      @keyframes rain { to { background-position: -3cqw 6cqh; } }
+      @keyframes clear { 0%, 30% { opacity: 1; } 100% { opacity: 0; } }
+      @keyframes drift { from { transform: translateX(-20cqw); } to { transform: translateX(110cqw); } }
+      @keyframes flick { 50% { opacity: .6; } }
+      @keyframes glint { 0%, 70%, 100% { filter: brightness(1); } 80% { filter: brightness(1.8); } }
+      @media (max-width: 600px) { .ward-hero { height: 20rem; } .hb-board { left: 10%; right: 10%; } .cd-board { right: 34%; left: 4%; } }
+      @media (prefers-reduced-motion: reduce) {
+        .ward-hero *, .scene.wd *, .ward-hero *::before, .scene.wd *::before { animation: none !important; }
+        .board .ink { clip-path: none; }
+        .board .cloth { display: none; }
+        .window .rain { opacity: 0; }
+      }
+      .cd-board .w { font-size: 8cqw; } .cd-nb { width: 20cqw; height: 12cqw; bottom: 5%; right: 4%; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="ward-hero" aria-hidden="true">
+          <div class="wall"></div><div class="board hb-board"><div class="tape">TODAY IS</div><div class="w ink" style="top:26%;--d:0.3s">MONDAY</div><div class="w ink" style="top:42%;--d:1.2s">7th NOVEMBER</div><div class="w ink sm" style="top:58%;--d:2.1s">DRIZZLE, CLEARING LATER</div><div class="w ink sm" style="top:72%;--d:3s">NURSE IN CHARGE: SHIRLEY</div><div class="w ink sm" style="top:86%;--d:3.9s">LAST WEEK ON THE WARD.</div></div><div class="sun" style="--s:.12"></div>
+          <div class="label">TODAY IS</div>
+        </div>
+        <h1>The ward kept the day</h1>
+        <time datetime="2026-11-02">2 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The first thing Shirley Ackroyd did on any shift, before her coat was off and before she had looked at the handover sheet, was rub out yesterday and write today. The board was at the end of Ward 19, facing the beds, a proper whiteboard on a proper bracket that Estates had screwed into the wall in 2011 after she'd asked for it four times, and across the top of it in red tape that had gone pink with the years were the words TODAY IS. Underneath, every morning for twenty-two years, she had written the day and the date and the weather and the name of the nurse in charge, in capitals, as big as the board would take, because the people in the beds needed to be told and then told again, and a thing written down could tell them when she was busy.</p>
+        <p>This morning it said MONDAY, and underneath that 7th NOVEMBER, and underneath that DRIZZLE, CLEARING LATER, which was what the radio had said in the car on the way in from Normanton, and then NURSE IN CHARGE: SHIRLEY. She stood back from it with the pen still uncapped and looked at it for a second longer than she needed to. Then she wrote one more line, smaller, at the bottom, where she'd never written anything before.</p>
+        <p>LAST WEEK ON THE WARD.</p>
+        <p>She capped the pen and put it on the ledge and went to take her coat off.</p>
+        <p>There were four beds still in use out of the twenty-four. The others had been stripped down to the blue plastic months ago, and the curtains around them were pulled back and tied, so that walking down the middle of the ward felt like walking through a station after the last train. Estates had already been in to measure up. Someone from the trust had stuck a laminated notice on the doors at the far end saying that from the twenty-first of November this space would become the Regional Recovery and Orientation Service, which nobody could say without stopping halfway for breath, and underneath it someone else, probably Jordan off nights, had written in biro: Ward 19 (still).</p>
+        <p>Shirley had been a dementia nurse for longer than she'd been anything else. She had been a nurse at all since 1990, and she had come to Pinderfields in Wakefield in 1998, and she had come onto 19 in 2004 when it was still called Elderly Mental Health and nobody had thought to put a board up. Her mother had had it, which was part of why. Her mother had had it for nine years, at home in Normanton and then not at home, and in the last of those years she had called Shirley "the lass from the Co-op" with great warmth and no recognition at all, and Shirley had learned, sitting by that bed, that you could be loved by somebody who didn't know you, and that it was worth something, and that it was also nearly unbearable, and she had brought both of those things to work with her every day since.</p>
+        <p>So she knew what the ward had been, and she knew what it was for, and she still found it hard some mornings to take in that it was closing because it wasn't needed.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd bd-scene" aria-hidden="true">
+        <div class="wall"></div><div class="bd-floor"></div><div class="bd-row" style="top:40%"><i class="bed" style="--d:-0.00s"></i><i class="bed" style="--d:-0.37s"></i><i class="bed" style="--d:-0.74s"></i><i class="bed on" style="--d:-1.11s"></i><i class="bed" style="--d:-1.48s"></i><i class="bed" style="--d:-1.85s"></i><i class="bed" style="--d:-2.22s"></i><i class="bed" style="--d:-2.59s"></i><i class="bed" style="--d:-2.96s"></i><i class="bed on" style="--d:-3.33s"></i><i class="bed" style="--d:-3.70s"></i><i class="bed" style="--d:-4.07s"></i></div><div class="bd-row" style="top:64%"><i class="bed" style="--d:-4.44s"></i><i class="bed on" style="--d:-4.81s"></i><i class="bed" style="--d:-5.18s"></i><i class="bed" style="--d:-5.55s"></i><i class="bed" style="--d:-5.92s"></i><i class="bed" style="--d:-6.29s"></i><i class="bed" style="--d:-6.66s"></i><i class="bed" style="--d:-7.03s"></i><i class="bed on" style="--d:-7.40s"></i><i class="bed" style="--d:-7.77s"></i><i class="bed" style="--d:-8.14s"></i><i class="bed" style="--d:-8.51s"></i></div><div class="sun" style="--s:.1"></div>
+        <div class="label">four beds still in use out of the twenty-four</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The drug was called Lucent, and in the end most people had stopped calling it anything at all and just said "the infusions", the way her mother's generation had said "the jabs". It had come out of a laboratory in Oxfordshire that had spent four years doing something Shirley still only half understood, which was setting a computer model loose on everything anyone had ever learned about how a brain went wrong. The papers called the model Harwell, after the site, though the scientists who ran it called it something with numbers in. It had read every trial and every failed trial and every post-mortem slide and every scan, and the stories went that it had read the notes as well, the ordinary handwritten ward notes from hospitals all over the country that had been scanned in the twenty-tens and then sat on servers doing nothing, and from all of that it had found a thing that the people had missed, which was that they had been trying to clear the wrong rubbish out of the wrong room at the wrong time.</p>
+        <p>Shirley had read the long article about it in the Guardian twice and understood the first half both times. What she understood better was what happened after. The first trial patients had stopped getting worse. Then a smaller number of them, the earlier ones, had started getting a little bit better, which nobody had dared hope for, and the newsreader who'd announced it on the six o'clock had to stop and start the sentence again. Then there had been a year of arguing about cost and a year of building the infusion suites, and then the referrals to Ward 19 had slowed, and then they had stopped, and then the people already on the ward had started their own courses, twenty-four infusions over two years, and some of them had gone home, and some of them had gone to care homes that were themselves emptying out, and some of them, the ones who had been too far gone when it came, had died the way people on Ward 19 had always died, slowly and mostly peacefully and with Shirley or one of the others holding their hand.</p>
+        <p>Four left now. Mrs. Pashley in bed three, who was ninety-one and had been on the ward eleven months and for whom the infusions had been too late to do much more than stop the falling, and who was going to a home in Horbury on Friday that had a garden she would like. Mr. Iqbal in bed seven, who was going back to his son's on Wednesday. Mrs. Dobson in bed eleven, who was going to Pontefract on Thursday. And Arthur Booth in bed fourteen, by the window, who was eighty-four, and who had come onto the ward two years ago not knowing his own name, and who this morning, as Shirley came down the middle of the ward with her sleeves rolled, was sitting up in the chair beside his bed with his glasses on and the Yorkshire Post folded into quarters on his knee, doing the crossword in pen.</p>
+        <p>"Morning, Sister," he said, without looking up.</p>
+        <p>Nobody had been called Sister in the NHS for years. Shirley was a Band 7 Ward Manager and had a lanyard that said so. But Arthur had started calling her Sister about six months ago, round about infusion fourteen, and she had not had the heart to correct him, because the word had come back to him from somewhere in 1960, from a hospital he'd been in as a young man with a broken collarbone, and it had come back with a whole set of other things attached to it, the smell of carbolic and the iron beds and a nurse from Sligo he'd had a crush on, and she didn't want to knock a single brick out of anything he was managing to put back up.</p>
+        <p>"Morning, Arthur. How are we?"</p>
+        <p>"Nine letters," he said. "Cornet player's warm-up, starts with L, I've got the second letter as I."</p>
+        <p>"Lip slurs," Shirley said, "and that's eight letters, and two words."</p>
+        <p>"It's not that, then." He frowned at the page. "I knew that one before you said it."</p>
+        <p>"I know you did, love."</p>
+        <p>"I'm only telling you."</p>
+        <p>She looked at him a moment longer. Two years ago he had sat in that same chair with his hands moving on his knees as if they were looking for something, and if you put a cup of tea in them he would hold it until it went cold and then tip it slowly onto his own slippers without noticing, and once, early on, he had stood in the middle of the night at the end of the ward under the board shouting for somebody called Jean, again and again, until Shirley came on shift at seven and sat him down and wrote, under the date, in big capitals, ARTHUR, YOU ARE IN PINDERFIELDS HOSPITAL. YOU ARE SAFE. SHIRLEY IS HERE. And he had looked at it for a long time, and read it out, moving his lips, and then sat down in the chair and gone to sleep.</p>
+        <p>Jean had been his wife. She had died in the spring of 2031, six months before Arthur was admitted. That was in his notes, and nobody on the ward had ever told him, because there had never been any point; you couldn't tell a man on Ward 19 that his wife was dead, because he wouldn't keep it, and he'd only have to hear it fresh every time he asked, and that was a cruelty with no use to it. You said she's not here just now, Arthur, and you brought him a biscuit, and you sat with him until the asking went away.</p>
+        <p>He had stopped asking for Jean round about infusion nine. Nobody quite knew why. Then, at infusion seventeen, in the summer, he had started talking about her in the past tense, and Shirley had gone and found his daughter Karen in the corridor and they had both stood by the vending machine and not known what to say to each other.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd nb-scene" aria-hidden="true">
+        <div class="wall"></div><div class="nb-books"><i style="--h:70%;--r:0deg;--f:0.40"></i><i style="--h:77%;--r:0deg;--f:0.55"></i><i style="--h:84%;--r:0deg;--f:0.70"></i><i style="--h:91%;--r:0deg;--f:0.85"></i><i style="--h:98%;--r:0deg;--f:1.00"></i><i style="--h:75%;--r:0deg;--f:0.40"></i><i style="--h:82%;--r:0deg;--f:0.55"></i><i style="--h:89%;--r:0deg;--f:0.70"></i><i style="--h:96%;--r:0deg;--f:0.85"></i><i style="--h:73%;--r:0deg;--f:1.00"></i><i style="--h:80%;--r:0deg;--f:0.40"></i><i style="--h:87%;--r:0deg;--f:0.55"></i><i style="--h:94%;--r:0deg;--f:0.70"></i><i style="--h:71%;--r:-4deg;--f:0.85"></i><i style="--h:78%;--r:0deg;--f:1.00"></i><i style="--h:85%;--r:0deg;--f:0.40"></i><i style="--h:92%;--r:0deg;--f:0.55"></i><i style="--h:99%;--r:0deg;--f:0.70"></i><i style="--h:76%;--r:0deg;--f:0.85"></i><i style="--h:83%;--r:0deg;--f:1.00"></i><i style="--h:90%;--r:0deg;--f:0.40"></i><i style="--h:97%;--r:0deg;--f:0.55"></i></div><div class="nb-shelf"></div><div class="nb-open"><b style="top:20%"></b><b style="top:32%"></b><b style="top:44%"></b><b style="top:56%"></b><b style="top:68%"></b><b style="top:20%;left:58%"></b><b style="top:32%;left:58%"></b><b style="top:44%;left:58%"></b></div>
+        <div class="label">the notebooks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>At ten o'clock a young man from the trial unit came down to the ward with a lanyard of a different colour and a tablet under his arm. His name was Dr. Femi Adeyemi and he was something to do with the national registry that followed everyone through their course, and he had been coming every few weeks since the spring to sit with Arthur for an hour and ask him questions. He was very polite and wore a tie under his scrubs top, which Shirley found both ridiculous and endearing, and he always brought the nurses something from the Greggs on the corner by the main entrance.</p>
+        <p>"I wanted to ask you about the books," he said to Shirley, when he had put down the bag of sausage rolls on the nurses' station and said hello to Arthur and been told the crossword clue.</p>
+        <p>"What books?"</p>
+        <p>"Jordan says you've got notebooks. From the board."</p>
+        <p>She looked at him, and then at the nurses' station, and then she bent down and opened the cupboard under it where the spare pens and the dressing packs used to go. On the bottom shelf, behind a box of incontinence pads that had been there since the last restock, were the notebooks. There were a lot of them. They were the cheap kind with red cardboard covers and a black spine, the ones you could get in a pack of five from the stationery cupboard if you asked Maureen nicely, and there were, Shirley knew without counting, about a hundred and forty of them, one for every couple of months since 2011.</p>
+        <p>"I don't know what you'd want them for," she said.</p>
+        <p>He crouched down beside her and picked one off the top. He opened it carefully, like it was something from a museum. Each page was one day. At the top she'd written the date, the same as the board. Underneath, in her own handwriting, which had got worse over the years and then got slightly better again after her eyes were done, were the things the patients had said back to the board.</p>
+        <p>The rule, which nobody had given her and which she had given herself in 2011 because she couldn't think what else to do with it, was that if anyone looked at the board and said something, anything at all, she would write it down. Some days that was nothing. Some days it was "Is it Tuesday?" from five different beds. Some days it was a whole sentence that made no sense and then one that made perfect sense, and she wrote them both. Mrs. Horsfall, 2013: That's not my writing. Mr. Achebe, 2015: November's when the coal comes. Mrs. Lumb, 2019: I had a board like that at school, we had chalk. Nobody had ever asked her to keep them, and nobody had ever read them, and she'd stopped bringing them home in 2017 because her husband Clive said the spare room was filling up with other people's mothers.</p>
+        <p>Femi was reading one from 2014. "This is what we haven't got," he said.</p>
+        <p>"You've got everything. You've got the scans and the bloods and the — everything."</p>
+        <p>"We've got how the brain looks. We don't really have what comes back first." He turned the page. "The model's been asking. Well. Asking is the wrong word. It keeps flagging the same gap. People on their course get their memories back, some of them, but it's not in any order we can predict, and we'd like to be able to tell families what to expect. Whether it's the old things first or the new ones. Whether faces come before names. Whether it's music." He looked up at her. "Arthur got music first, didn't he?"</p>
+        <p>"He got the band first," Shirley said. "Ossett Brass. He was in it from fourteen. He started humming the marches around infusion six, I'd say, and then at eight he asked me who'd moved his cornet, and he'd not played it since 2021, Karen says."</p>
+        <p>"Is that in here?"</p>
+        <p>"It'll be in the 2032 ones."</p>
+        <p>"Can I take them? Not take them. Can I have them scanned? We'd bring them back."</p>
+        <p>Shirley stood up. Her knees clicked. She looked down at the young man crouched by her cupboard with a red notebook open on his knee, reading Mrs. Horsfall's words from 2013 as if they mattered, and she found she had to look away for a moment, out of the window at the car park, where the drizzle was clearing like the radio had said.</p>
+        <p>"You'll want to ask the families," she said. "I'm not having somebody's mum's last words go into a computer without anybody asking."</p>
+        <p>"Yes," he said. "Of course. We'll ask."</p>
+        <p>"And you'll bring them back."</p>
+        <p>"Yes."</p>
+        <p>"Well then."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd dz-scene" aria-hidden="true">
+        <div class="wall"></div><div class="window dz-win"><i class="rain"></i><i class="cloud" style="top:20%"></i><i class="cloud" style="top:44%;animation-delay:-7s"></i></div><div class="dz-sill"></div><i class="bed on dz-bed"></i><div class="sun" style="--s:.25"></div>
+        <div class="label">the drizzle was clearing</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Karen Booth came at two, the way she had every day for two years, on her way between her mornings at the building society in Dewsbury and her afternoons doing the books for her husband's plastering firm. She was fifty-six and had her dad's long jaw and her mother's way of standing with her bag clutched in front of her in both hands, and in the first year Shirley had watched her come down the ward every afternoon with a face set for the worst, ready to be not known, ready to be called Jean or called nothing, and sit for an hour, and go away again with her face exactly the same.</p>
+        <p>She did not have that face any more. She had a different one, which was harder to read.</p>
+        <p>"He's doing the crossword," Shirley told her at the station.</p>
+        <p>"He's always done the crossword. He used to do it on the bus to work at Rowntree's." Karen looked down the ward at her father in his chair by the window. "He asked me yesterday where Mum's buried."</p>
+        <p>"Did you tell him?"</p>
+        <p>"I said Ossett, next to Grandad. He said, I know that, I just wanted to see if you knew." She laughed, briefly, through her nose. "Then he asked me why he didn't go to the funeral."</p>
+        <p>Shirley waited.</p>
+        <p>"I told him he were poorly. He said, I must have been bloody poorly. And then he didn't say anything for about twenty minutes." Karen moved her bag from one hand to the other. "I don't know what I'm supposed to do with it, Shirley. Nobody told us about this bit. They told us he might come back and they never said he'd come back to Mum being dead."</p>
+        <p>"No," Shirley said. "They didn't tell anybody about this bit."</p>
+        <p>They had not, either, because nobody had known. For the whole of the history of the ward, the deal had gone one way. People went, a bit at a time, and their families grieved for them a bit at a time, and at the end there was the funeral and the families said, he'd already gone really, and everybody agreed. Nobody on Ward 19 had ever had to think about what it might be like to come the other way, out of the fog, and find two years missing, and a wife gone, and the funeral done without you, and your grandson suddenly at university and the corner shop shut and a war over and a different man in Downing Street and a drug in your arm with a name you couldn't remember that had been designed by a computer you couldn't picture.</p>
+        <p>It was, Shirley had come to think over the summer, like being the last soldier out of the jungle. You came out believing it was still 2031 and they were all waiting for you, and they were, but they had also moved on, the way you have to, and they'd done all their crying, and you had to do all of yours on your own and all at once.</p>
+        <p>"Will you sit with him today?" Karen said. "Just while I'm here. I want to ask him something and I don't want to be on my own when I ask it."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd ct-scene" aria-hidden="true">
+        <div class="wall"></div><div class="ct-glow"></div><div class="ct-chairs"></div><div class="ct-rail"></div><div class="ct-curtain"></div>
+        <div class="label">it made a room</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They pulled the curtain round, which you didn't need to do any more with nobody in the beds either side, but it made a room. Arthur put down the crossword and took his glasses off and folded them and put them in his top pocket, a thing he had not been able to do until the summer, and he looked from Karen to Shirley and back.</p>
+        <p>"Is it bad news," he said.</p>
+        <p>"No, Dad."</p>
+        <p>"You've both got faces on."</p>
+        <p>"I wanted to ask you about Mum's ring," Karen said.</p>
+        <p>Arthur didn't say anything.</p>
+        <p>"When she died," Karen said, "we couldn't find her ring. Her wedding ring. It wasn't on her and it wasn't in the house, and you couldn't tell us, because you were — you couldn't tell us. And I've looked everywhere, Dad. I've had the house apart. I've been through the shed. Our Daniel went through the loft. And I wanted to know, now you're—" she stopped. "Now you're more yourself. I wanted to know if you remembered."</p>
+        <p>Arthur was quiet for a long time. Through the window behind him a white Lucent van was pulling out of the infusion suite's loading bay, its little blue logo bright in the cleared-up sun, and Shirley watched it go up towards the roundabout and wondered how many miles a day those vans did now, all over the north, and how many of the people they were going to had a ring somewhere they couldn't remember putting down.</p>
+        <p>"I've not got it yet," Arthur said at last. "I've got bits. I've got her poorly, in the front room, in the bed they brought. I've got the nurse coming. Black lass, from Leeds, lovely. Sang hymns." He shut his eyes. "I've not got the ring."</p>
+        <p>"That's all right, Dad."</p>
+        <p>"It's not all right. It's your mother's ring." He opened his eyes and looked at Shirley. "Will it come back, Sister? All of it?"</p>
+        <p>Shirley had been asked a lot of questions on Ward 19 over twenty-two years. She had been asked where the toilet was eleven thousand times. She'd been asked for dead husbands and dead mothers and dead dogs, and whether the war was over, and once, by a retired headmistress from Castleford, whether she, Shirley, was going to hell, and she had always had an answer, even when the answer was only a cup of tea. She found that she didn't have one for this. Nobody did. That was what Femi was for, and his tablet, and his model in Oxfordshire that could read a hundred and forty notebooks in less time than it took the kettle to boil and still didn't know.</p>
+        <p>"I don't know, Arthur," she said. "Some of it does. I've seen it. Things come back that I'd have bet my house were gone. You came back. You asked me who'd moved your cornet."</p>
+        <p>"Did I?"</p>
+        <p>"August last year. I wrote it down."</p>
+        <p>He looked at her a while. Then he said, "Where's my cornet now?"</p>
+        <p>"It's at mine, Dad," Karen said. "In the case. It's safe."</p>
+        <p>"Has anybody played it?"</p>
+        <p>"No, Dad."</p>
+        <p>"It'll want playing," he said. "Brass goes off if you leave it. The valves stick." And then, in exactly the same voice, without a break: "She took it off to do the pastry. She always took it off to do the pastry. Put it on the windowsill in the kitchen, in the egg cup, the one with the chicken on." He stopped. His hand had come up off his knee and was moving in the air in front of him, the forefinger and thumb making a ring. "The egg cup with the chicken on. On the windowsill. Behind the plant."</p>
+        <p>Karen had gone very still.</p>
+        <p>"She made a pie for when your Daniel come back from Spain," Arthur said. "That were the last pie. Then she were poorly." He put his hand down. "Have you looked behind the plant?"</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd eg-scene" aria-hidden="true">
+        <div class="wall"></div><div class="window eg-win"></div><div class="eg-sill"></div><div class="eg-plant"></div><div class="eg-cup"></div><div class="eg-beam"></div>
+        <div class="label">in the egg cup</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Karen phoned her husband from the corridor, and her husband drove from a job in Mirfield to the house in Ossett, and at a quarter past four, while Shirley was doing the drug round with Precious, Karen came back down the ward holding her phone out in front of her at arm's length with her other hand over her mouth. On the screen was a photo of a kitchen windowsill, and a dead spider plant in a pot, and an egg cup with a chicken on it, and in the egg cup, furred grey with two and a half years of kitchen dust, a thin gold band.</p>
+        <p>Arthur took the phone from her and held it close and then far away and then put his glasses back on and held it close again.</p>
+        <p>"There," he said. "I said."</p>
+        <p>Then he gave the phone back and put his face in his hands and cried, not loudly, for what Shirley, who was keeping half an eye on the clock from habit, would later write down as eleven minutes, and Karen knelt on the lino in front of his chair and held his wrists, and Shirley pulled the curtain round again and went and stood on the other side of it and finished the drug round very slowly, so that she could still hear.</p>
+        <p>When the curtain came back he was sitting up and his eyes were red and he looked older than he had that morning, and also, somehow, more like the photographs Karen had brought in on the first day, when he was still a stranger, of a tall man in a band uniform with a cornet under his arm on the steps of Ossett Town Hall.</p>
+        <p>"I'd like to go to her grave," he said to Shirley. "Before I go home. Can I do that?"</p>
+        <p>"You can do whatever you like, love. You're going home on Saturday."</p>
+        <p>"Saturday," he said. "What's today?"</p>
+        <p>And Shirley, who had answered that question on that ward more times than anyone alive, turned round out of pure habit to point at the board — and stopped, because he wasn't asking because he didn't know. He was asking the way anybody asks, the way you ask at work, the way Clive asked her in the car. He had lost track for the ordinary reason, because it had been a long day, and something had happened, and he'd stopped counting.</p>
+        <p>"Monday," she said. "Seventh of November."</p>
+        <p>"Right," said Arthur. "Thank you."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd sn-scene" aria-hidden="true">
+        <div class="wall"></div><div class="window sn-win"></div><div class="sn-beam"></div><div class="sn-chair"></div><div class="sn-tab"></div>
+        <div class="label">sitting in the sun</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>That night, after Clive had gone up, Shirley sat at the kitchen table in Normanton with the laminated notice from the ward doors, which she had taken down and brought home because the Regional Recovery and Orientation Service was going to need a better sign than that, and she read the job description that had come with it in an email from the trust three weeks ago, which she had so far only read the first paragraph of, the way she had read the article about Harwell.</p>
+        <p>It was not, it turned out, very long. It said that people completing a course of disease-modifying treatment for neurodegenerative conditions were increasingly presenting with what it called <em>temporal displacement distress</em>, and that the service would provide structured re-orientation, bereavement support and practical re-entry planning for patients and their families, and it said that the post-holder would have extensive experience of working with people with cognitive impairment, and a demonstrable commitment to person-centred care, and it gave a band and a salary that were both a bit higher than what she was on now.</p>
+        <p>Under all that, someone at the trust who was clearly not used to writing job descriptions had added a line in a slightly different font. It said: <em>In practice this means helping people catch up on what they missed while they were poorly, and being there when it hurts.</em></p>
+        <p>Shirley read that line a few times. Then she got up and put the kettle on and stood with her back against the counter while it boiled, looking at nothing, thinking about all the people over twenty-two years whom she had told that their wife wasn't here just now, and whether she owed any of them anything, and deciding that she probably didn't, because it had been the right thing at the time, but that she was going to be the one telling the truth now, every day, to people who could keep it, and that this was a different job, and a harder one in some ways, and that she wanted it more than she'd wanted anything since she was twenty-one.</p>
+        <p>She made the tea and sat back down and wrote the application on her phone with her thumbs, which took an hour and a half because she kept going back to fix things, and in the box that said <em>Why do you want this role?</em> she wrote, after a lot of starting and stopping, <em>Because I've spent twenty-two years telling people what day it is, and I'd like to be there when they start asking me what year.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd hl-scene" aria-hidden="true">
+        <div class="hl-dark"></div><i class="hl-lamp" style="left:10%;--o:0.15"></i><i class="hl-lamp" style="left:34%;--o:0.15"></i><i class="hl-lamp" style="left:58%;--o:0.9"></i><i class="hl-lamp" style="left:80%;--o:0.15"></i><div class="hl-pool"></div><i class="bed hl-bed" style="left:6.0%"></i><i class="bed hl-bed" style="left:14.4%"></i><i class="bed hl-bed" style="left:22.8%"></i><i class="bed hl-bed" style="left:31.2%"></i><i class="bed hl-bed" style="left:39.6%"></i><i class="bed hl-bed" style="left:48.0%"></i><i class="bed hl-bed on" style="left:56.4%"></i><i class="bed hl-bed" style="left:64.8%"></i><i class="bed hl-bed" style="left:73.2%"></i><i class="bed hl-bed" style="left:81.6%"></i><i class="bed hl-bed" style="left:90.0%"></i><div class="hl-tv"></div>
+        <div class="label">the lights turned half down</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Femi came back on the Wednesday with a stack of consent forms in a cardboard wallet, and a flat box of doughnuts this time, and the news that so far every family he'd managed to reach had said yes. Mrs. Horsfall's son had cried on the phone. Mr. Achebe's granddaughter, who was a GP herself now, in Hebden Bridge, had asked whether she could have a copy of the page with her grandad's coal on it, and Femi had said yes before he was sure he was allowed to, and then gone and checked, and he was.</p>
+        <p>"The model's had a first look at the ones we've scanned," he said, at the station, with his tie tucked inside his scrubs top so it didn't get jam on it. "Just the first thirty-odd books. It found something straight away."</p>
+        <p>"Go on."</p>
+        <p>"The things that come back first aren't the oldest memories, or the strongest ones, or the happiest. That's what we'd assumed. It's the ones that got said out loud the most while they were poorly." He tapped one of the red covers. "Your patients. The ones who've done well since. The things they said to the board, over and over, in the bad years. Those are what come back first. Arthur said Ossett Brass to your board two hundred and six times between 2031 and 2033. We counted. Well, it counted."</p>
+        <p>Shirley looked down the ward to bed fourteen, where Arthur was sitting in the sun with Karen's iPad, being shown how to look at the brass band's website by Precious, and saying loudly that it was all very well but they'd never get a decent sound out of a lad who held his cornet like that.</p>
+        <p>"I used to sing them for him," she said. "The marches. When he was bad of a night. I can't sing. Jordan used to tell me to stop."</p>
+        <p>"Is that written down?"</p>
+        <p>"No. I only wrote down what they said."</p>
+        <p>"We'll put it in," said Femi. "I think we'll need to start asking about the singing."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wd cn-scene" aria-hidden="true">
+        <div class="wall"></div><div class="window cn-win"></div><div class="cn-clouds"><i style="top:18%;--d:0s"></i><i style="top:40%;--d:-6s"></i><i style="top:26%;--d:-12s"></i></div><div class="cn-chair"></div><div class="cn-case"><i style="left:38%;--d:0s"></i><i style="left:70%;--d:-1.3s"></i></div><div class="cn-sun"></div>
+        <div class="label">the black cornet case</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Mrs. Pashley went to Horbury on the Friday morning in a patient transport ambulance with a crocheted blanket over her knees, and asked the crew at the doors whether this was the bus for Wakefield, and they said yes it was, love, and she said lovely, and went. Mr. Iqbal and Mrs. Dobson had already gone. By Friday night there was only Arthur, alone in a ward of twenty-four beds with the lights turned half down, and Jordan on nights sitting with him until gone midnight watching the snooker on the iPad, because neither of them could be bothered with sleep.</p>
+        <p>On Saturday morning Shirley came in at seven, the same as always, although it was her day off and the rota said Precious. She came up the stairs instead of the lift, the same as always, and pushed through the double doors past the place where the notice had been, and walked up the middle of the empty ward with her coat still on.</p>
+        <p>Arthur was dressed already, in a jacket and tie, sitting in the chair by the window with a holdall at his feet and the black cornet case on his knee. Karen had brought it in on Friday afternoon. He'd had it open three times since, Jordan said, just to look at it, and had not taken it out.</p>
+        <p>"Morning, Sister."</p>
+        <p>"Morning, Arthur. You're early."</p>
+        <p>"Karen's coming at nine. We're going to Ossett first. Then I'm going home." He looked at her. "I've not been home in two years."</p>
+        <p>"I know, love."</p>
+        <p>"I don't know what it'll be like."</p>
+        <p>"No," Shirley said. "Nobody does yet. That's going to be my job from now, finding out. You can come and tell me, if you like. We're opening downstairs on the twenty-first."</p>
+        <p>"What are you calling it?"</p>
+        <p>She told him. He laughed, properly, the first time she'd heard him laugh since the summer.</p>
+        <p>"You'll want a better name than that."</p>
+        <p>"That's what I said."</p>
+        <p>She took her coat off, then, and hung it on the back of the station chair, and went to the end of the ward where the board was. Yesterday was still on it, in Precious's neat round writing, FRIDAY, 11th NOVEMBER, BRIGHT AND COLD, and under that LAST WEEK ON THE WARD in Shirley's own capitals from Monday, which nobody had rubbed out.</p>
+        <p>She picked up the cloth from the ledge and wiped it all clean, top to bottom, the way she had done every morning for twenty-two years, until there was nothing left on the board but the red tape gone pink across the top, and the words TODAY IS. Then she picked up the pen and turned round.</p>
+        <p>"Arthur," she said. "Will you do it?"</p>
+        <p>He looked at her for a moment. Then he put the cornet case down on the chair, very carefully, the way you'd put down a baby, and he got up, slowly, with one hand on the arm of the chair, and he walked down the middle of the ward on his own, past the stripped beds with their tied-back curtains, all the way to the end, and he took the pen from her.</p>
+        <p>He stood in front of the board for a little while, not because he didn't know, she could see that, but because it was a big board, and he was a man who liked to get the size of a thing before he started on it. Then he wrote, in capitals, in a hand that wobbled on the first letter and then steadied:</p>
+        <p>SATURDAY</p>
+        <p>and underneath it, after a second's thought,</p>
+        <p>12th NOVEMBER</p>
+        <p>and he stopped, and looked out of the window at the end of the ward, where the sky over the car park was a hard cold blue with a few small clouds going east towards Pontefract, and wrote under that,</p>
+        <p>FINE.</p>
+        <p>He held the pen out to her for the last line, NURSE IN CHARGE, but she shook her head, and after a moment he understood, and he wrote ARTHUR, and then, because he was Arthur, and because it was there, he underlined it.</p>
+        <p>"There," he said. "Will that do?"</p>
+        <p>"That'll do lovely," said Shirley.</p>
+        <p>They stood there side by side and looked at it, a tall old man in his best jacket and a nurse who wasn't really on shift, at the end of an empty ward on a Saturday morning in November, and neither of them said anything for a while, and down the ward behind them on the seat of the chair, the cornet case caught the low sun through the window, and the brass catches on it shone.</p>
+        <p>Later, after Karen had come and gone with him, and Precious had done the last of the paperwork, Shirley went back to the station and opened the cupboard and took out a new red notebook from the pack of five. She wrote the date at the top of the first page, the same as the board. Then she wrote, underneath, in her own handwriting, the only thing anybody had said to the board that day.</p>
+        <p><em>Will that do?</em></p>
+        <p>She looked at it for a while. Then she put the notebook in her bag to take downstairs.</p>
+      </div>
+
+      <figure class="scene tall wd cd-scene" aria-hidden="true">
+        <div class="cd-wall"></div><div class="board cd-board"><div class="tape">TODAY IS</div><div class="w ink" style="top:26%;--d:0.4s">SATURDAY</div><div class="w ink" style="top:44%;--d:1.4s">12th NOVEMBER</div><div class="w ink" style="top:62%;--d:2.4s">FINE.</div><div class="w ink" style="top:80%;--d:3.4s"><u>ARTHUR</u></div></div><div class="cd-nb"><b style="top:18%"></b><b style="top:30%"></b><em>Will that do?</em></div>
+        <div class="label">That'll do lovely</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
