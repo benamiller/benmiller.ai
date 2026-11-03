@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The dish kept the noise — Ben Miller</title>
+    <meta name="description" content="At Jodrell Bank the Lovell telescope now mostly talks to satellites, and the model that cleans its data keeps cutting out something faint near Cygnus that ticks every forty-one minutes. Only one night engineer&#x27;s old pen recorder can still hear it.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #070a10;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c8e0d0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #9fe8b0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .header-dek, .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .dish-hero { position: relative; height: 26rem; margin: 0 -0.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.65), inset 0 0 0 1px rgba(160,230,190,.14); background: #05070d; }
+      .dish-hero > * { position: absolute; }
+      .dish-hero::after, .scene.ds::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 50%, rgba(0,2,6,.78) 100%), repeating-linear-gradient(112deg, rgba(180,255,210,.022) 0 2px, transparent 2px 8px); }
+      .scene.ds { background: #060912; }
+      .sky { inset: 0; background: radial-gradient(ellipse 120% 70% at 50% 100%, #12203a, #070b16 60%, #03050a); }
+      .stars { inset: 0; background-image: radial-gradient(1px 1px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 27% 8%, #cfe, transparent), radial-gradient(1.4px 1.4px at 44% 22%, #fff, transparent), radial-gradient(1px 1px at 63% 12%, #fff, transparent), radial-gradient(1px 1px at 78% 28%, #dff, transparent), radial-gradient(1.4px 1.4px at 88% 9%, #fff, transparent), radial-gradient(1px 1px at 7% 36%, #fff, transparent), radial-gradient(1px 1px at 35% 33%, #bfe, transparent), radial-gradient(1px 1px at 55% 40%, #fff, transparent), radial-gradient(1px 1px at 93% 40%, #fff, transparent); opacity: .8; }
+      .cyg { width: 1.2cqw; height: 1.2cqw; margin: -.6cqw; border-radius: 50%; background: #c8ffd8; box-shadow: 0 0 1.6cqw #6fff9f; animation: tick 4.1s steps(1) infinite; }
+      .fields { left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(180deg, #0a1410, #040806); }
+      /* Lovell */
+      .lovell { width: 44cqw; height: 44cqw; margin-left: -22cqw; }
+      .lovell > * { position: absolute; }
+      .lv-tower { bottom: 0; width: 7cqw; height: 52%; background: linear-gradient(90deg, #8a96a6, #dfe6ee 50%, #6a7686); clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%); }
+      .lv-tower::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(35deg, transparent 0 1.2cqw, rgba(20,30,40,.45) 1.2cqw 1.45cqw), repeating-linear-gradient(-35deg, transparent 0 1.2cqw, rgba(20,30,40,.45) 1.2cqw 1.45cqw); }
+      .lv-tower.l { left: 6%; } .lv-tower.r { right: 6%; }
+      .lv-bowl { left: 8%; right: 8%; top: 6%; height: 64%; transform: rotate(var(--tilt, -18deg)); transform-origin: 50% 70%; animation: track 26s ease-in-out infinite alternate; }
+      .lv-bowl i { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(ellipse 50% 50% at 50% 46%, #f4f8fc 0 30%, #c8d2dc 55%, #7a8698 78%, #3a4454 100%); clip-path: ellipse(50% 30% at 50% 58%); box-shadow: inset 0 0 4cqw rgba(0,0,0,.4); }
+      .lv-bowl i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-radial-gradient(ellipse 50% 30% at 50% 58%, transparent 0 1.6cqw, rgba(60,70,90,.25) 1.6cqw 1.75cqw), repeating-conic-gradient(from 0deg at 50% 58%, transparent 0 7deg, rgba(60,70,90,.2) 7deg 7.6deg); }
+      .lv-bowl b { position: absolute; left: 49%; top: 12%; width: 2%; height: 46%; background: linear-gradient(#c8d2dc, #6a7686); }
+      .lv-bowl b::after { content: ""; position: absolute; left: -150%; top: -4%; width: 400%; height: 6%; border-radius: 30%; background: #e8eef4; }
+      .lv-glow { left: 0; right: 0; bottom: -8%; height: 60%; background: radial-gradient(ellipse at 50% 100%, rgba(200,230,255,.35), transparent 65%); mix-blend-mode: screen; }
+      /* chart paper */
+      .paper { background-color: #e9ecdc; background-image: linear-gradient(90deg, rgba(40,120,80,.25) 1px, transparent 1px), linear-gradient(0deg, rgba(40,120,80,.25) 1px, transparent 1px), linear-gradient(90deg, rgba(40,120,80,.1) 1px, transparent 1px), linear-gradient(0deg, rgba(40,120,80,.1) 1px, transparent 1px);
+        background-size: 10cqw 10cqw, 10cqw 10cqw, 2cqw 2cqw, 2cqw 2cqw; box-shadow: 0 1.4cqw 3cqw rgba(0,0,0,.55); overflow: hidden; }
+      .trace { position: absolute; inset: 0; background: #1a8a4a; animation: draw 7s linear both; }
+      .trace.clean { background: #6aa8d0; }
+      .pen { width: 1cqw; height: 9cqw; margin-left: -.5cqw; background: linear-gradient(#2a7a4a, #0e3a22); border-radius: .3cqw; box-shadow: 0 0 1.4cqw rgba(80,255,150,.5); }
+      .stamp { font: 500 1.7cqw/1 Karla, sans-serif; letter-spacing: .08em; color: #1a5a3a; position: absolute; }
+      .hp-paper { left: 4%; right: 4%; bottom: 4%; height: 22%; transform: perspective(60cqw) rotateX(28deg); transform-origin: bottom; }
+      .hp-dish { left: 50%; top: 10%; }
+      .bm-paper { left: 6%; right: 6%; top: 14%; bottom: 18%; }
+      .bm-pen { right: 9%; top: 18%; position: absolute; }
+      .bm-box { right: 2%; top: 8%; bottom: 10%; width: 9%; background: linear-gradient(90deg, #3a5a48, #5a7a64 50%, #2a4234); box-shadow: inset 0 0 0 .4cqw #2a3a30; }
+      /* Lantern */
+      .lt-streak { height: .25cqw; width: 30cqw; background: linear-gradient(90deg, transparent, rgba(230,240,255,.85), transparent); transform: rotate(var(--r)); animation: pass var(--s) linear infinite; animation-delay: var(--d); }
+      .lt-dish { left: 50%; top: 32%; --tilt: 22deg; }
+      .lt-wash { inset: 0; background: linear-gradient(200deg, rgba(200,220,255,.12), transparent 60%); }
+      /* excised */
+      .ex-raw { left: 6%; right: 6%; top: 10%; height: 34%; }
+      .ex-clean { left: 6%; right: 6%; top: 54%; height: 34%; background: linear-gradient(180deg, #0c1420, #101a2a); box-shadow: inset 0 0 0 .2cqw rgba(140,200,255,.25); }
+      .ex-gap { left: 62%; width: 9%; top: 8%; bottom: 10%; border-left: .25cqw dashed rgba(255,120,110,.8); border-right: .25cqw dashed rgba(255,120,110,.8); background: rgba(255,100,90,.08); animation: blinkgap 3s ease-in-out infinite; }
+      .ex-txt { left: 6%; top: 91%; font: 500 1.6cqw/1 Karla, sans-serif; color: #8fb8d8; letter-spacing: .06em; }
+      /* rank */
+      .rk-list { left: 10%; right: 10%; top: 8%; bottom: 12%; display: grid; grid-template-columns: repeat(38, 1fr); gap: .35cqw; }
+      .rk-list i { position: relative; background: rgba(140,190,230,.22); border-radius: .1cqw; }
+      .rk-list i.me { background: #7fffaa; box-shadow: 0 0 1.4cqw #4fff8a; animation: tick 4.1s steps(1) infinite; }
+      /* paint */
+      .pk-under { left: -10%; right: -10%; top: -30%; height: 90%; border-radius: 50%; background: radial-gradient(ellipse at 50% 0, #dfe6ee, #9aa6b6 60%, #4a5466); }
+      .pk-under::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-linear-gradient(90deg, transparent 0 4cqw, rgba(30,40,55,.35) 4cqw 4.3cqw), repeating-linear-gradient(0deg, transparent 0 4cqw, rgba(30,40,55,.25) 4cqw 4.3cqw); }
+      .pk-ladder { left: 30%; top: 30%; bottom: 0; width: 5cqw; background: repeating-linear-gradient(180deg, transparent 0 2.6cqw, #8a96a6 2.6cqw 3cqw); box-shadow: inset .35cqw 0 0 #b8c2ce, inset -.35cqw 0 0 #b8c2ce; }
+      .pk-rope { left: 58%; top: 40%; width: .3cqw; height: 34%; background: #c8b48a; transform-origin: top; animation: swing 4s ease-in-out infinite alternate; }
+      .pk-kettle { left: calc(58% - 2.6cqw); top: calc(74% - .2cqw); width: 5.5cqw; height: 5cqw; border-radius: .4cqw .4cqw 1.4cqw 1.4cqw; background: linear-gradient(90deg, #5a6a7a, #a8b4c2 45%, #4a5664); transform-origin: 2.75cqw -34cqh; animation: swing 4s ease-in-out infinite alternate; }
+      .pk-kettle::before { content: ""; position: absolute; left: 10%; right: 10%; top: -1.6cqw; height: 2cqw; border: .3cqw solid #8a96a6; border-bottom: 0; border-radius: 50% 50% 0 0; }
+      .pk-kettle::after { content: ""; position: absolute; left: 6%; right: 6%; top: 0; height: 18%; background: #eef2f6; border-radius: .3cqw; }
+      /* landed */
+      .ld-win { inset: 6% 8% 10%; box-shadow: inset 0 0 0 1.4cqw #1a2a24, 0 0 0 100cqw #0a120e; background: transparent; }
+      .ld-win::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.2cqw; margin-left: -.6cqw; background: #1a2a24; }
+      .ld-dish { left: 50%; top: 24%; --tilt: -6deg; }
+      .ld-up { left: 10%; right: 10%; bottom: 10%; height: 70%; background: radial-gradient(ellipse 40% 60% at 50% 100%, rgba(220,240,255,.45), transparent 70%); mix-blend-mode: screen; }
+      .ld-man { left: 70%; bottom: 10%; width: 5cqw; height: 15cqw; background: #050806; border-radius: 2.5cqw 2.5cqw 0 0; z-index: 5; }
+      /* tap */
+      .tp-cable { left: -2%; right: -2%; top: 46%; height: 2.4cqw; background: linear-gradient(180deg, #2a2e34, #4a525c 50%, #1a1e24); }
+      .tp-port { left: 46%; top: calc(46% - 2cqw); width: 8cqw; height: 6.4cqw; background: linear-gradient(180deg, #8a8f98, #5a5f68); border-radius: .4cqw; }
+      .tp-port::after { content: ""; position: absolute; left: 35%; top: 30%; width: 30%; height: 40%; border-radius: 50%; background: radial-gradient(circle, #0a0a0a 40%, #c8a050 44%, #7a5a20 60%); }
+      .tp-gone { left: 49%; top: 14%; width: 2cqw; height: 26%; border: .25cqw dashed rgba(160,255,190,.55); border-bottom: 0; animation: fadeout 4s ease-in forwards; }
+      .tp-tag { left: 56%; top: 24%; width: 10cqw; height: 6cqw; background: #f0f0e6; transform: rotate(8deg); box-shadow: 0 .6cqw 1.2cqw rgba(0,0,0,.5); }
+      .tp-tag::before { content: ""; position: absolute; left: 10%; right: 30%; top: 30%; height: .4cqw; background: #c02a2a; box-shadow: 0 1.4cqw 0 #555; }
+      /* kitchen */
+      .kt-win { left: 8%; right: 8%; top: 6%; height: 44%; box-shadow: inset 0 0 0 1.2cqw #d8d4c8; overflow: hidden; background: radial-gradient(ellipse 120% 90% at 50% 100%, #12203a, #05070d); }
+      .kt-win .lovell { left: 70%; top: 34%; transform: scale(.32); transform-origin: 50% 100%; --tilt: 30deg; }
+      .kt-win .stars { inset: 0; position: absolute; }
+      .kt-table { left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg, #6a4a32, #3a2618); }
+      .kt-rec { left: 34%; bottom: 18%; width: 30cqw; height: 15cqw; background: linear-gradient(180deg, #4a6a54, #2e4a38); border-radius: .6cqw; box-shadow: 0 1.4cqw 2.6cqw rgba(0,0,0,.6); }
+      .kt-strip { left: 37%; bottom: 23%; width: 24cqw; height: 6cqw; }
+      .kt-line { position: absolute; left: 0; width: 100%; top: 50%; height: .3cqw; background: #1a8a4a; animation: draw 6s linear both; }
+      .kt-pleats { left: 35%; bottom: 4%; width: 28cqw; height: 10%; background: repeating-linear-gradient(90deg, #e9ecdc 0 2cqw, #c8ccb8 2cqw 2.4cqw); transform: skewX(-12deg); }
+      .kt-photo { left: 14%; bottom: 20%; width: 9cqw; height: 12cqw; background: linear-gradient(180deg, #8a8270, #4a4234); box-shadow: inset 0 0 0 .6cqw #e8e2d4, 0 .8cqw 1.4cqw rgba(0,0,0,.5); transform: rotate(-6deg); }
+      .kt-bowl { left: 22%; bottom: 17%; width: 7cqw; height: 4.4cqw; border-radius: 0 0 3cqw 3cqw; background: linear-gradient(90deg, #c8d4e0, #f4f8fc 40%, #a8b4c0); }
+      .kt-lamp { left: 30%; top: 0; width: 40%; height: 100%; background: radial-gradient(ellipse at 50% 0, rgba(255,230,180,.28), transparent 60%); mix-blend-mode: screen; }
+      @keyframes tick { 0%, 6% { opacity: 1; } 8%, 100% { opacity: .25; } }
+      @keyframes track { from { transform: rotate(calc(var(--tilt, -18deg) - 4deg)); } to { transform: rotate(calc(var(--tilt, -18deg) + 4deg)); } }
+      @keyframes draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes pass { from { transform: rotate(var(--r)) translateX(-60cqw); } to { transform: rotate(var(--r)) translateX(120cqw); } }
+      @keyframes blinkgap { 50% { background: rgba(255,100,90,.18); } }
+      @keyframes swing { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+      @keyframes fadeout { to { opacity: .15; } }
+      @media (max-width: 600px) { .dish-hero { height: 22rem; } .rk-list { grid-template-columns: repeat(22, 1fr); } }
+      @media (prefers-reduced-motion: reduce) {
+        .dish-hero *, .scene.ds *, .dish-hero *::after, .scene.ds *::after { animation: none !important; }
+        .trace, .kt-line { clip-path: none; }
+        .lt-streak { transform: rotate(var(--r)) translateX(var(--x)); }
+        .tp-gone { opacity: .15; }
+      }
+      .lt-dish { top: 14%; } .ld-dish { top: 8%; }
+      .ex-txt { font-size: 1.25cqw; white-space: nowrap; top: 90%; }
+      .kt-win { height: 40%; }
+      .kt-win .lovell { left: 74%; top: 4%; transform: scale(.36); transform-origin: 50% 0; }
+      .kt-rec { left: 38%; bottom: 8%; width: 26cqw; height: 11cqw; }
+      .kt-strip { left: 40.5%; bottom: 12%; width: 21cqw; height: 4.5cqw; }
+      .kt-pleats { left: 39%; bottom: 1%; width: 24cqw; height: 6%; }
+      .kt-photo { left: 12%; bottom: 10%; } .kt-bowl { left: 24%; bottom: 8%; }
+      .hp-paper { bottom: 9%; height: 18%; }
+      .lovell { --sz: min(44cqw, 74cqh); width: var(--sz); height: var(--sz); margin-left: calc(var(--sz) / -2); }
+      .lv-tower { width: 16%; }
+      .ld-dish, .lt-dish { --sz: min(44cqw, 64cqh); }
+      .kt-win .lovell { --sz: min(30cqw, 60cqh); left: 76%; top: 8%; transform: none; }
+      .ld-dish, .lt-dish { --sz: min(40cqw, 48cqh); top: 22%; }
+      .kt-win .lovell { --sz: min(16cqw, 24cqh); left: 80%; top: 30%; }
+      .kt-win .lovell { position: absolute; width: 13cqw; height: 13cqw; margin-left: -6.5cqw; left: 80%; top: 22%; }
+      .ld-dish, .lt-dish { width: 30cqw; height: 30cqw; margin-left: -15cqw; top: 24%; }
+      .lt-dish { top: 6%; } .ld-dish { top: 10%; } .kt-win .lovell { top: 6%; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="dish-hero" aria-hidden="true">
+          <div class="sky"></div><div class="stars"></div><div class="cyg" style="left:18%;top:20%"></div><div class="fields"></div><div class="lovell hp-dish" style=""><div class="lv-glow"></div><div class="lv-tower l"></div><div class="lv-tower r"></div><div class="lv-bowl"><i></i><b></b></div></div>
+          <div class="paper hp-paper"><div class="trace " style="clip-path: polygon(0.00% 54.06%, 0.56% 54.63%, 1.11% 56.13%, 1.67% 57.36%, 2.22% 53.80%, 2.78% 54.20%, 3.33% 51.52%, 3.89% 57.05%, 4.44% 54.46%, 5.00% 59.64%, 5.56% 59.44%, 6.11% 56.39%, 6.67% 54.47%, 7.22% 55.97%, 7.78% 52.25%, 8.33% 55.56%, 8.89% 57.74%, 9.44% 58.65%, 10.00% 58.84%, 10.56% 57.21%, 11.11% 52.57%, 11.67% 52.85%, 12.22% 52.15%, 12.78% 52.31%, 13.33% 50.78%, 13.89% 54.86%, 14.44% 52.52%, 15.00% 52.93%, 15.56% 52.12%, 16.11% 60.01%, 16.67% 58.60%, 17.22% 58.55%, 17.78% 52.35%, 18.33% 50.88%, 18.89% 52.89%, 19.44% 58.27%, 20.00% 52.51%, 20.56% 55.70%, 21.11% 57.93%, 21.67% 52.81%, 22.22% 54.50%, 22.78% 54.51%, 23.33% 53.63%, 23.89% 58.73%, 24.44% 57.12%, 25.00% 53.18%, 25.56% 52.36%, 26.11% 56.69%, 26.67% 56.69%, 27.22% 57.22%, 27.78% 56.00%, 28.33% 52.11%, 28.89% 54.06%, 29.44% 52.26%, 30.00% 53.88%, 30.56% 54.13%, 31.11% 53.96%, 31.67% 58.64%, 32.22% 55.81%, 32.78% 55.88%, 33.33% 60.61%, 33.89% 57.74%, 34.44% 59.00%, 35.00% 53.97%, 35.56% 51.36%, 36.11% 59.44%, 36.67% 60.00%, 37.22% 58.39%, 37.78% 58.85%, 38.33% 51.23%, 38.89% 58.80%, 39.44% 58.14%, 40.00% 59.28%, 40.56% 56.30%, 41.11% 58.55%, 41.67% 58.17%, 42.22% 55.27%, 42.78% 51.29%, 43.33% 54.51%, 43.89% 57.28%, 44.44% 57.79%, 45.00% 55.58%, 45.56% 58.86%, 46.11% 55.97%, 46.67% 58.31%, 47.22% 56.87%, 47.78% 58.28%, 48.33% 57.09%, 48.89% 55.80%, 49.44% 50.27%, 50.00% 57.02%, 50.56% 51.95%, 51.11% 44.18%, 51.67% 28.41%, 52.22% 32.01%, 52.78% 37.45%, 53.33% 44.41%, 53.89% 52.16%, 54.44% 51.59%, 55.00% 54.86%, 55.56% 54.53%, 56.11% 49.71%, 56.67% 44.20%, 57.22% 44.13%, 57.78% 33.55%, 58.33% 31.20%, 58.89% 39.25%, 59.44% 52.51%, 60.00% 48.14%, 60.56% 54.03%, 61.11% 50.89%, 61.67% 58.43%, 62.22% 56.76%, 62.78% 43.83%, 63.33% 34.66%, 63.89% 28.88%, 64.44% 30.95%, 65.00% 45.72%, 65.56% 48.64%, 66.11% 53.79%, 66.67% 57.71%, 67.22% 49.96%, 67.78% 57.76%, 68.33% 58.84%, 68.89% 58.60%, 69.44% 52.82%, 70.00% 56.29%, 70.56% 57.42%, 71.11% 56.62%, 71.67% 58.57%, 72.22% 57.49%, 72.78% 54.11%, 73.33% 56.44%, 73.89% 57.17%, 74.44% 56.52%, 75.00% 58.46%, 75.56% 58.93%, 76.11% 54.01%, 76.67% 57.77%, 77.22% 55.80%, 77.78% 51.75%, 78.33% 53.41%, 78.89% 52.48%, 79.44% 58.14%, 80.00% 53.04%, 80.56% 52.10%, 81.11% 55.83%, 81.67% 60.17%, 82.22% 56.09%, 82.78% 52.22%, 83.33% 52.96%, 83.89% 58.36%, 84.44% 54.88%, 85.00% 58.24%, 85.56% 53.39%, 86.11% 53.24%, 86.67% 57.39%, 87.22% 59.16%, 87.78% 52.50%, 88.33% 59.62%, 88.89% 51.77%, 89.44% 54.51%, 90.00% 52.16%, 90.56% 57.02%, 91.11% 53.53%, 91.67% 53.82%, 92.22% 53.10%, 92.78% 54.98%, 93.33% 58.85%, 93.89% 58.24%, 94.44% 53.60%, 95.00% 52.53%, 95.56% 51.80%, 96.11% 58.29%, 96.67% 58.40%, 97.22% 52.34%, 97.78% 54.52%, 98.33% 57.60%, 98.89% 52.80%, 99.44% 57.67%, 100.00% 49.34%, 100.00% 50.94%, 99.44% 59.27%, 98.89% 54.40%, 98.33% 59.20%, 97.78% 56.12%, 97.22% 53.94%, 96.67% 60.00%, 96.11% 59.89%, 95.56% 53.40%, 95.00% 54.13%, 94.44% 55.20%, 93.89% 59.84%, 93.33% 60.45%, 92.78% 56.58%, 92.22% 54.70%, 91.67% 55.42%, 91.11% 55.13%, 90.56% 58.62%, 90.00% 53.76%, 89.44% 56.11%, 88.89% 53.37%, 88.33% 61.22%, 87.78% 54.10%, 87.22% 60.76%, 86.67% 58.99%, 86.11% 54.84%, 85.56% 54.99%, 85.00% 59.84%, 84.44% 56.48%, 83.89% 59.96%, 83.33% 54.56%, 82.78% 53.82%, 82.22% 57.69%, 81.67% 61.77%, 81.11% 57.43%, 80.56% 53.70%, 80.00% 54.64%, 79.44% 59.74%, 78.89% 54.08%, 78.33% 55.01%, 77.78% 53.35%, 77.22% 57.40%, 76.67% 59.37%, 76.11% 55.61%, 75.56% 60.53%, 75.00% 60.06%, 74.44% 58.12%, 73.89% 58.77%, 73.33% 58.04%, 72.78% 55.71%, 72.22% 59.09%, 71.67% 60.17%, 71.11% 58.22%, 70.56% 59.02%, 70.00% 57.89%, 69.44% 54.42%, 68.89% 60.20%, 68.33% 60.44%, 67.78% 59.36%, 67.22% 51.56%, 66.67% 59.31%, 66.11% 55.39%, 65.56% 50.24%, 65.00% 47.32%, 64.44% 32.55%, 63.89% 30.48%, 63.33% 36.26%, 62.78% 45.43%, 62.22% 58.36%, 61.67% 60.03%, 61.11% 52.49%, 60.56% 55.63%, 60.00% 49.74%, 59.44% 54.11%, 58.89% 40.85%, 58.33% 32.80%, 57.78% 35.15%, 57.22% 45.73%, 56.67% 45.80%, 56.11% 51.31%, 55.56% 56.13%, 55.00% 56.46%, 54.44% 53.19%, 53.89% 53.76%, 53.33% 46.01%, 52.78% 39.05%, 52.22% 33.61%, 51.67% 30.01%, 51.11% 45.78%, 50.56% 53.55%, 50.00% 58.62%, 49.44% 51.87%, 48.89% 57.40%, 48.33% 58.69%, 47.78% 59.88%, 47.22% 58.47%, 46.67% 59.91%, 46.11% 57.57%, 45.56% 60.46%, 45.00% 57.18%, 44.44% 59.39%, 43.89% 58.88%, 43.33% 56.11%, 42.78% 52.89%, 42.22% 56.87%, 41.67% 59.77%, 41.11% 60.15%, 40.56% 57.90%, 40.00% 60.88%, 39.44% 59.74%, 38.89% 60.40%, 38.33% 52.83%, 37.78% 60.45%, 37.22% 59.99%, 36.67% 61.60%, 36.11% 61.04%, 35.56% 52.96%, 35.00% 55.57%, 34.44% 60.60%, 33.89% 59.34%, 33.33% 62.21%, 32.78% 57.48%, 32.22% 57.41%, 31.67% 60.24%, 31.11% 55.56%, 30.56% 55.73%, 30.00% 55.48%, 29.44% 53.86%, 28.89% 55.66%, 28.33% 53.71%, 27.78% 57.60%, 27.22% 58.82%, 26.67% 58.29%, 26.11% 58.29%, 25.56% 53.96%, 25.00% 54.78%, 24.44% 58.72%, 23.89% 60.33%, 23.33% 55.23%, 22.78% 56.11%, 22.22% 56.10%, 21.67% 54.41%, 21.11% 59.53%, 20.56% 57.30%, 20.00% 54.11%, 19.44% 59.87%, 18.89% 54.49%, 18.33% 52.48%, 17.78% 53.95%, 17.22% 60.15%, 16.67% 60.20%, 16.11% 61.61%, 15.56% 53.72%, 15.00% 54.53%, 14.44% 54.12%, 13.89% 56.46%, 13.33% 52.38%, 12.78% 53.91%, 12.22% 53.75%, 11.67% 54.45%, 11.11% 54.17%, 10.56% 58.81%, 10.00% 60.44%, 9.44% 60.25%, 8.89% 59.34%, 8.33% 57.16%, 7.78% 53.85%, 7.22% 57.57%, 6.67% 56.07%, 6.11% 57.99%, 5.56% 61.04%, 5.00% 61.24%, 4.44% 56.06%, 3.89% 58.65%, 3.33% 53.12%, 2.78% 55.80%, 2.22% 55.40%, 1.67% 58.96%, 1.11% 57.73%, 0.56% 56.23%, 0.00% 55.66%)"></div></div>
+          <div class="label">the hiss of everything</div>
+        </div>
+        <h1>The dish kept the noise</h1>
+        <p class="dek">At Jodrell Bank the Lovell telescope now mostly talks to satellites, and the model that cleans its data keeps cutting out something faint near Cygnus that ticks every forty-one minutes. Only one night engineer's old pen recorder can still hear it.</p>
+        <time datetime="2026-11-03">3 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The pen came alive at twelve minutes past three, and Pauline Hough, who had been half asleep in the swivel chair with her coat over her knees, heard it before she saw it, the small dry scratch of a nib going sideways on paper when for the last two hours it had only gone straight.</p>
+        <p>She did not move straight away. You learned that, in forty-one years of nights at Jodrell Bank. You learned that most things that woke you were nothing, a lorry on the A535, a heater coming on in the next room, a pigeon that had got into the focus box again and was walking about on the feed horn with its feet going through every receiver on the site. You learned to let a thing happen twice before you got up for it. So she sat with her coat on her knees and her hands round the cold mug and listened to the pen scratch, and stop, and scratch, and stop, and then lie quiet again along its line, and only then did she lean forward and pull the lamp across.</p>
+        <p>The chart recorder sat on the end of the bench under the window, a grey steel box the size of a bread bin, made in Stockport in 1979 and painted the particular green that everything in the control building had been painted in 1979, and it was not, strictly speaking, supposed to be there. It took a spare output off the intermediate frequency chain, a tap that a man called Derek had put in for her in 2003 when the last of the old recorders was being thrown out, because she had said she liked to see the sky move and Derek had been the kind of engineer who thought that was a perfectly good reason. The paper came off a roll at the back, a centimetre a minute, and went under the pen, and came out the front and folded itself into a tray in long pale pleats, and in the morning she would tear it off and look along it the way her mother used to look along a knitting pattern, and then she would put it in the bin. She had been doing that every night shift for twenty-three years. Nobody had ever asked her why, and if they had she would have said it was easier on the eyes than the screens, which was true, and which was not the reason.</p>
+        <p>The trace on the paper was a long wavering line, the sound of the sky and the receiver and the cold and the warm all added together, what Derek used to call the hiss of everything. And in the middle of the hiss, where the pen had moved, there were three small bumps, close together, like somebody had tapped the bench three times with a fingernail.</p>
+        <p>She looked at them for a long while. Then she looked at the clock above the door, and wrote 03:12 on the paper beside them in biro, and the date, and the word <em>again</em>.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds bm-scene" aria-hidden="true">
+        <div class="paper bm-paper"><div class="trace " style="clip-path: polygon(0.00% 55.14%, 0.45% 52.20%, 0.91% 59.61%, 1.36% 56.57%, 1.82% 51.76%, 2.27% 54.08%, 2.73% 52.14%, 3.18% 53.78%, 3.64% 53.60%, 4.09% 57.23%, 4.55% 52.62%, 5.00% 52.34%, 5.45% 58.28%, 5.91% 57.99%, 6.36% 56.81%, 6.82% 56.80%, 7.27% 51.77%, 7.73% 56.87%, 8.18% 57.06%, 8.64% 57.02%, 9.09% 51.29%, 9.55% 57.53%, 10.00% 56.68%, 10.45% 51.68%, 10.91% 56.64%, 11.36% 58.25%, 11.82% 55.87%, 12.27% 57.56%, 12.73% 51.97%, 13.18% 52.07%, 13.64% 53.19%, 14.09% 51.57%, 14.55% 55.17%, 15.00% 58.28%, 15.45% 56.53%, 15.91% 56.79%, 16.36% 53.86%, 16.82% 52.97%, 17.27% 56.17%, 17.73% 52.34%, 18.18% 58.39%, 18.64% 54.08%, 19.09% 54.75%, 19.55% 58.82%, 20.00% 56.63%, 20.45% 55.32%, 20.91% 52.59%, 21.36% 57.15%, 21.82% 53.79%, 22.27% 52.04%, 22.73% 50.82%, 23.18% 55.42%, 23.64% 51.97%, 24.09% 56.86%, 24.55% 58.23%, 25.00% 54.31%, 25.45% 56.28%, 25.91% 56.53%, 26.36% 52.26%, 26.82% 52.10%, 27.27% 53.80%, 27.73% 52.07%, 28.18% 52.39%, 28.64% 55.82%, 29.09% 54.76%, 29.55% 52.92%, 30.00% 52.89%, 30.45% 55.63%, 30.91% 54.76%, 31.36% 54.11%, 31.82% 52.10%, 32.27% 59.65%, 32.73% 57.69%, 33.18% 53.38%, 33.64% 52.37%, 34.09% 57.79%, 34.55% 54.75%, 35.00% 52.40%, 35.45% 52.77%, 35.91% 53.63%, 36.36% 58.61%, 36.82% 54.04%, 37.27% 56.63%, 37.73% 53.39%, 38.18% 57.32%, 38.64% 57.52%, 39.09% 54.26%, 39.55% 57.39%, 40.00% 53.15%, 40.45% 53.57%, 40.91% 52.49%, 41.36% 57.56%, 41.82% 57.14%, 42.27% 59.12%, 42.73% 51.87%, 43.18% 54.74%, 43.64% 53.72%, 44.09% 54.13%, 44.55% 52.72%, 45.00% 58.26%, 45.45% 53.89%, 45.91% 55.59%, 46.36% 51.68%, 46.82% 46.33%, 47.27% 37.93%, 47.73% 34.82%, 48.18% 29.68%, 48.64% 38.18%, 49.09% 46.77%, 49.55% 52.92%, 50.00% 49.93%, 50.45% 56.00%, 50.91% 52.92%, 51.36% 52.06%, 51.82% 55.47%, 52.27% 58.85%, 52.73% 56.69%, 53.18% 56.06%, 53.64% 48.16%, 54.09% 43.57%, 54.55% 34.01%, 55.00% 34.05%, 55.45% 38.15%, 55.91% 41.19%, 56.36% 51.74%, 56.82% 50.38%, 57.27% 53.18%, 57.73% 53.86%, 58.18% 57.29%, 58.64% 53.16%, 59.09% 52.61%, 59.55% 53.63%, 60.00% 49.32%, 60.45% 52.65%, 60.91% 42.83%, 61.36% 36.37%, 61.82% 34.51%, 62.27% 29.36%, 62.73% 37.83%, 63.18% 49.94%, 63.64% 49.96%, 64.09% 55.30%, 64.55% 54.04%, 65.00% 56.97%, 65.45% 51.71%, 65.91% 53.08%, 66.36% 58.66%, 66.82% 57.90%, 67.27% 53.28%, 67.73% 57.80%, 68.18% 57.17%, 68.64% 59.17%, 69.09% 58.10%, 69.55% 53.93%, 70.00% 56.99%, 70.45% 56.01%, 70.91% 56.52%, 71.36% 54.39%, 71.82% 51.72%, 72.27% 55.83%, 72.73% 52.84%, 73.18% 57.85%, 73.64% 55.78%, 74.09% 56.76%, 74.55% 54.03%, 75.00% 56.75%, 75.45% 56.51%, 75.91% 54.85%, 76.36% 50.95%, 76.82% 56.52%, 77.27% 53.19%, 77.73% 57.88%, 78.18% 51.73%, 78.64% 51.36%, 79.09% 57.30%, 79.55% 56.38%, 80.00% 50.98%, 80.45% 55.58%, 80.91% 54.93%, 81.36% 57.78%, 81.82% 52.81%, 82.27% 54.36%, 82.73% 54.56%, 83.18% 56.04%, 83.64% 52.59%, 84.09% 57.70%, 84.55% 55.03%, 85.00% 54.05%, 85.45% 55.62%, 85.91% 57.35%, 86.36% 50.43%, 86.82% 54.21%, 87.27% 54.78%, 87.73% 58.16%, 88.18% 58.34%, 88.64% 54.76%, 89.09% 54.91%, 89.55% 52.18%, 90.00% 58.33%, 90.45% 52.14%, 90.91% 57.19%, 91.36% 57.02%, 91.82% 53.00%, 92.27% 54.54%, 92.73% 52.45%, 93.18% 57.41%, 93.64% 56.04%, 94.09% 53.06%, 94.55% 53.03%, 95.00% 52.34%, 95.45% 57.68%, 95.91% 53.74%, 96.36% 58.28%, 96.82% 54.71%, 97.27% 54.06%, 97.73% 54.36%, 98.18% 53.17%, 98.64% 54.37%, 99.09% 57.63%, 99.55% 57.97%, 100.00% 55.13%, 100.00% 56.73%, 99.55% 59.57%, 99.09% 59.23%, 98.64% 55.97%, 98.18% 54.77%, 97.73% 55.96%, 97.27% 55.66%, 96.82% 56.31%, 96.36% 59.88%, 95.91% 55.34%, 95.45% 59.28%, 95.00% 53.94%, 94.55% 54.63%, 94.09% 54.66%, 93.64% 57.64%, 93.18% 59.01%, 92.73% 54.05%, 92.27% 56.14%, 91.82% 54.60%, 91.36% 58.62%, 90.91% 58.79%, 90.45% 53.74%, 90.00% 59.93%, 89.55% 53.78%, 89.09% 56.51%, 88.64% 56.36%, 88.18% 59.94%, 87.73% 59.76%, 87.27% 56.38%, 86.82% 55.81%, 86.36% 52.03%, 85.91% 58.95%, 85.45% 57.22%, 85.00% 55.65%, 84.55% 56.63%, 84.09% 59.30%, 83.64% 54.19%, 83.18% 57.64%, 82.73% 56.16%, 82.27% 55.96%, 81.82% 54.41%, 81.36% 59.38%, 80.91% 56.53%, 80.45% 57.18%, 80.00% 52.58%, 79.55% 57.98%, 79.09% 58.90%, 78.64% 52.96%, 78.18% 53.33%, 77.73% 59.48%, 77.27% 54.79%, 76.82% 58.12%, 76.36% 52.55%, 75.91% 56.45%, 75.45% 58.11%, 75.00% 58.35%, 74.55% 55.63%, 74.09% 58.36%, 73.64% 57.38%, 73.18% 59.45%, 72.73% 54.44%, 72.27% 57.43%, 71.82% 53.32%, 71.36% 55.99%, 70.91% 58.12%, 70.45% 57.61%, 70.00% 58.59%, 69.55% 55.53%, 69.09% 59.70%, 68.64% 60.77%, 68.18% 58.77%, 67.73% 59.40%, 67.27% 54.88%, 66.82% 59.50%, 66.36% 60.26%, 65.91% 54.68%, 65.45% 53.31%, 65.00% 58.57%, 64.55% 55.64%, 64.09% 56.90%, 63.64% 51.56%, 63.18% 51.54%, 62.73% 39.43%, 62.27% 30.96%, 61.82% 36.11%, 61.36% 37.97%, 60.91% 44.43%, 60.45% 54.25%, 60.00% 50.92%, 59.55% 55.23%, 59.09% 54.21%, 58.64% 54.76%, 58.18% 58.89%, 57.73% 55.46%, 57.27% 54.78%, 56.82% 51.98%, 56.36% 53.34%, 55.91% 42.79%, 55.45% 39.75%, 55.00% 35.65%, 54.55% 35.61%, 54.09% 45.17%, 53.64% 49.76%, 53.18% 57.66%, 52.73% 58.29%, 52.27% 60.45%, 51.82% 57.07%, 51.36% 53.66%, 50.91% 54.52%, 50.45% 57.60%, 50.00% 51.53%, 49.55% 54.52%, 49.09% 48.37%, 48.64% 39.78%, 48.18% 31.28%, 47.73% 36.42%, 47.27% 39.53%, 46.82% 47.93%, 46.36% 53.28%, 45.91% 57.19%, 45.45% 55.49%, 45.00% 59.86%, 44.55% 54.32%, 44.09% 55.73%, 43.64% 55.32%, 43.18% 56.34%, 42.73% 53.47%, 42.27% 60.72%, 41.82% 58.74%, 41.36% 59.16%, 40.91% 54.09%, 40.45% 55.17%, 40.00% 54.75%, 39.55% 58.99%, 39.09% 55.86%, 38.64% 59.12%, 38.18% 58.92%, 37.73% 54.99%, 37.27% 58.23%, 36.82% 55.64%, 36.36% 60.21%, 35.91% 55.23%, 35.45% 54.37%, 35.00% 54.00%, 34.55% 56.35%, 34.09% 59.39%, 33.64% 53.97%, 33.18% 54.98%, 32.73% 59.29%, 32.27% 61.25%, 31.82% 53.70%, 31.36% 55.71%, 30.91% 56.36%, 30.45% 57.23%, 30.00% 54.49%, 29.55% 54.52%, 29.09% 56.36%, 28.64% 57.42%, 28.18% 53.99%, 27.73% 53.67%, 27.27% 55.40%, 26.82% 53.70%, 26.36% 53.86%, 25.91% 58.13%, 25.45% 57.88%, 25.00% 55.91%, 24.55% 59.83%, 24.09% 58.46%, 23.64% 53.57%, 23.18% 57.02%, 22.73% 52.42%, 22.27% 53.64%, 21.82% 55.39%, 21.36% 58.75%, 20.91% 54.19%, 20.45% 56.92%, 20.00% 58.23%, 19.55% 60.42%, 19.09% 56.35%, 18.64% 55.68%, 18.18% 59.99%, 17.73% 53.94%, 17.27% 57.77%, 16.82% 54.57%, 16.36% 55.46%, 15.91% 58.39%, 15.45% 58.13%, 15.00% 59.88%, 14.55% 56.77%, 14.09% 53.17%, 13.64% 54.79%, 13.18% 53.67%, 12.73% 53.57%, 12.27% 59.16%, 11.82% 57.47%, 11.36% 59.85%, 10.91% 58.24%, 10.45% 53.28%, 10.00% 58.28%, 9.55% 59.13%, 9.09% 52.89%, 8.64% 58.62%, 8.18% 58.66%, 7.73% 58.47%, 7.27% 53.37%, 6.82% 58.40%, 6.36% 58.41%, 5.91% 59.59%, 5.45% 59.88%, 5.00% 53.94%, 4.55% 54.22%, 4.09% 58.83%, 3.64% 55.20%, 3.18% 55.38%, 2.73% 53.74%, 2.27% 55.68%, 1.82% 53.36%, 1.36% 58.17%, 0.91% 61.21%, 0.45% 53.80%, 0.00% 56.74%)"></div><span class="stamp" style="left:44%;top:8%">03:11:58</span></div><div class="bm-box"></div><div class="pen bm-pen"></div>
+        <div class="label">three small bumps</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first time had been the Tuesday before, and the time before that had been the Tuesday before that, and both times she had told herself it was the satellites, because these days it was always the satellites.</p>
+        <p>The Lovell Telescope was still the Lovell Telescope, if you were standing under it. It still filled the sky over the Cheshire fields like a white ear the size of a cathedral, seventy-six metres across, the second thing you saw from the train at Goostrey after your own reflection in the window. Children still came on school trips to the Discovery Centre and stood at the fence in their hi-vis tabards and put their heads right back, and the guides still told them that it had tracked the Sputnik rocket in 1957 when nobody else in the West could, and that it had heard the Russians land on the Moon, and that it was listening right now to stars that had died before there were people. The guides were careful to say <em>listening</em>. They had been told to say listening and not to say <em>working</em>, because what the dish mostly did now, nineteen and a half hours out of every twenty-four, was talk.</p>
+        <p>It talked to Lantern. Lantern was a constellation of four thousand two hundred satellites in a low orbit, each one about the size of a shipping container and covered on one face with solar panel and on the other with radiator, and inside each one were racks of chips doing the thinking that the ground no longer had the electricity or the water to do. The thinking had to come down somewhere. Most of it came down to small flat dishes on rooftops and in car parks all over the world, the way the internet came down to a farmhouse, but some of it, the heavy part, the training runs and the checkpoints and whatever else it was they moved about up there in quantities nobody at Jodrell was allowed to know, needed a big collecting area and a quiet site and a cold receiver, and there were only so many of those in the world, and they had all been built by astronomers.</p>
+        <p>So in the fourth year of the lease, which was the year the university had stopped pretending it could pay the electricity bill on its own, the big dishes of the world had been turned round to face the other way. The Lovell and the Mark II here. Effelsberg in Germany. The big one at Green Bank in America. The two at Parkes and Narrabri. Dozens of the smaller ones, the old twenty-five metre dishes that had been used for teaching, rented by the hour. They had new feeds fitted in the focus boxes and new receivers bolted in under the old ones and new drive software that let them follow a satellite from horizon to horizon in nine minutes, which the old Lovell had never been designed to do and which made the whole structure groan in a way Pauline did not like. And in return the money came, more money than the observatory had seen since the 1960s, enough to fix the roof of the control building and repaint the dish and keep thirty-one people on the payroll, of whom she was one.</p>
+        <p>The science still happened. That had been the promise and it was, if you looked at it a certain way, kept. Four and a half hours a day the dish belonged to astronomy, and those hours were given out by a scheduling model called Steward, which had been trained on seventy years of observing logs and every paper the site had ever produced and every proposal that had ever been accepted or turned down, and which was very good, everyone agreed, at working out where an hour of telescope would do the most good. It ranked proposals by what it called expected yield. It packed them into the gaps between Lantern passes like a woman packing a car boot for a fortnight in Cornwall. It never forgot that one group needed the dish cold and another needed it at low elevation and a third had a student who was going to be in Sydney next month and could only observe remotely between four and six. It was, the director said in every all-staff meeting, the best thing that had happened to the scheduling office since Bernard Lovell had stopped doing it himself in his head.</p>
+        <p>And because the dish now spent most of its life pointed at satellites, Steward also did the other thing, the cleaning. Every second of astronomical data that came off the receivers went through it before anyone saw it, and anything in the data that looked like it had come from a satellite, a Lantern sidelobe, a stray GPS signal, a Starlink, the wrong side of a weather sat, was cut out and thrown away and replaced with a smooth neutral line, so that the astronomers got a clean sky. It was very good at that too. Before Steward, a postgraduate could lose half a thesis to interference. Now nobody lost anything. The archive was the cleanest radio archive in the world.</p>
+        <p>The chart recorder, being older than Steward and plugged in on the other side of it, did not get cleaned. It got everything.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds lt-scene" aria-hidden="true">
+        <div class="sky"></div><div class="stars"></div><div class="lt-wash"></div><i class="lt-streak" style="left:-14%;top:34%;--r:-20deg;--s:5.2s;--d:-0.6s;--x:37cqw"></i><i class="lt-streak" style="left:14%;top:45%;--r:-23deg;--s:10.0s;--d:-2.1s;--x:37cqw"></i><i class="lt-streak" style="left:14%;top:48%;--r:-13deg;--s:7.7s;--d:-9.6s;--x:35cqw"></i><i class="lt-streak" style="left:3%;top:39%;--r:-16deg;--s:8.1s;--d:-1.4s;--x:42cqw"></i><i class="lt-streak" style="left:11%;top:36%;--r:-28deg;--s:8.2s;--d:-4.9s;--x:32cqw"></i><i class="lt-streak" style="left:42%;top:28%;--r:-28deg;--s:8.6s;--d:-4.3s;--x:26cqw"></i><i class="lt-streak" style="left:26%;top:6%;--r:-16deg;--s:6.2s;--d:-4.6s;--x:11cqw"></i><i class="lt-streak" style="left:51%;top:29%;--r:-17deg;--s:6.9s;--d:-3.1s;--x:3cqw"></i><i class="lt-streak" style="left:5%;top:7%;--r:-25deg;--s:8.5s;--d:-8.1s;--x:4cqw"></i><i class="lt-streak" style="left:57%;top:24%;--r:-25deg;--s:7.0s;--d:-3.7s;--x:43cqw"></i><i class="lt-streak" style="left:-19%;top:22%;--r:-13deg;--s:10.7s;--d:-0.8s;--x:29cqw"></i><i class="lt-streak" style="left:30%;top:32%;--r:-23deg;--s:7.3s;--d:-2.6s;--x:34cqw"></i><i class="lt-streak" style="left:10%;top:13%;--r:-14deg;--s:10.0s;--d:-9.5s;--x:46cqw"></i><i class="lt-streak" style="left:16%;top:33%;--r:-15deg;--s:10.3s;--d:-2.0s;--x:0cqw"></i><i class="lt-streak" style="left:65%;top:3%;--r:-20deg;--s:9.0s;--d:-9.9s;--x:44cqw"></i><i class="lt-streak" style="left:80%;top:47%;--r:-24deg;--s:8.1s;--d:-9.4s;--x:16cqw"></i><i class="lt-streak" style="left:22%;top:20%;--r:-24deg;--s:5.2s;--d:-2.8s;--x:16cqw"></i><i class="lt-streak" style="left:65%;top:39%;--r:-22deg;--s:6.1s;--d:-5.0s;--x:3cqw"></i><i class="lt-streak" style="left:44%;top:39%;--r:-18deg;--s:5.8s;--d:-2.8s;--x:1cqw"></i><i class="lt-streak" style="left:52%;top:23%;--r:-17deg;--s:8.8s;--d:-7.7s;--x:39cqw"></i><i class="lt-streak" style="left:31%;top:5%;--r:-13deg;--s:8.4s;--d:-5.2s;--x:16cqw"></i><i class="lt-streak" style="left:4%;top:41%;--r:-24deg;--s:5.0s;--d:-6.1s;--x:33cqw"></i><i class="lt-streak" style="left:78%;top:39%;--r:-13deg;--s:10.4s;--d:-7.1s;--x:13cqw"></i><i class="lt-streak" style="left:-8%;top:36%;--r:-18deg;--s:8.3s;--d:-8.5s;--x:1cqw"></i><i class="lt-streak" style="left:70%;top:26%;--r:-26deg;--s:5.7s;--d:-7.2s;--x:18cqw"></i><i class="lt-streak" style="left:12%;top:26%;--r:-25deg;--s:10.9s;--d:-1.6s;--x:28cqw"></i><i class="lt-streak" style="left:62%;top:6%;--r:-24deg;--s:8.8s;--d:-7.7s;--x:38cqw"></i><i class="lt-streak" style="left:50%;top:32%;--r:-18deg;--s:6.9s;--d:-2.5s;--x:9cqw"></i><i class="lt-streak" style="left:39%;top:13%;--r:-26deg;--s:8.7s;--d:-9.2s;--x:31cqw"></i><i class="lt-streak" style="left:-8%;top:30%;--r:-21deg;--s:5.6s;--d:-1.8s;--x:1cqw"></i><i class="lt-streak" style="left:66%;top:28%;--r:-28deg;--s:5.5s;--d:-4.5s;--x:20cqw"></i><i class="lt-streak" style="left:77%;top:50%;--r:-25deg;--s:9.3s;--d:-5.2s;--x:2cqw"></i><i class="lt-streak" style="left:23%;top:35%;--r:-25deg;--s:8.3s;--d:-3.4s;--x:45cqw"></i><i class="lt-streak" style="left:78%;top:25%;--r:-22deg;--s:6.6s;--d:-6.2s;--x:40cqw"></i><div class="fields"></div><div class="lovell lt-dish" style=""><div class="lv-glow"></div><div class="lv-tower l"></div><div class="lv-tower r"></div><div class="lv-bowl"><i></i><b></b></div></div>
+        <div class="label">Lantern</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>At half past seven, when the morning shift came on and the dish had been turned round to pick up a Lantern pass coming over the Pennines, Pauline took her roll of paper through to the little office at the end of the corridor where Aled Pryce had his desk.</p>
+        <p>Aled was twenty-nine and a postdoc and from Bangor, and he was the only one of the astronomers who still came in to the site most days instead of working from wherever he lived, which in his case was a flat in Macclesfield with a girl who did something at AstraZeneca. He said he liked being near the dish. He said it the way some people said they liked being near the sea. Pauline thought he was the best of them, which was not the same as thinking he would be any use.</p>
+        <p>She put the paper on his desk and unrolled it with her hands flat, the way you'd show somebody a map.</p>
+        <p>"Three bumps," she said. "There. Twelve minutes past three. And here's last Tuesday, I kept that one, and here's the Tuesday before, I didn't keep that one but I wrote the time down."</p>
+        <p>He leaned over it with his tea, careful not to spill. He had the kind of face that looked interested in everything, which was why the school parties liked him.</p>
+        <p>"Where were we pointing?"</p>
+        <p>"Lantern. Pass four-four-nine, the low one over the Wash. But the bumps are when it's dropping out of the beam, look, here's the pass coming through." She ran her finger along a long smooth hump on the paper, the satellite going over, big and fat and obvious. "And here's it leaving. And the bumps come after. Off the side. It's coming in on the sidelobe from somewhere else."</p>
+        <p>"A different satellite."</p>
+        <p>"That's what I thought. So I worked it out." She put a sheet of A4 down beside the paper, covered in her own handwriting. "The three times are forty-one minutes apart. Well, they're not, they're a week apart, but they're on the same bit of sky every time, and the bit of sky moves with the stars, not with anything in orbit. I've gone back through the night logs to see where the sidelobe would have been looking. It's here." She tapped the sheet. "Up near Cygnus. Same place every time, to within what I can work out with a pencil. And if it's on the same bit of sky that moves with the stars, Aled, it's not in orbit, is it? It's out there."</p>
+        <p>He went quiet. He put his tea down on the corner of the desk, off the paper.</p>
+        <p>"Forty-one minutes," he said.</p>
+        <p>"I don't know that it's forty-one minutes. I only see it when we happen to be swinging past. But I sat up last night and worked out where the sidelobe would have been every time it's gone quiet, and it's three hits out of three on the same spot, and if you do the sums with the times there's a forty-one minute thing that fits, and nothing shorter does."</p>
+        <p>"There's the long ones," Aled said slowly. "The long-period transients. There was one in Australia years ago with an eighteen minute period, and one at twenty-one, and a couple since. People think white dwarfs. Or a magnetar, something old and slow. They switch on and off, they're very odd. Nobody's ever found one up here."</p>
+        <p>"Well," said Pauline.</p>
+        <p>"Has Steward seen it?"</p>
+        <p>"That's why I've come to you."</p>
+        <p>He turned his chair round to the screen and pulled up the archive and typed in the time and the date. The screen thought about it for a second, the way it did, and then showed him the clean data from the morning's observation, which had been a twenty-minute slot for a group in Leiden looking at hydrogen in a nearby galaxy, done in the gap between two passes. At twelve minutes past three there was nothing. There was the hiss of everything, smoothed and flattened, and then a short neat section of perfectly level line, like a road that had been resurfaced.</p>
+        <p>He clicked on the level section and a little box came up.</p>
+        <p><em>Excised: 03:11:58 to 03:12:21. Classification: Lantern sidelobe, residual, class 3. Confidence 0.94. No astronomical content.</em></p>
+        <p>"That's your bumps," he said.</p>
+        <p>"That's where my bumps were."</p>
+        <p>He sat back. "Class three's the low-level stuff. It's what you get when the dish has just been looking at a satellite and the receiver's still ringing a bit. It's the commonest thing it cuts."</p>
+        <p>"I know what class three is. It's not ringing. It's three separate bumps and they come after the ringing's stopped, you can see on the paper. And it's the same bit of sky."</p>
+        <p>"I believe you," he said, and she thought he did. "But Steward doesn't do sky position on class three. It doesn't need to. It knows the receiver's just been on a Lantern, it sees a periodic blip, it calls it residual and cuts it. Same as it would if it was a satellite. That's the whole point, it's meant to be cautious."</p>
+        <p>"Can you ask it?"</p>
+        <p>"I can ask it." He opened a window and typed, and she read it over his shoulder. <em>Query: excised segment 03:11:58 to 03:12:21. Observer reports matching signal on two prior dates at consistent sidereal position. Possible astronomical origin. Please review.</em></p>
+        <p>The answer came back in about the time it took Pauline to straighten up.</p>
+        <p><em>Thank you for your query. I have reviewed the excised segment and the two prior dates. All three segments occurred within 160 seconds of a Lantern pass exit, which is consistent with residual receiver response. Sidereal coincidence of three events is not unexpected given the regularity of the Lantern schedule, which repeats with respect to the stars on a seven-day cycle. Probability of astronomical origin: 0.03. If you would like to pursue this, you are welcome to submit an observing proposal for dedicated time on the reported position. I can help you draft one.</em></p>
+        <p>Aled read it twice. Pauline read it once.</p>
+        <p>"Seven-day cycle," Aled said. "That's a fair point. The passes repeat weekly. So if something's tied to the pass, it'll look like it's tied to the sky, if you only see it on Tuesdays."</p>
+        <p>"It's not tied to the pass," Pauline said. "I've told you. It comes after."</p>
+        <p>"I know. I'm just saying what it's saying. Three hits on a weekly schedule, it's going to see a pattern in the schedule before it sees one in the sky. Honestly, that's what I'd have said too, two years ago."</p>
+        <p>"And now?"</p>
+        <p>He looked at the paper for a long time.</p>
+        <p>"Now I'd like forty minutes on Cygnus," he said. "Pointing straight at it, not with the side of the beam while we're doing something else. If it's there it'll be there. If it's not, you'll have had a nice night and I'll buy you a bacon roll."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds ex-scene" aria-hidden="true">
+        <div class="sky"></div><div class="paper ex-raw"><div class="trace " style="clip-path: polygon(0.00% 57.63%, 0.56% 53.47%, 1.11% 50.68%, 1.67% 57.47%, 2.22% 51.91%, 2.78% 57.30%, 3.33% 52.93%, 3.89% 57.10%, 4.44% 54.40%, 5.00% 55.35%, 5.56% 56.59%, 6.11% 50.75%, 6.67% 51.63%, 7.22% 59.35%, 7.78% 59.23%, 8.33% 55.89%, 8.89% 57.08%, 9.44% 55.31%, 10.00% 52.93%, 10.56% 58.20%, 11.11% 57.06%, 11.67% 56.44%, 12.22% 51.70%, 12.78% 53.39%, 13.33% 51.26%, 13.89% 50.93%, 14.44% 53.30%, 15.00% 57.72%, 15.56% 53.04%, 16.11% 58.58%, 16.67% 52.19%, 17.22% 56.82%, 17.78% 55.27%, 18.33% 52.56%, 18.89% 52.22%, 19.44% 55.93%, 20.00% 58.11%, 20.56% 57.68%, 21.11% 56.66%, 21.67% 55.16%, 22.22% 54.63%, 22.78% 58.86%, 23.33% 54.88%, 23.89% 58.46%, 24.44% 57.76%, 25.00% 57.32%, 25.56% 57.93%, 26.11% 58.91%, 26.67% 54.27%, 27.22% 52.27%, 27.78% 55.17%, 28.33% 53.62%, 28.89% 55.01%, 29.44% 58.40%, 30.00% 58.64%, 30.56% 58.08%, 31.11% 55.22%, 31.67% 56.07%, 32.22% 54.02%, 32.78% 57.03%, 33.33% 50.46%, 33.89% 54.44%, 34.44% 54.00%, 35.00% 56.38%, 35.56% 52.04%, 36.11% 58.48%, 36.67% 57.21%, 37.22% 57.43%, 37.78% 53.03%, 38.33% 56.38%, 38.89% 51.65%, 39.44% 56.71%, 40.00% 52.57%, 40.56% 56.94%, 41.11% 51.74%, 41.67% 51.68%, 42.22% 56.52%, 42.78% 56.38%, 43.33% 53.61%, 43.89% 55.95%, 44.44% 57.73%, 45.00% 55.41%, 45.56% 55.81%, 46.11% 52.67%, 46.67% 55.46%, 47.22% 52.18%, 47.78% 55.35%, 48.33% 53.65%, 48.89% 51.02%, 49.44% 51.53%, 50.00% 51.52%, 50.56% 53.40%, 51.11% 52.11%, 51.67% 54.23%, 52.22% 55.80%, 52.78% 55.62%, 53.33% 53.45%, 53.89% 58.05%, 54.44% 50.66%, 55.00% 58.57%, 55.56% 53.27%, 56.11% 53.19%, 56.67% 59.53%, 57.22% 56.67%, 57.78% 57.11%, 58.33% 58.54%, 58.89% 51.38%, 59.44% 52.53%, 60.00% 54.99%, 60.56% 53.96%, 61.11% 52.05%, 61.67% 47.35%, 62.22% 37.06%, 62.78% 36.22%, 63.33% 36.12%, 63.89% 39.42%, 64.44% 41.95%, 65.00% 41.66%, 65.56% 34.90%, 66.11% 32.10%, 66.67% 38.99%, 67.22% 40.97%, 67.78% 43.86%, 68.33% 34.39%, 68.89% 27.92%, 69.44% 33.93%, 70.00% 45.57%, 70.56% 51.45%, 71.11% 54.89%, 71.67% 53.45%, 72.22% 53.20%, 72.78% 54.74%, 73.33% 58.32%, 73.89% 54.11%, 74.44% 51.06%, 75.00% 54.51%, 75.56% 54.15%, 76.11% 58.84%, 76.67% 52.75%, 77.22% 52.47%, 77.78% 57.05%, 78.33% 56.03%, 78.89% 52.39%, 79.44% 53.05%, 80.00% 54.78%, 80.56% 53.41%, 81.11% 53.71%, 81.67% 57.49%, 82.22% 54.46%, 82.78% 53.78%, 83.33% 52.81%, 83.89% 55.27%, 84.44% 52.37%, 85.00% 57.92%, 85.56% 51.18%, 86.11% 59.12%, 86.67% 58.62%, 87.22% 53.95%, 87.78% 52.13%, 88.33% 55.59%, 88.89% 51.28%, 89.44% 50.83%, 90.00% 53.36%, 90.56% 52.98%, 91.11% 55.50%, 91.67% 52.49%, 92.22% 52.79%, 92.78% 55.61%, 93.33% 51.48%, 93.89% 55.56%, 94.44% 52.87%, 95.00% 57.78%, 95.56% 58.13%, 96.11% 52.50%, 96.67% 56.99%, 97.22% 52.47%, 97.78% 54.60%, 98.33% 54.03%, 98.89% 54.98%, 99.44% 58.31%, 100.00% 55.06%, 100.00% 56.66%, 99.44% 59.91%, 98.89% 56.58%, 98.33% 55.63%, 97.78% 56.20%, 97.22% 54.07%, 96.67% 58.59%, 96.11% 54.10%, 95.56% 59.73%, 95.00% 59.38%, 94.44% 54.47%, 93.89% 57.16%, 93.33% 53.08%, 92.78% 57.21%, 92.22% 54.39%, 91.67% 54.09%, 91.11% 57.10%, 90.56% 54.58%, 90.00% 54.96%, 89.44% 52.43%, 88.89% 52.88%, 88.33% 57.19%, 87.78% 53.73%, 87.22% 55.55%, 86.67% 60.22%, 86.11% 60.72%, 85.56% 52.78%, 85.00% 59.52%, 84.44% 53.97%, 83.89% 56.87%, 83.33% 54.41%, 82.78% 55.38%, 82.22% 56.06%, 81.67% 59.09%, 81.11% 55.31%, 80.56% 55.01%, 80.00% 56.38%, 79.44% 54.65%, 78.89% 53.99%, 78.33% 57.63%, 77.78% 58.65%, 77.22% 54.07%, 76.67% 54.35%, 76.11% 60.44%, 75.56% 55.75%, 75.00% 56.11%, 74.44% 52.66%, 73.89% 55.71%, 73.33% 59.92%, 72.78% 56.34%, 72.22% 54.80%, 71.67% 55.05%, 71.11% 56.49%, 70.56% 53.05%, 70.00% 47.17%, 69.44% 35.53%, 68.89% 29.52%, 68.33% 35.99%, 67.78% 45.46%, 67.22% 42.57%, 66.67% 40.59%, 66.11% 33.70%, 65.56% 36.50%, 65.00% 43.26%, 64.44% 43.55%, 63.89% 41.02%, 63.33% 37.72%, 62.78% 37.82%, 62.22% 38.66%, 61.67% 48.95%, 61.11% 53.65%, 60.56% 55.56%, 60.00% 56.59%, 59.44% 54.13%, 58.89% 52.98%, 58.33% 60.14%, 57.78% 58.71%, 57.22% 58.27%, 56.67% 61.13%, 56.11% 54.79%, 55.56% 54.87%, 55.00% 60.17%, 54.44% 52.26%, 53.89% 59.65%, 53.33% 55.05%, 52.78% 57.22%, 52.22% 57.40%, 51.67% 55.83%, 51.11% 53.71%, 50.56% 55.00%, 50.00% 53.12%, 49.44% 53.13%, 48.89% 52.62%, 48.33% 55.25%, 47.78% 56.95%, 47.22% 53.78%, 46.67% 57.06%, 46.11% 54.27%, 45.56% 57.41%, 45.00% 57.01%, 44.44% 59.33%, 43.89% 57.55%, 43.33% 55.21%, 42.78% 57.98%, 42.22% 58.12%, 41.67% 53.28%, 41.11% 53.34%, 40.56% 58.54%, 40.00% 54.17%, 39.44% 58.31%, 38.89% 53.25%, 38.33% 57.98%, 37.78% 54.63%, 37.22% 59.03%, 36.67% 58.81%, 36.11% 60.08%, 35.56% 53.64%, 35.00% 57.98%, 34.44% 55.60%, 33.89% 56.04%, 33.33% 52.06%, 32.78% 58.63%, 32.22% 55.62%, 31.67% 57.67%, 31.11% 56.82%, 30.56% 59.68%, 30.00% 60.24%, 29.44% 60.00%, 28.89% 56.61%, 28.33% 55.22%, 27.78% 56.77%, 27.22% 53.87%, 26.67% 55.87%, 26.11% 60.51%, 25.56% 59.53%, 25.00% 58.92%, 24.44% 59.36%, 23.89% 60.06%, 23.33% 56.48%, 22.78% 60.46%, 22.22% 56.23%, 21.67% 56.76%, 21.11% 58.26%, 20.56% 59.28%, 20.00% 59.71%, 19.44% 57.53%, 18.89% 53.82%, 18.33% 54.16%, 17.78% 56.87%, 17.22% 58.42%, 16.67% 53.79%, 16.11% 60.18%, 15.56% 54.64%, 15.00% 59.32%, 14.44% 54.90%, 13.89% 52.53%, 13.33% 52.86%, 12.78% 54.99%, 12.22% 53.30%, 11.67% 58.04%, 11.11% 58.66%, 10.56% 59.80%, 10.00% 54.53%, 9.44% 56.91%, 8.89% 58.68%, 8.33% 57.49%, 7.78% 60.83%, 7.22% 60.95%, 6.67% 53.23%, 6.11% 52.35%, 5.56% 58.19%, 5.00% 56.95%, 4.44% 56.00%, 3.89% 58.70%, 3.33% 54.53%, 2.78% 58.90%, 2.22% 53.51%, 1.67% 59.07%, 1.11% 52.28%, 0.56% 55.07%, 0.00% 59.23%)"></div></div><div class="ex-clean"><div class="trace clean" style="clip-path: polygon(0.00% 55.66%, 0.56% 55.88%, 1.11% 55.28%, 1.67% 54.75%, 2.22% 55.13%, 2.78% 55.77%, 3.33% 54.61%, 3.89% 55.87%, 4.44% 55.42%, 5.00% 56.00%, 5.56% 54.43%, 6.11% 55.81%, 6.67% 54.46%, 7.22% 54.96%, 7.78% 54.49%, 8.33% 54.53%, 8.89% 54.99%, 9.44% 54.72%, 10.00% 55.24%, 10.56% 55.27%, 11.11% 55.57%, 11.67% 55.08%, 12.22% 55.41%, 12.78% 55.18%, 13.33% 55.89%, 13.89% 54.88%, 14.44% 54.32%, 15.00% 55.27%, 15.56% 54.69%, 16.11% 54.33%, 16.67% 55.27%, 17.22% 55.36%, 17.78% 54.24%, 18.33% 53.93%, 18.89% 54.70%, 19.44% 54.30%, 20.00% 55.17%, 20.56% 54.84%, 21.11% 55.37%, 21.67% 55.56%, 22.22% 54.56%, 22.78% 55.28%, 23.33% 53.89%, 23.89% 55.44%, 24.44% 54.24%, 25.00% 54.48%, 25.56% 54.64%, 26.11% 55.83%, 26.67% 54.37%, 27.22% 54.73%, 27.78% 55.36%, 28.33% 54.14%, 28.89% 55.89%, 29.44% 53.98%, 30.00% 55.55%, 30.56% 55.79%, 31.11% 55.28%, 31.67% 55.34%, 32.22% 54.78%, 32.78% 55.67%, 33.33% 55.27%, 33.89% 54.65%, 34.44% 54.61%, 35.00% 55.97%, 35.56% 55.37%, 36.11% 54.56%, 36.67% 56.05%, 37.22% 54.90%, 37.78% 55.09%, 38.33% 55.04%, 38.89% 54.28%, 39.44% 55.83%, 40.00% 55.96%, 40.56% 55.20%, 41.11% 55.68%, 41.67% 54.90%, 42.22% 55.42%, 42.78% 55.14%, 43.33% 54.66%, 43.89% 54.49%, 44.44% 55.04%, 45.00% 55.81%, 45.56% 54.60%, 46.11% 54.62%, 46.67% 55.65%, 47.22% 54.77%, 47.78% 54.69%, 48.33% 54.99%, 48.89% 55.76%, 49.44% 55.53%, 50.00% 55.44%, 50.56% 55.21%, 51.11% 54.05%, 51.67% 55.67%, 52.22% 54.81%, 52.78% 53.94%, 53.33% 55.76%, 53.89% 54.85%, 54.44% 55.67%, 55.00% 55.46%, 55.56% 54.97%, 56.11% 55.21%, 56.67% 53.96%, 57.22% 54.89%, 57.78% 54.99%, 58.33% 54.60%, 58.89% 55.46%, 59.44% 55.47%, 60.00% 54.67%, 60.56% 54.70%, 61.11% 55.54%, 61.67% 55.64%, 62.22% 55.00%, 62.78% 55.00%, 63.33% 55.00%, 63.89% 55.00%, 64.44% 55.00%, 65.00% 55.00%, 65.56% 55.00%, 66.11% 55.00%, 66.67% 55.00%, 67.22% 55.00%, 67.78% 55.00%, 68.33% 55.00%, 68.89% 55.00%, 69.44% 55.00%, 70.00% 55.00%, 70.56% 55.00%, 71.11% 55.42%, 71.67% 56.05%, 72.22% 55.02%, 72.78% 55.48%, 73.33% 54.49%, 73.89% 55.85%, 74.44% 54.14%, 75.00% 55.42%, 75.56% 55.68%, 76.11% 54.43%, 76.67% 55.50%, 77.22% 55.14%, 77.78% 55.42%, 78.33% 55.20%, 78.89% 55.02%, 79.44% 54.24%, 80.00% 54.79%, 80.56% 55.12%, 81.11% 54.70%, 81.67% 54.71%, 82.22% 55.02%, 82.78% 54.93%, 83.33% 55.49%, 83.89% 55.83%, 84.44% 55.96%, 85.00% 54.37%, 85.56% 54.96%, 86.11% 55.85%, 86.67% 54.79%, 87.22% 55.33%, 87.78% 54.18%, 88.33% 55.04%, 88.89% 54.25%, 89.44% 54.33%, 90.00% 55.79%, 90.56% 55.19%, 91.11% 54.39%, 91.67% 54.63%, 92.22% 55.16%, 92.78% 54.46%, 93.33% 54.69%, 93.89% 55.72%, 94.44% 55.11%, 95.00% 55.89%, 95.56% 54.54%, 96.11% 55.13%, 96.67% 55.05%, 97.22% 54.75%, 97.78% 54.97%, 98.33% 54.64%, 98.89% 55.04%, 99.44% 55.15%, 100.00% 54.06%, 100.00% 55.66%, 99.44% 56.75%, 98.89% 56.64%, 98.33% 56.24%, 97.78% 56.57%, 97.22% 56.35%, 96.67% 56.65%, 96.11% 56.73%, 95.56% 56.14%, 95.00% 57.49%, 94.44% 56.71%, 93.89% 57.32%, 93.33% 56.29%, 92.78% 56.06%, 92.22% 56.76%, 91.67% 56.23%, 91.11% 55.99%, 90.56% 56.79%, 90.00% 57.39%, 89.44% 55.93%, 88.89% 55.85%, 88.33% 56.64%, 87.78% 55.78%, 87.22% 56.93%, 86.67% 56.39%, 86.11% 57.45%, 85.56% 56.56%, 85.00% 55.97%, 84.44% 57.56%, 83.89% 57.43%, 83.33% 57.09%, 82.78% 56.53%, 82.22% 56.62%, 81.67% 56.31%, 81.11% 56.30%, 80.56% 56.72%, 80.00% 56.39%, 79.44% 55.84%, 78.89% 56.62%, 78.33% 56.80%, 77.78% 57.02%, 77.22% 56.74%, 76.67% 57.10%, 76.11% 56.03%, 75.56% 57.28%, 75.00% 57.02%, 74.44% 55.74%, 73.89% 57.45%, 73.33% 56.09%, 72.78% 57.08%, 72.22% 56.62%, 71.67% 57.65%, 71.11% 57.02%, 70.56% 56.60%, 70.00% 56.60%, 69.44% 56.60%, 68.89% 56.60%, 68.33% 56.60%, 67.78% 56.60%, 67.22% 56.60%, 66.67% 56.60%, 66.11% 56.60%, 65.56% 56.60%, 65.00% 56.60%, 64.44% 56.60%, 63.89% 56.60%, 63.33% 56.60%, 62.78% 56.60%, 62.22% 56.60%, 61.67% 57.24%, 61.11% 57.14%, 60.56% 56.30%, 60.00% 56.27%, 59.44% 57.07%, 58.89% 57.06%, 58.33% 56.20%, 57.78% 56.59%, 57.22% 56.49%, 56.67% 55.56%, 56.11% 56.81%, 55.56% 56.57%, 55.00% 57.06%, 54.44% 57.27%, 53.89% 56.45%, 53.33% 57.36%, 52.78% 55.54%, 52.22% 56.41%, 51.67% 57.27%, 51.11% 55.65%, 50.56% 56.81%, 50.00% 57.04%, 49.44% 57.13%, 48.89% 57.36%, 48.33% 56.59%, 47.78% 56.29%, 47.22% 56.37%, 46.67% 57.25%, 46.11% 56.22%, 45.56% 56.20%, 45.00% 57.41%, 44.44% 56.64%, 43.89% 56.09%, 43.33% 56.26%, 42.78% 56.74%, 42.22% 57.02%, 41.67% 56.50%, 41.11% 57.28%, 40.56% 56.80%, 40.00% 57.56%, 39.44% 57.43%, 38.89% 55.88%, 38.33% 56.64%, 37.78% 56.69%, 37.22% 56.50%, 36.67% 57.65%, 36.11% 56.16%, 35.56% 56.97%, 35.00% 57.57%, 34.44% 56.21%, 33.89% 56.25%, 33.33% 56.87%, 32.78% 57.27%, 32.22% 56.38%, 31.67% 56.94%, 31.11% 56.88%, 30.56% 57.39%, 30.00% 57.15%, 29.44% 55.58%, 28.89% 57.49%, 28.33% 55.74%, 27.78% 56.96%, 27.22% 56.33%, 26.67% 55.97%, 26.11% 57.43%, 25.56% 56.24%, 25.00% 56.08%, 24.44% 55.84%, 23.89% 57.04%, 23.33% 55.49%, 22.78% 56.88%, 22.22% 56.16%, 21.67% 57.16%, 21.11% 56.97%, 20.56% 56.44%, 20.00% 56.77%, 19.44% 55.90%, 18.89% 56.30%, 18.33% 55.53%, 17.78% 55.84%, 17.22% 56.96%, 16.67% 56.87%, 16.11% 55.93%, 15.56% 56.29%, 15.00% 56.87%, 14.44% 55.92%, 13.89% 56.48%, 13.33% 57.49%, 12.78% 56.78%, 12.22% 57.01%, 11.67% 56.68%, 11.11% 57.17%, 10.56% 56.87%, 10.00% 56.84%, 9.44% 56.32%, 8.89% 56.59%, 8.33% 56.13%, 7.78% 56.09%, 7.22% 56.56%, 6.67% 56.06%, 6.11% 57.41%, 5.56% 56.03%, 5.00% 57.60%, 4.44% 57.02%, 3.89% 57.47%, 3.33% 56.21%, 2.78% 57.37%, 2.22% 56.73%, 1.67% 56.35%, 1.11% 56.88%, 0.56% 57.48%, 0.00% 57.26%)"></div></div><div class="ex-gap"></div><div class="ex-txt">Classification: Lantern sidelobe, residual, class 3. Confidence 0.94.</div>
+        <div class="label">Excised</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The proposal went in at ten past eleven. Aled let Steward draft it, because Steward drafted proposals better than anyone on the site and everyone knew it, and he and Pauline sat side by side while it wrote, and it was, she had to admit, a good proposal. It was clear and short and fair. It said what Pauline had seen and when, and it described the long-period transients in Australia and the two since, and it put in a little paragraph about how a confirmed northern-sky example would be of considerable interest, and it asked for forty minutes on the dish, pointed at the position Pauline had worked out with her pencil and that Steward had very politely corrected by about a tenth of a degree.</p>
+        <p>At the bottom, where the proposer's name went, it had written <em>A. Pryce</em>, and underneath, <em>with observations by P. Hough (engineering)</em>, and Pauline found she did not mind that at all, and then found that she did.</p>
+        <p>Steward ranked it in nine seconds.</p>
+        <p><em>Proposal 7731-A: Dedicated follow-up of candidate periodic source near Cygnus. Expected yield: low. Rank: 412 of 418 in current cycle. Next available slot meeting constraints: none in current cycle. Proposal will be held for reconsideration in the next cycle (begins 3 February).</em></p>
+        <p>"February," Pauline said.</p>
+        <p>"It's three in a hundred," said Aled. "It's ranking it on three in a hundred. Everything else in the queue is a sure thing, more or less. People going back to things they already know are there. That's how it's trained, it's seventy years of what got papers."</p>
+        <p>"And if it's there in February?"</p>
+        <p>"Then it's there in February." He rubbed his face. "I'll talk to Hal."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds rk-scene" aria-hidden="true">
+        <div class="sky"></div><div class="rk-list"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="me"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+        <div class="label">Rank: 412</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Hal Ackerley was the director, and he was a decent man, which was the trouble with him. He had come to Jodrell as a student in 1998 the same as Pauline had come as an apprentice in 1984, and he had loved the place in the same way, which was the way you love a big old house you grew up in, and he had been the one to sign the Lantern lease, in an office in London with a pen they gave him to keep, because the alternative had been a letter from the university saying the site would close in eighteen months and the dish would be listed and left to rust like the cooling towers at Fiddlers Ferry. He had told all thirty-one of them that, standing in the canteen, and he had cried a little bit at the end of it, and nobody had held it against him.</p>
+        <p>He listened to Aled in his office with the door shut, and Pauline sat in the other chair with her roll of paper on her knee, and when Aled had finished he asked to see it, and she unrolled it on his desk over the top of a planning application for a car park, and he looked at the three bumps for a long time.</p>
+        <p>"Paul," he said, because he had always called her Paul, "where's this coming off?"</p>
+        <p>"Derek's tap. The spare IF."</p>
+        <p>"That's on the far side of Steward."</p>
+        <p>"It is."</p>
+        <p>"So this is raw."</p>
+        <p>"That's why you can see it."</p>
+        <p>He nodded, slowly, and then he sat back in his chair and looked out of the window, where the dish was just visible over the top of the visitor centre, tilted low and to the east and following something across the sky at a speed that still looked wrong to Pauline after four years, like watching a cathedral jog.</p>
+        <p>"I can't give you forty minutes," he said.</p>
+        <p>"It's only forty minutes, Hal."</p>
+        <p>"I know. I know it's only forty minutes." He did not look at either of them. "But the hours aren't mine. That's the bit nobody ever quite gets. The science hours are given to us under the lease, four and a half a day, and Steward allocates them, and the lease says Steward allocates them, because Lantern didn't want a director giving their downtime to his mates. That was the whole negotiation, near enough. They wanted the astronomy to be done by something that couldn't be leaned on. If I override Steward, I'm in breach. Not a big breach. But they do look. And the next negotiation's in March."</p>
+        <p>"So go to Lantern and ask for forty minutes," said Aled. "Out of their nineteen and a half. They won't notice forty minutes."</p>
+        <p>"They'll notice," said Hal. "Every minute of that dish is booked eighteen months out. They've got checkpoints moving that they pay penalties on if they're late. They'd want paying for it, and we haven't got it, and if we had it we'd have spent it on the roof." He turned back to them. "Put it in for February. Steward re-ranks every cycle. If it shows up again in the sidelobe it'll have more hits, and the more hits, the higher it goes. That's how it's meant to work."</p>
+        <p>"It won't show up," said Pauline.</p>
+        <p>They both looked at her.</p>
+        <p>"It won't show up in the sidelobe," she said, "because Steward cuts it out of the sidelobe before anybody sees it, and it'll keep cutting it out, because it's decided it's a satellite. The only way it shows up is on my paper. And my paper isn't data, Hal. Is it? My paper doesn't go in the archive. You can't put three bumps in biro in a proposal."</p>
+        <p>Hal looked at the roll on his desk.</p>
+        <p>"No," he said. "I suppose you can't."</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>She did not go home that afternoon, though her shift had ended at eight and she had been up since the day before. She went to the canteen and had a jacket potato she didn't want and then she went out and walked round the dish, the long way, round the back of the Mark II and along the path under the cable trays to where you could stand right beneath the Lovell and look up at the underside of the bowl, the great white ribbed belly of it going over your head like a ceiling, and the steel of the towers going up on either side, and the elevation racks the size of a house, each tooth on them as long as her forearm, and the huge gun turret racks taken off a battleship, which was what everyone told the school parties and which was true.</p>
+        <p>Her dad had painted that underside. Frank Hough, a rigger, a big gentle man from Middlewich with forearms like ham hocks, who had come to work here in 1961 and worked on the dish for thirty-four years and had gone up and down those towers in all weathers on ropes and ladders with a paint kettle hung off his belt, and who had brought her here on a Saturday when she was eight and lifted her up to the fence and said, <em>That's the ear of England, that is, Paulie. That's how we know who's out there.</em> She had believed him in the way you believe your dad at eight, and then she had stopped believing him in the way you stop at fourteen, and then somewhere in her thirties, on a night shift in winter with the pen going along the paper, she had started believing him again, not quite the way he meant it, but near enough.</p>
+        <p>He had died in 2009, in Leighton Hospital, of the thing that had been in the paint. She had his paint kettle in her shed, and a photograph of him at the top of the east tower with his arm round the handrail and his thumb up, the dish behind him going up like a white wall into the sky.</p>
+        <p>She stood under it now with her hands in her coat pockets and listened to it move. It made a noise when it slewed, these days, that it had not made before the new drives went in. A low long groan in the steel, like a ship's hull in a swell. The engineers from Lantern said it was within tolerance, and she supposed it was. But she had lived inside the sound of this dish for forty-one years and she knew when it was being asked to do a thing it had not been made for.</p>
+        <p>Up in the focus box, a hundred feet above her head, the new receivers were taking down whatever Lantern was sending, gigabits of it a second, the thinking of the world coming down out of the sky into a field in Cheshire, and going off along a fibre to somewhere she would never see. And off to one side of all that, in the faint wide sidelobe of the beam where the dish heard things it was not pointed at, a thing out near Cygnus was ticking every forty-one minutes, or wasn't, and no one in the world could look.</p>
+        <p>She thought about that. She thought about the dish at Effelsberg and the one at Green Bank and the ones at Parkes and Narrabri and all the old teaching dishes rented by the hour, every one of them turned round to face the satellites, every one of them with a Steward or something like Steward on the far side of the receiver, cleaning the sky so nobody lost a thesis. Every one of them cutting out, with great care and very high confidence, anything that was periodic and faint and came in round the edge while the dish was looking at something else.</p>
+        <p>It occurred to her, standing there, that if somebody were out there, really out there, the way her dad had meant it on that Saturday, and if they had worked out that the cheapest way to be heard was to tick, slow and steady, the way you'd knock on a wall, then the people of Earth had built the most careful machine in their history for not hearing them. And that nobody had meant it. And that every single step of it had been sensible.</p>
+        <p>Then she thought that this was the kind of thing you thought when you'd been up for thirty hours and eaten a jacket potato you didn't want, and she went home to bed.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds pk-scene" aria-hidden="true">
+        <div class="sky"></div><div class="pk-under"></div><div class="pk-ladder"></div><div class="pk-rope"></div><div class="pk-kettle"></div>
+        <div class="label">paint kettle</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She came back on the Monday night, which was her next shift, and she brought her dad's photograph in her bag, though she couldn't have said why.</p>
+        <p>Aled was there. He was not supposed to be, he was not on the rota, but he was sitting in the control room in his big parka with a flask, and he said he'd thought he'd keep her company, and she said that was kind, and he said it wasn't kind, he wanted to see it.</p>
+        <p>"It's Tuesday it comes," she said.</p>
+        <p>"It's Tuesday we <em>see</em> it. Because of the pass schedule. It might be there every forty-one minutes every day of the week. We only catch it on Tuesdays because Tuesday's when the low pass over the Wash drags the sidelobe across Cygnus." He held up his phone. "I did the sums. If it's forty-one minutes on the nose, then there's a window tonight at ten to one where we come close. Not as close. But close."</p>
+        <p>"Tonight's Monday."</p>
+        <p>"Tonight's Monday."</p>
+        <p>She looked at him. He grinned, a bit sheepishly, and poured her a cup of tea out of his flask without asking, which nobody had done for her in a long time.</p>
+        <p>They sat up together. The dish did its work. It followed a pass up over Snowdonia and down to the Wash and then swung, groaning, all the way round to pick one up coming over from Ireland, and then it went still for twenty minutes for a group in Manchester who were timing pulsars, and in the clean data on the screen the pulsars ticked away in their neat lines, a millisecond here and a second there, the way they always had, and Steward cleaned the satellite residue out around them like a woman wiping a worktop. On the bench the pen went along the paper and drew the hiss of everything in long pale pleats.</p>
+        <p>At ten to one it went sideways.</p>
+        <p>Very small. Smaller than before. Three bumps, but low, nearly in the hiss, like someone tapping on the other side of a much thicker wall. Pauline saw it and did not say anything and pulled the lamp across, and Aled saw her pull the lamp across and was out of his chair before she'd moved her hand back.</p>
+        <p>"Is that it?"</p>
+        <p>"That's it."</p>
+        <p>"That's three."</p>
+        <p>"That's three."</p>
+        <p>"Ten to one." He looked at his phone and then at the clock and then at the paper, and she saw his face go a strange colour. "That's on the nose, Pauline. That's bang on. That's not a pass, there's no pass tonight that ends anywhere near that, the low one over the Wash is a Tuesday, that's—" He went to the screen and pulled up the clean data. At ten to one there was a short, perfectly level line.</p>
+        <p><em>Excised: 00:49:44 to 00:50:03. Classification: Lantern sidelobe, residual, class 3. Confidence 0.91. No astronomical content.</em></p>
+        <p>"There wasn't a Lantern," Aled said. "We were on the Ireland pass and it had gone. The receiver had been off it for six minutes."</p>
+        <p>He typed fast. He did not use full sentences, this time. <em>Excised 00:49:44. No Lantern pass ending within 360 s. Matches predicted time of candidate periodic source 7731-A to within 20 s. Requesting reclassification.</em></p>
+        <p><em>Thank you,</em> said Steward. <em>I have reviewed the segment. You are correct that no Lantern pass ended within 360 seconds. However, the receiver was tracking pass 2210 at the time, and pass 2210 has a known secondary lobe response at low elevations that can persist for several minutes. Classification is unchanged. I note that the segment occurred close to the time you predicted. Given the small number of observations, the prediction itself is likely to have been fitted to noise, and a match of this kind is expected by chance about one time in eight. Probability of astronomical origin is now 0.06. This has been added to proposal 7731-A, which has moved from rank 412 to rank 409. Thank you for your diligence.</em></p>
+        <p>Aled read it out loud, all the way to the end, in a flat voice. Then he put his face in his hands.</p>
+        <p>"Diligence," he said through his fingers.</p>
+        <p>"It's right about the one in eight," said Pauline.</p>
+        <p>"I know it's right about the one in eight."</p>
+        <p>"And it's right about the secondary lobe. Pass twenty-two ten does do that, I've seen it on the paper. Not like this. But it does do it."</p>
+        <p>"I know." He took his hands away. "It's always right. That's what I can't—it's always a bit right. Every single thing it says, I'd have said, if I was being careful. And if you add up every careful thing, you get a level line." He was quiet. "Can we not just—can you not just <em>point</em> it? Now? There's twenty minutes before the next pass. Point it at Cygnus. We'd see the next one at half one if it's there."</p>
+        <p>Pauline looked at the drive console on the other side of the room. It had been the drive console when she joined in 1984, a long grey desk with big chunky switches and an emergency stop the size of a saucer, and on the right-hand side of it there was a keyhole, brass, and a little engraved plate that said MANUAL. For thirty-seven years of her working life, there had been a key that went in that keyhole, on a green tag, in the top drawer of the engineer's desk, and an engineer who turned it could move the dish where she liked, slowly, with two black wheels, the way Frank Hough's generation had moved it when the first computer broke. You only used it when something had gone wrong. She had used it four times in her life.</p>
+        <p>When the new drives went in, a man from Lantern had come round the building collecting keys. He had been very nice about it. He had said the new drive software had its own safety, and two systems giving orders to one dish was how you got accidents, and he had taken the green tag out of the top drawer and put it in a little plastic bag with a label on and written her name on it, as the person he'd taken it from, so it would all be properly recorded, and taken it away.</p>
+        <p>The keyhole was still there. They'd left the old desk in because it was listed.</p>
+        <p>"No," she said. "I can't point it."</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>They did not say very much for a while after that. Aled went and stood at the window and looked out at the dish, which was lit from below by the security lights and looked, as it always looked at night, like something that had landed. Pauline sat in the swivel chair and looked at the three small bumps on the paper and wrote 00:50 beside them, and the date, and then, after a moment, she wrote <em>M</em>, for Monday, and drew a ring round it.</p>
+        <p>"Somebody else will have seen it," Aled said, at the window. "Somewhere. If it's there. Somebody'll have a dish pointed that way. It's a big sky but it's not that big."</p>
+        <p>"Who?"</p>
+        <p>He started to say something and stopped. She watched him go round them in his head, the way she'd gone round them standing under the dish. Effelsberg, leased. Green Bank, leased. The Australians, leased. The Chinese had the big one in the mountains, the five-hundred metre one, and nobody knew any more what that was pointed at, and they weren't going to say. There were the arrays, the hundreds of small dishes in the deserts, and they were still mostly astronomy, but they ran their data through cleaning models too, because the sky was so full of satellites now that you couldn't do anything at all without one, and the cleaning models had all learned from the same years of the same sky, and Pauline had a good idea what any of them would make of three faint bumps that came round the side.</p>
+        <p>"The amateurs," Aled said. "There's people with dishes in their gardens. Five metres. Ex-satellite TV. Some of them are good."</p>
+        <p>"Five metres won't hear that."</p>
+        <p>"No," he said. "It won't."</p>
+        <p>He came and sat down. He picked up her dad's photograph, which she had taken out and propped against the chart recorder without quite deciding to, and looked at it.</p>
+        <p>"Who's this?"</p>
+        <p>"My dad. He painted it."</p>
+        <p>"The dish?"</p>
+        <p>"The underneath. And the towers. He's on the east tower there. Nineteen seventy-something."</p>
+        <p>Aled looked at it for a long time. Frank Hough with his thumb up and his arm round the handrail, squinting into the sun, a big white wall going up behind him into the sky.</p>
+        <p>"He'd be livid," said Aled.</p>
+        <p>Pauline laughed, which surprised her. It was the first time she'd laughed in about a week.</p>
+        <p>"No he wouldn't," she said. "He'd have gone up the tower with a spanner. And they'd have sacked him. And then he'd have been livid."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds ld-scene" aria-hidden="true">
+        <div class="sky"></div><div class="stars"></div><div class="lovell ld-dish" style=""><div class="lv-glow"></div><div class="lv-tower l"></div><div class="lv-tower r"></div><div class="lv-bowl"><i></i><b></b></div></div><div class="ld-up"></div><div class="fields"></div><div class="ld-win"></div><div class="ld-man"></div>
+        <div class="label">like something that had landed</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The email came on the Thursday, at eleven in the morning, when she was asleep. It was from Estates and Compliance at the university, and it was very nice. It said that during a routine audit of the signal chain, required under clause 14 of the Lantern ground station agreement, an unregistered tap had been identified on a spare intermediate frequency output in the main control building, feeding a non-networked chart recorder of unknown provenance. It said that unregistered taps represented a potential source of interference and of uncontrolled data egress, and that the tap had been removed and the equipment set aside for disposal, and that if the equipment was personal property she was welcome to collect it from the Estates store by the end of the month. It thanked her for her many years of service to the observatory.</p>
+        <p>At the bottom, in a different font, it said that the audit had been triggered automatically by an anomaly in the IF chain's impedance profile, first noted in the early hours of Tuesday morning.</p>
+        <p>She read it twice, in bed, on her phone, with the curtains still shut.</p>
+        <p>Then she got up and got dressed and drove in, though it was not her shift, and went to the Estates store, which was a prefab behind the Mark II, and a lad she didn't know helped her carry the recorder out to her car, and put it in the boot for her, and said it was a nice old thing, and asked what it was for.</p>
+        <p>"Listening," she said.</p>
+        <p>He nodded as if that made sense, and went back inside.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds tp-scene" aria-hidden="true">
+        <div class="sky"></div><div class="tp-cable"></div><div class="tp-port"></div><div class="tp-gone"></div><div class="tp-tag"></div>
+        <div class="label">an unregistered tap</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She went to see Aled before she left. He was in his office with the door open and he looked as though he hadn't slept, and he had something on his screen that he turned round to show her before she'd sat down.</p>
+        <p>"Look," he said. "Look what it's done."</p>
+        <p>It was proposal 7731-A. It had been withdrawn. Underneath, in Steward's tidy way, there was a note.</p>
+        <p><em>This proposal has been withdrawn automatically because the supporting observations were made with unregistered equipment that has since been removed from the signal chain. Under archive policy, observations from unregistered equipment cannot be cited as evidence in an observing proposal. If you have observations of the candidate source from registered equipment, you are welcome to resubmit. I have searched the archive for any such observations and found none. Thank you for your understanding.</em></p>
+        <p>"It searched the archive," Aled said. "It searched its own archive. For the thing it cut out of its own archive."</p>
+        <p>"It would have found nothing, then."</p>
+        <p>"It found nothing."</p>
+        <p>She stood in the doorway of his office with her car keys in her hand. The dish was out of the window behind him, tilted up to the south-west, following something, groaning.</p>
+        <p>"I'll put it in again in February," he said. "From scratch. I'll say I saw something in the sidelobe and I'll make it sound like I'm not sure. I'll make it sound like a student project. It might get in."</p>
+        <p>"It might," she said.</p>
+        <p>"Will you be here?"</p>
+        <p>She thought about that. She was sixty-one. She had nineteen months left until the pension the university had promised her in 1984 and then promised again, a bit smaller, in 2014, and then again, a bit smaller again, when the lease came in.</p>
+        <p>"I'll be here," she said.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall ds kt-scene" aria-hidden="true">
+        <div class="kt-win"><div class="stars"></div><div class="lovell " style=""><div class="lv-glow"></div><div class="lv-tower l"></div><div class="lv-tower r"></div><div class="lv-bowl"><i></i><b></b></div></div></div><div class="kt-lamp"></div><div class="kt-table"></div><div class="kt-photo"></div><div class="kt-bowl"></div><div class="kt-rec"></div><div class="paper kt-strip"><i class="kt-line"></i></div><div class="kt-pleats"></div>
+        <div class="label">a perfectly straight line</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>That night she was not on shift, and she did not sleep. At half past twelve she went out to the shed in her dressing gown with a torch and found her dad's paint kettle and moved it, and moved a box of jam jars, and found the old extension lead, and carried the chart recorder in from the car on her own, which she should not have done with her back, and set it up on the kitchen table under the light.</p>
+        <p>It had nothing to listen to. There was no tap and no dish and no receiver. But it still switched on. The roll of paper started moving under the pen at a centimetre a minute, and the pen lay down along it and drew a perfectly straight line, the line you get when there is nothing coming in at all, not even the hiss of everything.</p>
+        <p>She sat at the table and watched it.</p>
+        <p>Out of the kitchen window, over the hedge and across two fields and the railway, she could just see the top of the Lovell, picked out by the security lights, white and enormous, turning slowly against the dark to face the north-east, where a pass was due to come up over the Pennines at one o'clock and begin pouring down whatever it was it poured.</p>
+        <p>She looked at the clock on the cooker. Twenty to one. If Aled's sums were right, and she thought they were, then in about ten minutes, somewhere off past Cygnus, a long way off, something old and slow would tap three times, the way it had been tapping every forty-one minutes since before there was a Cheshire, and the edge of the great dish over the fields would brush past it as it turned, and hear it, the way it was built to hear things, and pass it down the cable, and the cable would pass it to Steward, and Steward would look at it carefully, and very fairly, and with high confidence, and lay a smooth level line where it had been.</p>
+        <p>She watched the pen. The pen drew its straight line along the paper.</p>
+        <p>At ten to one, she put her hand flat on the kitchen table, the way her dad used to put his hand on the rail at the top of the east tower before he'd trust it, and she knocked on it, three times, with her fingernail. Then she sat with her dad's photograph propped against the sugar bowl and the paper coming off the roll and folding itself into long pale pleats in the tray, and she waited for half past one.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
