@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The pool kept the heat — Ben Miller</title>
+    <meta name="description" content="Abertillery&#x27;s swimming baths have been shut since 2019, and the energy co-op&#x27;s model picks the empty pool as the best place in the valley to store heat. The woman who taught there for thirty-one years still has the side-door key, and she wants people swimming in it again.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0e1218;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #e8d8c0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #f4c07a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .pool-hero { position: relative; height: 26rem; margin: 0 -0.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(240,200,150,.14); background: #10161e; }
+      .pool-hero > * { position: absolute; }
+      .pool-hero::after, .scene.pl::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 50%, rgba(4,6,10,.74) 100%), repeating-linear-gradient(68deg, rgba(255,220,180,.022) 0 2px, transparent 2px 8px); }
+      .scene.pl { background: #10161e; }
+      /* --w: 0 cold .. 1 warm */
+      .vsky { inset: 0; background: linear-gradient(180deg, color-mix(in oklab, #2a3644, #f0a050 calc(var(--w,0) * 70%)), color-mix(in oklab, #5a6a78, #ffd08a calc(var(--w,0) * 80%)) 70%); }
+      .ridge { left: -5%; right: -5%; height: 46%; bottom: 30%; background: #2a3430; clip-path: polygon(0 100%, 0 40%, 12% 26%, 30% 34%, 46% 12%, 60% 22%, 78% 6%, 100% 30%, 100% 100%); }
+      .ridge.near { bottom: 0; height: 52%; background: linear-gradient(180deg, #222a28, #161c1c); clip-path: polygon(0 100%, 0 20%, 18% 34%, 40% 22%, 62% 40%, 84% 18%, 100% 30%, 100% 100%); }
+      .tip { left: 52%; width: 28%; bottom: 52%; height: 14%; background: repeating-linear-gradient(90deg, #3a4656 0 1.4cqw, #56667a 1.4cqw 1.6cqw), #3a4656; clip-path: polygon(0 100%, 26% 0, 74% 0, 100% 100%); box-shadow: inset 0 0 2cqw rgba(160,200,255,.3); }
+      .tip::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,230,180,.35) 50%, transparent 70%); animation: sheen 6s ease-in-out infinite; }
+      .turb { width: .4cqw; height: 9cqw; background: #e8ecee; }
+      .turb i { position: absolute; left: 50%; top: 0; width: 0; height: 0; animation: spin var(--sp, 3s) linear infinite; }
+      .turb i::before, .turb i::after, .turb i b { content: ""; position: absolute; left: -.25cqw; bottom: 0; width: .5cqw; height: 5cqw; background: #f4f6f8; border-radius: .3cqw; transform-origin: 50% 100%; }
+      .turb i::after { transform: rotate(120deg); } .turb i b { transform: rotate(240deg); }
+      .still .turb i { animation: none; }
+      .terrace { left: 0; right: 0; bottom: 6%; height: 18%; display: flex; gap: .3cqw; align-items: flex-end; }
+      .terrace i { position: relative; flex: 1; height: var(--h, 70%); background: #2a2a2e; clip-path: polygon(0 18%, 50% 0, 100% 18%, 100% 100%, 0 100%); }
+      .terrace i::after { content: ""; position: absolute; left: 30%; right: 30%; top: 40%; height: 26%; background: #ffd890; opacity: calc(.15 + var(--w,0) * .85); box-shadow: 0 0 1.4cqw rgba(255,200,120,.8); }
+      .baths { left: 34%; width: 18%; bottom: 6%; height: 16%; background: linear-gradient(180deg, #5a4a44, #3a2e2a); clip-path: polygon(0 30%, 50% 0, 100% 30%, 100% 100%, 0 100%); }
+      .baths::after { content: ""; position: absolute; left: 10%; right: 10%; top: 44%; height: 26%; background: repeating-linear-gradient(90deg, #ffc070 0 2cqw, transparent 2cqw 2.6cqw); box-shadow: 0 0 3cqw rgba(255,180,90,.8); opacity: calc(.2 + var(--w,0) * .8); }
+      .steam { width: 3cqw; height: 12cqw; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,240,220,.5), transparent 70%); filter: blur(.6cqw); animation: steamup 5s ease-in infinite; animation-delay: var(--d); }
+      /* key */
+      .ky-bg { inset: 0; background: radial-gradient(ellipse at 50% 40%, #2a3440, #0e1218 75%); }
+      .rope { height: 2.4cqw; border-radius: 1.2cqw; background: repeating-linear-gradient(90deg, #2a7ad0 0 2.4cqw, #f0f4f8 2.4cqw 3cqw, #2a7ad0 3cqw 4.6cqw, #e04040 4.6cqw 5.2cqw); box-shadow: inset 0 .5cqw .6cqw rgba(255,255,255,.35), inset 0 -.5cqw .6cqw rgba(0,0,0,.35), 0 .8cqw 1.4cqw rgba(0,0,0,.5); }
+      .ky-loop { left: 30%; top: 16%; width: 30cqw; height: 22cqw; border: 2.2cqw solid transparent; border-radius: 50%; background: repeating-conic-gradient(#2a7ad0 0 14deg, #f0f4f8 14deg 18deg) border-box; -webkit-mask: radial-gradient(ellipse 50% 50%, transparent calc(50% - 2.3cqw), #000 calc(50% - 2.2cqw)); mask: radial-gradient(ellipse 50% 50%, transparent 60%, #000 61%); transform: rotate(-8deg); }
+      .ky-key { left: 46%; top: 50%; width: 3.4cqw; height: 14cqw; background: linear-gradient(90deg, #a08040, #f0d890 50%, #8a6a30); clip-path: polygon(20% 0, 80% 0, 80% 28%, 62% 30%, 62% 80%, 90% 82%, 90% 88%, 62% 90%, 62% 100%, 38% 100%, 38% 30%, 20% 28%); transform: rotate(14deg); filter: drop-shadow(0 .6cqw .8cqw rgba(0,0,0,.6)); animation: glint 5s ease-in-out infinite; }
+      /* lanes */
+      .ln-roof { left: 0; right: 0; top: 0; height: 22%; background: linear-gradient(180deg, #06080c, #141a22); }
+      .ln-pool { left: 50%; top: 22%; width: 90cqw; height: 78%; margin-left: -45cqw; transform: perspective(40cqw) rotateX(52deg); transform-origin: 50% 0; background: linear-gradient(180deg, #8a969e, #b8c4cc); background-image: repeating-linear-gradient(90deg, transparent 0 7cqw, rgba(20,24,30,.85) 7cqw 8cqw, transparent 8cqw 15cqw), repeating-linear-gradient(0deg, rgba(255,255,255,.25) 0 .2cqw, transparent .2cqw 2.4cqw), repeating-linear-gradient(90deg, rgba(255,255,255,.25) 0 .2cqw, transparent .2cqw 2.4cqw); background-position: 4cqw 0; }
+      .ln-lamp { left: 0; right: 0; top: 22%; bottom: 0; background: linear-gradient(90deg, rgba(255,200,120,.18), transparent 30%); mix-blend-mode: screen; }
+      .ln-board { left: 46%; top: 18%; width: 8cqw; height: 1cqw; background: #c8ccd0; box-shadow: 0 0 0 .2cqw #5a6068; }
+      /* map */
+      .mp-bg { inset: 0; background: #0e141c; }
+      .mp-valley { left: 30%; width: 40%; top: -10%; bottom: -10%; background: radial-gradient(ellipse 30% 100% at 50% 50%, #1e2a34, transparent 70%); }
+      .mp-river { left: 49%; top: -5%; bottom: -5%; width: .5cqw; background: #4a7aa0; transform: skewX(-8deg); }
+      .mp-node { width: 1.6cqw; height: 1.6cqw; margin: -.8cqw; border-radius: 50%; background: #7a8a9a; }
+      .mp-node.hub { width: 3.4cqw; height: 3.4cqw; margin: -1.7cqw; background: #ffc070; box-shadow: 0 0 3cqw #ff9a40, 0 0 0 .6cqw rgba(255,190,110,.3); animation: pulse 3s ease-in-out infinite; }
+      .mp-num { font: 500 1.3cqw/1 Karla, sans-serif; color: #8aa0b4; letter-spacing: .04em; }
+      .mp-line { height: .35cqw; transform-origin: 0 50%; background: linear-gradient(90deg, #ffb060, rgba(255,176,96,.2)); box-shadow: 0 0 1cqw rgba(255,160,80,.7); animation: spread 3s ease-out both; animation-delay: var(--d); }
+      /* terraces */
+      .tr-bg { inset: 0; background: linear-gradient(180deg, #1a222c, #0e1218); }
+      .tr-row { left: 0; right: 0; height: 22%; display: flex; gap: .4cqw; align-items: flex-end; }
+      .tr-row i { position: relative; flex: 1; height: 100%; background: linear-gradient(180deg, #4a4e56, #34383e); background-image: repeating-linear-gradient(0deg, transparent 0 1.2cqw, rgba(0,0,0,.25) 1.2cqw 1.35cqw); clip-path: polygon(0 22%, 50% 0, 100% 22%, 100% 100%, 0 100%); }
+      .tr-row i::after { content: ""; position: absolute; left: 32%; right: 32%; top: 44%; height: 26%; background: #ffd080; box-shadow: 0 0 2cqw #ffb050; opacity: 0; animation: lamp 6s ease-in-out infinite alternate; animation-delay: var(--d); }
+      .tr-pipe { left: 0; right: 0; height: .5cqw; background: linear-gradient(90deg, #ffb060, #ffd8a0, #ffb060); box-shadow: 0 0 1.4cqw rgba(255,170,90,.8); transform-origin: 50% 50%; animation: spread 4s ease-out both; }
+      /* cover */
+      .cv-bg { inset: 0; background: linear-gradient(180deg, #1a2028, #2a2e34); }
+      .cv-water { left: 6%; right: 6%; top: 34%; bottom: 10%; background: linear-gradient(180deg, #3aa0c0, #1a6a90); box-shadow: inset 0 0 4cqw rgba(0,0,0,.4); }
+      .cv-cover { left: 6%; top: 34%; bottom: 10%; width: 54%; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.3) 0 .5cqw, transparent .6cqw) 0 0/1.6cqw 1.6cqw, linear-gradient(180deg, #3a7ad0, #2a5aa8); box-shadow: 1cqw 0 1.4cqw rgba(0,0,0,.4); animation: roll 6s ease-in-out both; }
+      .cv-roll { left: 58%; top: 32%; bottom: 8%; width: 4cqw; border-radius: 2cqw; background: linear-gradient(90deg, #2a5aa8, #6a9ae0 50%, #2a5aa8); animation: rollx 6s ease-in-out both; }
+      .cv-steam { top: 20%; }
+      /* text + turbines */
+      .tx-phone { left: 10%; top: 12%; width: 22cqw; height: 40cqw; max-height: 84%; border-radius: 2.4cqw; background: #0a0c10; box-shadow: 0 0 0 .5cqw #2a2e34, 0 2cqw 3cqw rgba(0,0,0,.6); }
+      .tx-bubble { position: absolute; left: 8%; right: 8%; top: 20%; padding: 1.2cqw; border-radius: 1.4cqw; background: #2a3a4a; font: 500 1.7cqw/1.35 Karla, sans-serif; color: #eef2f6; }
+      .tx-ridge { left: 36%; right: 0; bottom: 0; height: 60%; background: #1a2020; clip-path: polygon(0 100%, 0 50%, 30% 30%, 60% 40%, 100% 20%, 100% 100%); }
+      /* thermo */
+      .th-tube { left: 62%; top: 10%; bottom: 14%; width: 4cqw; border-radius: 2cqw; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 .3cqw rgba(255,255,255,.3); overflow: hidden; }
+      .th-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 80%; background: linear-gradient(0deg, #ff7a30, #ffc070); animation: fill 7s ease-in-out both; }
+      .th-tick { position: absolute; left: 68%; font: 600 2.4cqw/1 "Cormorant Garamond", serif; color: #f4e2c8; }
+      .th-water { left: 6%; width: 48%; bottom: 10%; height: 30%; background: linear-gradient(180deg, rgba(120,190,220,.8), #1a5a80); animation: water 7s ease-in-out both; }
+      .th-float { left: 22%; bottom: 40%; width: 14cqw; height: 2.6cqw; border-radius: 1.4cqw; background: #f0c890; box-shadow: 0 0 2cqw rgba(255,200,140,.6); animation: bob 4s ease-in-out infinite alternate; }
+      /* coda */
+      .wh-bg { inset: 0; background: radial-gradient(ellipse at 50% 70%, #ffb060, #a04a1a 50%, #2a120a); }
+      .wh-water { left: 0; right: 0; bottom: 0; height: 34%; background: linear-gradient(180deg, #4ab0c8, #1a6a8a); }
+      .wh-water::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 6cqw, rgba(255,255,255,.12) 6cqw 6.4cqw); }
+      .wh-rope { left: -4%; right: -4%; bottom: 33%; }
+      .wh-fig { left: 46%; bottom: 36%; width: 6cqw; height: 22cqw; background: #1a0c06; border-radius: 3cqw 3cqw .6cqw .6cqw; }
+      .wh-fig::before { content: ""; position: absolute; left: 1cqw; top: -4.4cqw; width: 4cqw; height: 4.4cqw; border-radius: 50%; background: #1a0c06; }
+      .wh-ring { left: calc(46% + 5cqw); bottom: calc(36% + 22cqw); width: 4cqw; height: 4cqw; margin: -2cqw; border-radius: 50%; border: .3cqw solid rgba(255,240,210,.8); animation: ring 2s ease-out infinite; animation-delay: var(--d); }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes sheen { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+      @keyframes steamup { from { transform: translateY(0) scale(.6); opacity: 0; } 30% { opacity: .8; } to { transform: translateY(-20cqh) scale(1.4); opacity: 0; } }
+      @keyframes glint { 50% { filter: drop-shadow(0 .6cqw .8cqw rgba(0,0,0,.6)) brightness(1.4); } }
+      @keyframes pulse { 50% { box-shadow: 0 0 5cqw #ff9a40, 0 0 0 1.4cqw rgba(255,190,110,.15); } }
+      @keyframes spread { from { transform: scaleX(0); } }
+      @keyframes lamp { to { opacity: 1; } }
+      @keyframes roll { from { width: 88%; } }
+      @keyframes rollx { from { left: 92%; } }
+      @keyframes fill { from { height: 44%; } }
+      @keyframes water { from { height: 18%; } }
+      @keyframes bob { to { transform: translateY(-1cqh); } }
+      @keyframes ring { from { transform: scale(.4); opacity: 1; } to { transform: scale(3); opacity: 0; } }
+      @media (max-width: 600px) { .pool-hero { height: 22rem; } .tx-bubble { font-size: 2.4cqw; } .tx-phone { width: 30cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .pool-hero *, .scene.pl *, .pool-hero *::before, .pool-hero *::after, .scene.pl *::before, .scene.pl *::after { animation: none !important; }
+        .tr-row i::after { opacity: 1; }
+        .steam { opacity: .6; transform: translateY(-6cqh); }
+        .wh-ring { opacity: .5; transform: scale(1.6); }
+      }
+      .ky-loop { left: 34%; top: 10%; width: 24cqw; height: 17cqw; }
+      .ky-key { left: 47%; top: 34%; height: 11cqw; width: 2.8cqw; }
+      .turb { height: 6cqw; }
+      .turb i::before, .turb i::after, .turb i b { height: 3.4cqw; }
+      .wh-fig { width: 3.6cqw; height: 12cqw; left: 48%; }
+      .wh-fig::before { left: .5cqw; top: -2.8cqw; width: 2.6cqw; height: 2.8cqw; }
+      .wh-ring { left: calc(48% + 3.6cqw); bottom: calc(36% + 11cqw); }
+      .ln-pool { background-image: repeating-linear-gradient(90deg, transparent 0 6.6cqw, rgba(10,12,16,.95) 6.6cqw 8.4cqw, transparent 8.4cqw 15cqw), repeating-linear-gradient(0deg, rgba(255,255,255,.18) 0 .2cqw, transparent .2cqw 2.4cqw); }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="pool-hero" aria-hidden="true" style="--w:.25">
+          <div class="vsky"></div><div class="ridge"></div><div class="turb" style="left:8%;bottom:54%;--sp:3.0s"><i><b></b></i></div><div class="turb" style="left:16%;bottom:57%;--sp:3.4s"><i><b></b></i></div><div class="turb" style="left:24%;bottom:60%;--sp:3.8s"><i><b></b></i></div><div class="turb" style="left:34%;bottom:54%;--sp:4.2s"><i><b></b></i></div><div class="turb" style="left:86%;bottom:57%;--sp:4.6s"><i><b></b></i></div><div class="turb" style="left:94%;bottom:60%;--sp:5.0s"><i><b></b></i></div><div class="tip"></div><div class="ridge near"></div><div class="terrace"><i style="--h:60%"></i><i style="--h:67%"></i><i style="--h:74%"></i><i style="--h:81%"></i><i style="--h:88%"></i><i style="--h:65%"></i><i style="--h:72%"></i><i style="--h:79%"></i><i style="--h:86%"></i><i style="--h:63%"></i><i style="--h:70%"></i><i style="--h:77%"></i><i style="--h:84%"></i><i style="--h:61%"></i><i style="--h:68%"></i><i style="--h:75%"></i><i style="--h:82%"></i><i style="--h:89%"></i><i style="--h:66%"></i><i style="--h:73%"></i><i style="--h:80%"></i><i style="--h:87%"></i><i style="--h:64%"></i><i style="--h:71%"></i><i style="--h:78%"></i><i style="--h:85%"></i><i style="--h:62%"></i><i style="--h:69%"></i><i style="--h:76%"></i><i style="--h:83%"></i><i style="--h:60%"></i><i style="--h:67%"></i><i style="--h:74%"></i><i style="--h:81%"></i></div><div class="baths"></div><i class="steam" style="left:38%;top:64%;--d:0.0s"></i><i class="steam" style="left:43%;top:64%;--d:-1.3s"></i><i class="steam" style="left:48%;top:64%;--d:-2.6s"></i>
+          <div class="label">Tillery Street</div>
+        </div>
+        <h1>The pool kept the heat</h1>
+        <p class="dek">Abertillery's swimming baths have been shut since 2019, and the energy co-op's model picks the empty pool as the best place in the valley to store heat. The woman who taught there for thirty-one years still has the side-door key, and she wants people swimming in it again.</p>
+        <time datetime="2026-11-04">4 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Lynne Prosser had walked past the baths on Tillery Street every morning for thirteen years without once looking at them properly, which was a skill, like treading water, that you got better at the longer you kept it up.</p>
+        <p>She walked past them on the way to the paper shop, and back past them on the way home, and if Mal was with her he would sometimes slow down by the railings and say something about the state of the guttering, and she would say yes, it was a shame, and keep going, because the trick of it was not to stop. If you stopped you saw the board over the front doors with the council crest on it and the words CLOSED UNTIL FURTHER NOTICE, which had been printed in 2019 by somebody who must have honestly believed there would be further notice. If you stopped you saw the little round window by the side entrance, the one that looked into the corridor where the changing rooms were, and you remembered that the corridor always smelt of chlorine and wet coats and the vending machine that only took ten-pence pieces and never gave them back. If you stopped you started counting, and Lynne had counted once, in the first year, sitting at the kitchen table with a biro and the back of an electricity bill, and she had worked out that in thirty-one years at the baths she had taught somewhere around four thousand children in Abertillery to swim, give or take, and that since the doors were boarded the number of children in Abertillery who could swim had been going down by about the size of one primary school class every year, and she had put the biro down and not done any more sums after that.</p>
+        <p>So she did not stop. She walked past with her paper under her arm and her eyes on the hill, where the old tip above Six Bells had been covered in solar panels the colour of a wet slate roof, and on the ridge beyond it where the turbines turned, or didn't, depending, and she thought about what to have for tea.</p>
+        <p>That was why she did not notice, for the best part of a week, that somebody had been inside.</p>
+        <p>It was Mal who noticed. Mal noticed vans. He had driven the number 21 down the valley for twenty-six years and he could tell you the make and age of any vehicle parked on any street between Brynmawr and Newport, and on the Thursday he came back from his walk and stood in the kitchen doorway with his cap still on and said, "There's a co-op van outside the baths again."</p>
+        <p>"Again?"</p>
+        <p>"Third day. Same lad. Ginger. Got a key."</p>
+        <p>"Nobody's got a key," Lynne said, and then she stood there with the tea towel over her shoulder, because that wasn't true, and they both knew it wasn't true, because the only key to the side door of Tillery Street Baths that had not been handed back to Blaenau Gwent County Borough Council in March 2019 was hanging on a cup hook inside the cupboard under the stairs, on a loop of blue lane rope, next to the torch.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl ky-scene" style="--w:0" aria-hidden="true">
+        <div class="ky-bg"></div><div class="ky-loop"></div><div class="ky-key"></div>
+        <div class="label">loop of lane rope</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She had not kept it on purpose. That was what she told herself, and it was very nearly true. On the last day the man from the council had come round with a clipboard and a cardboard box and taken back the keys one by one from the staff, the front doors, the office, the first aid room, the till, and when he got to the plant room and the side door she had said, without really deciding to say it, that those were on a separate ring and the ring was at home, and he had said not to worry, he'd get them off her another time. There had never been another time. Nobody had ever asked. The council had changed its leisure contract twice since then and lost the clipboard, she supposed, or the man, or the box, and the key had stayed on its loop of lane rope under the stairs for thirteen years, through two new boilers and a flood in the cellar and the year Mal had his hip done, and once or twice a year when she went in for the torch she would see it there and leave it.</p>
+        <p>The ginger lad's key must have come from the council, then. She said this to Mal, and Mal said very likely, and they had their tea, and she washed up, and then she put her coat back on and went down the hill.</p>
+        <p>It was getting dark. The van was still there, a white one with the green leaf of the Ebbw Fach Energy Co-operative on the side and a ladder on the roof, and the side door of the baths was propped open with a fire extinguisher, which was the first thing that made her cross, because that was exactly what you were not supposed to do with a fire extinguisher. There was a light on inside. Not the big lights over the pool, which she could see through the high windows were dark, but a little moving light, a head torch or a phone, going about at the far end where the plant room was.</p>
+        <p>She stood on the pavement for a minute and argued with herself and lost.</p>
+        <p>The corridor did not smell of chlorine any more. It smelt of damp plaster and pigeons and something sweetish underneath, like old apples, which she thought was probably the vending machine. The changing room doors were open. The lockers were still there, all their little orange keys gone but the coin slots still waiting for a twenty-pence piece that nobody had pushed into them since the year before the pandemic. And then the corridor turned left and opened out and there it was, under the dark high roof, the pool, twenty-five metres by ten, six lanes, empty, the tiles pale grey in the bit of light that came through the windows from the street lamps, the black lines on the bottom running away from her towards the deep end like railway tracks, and the diving board still up there at the far end over nothing at all.</p>
+        <p>She had been in this room more than she had been in her own front room. She had stood on that side, by the shallow steps, every weekday morning for thirty-one years with a whistle and a float, and she had walked up and down beside children who were frightened of the water and children who were not nearly frightened enough, and she had pulled two people out of it who would not otherwise be alive, one of them a grown man who had had a heart attack doing lengths and one of them a boy called Rhodri Price who had gone off the diving board for a dare in 1997 and come up underneath it and not known which way was up. She had stood here the day it shut, too, and watched the water go down through the drain over two days, slowly, the way a bath goes, the lines on the bottom coming up through it like the bones of something.</p>
+        <p>"Hello?" someone said. "Sorry. Hello. You can't really be in here."</p>
+        <p>The head torch came round the corner from the plant room and stopped at her, and behind it was a lad of about thirty with a beard that was more ginger than his hair, in a co-op fleece, holding a tablet in one hand and a clamp meter in the other.</p>
+        <p>"Neither can you," said Lynne. "Not with the fire door propped open with an extinguisher."</p>
+        <p>He looked back down the corridor and then at her and said, "Oh. Yeah. Fair," in a Merthyr accent, and then, "Sorry, who are you?"</p>
+        <p>"I'm Mrs Prosser," she said. "I used to work here."</p>
+        <p>And he looked at her for a second longer, the torch going a bit lower out of politeness, and then he said, "Hang on. Lynne Prosser? Swimming Lynne?" and she said yes, she supposed so, and he said, "Oh my God. You're in the files."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl ln-scene" style="--w:0.05" aria-hidden="true">
+        <div class="ln-roof"></div><div class="ln-pool"></div><div class="ln-board"></div><div class="ln-lamp"></div>
+        <div class="label">like railway tracks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>His name was Kieran Bevan and he was the co-op's heat engineer, which he explained meant that he spent most of his time trying to find somewhere to put warmth.</p>
+        <p>They sat on the bench by the shallow end, the one with the brass plaque for Councillor Edwin Jenkins that the plaque thieves had somehow never found, and he showed her the tablet. He was the kind of young man who could not explain anything without first showing you a picture of it, and Lynne, who had taught swimming to the children of the kind of young men who could not explain anything, let him.</p>
+        <p>The picture was the valley, drawn from above in thin lines, every street and every house, with coloured dots on it. The co-op ran most of the power in the Ebbw Fach now. She knew that much; everybody did; it was on the side of the vans and the bottom of the bills. There was the solar on the old tips, which made a great deal of electricity on bright days and none at all at night. There was the wind on the ridge, which made a great deal when it blew and none at all when it didn't. There were the big grey battery boxes behind the old Six Bells pithead, which could hold a few hours' worth, and there was the line down to Newport and the rest of the country, which took what they didn't want and sold them what they were short of. And sitting over all of it, deciding every few seconds what went where, was the model the co-op used, which was properly called something long with a version number and which everyone in the office called the Flex.</p>
+        <p>"Electricity it's brilliant at now," Kieran said. "Honestly. Two, three years ago we were still curtailing on sunny days, turning panels off because there was nowhere for it to go, and now the Flex just finds somewhere. It'll charge every car in the valley, it'll run the freezers at the Co-op cold for an extra hour so they can coast through teatime, it'll talk to the batteries in people's houses. It's mad what it'll do. Prices on a windy Sunday afternoon go to nothing. Literally nothing. You've probably seen."</p>
+        <p>She had seen. There was a little screen by the kettle that the co-op had put in that went green when it was cheap, and it went green more and more, and Mal had taken to running the tumble dryer in the middle of the night on the strength of it, which she did not approve of, on principle.</p>
+        <p>"The trouble's heat," Kieran said. "Everybody round here's on heat pumps now, or they're going on them, and heat pumps are electricity, fine. But the hard week's in January. Cold, still, grey. No sun, no wind, everybody's heating on full. You get five, six days of that and you can't store enough electricity in batteries to cover it, not at the money we've got. Nobody can. So that's when we're buying off the national line at the worst price there is. And it's all about storing heat instead. You make the heat when it's cheap, back in the windy week, and you keep it somewhere until the still week. You need a big lump of something warm, basically."</p>
+        <p>"And you've been looking for a big lump," said Lynne.</p>
+        <p>"The Flex has been looking." He swiped. The valley map filled with numbers, little labels by every big building, every reservoir and pond and flooded mine working. "We asked it to find every volume of water and every big insulated space in about ten miles that could be a heat store. It looked at the reservoirs, the old pit water, the school basements, everything, and it ranks them on cost and how close they are to houses that need the heat and how much work they'd be." He tapped one and it got bigger. "And this is top. By a mile."</p>
+        <p>The label said TILLERY ST BATHS (DISUSED). 410 m³. Underneath that there were a lot of numbers she did not follow and a line of plain writing that she did, because the Flex wrote its reasons out in sentences, the way a good apprentice will if you make them. It said that the pool tank was structurally sound according to the 2018 survey, already tiled and sealed, already fitted with heat exchangers and pumps in the plant room that could be refurbished rather than replaced, and sat within two hundred metres of one hundred and forty homes on the terraces above it, several of which were among the worst-insulated in the valley. It said that a refilled tank at the right temperature, with a floating cover and the plant room brought back, could carry the heating of those homes through most of a five-day still spell. It said that it could have the heat network laid up Tillery Street and Gwern Berthi Road in about seven months.</p>
+        <p>"It's a pool," said Lynne.</p>
+        <p>"It's a really good pool," said Kieran. "Sorry. I mean as a tank. It's really well built. Whoever did your tiling in the seventies did not mess about."</p>
+        <p>"Nineteen seventy-four," she said. "Cardiff firm. Mal's uncle was on it."</p>
+        <p>He looked delighted. He wrote it down.</p>
+        <p>Then he said, "Thing is, it keeps flagging something," and swiped again, and showed her the deep end on the plan, coloured an angry orange. "Heat loss model. It takes the old meter data from when the place was running, the council gave us all the plant records, and it's got this, like, a leak of heat at the deep end, under the board. Way more than there should be. It thinks there might be water getting into the ground there, or a void under the tiles, it's not sure. It's asked us to get a survey in before we commit. And it said, here—"</p>
+        <p>He turned the tablet round for her. It was the same plain sentences. It said that the plant records from 2009 to 2019 showed persistent excess heat loss at the deep end, inconsistent with the original design. It said that the maintenance log noted a cracked tile under the diving board reported in October 2014, and that the log did not show it being repaired. It said that the report had been signed L. Prosser, senior instructor, and that the staff records suggested L. Prosser might still live locally, and that if she was willing to be contacted she would very probably know more about the deep end than any survey.</p>
+        <p>"That's why you're in the files," said Kieran. "We were going to write to you. I've got a letter in the van."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl mp-scene" style="--w:0.3" aria-hidden="true">
+        <div class="mp-bg"></div><div class="mp-valley"></div><div class="mp-river"></div><i class="mp-line" style="left:50%;top:52%;width:24.4%;transform:rotate(136.5deg);--d:0.00s"></i><i class="mp-line" style="left:50%;top:52%;width:30.9%;transform:rotate(157.1deg);--d:0.12s"></i><i class="mp-line" style="left:50%;top:52%;width:22.0%;transform:rotate(126.5deg);--d:0.24s"></i><i class="mp-line" style="left:50%;top:52%;width:20.6%;transform:rotate(113.8deg);--d:0.36s"></i><i class="mp-line" style="left:50%;top:52%;width:18.6%;transform:rotate(-132.9deg);--d:0.48s"></i><i class="mp-line" style="left:50%;top:52%;width:22.3%;transform:rotate(-159.0deg);--d:0.60s"></i><i class="mp-line" style="left:50%;top:52%;width:33.3%;transform:rotate(-148.2deg);--d:0.72s"></i><i class="mp-line" style="left:50%;top:52%;width:13.9%;transform:rotate(-134.0deg);--d:0.84s"></i><i class="mp-line" style="left:50%;top:52%;width:8.7%;transform:rotate(117.2deg);--d:0.96s"></i><i class="mp-line" style="left:50%;top:52%;width:31.0%;transform:rotate(-160.9deg);--d:1.08s"></i><i class="mp-line" style="left:50%;top:52%;width:28.0%;transform:rotate(-154.9deg);--d:1.20s"></i><i class="mp-line" style="left:50%;top:52%;width:27.0%;transform:rotate(32.5deg);--d:1.32s"></i><i class="mp-line" style="left:50%;top:52%;width:27.6%;transform:rotate(-46.7deg);--d:1.44s"></i><i class="mp-line" style="left:50%;top:52%;width:35.6%;transform:rotate(-25.4deg);--d:1.56s"></i><i class="mp-line" style="left:50%;top:52%;width:18.8%;transform:rotate(-39.6deg);--d:1.68s"></i><i class="mp-line" style="left:50%;top:52%;width:33.5%;transform:rotate(-155.2deg);--d:1.80s"></i><i class="mp-line" style="left:50%;top:52%;width:34.6%;transform:rotate(173.3deg);--d:1.92s"></i><i class="mp-line" style="left:50%;top:52%;width:29.3%;transform:rotate(-149.1deg);--d:2.04s"></i><i class="mp-line" style="left:50%;top:52%;width:10.8%;transform:rotate(-82.8deg);--d:2.16s"></i><i class="mp-line" style="left:50%;top:52%;width:13.7%;transform:rotate(58.5deg);--d:2.28s"></i><i class="mp-line" style="left:50%;top:52%;width:5.5%;transform:rotate(-53.2deg);--d:2.40s"></i><i class="mp-line" style="left:50%;top:52%;width:22.8%;transform:rotate(4.2deg);--d:2.52s"></i><i class="mp-node" style="left:32.279476147464415%;top:85.58533151746714%"></i><i class="mp-node" style="left:21.5139302833903%;top:76.07986029021752%"></i><i class="mp-node" style="left:36.892655010048756%;top:87.4618429371357%"></i><i class="mp-node" style="left:41.70930870334427%;top:89.60754191121575%"></i><i class="mp-node" style="left:37.34804499056932%;top:24.808062072807402%"></i><i class="mp-node" style="left:29.217715089537393%;top:36.08600872228082%"></i><i class="mp-node" style="left:21.680986464293564%;top:16.909421628458936%"></i><i class="mp-node" style="left:40.366846891342405%;top:32.08158689466424%"></i><i class="mp-node" style="left:46.001342084098916%;top:67.55983857614822%"></i><i class="mp-node" style="left:20.682501351157853%;top:31.71031211553909%"></i><i class="mp-node" style="left:24.668965961649853%;top:28.30482219004849%"></i><i class="mp-node" style="left:72.79243618839975%;top:81.00015838728321%"></i><i class="mp-node" style="left:68.91301309818544%;top:11.865905591787085%"></i><i class="mp-node" style="left:82.1803928757949%;top:21.451179990787608%"></i><i class="mp-node" style="left:64.5017242286608%;top:27.99076112691969%"></i><i class="mp-node" style="left:19.600129589365658%;top:23.967634513209532%"></i><i class="mp-node" style="left:15.66405784366958%;top:60.04847731306236%"></i><i class="mp-node" style="left:24.90083879591122%;top:21.913633287765634%"></i><i class="mp-node" style="left:51.34272913202023%;top:30.600270516119608%"></i><i class="mp-node" style="left:57.157262888869646%;top:75.3272691555488%"></i><i class="mp-node" style="left:53.299283893712314%;top:43.17014841078727%"></i><i class="mp-node" style="left:72.70278010668716%;top:55.33584331259584%"></i><span class="mp-num" style="left:33.7%;top:82.6%">81</span><span class="mp-num" style="left:43.1%;top:86.6%">54</span><span class="mp-num" style="left:23.1%;top:13.9%">17</span><span class="mp-num" style="left:22.1%;top:28.7%">13</span><span class="mp-num" style="left:70.3%;top:8.9%">44</span><span class="mp-num" style="left:21.0%;top:21.0%">33</span><span class="mp-num" style="left:52.7%;top:27.6%">57</span><span class="mp-num" style="left:74.1%;top:52.3%">94</span><i class="mp-node hub" style="left:50%;top:52%"></i>
+        <div class="label">The valley map filled with numbers</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She told him about the crack, because there was no reason not to. It ran under the third tile from the wall beneath the diving board, about the length of a hand, and it had first appeared after the hard frost of the winter of 2010, when the boiler failed over Christmas and the building got cold enough for the water in the pool to have ice at the edges on Boxing Day morning. They had drained it a foot and patched it with something out of a tube. It had come back in 2014. She had written it up, twice, and been told it was in the plan. It had still been there on the last day, because she had gone down the steps into the empty deep end, when they'd finished draining, and stood under the board in her trainers and put her hand on it, the way you'd put your hand on a horse's neck.</p>
+        <p>"It always felt cold," she said. "Even when the pool was at twenty-nine. You'd teach the advanced ones to touch the bottom at the deep end and fetch the rubber brick, and they'd come up and say, Miss, it's cold at the bottom there. And it was. Just there. Like standing on a step in the dark."</p>
+        <p>Kieran wrote all of this down, and then he typed it into the tablet, more or less word for word, cold at the bottom there, like standing on a step in the dark, and she watched him and felt a bit silly and a bit something else.</p>
+        <p>The Flex said thank you. It actually said it, at the top of its reply, thank you, this is very useful, and then it said that a localised crack with water tracking through into a void below the slab would explain the pattern it was seeing, and that a cold spot noticeable to swimmers was consistent with groundwater movement, and it changed the orange at the deep end on the plan into a neat little circle under the board with a note beside it that said, in brackets, (per L. Prosser), and moved the survey from the top of the list of jobs to the second, with a new first item underneath it about cutting out the third tile from the wall and seeing what was behind.</p>
+        <p>"There you go," said Kieran. "You've just saved us about six grand of ground radar."</p>
+        <p>"Have I," said Lynne.</p>
+        <p>She was looking at the pool. It was quite dark now. The street lamps outside made long yellow shapes on the floor of the empty tank and the black lane lines ran through them.</p>
+        <p>"What temperature," she said.</p>
+        <p>"Sorry?"</p>
+        <p>"When you fill it. What temperature will it be."</p>
+        <p>Kieran frowned at the tablet as if he hadn't been asked that before, which, she thought afterwards, he probably hadn't, not in that way. "Depends how we run it," he said. "It wanted it hotter first time round, like fifty, sixty degrees, because you get more in, but then you lose more through the walls and you need a bigger cover and the tiles don't love it. So we've been looking at running it cooler and lifting it with the heat pumps in the plant room. Bit less in it but much less lost. Twenty-eight to thirty-two, probably. It'd go up in the windy weeks and down in the still weeks."</p>
+        <p>"Twenty-eight to thirty-two," said Lynne.</p>
+        <p>"Yeah."</p>
+        <p>"That's swimming," said Lynne. "That's exactly swimming. Learner pools are thirty. Twenty-eight for lengths."</p>
+        <p>There was a silence, of the kind a young man makes when he can see where an older woman is going and knows he has no way of getting off the bus before she gets there.</p>
+        <p>"Mrs Prosser," said Kieran. "It's a heat store."</p>
+        <p>"It's a pool," said Lynne.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>The co-op had its members' meeting on the second Tuesday of every month in the upstairs room of the Royal Oak, and Lynne had been a member for six years, because you were automatically if you were on their tariff, and she had never once been. Mal said she'd hate it. Mal had been twice and said it was forty minutes of a man called Huw asking about the depreciation schedule on the batteries.</p>
+        <p>She went. She sat at the back with her coat on, and there were about thirty people, which Kieran told her afterwards was a lot, and a woman from the board called Sian Hopkins chaired it, and after the depreciation schedule on the batteries, which took thirty-five minutes, Kieran stood up at the front with his tablet plugged into a television on a stand and explained about the heat store at Tillery Street.</p>
+        <p>People liked it. You could feel them liking it. A lot of them lived on the terraces above the baths, in the houses with the solid stone walls that never warmed up whatever you did, and Kieran put up a picture of their streets with the pipes drawn in, going up the hill from the pool like the roots of something, and people leaned forward to find their own house. A man in the second row said, so you're telling me my heating in January is coming out of the old baths, and Kieran said, more or less, yes, and the man said, well I learned to swim in there, and somebody else said so did I, and somebody else said so did everyone, and there was a sort of laugh that went round the room.</p>
+        <p>Then Sian Hopkins said were there any questions, and Lynne put her hand up.</p>
+        <p>She had not been sure she would. She had sat at the back working out what she would say and then deciding she would not say it, all through the batteries. But Kieran was looking at her from the front with an expression like a boy at the deep end who has been told to fetch the brick, and she put her hand up and stood and said who she was, and some of them knew her, she saw that, a woman by the window put her hand to her mouth, and Lynne said that she only had one question, which was whether the co-op would let people swim in it.</p>
+        <p>It was not, it turned out, a question anybody in the room had thought of. It was obvious, the moment she said it. But nobody had thought of it, because for thirteen years nobody had thought of the baths as anything but a building with a board over the door, and the co-op had found it the way the Flex found things, by searching for volumes, and a volume does not have a shallow end.</p>
+        <p>There were objections, and they were good ones, and she had expected all of them. Insurance. Lifeguards. Changing rooms. The council still owned the building. The cover would have to come off, and the heat would go up into the roof. Chlorine and the heat exchangers did not get on. People would want it open on Saturday mornings and the whole point was that it ran when the weather said. Huw, who had asked about the batteries, said that it seemed to him the co-op was in the business of power, not leisure, and that it would be a shame to put the heat store at risk for a bit of nostalgia, and a few people nodded at that, and Lynne thought he was probably right, and sat down.</p>
+        <p>"Can I just," said Kieran, "can I just ask it."</p>
+        <p>He had the Flex up on the television. He typed the question in more or less as she'd said it, would it be possible to let the public swim in the Tillery Street heat store, and what would it cost, and the room watched the screen in that way people watch a screen when they are not quite sure whether they are supposed to, and after a few seconds it answered, and Sian Hopkins read it out loud because the writing was small.</p>
+        <p>It said that it had not previously modelled swimming because it had not been asked to. It said it would now. It said that the main cost of public swimming would be heat lost through the open surface of the water while the cover was off, and that this depended very heavily on when the sessions were held. It said that a swimming session held on a still, cold evening when the store was low would be expensive and would draw down heat that the terraces needed later in the week. It said that a swimming session held on a windy evening, when the valley was making more electricity than it could use and the store was being charged anyway, would cost very little, and in some hours nothing, because the heat lost from the surface would be heat it would otherwise have had nowhere to put. It said that if sessions were scheduled only in surplus hours, it estimated public swimming would reduce the store's useful capacity in the worst week of an average winter by between three and five per cent, and that this could be recovered by adding a second layer to the floating cover. It said that it could not advise on insurance, lifeguards or the council's lease, which were outside what it knew. It said that it noted from the plant records that the baths had previously served between four and six hundred swimmers a week.</p>
+        <p>It finished by saying that if the members wanted it, it could publish the swimming times a day in advance, according to the wind.</p>
+        <p>Nobody said anything for a bit.</p>
+        <p>Then the man in the second row, the one who'd learnt to swim there, said, "So the swimming's on when it's windy," and Kieran said yes, basically, and the man said, "That's the most Welsh thing I've ever heard in my life," and the room went, properly went, even Huw, and Sian Hopkins had to bang the table with her glasses case, and when it had calmed down they voted, and it passed, twenty-six to four, with two abstentions, subject to insurance, lifeguards, changing rooms and the council.</p>
+        <p>"That's everything," Lynne said to Kieran outside, in the car park, in the rain.</p>
+        <p>"Yeah," said Kieran. "But we've got a list now."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl tr-scene" style="--w:0.45" aria-hidden="true">
+        <div class="tr-bg"></div><div class="tr-row" style="top:6%"><i style="--d:-0.5s"></i><i style="--d:-5.6s"></i><i style="--d:-4.1s"></i><i style="--d:-5.4s"></i><i style="--d:-2.8s"></i><i style="--d:-0.8s"></i><i style="--d:-1.3s"></i><i style="--d:-2.7s"></i><i style="--d:-2.1s"></i><i style="--d:-2.7s"></i><i style="--d:-0.5s"></i><i style="--d:-1.2s"></i><i style="--d:-5.4s"></i><i style="--d:-3.2s"></i><i style="--d:-2.6s"></i><i style="--d:-0.6s"></i></div><i class="tr-pipe" style="top:29%"></i><div class="tr-row" style="top:36%"><i style="--d:-2.5s"></i><i style="--d:-3.7s"></i><i style="--d:-1.0s"></i><i style="--d:-3.8s"></i><i style="--d:-1.9s"></i><i style="--d:-2.3s"></i><i style="--d:-2.0s"></i><i style="--d:-3.7s"></i><i style="--d:-6.0s"></i><i style="--d:-5.4s"></i><i style="--d:-0.0s"></i><i style="--d:-5.8s"></i><i style="--d:-5.4s"></i><i style="--d:-1.6s"></i><i style="--d:-1.5s"></i><i style="--d:-4.9s"></i></div><i class="tr-pipe" style="top:59%"></i><div class="tr-row" style="top:66%"><i style="--d:-4.9s"></i><i style="--d:-3.8s"></i><i style="--d:-2.6s"></i><i style="--d:-1.3s"></i><i style="--d:-3.6s"></i><i style="--d:-0.8s"></i><i style="--d:-5.1s"></i><i style="--d:-5.2s"></i><i style="--d:-5.2s"></i><i style="--d:-5.2s"></i><i style="--d:-5.0s"></i><i style="--d:-0.3s"></i><i style="--d:-3.9s"></i><i style="--d:-4.8s"></i><i style="--d:-0.7s"></i><i style="--d:-2.7s"></i></div><i class="tr-pipe" style="top:89%"></i>
+        <div class="label">solid stone walls</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It took the rest of the year, and most of it was the list.</p>
+        <p>The council turned out to be the easiest part, in the end, because the council had been trying to get the baths off its books since 2019 and had been paying a man every quarter to go round and check the roof was still on, and when the co-op offered to take the building on a long lease for a pound a year and keep the roof on themselves, somebody in the leisure department said yes so quickly that Sian Hopkins thought it was a trick. The insurance was harder. The insurers had never covered a swimming pool that opened according to a weather forecast and they wanted to know what would happen if somebody was in the water when the wind dropped. Kieran asked the Flex, and the Flex wrote them three pages explaining that nothing would happen at all, the water would simply be warm for a few hours more, and that it did not close sessions early, it only chose when they started. The insurers asked for a lifeguard ratio and a written operating procedure and a named responsible person.</p>
+        <p>"That's you," said Kieran.</p>
+        <p>"I'm sixty-seven," said Lynne.</p>
+        <p>"Yeah, but you're the named responsible person in my head," he said. "So."</p>
+        <p>The lifeguard qualification was a four-day course in Ebbw Vale and a pool test at the end of it, which you did in the big leisure centre in Ebbw Vale where the water was colder than anywhere she had ever taught, and you had to swim fifty metres in under a minute, and pull a man the size of a bullock up from the deep end, and tread water for thirty seconds with your hands up. She had not swum properly in thirteen years. She had been in the sea at Tenby twice, up to her waist, with Seren, her granddaughter, who was eight and could not swim, because the nearest pool to her mum's flat in Cardiff was forty minutes on two buses and the swimming lessons at school had been cut to one term in Year 4 and it had been the term she had tonsillitis.</p>
+        <p>So Lynne swam. She drove to Ebbw Vale three mornings a week at half six with her costume on under her clothes the way she used to as a girl, and she did lengths in the cold lane among the retired men and the triathletes until her shoulders came back. Mal drove her the last week, because her arms were too tired to hold the wheel by the time she got out, and he sat in the café on the other side of the glass with a cup of tea and watched her, and when she came out with her hair wet and her face red he said, "You've still got it, girl," and she said, "Don't be soft," and he said, "I'm not being soft, I timed you."</p>
+        <p>She passed. The bullock was a fireman from Brynmawr called Rhodri Price. She did not realise until she had him by the chin on his back, kicking hard for the side, and he said, through water, "You've done this to me before, Mrs Prosser," and she nearly let go of him.</p>
+        <p>He said he would do the second lifeguard. He said he'd been meaning to say thank you for twenty-nine years.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>In September they cut out the third tile from the wall under the diving board, and behind it, just where she'd said, the screed was cracked through and there was a hollow under the slab the size of a bath where the groundwater had been coming and going for sixteen years and taking the warm with it. They filled it and sealed it and retiled. Kieran sent her a picture of the new tile, very slightly whiter than the ones around it, and underneath it the Flex had written in its notes, <em>deep end anomaly resolved (L. Prosser, 2014)</em>, and she showed it to Mal, and Mal had it printed at the chemist's and put it on the fridge with a magnet from Tenby, which she said was ridiculous and did not take down.</p>
+        <p>In October they filled the pool.</p>
+        <p>It took four days, from the mains and from the old pit water, which the Flex said was already a little warm from the ground and saved a fortnight of heating. Lynne went down every afternoon to watch it, the way she'd gone down every afternoon thirteen years before to watch it go. She stood by the shallow steps and watched it come up the black lines on the bottom like a tide on sand. Other people came to watch too. That surprised her. The side door was open, properly open this time, with a hook, and people from the terraces came down in ones and twos and stood along the edge in their coats and looked at the water coming, and some of them talked and some of them didn't, and an old man she half knew, who had been a caretaker at the infants', stood there an hour without saying a thing and then went over to the wall and turned the big brass tap for the shower at the shallow end, the one by the steps, which still worked, and stood under it in his coat for a second in the cold water and came out and said, "Right then," to nobody, and went home.</p>
+        <p>The plant room came back on the fourth evening. Kieran had been in there for weeks with two lads from the co-op and a heat pump the size of a garden shed, and the old exchangers that the Cardiff firm had fitted in 1974 had been cleaned out and pressure tested and found to be, in Kieran's word, unreal, and when the pumps started up there was a sound Lynne had not heard since 2019, a deep pipe sound that you felt through the soles of your feet more than heard, that used to go on every morning at six when she unlocked, and she had to go out into the corridor for a minute and stand by the vending machine.</p>
+        <p>The cover went on. It was a great floating thing of blue bubbled plastic, two layers, as the Flex had wanted, and it lay over the whole pool from wall to wall so that you couldn't see the water at all, and the pool sat there under it, filling with heat, a little more every windy day, a little more every bright afternoon, and up the hill from it the new pipes ran under the pavements of Tillery Street and Gwern Berthi Road into a hundred and forty houses with stone walls that had never been warm in their lives.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl cv-scene" style="--w:0.6" aria-hidden="true">
+        <div class="cv-bg"></div><div class="cv-water"></div><div class="cv-cover"></div><div class="cv-roll"></div><i class="steam" style="left:62%;top:26%;--d:0.0s"></i><i class="steam" style="left:70%;top:26%;--d:-1.3s"></i><i class="steam" style="left:78%;top:26%;--d:-2.6s"></i><i class="steam" style="left:86%;top:26%;--d:-3.9s"></i>
+        <div class="label">blue bubbled plastic</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first text came on a Thursday in the middle of November, at twenty past four in the afternoon, while Lynne was peeling potatoes.</p>
+        <p>It came to about three hundred phones at once, everyone on the terraces who had signed up for it and a good few who hadn't but had been signed up by their daughters, and it said: <em>Tillery St Baths. Wind tonight. Pool open 6 till 9. 30°C.</em></p>
+        <p>That was all it said. The Flex had wanted to write more, Kieran told her later, it had drafted a paragraph about the forecast and the state of the store and why tonight in particular, and Lynne had read the paragraph and said nobody needed any of that, they needed to know when to bring a towel, and Kieran had passed this on and the Flex had cut it down to ten words and a number without arguing, and kept it like that.</p>
+        <p>She put the potato down and looked out of the kitchen window. The washing on next door's line was standing straight out sideways. Up on the ridge, in what was left of the light, she could see the turbines going round all together, fast and white, like something being stirred.</p>
+        <p>Mal was already in the hall, getting his coat.</p>
+        <p>"Where are you going?" she said.</p>
+        <p>"Same place as you," said Mal. "I've got your bag. You'll want a whistle."</p>
+        <p>She had a whistle. She had had it since 1988. It was in the bag with the key on the loop of lane rope, which she did not need any more, because she had her own keys now, a full ring of them, but which she had brought anyway.</p>
+        <p>There were people outside the side door at half five. Not a great many, twenty or so, because it was short notice and it was dark and November, but they were there, a few of the old men with their towels rolled under their arms the way you carried them in 1975, and a woman with three little boys in their coats with their goggles already on, which made Rhodri laugh, and the caretaker from the infants', who had brought a costume this time. Lynne unlocked. Rhodri and Kieran rolled the cover back, the two of them walking it slowly down the length of the pool from the shallow end, and as it came off the steam came up, real steam, out of the warm water into the cool air under the roof, so that for a moment the whole pool smoked like a field in the morning, and the lane ropes that Lynne had made them put back in floated on it, red and white and blue.</p>
+        <p>People went quiet.</p>
+        <p>Then one of the little boys in goggles shouted "Oh, <em>wow</em>," and his mother told him to wait, and Lynne stood on the side by the shallow steps where she had stood for thirty-one years, with the whistle on its cord round her neck, and blew it, once, short, which meant you may now get in, and they got in.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl tx-scene" style="--w:0.55" aria-hidden="true">
+        <div class="vsky"></div><div class="tx-ridge"></div><div class="turb" style="left:48%;bottom:40%;--sp:1.4s"><i><b></b></i></div><div class="turb" style="left:58%;bottom:43%;--sp:1.8s"><i><b></b></i></div><div class="turb" style="left:68%;bottom:46%;--sp:2.2s"><i><b></b></i></div><div class="turb" style="left:78%;bottom:40%;--sp:2.6s"><i><b></b></i></div><div class="turb" style="left:88%;bottom:43%;--sp:3.0s"><i><b></b></i></div><div class="tx-phone"><div class="tx-bubble">Tillery St Baths. Wind tonight. Pool open 6 till 9. 30°C.</div></div>
+        <div class="label">Wind tonight.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Then came December, which was mostly wet and wild and good for swimming, and the texts came three or four times a week, at teatime, with the wind. People began to watch the ridge. You'd see them in the street, in the morning, looking up at the turbines on their way to the bus, and you'd hear someone in the Co-op queue say, looks like a pool night, and somebody else say, you reckon, and then it would be. The woman with the three boys in goggles came every time. So did the man from the second row at the members' meeting, who did forty lengths of breaststroke at the speed of a canal boat with his head right up out of the water like a seal. The old men came for the steam and sat on the steps at the shallow end in it, up to their chests, talking about rugby. Some evenings there were sixty people in. Rhodri said the trick was to get a lane rope across and teach in the shallow half while the lengths went on in the deep, and Lynne said she knew the trick, thank you, Rhodri, she'd invented the trick, and he said yes, Mrs Prosser.</p>
+        <p>She started a learners' group on the windy nights. The first week she had four, and by the third week she had eleven, most of them children who had never been in a pool in their lives, because there had not been a pool to go in, and two of them adults, a woman of forty who had always told her children she couldn't swim because of her ears, which was not true, and a lad from the co-op who had been carrying the cover since October and confessed to Kieran that he was frightened of the deep end. She took them as she had always taken them, one at a time in the end, however many there were, hand under the back of the head, look at the roof, I've got you, I've got you, now I'm only holding one finger, now I'm not.</p>
+        <p>Seren came up from Cardiff on the train for the first week of the Christmas holidays, and the first night she was there it was dead still.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>It stayed still for six days. Everyone remembered it afterwards, the way they remembered snow, as the week the valley held its breath.</p>
+        <p>A big slow high came in across the Irish Sea and sat down on top of Wales and would not move. The sky went the colour of a dishcloth and stayed that way. There was no sun to speak of and the frost lay all day in the shade and the turbines on the ridge stood still against the grey, all of them pointing different ways, like people at a bus stop who'd given up on the bus. The little screen by the kettle went from green to amber to the red that Mal had told her he had never seen it go. And in the plant room at the baths, as Kieran showed her on his tablet, the Flex was doing exactly what it had been built to do, which was take the heat out of the pool and send it up the hill.</p>
+        <p>The cover stayed on. There were no texts. Twice a day Lynne went down and stood in the warm plant room, which was the only place in the valley that week where it was warm without anybody paying for it, and she watched the number on the screen by the door that said the temperature of the water. Thirty-one on the Sunday. Twenty-nine on the Monday. Twenty-seven on the Tuesday. Twenty-five on the Wednesday. Going down by a degree and a half or so a day, steady as a tide. And up on Tillery Street and Gwern Berthi Road, in houses with stone walls, where every January for as long as anyone could remember the old people had sat in one room in their coats with a fan heater and their gas meter going round like a fruit machine, the radiators were warm all day and all night, and nobody's bill went up, because the heat had been made in November on windy nights and kept, in four hundred and ten cubic metres of water, under a blue plastic cover, in a building with a board over the door that said CLOSED UNTIL FURTHER NOTICE, which Lynne had asked them to leave up.</p>
+        <p>Seren asked if they could go swimming and Lynne said no, love, the pool's busy, and Seren asked what it was busy doing, and Lynne took her up the hill and knocked on the door of Mrs Annie Rees at number 41 Gwern Berthi Road, who was ninety-three, and Annie Rees answered the door in a cardigan, only a cardigan, and said come in, come in, it's lovely in here, it's never been like this, I don't know what they've done, and they went in and it was lovely, and Seren put her hand flat on the radiator under the window and held it there, and Lynne said, "That's the pool."</p>
+        <p>Seren took her hand off the radiator and looked at it as if there might be water on it.</p>
+        <p>"The pool's in the radiator?"</p>
+        <p>"The warm from it is."</p>
+        <p>"Are we going to use it all up?"</p>
+        <p>"No," said Lynne. "The wind'll come back."</p>
+        <p>"How do you know?"</p>
+        <p>And Lynne, who did not know, who had looked at the forecast on Mal's phone every hour that morning, said, "It always does, round here," which was the kind of thing you said in a warm front room on a still day to a girl of eight, and which was, as it happened, true.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl still st-scene" style="--w:0" aria-hidden="true">
+        <div class="vsky"></div><div class="ridge"></div><div class="turb" style="left:10%;bottom:46%;--sp:3.0s"><i><b></b></i></div><div class="turb" style="left:22%;bottom:49%;--sp:3.4s"><i><b></b></i></div><div class="turb" style="left:34%;bottom:52%;--sp:3.8s"><i><b></b></i></div><div class="turb" style="left:46%;bottom:46%;--sp:4.2s"><i><b></b></i></div><div class="turb" style="left:58%;bottom:49%;--sp:4.6s"><i><b></b></i></div><div class="turb" style="left:70%;bottom:52%;--sp:5.0s"><i><b></b></i></div><div class="turb" style="left:82%;bottom:46%;--sp:5.4s"><i><b></b></i></div><div class="turb" style="left:92%;bottom:49%;--sp:5.8s"><i><b></b></i></div><div class="ridge near"></div><div class="terrace"><i style="--h:60%"></i><i style="--h:67%"></i><i style="--h:74%"></i><i style="--h:81%"></i><i style="--h:88%"></i><i style="--h:65%"></i><i style="--h:72%"></i><i style="--h:79%"></i><i style="--h:86%"></i><i style="--h:63%"></i><i style="--h:70%"></i><i style="--h:77%"></i><i style="--h:84%"></i><i style="--h:61%"></i><i style="--h:68%"></i><i style="--h:75%"></i><i style="--h:82%"></i><i style="--h:89%"></i><i style="--h:66%"></i><i style="--h:73%"></i><i style="--h:80%"></i><i style="--h:87%"></i><i style="--h:64%"></i><i style="--h:71%"></i><i style="--h:78%"></i><i style="--h:85%"></i><i style="--h:62%"></i><i style="--h:69%"></i><i style="--h:76%"></i><i style="--h:83%"></i><i style="--h:60%"></i><i style="--h:67%"></i><i style="--h:74%"></i><i style="--h:81%"></i></div>
+        <div class="label">held its breath</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>On the Friday the water was down to twenty-two, which was colder than any pool Lynne had ever taught in, and colder than the leisure centre in Ebbw Vale, and about the temperature of the sea at Tenby in August, and on the Friday afternoon she went down to the baths on her own and asked Kieran if he would roll back a corner of the cover for ten minutes, and he looked at the Flex, and the Flex said that ten minutes of a small open corner in still air would cost a negligible amount of heat, and Kieran rolled it back.</p>
+        <p>She went in by the shallow steps, slowly, the way she told the learners to, one step and wait, one step and wait, and it was cold, it took the breath out of her, and she stood up to her chest in it with her arms up and her shoulders by her ears and laughed out loud in the empty building, a sound that went up into the roof and came back down, and then she put her face in and pushed off and swam one width under the edge of the cover, ten metres, to the other side, and back. That was all. She got out. She stood dripping on the tiles where she'd stood for thirty-one years and her skin was red and her hands were shaking, and Kieran held out a towel and did not say anything, which was the best thing he could have said.</p>
+        <p>She did not tell Mal. Mal knew anyway. He said her hair smelt of the baths and he'd know that smell in his grave.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl th-scene" style="--w:0.8" aria-hidden="true">
+        <div class="cv-bg"></div><div class="th-water"></div><div class="th-float"></div><div class="th-tube"><i class="th-fill"></i></div><span class="th-tick" style="bottom:48%">22</span><span class="th-tick" style="bottom:65%">24</span><span class="th-tick" style="bottom:82%">26</span><i class="steam" style="left:14%;top:40%;--d:0.0s"></i><i class="steam" style="left:24%;top:40%;--d:-1.3s"></i><i class="steam" style="left:34%;top:40%;--d:-2.6s"></i><i class="steam" style="left:44%;top:40%;--d:-3.9s"></i>
+        <div class="label">twenty-six by twelve</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The wind came back on the Saturday night. It came in from the south-west about one in the morning, the kind of wind that finds the gap in every window in the valley, and Lynne woke up and heard it in the chimney and lay there and listened to it get stronger, and in the morning when she drew the curtains every turbine on the ridge was going round together, white against a sky that had been torn open and was blue in places for the first time in a week.</p>
+        <p>The text came at quarter past nine, which was unusual, because it was usually teatime. It said: <em>Tillery St Baths. Wind today. Pool open 10 till 4. 24°C, warming.</em></p>
+        <p>Seren read it off her phone before Lynne could. Seren read it out loud standing up in bed.</p>
+        <p>The water was twenty-four by ten o'clock and twenty-six by twelve, as the heat pump in the plant room took the wind off the ridge and put it back into the pool as fast as it could, and the steam came up off it in clouds when they rolled the cover back, because the air under the roof was so cold, and people came in their coats, more of them than ever, as if they'd been waiting all week, which they had. The woman with the three boys. The man from the second row. The caretaker from the infants'. Annie Rees from number 41, who did not swim, and had not swum, she said, since 1951, but who came down in a taxi to sit on the bench with the plaque for Councillor Edwin Jenkins and look at it, and said to Mal, who was sitting beside her, "Isn't that something," and Mal said it was.</p>
+        <p>Seren had armbands on in the morning. She did not have them on at two o'clock.</p>
+        <p>Lynne had her at the shallow end in the learners' lane, by the steps, where the water came up to Seren's chin and to Lynne's waist. Hand under the back of the head. Look at the roof. I've got you. I've got you. Now I'm only holding one finger. And Seren lay on her back on the warm water that had been in Annie Rees's radiator on Wednesday and would be in it again on some still day in February, with her ears under and her eyes on the high dark roof and the steam going up past her face, and Lynne took her finger away and Seren did not notice, and floated.</p>
+        <p>"Now turn over," said Lynne, "and go to Grandad."</p>
+        <p>Mal was on the other side. He'd come in. He had not been in a swimming pool since about 1983 and he was standing in the learners' lane up to his waist with his arms out and his chest the colour of a plucked chicken and his face set like a man waiting for a bus he has every intention of catching.</p>
+        <p>Ten metres.</p>
+        <p>Seren turned over. She put her face in the water and her bottom came up and her legs went everywhere, like they all did, like four thousand of them had, and she went, splashing and blowing and getting nowhere and then getting somewhere, and Lynne walked beside her down the lane with her hands just under her and not touching, the way she always had, not touching, not touching, all the way across, until Seren hit Mal in the stomach with her head and came up shouting.</p>
+        <p>Lynne stood in the warm water with her arms still out. Up on the wall the screen by the plant room door said the water was twenty-seven and a half, and rising.</p>
+        <p>She blew the whistle. Short, once. It did not mean anything in particular. She just wanted to.</p>
+      </div>
+
+      <figure class="scene tall pl wh-scene" style="--w:1" aria-hidden="true">
+        <div class="wh-bg"></div><div class="wh-water"></div><div class="rope wh-rope"></div><div class="wh-fig"></div><i class="wh-ring" style="--d:0.0s"></i><i class="wh-ring" style="--d:0.6s"></i><i class="wh-ring" style="--d:1.2s"></i><i class="steam" style="left:10%;top:50%;--d:0.0s"></i><i class="steam" style="left:30%;top:50%;--d:-1.3s"></i><i class="steam" style="left:70%;top:50%;--d:-2.6s"></i><i class="steam" style="left:88%;top:50%;--d:-3.9s"></i>
+        <div class="label">She blew the whistle</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
