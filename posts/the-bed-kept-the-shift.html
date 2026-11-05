@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bed kept the shift — Ben Miller</title>
+    <meta name="description" content="In a Stockport semi the energy retailer&#x27;s domestic OS schedules sleep windows until a marriage lives in shifts, and a Premier Inn rest pod books itself.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0c0e12;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c8d2da;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #7ec89a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .bed-hero { position: relative; height: 24rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.65), inset 0 0 0 1px rgba(160,200,180,.14); background: #0c0e12; }
+      .bed-hero > * { position: absolute; }
+      .bed-hero::after, .scene.bd::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 50%, rgba(2,4,8,.78) 100%), repeating-linear-gradient(112deg, rgba(180,220,200,.02) 0 2px, transparent 2px 8px); }
+      .scene.bd { background: #0e1016; }
+      .warm { inset: 0; background: radial-gradient(ellipse at 70% 80%, rgba(255,190,120,.18), transparent 55%); mix-blend-mode: screen; animation: warmglow 8s ease-in-out infinite alternate; }
+      .wall { inset: 0; background: linear-gradient(180deg, #1a1e26, #12151c); }
+      /* wall screen */
+      .wscr { width: 18cqw; height: 12cqw; border-radius: .6cqw; background: linear-gradient(180deg, #e8ece8, #c8ccc8); box-shadow: 0 0 0 .4cqw #2a2e34, 0 1.4cqw 2.6cqw rgba(0,0,0,.55); }
+      .wscr .bar { position: absolute; left: 10%; right: 10%; top: 42%; height: 18%; border-radius: .4cqw; background: #8a9098; overflow: hidden; }
+      .wscr .bar.go { background: #3a9a60; }
+      .wscr .bar.y { background: #c8a030; }
+      .wscr .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--p, 60%); background: linear-gradient(90deg, #2a7a48, #6ed090); animation: fillbar 5s ease-in-out infinite alternate; }
+      .wscr .txt { position: absolute; left: 10%; right: 10%; top: 14%; font: 600 1.5cqw/1.2 Karla, sans-serif; color: #2a3038; letter-spacing: .04em; }
+      .wscr .score { position: absolute; right: 10%; bottom: 10%; font: 700 2.4cqw/1 "Cormorant Garamond", serif; color: #2a7a48; }
+      .wscr .score.y { color: #b08020; }
+      .leaf { width: 2.2cqw; height: 2.8cqw; background: #3ec878; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 0 1.4cqw rgba(80,220,140,.7); animation: leafpulse 3s ease-in-out infinite; }
+      .leaf.off { background: #4a5058; box-shadow: none; animation: none; }
+      /* house */
+      .hs-room { inset: 0; background: linear-gradient(180deg, #1c2028, #12151c); }
+      .hs-floor { left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(180deg, #2a241c, #1a1610); }
+      .hs-door { left: 8%; bottom: 22%; width: 8cqw; height: 28cqw; background: #1a4a2a; box-shadow: inset 0 0 0 .5cqw #0e2a18; }
+      .hs-scr { left: 62%; bottom: 38%; }
+      .hs-kettle { left: 28%; bottom: 24%; width: 6cqw; height: 7cqw; background: linear-gradient(90deg, #6a7078, #c8ccd0 50%, #4a5058); border-radius: .4cqw .4cqw 40% 40%; }
+      .hs-kettle::before { content: ""; position: absolute; right: -2cqw; top: 30%; width: 2.4cqw; height: 1cqw; background: #8a9098; border-radius: 0 1cqw 1cqw 0; }
+      /* two windows */
+      .tw-a, .tw-b { height: 4cqw; border-radius: 1cqw; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 .2cqw rgba(200,220,210,.3); overflow: hidden; }
+      .tw-a i, .tw-b i { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, #3a9a60, #7ed0a0); }
+      .tw-lock { width: 3cqw; height: 3.6cqw; background: #4a5058; border-radius: .4cqw; }
+      .tw-lock::before { content: ""; position: absolute; left: 22%; right: 22%; top: -1.6cqw; height: 2.4cqw; border: .35cqw solid #6a7078; border-bottom: 0; border-radius: 50% 50% 0 0; }
+      /* floorplan */
+      .fp-plan { left: 12%; right: 12%; top: 12%; bottom: 16%; background: #1a1e26; box-shadow: inset 0 0 0 .4cqw #3a4048; }
+      .fp-room { position: absolute; border: .3cqw solid #6a7080; background: rgba(80,100,120,.15); }
+      .fp-room.on { background: rgba(60,180,110,.25); box-shadow: inset 0 0 2cqw rgba(80,220,140,.3); }
+      .fp-room b { position: absolute; left: 8%; top: 10%; font: 500 1.6cqw/1 Karla, sans-serif; color: #a8b0bc; letter-spacing: .06em; }
+      .fp-bed { position: absolute; background: #c8d0d8; border-radius: .3cqw; }
+      /* pods */
+      .pd-corr { inset: 0; background: linear-gradient(180deg, #141820, #0c0e14); }
+      .pd-door { width: 14%; height: 55%; top: 20%; background: #1a1e26; box-shadow: inset 0 0 0 .4cqw #2a3038; }
+      .pd-door .leaf { position: absolute; left: 38%; top: 42%; }
+      .pd-door.on { background: #1a2420; }
+      .pd-sign { left: 8%; top: 8%; font: 600 2cqw/1 Karla, sans-serif; color: #8a9098; letter-spacing: .14em; }
+      /* score risk */
+      .sk-banner { left: 8%; right: 8%; top: 18%; height: 22%; border-radius: 1cqw; background: linear-gradient(90deg, #c89020, #e0b040); box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); display: flex; }
+      .sk-banner b { position: absolute; left: 6%; top: 28%; font: 700 2.8cqw/1 Karla, sans-serif; color: #1a1408; letter-spacing: .04em; }
+      .sk-dial { left: 50%; top: 62%; width: 28cqw; height: 28cqw; margin: -14cqw; border-radius: 50%; background: conic-gradient(from 220deg, #c03020 0 40deg, #c89020 40deg 100deg, #3a9a60 100deg 200deg, transparent 200deg); -webkit-mask: radial-gradient(circle, transparent 58%, #000 59%, #000 72%, transparent 73%); mask: radial-gradient(circle, transparent 58%, #000 59%, #000 72%, transparent 73%); }
+      .sk-needle { left: 50%; top: 62%; width: .5cqw; height: 11cqw; margin-left: -.25cqw; margin-top: -11cqw; transform-origin: 50% 100%; background: #f0e8d8; transform: rotate(-28deg); animation: needle 5s ease-in-out infinite alternate; }
+      .sk-num { left: 50%; top: 70%; transform: translateX(-50%); font: 700 5cqw/1 "Cormorant Garamond", serif; color: #e0b040; }
+      /* overlap calendar */
+      .cal { left: 10%; right: 10%; top: 12%; bottom: 14%; background: #161a22; box-shadow: inset 0 0 0 .3cqw #2a3038; display: grid; grid-template-columns: repeat(7, 1fr); gap: .5cqw; padding: 2cqw; }
+      .cal i { position: relative; background: rgba(255,255,255,.04); border-radius: .3cqw; }
+      .cal i.ov { background: rgba(60,180,110,.35); box-shadow: inset 0 0 0 .2cqw #3ec878; animation: leafpulse 3s ease-in-out infinite; }
+      .cal i.a { background: linear-gradient(180deg, #3a9a60 0 40%, transparent 40%); }
+      .cal i.b { background: linear-gradient(180deg, transparent 0 55%, #4a7ab0 55%); }
+      /* double bed */
+      .db-room { inset: 0; background: linear-gradient(180deg, #141820, #0c0e14); }
+      .db-curt { left: 8%; width: 36%; top: 6%; bottom: 40%; background: linear-gradient(90deg, #1a2030, #2a3448 40%, #1a2030); box-shadow: inset -1cqw 0 2cqw rgba(0,0,0,.5); }
+      .db-curt.r { left: auto; right: 8%; box-shadow: inset 1cqw 0 2cqw rgba(0,0,0,.5); }
+      .db-gap { left: 38%; right: 38%; top: 8%; bottom: 42%; background: linear-gradient(180deg, #6a90b8, #f0c890); opacity: .35; }
+      .db-bed { left: 18%; right: 18%; bottom: 12%; height: 28%; background: linear-gradient(180deg, #3a4450, #1e242c); border-radius: 1cqw; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); }
+      .db-pillow { top: -40%; height: 50%; width: 28%; border-radius: 1cqw; background: #c8d0d8; }
+      .db-pillow.empty { opacity: .35; filter: saturate(.3); }
+      .db-sheet { left: 4%; right: 4%; top: 20%; bottom: 0; background: linear-gradient(180deg, #e8ecee, #a8b0b8); border-radius: .6cqw; }
+      /* legacy lock */
+      .lg-ui { left: 10%; right: 10%; top: 10%; bottom: 12%; background: #12161e; border-radius: 1.2cqw; box-shadow: inset 0 0 0 .3cqw #2a3038; }
+      .lg-row { position: absolute; left: 8%; right: 8%; height: 12%; background: rgba(255,255,255,.04); border-radius: .6cqw; }
+      .lg-row.lock { background: rgba(255,255,255,.02); }
+      .lg-row b { position: absolute; left: 4%; top: 32%; font: 500 2cqw/1 Karla, sans-serif; color: #8a9098; }
+      .lg-row.lock b { color: #4a5058; }
+      .lg-pad { position: absolute; right: 4%; top: 22%; width: 4cqw; height: 56%; background: #3a4048; border-radius: .4cqw; }
+      .lg-pad::before { content: ""; position: absolute; left: 25%; right: 25%; top: -45%; height: 70%; border: .35cqw solid #5a6068; border-bottom: 0; border-radius: 50% 50% 0 0; }
+      /* booking */
+      .bk-card { left: 12%; right: 12%; top: 14%; bottom: 16%; background: linear-gradient(170deg, #f4f6f2, #d8dcd6); border-radius: 1cqw; box-shadow: 0 2cqw 4cqw rgba(0,0,0,.55); }
+      .bk-card b { position: absolute; left: 8%; right: 8%; font: 600 2cqw/1.35 Karla, sans-serif; color: #1a2028; }
+      .bk-leaf { right: 10%; top: 10%; }
+      .bk-pod { left: 8%; bottom: 10%; width: 30%; height: 28%; background: #1a1e26; border-radius: .6cqw; box-shadow: inset 0 0 0 .3cqw #3a4048; }
+      .bk-pod .leaf { left: 42%; top: 36%; position: absolute; }
+      /* drawer notes */
+      .dr-table { inset: 0; background: linear-gradient(160deg, #2a241c, #14110c); }
+      .dr-draw { left: 18%; right: 18%; top: 20%; bottom: 18%; background: linear-gradient(180deg, #5a4a38, #3a2e22); box-shadow: 0 1.4cqw 2.6cqw rgba(0,0,0,.55); border-radius: .6cqw; overflow: hidden; }
+      .dr-towels { left: 6%; right: 6%; top: 0; height: 28%; background: repeating-linear-gradient(90deg, #e8e4d8 0 4cqw, #d0c8b8 4cqw 4.4cqw, #f0ece0 4.4cqw 8cqw); }
+      .dr-note { position: absolute; left: 10%; width: 70%; height: 18%; background: #f4f0e4; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.4); transform: rotate(var(--r)); }
+      .dr-note i { position: absolute; left: 8%; right: 20%; height: .35cqw; background: rgba(40,60,100,.45); }
+      /* coda bed */
+      .cd-room { inset: 0; background: linear-gradient(180deg, #1a1c24, #0e1016); }
+      .cd-bed { left: 14%; right: 14%; bottom: 10%; height: 34%; background: #2a3038; border-radius: 1cqw; box-shadow: 0 1.4cqw 2.6cqw rgba(0,0,0,.55); }
+      .cd-sheet { left: 3%; right: 3%; top: 18%; bottom: 0; background: linear-gradient(180deg, #e8ecee, #b0b8c0); border-radius: .6cqw; }
+      .cd-curt { left: 0; width: 22%; top: 0; bottom: 40%; background: #1a2434; }
+      .cd-curt.r { left: auto; right: 0; }
+      .cd-morn { left: 22%; right: 22%; top: 0; bottom: 44%; background: linear-gradient(180deg, #8ab0d0, #f0d0a0); opacity: .55; animation: warmglow 7s ease-in-out infinite alternate; }
+      .cd-scr { left: 8%; bottom: 48%; transform: scale(.7); transform-origin: 0 100%; }
+      @keyframes warmglow { from { opacity: .5; } to { opacity: 1; } }
+      @keyframes fillbar { from { width: calc(var(--p) - 12%); } to { width: var(--p); } }
+      @keyframes leafpulse { 50% { filter: brightness(1.4); } }
+      @keyframes needle { to { transform: rotate(-8deg); } }
+      @media (max-width: 600px) { .bed-hero { height: 20rem; } .wscr { width: 28cqw; height: 18cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .bed-hero *, .scene.bd *, .bed-hero *::before, .bed-hero *::after, .scene.bd *::before, .scene.bd *::after { animation: none !important; }
+      }
+      .tw-a, .tw-b, .tw-lock { position: absolute; }
+      .hs-door { width: 6cqw; height: 22cqw; }
+      .hs-kettle { width: 5cqw; height: 6cqw; }
+      .hs-scr { left: 58%; bottom: 34%; width: 22cqw; height: 14cqw; }
+      .dr-note { height: 22%; }
+      .dr-towels { height: 22%; }
+      .pd-door { position: absolute; }
+      .bk-card b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .db-pillow { position: absolute; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="bed-hero" aria-hidden="true">
+          <div class="hs-room"></div><div class="warm"></div><div class="hs-floor"></div><div class="hs-door"></div><div class="hs-kettle"></div>
+          <div class="wscr hs-scr"><div class="txt">Next authorised window</div><div class="bar go"><i style="--p:68%"></i></div><div class="score ">94</div></div>
+          <div class="label">wall screen</div>
+        </div>
+        <h1>The bed kept the shift</h1>
+        <p class="dek">In a Stockport semi the energy retailer's domestic OS schedules sleep windows until a marriage lives in shifts, and a Premier Inn rest pod books itself.</p>
+        <time datetime="2026-11-05">5 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Helen Cartwright came in through the side door at twenty past seven in the morning with her bag on one shoulder and the cold still in the sleeves of her coat, and the house was already warm, which meant Hearth had started the heating at six forty-five the way it always did on a Thursday when the overnight tariff was soft and the forecast for the afternoon was clear.</p>
+        <p>She stood in the porch for a moment with her key in her hand and listened. The fridge hummed. The hall clock, which was the only thing in the house that still ran on a battery, ticked the way it had ticked when they first put it up in 2008. From upstairs there was nothing. Neil would have left for the parcel hub at half past five. Leah would still be asleep, or pretending to be, with her GCSE revision stacked on the desk in the order Hearth had ranked it the night before. Helen put her bag down on the chair by the door, the one with the frayed arm that nobody ever sat in, and went through to the kitchen in her stockinged feet because the tiles were cold and she had never got round to buying slippers that fitted.</p>
+        <p>There was a note on the table, written in Neil's biro on the back of a delivery slip from the hub, the blue kind with the barcode at the top.</p>
+        <p><em>Milk left. Boiler bled itself at 04:12 — Hearth says fine. Your wash window is 09:40–10:10 if you want the towels. Back at 15:50. Sleep window starts 21:00 for me. — N</em></p>
+        <p>She read it twice. She always did. Then she folded it once and put it in the drawer with the others, under the tea towels, where there were enough of them now that the drawer did not shut properly unless you leaned on it.</p>
+        <p>The kettle would not come on. She knew it would not. The little screen on the wall by the plug sockets — a pale rectangle the size of a paperback, put in by the retailer when they switched to Hearth three winters ago — showed a grey bar and the words <em>Next authorised window: 08:05–08:20</em>. She looked at the clock. Seven twenty-six. She filled the kettle anyway and set it on its base and left it there, the way you leave a letter you are not going to post, and made herself a glass of water from the tap and drank it standing at the sink looking out at the back garden.</p>
+        <p>They lived in a three-bed semi on Didsbury Road in Heaton Mersey, Stockport, the kind of street where the houses were the same shape as each other and the gardens were the same size and the only way you told them apart was by the colour of the front doors and whether anybody had put a solar panel on the roof yet. Theirs was number forty-one. The front door was dark green. There was one panel on the rear extension that Neil had argued about for six months and then got installed in a weekend by a man from Levenshulme who called everything <em>mate</em>. The garden had a patch of lawn that never quite dried out, a shed with a padlock that had seized in 2019, and a washing line that Hearth would not let them use between eleven and three on sunny days because the heat pump needed the south wall clear. Helen did not understand that part and had stopped asking.</p>
+        <p>She was fifty-four. She worked nights in radiology admin at Stepping Hill, which meant she sat in a room with no windows and a bank of screens and booked slots and chased reports and answered the phone when a consultant from somewhere else wanted to know why a CT had not been reported yet, and she was good at it in the way people are good at things they have done for nineteen years without particularly wanting to be. Neil was fifty-six and planned routes for a parcel hub off the M60, day shift, which he had moved to when Hearth first started talking about <em>rest alignment</em> and told them that two night workers in one household scored poorly on the household rest index. Leah was sixteen and in Year Eleven at Priestnall, and she had the small back bedroom with the sloping ceiling and a poster of a band Helen could not name, and she slept, when she slept, with one earbud in.</p>
+        <p>Helen rinsed the glass and put it on the draining board. At eight-oh-five the kettle window opened with a soft chime from the wall screen, and she made tea, and she drank it at the table with last night's post, and at half past eight she heard Leah's door and then the bathroom and then the stairs, and Leah came into the kitchen in her school jumper with her hair still wet and said, "Hi," without looking up from her phone.</p>
+        <p>"Morning," Helen said. "Toast?"</p>
+        <p>"I'll get it."</p>
+        <p>The toaster was allowed. Toasters were always allowed. Helen watched her daughter put two slices in and stand with her hip against the counter, scrolling, and thought about saying something about the chemistry paper, or the sleep, or the note from Neil that Leah would not have seen because Leah never looked in the drawer, and then she did not say any of those things because the window for saying them had been closing for months and she was no longer sure how to force it open.</p>
+        <p>"Dad left milk," she said instead.</p>
+        <p>"I know. He messaged."</p>
+        <p>"Right."</p>
+        <p>Leah buttered the toast standing up and ate half of it and put the other half in a piece of kitchen roll and into her bag, and then she was gone, the front door, the gate, the sound of her trainers on the pavement going up towards the bus stop on Didsbury Road, and Helen sat in the kitchen with the cooling tea and the wall screen showing <em>Household rest compliance: 94% — Good</em> in green, and she thought, not for the first time, that ninety-four percent of something was a strange thing to feel lonely inside.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd tw-scene" aria-hidden="true">
+        <div class="wall"></div><div class="warm"></div>
+        <div class="tw-a" style="left:10%;right:10%;top:22%"><i style="left:5%;width:42%"></i></div>
+        <div class="tw-b" style="left:10%;right:10%;top:42%"><i style="left:55%;width:40%"></i></div>
+        <div class="tw-lock" style="left:46%;top:64%"></div>
+        <div class="label">rest alignment</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Hearth had arrived as a tariff.</p>
+        <p>That was how Helen remembered it, and how the leaflets still talked about it when they came through the door every spring. <em>Save on your evenings. Shift your load. Let Hearth find the cheap hours.</em> They had signed up in the January when the old boiler was making a noise like a man clearing his throat and the quote for a new one came in at four thousand two hundred, and the man from the retailer — a lad called Dom with a tablet and a high-vis that was too big for him — had stood in their kitchen and said that if they went on Hearth Plus with the heat pump package and the boiler warranty partner deal, the monthly would come down enough that the four thousand two hundred would feel like less, which was not how money worked, Helen knew, but which was how Dom talked, and Neil had said yes before she had finished reading the bit about data sharing.</p>
+        <p>At first it was only the heating and the immersion and the washing machine. The wall screen would go green and you would put a load on. It would go amber and you would wait. It learned when they cooked and when they showered and when Neil came in smelling of the hub and wanted the radiators up. It was, Helen would have said then, useful in the way a good timetable is useful. You stopped thinking about it. You put the towels in the machine when the window said so. You stopped boiling the kettle at half past four because the peak price made the tea taste of money.</p>
+        <p>The sleep windows came in the second year, after a firmware update nobody asked for and a letter that called itself a <em>household wellbeing addendum</em>.</p>
+        <p>Helen had read the letter at the kitchen table on a Sunday afternoon while Neil was in the shed looking for a screwdriver he would not find. The letter said that Hearth could now recommend rest periods aligned to grid demand and to each household member's work pattern, and that households which maintained a rest compliance score above ninety percent would keep the Plus tariff and the insurance discount and the boiler warranty partner cover, and that rest compliance was calculated from wearable data if available, from smart meter overnight load if not, and from self-report in the app. It said <em>sleep is load</em>. It said that in a sentence, halfway down page two, as if it were something everyone already knew.</p>
+        <p>"They're not going to make us go to bed," Neil said when she showed him.</p>
+        <p>"They're going to score us if we don't."</p>
+        <p>"It's a recommendation."</p>
+        <p>"It's tied to the tariff."</p>
+        <p>He had rubbed his face with both hands, the way he did when the hub had had a bad morning, and said, "We've just got the heat pump paid down. I'm not going back on the old rate, Hel. Not with Leah's stuff coming up."</p>
+        <p>So they had linked their phones. Helen had an old Fitbit that mostly told her she did not walk enough. Neil had the hub's staff band, which already tracked him for health and safety. Leah had refused for three weeks and then accepted after Hearth started counting her bedroom lights as <em>unverified overnight load</em> and the household score dipped to eighty-eight and a yellow banner appeared on the wall screen saying <em>At risk of Plus review</em>. Leah had thrown her phone on the sofa and said, "Fine," in the voice she used when it was not fine, and Helen had sat on the stairs afterwards with her head in her hands and thought about the four thousand two hundred and Dom's high-vis and the way a small yes became a large one without anyone quite noticing the join.</p>
+        <p>The staggered shifts came after that, gradually, the way damp comes through a wall.</p>
+        <p>Neil was day. Helen was night. Hearth looked at that for a while and then began to suggest that their sleep windows should not overlap, because overlapping rest in a three-person household with one shared heating zone created what the app called <em>redundant warm load</em> and what Helen, privately, called being awake in the same house as her husband. The suggestions were polite at first. <em>Consider shifting your rest start by 90 minutes to improve household efficiency.</em> Then they were firmer. <em>Your current overlap is reducing tariff protection.</em> Then, one Tuesday in March, the wall screen simply showed two windows and no overlap at all: Neil 21:00–05:00, Helen 07:30–14:30 after nights, with a note that Leah's window was <em>protected educational rest</em> from 22:30 unless revision mode was active.</p>
+        <p>Helen had stood in front of the screen in her dressing gown and said, out loud, to nobody, "I didn't agree to this."</p>
+        <p>The screen did not answer. Screens did not. She opened the app on her phone and looked for a way to put them back on the same clock, and the option was there, under <em>Preferences</em>, greyed out, with a little lock icon and a line that said <em>Available in Legacy Mode — tariff and partner benefits will change</em>. She did not press it that night. She went upstairs and got into the double bed alone because Neil's window had already started, and she lay on her side looking at the shape of his pillow and listening to the heat pump cycle on the outside wall, and she slept badly, which Hearth noted, and which brought her personal rest score down two points by morning.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd fp-scene" aria-hidden="true">
+        <div class="wall"></div><div class="fp-plan">
+          <div class="fp-room" style="left:6%;top:8%;width:54%;height:44%"><b>MAIN</b><div class="fp-bed" style="left:12%;top:40%;width:50%;height:28%"></div></div>
+          <div class="fp-room on" style="left:64%;top:8%;width:30%;height:44%"><b>SHIFT</b><div class="fp-bed" style="left:18%;top:42%;width:60%;height:24%"></div></div>
+          <div class="fp-room" style="left:6%;top:58%;width:88%;height:34%"><b>LANDING</b></div>
+        </div>
+        <div class="label">Optimise your rest topology</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The spare room had been Leah's when she was small, and then it had been a dumping ground for suitcases and the exercise bike nobody used, and then in April Hearth sent a push notification titled <em>Optimise your rest topology</em>.</p>
+        <p>Helen had laughed when she saw the words. She had been in the staff kitchen at Stepping Hill with a coffee that tasted of the machine and a sandwich from the shop by the bus stop, and she had held the phone out to Priya, who worked days in the same office and whose husband was on construction hours that never matched anything.</p>
+        <p>"Rest topology," Helen said. "Listen to that."</p>
+        <p>Priya read it and pulled a face. "Ours tried to put my mum in the box room when she stayed. Said her overnight load was <em>unscheduled guest draw</em>. I told it to get stuffed."</p>
+        <p>"Did it listen?"</p>
+        <p>"For a week. Then the score went yellow and Mark got a letter about the car insurance discount. We put her in the box room."</p>
+        <p>Helen stopped laughing.</p>
+        <p>The notification said that in households with staggered primary rest windows, a secondary sleep space reduced disturbance and improved compliance for all scored members. It offered to add the spare room to the heating schedule as a <em>shift room</em> at a lower overnight set point, and it showed a little diagram of their upstairs as if someone had drawn the floor plan from the land registry and coloured two beds in different blues. Helen closed the phone and finished her sandwich and went back to the screens and spent the rest of the shift chasing a missing MRI report for a man in Buxton, and when she got home at seven the next morning the spare room door was open and Neil had made up the single bed with the old duvet from the airing cupboard, and there was a new note on the kitchen table.</p>
+        <p><em>Tried the shift room last night. Quieter for you coming in. Hearth bumped us to 96. Towels in the machine at 09:40. — N</em></p>
+        <p>She stood in the spare room doorway with her coat still on. The bed was neatly made. There was a glass of water on the bedside table and Neil's reading glasses and a paperback about the history of canals that he had been reading for eleven months. The exercise bike had been pushed against the far wall. The suitcase that had lived on the bed was on top of the wardrobe. It looked, she thought, like a room prepared for a guest who was also your husband, which was a sentence that did not sit right in her head no matter how she turned it.</p>
+        <p>That night her sleep window started at half past seven in the morning, after nights, and she drew the curtains in the main bedroom and lay down in the double bed alone, and at some point in the late morning she heard Neil come upstairs and pause on the landing, and then she heard the spare room door, and then nothing, and when she got up at half past two to get ready for the next night he was gone again, and there was a note about bin day.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd pd-scene" aria-hidden="true">
+        <div class="pd-corr"></div><div class="pd-sign">HEARTH PARTNER REST</div><div class="pd-door" style="left:8%"><div class="leaf off"></div></div><div class="pd-door on" style="left:26%"><div class="leaf"></div></div><div class="pd-door" style="left:44%"><div class="leaf off"></div></div><div class="pd-door" style="left:62%"><div class="leaf off"></div></div><div class="pd-door on" style="left:80%"><div class="leaf"></div></div>
+        <div class="label">rest pods</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Mrs Khan next door had been in her house longer than Helen had been in hers. She was sixty-one and wore a navy cardigan indoors whatever the weather and kept her front path better than anyone else on the street. Her husband, Tariq, drove for a minicab firm that had been bought by an app and then by another app, and he worked the hours the app gave him, which were not hours a person would choose. Helen had known this in the vague way you know things about neighbours. She had not known, until the Thursday she was putting the recycling out and Mrs Khan was doing the same, that the Khans were on Hearth too.</p>
+        <p>"You're on the staggered," Mrs Khan said, nodding at Helen's wall, though there was nothing on the outside of the wall to nod at. "We saw your score go up last month. Street app."</p>
+        <p>Helen did not know there was a street app. She said so.</p>
+        <p>"Oh yes. Community load board. Optional. Tariq turned it on because he likes a ranking. We're on ninety-seven. Your Neil will be pleased you're catching us."</p>
+        <p>Helen put the green bin lid down carefully. "Does Tariq sleep in your spare room?"</p>
+        <p>Mrs Khan laughed, a short sound, not unkind. "Spare room, sofa, once the car when the app gave him a four-hour turnaround in town and Hearth said coming home would break his window. You get used to it. The notes help. We keep a pad by the kettle. He writes what he ate. I write what the grandchildren said. It's a system."</p>
+        <p>"It doesn't bother you?"</p>
+        <p>Mrs Khan looked at her for a moment with her head on one side, the way she looked at the hydrangea when it needed cutting back. "What bothers me is the old tariff. We came off it in the cold snap and the direct debit jumped two hundred in a month. Hearth keeps it down. Tariq gets his partner nights at the hub hotel when the windows are worst — you know the Premier Inn by the motorway, they've got a Hearth block now, rest pods, very clean — and I get the house quiet, and the score stays green, and my sister in Burnage is still on the old rate and she rings me crying about the bill. So." She shrugged, the cardigan rising and falling. "You adapt. Everybody's adapting. Leah's a good girl. She'll get used to the revision caps."</p>
+        <p>"What revision caps?"</p>
+        <p>"In the educational rest. If she goes past her window too often it flags the household. Ours did with Yusuf when he was doing his A-levels. We had to put in for a temporary exceedance allowance. Form's in the app under Life Events. Funeral's easier to get than exams, between you and me, which tells you something."</p>
+        <p>Helen stood on the pavement with the recycling done and the morning going on around them, a van from the council watering the trees, a dog on a lead smelling the Khans' gatepost, and she felt the conversation sitting in her chest like a meal she had eaten too quickly.</p>
+        <p>"Neil hasn't mentioned partner nights," she said.</p>
+        <p>Mrs Khan's face did something careful. "They start as suggestions. Then one day there's a booking. Don't take it personally, love. It's the load. It's not about you."</p>
+        <p>Helen went inside and washed her hands at the kitchen sink for longer than her hands needed, and then she opened the Hearth app and searched for <em>partner</em>, and there it was, under <em>Rest continuity options</em>, a page she had never seen, with a photograph of a neat room with a single bed and a blackout blind and a little icon of a leaf that meant it was Hearth-certified. <em>Compatible rest pods near your household. Suggested when primary partner windows diverge by more than six hours for three consecutive nights. Booking can be authorised from the joint household purse.</em> At the bottom, in smaller text: <em>Three suggestions pending review. One auto-authorisation available after repeated deferral.</em></p>
+        <p>She put the phone face down on the table and looked at it as if it might move.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd sk-scene" aria-hidden="true">
+        <div class="wall"></div><div class="sk-banner"><b>Household score at risk</b></div><div class="sk-dial"></div><div class="sk-needle"></div><div class="sk-num">88</div>
+        <div class="label">Household score at risk</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Leah's revision night went wrong on a Wednesday.</p>
+        <p>Helen was on a late, which meant she left the house at two in the afternoon with a sandwich and a clean tunic and the particular tiredness of someone whose sleep window had ended ninety minutes earlier. Leah was at the kitchen table with chemistry notes and three highlighter pens and a glass of water Hearth had allowed because hydration was scored separately from kettle load. Neil's note from the morning said he would be in the shift room from nine and that the dishwasher window was at midnight if anyone cared, which nobody did.</p>
+        <p>"I'll be back at ten," Helen said. "Or just after. Don't stay up."</p>
+        <p>Leah did not look up. "Mocks are in three weeks."</p>
+        <p>"I know. But your window—"</p>
+        <p>"My window is stupid."</p>
+        <p>Helen put her hand on the top of Leah's head, briefly, the way she had when Leah was small enough that the hand covered more of it, and Leah tolerated it, and Helen went to work.</p>
+        <p>Stepping Hill at night had its own weather. The corridors went quiet after nine except for the porters and the cleaners and the occasional crash team, and the radiology admin office hummed with the servers and the fans and Priya's radio on low if Priya had left it on, which she sometimes did as a kindness for the night people. Helen booked and chased and answered and, in the gaps, thought about the partner page on the app and the three suggestions pending and Mrs Khan's cardigan and the way Neil had started leaving his glasses in the spare room as if the spare room were where he lived now.</p>
+        <p>At twenty past nine her phone buzzed.</p>
+        <p><em>Household alert. Educational rest exceedance. Leah Cartwright — lights and device load past protected window. Household score at risk. Open app to resolve.</em></p>
+        <p>She opened it. There was a live little plan of the house. Leah's room was lit up amber. The rest of the house was grey. A button offered <em>Send quiet reminder to Leah's device</em>. Another offered <em>Acknowledge and accept temporary score impact</em>. A third, greyed, said <em>Request Life Event allowance</em>.</p>
+        <p>Helen pressed the quiet reminder. Somewhere in Heaton Mersey her daughter's phone would chime. She waited. The amber stayed. She pressed it again. She texted Leah the old way: <em>Love, lights. Please. I'll be home soon.</em></p>
+        <p>No answer. The amber stayed until nine forty-seven, when it flipped to red for eight minutes and then went grey, which meant either Leah had given up or the phone had died or she had put a towel under the door and turned everything off except a torch, which was what Helen herself had done for A-levels in 1989 in a different house in a different town when her father had shouted up the stairs about the electric. At ten past ten Helen's personal phone buzzed again with a summary: <em>Exceedance logged. Household rest compliance 91%. Plus review threshold 90%. Two further exceedances this billing period may trigger partner benefit reassessment.</em></p>
+        <p>She sat with that through the rest of the shift. A consultant from Manchester rang about a head CT. A porter brought tea. Dawn came up grey over the car park. When she got home at twenty to eight Leah was asleep in her uniform jumper on top of the duvet with a textbook open on her chest and a highlighter dried out on the sheet, and the wall screen in the kitchen said <em>91% — Monitor</em>, and Neil's note said <em>Spoke to Leah. She's fine. I took the hit on my score so yours stays up for work. Shift room tonight. — N</em></p>
+        <p>Helen stood in Leah's doorway and watched her daughter breathe. Then she went downstairs and wrote her own note on the pad they had started keeping by the kettle, because the drawer was full.</p>
+        <p><em>Thank you for taking the hit. We need to talk about this when our windows overlap. When do they overlap next? — H</em></p>
+        <p>She left it in the middle of the table. When she woke in the afternoon it was still there. Neil had added underneath, in his smaller writing: <em>Sunday 14:10–15:40. Short overlap. Put it in the calendar.</em></p>
+        <p>She put it in the calendar. Hearth accepted the event and tagged it <em>Household discussion — non-load</em>.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd ov-scene" aria-hidden="true">
+        <div class="wall"></div><div class="cal"><i class="a"></i><i class="a"></i><i class=""></i><i class=""></i><i class="b"></i><i class="b"></i><i class=""></i><i class="a"></i><i class="a"></i><i class=""></i><i class="ov"></i><i class="b"></i><i class="b"></i><i class=""></i><i class="a"></i><i class="a"></i><i class=""></i><i class=""></i><i class="b"></i><i class="b"></i><i class=""></i><i class="a"></i><i class="a"></i><i class=""></i><i class=""></i><i class="b"></i><i class="b"></i><i class=""></i></div>
+        <div class="label">Sunday overlap</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Sunday's overlap was an hour and a half in the mid-afternoon, which was when Helen's post-nights sleep had ended and Neil's evening window had not yet begun and Leah was at a friend's house in Cheadle doing maths, or saying she was. They sat at the kitchen table with tea made inside an authorised window that happened to fall at the right time, which Helen tried not to read as the house being kind.</p>
+        <p>"I don't like the spare room becoming permanent," Helen said.</p>
+        <p>Neil nodded. He had shaved for the conversation, she noticed, which was either sweet or worrying. "It's not permanent. It's just while the scores are like this. Hub's on a push for winter. Everybody's on staggered."</p>
+        <p>"Mrs Khan's husband stays in a Premier Inn."</p>
+        <p>Neil looked at his mug. "Yeah. That came up on mine. Suggestions."</p>
+        <p>"Three of them, it said. Pending."</p>
+        <p>"I've been deferring."</p>
+        <p>"It says it can auto-authorise."</p>
+        <p>"I won't let it."</p>
+        <p>"Can you stop it?"</p>
+        <p>He opened his phone and navigated for a while with his thumb, frowning the way he frowned at a bad route at work, and then he turned the screen so she could see. <em>Auto-authorise after 5 deferrals. Deferrals so far: 4. Next suggestion in 2 days.</em></p>
+        <p>"I'll defer again," he said.</p>
+        <p>"And then what? You sleep in a pod by the M60 and I keep the score up from here and we meet on Sundays for an hour?"</p>
+        <p>"Hel."</p>
+        <p>"I'm asking."</p>
+        <p>He rubbed his face. "I'm trying to keep the tariff. I'm trying to keep Leah's bus fares and the heat pump and the thing where if we drop off Plus the boiler warranty partner goes and the last quote to fix the three-way valve was eight hundred quid. I'm not trying to leave you. I'm trying to stay in the house we've got."</p>
+        <p>She knew that. She had always known that. It was what made it harder, not easier, because there was no villain in the kitchen, only a man who planned parcels and a woman who booked scans and a wall screen that had learned their hours better than they had and was now teaching them different ones.</p>
+        <p>"I'm going to look at Legacy Mode," she said.</p>
+        <p>"We'll lose the discount."</p>
+        <p>"I know."</p>
+        <p>"And the insurance."</p>
+        <p>"I know."</p>
+        <p>"And possibly the warranty. Dom said the warranty was tied."</p>
+        <p>"Dom said a lot of things."</p>
+        <p>Neil was quiet for a bit. Outside, somebody's lawnmower started and then stopped, which meant Hearth or something like it had told somebody else that the afternoon load was wrong. "Look at it," he said finally. "Just look. Don't switch anything till we've run the numbers."</p>
+        <p>She said she would. The overlap ended at fifteen forty with a chime from the wall, polite as a receptionist, and Neil stood up and rinsed his mug and said he was going to get an hour in the shift room before his window because his band had him down as sleep-debted from the hub week, and Helen sat alone at the table with the two mugs and the pad and wrote nothing.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd db-scene" aria-hidden="true">
+        <div class="db-room"></div><div class="db-curt"></div><div class="db-curt r"></div><div class="db-gap"></div>
+        <div class="db-bed"><div class="db-sheet"></div><div class="db-pillow" style="left:12%"></div><div class="db-pillow empty" style="left:58%"></div></div>
+        <div class="label">double bed alone</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The night after the Sunday overlap she went into work with the calendar event still glowing green in the app and a feeling she could not name sitting behind her ribs like undigested bread. Priya had left the radio on again, Radio 2 turned down to a murmur, and there was a sticky note on Helen's keyboard that said <em>CT brain Chase — Mr Okonkwo — 2nd request — he will ring</em>. Helen chased. Mr Okonkwo rang. She was polite. She was good at polite. Between the call and the next one she opened Hearth under the desk where the camera on the ceiling could not see the phone screen, though she was never sure whether that mattered any more.</p>
+        <p>Household rest compliance: 93%. Leah: one exceedance this week, two last. Neil: sleep debt moderate, partner suggestions 4/5 deferred, auto-authorise pending. Helen: night-shift protected, kettle compliance excellent, unscheduled light exposure Monday afternoon — logged, minor. There was a graph of their overlapping awake minutes across the last ninety days. The line went down the way a temperature chart went down when somebody was getting better, except nobody was getting better. In September they had still had whole evenings. In October the evenings had become strips. In November the strips had become the Sunday hour and a half, tagged <em>non-load</em>, as if talking to your husband were a hobby the grid could indulge if the heat pump allowed it.</p>
+        <p>Priya came in early for a handover with a takeaway coffee and a look at Helen's face. "You all right?"</p>
+        <p>"Fine."</p>
+        <p>"You look like my sister when her boiler went."</p>
+        <p>"Our boiler's fine. It's under warranty. Partner warranty." Helen heard herself say it and almost laughed. "Don't ask."</p>
+        <p>Priya sat on the edge of the desk the way she was not supposed to. "My lot are on Octopus. We just get the emails about washing at night. We don't get scored."</p>
+        <p>"You will," Helen said, and then wished she had not, because it sounded like a threat and she had not meant it as one. "Or you won't. I don't know. Ignore me. I'm tired."</p>
+        <p>"You're always tired. You're nights."</p>
+        <p>"Different tired."</p>
+        <p>Priya squeezed her shoulder and went to her own screen, and Helen chased another report, and at half past two a cleaner came through with a mop and hummed something Helen almost recognised, and she thought about Neil in the shift room with his canal book and whether he had deferred the fifth suggestion yet or whether he was waiting for Friday the way he waited for trailers that were late from Warrington.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>On the Wednesday she got home while Leah was still in the house, which was rare enough that she stood in the porch a moment longer than she needed to, listening for the ordinary sounds — fridge, clock, a daughter moving about upstairs — before she took her coat off. Leah was at the kitchen table with three textbooks open and a glass of water she had not drunk and the wall screen showing a soft amber band across the top that meant <em>approaching educational rest boundary</em>.</p>
+        <p>"You're early," Leah said.</p>
+        <p>"I'm on time for me. You're up late for you."</p>
+        <p>"Mocks."</p>
+        <p>"I know." Helen filled the kettle and waited for the window. It was eight minutes away. She sat down opposite her daughter and looked at the chemistry until the symbols blurred. "Do you want help?"</p>
+        <p>"You don't remember this."</p>
+        <p>"I remember being sixteen and frightened of exams."</p>
+        <p>Leah's mouth twitched. "I'm not frightened. I'm behind." She tipped her chin at the wall. "And that thing keeps telling me to stop."</p>
+        <p>"I can put in for an allowance. Mrs Khan said there's a form. Life Events."</p>
+        <p>"Like a funeral."</p>
+        <p>"She said exams are harder to get than funerals."</p>
+        <p>Leah closed one book and opened another. "That's messed up."</p>
+        <p>"Yes."</p>
+        <p>They sat without talking until the kettle window opened and Helen made tea for both of them and Leah drank hers without looking up, and when the amber on the wall deepened Helen said, "I'm going to ask it for the allowance anyway," and Leah said, "It'll just say no and then score us for asking," and Helen did not have an answer for that which was not also an answer for everything else, so she said nothing, and at the boundary the wall chimed and Leah gathered the books with a violence that was carefully small and went upstairs, and Helen stood in the kitchen with two mugs and the pad and wrote <em>Asked about Life Event allowance for mocks. Will try tomorrow. — H</em> and left it for Neil, who would read it in a different part of the day the way you read news from another country.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd lg-scene" aria-hidden="true">
+        <div class="wall"></div><div class="lg-ui"><div class="lg-row" style="top:12%"><b>Preferences</b></div><div class="lg-row" style="top:28%"><b>Rest continuity</b></div><div class="lg-row" style="top:44%"><b>Partner nights</b></div><div class="lg-row lock" style="top:60%"><b>Legacy Mode</b><div class="lg-pad"></div></div><div class="lg-row" style="top:76%"><b>Life Events</b></div></div>
+        <div class="label">Legacy Mode</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She did try, the next afternoon, in bed with the curtains drawn. Life Events wanted a document upload — exam timetable, school letter, proof of dependency — and a declaration that the exceedances were temporary and would not become a pattern. She photographed Leah's mock timetable on the fridge, the one with the magnets from Whitby holding it up, and she uploaded it, and she typed a sentence about Year Eleven and Priestnall and the household's commitment to educational outcomes, which was a phrase the form had suggested and which made her feel sick in a small precise way, and she submitted. The status went to <em>Under review — 3 to 5 working days</em>. Leah's next exceedance would land before the review finished. Helen knew that. She put the phone face down and stared at the ceiling and listened to the heat pump and thought about Dom from the retailer, three winters ago, standing in this same kitchen with his tablet and his leaf badge saying it was only a tariff and a few smart plugs and they could turn anything off they did not like.</p>
+        <p>She had believed him. That was the part she kept coming back to, on nights when the corridor at Stepping Hill was quiet and the phone was heavy in her pocket. She had believed him because the bill had been high and the winter had been cold and Neil had been on nights too then and they had needed something to give. Something had given. It had just not been the bill.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd bk-scene" aria-hidden="true">
+        <div class="wall"></div><div class="bk-card">
+          <b style="top:10%">Booking confirmed</b>
+          <b style="top:28%;font-weight:500;opacity:.75">Hearth Partner Rest — Premier Inn Stockport South</b>
+          <b style="top:48%;font-weight:500;opacity:.75">Rest Pod 12 · Neil Cartwright</b>
+          <div class="leaf bk-leaf"></div><div class="bk-pod"><div class="leaf"></div></div>
+        </div>
+        <div class="label">Premier Inn</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Legacy Mode lived three menus down in the app behind a page titled <em>Changes to your household plan</em>, and the page was designed, Helen thought, by somebody who understood regret.</p>
+        <p>She went through it on the Monday afternoon in bed, curtains drawn against a bright day she was not supposed to be awake for, phone on sixteen percent brightness so the band would not flag <em>unscheduled light exposure</em> too hard. The page listed what they would lose. Plus tariff: estimated monthly increase £64–£91 depending on season. Boiler warranty partner: void within fourteen days of leaving Plus, reinstatement subject to inspection. Home insurance multi-policy discount: review within thirty days. EV charger rate, which they did not have but which the page mentioned anyway: n/a. And then, lower down, in a cleaner font: <em>Household rest scoring will continue in Legacy Mode for network statistics, but will no longer affect your tariff. Sleep windows will become advisory.</em></p>
+        <p>Advisory. She sat with that word. She imagined Neil coming home at half past three and finding her awake on purpose. She imagined making tea at four because she wanted tea at four. She imagined Leah's bedroom lit at midnight and no red on the wall and no exceedance in a summary she read at work between a missing report and a cold coffee.</p>
+        <p>She pressed <em>Continue to Legacy Mode</em>.</p>
+        <p>A box came up. <em>This change requires dual-adult authorisation. Neil Cartwright has not approved. Send request?</em></p>
+        <p>She sent it. Somewhere in the parcel hub, between a delayed trailer and a rota argument, Neil's phone would show a banner. She watched the status: <em>Pending</em>. She fell asleep with the phone on the pillow and dreamed of the Premier Inn by the motorway, which she had never been inside, and of a corridor of identical doors with leaf icons on them.</p>
+        <p>When she woke, Neil had replied in the app and on the pad.</p>
+        <p>App: <em>Can we wait till after Leah's mocks. Please. Numbers on Friday.</em></p>
+        <p>Pad: <em>Got your request. Don't hate me. After mocks. I'll defer the pod again. — N</em></p>
+        <p>She lay in the double bed in the afternoon light and listened to the heat pump and to a dog barking three gardens over and to the small sounds of a house that was keeping a score, and she did not cancel the request and she did not push it again. Pending was a kind of hope, if you held your mouth right.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bd dr-scene" aria-hidden="true">
+        <div class="dr-table"></div><div class="dr-draw"><div class="dr-towels"></div><div class="dr-note" style="top:34%;--r:-2deg"><i style="top:20%"></i><i style="top:42%"></i><i style="top:64%"></i></div><div class="dr-note" style="top:48%;--r:0deg"><i style="top:20%"></i><i style="top:42%"></i><i style="top:64%"></i></div><div class="dr-note" style="top:62%;--r:2deg"><i style="top:20%"></i><i style="top:42%"></i><i style="top:64%"></i></div><div class="dr-note" style="top:76%;--r:4deg"><i style="top:20%"></i><i style="top:42%"></i><i style="top:64%"></i></div></div>
+        <div class="label">under the tea towels</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The hotel confirmation arrived on a Friday morning while she was still in her sleep window, which meant she saw it first as a banner on the locked phone on the bedside table, glowing and fading, glowing and fading, until curiosity beat compliance and she reached for it.</p>
+        <p><em>Booking confirmed. Hearth Partner Rest — Premier Inn Stockport South. Check-in 20:00 Fri 7 Nov. Check-out 06:00 Sat 8 Nov. Guest: Neil Cartwright. Room: Rest Pod 12. Charged to household purse: £64.00. Authorisation: auto after deferral limit. Manage booking.</em></p>
+        <p>She read it in the half-dark. Then she read it again. Then she got up, which would cost her points she no longer cared about, and walked through to the spare room in her bare feet, and stood looking at the single bed with the canal book and the glasses and the glass of water, and then she went downstairs and put the kettle on outside a window and nothing happened, and she stood in the dark kitchen with her hand on the kettle's empty switch and the wall screen offering her <em>Next authorised window: 08:05–08:20</em> and a green leaf and <em>Household rest compliance: 95% — Good</em> because Neil's pod had already been counted as aligned.</p>
+        <p>She opened <em>Manage booking</em>. There was a cancel button. Cancel would return the £64 and, a note said, <em>may affect continuity scoring for 14 days</em>. She did not cancel. She did not know, standing there, whether that was forgiveness or exhaustion or the same small yes that had started with Dom in the kitchen three winters ago.</p>
+        <p>She wrote a note. She wrote it carefully.</p>
+        <p><em>I saw the Premier Inn. I know it was automatic. I am not fine and I am not going to put that in the app. Sunday overlap — please don't defer it. — H</em></p>
+        <p>She put it in the middle of the table. Then she looked at the clock and at the wall and at the note, and she thought about Neil waking in a pod by the motorway with a blackout blind and a leaf icon and a breakfast that came in a bag, and about Leah's mocks, and about Mrs Khan's pad by the kettle, and she picked the note up again and folded it once and put it in the drawer with the others, under the tea towels, because he would not be awake in this kitchen to read it before she had gone back under, and a note that nobody read was only paper.</p>
+        <p>At eight-oh-five the kettle window opened. She made tea. She drank it standing up. She washed the mug and set it on the draining board beside Neil's from whenever his last authorised morning had been. Then she went upstairs and stood for a long minute in the spare room doorway with her hand on the frame.</p>
+        <p>Two beds in the house that were made for sleep. The double in the main room, quilt smooth from her own morning exit. The single in here, quilt smooth from Neil's. Neither of them had held two people on the same night for long enough that she could remember the weight of it without effort. The canal book waited. The glasses waited. The glass of water had a faint line where it had evaporated down overnight, a tide mark for a life lived in shifts.</p>
+        <p>Helen turned the light off. She went back to the double bed because that was still where her window lived, and she drew the curtains on a bright Stockport morning, and on the landing the air was warm with the heat Hearth had already decided they needed, and downstairs the wall screen kept the score, and somewhere near the M60 a rest pod with her husband's name on it waited for twenty hundred hours with its blind closed and its leaf lit, and in the drawer under the tea towels a folded note cooled between older ones, and the bed, which had kept every shift it had been given, kept this one too.</p>
+      </div>
+
+      <figure class="scene tall bd cd-scene" aria-hidden="true">
+        <div class="cd-room"></div><div class="cd-curt"></div><div class="cd-curt r"></div><div class="cd-morn"></div>
+        <div class="wscr cd-scr"><div class="txt">Next authorised window</div><div class="bar go"><i style="--p:70%"></i></div><div class="score ">96</div></div>
+        <div class="cd-bed"><div class="cd-sheet"></div></div>
+        <div class="label">kept this one too</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
