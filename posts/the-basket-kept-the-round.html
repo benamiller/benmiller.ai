@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The basket kept the round — Ben Miller</title>
+    <meta name="description" content="In Selby a retired dinner lady walks a neighbour food-share round until a closed primary kitchen opens for Thursday dinner, and the baskets keep going.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #1a1410;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f0d8b0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c87840; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .bask-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(240,200,140,.16); background: #1a1410; }
+      .bask-hero > * { position: absolute; }
+      .bask-hero::after, .scene.bk::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(12,8,4,.72) 100%), repeating-linear-gradient(68deg, rgba(255,220,160,.025) 0 2px, transparent 2px 8px); }
+      .scene.bk { background: #1c1612; }
+      .sky { inset: 0; background: linear-gradient(180deg, #2a3040 0%, #8a6a58 40%, #f0b070 78%, #ffd8a0); }
+      .sky.dawn { background: linear-gradient(180deg, #1a2030, #6a4a48 35%, #e09050 70%, #ffc878); }
+      .sky.frost { background: linear-gradient(180deg, #3a4858, #8a9aac 55%, #d8e0e8); }
+      .brick { background-color: #7a3a28; background-image: repeating-linear-gradient(180deg, transparent 0 2.4cqw, rgba(30,12,8,.7) 2.4cqw 2.8cqw), repeating-linear-gradient(90deg, transparent 0 5.6cqw, rgba(30,12,8,.7) 5.6cqw 6cqw), linear-gradient(160deg, #9a4a34, #5a2818); }
+      .abbey { left: 58%; width: 18cqw; bottom: 28%; height: 48%; background: linear-gradient(180deg, #c8bca8, #8a7e6a); clip-path: polygon(20% 100%, 20% 28%, 8% 28%, 8% 18%, 35% 0, 62% 0, 90% 18%, 90% 28%, 78% 28%, 78% 100%); box-shadow: inset 0 0 2cqw rgba(0,0,0,.25); }
+      .abbey::after { content: ""; position: absolute; left: 42%; top: 30%; width: 16%; height: 22%; background: #1a2030; }
+      .terrace { left: 0; right: 40%; bottom: 0; height: 34%; display: flex; gap: .3cqw; align-items: flex-end; }
+      .terrace i { position: relative; flex: 1; height: var(--h, 80%); background: #6a3424; clip-path: polygon(0 18%, 50% 0, 100% 18%, 100% 100%, 0 100%); box-shadow: inset 0 0 0 .3cqw rgba(0,0,0,.2); }
+      .terrace i::after { content: ""; position: absolute; left: 28%; right: 28%; top: 40%; height: 22%; background: #ffd080; opacity: .55; box-shadow: 0 0 1.2cqw rgba(255,200,100,.6); }
+      .street { left: 0; right: 0; bottom: 0; height: 10%; background: linear-gradient(180deg, #3a342c, #1a1610); }
+      .trolley { width: 16cqw; height: 14cqw; }
+      .trolley .frame { position: absolute; inset: 18% 8% 8%; border: .7cqw solid #2a2e34; border-radius: .6cqw; background: repeating-linear-gradient(45deg, #3a5a8a 0 1cqw, #c84040 1cqw 2cqw, #f0f0e8 2cqw 3cqw, #3a5a8a 3cqw 4cqw); box-shadow: inset 0 0 0 .3cqw rgba(0,0,0,.3), 0 1cqw 1.6cqw rgba(0,0,0,.45); }
+      .trolley .handle { position: absolute; left: 20%; right: 20%; top: 0; height: 22%; border: .6cqw solid #2a2e34; border-bottom: 0; border-radius: 50% 50% 0 0; }
+      .trolley .wheel { position: absolute; bottom: -2%; width: 3.2cqw; height: 3.2cqw; border-radius: 50%; background: #1a1e24; box-shadow: inset 0 0 0 .5cqw #4a5058; }
+      .trolley .wheel.l { left: 12%; } .trolley .wheel.r { right: 12%; }
+      .steamw { width: 4cqw; height: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,245,230,.55), transparent 70%); filter: blur(.7cqw); animation: steamwisp 5s ease-in infinite; animation-delay: var(--d); }
+      /* depot crates */
+      .dp-yard { inset: 0; background: linear-gradient(180deg, #2a3038, #1a1410 55%); }
+      .dp-lean { left: 0; right: 30%; top: 0; height: 40%; background: repeating-linear-gradient(90deg, #3a2e22 0 4cqw, #2a2018 4cqw 4.4cqw); }
+      .dp-lines { left: 0; right: 0; bottom: 0; height: 55%; background: repeating-linear-gradient(90deg, transparent 0 12cqw, rgba(240,200,140,.25) 12cqw 12.5cqw); }
+      .crate { width: 14cqw; height: 9cqw; background: linear-gradient(180deg, #c8a050, #8a6830); border-radius: .4cqw; box-shadow: inset 0 0 0 .3cqw rgba(60,40,10,.4), 0 .8cqw 1.2cqw rgba(0,0,0,.45); }
+      .crate::before { content: ""; position: absolute; left: 8%; right: 8%; top: 12%; bottom: 12%; background: repeating-linear-gradient(90deg, transparent 0 1.6cqw, rgba(60,40,10,.35) 1.6cqw 1.9cqw); }
+      .crate.apple::after { content: ""; position: absolute; left: 20%; top: -20%; width: 60%; height: 50%; background: radial-gradient(circle at 30% 50%, #c03030 0 1.2cqw, transparent 1.3cqw), radial-gradient(circle at 70% 40%, #d04028 0 1.1cqw, transparent 1.2cqw), radial-gradient(circle at 50% 70%, #a82820 0 1cqw, transparent 1.1cqw); }
+      .crate.cab::after { content: ""; position: absolute; left: 15%; top: -30%; width: 70%; height: 60%; background: radial-gradient(circle at 50% 60%, #3a8a40 0 35%, #2a6a30 55%, transparent 60%); }
+      /* baskets row */
+      .bs-row { left: 6%; right: 6%; top: 18%; bottom: 22%; display: flex; gap: 1cqw; align-items: flex-end; }
+      .bs-row i { position: relative; flex: 1; height: var(--h, 70%); background: linear-gradient(180deg, #d8b070, #8a6030); border-radius: .4cqw .4cqw 40% 40% / .4cqw .4cqw 20% 20%; box-shadow: inset 0 1cqw 0 rgba(255,255,255,.15), 0 .8cqw 1.2cqw rgba(0,0,0,.4); }
+      .bs-row i.empty { opacity: .35; filter: saturate(.4); }
+      .bs-row i::after { content: ""; position: absolute; left: 15%; right: 15%; top: 10%; height: 35%; background: radial-gradient(circle, #c03030 0 30%, transparent 32%), radial-gradient(circle at 70% 50%, #6a9a40 0 28%, transparent 30%); opacity: .85; }
+      .bs-row i.empty::after { display: none; }
+      .bs-slip { position: absolute; top: -18%; left: 20%; right: 20%; height: 22%; background: #f4f0e4; box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.35); font: 600 1.2cqw/1 Karla, sans-serif; color: #2a2a2a; }
+      /* soft pack */
+      .sp-door { left: 8%; top: 8%; bottom: 8%; width: 28%; background: #5a3428; box-shadow: inset 0 0 0 .5cqw #3a2018; }
+      .sp-basket { left: 42%; bottom: 18%; width: 40cqw; height: 28cqw; background: linear-gradient(180deg, #d8b070, #8a6030); border-radius: 1cqw 1cqw 40% 40%; box-shadow: 0 1.4cqw 2.4cqw rgba(0,0,0,.5); }
+      .sp-soft { left: 48%; bottom: 38%; width: 28cqw; height: 14cqw; background: linear-gradient(160deg, #f4efe4, #d8d0c0); border-radius: 1cqw; box-shadow: 0 .8cqw 1.4cqw rgba(0,0,0,.4); transform: rotate(-4deg); }
+      .sp-soft::before { content: ""; position: absolute; left: 12%; right: 12%; top: 28%; height: .4cqw; background: rgba(40,60,40,.35); box-shadow: 0 2cqw 0 rgba(40,60,40,.3), 0 4cqw 0 rgba(40,60,40,.25); }
+      .sp-apple { left: 70%; bottom: 42%; width: 6cqw; height: 6cqw; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e86050, #a02820 70%); box-shadow: 0 .6cqw 1cqw rgba(0,0,0,.4); }
+      .sp-hand { left: 18%; bottom: 20%; width: 8cqw; height: 16cqw; background: #c89a78; border-radius: 3cqw 3cqw 1cqw 1cqw; }
+      /* hi-vis + trolley */
+      .hv-yard { inset: 0; background: linear-gradient(180deg, #f0b070, #8a6a50 50%, #2a241c); }
+      .hv-bib { left: 18%; top: 18%; width: 20cqw; height: 24cqw; background: #e8d030; border-radius: 1cqw; box-shadow: 0 0 0 .5cqw #c8b020, 0 1cqw 2cqw rgba(0,0,0,.4); }
+      .hv-bib::before { content: ""; position: absolute; left: 8%; right: 8%; top: 30%; height: .5cqw; background: #1a1a1a; box-shadow: 0 4cqw 0 #1a1a1a; }
+      .hv-trolley { left: 48%; bottom: 14%; }
+      /* hatch */
+      .ht-wall { inset: 0; }
+      .ht-board { left: 22%; right: 22%; top: 18%; bottom: 22%; background: repeating-linear-gradient(180deg, #5a4030 0 2cqw, #4a3428 2cqw 2.3cqw); box-shadow: inset 0 0 0 .6cqw #3a2a20; animation: hatchopen 6s ease-in-out both; }
+      .ht-open { left: 22%; right: 22%; top: 18%; bottom: 22%; background: linear-gradient(180deg, #1a1010, #3a2a20); box-shadow: inset 0 0 3cqw rgba(0,0,0,.6); }
+      .ht-steel { left: 26%; right: 26%; top: 26%; bottom: 30%; background: linear-gradient(180deg, #c8d0d4, #8a949a); box-shadow: inset 0 0 2cqw rgba(0,0,0,.3); }
+      .ht-glow { left: 26%; right: 26%; top: 26%; bottom: 30%; background: radial-gradient(ellipse at 50% 80%, rgba(255,200,120,.7), transparent 70%); mix-blend-mode: screen; animation: warmglow 5s ease-in-out infinite alternate; }
+      /* kitchen steam + dinner */
+      .kn-wall { inset: 0; background: linear-gradient(180deg, #2a2420, #1a1612); }
+      .kn-hatch { left: 20%; right: 20%; top: 12%; height: 40%; background: linear-gradient(180deg, #1a1010, #3a2a20); box-shadow: inset 0 0 0 .8cqw #c8bca8; }
+      .kn-tray { left: 30%; width: 40%; top: 28%; height: 14%; background: linear-gradient(180deg, #d8dce0, #9aa2a8); border-radius: .4cqw; box-shadow: 0 .6cqw 1cqw rgba(0,0,0,.4); }
+      .kn-tray::after { content: ""; position: absolute; left: 10%; right: 10%; top: 20%; bottom: 20%; background: radial-gradient(ellipse, #c87840, #8a4820); border-radius: .3cqw; }
+      .kn-people { left: 10%; right: 10%; bottom: 8%; height: 28%; display: flex; gap: 2cqw; justify-content: center; align-items: flex-end; }
+      .kn-people i { position: relative; width: 5cqw; height: var(--h, 90%); background: #1a0e08; border-radius: 2.5cqw 2.5cqw .4cqw .4cqw; }
+      .kn-people i::before { content: ""; position: absolute; left: 15%; top: -35%; width: 70%; height: 40%; border-radius: 50%; background: #1a0e08; }
+      /* List slip */
+      .ls-paper { left: 18%; right: 18%; top: 10%; bottom: 12%; background: #f4f0e4; box-shadow: 0 2cqw 4cqw rgba(0,0,0,.5); transform: rotate(-1.5deg); }
+      .ls-paper b { position: absolute; left: 8%; right: 8%; font: 500 2.2cqw/1.35 Karla, sans-serif; color: #2a2a28; }
+      .ls-paper i { position: absolute; left: 8%; right: 18%; height: .35cqw; background: rgba(40,40,40,.35); }
+      /* frost depot */
+      .fr-white { left: 0; right: 0; bottom: 0; height: 40%; background: linear-gradient(180deg, transparent, rgba(240,245,255,.55)); }
+      .fr-track { left: 10%; right: 10%; bottom: 8%; height: 8%; background: repeating-linear-gradient(90deg, rgba(40,40,50,.5) 0 6cqw, transparent 6cqw 10cqw); }
+      /* coda */
+      .cd-lean { left: 0; right: 0; top: 0; height: 55%; background: linear-gradient(180deg, #2a2018, #1a1410); }
+      .cd-trolley { left: 34%; top: 18%; }
+      .cd-kitchen { left: 0; right: 0; bottom: 0; height: 50%; background: linear-gradient(180deg, #3a2a20, #1a1210); }
+      .cd-glow { left: 20%; right: 20%; bottom: 10%; height: 50%; background: radial-gradient(ellipse at 50% 80%, rgba(255,180,90,.55), transparent 70%); mix-blend-mode: screen; }
+      .cd-slips { left: 8%; bottom: 12%; width: 22cqw; height: 16cqw; background: #f4f0e4; box-shadow: 0 .8cqw 1.4cqw rgba(0,0,0,.45); transform: rotate(-6deg); }
+      .cd-slips i { position: absolute; left: 10%; right: 15%; height: .3cqw; background: rgba(40,40,40,.4); }
+      .cd-slips.b { left: 14%; bottom: 8%; transform: rotate(4deg); opacity: .85; }
+      @keyframes steamwisp { from { transform: translateY(0) scale(.6); opacity: 0; } 30% { opacity: .85; } to { transform: translateY(-18cqh) scale(1.5); opacity: 0; } }
+      @keyframes hatchopen { from { transform: translateY(0); } to { transform: translateY(-70%); } }
+      @keyframes warmglow { from { opacity: .45; } to { opacity: 1; } }
+      @media (max-width: 600px) { .bask-hero { height: 22rem; } .abbey { width: 14cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .bask-hero *, .scene.bk *, .bask-hero *::before, .bask-hero *::after, .scene.bk *::before, .scene.bk *::after { animation: none !important; }
+        .ht-board { transform: translateY(-70%); }
+        .steamw { opacity: .5; transform: translateY(-6cqh); }
+      }
+      .sp-basket { height: 22cqw; bottom: 14%; }
+      .sp-soft { bottom: 30%; height: 12cqw; width: 26cqw; }
+      .sp-apple { bottom: 36%; }
+      .sp-hand { bottom: 14%; height: 12cqw; }
+      .crate { position: absolute; }
+      .bs-slip { display: block; }
+      .ht-board { z-index: 4; }
+      .ht-glow { z-index: 2; }
+      .kn-people i { flex: 0 0 5cqw; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="bask-hero" aria-hidden="true">
+          <div class="sky dawn"></div><div class="abbey"></div><div class="terrace"><i style="--h:65%"></i><i style="--h:94%"></i><i style="--h:93%"></i><i style="--h:92%"></i><i style="--h:91%"></i><i style="--h:90%"></i><i style="--h:89%"></i><i style="--h:88%"></i><i style="--h:87%"></i></div><div class="street"></div>
+          <div class="trolley " style="left:12%;bottom:8%"><div class="handle"></div><div class="frame"></div><div class="wheel l"></div><div class="wheel r"></div></div><i class="steamw" style="left:40%;top:42%;--d:0.0s"></i><i class="steamw" style="left:48%;top:42%;--d:-1.2s"></i><i class="steamw" style="left:56%;top:42%;--d:-2.4s"></i>
+          <div class="label">Abbey tower</div>
+        </div>
+        <h1>The basket kept the round</h1>
+        <p class="dek">In Selby a retired dinner lady walks a neighbour food-share round until a closed primary kitchen opens for Thursday dinner, and the baskets keep going.</p>
+        <time datetime="2026-11-06">6 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Ruth Ellerby woke at half past five the way she always had, before the List texted and before the kettle boiled and before the light over the Abbey had properly decided what kind of day it was going to be, and she lay for a minute listening to the radiator click itself awake and to the distant clank of a goods train on the line towards Hull, which was the same clank Denis used to time his first cup by when he still worked nights at the paper mill.</p>
+        <p>She was seventy. She lived in a two-up two-down on Flaxley Road in Selby, North Yorkshire, the middle of a short terrace of the same red brick, with a short front garden that she kept in order and a back yard that held a washing line, a water butt, and the two-wheeled tartan trolley she had bought in the market in 2019 for Denis's walking stick and her shopping bags. Denis had been gone five years. The stick was still in the porch. The trolley had found a second life.</p>
+        <p>Her phone buzzed on the bedside table at five forty-one, which was early even for the List.</p>
+        <p><em>Flaxley round — Tue. Collect 07:10 depot (old Co-op yard). 11 baskets. Soft pack for 14 Flaxley (Scaife). Sub: no crusty for 9 Portholme (Denton, jaw). Allotment return: Courtenay Ave crate in. Route attached. — Glean / the List</em></p>
+        <p>She read it twice, the way she read everything twice now, and sat up and put her feet on the rug Denis's sister had given them for their fortieth, which was worn through in the place where she stood every morning to pull her socks on. Soft pack for Arthur. No crusty for Mrs Denton. Courtenay Avenue putting something back in. Eleven houses. That was a light Tuesday.</p>
+        <p>Downstairs she made tea in the brown pot and ate toast with Marmite standing at the sink, looking out at the yard and the trolley parked under the lean-to with its cover on against the damp. The kitchen was small and still mostly Denis's arrangement — the radio on the windowsill, the calendar from the funeral directors that she never threw away because the months were big enough to write on, the photograph of Craig at eighteen in his Leeds United shirt stuck to the fridge with a magnet from Whitby. Craig was forty-four now and lived in Headingley with a woman called Joanne who was perfectly nice and slightly careful with Ruth, and their boy Callum was sixteen and came through on the train some weekends with a rucksack and a hunger that reminded her of the dinner hall.</p>
+        <p>She dressed in the clothes she wore for the round: soft trousers, a fleece, the navy anorak with the Glean badge sewn on by a volunteer called Magda who ran the depot sewing bee on Fridays, and the shoes with the good grip because Flaxley Road had a stretch near the corner that stayed wet after rain. She put the phone in her pocket. She took the house key off the hook. She went out through the back, unlocked the lean-to, and rolled the trolley into the yard. The wheels squeaked once and then settled. She had oiled them last week with the same three-in-one Denis used to keep in the shed.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk dp-scene" aria-hidden="true">
+        <div class="dp-yard"></div><div class="dp-lean"></div><div class="dp-lines"></div><div class="crate apple" style="left:8%;bottom:12%"></div><div class="crate cab" style="left:26%;bottom:22%"></div><div class="crate" style="left:44%;bottom:12%"></div><div class="crate apple" style="left:62%;bottom:22%"></div><div class="crate cab" style="left:80%;bottom:12%"></div>
+        <div class="label">waxed cardboard</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The depot sat behind what used to be the Co-op on Gowthorpe, in a yard that still had the faded painted lines for the old delivery vans and a lean-to of its own where the crates came in from the Vale. Ruth had walked there three mornings a week for fourteen months, ever since Magda had put a flyer through the door and Ruth had stood in the porch reading it with her reading glasses on and thought, well, I know how to put food in a bag, and joined the way you joined a library, which was the point Magda kept making to anyone who looked uncertain about it. No means test. You put your name down. You took a turn. You took a basket when it was your turn to receive. The Yorkshire Food Partnership ran Glean out of a small office above a solicitor's in Micklegate and paid for the vans and the cold store and the person who kept the List honest, and everything else was neighbours.</p>
+        <p>The List was not a person. It was the scheduling model the partnership used, and people called it the List the way people call a familiar dog by a short name, without ceremony. It texted routes. It texted substitutions when somebody was away at a hospital appointment or staying with a daughter in York. It remembered that Arthur Scaife at number fourteen could not lift a full crate of potatoes and that Mrs Denton at nine Portholme Avenue was having her teeth done and needed soft food until further notice, and it remembered that the Courtenay Avenue allotments put surplus back into the share on Tuesdays and Fridays when the beans came in, and it wrote all of this in plain sentences that arrived on your phone like a note from a careful neighbour.</p>
+        <p>Magda was already there when Ruth arrived at seven, hair in a scarf, breath showing, sorting a stack of waxed cardboard trays that had come up from a farm near Riccall with the seconds — apples with a bruise, carrots that had grown into each other, cabbages with an outer leaf the supermarket would not have taken. Behind her, under the lean-to lights, two younger volunteers were packing baskets according to the printed slips the List had spat out at six. Each slip had a house number, a street, a short note, and a list of what was going in.</p>
+        <p>"Ruth," Magda said, without looking up. "Soft for Arthur. I've put the stew pack on top so he sees it. And there's a loaf from Bettys' end-of-day that isn't Betty's, it's the one on Finkle Street, but it's good, and I've torn the crusts off half of it for Mrs Denton so she doesn't have to pretend."</p>
+        <p>"You're a soft touch," Ruth said.</p>
+        <p>"I am not," Magda said. "The List told me. I only tore."</p>
+        <p>Ruth checked her eleven slips against her eleven baskets. She knew most of the houses by the feel of the path and the sound of the gate. Number three Flaxley was the young couple with the baby, and they got the extra bananas when there were any because the List had noted <em>infant, finger food welcome</em>. Number six was Mr and Mrs Khan, who put back jars of lime pickle when they made a batch, labelled in Mrs Khan's careful hand. Number eleven was empty this week — daughter in Doncaster, dog with a neighbour — and the List had rerouted that basket to a house on Armoury Road where a man called Pete was recovering from a hip and living on what his sister brought when she remembered. Number fourteen was Arthur.</p>
+        <p>She loaded the trolley carefully, heavy things at the bottom, soft packs and bread on top, the way she had loaded the dinner trolley in the hall at Barlby Road Primary for twenty-three years before the academy merger shut the annex kitchen and she took early retirement with a card signed by two hundred children who could not all spell her name. The tartan cover went over. The strap went round. She said goodbye to Magda and set off up Gowthorpe in the thin morning with the Abbey tower behind her and the smell of the river when the wind was in the right place.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk bs-scene" aria-hidden="true">
+        <div class="sky"></div><div class="brick" style="inset:0;opacity:.35"></div><div class="bs-row"><i class="" style="--h:55%"><b class="bs-slip"></b></i><i class="" style="--h:57%"><b class="bs-slip"></b></i><i class="" style="--h:59%"><b class="bs-slip"></b></i><i class="" style="--h:61%"><b class="bs-slip"></b></i><i class="" style="--h:63%"><b class="bs-slip"></b></i><i class="" style="--h:65%"><b class="bs-slip"></b></i><i class="" style="--h:67%"><b class="bs-slip"></b></i><i class="" style="--h:69%"><b class="bs-slip"></b></i><i class="" style="--h:71%"><b class="bs-slip"></b></i><i class="" style="--h:73%"><b class="bs-slip"></b></i><i class="empty" style="--h:75%"><b class="bs-slip"></b></i></div>
+        <div class="label">eleven baskets</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Flaxley Road ran off the main road in a short straight line of terraces with front gardens that were mostly gravel and bins and the occasional rose that had been put in by somebody who still believed in roses. Ruth knew it the way you know a street you have walked for forty years. She knew which gate stuck. She knew which door had a letterbox that bit your fingers. She knew that the woman at number eight put her milk bottles out in a perfect line and that the man at number twelve left his recycling in a heap that the wind took.</p>
+        <p>She started at the far end and worked back, which was what the List preferred on Tuesdays because the soft packs for Arthur wanted less time in the trolley. At number nineteen she left a basket on the step and rang once, and a hand came out and took it and said thanks love without a face attached, which was fine. At number seventeen she waited because Mrs Lomas liked to come to the door and ask about Craig, and Ruth told her Craig was well and Callum was coming Friday, and Mrs Lomas said that was nice and took the basket with both hands as if it were a baby.</p>
+        <p>At number fourteen she rang and waited longer. Arthur Scaife was eighty-two and moved slowly. He had been a fitter at the shipyard in years that Selby no longer talked about much, and he had lived alone in the house since his wife died in the same winter Denis did, which was a coincidence Ruth did not like to dwell on. She had been bringing him baskets for eleven months. For the first three he had taken them with a nod and she had later seen the bread gone and the vegetables still in the crate by the bin, and Magda had said leave it, the List will learn, and the List had learned. Soft pack. Stew. Mash. Things you could eat with a fork without cutting. Things that did not need a recipe.</p>
+        <p>The door opened. Arthur stood in a cardigan that had been washed until the elbows were thin, and he smelled of coal tar soap and the particular staleness of a house where the windows did not get opened enough. He looked at the soft pack on top of the basket.</p>
+        <p>"They've done that mash again," he said.</p>
+        <p>"They have," Ruth said. "And there's stew underneath. And an apple you can manage."</p>
+        <p>"I had toast," he said, as if confessing.</p>
+        <p>"I know you did. Have the stew for your dinner."</p>
+        <p>He took the basket. His hands shook a little on the handles. He did not close the door at once. He stood there looking at her trolley as if it were a piece of machinery he was assessing for a repair.</p>
+        <p>"Your lad coming?" he said.</p>
+        <p>"Friday. Callum."</p>
+        <p>"Bring him round. I've got a tin of biscuits that wants eating."</p>
+        <p>"I will," Ruth said, and meant it, and went on to number twelve, where the recycling heap had acquired a new pizza box overnight.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk sp-scene" aria-hidden="true">
+        <div class="sky"></div><div class="brick" style="inset:0"></div><div class="sp-door"></div><div class="sp-basket"></div><div class="sp-soft"></div><div class="sp-apple"></div><div class="sp-hand"></div>
+        <div class="label">soft pack</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She finished the Flaxley stretch by twenty past eight and did Portholme and the two houses on Armoury Road and the Courtenay Avenue drop-off where she left an empty crate for the allotment surplus and took away a full one of runner beans and courgettes that had grown past the size anybody wanted to sell. By nine she was back at the depot with an empty trolley and a light sweat under the fleece, and Magda gave her a mug of tea from the thermos and a biscuit from a packet that had come in with the near-date supermarket run.</p>
+        <p>"List says Arthur's eating the soft packs," Magda said. "Weight of the returns is down. That's how it knows."</p>
+        <p>"He still talks about toast," Ruth said.</p>
+        <p>"Talking's free. Eating's what counts."</p>
+        <p>Ruth sat on the plastic chair by the cold store and drank her tea and looked at the crates coming in from a bakery in York that had over-ordered for a wedding that had cancelled. The List would turn those into baskets by Thursday. She thought about the annex kitchen on Barlby Road, the one that had sat locked since the merger with its stainless steel benches still in place and the serving hatch boarded, and she did not say anything about it, because she had said it before and Magda had said the partnership was looking at community kitchens and Ruth had learned to wait.</p>
+        <p>On the walk home she stopped at the corner shop for milk and a paper, and the woman behind the counter asked if the round was busy, and Ruth said it was a light Tuesday, and the woman said that was good, and neither of them made a speech about food waste or dignity or any of the words that got used in the leaflets. They talked about the rain and about Callum's GCSEs and about the price of butter, which had come down a bit.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk hv-scene" aria-hidden="true">
+        <div class="hv-yard"></div><div class="hv-bib"></div><div class="trolley hv-trolley" style=""><div class="handle"></div><div class="frame"></div><div class="wheel l"></div><div class="wheel r"></div></div>
+        <div class="label">hi-vis</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Callum arrived on the Friday train from Leeds with his rucksack and a haircut that made him look older and a hunger that made him look exactly sixteen. He hugged Ruth in the porch as if he were still twelve and then stood back and looked at the trolley under the lean-to.</p>
+        <p>"You still doing that food thing," he said.</p>
+        <p>"I am."</p>
+        <p>"Nan, that's well old-person."</p>
+        <p>"I am well old," she said. "Take your bag up. I've done a fish pie."</p>
+        <p>He ate the fish pie standing up in the kitchen the way Denis used to, which she did not correct, and then he sat at the table with a second helping and asked her how the List worked, not because he was interested in scheduling models but because he had a Computing project and needed something that was not a game or a shop, and Ruth found herself explaining it while she washed up.</p>
+        <p>"It isn't clever like they say on the news," she said. "It just remembers. Arthur can't lift. Mrs Denton can't chew. The Khans put pickle back in. The allotments put beans. It matches. Like a dinner lady with a very big notebook."</p>
+        <p>"Can I come on the round," Callum said.</p>
+        <p>She looked at him over the washing-up foam. He had mashed potato on his chin. He was her grandson and he was asking to walk Flaxley Road at seven in the morning with a tartan trolley, and she felt something in her chest that was not quite pride and not quite relief.</p>
+        <p>"Saturday," she said. "Early. Soft shoes. And you do what Magda says."</p>
+        <p>"Who's Magda."</p>
+        <p>"You'll see."</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>Saturday morning Magda looked Callum up and down once and handed him a hi-vis bib that was too big and a pair of cotton gloves and said he could push the trolley on the flat and Ruth would take the kerbs, and Callum, who had expected to be treated like a child or like a hero, was treated like an apprentice, which was better than either. They collected twelve baskets. The List had added a note: <em>Apprentice on round — Ellerby. Keep soft packs labelled clear.</em> Magda laughed when she saw it.</p>
+        <p>"It knows you've brought help," she said. "Show-off."</p>
+        <p>They walked Flaxley in a fine drizzle that made the brick dark. Callum rang the bells. He said thanks love when people said thanks love first, and he learned not to put the heavy potatoes on top of the bread, and at number fourteen he stood behind Ruth while Arthur opened the door in the thin cardigan and looked at the boy and then at Ruth and then at the soft pack.</p>
+        <p>"This your lad," Arthur said.</p>
+        <p>"Grandson. Callum."</p>
+        <p>"Come in a minute," Arthur said. "Both of you. Kettle's on."</p>
+        <p>Ruth nearly said they were on a round, and then she looked at Callum's face and at Arthur's doorway and she said they had five minutes, and they went into a front room that had not changed its wallpaper since about 1987 and smelled of toast and Brasso. Arthur made tea in mugs with saucers. He put a tin of biscuits on the table and opened it with hands that shook and insisted Callum take two. On the sideboard there was a photograph of a woman with a perm and a laugh, and beside it a plate with toast crumbs and a knife with margarine still on it.</p>
+        <p>"I eat proper now, some days," Arthur said to Callum, as if Ruth were not there. "Your nan brings the soft stuff. I was on toast a long while. Toast is easy when you can't be bothered with a pan."</p>
+        <p>"Stew's better," Callum said, because he was sixteen and certain.</p>
+        <p>"Stew is better," Arthur agreed. "I've got a pan going tonight. List put a note on the pack. Said low salt. Cheek."</p>
+        <p>Ruth drank her tea and looked at the toast plate and did not say that Magda weighed the returns. When they left, Arthur came to the door with them and watched the trolley go down the path as if he were seeing it off on a journey, and Callum pushed with more care after that, as if the baskets had become heavier with knowing who they were for.</p>
+        <p>At the depot afterwards Magda put Callum on crate sorting under the lean-to lights, which meant lifting the farm seconds into the right stacks — fruit, root, leaf, soft — and writing the farm name on the chalk board so the List could see what had come in. He worked without complaining. He asked if he could come again. Magda looked at Ruth over his head.</p>
+        <p>"We can use him Saturdays," Magda said. "If he turns up."</p>
+        <p>"I'll turn up," Callum said.</p>
+        <p>On the train back to Leeds that evening he texted Ruth a photograph of the chalk board with his own handwriting on it, <em>Riccall apples — bruise OK</em>, and she saved it to the album she kept for him and did not tell Craig that his son had spent a morning talking to an eighty-two-year-old about stew, because Craig would have made a joke of it and the morning did not want a joke.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk ht-scene" aria-hidden="true">
+        <div class="brick ht-wall"></div><div class="ht-open"></div><div class="ht-steel"></div><div class="ht-glow"></div><div class="ht-board"></div><i class="steamw" style="left:30%;top:8%;--d:0.0s"></i><i class="steamw" style="left:45%;top:8%;--d:-1.2s"></i><i class="steamw" style="left:60%;top:8%;--d:-2.4s"></i><i class="steamw" style="left:75%;top:8%;--d:-3.6s"></i>
+        <div class="label">serving hatch</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The email about the annex kitchen came on a Wednesday in a week of ordinary rounds. It was from the Yorkshire Food Partnership to every Glean volunteer in Selby and Barlby, and Magda printed it and pinned it to the noticeboard at the depot beside the rota and the poster about handwashing. Ruth stood in her anorak and read it with her glasses down her nose.</p>
+        <p>The partnership had agreed a licence with the academy trust for the old annex kitchen on Barlby Road, the one that had served dinners to infants and juniors for forty years and then been shut when the kitchens were centralised at the main site. The stainless was still in. The ovens worked after a service. The serving hatch could come unboarded. Starting the first Thursday in November, Glean would run a weekly community kitchen there — not a soup kitchen, Magda was very clear when she read the email out loud, and not a restaurant, but a place where the week's awkward surplus could be cooked into something people sat down to eat together, and where anyone on the share could come without booking and without proving anything, the way you came to a library.</p>
+        <p>Ruth put her hand on the noticeboard and left it there a moment. She had plated shepherd's pie through that hatch for children who were now old enough to have children of their own. She knew which oven ran hot. She knew which corner of the walk-in had always iced up. She knew the sound the hatch made when you slid it up with your hip because your hands were full of trays.</p>
+        <p>"I'll do Thursdays," she said.</p>
+        <p>"I thought you might," Magda said.</p>
+        <p>The List, when it updated the rota that evening, put Ruth Ellerby down for kitchen lead on Thursdays and added a quiet line Magda showed her on the phone: <em>Ellerby — prior service Barlby annex 23 yrs. Prefer her on hatch and gravy.</em> Ruth laughed until she had to sit down on the plastic chair.</p>
+        <p>"It read my file," she said.</p>
+        <p>"You put the years on your volunteer form," Magda said. "It reads forms. That's allowed."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk kn-scene" aria-hidden="true">
+        <div class="kn-wall"></div><div class="kn-hatch"></div><div class="kn-tray"></div><i class="steamw" style="left:28%;top:0%;--d:0.0s"></i><i class="steamw" style="left:40%;top:0%;--d:-1.2s"></i><i class="steamw" style="left:52%;top:0%;--d:-2.4s"></i><i class="steamw" style="left:64%;top:0%;--d:-3.6s"></i><div class="kn-people"><i style="--h:70%"></i><i style="--h:81%"></i><i style="--h:92%"></i><i style="--h:73%"></i><i style="--h:84%"></i><i style="--h:95%"></i><i style="--h:76%"></i></div>
+        <div class="label">cottage pie</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They spent the last week of October cleaning. Magda, Ruth, two men from the partnership who knew about gas certificates, Callum on the Saturday with a scrubbing brush and headphones he was not allowed to wear in the kitchen, and Arthur Scaife, who turned up on the Tuesday morning at the depot with a clean shirt and said he had come to sort crates if anybody wanted him, and then, when Magda said they were short for the annex clean, said he could still hold a cloth.</p>
+        <p>Arthur moved slowly along the stainless benches with a bottle of cleaner and a cloth folded the way fitters fold cloths, neat and ready, and he did not talk much, and when he found the old scratched mark on the corner of the plate warmer where a thousand trays had caught, he rubbed at it as if he could take the years out. Ruth watched him from the hatch. He had colour in his face that the toast months had not given him. At dinnertime Magda put a bowl of the trial stew on the pass for him — the same soft pack recipe, cooked proper in a pot — and he sat on a stool in the corner and ate it all and wiped the bowl with a piece of bread and said, to nobody in particular, that it wanted a bit of pepper, which Magda wrote down and which the List, somehow, added to the soft-pack notes the next day.</p>
+        <p>Callum found the old dinner-lady rota still blu-tacked inside a cupboard door, names in felt tip, 2014, and among them R. ELLERBY — Mon Tue Wed Thu Fri. He photographed it and showed Ruth, and she looked at her own name in her own writing and felt the years arrange themselves into a straight line from that cupboard to this Thursday coming.</p>
+        <p>"You were here every day," Callum said.</p>
+        <p>"Dinner doesn't take weekends off," she said. "Not when you're feeding three hundred."</p>
+        <p>"How many on Thursday, Magda said."</p>
+        <p>"As many as come. The List thinks forty. Magda thinks thirty. I think we'll put enough on for fifty and send the rest out in baskets Friday."</p>
+        <p>He nodded as if this were a logistics problem he had been set at school. Then he said, "Can I do the trolley on Thursday morning and then come here after."</p>
+        <p>"If your dad says."</p>
+        <p>Craig said yes by text, with a string of thumbs-up that Ruth found faintly exhausting and also kind. Joanne sent a separate message asking if Callum needed to bring anything, and Ruth wrote back <em>apron if he's got one, and an appetite</em>, and Joanne sent a smiling face, and that was the whole negotiation.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk ls-scene" aria-hidden="true">
+        <div class="sky"></div><div class="ls-paper"><b style="top:8%">Flaxley round</b><i style="top:18%"></i><i style="top:25%"></i><i style="top:32%"></i><i style="top:39%"></i><i style="top:46%"></i><i style="top:53%"></i><i style="top:60%"></i><i style="top:67%"></i><i style="top:74%"></i><i style="top:81%"></i><b style="top:72%;font-weight:500;font-size:1.8cqw">cottage pie again risks fatigue</b><b style="top:84%;font-weight:500;font-size:1.6cqw;opacity:.7">try hotpot with Courtenay carrots</b></div>
+        <div class="label">plain hand</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first Thursday opened on a morning of low cloud and the smell of the river. Ruth was at the annex by half past seven with Magda and a woman called Aisha from the partnership who had brought the paperwork and then wisely stood back. The hatch came unboarded with a sound like a held breath let out. The ovens lit. The List had sent the day's menu overnight based on what was in the cold store and what would not keep until Friday: a big cottage pie from the minced beef that was near its date from the supermarket run, mash from the ugly potatoes, cabbage from Courtenay Avenue, apple crumble from the Riccall bruise-apples and a crate of oats that had been sitting too long in a warehouse in York. Soft option: the same pie blitzed and the cabbage cooked soft. No speeches on the wall. A handwritten board by the door that said THURSDAY DINNER — ALL WELCOME — TWELVE TILL TWO.</p>
+        <p>Ruth worked the way she had always worked. She knew without thinking how many scoops to a plate. She knew how to keep the mash from skinning. She put Callum on the trolley for the morning round with Magda supervising, and by half past ten he was back, pink-cheeked, saying Arthur had asked for an extra soft pack to bring to the dinner so he wouldn't be a bother, and Magda had told him he was not a bother and to come as he was.</p>
+        <p>People started arriving at ten to twelve. Mrs Lomas. The Khans with the baby from number three Flaxley, who was not a baby any more and who sat in a high chair that Magda had borrowed from the church hall. Pete from Armoury Road with a stick. Mrs Denton, eating carefully on the soft side. Aisha. Two lads from the sixth form who had seen the board and were hungry in the way sixth-formers are. Arthur, in the clean shirt, with his soft pack under his arm until Ruth took it off him and said he was eating what everyone else was eating, soft, from the hatch, and he sat where she put him near the radiator.</p>
+        <p>Ruth plated. Magda plated. Callum carried plates with a concentration that made his tongue stick out slightly, the way it had when he was learning to write. Nobody stood up and said what this meant. Nobody mentioned waste or community or the future of food. Somebody asked for more gravy and Ruth gave them more gravy. Somebody said the crumble wanted custard and Aisha found a tin of powder in the back of a cupboard that was still in date by a week and made a jug, and the jug went round, and that was the speech, if there was one.</p>
+        <p>Arthur ate his soft cottage pie with a fork and then, slowly, a few soft apple pieces from the crumble, and when Callum came past with the water jug Arthur said, "Tell your nan the pepper's right today," and Callum did, solemnly, standing at the hatch, and Ruth said tell him thank you, and Callum went back, and the room made the particular noise of people who are eating and not in a hurry.</p>
+        <p>At two they packed what was left into clean trays for the Friday baskets. The List had already texted the Friday route with a line that said <em>Thursday kitchen surplus — label clear, heat advice on slip</em>. Ruth washed down the benches. Callum stacked chairs. Arthur held a cloth again and did the hatch lip, which was the job Ruth had always hated because of the crumbs in the track, and he did it properly.</p>
+        <p>When they locked up the cloud had lifted a little and the Barlby Road traffic was doing its ordinary afternoon thing. Ruth stood for a moment with the key in her hand and looked at the annex windows, lit from inside for another minute while Magda did the last switches, and then dark, and then just windows again.</p>
+        <p>"Same time next week," Magda said.</p>
+        <p>"Same time," Ruth said.</p>
+        <p>Callum walked her home as far as Flaxley with the empty trolley, and at her gate he said he would come next Saturday and the Thursday after if Dad said, and Ruth said Dad would say, and she kissed the top of his head even though he was taller than her now, and he put up with it.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>November settled into itself the way it does in Selby, with the river higher against the banks and the Abbey lit early and the market stalls putting their covers on against a wind that came off the Vale with a smell of turned earth. Ruth's rounds took on the winter shape: more root vegetables, more soft packs, more notes from the List about heating instructions and about who needed the basket left inside the porch because the step was icy. She oiled the trolley wheels again. She put the spare gloves in the pocket of the anorak. She found Denis's old scarf in the drawer under the stairs and wore it without making a fuss about whose it had been.</p>
+        <p>Arthur came to the depot three mornings a week now. Magda had put him on the rota for crate sorting between nine and eleven, which was when the farm vans arrived and the work was steady and not heavy if you did it clever. He sat on a high stool Magda had found and sorted apples by feel, bruise to one side, clean to the other, and he taught Callum, on the Saturdays, how to tell a potato that would keep from a potato that wanted using that day, which was a skill Callum's Computing project had not covered and which Callum wrote down in his phone notes under the heading <em>Arthur — veg</em>.</p>
+        <p>"Your project," Ruth said one Saturday, walking home. "Is it going all right."</p>
+        <p>"Miss said it was proper," Callum said. "She liked that it was local. She liked the List remembering soft food. She said most people write about shops."</p>
+        <p>"It isn't a shop."</p>
+        <p>"I know. I said. She put that in the mark."</p>
+        <p>He was quiet for a stretch of pavement. Then he said, "Grandad would have liked Arthur."</p>
+        <p>Ruth looked at the trolley and at the wet leaves in the gutter and at the boy who had Denis's hands when he held a bag of potatoes.</p>
+        <p>"He would," she said. "He'd have argued with him about the shipyard and then shared his sandwiches."</p>
+        <p>"Did Grandad argue a lot."</p>
+        <p>"Only about things that mattered. And football. And whether the kettle had boiled."</p>
+        <p>Callum smiled the small smile he used when he was putting something away carefully in his head for later. At the gate he took the empty baskets into the lean-to for her and hung the cover up on the hook, and she stood in the kitchen doorway watching him do it the way she had once watched Denis hang a coat, and the ordinary rightness of it sat in her chest without needing a name.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk cb-scene" aria-hidden="true">
+        <div class="dp-yard"></div><div class="dp-lean"></div><div class="crate cab" style="left:10%;bottom:14%"></div><div class="crate cab" style="left:26%;bottom:26%"></div><div class="crate cab" style="left:42%;bottom:38%"></div><div class="crate cab" style="left:58%;bottom:14%"></div><div class="crate cab" style="left:74%;bottom:26%"></div><div class="crate cab" style="left:90%;bottom:38%"></div><i class="steamw" style="left:20%;top:30%;--d:0.0s"></i><i class="steamw" style="left:50%;top:30%;--d:-1.2s"></i><i class="steamw" style="left:80%;top:30%;--d:-2.4s"></i>
+        <div class="label">cabbage</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The List learned the kitchen the way it had learned the round. After the second Thursday it began sending Magda a suggested menu on the Wednesday night, written in the same plain sentences, with reasons. <em>Minced pork near date — cottage pie again risks fatigue; try hotpot with Courtenay carrots. Apples holding — crumble alternate with baked. Soft option: hotpot fork-mash. Ellerby prefers gravy jug on pass not plated. Scaife attended both weeks — keep soft volume.</em> Magda read it out in the depot and Ruth snorted at the gravy line and did not deny it.</p>
+        <p>The second Thursday brought more people. Word had gone along Flaxley and along Portholme and into the church coffee morning, not as a campaign but as the kind of news that travels with the offer of a lift. A woman Ruth did not know well from the far end of Armoury Road came with her mother, who was ninety-one and ate half a plate of hotpot with great concentration and then asked if there was tea, and there was tea. The sixth-form lads came back and brought a girl who worked at the chemist and who stayed to dry plates. Craig texted at one o'clock to say he was proud of Callum, which Callum pretended to find embarrassing and then read twice when he thought nobody was looking.</p>
+        <p>Arthur had started leaving the soft pack at home on Thursdays. He ate at the table near the radiator with Mrs Denton on one side and Pete on the other, and the three of them talked about the weather and about the buses and about whether the Abbey floodlights were too bright, and when the crumble came round Arthur had custard and did not mention toast. Ruth, plating at the hatch, saw his cardigan and his clean shirt and the way he passed the water jug without being asked, and she thought of the plate with the margarine knife in his front room and hoped it was still there and also hoped it was not the whole of his evenings any more.</p>
+        <p>After service that week Magda asked Ruth to stay back a minute. The partnership wanted a note for the newsletter, something short about the kitchen, and Magda hated writing and Ruth hated writing for newsletters and between them they produced three sentences that said the annex was open on Thursdays and that surplus from the share was cooked and that everyone was welcome, and Magda emailed it before either of them could make it longer or smarter. The List, Magda said later, had already put the kitchen on the public board with the same information in plainer words. Ruth preferred the List's version. It did not try to warm you up.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall bk fr-scene" aria-hidden="true">
+        <div class="sky frost"></div><div class="abbey" style="filter:brightness(.9)"></div><div class="terrace"><i style="--h:65%"></i><i style="--h:94%"></i><i style="--h:93%"></i><i style="--h:92%"></i><i style="--h:91%"></i><i style="--h:90%"></i><i style="--h:89%"></i><i style="--h:88%"></i><i style="--h:87%"></i></div><div class="street"></div><div class="fr-white"></div><div class="fr-track"></div><div class="trolley " style="left:20%;bottom:12%"><div class="handle"></div><div class="frame"></div><div class="wheel l"></div><div class="wheel r"></div></div>
+        <div class="label">tartan cover</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>On a cold Tuesday in the middle of the month the Riccall farm sent a crate of cabbages that had been caught by an early frost and were good for cooking and for nothing else that would sell, and the List put them into nearly every basket on the Flaxley round with a slip that said <em>frost cabbage — best boiled or in a pan with butter, tonight if you can</em>. Ruth delivered them with the rest. At Arthur's door she waited while he read the slip aloud, slowly, and then he said he had butter, and she said good, and he said he might put a bit of the leftover mash with it, and she said that would do very well.</p>
+        <p>"Callum coming Saturday," he said.</p>
+        <p>"He is."</p>
+        <p>"I've kept the biscuit tin going. Tell him."</p>
+        <p>"I will."</p>
+        <p>She finished the round with her hands cold even in the gloves and the trolley lighter with every gate, and at the depot she stamped her feet and Magda put tea into her and said the partnership had renewed the annex licence for six months on the strength of the first two Thursdays, which was not a surprise and was still a thing you wanted to hear said out loud. Ruth nodded. She did not say she had dreamed about the hatch the night before, the old dream where the trays kept coming and the children kept lining up and Denis was at the end of the line in his mill coat waiting for his dinner as if he had every right, which in the dream he did.</p>
+        <p>Walking home she went the long way past Barlby Road and looked at the annex from the pavement. The windows were dark. The board by the door still said THURSDAY DINNER in Magda's marker pen, a bit rain-smudged. Somebody had tied a bunch of late chrysanthemums to the railings with garden twine, no note. Ruth stood with the trolley and looked at the flowers and at the dark windows and at the ordinary road, and then she went home and put the trolley under the lean-to and made herself cheese on toast because it was Tuesday and she was allowed toast, and she ate it at the table with the radio on and Denis's calendar open to November and Callum's chalk-board photograph still on her phone when she unlocked it for no reason except to look.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>December came early in the sky if not on the calendar. The third Thursday of the kitchen fell on a morning when the frost held until ten and the depot yard was white in the tire tracks. Callum had a school inset and came for the whole day. He did the round with Ruth in the dark-blue of seven o'clock, breath smoking, and at Arthur's door Arthur was already in his coat and said he would walk with them as far as the depot because he was on crates at nine, and so the three of them went down Flaxley together with the trolley and the soft packs and the frost crunching, and Mrs Lomas, opening her door for her basket, said it was like a parade, and Callum went red, and Arthur said it was a round not a parade, and Ruth said both could be true.</p>
+        <p>At the annex they cooked what the List had suggested from a near-date delivery of chicken and a hill of the frost cabbage and the last of a sack of rice that a corner shop had passed across rather than bin: a simple pot that was not any particular country's dish and was everybody's, with soft option mashed through for the ones who needed it, and apple sauce from a glut that would not wait. Ruth stood at the hatch with the gravy jug at her elbow and called the plates the way she had called them in 2014 and 2004 and 1998, and the room filled, and for a stretch of twenty minutes she forgot she was seventy and remembered only the work, which was the kindest forgetting she knew.</p>
+        <p>In the lull between firsts and seconds she looked out over the room. Arthur was cutting a soft piece of chicken for Mrs Denton's plate without being asked. Callum was refilling water and listening to Pete talk about his hip with the serious face he used for adults who were not his parents. Magda was at the far table with Aisha going through a clipboard of next week's farm pickups. The chrysanthemums from the railings were in a jug on the pass, Magda's doing. The serving hatch was up. The ovens hummed. Nobody stood and clapped. Nobody said this was what a town could be. The nearest anyone came was Mrs Lomas, who put her plate down and said, to Ruth, across the hatch, "This is a nice bit of dinner, love," and Ruth said, "Good," and took the plate to scrape and that was enough.</p>
+        <p>When they closed, the surplus went into the Friday trays under the List's labels, and Arthur wiped the hatch lip, and Callum stacked the chairs in the exact pattern Magda liked, and Ruth turned the ovens off in the order she had always turned them off, left to right, because the right one held heat longer and you did not leave a hot oven behind you if you had been trained by a cook called Brenda in 1989 who still lived in Brayton and still sent Ruth a Christmas card.</p>
+        <p>Outside, locking up, Callum said, "Nan."</p>
+        <p>"Mm."</p>
+        <p>"Can I put Glean on my work experience form for next year."</p>
+        <p>"You can put Magda's name. She'll sign."</p>
+        <p>"Arthur said he'd show me the shipyard photographs if I come for tea."</p>
+        <p>"Then you go for tea," Ruth said. "And you eat what you're given."</p>
+        <p>"Even if it's soft."</p>
+        <p>"Especially if it's soft."</p>
+        <p>He grinned. He took the trolley handle without being asked. They walked back through the early dark with the Abbey lit ahead of them and the river smell on the cold air and the wheels of the trolley ticking over the pavement joints in a rhythm Ruth knew better than any song on the radio.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>On the Friday morning the List texted early again.</p>
+        <p><em>Flaxley round — Fri. Collect 07:10. 13 baskets (Thu kitchen surplus in 6). Soft for 14 Flaxley. Denton clear for soft crust trial — small. Apprentice optional. Depot: Scaife on crates 09:00. — Glean / the List</em></p>
+        <p>Ruth read it in bed with the scarf Denis had left her around her shoulders like a habit. Soft crust trial for Mrs Denton. Arthur on crates. Kitchen surplus moving out into the street the way leftovers had always moved in a sensible house. She got up. She put her feet on the rug. She made tea in the brown pot and ate her own toast standing at the sink, looking at the trolley under the lean-to with the first grey light on its tartan cover.</p>
+        <p>She walked the round. She left the surplus meals with heat slips on six doorsteps and the ordinary baskets on the rest. At Arthur's she found him already gone to the depot, and she left his soft pack inside the porch as the List had learned to ask, and she noticed that the toast plate on the sideboard, visible through the front window where the curtain did not quite meet, had a bowl on it now as well, a bowl with a spoon, as if toast had become a side and not the meal. She did not go in. She closed the gate properly on its latch.</p>
+        <p>At the depot Arthur was on his stool with the Riccall apples. Magda was on the phone to a farm about a cancelled supermarket order that would become Monday's windfall. Callum was in Leeds at school, no doubt copying somebody's notes and thinking about potatoes. Ruth unloaded her empty trolley and sat with her tea and listened to the yard — the van doors, the crate wood, Magda's laugh, Arthur telling an apple from an apple — and when she stood to go Magda said Thursday next, and Ruth said Thursday next, and Arthur raised a hand without looking up from the fruit, which was his way of saying the same thing.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>That evening Ruth did not cook. She heated one of the kitchen's own surplus trays the List had marked for volunteers who wanted them, a portion of the pot with the cabbage and the rice, and she ate it at the table with the radio low and the calendar open and the porch light on because she liked to see the trolley from the kitchen window when she stood at the sink. The anorak hung on the peg. The Glean badge caught the light. Upstairs, Callum's rucksack from the last visit still had a spare pair of gloves in it that he had forgotten, and she had not posted them back yet because he would need them Saturday.</p>
+        <p>She washed the tray and set it to drain. She wiped the table. She stood for a long minute at the window with her hands on the edge of the sink and looked out at the lean-to and the yard and the dark shape of the trolley with its cover on, and beyond the fence the backs of the other houses on Flaxley where lights were on in kitchens and people were doing the ordinary evening things with whatever had come in the basket or the shop or the allotment crate.</p>
+        <p>She thought of the annex hatch open on its runners. She thought of Arthur's spoon in a bowl. She thought of Callum's handwriting on the chalk board and of Magda's marker pen on the Thursday board and of the List's plain sentences arriving before dawn like a neighbour who did not need thanking every time. She did not put any of that into a sentence of her own. She turned the kitchen light off and then, because she wanted one more look, turned it back on, and the trolley sat where she had left it, ready for the morning, and the baskets were stacked clean beside it, and the round, which was only a route and a set of gates and a way of getting food from a crate to a plate without anyone having to ask twice, kept itself for another day.</p>
+        <p>Ruth locked the back door. She hung Denis's scarf on the peg beside the anorak. She went up the stairs with the radiator clicking and the goods train somewhere towards Hull, and in the lean-to the tartan cover settled after the day's cold, and on Barlby Road the annex kitchen held the day's heat a little longer in its ovens the way Brenda had taught her ovens would, and on Flaxley Road the gates were shut and the baskets were inside and the List, somewhere on a server the partnership paid for and nobody on the street needed to see, had already begun tomorrow's slips in the same plain hand.</p>
+      </div>
+
+      <figure class="scene tall bk cd-scene" aria-hidden="true">
+        <div class="cd-lean"></div><div class="trolley cd-trolley" style=""><div class="handle"></div><div class="frame"></div><div class="wheel l"></div><div class="wheel r"></div></div><div class="cd-kitchen"></div><div class="cd-glow"></div>
+        <div class="cd-slips"><i style="top:18%"></i><i style="top:34%"></i><i style="top:50%"></i><i style="top:66%"></i></div><div class="cd-slips b"><i style="top:18%"></i><i style="top:34%"></i><i style="top:50%"></i><i style="top:66%"></i></div><i class="steamw" style="left:55%;top:40%;--d:0.0s"></i><i class="steamw" style="left:65%;top:40%;--d:-1.2s"></i><i class="steamw" style="left:75%;top:40%;--d:-2.4s"></i>
+        <div class="label">had already begun tomorrow</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
