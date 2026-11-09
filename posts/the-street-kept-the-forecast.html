@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The street kept the forecast — Ben Miller</title>
+    <meta name="description" content="In Nelson a lollipop lady keeps standing at her corner after the council&#x27;s street-by-street forecast starts aligning the services away, and the street empties exactly as projected.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0e1216;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c8d4c8;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #6a9a78; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .street-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(160,190,170,.14); background: #0e1216; }
+      .street-hero > * { position: absolute; }
+      .street-hero::after, .scene.st::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(4,6,8,.76) 100%), repeating-linear-gradient(112deg, rgba(180,210,190,.02) 0 2px, transparent 2px 8px); }
+      .scene.st { background: #10141a; }
+      .sky { inset: 0; background: linear-gradient(180deg, #1a2430, #4a5a68 55%, #8a9aa4); }
+      .sky.wet { background: linear-gradient(180deg, #121820, #2a343c 50%, #4a545c); }
+      .sky.dusk { background: linear-gradient(180deg, #1a1828, #3a3a48 40%, #6a6870); }
+      .mill { left: 8%; width: 22cqw; bottom: 22%; height: 48%; background: linear-gradient(180deg, #6a6e74, #3a3e44); clip-path: polygon(0 100%, 0 18%, 18% 18%, 18% 0, 82% 0, 82% 18%, 100% 18%, 100% 100%); }
+      .mill::after { content: ""; position: absolute; left: 30%; top: -18%; width: 14%; height: 40%; background: #4a4e54; }
+      .terr { left: 0; right: 0; bottom: 8%; height: 28%; display: flex; gap: .25cqw; align-items: flex-end; }
+      .terr i { position: relative; flex: 1; height: var(--h, 80%); background: #4a4e54; clip-path: polygon(0 16%, 50% 0, 100% 16%, 100% 100%, 0 100%); opacity: var(--o, 1); }
+      .terr i::after { content: ""; position: absolute; left: 30%; right: 30%; top: 38%; height: 20%; background: #c8a060; opacity: .25; }
+      .terr i.off::after { background: transparent; }
+      .tarmac { left: 0; right: 0; bottom: 0; height: 14%; background: linear-gradient(180deg, #2a2e34, #121418); }
+      .tarmac::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 40%; background: repeating-linear-gradient(90deg, transparent 0 8cqw, rgba(200,220,230,.12) 8cqw 8.4cqw); }
+      .lolly { width: 4cqw; height: 28cqw; }
+      .lolly .pole { position: absolute; left: 35%; right: 35%; top: 18%; bottom: 0; background: linear-gradient(90deg, #c8ccd0, #8a9098); }
+      .lolly .disc { position: absolute; left: 50%; top: 0; width: 14cqw; height: 14cqw; margin-left: -7cqw; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff8e0, #f0c040 55%, #c89020); box-shadow: 0 0 3cqw rgba(255,200,80,.55), inset 0 0 0 .6cqw #1a1a1a; animation: lantern 4s ease-in-out infinite alternate; }
+      .lolly .disc::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; border: .5cqw solid #1a1a1a; }
+      .cam { width: 2.4cqw; height: 2cqw; background: #5a6068; border-radius: .3cqw; box-shadow: 0 0 0 .3cqw #2a2e34; }
+      .cam::after { content: ""; position: absolute; left: 30%; top: 25%; width: 40%; height: 50%; border-radius: 50%; background: radial-gradient(circle, #8ab0d0, #1a2030); animation: blinkcam 3s steps(1) infinite; }
+      .lamp { width: .6cqw; height: 22cqw; background: #6a7078; }
+      .lamp::before { content: ""; position: absolute; left: -1.4cqw; top: 0; width: 3.4cqw; height: 2.2cqw; background: #8a9098; border-radius: .4cqw; }
+      .lamp.on::after { content: ""; position: absolute; left: -3cqw; top: 1cqw; width: 7cqw; height: 14cqw; background: radial-gradient(ellipse at 50% 0, rgba(220,230,240,.45), transparent 70%); mix-blend-mode: screen; }
+      /* map */
+      .mp-bg { inset: 0; background: #0c1014; }
+      .mp-green { left: 8%; right: 8%; top: 10%; bottom: 14%; background: radial-gradient(ellipse at 40% 45%, #6a9a78, #3a5a48 50%, #1a2a22); box-shadow: inset 0 0 0 .3cqw rgba(200,220,200,.2); }
+      .mp-ribs { position: absolute; inset: 0; background: repeating-linear-gradient(12deg, transparent 0 3cqw, rgba(20,30,25,.35) 3cqw 3.4cqw); }
+      .mp-street { position: absolute; height: .5cqw; background: #e8ece8; box-shadow: 0 0 1cqw rgba(240,255,240,.4); transform-origin: 0 50%; }
+      .mp-street.hot { background: #f0d080; box-shadow: 0 0 1.4cqw rgba(255,200,100,.6); }
+      .mp-street.dead { background: #4a6050; opacity: .45; }
+      .mp-bar { left: 12%; right: 12%; bottom: 6%; height: 1.6cqw; border-radius: .8cqw; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 .2cqw rgba(200,220,200,.3); }
+      .mp-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--p, 35%); background: linear-gradient(90deg, #6a9a78, #c8e0c8); border-radius: .8cqw; animation: slidebar 8s ease-in-out infinite alternate; }
+      .mp-card { left: 55%; top: 18%; width: 32%; padding: 0; background: #f4f6f2; border-radius: .6cqw; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); height: 28%; }
+      .mp-card b { position: absolute; left: 8%; right: 8%; font: 600 1.7cqw/1.3 Karla, sans-serif; color: #1a2018; }
+      /* bus / school fade */
+      .bs-stop { left: 20%; bottom: 20%; width: 24cqw; height: 18cqw; background: #3a4a58; border-radius: .4cqw; opacity: var(--o, 1); }
+      .bs-bus { left: 48%; bottom: 14%; width: 36cqw; height: 16cqw; background: linear-gradient(180deg, #d04030, #8a2018); border-radius: .6cqw; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); animation: busgo 7s ease-in both; }
+      .bs-bus::before { content: ""; position: absolute; left: 8%; top: 22%; width: 70%; height: 36%; background: repeating-linear-gradient(90deg, #a8c8e0 0 3cqw, transparent 3cqw 3.6cqw); }
+      /* letter */
+      .lt-desk { inset: 0; background: linear-gradient(160deg, #2a2e34, #121418); }
+      .lt-env { left: 22%; right: 22%; top: 18%; bottom: 20%; background: linear-gradient(170deg, #c8a878, #8a6a40); box-shadow: 0 2cqw 3cqw rgba(0,0,0,.55); }
+      .lt-crest { left: 50%; top: 22%; width: 8cqw; height: 8cqw; margin-left: -4cqw; border-radius: 50%; background: radial-gradient(circle at 40% 35%, rgba(255,255,255,.5), transparent 45%), radial-gradient(circle, transparent 50%, rgba(60,40,20,.35) 52%, transparent 60%); }
+      .lt-letter { left: 18%; right: 18%; top: 12%; bottom: 14%; background: #f4f2ea; box-shadow: 0 2cqw 3cqw rgba(0,0,0,.5); transform: rotate(-2deg); }
+      .lt-letter i { position: absolute; left: 10%; right: 15%; height: .35cqw; background: rgba(40,40,40,.35); }
+      /* lights out */
+      .lo-row { left: 0; right: 0; bottom: 12%; height: 40%; display: flex; gap: .3cqw; align-items: flex-end; }
+      .lo-row i { position: relative; flex: 1; height: 100%; background: #3a3e44; clip-path: polygon(0 16%, 50% 0, 100% 16%, 100% 100%, 0 100%); }
+      .lo-row i::after { content: ""; position: absolute; left: 28%; right: 28%; top: 36%; height: 18%; background: #f0d080; opacity: 0; animation: lampfade 6s ease-in-out infinite alternate; animation-delay: var(--d); }
+      .lo-row i.dead::after { animation: none; opacity: 0; }
+      /* sale boards */
+      .sl-house { left: 12%; width: 30%; top: 20%; bottom: 18%; background: #5a5e64; clip-path: polygon(0 18%, 50% 0, 100% 18%, 100% 100%, 0 100%); }
+      .sl-board { left: 48%; top: 28%; width: 36%; height: 40%; background: #f4f6f2; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); }
+      .sl-board b { position: absolute; left: 8%; right: 8%; top: 20%; font: 700 2.4cqw/1.2 Karla, sans-serif; color: #c03020; letter-spacing: .06em; text-align: center; }
+      .sl-board s { position: absolute; left: 8%; right: 8%; top: 55%; font: 500 1.6cqw/1 Karla, sans-serif; color: #4a5058; text-align: center; text-decoration: none; }
+      /* crossing */
+      .cr-road { left: 0; right: 0; bottom: 0; height: 48%; background: #2a2e34; }
+      .cr-zebra { left: 30%; right: 30%; bottom: 10%; height: 60%; background: repeating-linear-gradient(90deg, #e8ecee 0 2.4cqw, transparent 2.4cqw 4.2cqw); opacity: .85; }
+      .cr-lolly { left: 18%; bottom: 42%; }
+      .cr-kids { left: 55%; bottom: 48%; display: flex; gap: 1.4cqw; }
+      .cr-kids i { position: relative; width: 3cqw; height: 8cqw; background: #1a1e24; border-radius: 1.5cqw 1.5cqw .3cqw .3cqw; }
+      .cr-kids i::before { content: ""; position: absolute; left: 15%; top: -40%; width: 70%; height: 45%; border-radius: 50%; background: #1a1e24; }
+      /* toucan */
+      .tc-pole { left: 22%; bottom: 20%; width: 1.2cqw; height: 40%; background: #8a9098; }
+      .tc-box { left: 16%; bottom: 58%; width: 12cqw; height: 18cqw; background: #2a2e34; border-radius: .6cqw; box-shadow: 0 0 0 .4cqw #4a5058; }
+      .tc-box i { position: absolute; left: 22%; right: 22%; height: 22%; border-radius: 50%; background: #3a4048; }
+      .tc-box i.on { background: #e0b040; box-shadow: 0 0 2cqw #f0c050; animation: lantern 2s ease-in-out infinite alternate; }
+      .tc-btn { left: 42%; bottom: 36%; width: 8cqw; height: 8cqw; border-radius: 50%; background: #3a4048; box-shadow: inset 0 0 0 .5cqw #6a7078; }
+      .tc-btn::after { content: ""; position: absolute; inset: 28%; border-radius: 50%; background: #c03020; }
+      /* camera count */
+      .cc-lamp { left: 48%; bottom: 18%; }
+      .cc-cam { left: 49.2%; bottom: 42%; }
+      .cc-nums { left: 10%; top: 12%; font: 600 2.2cqw/1.5 Karla, sans-serif; color: #a8b4bc; letter-spacing: .04em; }
+      .cc-nums b { color: #c8e0c8; }
+      /* Tarn Fields card */
+      .tf-map { left: 6%; right: 6%; top: 8%; bottom: 10%; background: linear-gradient(160deg, #8ab898, #4a7a58 40%, #e8ece8 70%); box-shadow: inset 0 0 0 .3cqw rgba(20,40,30,.3); }
+      .tf-blocks { position: absolute; left: 20%; right: 20%; top: 20%; bottom: 30%; background: repeating-linear-gradient(90deg, #f4f6f2 0 4cqw, #d8e0d8 4cqw 4.4cqw, #f4f6f2 4.4cqw 8cqw); opacity: .85; clip-path: polygon(0 40%, 20% 20%, 50% 30%, 80% 15%, 100% 35%, 100% 100%, 0 100%); }
+      .tf-title { left: 10%; right: 10%; bottom: 14%; font: 700 2.6cqw/1 Karla, sans-serif; color: #1a2a20; letter-spacing: .08em; text-align: center; }
+      .tf-sub { left: 10%; right: 10%; bottom: 6%; font: 500 1.6cqw/1 Karla, sans-serif; color: #3a4a40; text-align: center; }
+      /* coda forecast card */
+      .cd-map { inset: 0; background: radial-gradient(ellipse at 40% 40%, #5a8a68, #1a2a22 60%, #0c1014); }
+      .cd-card { left: 18%; right: 18%; top: 22%; bottom: 22%; background: #f4f6f2; border-radius: .8cqw; box-shadow: 0 2cqw 4cqw rgba(0,0,0,.55); }
+      .cd-card b { position: absolute; left: 8%; right: 8%; font: 600 2.8cqw/1.35 Karla, sans-serif; color: #1a2018; }
+      .cd-card .zero { font-size: 7cqw; color: #c03020; }
+      .cd-card .conf { font-size: 2cqw; color: #6a7078; font-weight: 500; }
+      .cd-bar { left: 12%; right: 12%; bottom: 10%; height: 1.4cqw; border-radius: .7cqw; background: rgba(255,255,255,.12); }
+      .cd-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: linear-gradient(90deg, #6a9a78, #e8f0e8); border-radius: .7cqw; }
+      @keyframes lantern { from { filter: brightness(.85); } to { filter: brightness(1.15); } }
+      @keyframes blinkcam { 50% { opacity: .35; } }
+      @keyframes slidebar { from { width: 20%; } to { width: var(--p, 85%); } }
+      @keyframes busgo { to { transform: translateX(80cqw); opacity: 0; } }
+      @keyframes lampfade { from { opacity: .7; } to { opacity: 0; } }
+      @media (max-width: 600px) { .street-hero { height: 22rem; } .mp-card { width: 40%; } .cd-card b { font-size: 3.4cqw; } .cd-card .zero { font-size: 9cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .street-hero *, .scene.st *, .street-hero *::before, .street-hero *::after, .scene.st *::before, .scene.st *::after { animation: none !important; }
+        .bs-bus { opacity: .25; transform: translateX(40cqw); }
+        .lo-row i::after { opacity: 0; }
+        .mp-bar i, .cd-bar i { width: var(--p, 85%); }
+      }
+      .lolly .disc { width: 12cqw; height: 12cqw; margin-left: -6cqw; }
+      .bs-bus { z-index: 5; }
+      .cr-lolly { z-index: 5; }
+      .cr-kids { z-index: 5; }
+      .mp-card { height: 32%; }
+      .cd-card .zero { letter-spacing: -.02em; }
+      .lt-crest { z-index: 2; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="street-hero" aria-hidden="true">
+          <div class="sky wet"></div><div class="mill"></div><div class="terr"><i class="" style="--h:60%;--o:1"></i><i class="" style="--h:62%;--o:1"></i><i class="off" style="--h:64%;--o:0.35"></i><i class="" style="--h:66%;--o:1"></i><i class="" style="--h:68%;--o:1"></i><i class="off" style="--h:70%;--o:0.35"></i><i class="" style="--h:72%;--o:1"></i><i class="" style="--h:74%;--o:1"></i><i class="off" style="--h:76%;--o:0.35"></i><i class="off" style="--h:78%;--o:0.35"></i><i class="" style="--h:80%;--o:1"></i><i class="" style="--h:82%;--o:1"></i></div><div class="tarmac"></div>
+          <div class="lamp on" style="left:72%;bottom:10%"></div><div class="cam" style="left:73%;bottom:34%"></div>
+          <div class="lolly " style="left:38%;bottom:12%"><div class="disc"></div><div class="pole"></div></div>
+          <div class="label">Tarn Street</div>
+        </div>
+        <h1>The street kept the forecast</h1>
+        <p class="dek">In Nelson a lollipop lady keeps standing at her corner after the council's street-by-street forecast starts aligning the services away, and the street empties exactly as projected.</p>
+        <time datetime="2026-11-09">9 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Carol Hepworth put the kettle on at ten past seven, which gave it time to boil and gave her time to find her gloves, and by twenty-five past she was out of the front door of number 9 with the lollipop under her arm and her flask in the pocket of the long white coat, walking the forty yards down Tarn Street to the corner where it met Pendle View and where, for twenty-two years, she had stood in the road with her hand up and stopped the traffic for children.</p>
+        <p>It was a good corner for it. Tarn Street came down the hill from the old Albion mill in a long straight terrace of stone two-up two-downs, thirty-one houses on the left and twenty-nine on the right, and at the bottom it crossed Pendle View, which was the main road through to Colne and had the buses on it and the vans and, at that time of the morning, the people coming off the motorway who had worked out that if you cut through Nelson past the Shah's shop you saved four minutes on the roundabout. The school was on the far side, St. Mary's, one form entry, red brick with a green railing, and every child who lived on the Tarn Street side of the town had to cross Pendle View to get to it, which in the year Carol started had been a hundred and sixty of them, give or take, and she had known most of them by name and some of them by their grandparents.</p>
+        <p>She stood on the kerb and unscrewed the flask and had the first half cup, and at twenty to eight the first of them came down, which was always Filip and Zofia Kowalczyk from number 22, because their mother started at the care home at eight and dropped them at breakfast club on her way, and they came down the hill at a run with their bags bouncing and stopped dead at the kerb beside her the way she had taught every child to stop dead at the kerb, toes on the line.</p>
+        <p>"Morning, Mrs. Hepworth."</p>
+        <p>"Morning, you two. Coats done up."</p>
+        <p>They did their coats up, which they would not have done for their mother, and she stepped out into Pendle View with the lollipop held up in front of her like a lantern, and a white van slowed and stopped and a silver car behind it stopped, and the twins crossed in front of her and up onto the far pavement and through the green gate, and she stepped back onto her kerb and the van went on and the man in it lifted one finger off the wheel to her, which they mostly did, the regulars.</p>
+        <p>That was the shape of it. She did it until twenty past nine and then she went home and did the washing and had her dinner, and at quarter to three she came back and did it the other way round until twenty to four. It paid nine thousand four hundred pounds a year, which with Keith's pension and her own small one was enough, and it got her out of the house twice a day, which since Keith was more than enough, and it meant that she knew every child on Tarn Street and every child on Gisburn Road and Every Street and the top half of Pickup Street, and every parent, and which ones were late because the mother was poorly and which ones were late because the father had gone, and in a terrace like Tarn Street that was most of what there was to know.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st mp-scene" aria-hidden="true">
+        <div class="mp-bg"></div><div class="mp-green"><div class="mp-ribs"></div><i class="mp-street" style="left:12%;top:18%;width:20cqw;transform:rotate(-20deg)"></i><i class="mp-street dead" style="left:26%;top:27%;width:33cqw;transform:rotate(-3deg)"></i><i class="mp-street" style="left:40%;top:36%;width:46cqw;transform:rotate(14deg)"></i><i class="mp-street hot" style="left:54%;top:45%;width:29cqw;transform:rotate(-9deg)"></i><i class="mp-street" style="left:68%;top:54%;width:42cqw;transform:rotate(8deg)"></i><i class="mp-street" style="left:12%;top:63%;width:25cqw;transform:rotate(-15deg)"></i><i class="mp-street dead" style="left:26%;top:72%;width:38cqw;transform:rotate(2deg)"></i><i class="mp-street" style="left:40%;top:21%;width:21cqw;transform:rotate(19deg)"></i><i class="mp-street dead" style="left:54%;top:30%;width:34cqw;transform:rotate(-4deg)"></i><i class="mp-street" style="left:68%;top:39%;width:47cqw;transform:rotate(13deg)"></i></div>
+        <div class="mp-card"><b style="top:18%">Tarn Street</b><b style="top:48%;font-weight:500;opacity:.75">Forecast tracking</b><b style="top:68%;font-weight:500">ahead of projection</b></div>
+        <div class="mp-bar" style="--p:72%"><i></i></div>
+        <div class="label">Sightline</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first she heard of Sightline was on the radio in the kitchen, the local station, a man from the council talking over the top of the jingle for the carpet place in Burnley. He was called Matthew Ibbotson and he was the head of something called Place and Regeneration, and he had the kind of voice that made you want to believe him, a Rochdale voice with university over the top of it, and he was explaining that Pendle had become one of six councils in the north of England to take part in a national pilot of a new kind of planning.</p>
+        <p>"What we have never been able to do," he said, "is see where a town is going. We plan for the town we've got. We put a school where there are children, and then the children grow up and move to Manchester and we've got a school with ninety empty places and a roof that needs doing. We put in a bus route and the estate it serves goes quiet and we're running a forty-seater round it with three people on. What Sightline does is let us see ten and fifteen years out, street by street, so we can put the money where the people are going to be. Not where they were."</p>
+        <p>The presenter asked him whether that meant the council would be closing things.</p>
+        <p>"It means we'll be aligning things," Ibbotson said. "Honestly, that's the word we use. Aligning. Every pound we spend on a service nobody's going to use in 2035 is a pound we can't spend on a service somebody needs. We're not talking about switching anything off. We're talking about being sensible about where we grow and where we hold."</p>
+        <p>Carol turned it off to hear the kettle, and did not think about it again until the Thursday, when Tariq Shah at the shop on the corner of Pendle View showed her the map on his phone.</p>
+        <p>It was a website the council had put up, and it was very beautiful, she would give it that. It was the whole of Nelson and Brierfield and Colne seen from above, the way you saw it from Pendle Hill on a clear day, with the mills and the chimneys and the long ribs of the terraces running up the valley sides, and it was all done in a soft green colour like a map in an old book. You could slide a little bar at the bottom from 2026 to 2041, and as you slid it the green changed. Some of it went darker, a deep strong green, along the motorway and round the new houses up by the golf course and the business park at Lomeshaye. Some of it went paler. And some of it, as you slid the bar towards the far end, went almost white, the colour of paper, as if somebody had taken a rubber to it.</p>
+        <p>"Look at us," Tariq said, and slid the bar, and Tarn Street went white.</p>
+        <p>Not all at once. In 2026 it was the same soft green as everything else. By 2030 it was paler. By 2034 it was the colour of milk, and if you pressed on it, a little card came up, very neat, with the name of the street and two numbers. <em>Households, 2026: 57. Households, 2034 (projected): 6.</em> And underneath, in smaller grey writing, <em>Confidence: high.</em></p>
+        <p>"Six," Tariq said. "Six houses. Where's everybody going?"</p>
+        <p>"It doesn't say."</p>
+        <p>"It doesn't say. I've got fifty-seven households on this street and it says by 2034 I've got six. My dad bought this shop in 1988." He put the phone down on the counter between the Lotto and the chewing gum. "I rang them. I said where's everybody going. The girl said the model doesn't predict individual decisions, it predicts aggregate trends. I said what trend. She said ageing, out-migration, housing stock condition, employment accessibility. I said, love, you've just described Nelson. You've described every street in Nelson since 1980 and we're still here."</p>
+        <p>Carol pressed on her own house, which you could do, it turned out, and a smaller card came up that said only <em>Tarn Street, terraced, pre-1919</em>, which was true.</p>
+        <p>"It's a guess," she said. "Like the weather."</p>
+        <p>"The weather doesn't take your bus away," said Tariq.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st bs-scene" aria-hidden="true">
+        <div class="sky"></div><div class="terr" style="bottom:28%;height:22%"><i class="off" style="--h:60%;--o:0.35"></i><i class="off" style="--h:62%;--o:0.35"></i><i class="off" style="--h:64%;--o:0.35"></i><i class="off" style="--h:66%;--o:0.35"></i><i class="off" style="--h:68%;--o:0.35"></i><i class="off" style="--h:70%;--o:0.35"></i><i class="off" style="--h:72%;--o:0.35"></i><i class="off" style="--h:74%;--o:0.35"></i><i class="off" style="--h:76%;--o:0.35"></i><i class="off" style="--h:78%;--o:0.35"></i></div><div class="tarmac" style="height:28%"></div>
+        <div class="bs-stop"></div><div class="bs-bus"></div>
+        <div class="label">The bus went in the spring.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The bus went in the spring.</p>
+        <p>It was not the main bus on Pendle View, which went on to Colne every twelve minutes the same as ever. It was the little one, the 27, the hopper, the sixteen-seater that came round the back of the terraces once an hour and went up Tarn Street and across the top past the mill and down to the health centre and the big Asda, which was how Edna Pilling at number 14 got her prescription and her shopping, and how half the street got to the health centre at all, because the health centre was up a hill that nobody over seventy could walk.</p>
+        <p>The letter said that following a review of route performance and projected demand, the 27 would be withdrawn from Tarn Street and rerouted to serve the growth area at Lomeshaye, where a new development of three hundred and forty homes was coming forward. It said residents could still access the 2 and the 2A on Pendle View. It said a demand-responsive service was available for eligible residents and gave a number.</p>
+        <p>Edna rang the number. Carol sat with her while she did it, in Edna's front room with the gas fire on and the photographs of Edna's Harold on the mantelpiece in his Burnley shirt, and the woman on the phone was very kind and very patient and asked Edna for her date of birth and her postcode and her mobility needs, and then put her on hold, and then came back and said that Edna was eligible and that the service could be booked up to seven days in advance through the app or by phone between ten and two, Monday to Friday, and that the vehicle would arrive within a forty-minute window of the requested time.</p>
+        <p>"Forty minutes," said Edna, after she had put the phone down. "I can't stand at that door forty minutes."</p>
+        <p>"You can sit on the step."</p>
+        <p>"I can't get up off the step."</p>
+        <p>"I'll come and get you up off the step."</p>
+        <p>So that is what they did, for a while. Carol booked it on the app on her phone, which Joanne had set up for her from Leeds, and on the morning Edna needed her bloods doing Carol went down after the crossing and sat with her in the front room with the door open, and Edna in her good coat with her bag on her knee, and they watched the street for the white minibus with the green Sightline swoosh on the side, which was the same green as the map, and sometimes it came after ten minutes and sometimes it came after thirty-nine, and once it did not come at all, and the app said <em>your trip has been reallocated to optimise network efficiency, we apologise for any inconvenience</em>, and Edna missed her bloods and had to wait three weeks for another.</p>
+        <p>Edna's daughter came over from Accrington in June and had a long talk with her in the kitchen with the door shut, and in August Edna went to live with her, in a bungalow with a ramp and a bus stop outside, and number 14 went up for sale.</p>
+        <p>Carol helped her pack. They wrapped the photographs of Harold in the <em>Leader</em> and put them in a box, and Edna stood in the empty front room afterwards with the marks of the furniture on the carpet and said, "It's not the bus. You know it's not the bus. I'm eighty-four."</p>
+        <p>"I know."</p>
+        <p>"I'd have gone anyway. In a year or two."</p>
+        <p>"I know you would."</p>
+        <p>"It just made it sooner, that's all," Edna said, and Carol thought about the map, and the bar sliding, and the little card that came up when you pressed on a house.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st sc-scene" aria-hidden="true">
+        <div class="sky"></div><div class="mill" style="left:30%;width:36cqw;height:55%;opacity:.55;filter:grayscale(.4)"></div>
+        <div class="tarmac" style="height:20%"></div><div class="lolly " style="left:20%;bottom:18%;opacity:.3;filter:grayscale(1)"><div class="disc"></div><div class="pole"></div></div>
+        <div class="bs-stop" style="left:55%;bottom:22%;width:28cqw;height:20cqw;opacity:.4"></div>
+        <div class="label">The school went the year after.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The school went the year after.</p>
+        <p>It was not closed. Nobody used that word, and Matthew Ibbotson came to the meeting in the hall at St. Mary's in a blue jumper with no tie and said so himself, standing in front of the climbing frame they had pushed against the wall with the parents on the little plastic chairs and Carol at the back by the radiator because she had stood at that school's gate for twenty-three years and somebody had asked her to come.</p>
+        <p>"This is a federation," he said. "St. Mary's and Walverden will become one school across two sites, with one head, one governing body, one budget. Reception to Year 2 will be taught at Walverden from September. Year 3 to Year 6 will stay here for now."</p>
+        <p>"For now," said somebody.</p>
+        <p>He did not pretend he hadn't said it. That was the thing about Ibbotson, then and later. He did not pretend. "For now," he said. "I'll be straight with you, because you deserve it. The projections show the pupil numbers on this side of the valley falling by around half over the next eight years. We can keep two half-empty buildings going and spread the money thin across both of them and watch the standards drop, or we can put the money into one good school. I know which one I'd want for my own kids."</p>
+        <p>"Walverden's the other side of the bypass," said Kasia Kowalczyk, who had come straight from a shift and still had her lanyard on. "Filip's in Year 1. How does he get there?"</p>
+        <p>"There'll be a walking bus. And there's a school transport offer for families more than two miles."</p>
+        <p>"It's one point eight miles."</p>
+        <p>"Then the walking bus," said Ibbotson, gently. "I know it's not what you want. I'm not going to stand here and tell you it's what you want."</p>
+        <p>Kasia did the walking bus for a term. It left from the bottom of Tarn Street at quarter past eight in a long straggling line of fluorescent tabards, two volunteers and nine little ones, and went along Pendle View and over the footbridge on the bypass and down through the industrial estate, and it took thirty-five minutes on a dry day and forty-five on a wet one, and on the wet ones Carol stood at her corner and watched it go past with Filip at the back holding a volunteer's hand and his face screwed up against the rain, and Zofia, who was in Year 4 and still at St. Mary's, crossed Pendle View on her own in front of the lollipop and looked back at her brother every time.</p>
+        <p>In March the Kowalczyks moved to Lomeshaye, to one of the three hundred and forty new houses, a three-bed semi with a garden that backed onto a playing field and a primary school that had been built new the year before with a roof that did not need doing and a crossing outside it with lights.</p>
+        <p>Kasia came to say goodbye at the corner on the last morning. She stood beside Carol on the kerb while the twins crossed, and she said, "I didn't want to go."</p>
+        <p>"I know, love."</p>
+        <p>"Tomasz wanted to go two years ago. I said no. I said we've got the school and we've got the street and we've got Mrs. Hepworth." She laughed, a bit. "And then there's no bus for my mother when she comes, and Filip's walking forty minutes in the rain past the tyre place. And the new houses have a school with a lollipop light. What do I do?"</p>
+        <p>"You go," said Carol. "Course you go."</p>
+        <p>The removal van came down Tarn Street that afternoon and went to the bottom and turned left onto Pendle View, and that night Tariq showed her the map again on his phone, and you could slide the bar along and press on Tarn Street, and the little card that came up said <em>Households, 2026: 57. Households, current (estimated): 44. Households, 2034 (projected): 6. Confidence: high.</em> And underneath, a new line, in a nice bright green.</p>
+        <p><em>Forecast tracking: ahead of projection.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st lt-scene" aria-hidden="true">
+        <div class="lt-desk"></div><div class="lt-letter"><div class="lt-crest" style="position:absolute;left:50%;top:8%;width:7cqw;height:7cqw;margin-left:-3.5cqw;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.5),transparent 45%),radial-gradient(circle,transparent 50%,rgba(60,40,20,.35) 52%,transparent 60%)"></div><i style="top:22%"></i><i style="top:30%"></i><i style="top:38%"></i><i style="top:46%"></i><i style="top:54%"></i><i style="top:62%"></i><i style="top:70%"></i></div>
+        <div class="label">Mrs. Carol Anne Hepworth</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letter about the crossing came in a brown envelope with the council crest on it, and it was addressed to her by her full name, Mrs. Carol Anne Hepworth, which nobody had called her since the registry office in 1987.</p>
+        <p>It said that the School Crossing Patrol Service was undertaking a review of all sites against the national guidance, which assessed each crossing by the number of children using it and the number of vehicles passing during the patrol period, and that following the federation of St. Mary's and Walverden the site at Tarn Street and Pendle View had fallen below the threshold. It said that the site would therefore be withdrawn at the end of the summer term. It said that the council greatly valued her long service and would like to offer her a redeployment to the new patrol site at Lomeshaye Fields Primary, subject to the usual checks.</p>
+        <p>She took it down to the corner that afternoon in her coat pocket and did the crossing with it there, and there were eleven children that afternoon, which she counted, because she had never counted before and now she wanted to know. Eleven, and two pushchairs, and old Mr. Driver from Every Street who crossed with his stick at quarter past three every day to go to the bookies, and a lad of about fifteen with his hood up who did not look at her and did not need to be stopped for but whom she stopped for anyway, holding the lollipop up in front of a skip lorry while he went across with his hands in his pockets, and on the far kerb he turned round and said, "Ta," which was more than most.</p>
+        <p>She went to Lomeshaye on the Monday to have a look. Joanne drove her, over from Leeds for the day, and they parked in the new estate, which had roads with names like Meadowsweet Way and Kingfisher Rise and pavements so smooth they looked wet, and they stood outside Lomeshaye Fields Primary at half past eight and watched the children go in.</p>
+        <p>There was a crossing. It was a proper one, a toucan, with lights on poles and a box with a button that went <em>wait, wait, wait</em> in a calm woman's voice and then beeped, and the cars stopped on the red without anybody asking them to, and the children crossed on the green, and there was a man in a white coat standing next to it with a lollipop under his arm, doing nothing at all.</p>
+        <p>"That's you," said Joanne.</p>
+        <p>"That's not me," Carol said. "That's a man stood next to some lights."</p>
+        <p>She went and talked to him. He was called Derek and he had done Walverden for eleven years before it went into the federation, and he said it was the easiest money he had ever earned and he hated every minute of it. "They don't need me," he said. "The lights do it. I'm here because the parents asked for a person and the council had a person going spare. Insurance, they call it. I'm a reassurance." He looked at her lollipop. "You're Tarn Street. I've heard about you. You stood in front of a gritter once."</p>
+        <p>"It was going too fast."</p>
+        <p>"It was the gritter," Derek said, and laughed, and then stopped laughing. "Don't come here, love. Honestly. You'll go daft."</p>
+        <p>She wrote back to the council and said thank you but no. She said she would stay at Tarn Street until the end of the summer term, as the letter said, and then she would see.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st lo-scene" aria-hidden="true">
+        <div class="sky dusk"></div><div class="lo-row"><i class="" style="--d:0.0s"></i><i class="dead" style="--d:-0.7s"></i><i class="" style="--d:-1.4s"></i><i class="dead" style="--d:-2.1s"></i><i class="dead" style="--d:-2.8s"></i><i class="" style="--d:-3.5s"></i><i class="dead" style="--d:-4.2s"></i><i class="" style="--d:-4.9s"></i><i class="dead" style="--d:-5.6s"></i><i class="dead" style="--d:-6.3s"></i><i class="" style="--d:-7.0s"></i></div><div class="tarmac"></div>
+        <div class="label">That summer was when the lights started going off.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>That summer was when the lights started going off.</p>
+        <p>The street lights on Tarn Street were the old orange ones, sodium, that the council had been meaning to change for years, and in May some men came and changed them for the new white ones, which Carol thought at first was a good sign. Tariq said it was a good sign too. It was the first thing the council had put into Tarn Street rather than taken out of it since the map went up, and they stood on the step of the shop and watched the men on the cherry picker and Tariq said, "There you go. They're not giving up on us. You don't put new lights on a street you're giving up on."</p>
+        <p>The new lights came on at dusk and went off at half past eleven. There was a notice on the lamp-post about it, laminated, cable-tied on, which said that as part of the council's commitment to energy efficiency and dark skies, lighting on low-footfall residential streets would operate on a part-night schedule. It had a little picture of an owl.</p>
+        <p>After half past eleven Tarn Street was dark from the mill to the corner. You could see the stars over the top of the terrace, it was true, which you never had before, and Carol stood at her bedroom window one night and looked at them and thought of Keith, who had liked the stars and known some of their names. But she also saw, in the dark at the top of the street by the mill, a car pull in with its lights off and sit there for an hour, and in the morning the door of number 30, which had been empty since the Pattersons went, was open and swinging, and the copper had gone out of the walls.</p>
+        <p>The bins went to monthly in August. The notice for that had a picture of a recycling bin with a smile.</p>
+        <p>The gritter stopped coming in the November, which there was no notice for. Carol found out by slipping. Not badly, nothing broken, but she went down on her hip on the steep bit outside number 18 on the way to the corner one black morning and sat there for a while on the frost with the lollipop on the flags beside her, getting her breath, and nobody came, because there was nobody in 18 or 20 or 16 to come, and when she got up and got to the corner there were only four children, and one of them said, "Mrs. Hepworth, you've got ice on your bum," and she said, "I know I have."</p>
+        <p>She rang the council about the gritting. The man was very polite. He said that winter maintenance was prioritised according to a hierarchy based on traffic volume and strategic importance, and that the hierarchy had been updated this year to reflect the latest demand projections, and that Tarn Street was now a Priority 4 route, which would be treated in exceptional conditions only.</p>
+        <p>"What's exceptional?"</p>
+        <p>"When all Priority 1 to 3 routes have been treated."</p>
+        <p>"And when's that?"</p>
+        <p>"I couldn't tell you exactly," the man said. "It depends on the weather."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st sl-scene" aria-hidden="true">
+        <div class="sky"></div><div class="sl-house"></div><div class="sl-house" style="left:auto;right:8%;opacity:.5"></div>
+        <div class="sl-board"><b>FOR SALE</b><s>Tarn Street</s></div><div class="tarmac"></div>
+        <div class="label">The houses would not sell.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The houses would not sell.</p>
+        <p>That was the thing she had not understood, at the start, and Tariq had not understood either, and it was a young woman from the building society in Colne who explained it to them, in the end, sitting in the back room of the shop on the delivery crates with a mug of Tariq's tea, because her nan had lived on Every Street and she said she felt bad.</p>
+        <p>"It's the forecast," she said. "It's public. Anybody can look at it. The lenders look at it. The valuers look at it. The insurers look at it. There's a feed, you can plug it straight into the system. And if the property's in a pale area, a declining area, the system marks it down. It's not a person doing it. It's a risk weighting. The lender says, if this street's going to have six households on it in eight years, what's this house worth in eight years? And it comes out at not much. So they'll only lend sixty per cent, or they won't lend at all, and nobody can get a mortgage on it, so the only people buying are cash buyers, and the cash buyers know that, so they offer forty thousand."</p>
+        <p>"Forty thousand," said Tariq.</p>
+        <p>"Thirty-eight, I've seen. On Gisburn Road."</p>
+        <p>"For a house."</p>
+        <p>"For a house you can't get a mortgage on, on a street the council says is going to be empty." She looked at her tea. "I'm sorry. I'm not supposed to talk about it like this. We're supposed to say the valuation reflects current market conditions."</p>
+        <p>"It does reflect them," Carol said. "It made them."</p>
+        <p>The young woman did not say anything to that, and after a while she finished her tea and went.</p>
+        <p>The cash buyers came, though, the way she had said they would. Not people. Companies, with names that were two words and a number, Brightdale 4 and Northern Residential Holdings and a thing called Fenwick Living Ltd that bought eleven houses on Tarn Street in one go from an auction in Manchester and put white uPVC boards over the windows and a steel sheet over the doors, and a sign on each sheet with a phone number, and then nothing. Some of them rented a few out. A man moved into number 25 on his own with a dog and a very loud telly and was gone again in six weeks. A family came into number 7, a mother and three children from somewhere down south, placed by a council that was not Pendle, and the eldest girl came to the crossing for a fortnight in a uniform from a school Carol had never heard of, and then one Monday did not come, and the curtains in number 7 were open on an empty room.</p>
+        <p>The rest stayed boarded. The council's own Voluntary Acquisition Scheme bought the ones the companies didn't, at the valuation, plus a ten per cent homeloss payment and reasonable removal costs, and those got steel on the doors too, and a different sign, with the council crest on it and the word <em>SECURED</em>.</p>
+        <p>And every month, on Tariq's phone, the little card under Tarn Street said <em>Forecast tracking: ahead of projection.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st cr-scene" aria-hidden="true">
+        <div class="sky wet"></div><div class="cr-road"><div class="cr-zebra"></div></div>
+        <div class="lolly cr-lolly" style=""><div class="disc"></div><div class="pole"></div></div><div class="cr-kids"><i></i><i></i><i></i></div>
+        <div class="label">lollipop</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Carol did not stop going down to the corner at the end of the summer term.</p>
+        <p>She meant to. She had handed back the lollipop, which belonged to the council and had a number on the pole, and the white coat, and her badge, and she had had a nice card from the Road Safety team with a voucher for Marks and Spencer in it, and she had cried a bit on her own in the kitchen with the card on the table. And then on the first morning of the September term she was up at seven and the kettle was on and she was at the front door with her flask before she knew what she was doing, and she stood there with her hand on the door for a long minute.</p>
+        <p>Then she went upstairs and got Keith's old hi-vis vest out of the wardrobe, the yellow one from the buses with <em>BURNLEY &amp; PENDLE</em> on the back, and put her own coat on over the top, and went down the street to the corner.</p>
+        <p>Five children came down Tarn Street and Every Street that morning to cross Pendle View to the Year 3 to Year 6 site of St. Mary's and Walverden Federation. She did not stop the traffic for them, because she was not allowed to and she had no lollipop and a woman in a bus driver's vest walking into the road with her hand up would get herself killed. She stood at the kerb with them, that was all, and waited, and when there was a gap she said, "Now," and they went, and she watched them across.</p>
+        <p>She did it every day that term. She did it through the winter, when it was four children, and three, and then for a while in February only Mr. Driver from Every Street on his way to the bookies, who crossed Pendle View with his stick and said, "You're not even being paid, are you," and she said, "No," and he said, "Daft," and she said, "I know."</p>
+        <p>Then in March she had a letter from a different part of the council saying that it had been brought to their attention that an unauthorised individual had been observed attempting to direct pedestrian movements at the junction of Tarn Street and Pendle View, and reminding residents that only trained and authorised school crossing patrol officers might do so.</p>
+        <p>She took it down to the shop and showed Tariq, and Tariq read it twice and said, "Observed by who?"</p>
+        <p>He found out, in the end, through his cousin who worked for the camera people. There was a camera on the lamp-post at the junction now, a small grey one, put up when the new lights went in, and it counted things. It counted cars and vans and buses and bikes and people on foot and how long they waited at the kerb, and it sent the numbers to Sightline, so that the forecast could be kept up to date. And for six months, at twenty to eight and twenty past three, every weekday, it had counted a woman standing at the corner for an hour and a half and not crossing.</p>
+        <p>"It flagged you," said Tariq. "You're an anomaly. My cousin says there's a list. You're on it."</p>
+        <p>"What's the list for?"</p>
+        <p>"For checking. It doesn't know what you are. You don't fit." He put the phone down on the counter between the Lotto and the chewing gum, where he always put it. "Do you want to know what it thinks you are?"</p>
+        <p>"Go on."</p>
+        <p>"Possible loitering. Possible welfare concern. Possible data error." He looked at her. "You're a possible data error, Carol."</p>
+        <p>"Well," she said. "There's worse."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st tc-scene" aria-hidden="true">
+        <div class="sky"></div><div class="tarmac" style="height:40%"></div>
+        <div class="tc-pole"></div><div class="tc-box"><i style="top:12%"></i><i class="on" style="top:40%"></i><i style="top:68%"></i></div><div class="tc-btn"></div>
+        <div class="lamp on" style="left:70%;bottom:18%"></div><div class="cam cc-cam" style="left:71.2%;bottom:42%"></div>
+        <div class="label">toucan</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Tariq closed the shop in the June.</p>
+        <p>He had held out longer than anybody thought he could, and longer than he could afford to, Carol knew, because she had seen the shelves. They went the way the street went, a little at a time and then all at once. The cash and carry stopped delivering because the drop was below the minimum and he had to drive to Blackburn in his own car on a Sunday. The newspapers went because the wholesaler's route had been optimised. The Lotto went because the terminal was reviewed against the footfall from the camera and came out under the line. By the spring there were tins and crisps and milk and the cigarettes behind the counter, and the heater going in the corner for nobody, and Tariq on his stool doing the crossword in yesterday's <em>Telegraph</em> that he bought in Colne.</p>
+        <p>"My dad bought this in 1988," he said, on the last day, when they had taken the sign down and the man from Fenwick Living was coming at four with the steel sheet. "Nineteen eighty-eight. There were three shops on this corner. There was a butcher's where the bookies was. You could get your hair cut. You know what my dad said when he bought it? He said this is a good street, people will always need milk." He laughed. "People will always need milk. He wasn't wrong. They do. They just get it in Lomeshaye now."</p>
+        <p>He was going to his brother's in Bradford. He gave her the stool, which she did not want and took anyway, and the heater, and a box of tins with the labels peeling, and he stood on the step of the shop with his car keys in his hand and looked up Tarn Street towards the mill, at the white boards and the steel doors and the new white lights that came on at dusk and went off at half past eleven.</p>
+        <p>"Do you know the worst thing," he said. "It got it right. That's the worst thing. I wanted it to be wrong. I wanted to show it. And it got it right."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st cc-scene" aria-hidden="true">
+        <div class="sky wet"></div><div class="terr" style="bottom:20%"><i class="off" style="--h:60%;--o:0.35"></i><i class="off" style="--h:62%;--o:0.35"></i><i class="off" style="--h:64%;--o:0.35"></i><i class="" style="--h:66%;--o:1"></i><i class="off" style="--h:68%;--o:0.35"></i><i class="off" style="--h:70%;--o:0.35"></i><i class="" style="--h:72%;--o:1"></i><i class="off" style="--h:74%;--o:0.35"></i><i class="off" style="--h:76%;--o:0.35"></i><i class="off" style="--h:78%;--o:0.35"></i></div><div class="tarmac"></div>
+        <div class="lamp on cc-lamp"></div><div class="cam cc-cam"></div>
+        <div class="cc-nums" style="left:8%;top:14%">vehicles <b>1</b><br>stationary <b>9s</b><br>pedestrian <b>55m</b><br>crossed <b>0</b></div>
+        <div class="lolly " style="left:28%;bottom:12%;opacity:.15;filter:grayscale(1)"><div class="disc"></div><div class="pole"></div></div>
+        <div class="label">Forecast tracking: ahead of projection.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Matthew Ibbotson came to see her himself in the September.</p>
+        <p>She was not expecting him. There was a knock at twenty to five, which was a time nobody knocked any more, and he was on the step in a dark coat with a lanyard tucked inside it, alone, without a clipboard, looking younger than he had on the radio and older than he had in the school hall.</p>
+        <p>"Mrs. Hepworth. I'm sorry to turn up. I wanted to come in person."</p>
+        <p>She let him in. You did. She put the kettle on, and he sat at Keith's end of the kitchen table and looked round at the kitchen, at the calendar from the Chinese and the photographs of Joanne's graduation and the stool from Tariq's shop in the corner with the box of tins still on it, and he said, "This is a lovely house."</p>
+        <p>"It's worth thirty-eight thousand pounds," Carol said, "apparently."</p>
+        <p>He took that. He had always taken it, she would give him that. He took his tea and held it in both hands and did not drink it, and then he said that he had come because her name was on a list, a welfare list, and the officer whose job it was to visit had asked him whether he wanted to do it himself, because of the history, and he had said yes.</p>
+        <p>"Because I'm a data error."</p>
+        <p>"Because you're on your own at the bottom of a street with nobody either side of you," he said. "And it's going to be winter."</p>
+        <p>He told her about the scheme. It was an enhanced offer now, for the last households on the streets they called the realised areas, because the council wanted to be fair, and it was not a small amount. Full valuation, plus a hardship uplift that took it to what the house would have been worth on the old numbers, before. Plus a homeloss payment. Plus removals, plus a year's difference in rent, plus a place at the top of the list for one of the extra-care flats in the new block at Lomeshaye, where there were wardens and a lift and a hairdresser on Thursdays and a crossing outside with lights.</p>
+        <p>"It's a good offer," he said. "I'm not saying that because it's my job. I'd say it to my mum."</p>
+        <p>"What happens to the street?"</p>
+        <p>He hesitated, and then he got out his phone, because he did not pretend, and showed her.</p>
+        <p>It was a picture. A painting, really, done on a computer, of Tarn Street seen from the bottom of the hill, from her own corner. Except the terraces were gone. Where the terraces had been there was a long slope of meadow, green and gold, with ox-eye daisies in it and tall grass and a path winding up through the middle of it made of pale crushed stone, and a few young trees, and at the top the old Albion mill still standing with its chimney, done up, with glass in its windows and people sitting outside at little tables. There was a heron in the picture, at the bottom, standing in a pond that was roughly where number 9 was. There were children on the path, three of them, running, with a dog.</p>
+        <p><em>Tarn Fields</em>, it said along the bottom. <em>A new green heart for Nelson.</em></p>
+        <p>"There's lottery money for it," Ibbotson said. "Nature recovery. It's one of the best bids in the north. It'll flood less. The valley will flood less. It's genuinely good. The air will be better."</p>
+        <p>"Whose children are they?"</p>
+        <p>"Sorry?"</p>
+        <p>"On the path. Whose are they? Where've they come from?"</p>
+        <p>He looked at the picture. "Lomeshaye, I suppose," he said. "They'll walk over. It's a park."</p>
+        <p>She drank her tea. It had gone cold while he talked, and she drank it anyway.</p>
+        <p>"Can I ask you something," she said. "And you tell me straight, because you always have."</p>
+        <p>"Course."</p>
+        <p>"If you'd not put the map up. If you'd not moved the bus, and not shut the school, and not stopped the gritter and not turned the lights off and not put it all on the internet so the banks could see. If you'd done nothing. Would we be six?"</p>
+        <p>He was quiet for a long time. Outside, the white light on the lamp-post by the corner came on, because it was dusk, and she could see it come on through the window over the sink.</p>
+        <p>"I don't know," he said. "Honestly, I don't know. Maybe not six. Maybe twenty. Maybe the same. The model said six, and we've got six, and it said Gisburn Road would be eleven and Gisburn Road is eleven, and it said Lomeshaye would grow by three hundred and forty households and it's grown by three hundred and sixty. It's been right in this valley ninety-six times out of a hundred. Ninety-six per cent. Do you know what that means? Nobody's ever done that. We go round the country now, me and the team, and they ask us how we did it, and we show them."</p>
+        <p>"I asked you if we'd be six."</p>
+        <p>"I know you did." He put the mug down. "Mrs. Hepworth, if we'd kept the bus, we'd have been running it for Edna Pilling on her own, and she was eighty-four. If we'd kept both schools, the one over the road would have had forty children in a building for two hundred and it would have gone into special measures. We'd have spent money we haven't got holding up a street that was going anyway, and the people at Lomeshaye would have had no school, and no bus. Somebody always loses. All the model does is tell you who. It's just honest about it."</p>
+        <p>"It didn't tell you who," Carol said. "It told you where. You did who."</p>
+        <p>He did not have an answer to that, and he did not pretend to, and after a while he got up and thanked her for the tea and left the papers for the scheme on the table, in a folder with the council crest on and the green swoosh, and he stood on the step and did his coat up and looked down Tarn Street towards the corner, at the white light and the little grey camera on the post under it, and said, "You used to stand there."</p>
+        <p>"I still do."</p>
+        <p>"I know," he said. "I've seen."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st tf-scene" aria-hidden="true">
+        <div class="mp-bg"></div><div class="tf-map"><div class="tf-blocks"></div></div>
+        <div class="tf-title">Tarn Fields</div><div class="tf-sub">A new green heart for Nelson.</div>
+        <div class="label">Tarn Fields</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The six were Carol, at 9, and Kenneth Lord at 3, who was ninety and deaf and would not answer the door to anybody, and the Begums at 41, who had five grown children in Nelson and Brierfield and a son with a car who came every day, and a young couple at 50 who had bought for cash before anybody understood, at the very start, and were still trying to sell, and Mr. Driver, who had moved from Every Street into number 2 at the bottom when Every Street went, because Fenwick Living had rented it to him for nearly nothing, and a man at 33 who nobody had ever seen but whose light went on at night.</p>
+        <p>St. Mary's site closed that July. The federation went onto one site at Walverden, and the green railing round the red-brick building on the far side of Pendle View had a fence put up inside it, the metal mesh kind, on concrete feet, and a sign on the gate that said <em>SECURED</em>.</p>
+        <p>On the first morning of the new term, Carol was up at seven. She put the kettle on at ten past and filled the flask, and found her gloves, and at twenty-five past she put Keith's hi-vis on under her coat and went out of the front door of number 9 and down the forty yards of Tarn Street to the corner.</p>
+        <p>It was a fine morning, for September. The sun was coming over Pendle and lying gold along the tops of the white boards, and you could hear birds in the empty gardens, a lot of birds, more than there used to be, Keith would have known them. The light on the lamp-post was off, because it was day. The little grey camera was on.</p>
+        <p>She stood at the kerb and unscrewed the flask and had the first half cup, and she waited.</p>
+        <p>At twenty to eight, nobody came down the hill. At quarter to, nobody. At eight, Mr. Driver came out of number 2 in his slippers to put his bin out on the wrong week, and saw her, and lifted his stick, and went back in. At ten past, nobody. The traffic on Pendle View came and went, the vans and the silver cars and the twelve-minute bus to Colne with nobody getting off at the stop where nobody got on.</p>
+        <p>At twenty past, she put the lid back on the flask and put it in her pocket, and she looked up and down Pendle View, the way she had taught every child to look, right and left and right again, and there was a white van coming, a long way off, from the Burnley end, not fast.</p>
+        <p>She did not know why she did it. She would not have been able to tell Joanne, or Tariq, or Matthew Ibbotson in his dark coat, or anybody. She had no lollipop and no badge, and there was nobody behind her on the kerb with their toes on the line. But she stepped off the kerb into the road and put her hand up, flat, palm out, the way she had for twenty-two years, and stood there in the middle of Pendle View in a dead man's bus vest with the sun in her face.</p>
+        <p>And the van slowed, and stopped, a car's length from her, the way they always had. And the man in it, who she thought she might know, one of the regulars from before, sat there with the engine running and waited. He did not sound his horn. He did not look at his phone. He just waited, looking at her, and then past her at the kerb, where there was nobody, and then at her again.</p>
+        <p>She stood there until she felt it was long enough. Then she stepped back onto her own kerb, and put her hand down.</p>
+        <p>The man lifted one finger off the wheel to her, and the van went on, towards Colne.</p>
+        <p>On the lamp-post above her the little grey camera counted one vehicle, stationary for nine seconds, and one pedestrian, at the kerb for fifty-five minutes, who had not crossed. It sent the numbers up the valley to Sightline, which took them in along with everything else from that morning, every street in Nelson and Brierfield and Colne, and updated the map, very beautiful, in its soft green like a map in an old book.</p>
+        <p>If you had slid the little bar at the bottom all the way to the end, and pressed on Tarn Street, the card that came up would have said <em>Households, 2034 (projected): 0</em>.</p>
+        <p>And underneath, in smaller grey writing, <em>Confidence: high.</em></p>
+      </div>
+
+      <figure class="scene tall st cd-scene" aria-hidden="true">
+        <div class="cd-map"></div><div class="cd-bar"><i></i></div>
+        <div class="cd-card"><b style="top:12%">Households, 2034 (projected)</b><b class="zero" style="top:36%;left:8%">0</b><b class="conf" style="top:72%">Confidence: high.</b></div>
+        <div class="label">Confidence: high.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
