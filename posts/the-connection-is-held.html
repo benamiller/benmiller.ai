@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The connection is held — Ben Miller</title>
+    <meta name="description" content="A 78-year-old woman from Thurso who won&#x27;t fly sets off across Europe on six trains to reach her granddaughter&#x27;s birth in Thessaloniki, on a railway that has promised never to leave anyone behind.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #1a1410;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #f0d8b0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #3a9a60; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .conn-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(240,200,140,.16); background: #1a1410; }
+      .conn-hero > * { position: absolute; }
+      .conn-hero::after, .scene.cn::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(12,8,4,.7) 100%), repeating-linear-gradient(68deg, rgba(255,220,160,.022) 0 2px, transparent 2px 8px); }
+      .scene.cn { background: #1c1612; }
+      /* --w 0 cold dawn .. 1 warm aegean */
+      .csky { inset: 0; background: linear-gradient(180deg, color-mix(in oklab, #1a2434, #f0a050 calc(var(--w,0)*70%)), color-mix(in oklab, #5a6a78, #ffd08a calc(var(--w,0)*80%)) 70%); }
+      .csky.night { background: linear-gradient(180deg, #0c1018, #1a2430 50%, #2a3040); }
+      .firth { left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(180deg, #2a4a68, #0e1a28); }
+      .fields { left: 0; right: 0; bottom: 18%; height: 28%; background: linear-gradient(180deg, #2a3a28, #1a2418); clip-path: polygon(0 40%, 12% 20%, 28% 35%, 46% 10%, 70% 30%, 88% 8%, 100% 22%, 100% 100%, 0 100%); }
+      .track { left: -5%; right: -5%; height: .7cqw; background: #3a3e44; box-shadow: 0 .4cqw 0 #8a9098, 0 .9cqw 0 #3a3e44; transform: rotate(var(--r,-2deg)); }
+      .train { height: 6cqw; background: linear-gradient(180deg, #d8dce0, #8a9098); border-radius: .4cqw; box-shadow: 0 .8cqw 1.4cqw rgba(0,0,0,.45); }
+      .train::after { content: ""; position: absolute; left: 8%; top: 22%; width: 80%; height: 36%; background: repeating-linear-gradient(90deg, #8ab0d0 0 2.2cqw, transparent 2.2cqw 2.8cqw); opacity: .7; }
+      .carriage { width: 18cqw; height: 7cqw; background: linear-gradient(180deg, #4a5460, #2a323c); border-radius: .4cqw; box-shadow: 0 .6cqw 1cqw rgba(0,0,0,.4); }
+      .carriage::before { content: ""; position: absolute; left: 10%; top: 22%; width: 78%; height: 40%; background: repeating-linear-gradient(90deg, #c8d0d8 0 2.4cqw, transparent 2.4cqw 3cqw); }
+      /* route line */
+      .route { height: .55cqw; background: #4a5058; border-radius: .3cqw; overflow: visible; }
+      .route i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--p, 20%); background: linear-gradient(90deg, #2a8a50, #6ed080); border-radius: .3cqw; box-shadow: 0 0 1.2cqw rgba(80,200,120,.6); animation: linegrow 6s ease-out both; }
+      .route i.amb { background: linear-gradient(90deg, #2a8a50, #e0a030 70%, #e0a030); }
+      .dot { width: 1.6cqw; height: 1.6cqw; margin: -.8cqw 0 0 -.8cqw; border-radius: 50%; background: #8a9098; box-shadow: 0 0 0 .3cqw rgba(255,255,255,.15); }
+      .dot.on { background: #4eca78; box-shadow: 0 0 1.6cqw #6ed090; animation: stonglow 2.4s ease-in-out infinite; }
+      .dot.amb { background: #e0a030; box-shadow: 0 0 1.6cqw #f0c050; }
+      .held { font: 700 3cqw/1 Karla, sans-serif; letter-spacing: .18em; color: #6ed090; }
+      /* screens / tablets */
+      .tab { background: #12161c; border-radius: 1cqw; box-shadow: 0 0 0 .5cqw #2a3038, 0 1.4cqw 2.6cqw rgba(0,0,0,.5); }
+      .tab .line { position: absolute; left: 10%; right: 10%; top: 48%; height: .5cqw; background: #3a4048; border-radius: .3cqw; }
+      /* café / soup */
+      .bowl { width: 14cqw; height: 8cqw; border-radius: 0 0 50% 50% / 0 0 80% 80%; background: linear-gradient(180deg, #c87840, #8a4820); box-shadow: 0 1cqw 1.6cqw rgba(0,0,0,.45); }
+      .bowl::before { content: ""; position: absolute; left: -8%; right: -8%; top: 0; height: 30%; border-radius: 50%; background: #d8a060; box-shadow: inset 0 0 0 .4cqw #a06030; }
+      .pot { width: 10cqw; height: 8cqw; background: linear-gradient(90deg, #c8ccd0, #8a9098); border-radius: .4cqw .4cqw 40% 40%; }
+      /* sleeper */
+      .berth { left: 10%; right: 10%; top: 18%; bottom: 12%; background: linear-gradient(180deg, #2a1e18, #1a1210); border-radius: 1cqw; box-shadow: inset 0 0 0 .5cqw #3a2a22; }
+      .pillow { left: 12%; top: 22%; width: 22cqw; height: 10cqw; border-radius: 1cqw; background: #e8e0d4; }
+      .blanket { left: 20%; right: 12%; top: 38%; bottom: 18%; background: repeating-linear-gradient(45deg, #3a5a8a 0 1.2cqw, #c84040 1.2cqw 2.4cqw, #f0f0e8 2.4cqw 3.6cqw); border-radius: .6cqw; opacity: .85; }
+      .ylight { left: 0; top: 0; width: 30%; height: 100%; background: linear-gradient(90deg, rgba(255,200,80,.35), transparent); mix-blend-mode: screen; animation: yslide 7s ease-in-out infinite; }
+      /* card GUNN */
+      .card { width: 28cqw; height: 18cqw; background: #f4f2ea; box-shadow: 0 1.4cqw 2.4cqw rgba(0,0,0,.5); transform: rotate(-4deg); }
+      .card b { position: absolute; left: 0; right: 0; top: 32%; text-align: center; font: 700 4.4cqw/1 Karla, sans-serif; letter-spacing: .16em; color: #1a1a18; }
+      /* tunnel / sea */
+      .tunnel { left: 0; right: 0; top: 20%; bottom: 20%; background: #0a0e14; }
+      .tunnel .trainw { left: 10%; right: 10%; top: 30%; height: 40%; background: linear-gradient(180deg, #e8ecee, #a8b0b8); border-radius: .6cqw; box-shadow: 0 0 4cqw rgba(180,220,255,.25); }
+      /* ribcage roof */
+      .ribs { left: 0; right: 0; top: 0; height: 55%; background: repeating-radial-gradient(ellipse 80% 100% at 50% 110%, transparent 0 8%, rgba(200,190,170,.55) 8% 9%); }
+      /* Würzburg amber + web */
+      .web { inset: 8%; }
+      .thread { position: absolute; height: .35cqw; background: linear-gradient(90deg, #6ed080, #e0a030, #6ed080); transform-origin: 0 50%; opacity: .75; animation: threadshift 5s ease-in-out infinite alternate; animation-delay: var(--d); }
+      /* villages dawn */
+      .hills { left: -5%; right: -5%; bottom: 16%; height: 40%; background: #2a3a28; clip-path: polygon(0 70%, 10% 40%, 22% 55%, 38% 20%, 52% 45%, 70% 15%, 86% 40%, 100% 25%, 100% 100%, 0 100%); }
+      .spire { width: 1.2cqw; height: 14cqw; background: #8a4030; }
+      .spire::before { content: ""; position: absolute; left: -1.4cqw; top: -4cqw; width: 4cqw; height: 5cqw; background: #8a4030; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+      /* Vienna big hall */
+      .hall { inset: 0; background: linear-gradient(180deg, #c8bca8, #8a7e6a 40%, #3a342c); }
+      .arch { left: 10%; right: 10%; top: 4%; height: 50%; border: 1.4cqw solid rgba(240,230,210,.5); border-bottom: 0; border-radius: 50% 50% 0 0; }
+      .cake { width: 8cqw; height: 6cqw; background: linear-gradient(180deg, #f4e0c8, #d8a070); border-radius: .4cqw; box-shadow: 0 .6cqw 1cqw rgba(0,0,0,.4); }
+      /* Budapest bridges */
+      .river { left: 0; right: 0; top: 40%; bottom: 20%; background: linear-gradient(180deg, #1a3a58, #0e2030); }
+      .bridge { height: 1cqw; background: #d8c090; box-shadow: 0 0 1.4cqw rgba(255,200,100,.4); }
+      .bridge::before, .bridge::after { content: ""; position: absolute; top: -3cqw; width: 1cqw; height: 8cqw; background: #d8c090; }
+      .bridge::before { left: 18%; } .bridge::after { right: 18%; }
+      .cityglow { inset: 0; background: radial-gradient(ellipse at 50% 80%, rgba(255,180,80,.35), transparent 55%); mix-blend-mode: screen; }
+      /* Belgrade boy */
+      .plat { left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, #4a4e54, #2a2e34); }
+      .pillar { left: 28%; top: 8%; bottom: 28%; width: 6cqw; background: linear-gradient(90deg, #6a6e74, #3a3e44); }
+      .fig { width: 4cqw; height: 12cqw; background: #1a1210; border-radius: 2cqw 2cqw .4cqw .4cqw; }
+      .fig::before { content: ""; position: absolute; left: 12%; top: -32%; width: 76%; height: 36%; border-radius: 50%; background: #1a1210; }
+      .fig.kid { width: 2.8cqw; height: 8cqw; }
+      .pack { width: 3cqw; height: 4cqw; background: #3a5a8a; border-radius: .3cqw; }
+      /* Skopje running man */
+      .clock { width: 12cqw; height: 12cqw; border-radius: 50%; background: #e8ece8; box-shadow: inset 0 0 0 .6cqw #2a2e34, 0 1cqw 2cqw rgba(0,0,0,.4); }
+      .clock i { position: absolute; left: 48%; top: 16%; width: .4cqw; height: 34%; background: #1a1a18; transform-origin: 50% 100%; transform: rotate(var(--a, 20deg)); }
+      /* Greece lions */
+      .valley { left: 0; right: 0; bottom: 0; height: 55%; background: linear-gradient(180deg, #c89050, #8a5a30 40%, #3a6a88); clip-path: polygon(0 40%, 15% 20%, 32% 35%, 50% 8%, 68% 30%, 85% 12%, 100% 28%, 100% 100%, 0 100%); }
+      .river2 { left: 30%; right: 20%; bottom: 8%; height: 16%; background: linear-gradient(90deg, #3a8a70, #6ab090); border-radius: 40%; opacity: .85; }
+      /* Thessaloniki / coda */
+      .sea { left: 0; right: 0; bottom: 0; height: 30%; background: linear-gradient(180deg, #3a7aa0, #1a3a58); }
+      .board { left: 8%; right: 8%; top: 8%; height: 36%; background: #1a1e24; box-shadow: inset 0 0 0 .4cqw #3a4048; }
+      .board b { position: absolute; left: 6%; font: 600 1.8cqw/1 Karla, sans-serif; color: #6ed090; letter-spacing: .08em; }
+      .arms { left: 36%; bottom: 28%; width: 28cqw; height: 16cqw; background: #1a1210; border-radius: 8cqw 8cqw 2cqw 2cqw; }
+      @keyframes linegrow { from { width: 0; } }
+      @keyframes stonglow { 50% { filter: brightness(1.35); } }
+      @keyframes yslide { 0%, 100% { left: -10%; opacity: .2; } 40% { left: 50%; opacity: .7; } 80% { left: 110%; opacity: .15; } }
+      @keyframes threadshift { from { transform: rotate(var(--r)) scaleX(.92); } to { transform: rotate(calc(var(--r) + 4deg)) scaleX(1.06); } }
+      @media (max-width: 600px) { .conn-hero { height: 22rem; } .held { font-size: 4.2cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .conn-hero *, .scene.cn *, .conn-hero *::before, .conn-hero *::after, .scene.cn *::before, .scene.cn *::after { animation: none !important; }
+        .route i { width: var(--p, 20%); }
+      }
+      .dot, .route, .route i, .held, .tab, .bowl, .pot, .berth, .pillow, .blanket, .ylight, .card, .tunnel, .trainw, .thread, .hills, .spire, .arch, .cake, .fig, .pack, .plat, .clock, .clock i, .valley, .river2, .sea, .board, .board b, .arms, .bridge, .river, .cityglow, .fields, .firth, .track, .train, .carriage, .csky, .web, .line { position: absolute; }
+      .plat { left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, #4a4e54, #2a2e34); }
+      .card { width: 36cqw; height: 22cqw; left: 8%; }
+      .card b { font-size: 5.2cqw; top: 36%; letter-spacing: .12em; }
+      .board b { white-space: nowrap; }
+      .board .held { right: 8%; left: auto; text-align: right; }
+      .bridge { height: 1.2cqw; }
+      .bridge::before, .bridge::after { width: 1.4cqw; height: 10cqw; top: -5cqw; }
+      .arms { width: 22cqw; height: 12cqw; left: 38%; border-radius: 6cqw 6cqw 1.4cqw 1.4cqw; }
+      .tab .line { left: 10%; right: 10%; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="conn-hero" aria-hidden="true" style="--w:0">
+          <div class="csky"></div><div class="fields"></div><div class="firth"></div>
+          <div class="track" style="bottom:26%;--r:-3deg"></div>
+          <div class="carriage" style="left:8%;bottom:28%"></div><div class="carriage" style="left:27%;bottom:28%"></div>
+          <i class="dot on" style="left:8.0%;top:86%"></i><i class="dot " style="left:18.5%;top:86%"></i><i class="dot " style="left:29.0%;top:86%"></i><i class="dot " style="left:39.5%;top:86%"></i><i class="dot " style="left:50.0%;top:86%"></i><i class="dot " style="left:60.5%;top:86%"></i><i class="dot " style="left:71.0%;top:86%"></i><i class="dot " style="left:81.5%;top:86%"></i><i class="dot " style="left:92.0%;top:86%"></i><div class="route" style="left:8%;right:8%;top:86%"><i class="" style="--p:0.0%"></i></div>
+          <div class="label">a thin green line</div>
+        </div>
+        <h1>The connection is held</h1>
+        <p class="dek">A 78-year-old woman from Thurso who won't fly sets off across Europe on six trains to reach her granddaughter's birth in Thessaloniki, on a railway that has promised never to leave anyone behind.</p>
+        <time datetime="2026-11-10">10 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Moira Gunn had not left Caithness in eleven years, and when the message came through from Thessaloniki at twenty past four on a Wednesday afternoon, with the light already going out over the Pentland Firth and the kettle not yet boiled, she read it twice standing up and then sat down at the kitchen table with her coat still on, because she had only just come in from the shop and had not got round to taking it off.</p>
+        <p>It was from Eilidh, her granddaughter, who had gone out to Greece at twenty-three to teach English for a year and had stayed for nine, and had married a man called Nikos who repaired lifts, and who was now, at thirty-two, eight months pregnant with a baby that was supposed to arrive in the middle of December. The message said the baby was not going to wait for December. It said the doctors had said this week, maybe the weekend, and that Eilidh was fine, everyone was fine, there was nothing to worry about, and then underneath, on a line of its own, as if she had typed it and then sat looking at it before she pressed send, it said: I know it's far. I just wish you were here.</p>
+        <p>Moira took her coat off then. She hung it on the back of the door and filled the kettle and stood at the window while it boiled, looking at the street, which was empty except for the Henderson boy's bike lying on its side by the wall where it always lay, and she thought about the distance from Thurso to Thessaloniki, which she had never in her life thought about in miles, only in the idea of it, the way you think about the moon.</p>
+        <p>She did not fly. That was the first thing. She had flown once, to Tenerife with Donald in 1994, and she had gripped the armrest from Glasgow to the Canaries and back again, and Donald had laughed at her and then stopped laughing when he saw her face, and they had agreed between them, without ever quite saying it, that there would be no more of that. Donald had been dead six years now. The agreement had outlived him the way a lot of their agreements had, quietly, without anyone needing to renew it.</p>
+        <p>So it would be the train, if it was anything. She knew that people did it now. There had been a programme about it on the television, the sleeper trains coming back across Europe, the new lines, the timetables all knitted together, a woman from Leeds who had gone to Istanbul for her sixtieth birthday and cried at the Bosphorus. Moira had watched it with half her attention, the way you watch programmes about places you are not going to. She remembered that the woman had said something about a guarantee, and that the presenter had nodded as if he already knew all about it.</p>
+        <p>She made the tea. She did not drink it. She got out the tablet Eilidh had sent her three Christmases ago, which she used for the weather and for looking at photographs and for very little else, and she found the railway thing on it, the one with the green circle, and she pressed it, and a voice that was neither a man's nor a woman's, exactly, but was pleasant and unhurried and had, she would have sworn, a very faint Highland lilt to it that she had never noticed before, asked her where she would like to go.</p>
+        <p>"Thessaloniki," she said. "In Greece."</p>
+        <p>"Thessaloniki," the voice said. "That's a long way from Thurso. Is it soon?"</p>
+        <p>"It's my granddaughter. She's having a baby. They think this week."</p>
+        <p>There was a pause that was not quite long enough to be a pause, and then the voice said, "Then let's get you there for this week. Can I ask you a few things first?"</p>
+        <p>It asked her whether she could manage stairs, and she said she could manage them but she did not love them. It asked her whether she would rather sleep lying down or would sitting be all right, and she said lying down, at her age, please, if there was such a thing. It asked her whether she needed anyone to meet her at the changes, and she said she did not know, she had never done anything like this, and the voice said that was all right, that was what it was for, and that it would tell her everything as she went and she would never have to work anything out on her own. Then it asked her whether she had a passport, and she went upstairs and found it in the drawer with Donald's watch and the deeds to the house, and it was in date, just, until March, and she came back down and read the number out slowly and the voice thanked her.</p>
+        <p>"Here's what I've got," it said. "You leave Thurso tomorrow on the 06:48 to Inverness. From Inverness you take the Caledonian down to London overnight, and from London the morning train under the sea to Brussels, and from Brussels the sleeper to Vienna. From Vienna you go down through Budapest and Belgrade and Skopje, and you'll be in Thessaloniki on Saturday afternoon. Six trains. Three nights lying down. You'll be met at London and at Vienna and at Belgrade, and anywhere else you'd like to be met, you just say."</p>
+        <p>Moira looked at the screen, where the route had drawn itself as a thin green thread from the top of Scotland to the bottom of the Balkans, and it looked absurd, like a child's drawing of a journey, the kind of line you might draw in the condensation on a bus window.</p>
+        <p>"Six trains," she said. "And if one of them's late?"</p>
+        <p>"Then the next one waits for you," the voice said.</p>
+        <p>She laughed, a short dry sound she did not mean to make. "They don't wait. I've been getting the train from Thurso for sixty years. They don't wait for anybody."</p>
+        <p>"They do now," the voice said, quite gently. "That's the guarantee. Your connections are held. All of them, the whole way. If you're on the train, the next train knows, and it won't go without you."</p>
+        <p>She did not believe it. She would say so later, to Eilidh, and to Nikos, and to a woman called Zsófia whom she had not yet met, and to a boy on a platform in Belgrade whose name she never learned. She did not believe it at all. But she pressed the green button anyway, because the message was still sitting there underneath everything, I just wish you were here, and because there was nothing in the world she would rather do with the last of her savings than spend it on not believing something all the way to Greece.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn hd-scene" style="--w:0.08" aria-hidden="true">
+        <div class="csky" style="--w:0"></div><div class="tab" style="left:18%;right:18%;top:12%;bottom:28%">
+          <div class="line" style="top:40%"><i class="route" style="inset:0"><i style="--p:22%"></i></i></div>
+          <div class="held" style="left:12%;top:58%">HELD</div>
+        </div>
+        <i class="dot on" style="left:8.0%;top:88%"></i><i class="dot on" style="left:18.5%;top:88%"></i><i class="dot " style="left:29.0%;top:88%"></i><i class="dot " style="left:39.5%;top:88%"></i><i class="dot " style="left:50.0%;top:88%"></i><i class="dot " style="left:60.5%;top:88%"></i><i class="dot " style="left:71.0%;top:88%"></i><i class="dot " style="left:81.5%;top:88%"></i><i class="dot " style="left:92.0%;top:88%"></i><div class="route" style="left:8%;right:8%;top:88%"><i class="" style="--p:10.5%"></i></div>
+        <div class="label">a thin green line</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The 06:48 from Thurso was two carriages and a smell of diesel and wet coats, and it left at 06:48, and Moira sat by the window with her small blue case on the seat beside her and her handbag on her knee and watched the dark fields go grey and then go green, and she thought, well, that's one.</p>
+        <p>The guard was a lad called Ross whose mother she had been at school with, and he came down the carriage with his machine and stopped beside her and said, "Mrs Gunn. Where are you away to at this hour?"</p>
+        <p>"Greece," she said, and enjoyed his face.</p>
+        <p>He looked at his machine, and then he looked at her again, and something in his expression shifted, and he said, "So you are. It's come up here. You're on the hold." He turned the little screen round so she could see it, and there was her name, and a thin green line, and beside it a word in small capitals she did not understand, which was HELD, and beneath that, Inverness 10:41, Caledonian Sleeper 20:44 from Inverness, held.</p>
+        <p>"What does that mean?"</p>
+        <p>"Means the whole line knows you're going," Ross said. "Means if we sit behind a sheep at Forsinard for an hour, which we have done, Mrs Gunn, more than once, the sleeper'll wait at Inverness till you're on it." He put the machine back on his belt. "I've had a few. Lad last month going to Warsaw for a job interview. A woman going to her sister's funeral in Lyon. They all look like you do when I tell them."</p>
+        <p>"How do I look?"</p>
+        <p>He thought about it. "Like you're waiting for somebody to say it's a joke," he said.</p>
+        <p>They did not sit behind a sheep at Forsinard. They sat behind a broken-down engineering train at Lairg for fifty minutes, which Ross said was worse, because you could at least shout at a sheep. Moira watched the time on her tablet go past ten, and past half past, and past the time the voice had said she would be in Inverness, and she found that her hands had gone tight on her handbag the way they had gone tight on the armrest on the way to Tenerife, and she made herself let go of it.</p>
+        <p>At ten to eleven the tablet made a small sound, like a spoon on a cup, and the voice said, close to her ear, "You'll be about an hour late into Inverness. That's all right. You've got the whole afternoon there anyway, and the sleeper's not until the evening. I've moved your lunch."</p>
+        <p>"My lunch?"</p>
+        <p>"There was a table booked for you at the station café at half eleven. It's half twelve now. They've kept the soup."</p>
+        <p>She had not known there was a table booked. She had not known there was any soup. She sat with that for a while, watching the hills, and found that she was smiling at the window like an idiot, and that the man across the aisle, who was eating a sausage roll, had noticed and was smiling back at her without knowing why.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn sp-scene" style="--w:0.12" aria-hidden="true">
+        <div class="csky" style="--w:.12"></div>
+        <div class="bowl" style="left:22%;top:38%"></div><div class="pot" style="left:58%;top:36%"></div>
+        <div class="tab" style="left:62%;top:18%;width:16cqw;height:22cqw"></div>
+        <div class="label">She had the soup</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She had the soup. It was lentil, and it was good. She sat in the café at Inverness station through the long grey afternoon with a pot of tea and the tablet propped against the sugar bowl, and she sent Eilidh a photograph of the soup, and Eilidh sent back seven exclamation marks and a picture of her own feet, swollen up like loaves on the end of a sofa somewhere hot, and the words GRAN WHAT, and Moira typed with one finger, I'm coming on the train, don't you go anywhere, and then sat feeling more pleased with that sentence than with anything she had written in years.</p>
+        <p>At four o'clock a woman in a red railway jacket came over and asked if she was Mrs Gunn, and when she said she was, the woman said her name was Fiona and she was the one who did the holds for this end of the Highland line, and she'd just come over to say hello, because they did not get many going as far as Greece.</p>
+        <p>"You do the holds," Moira said. "I thought the machine did the holds."</p>
+        <p>Fiona sat down across from her without being asked, which Moira liked. "It does and it doesn't," she said. "It works them all out. It knows every train in Europe and where it is and how late it's running and who's on it that's going on somewhere else. It sees your train's going to be an hour late into Inverness about three hours before we would. And then it comes to people like me and says, here's what I'd like to do, and here's what it costs, and is that all right."</p>
+        <p>"What does it cost?"</p>
+        <p>"Usually nothing much. Your sleeper's not till tonight, so there was nothing to hold. The soup cost a bit." She smiled. "Sometimes it's more. Sometimes it's asking a train full of three hundred people to sit at a platform for six minutes so one person can get across a bridge, and the three hundred people have their own connections, and some of them are held too, and it has to work out the whole lot at once, every train behind and every train in front, all the way out. That's the bit I couldn't do in a thousand years. I just say yes or no."</p>
+        <p>"Do you ever say no?"</p>
+        <p>Fiona thought about it honestly, which Moira also liked. "Not much any more," she said. "At first we did. At first everyone thought it was daft. You can't run a railway holding trains for people, you'll never get anywhere on time. That's what we all said. My dad worked the signals at Dingwall forty years and he said it at the dinner table every night for a month." She turned her cup round on its saucer. "But it turned out the trains were never on time anyway. They were just late in a way that left people behind. Now they're late in a way that takes everybody. It's about the same amount of late, near enough. It's just that nobody gets left on a platform at midnight in a town they don't know."</p>
+        <p>"And your dad?"</p>
+        <p>"He comes down on a Saturday sometimes and watches the board," Fiona said. "He likes to see the holds come up. He says it's like watching the whole country breathe in."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn sl-scene" style="--w:0.2" aria-hidden="true">
+        <div class="csky night"></div><div class="berth"><div class="pillow"></div><div class="blanket"></div><div class="ylight"></div></div>
+        <div class="label">Caledonian Sleeper</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The Caledonian Sleeper left Inverness at 20:44 and it was the most beautiful thing Moira had ever been inside. That was not true, she knew it was not true, she had been inside the cathedral at Dornoch on her wedding day and inside the maternity ward at Wick when her daughter was born, and both of those had been more beautiful in the ways that counted. But in the way that a room can be beautiful just by being exactly right, by being warm and small and clean and having a bed in it with a tartan blanket folded at the end and a little light over the pillow you could turn on and off yourself, it was the most beautiful thing she had been inside, and she sat on the edge of the bed with her shoes still on and wept for a minute without being sad about anything at all.</p>
+        <p>The steward was a big quiet man from Perth who brought her a whisky she had not ordered, and when she said she had not ordered it he said it had been ordered for her, and when she asked by whom he said, "Fiona at Inverness. She said you'd had a long day." And Moira drank it, slowly, looking at her own face in the black window with the lights of Aviemore going past behind it, and she thought about the machine, whatever it was, working out the six minutes and the three hundred people and the bridge, and she thought about Fiona sitting down across from her without being asked, and she could not for the life of her work out where the one stopped and the other began, and found, slightly to her surprise, that she did not mind.</p>
+        <p>She slept. She had not expected to sleep. She woke once somewhere in the night, with the train standing still and a yellow light sliding across the ceiling and the sound of men's voices outside on a platform, and she lay listening to them, and one of them laughed, and the train moved off again, and she slept until the steward knocked with tea at Watford.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn gn-scene" style="--w:0.28" aria-hidden="true">
+        <div class="csky night"></div><div class="plat" style="height:20%"></div>
+        <div class="card" style="left:12%;top:22%"><b>GUNN</b></div>
+        <div class="tunnel" style="left:48%;right:6%;top:18%;bottom:22%"><div class="trainw"></div></div>
+        <i class="dot on" style="left:8.0%;top:90%"></i><i class="dot on" style="left:18.5%;top:90%"></i><i class="dot on" style="left:29.0%;top:90%"></i><i class="dot " style="left:39.5%;top:90%"></i><i class="dot " style="left:50.0%;top:90%"></i><i class="dot " style="left:60.5%;top:90%"></i><i class="dot " style="left:71.0%;top:90%"></i><i class="dot " style="left:81.5%;top:90%"></i><i class="dot " style="left:92.0%;top:90%"></i><div class="route" style="left:8%;right:8%;top:90%"><i class="" style="--p:21.0%"></i></div>
+        <div class="label">a small card that said GUNN</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>London was a great deal of noise and a man called Dev at the end of the platform at Euston holding a small card that said GUNN, who walked her across a road and through a station that was all glass and down an escalator and onto a train that was all white and leather and quiet, and who put her blue case on the rack for her and told her that the train went under the sea, and that it would take about twenty minutes for the under-the-sea bit, and that most people found it a bit of a let-down, because it was just dark.</p>
+        <p>"I don't mind dark," Moira said.</p>
+        <p>"No," Dev said. "You don't look like you would." He hesitated by the seat. "Can I ask you something? You're the one going to Thessaloniki?"</p>
+        <p>"How on earth do you know that?"</p>
+        <p>"It's on the board," he said. "In the office. We get the long ones up on a screen. Most people are going to Paris or Brussels, and then you get a Berlin, or a Milan, and once a week maybe a Stockholm. You're the furthest anyone's going today out of the whole of London. We've all been watching you since Lairg." He looked embarrassed. "Sorry. That sounds strange."</p>
+        <p>"It does sound strange."</p>
+        <p>"We just like it," Dev said. "When you do this job, you watch people miss things. That's most of what the job used to be. Watching people miss things and being sorry about it. Now there's this little line on a screen, and it's you, and it's going all the way to Greece, and every time it gets somewhere it goes green." He stepped back into the aisle. "Anyway. Good luck with the baby."</p>
+        <p>She had not told him about the baby. She sat back in the white leather seat as the train pulled out and thought about that, and decided that Fiona had told someone, or that the machine had told someone, or that Ross had told his mother who had told half of Thurso who had a cousin who worked at Euston, and that it did not really matter which, and that it was in its way the same thing.</p>
+        <p>The under-the-sea bit was just dark. She did not mind it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn rb-scene" style="--w:0.32" aria-hidden="true">
+        <div class="csky" style="--w:.3"></div><div class="ribs"></div>
+        <div class="track" style="bottom:22%"></div><div class="train" style="left:18%;width:50cqw;bottom:24%"></div>
+        <div class="label">roof like the inside of a ribcage</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In Brussels the station had a roof like the inside of a ribcage, and the sleeper to Vienna did not leave until the evening, and the voice suggested, very politely, that she might like to see something, and she said she would like to sit down, and the voice said that was also a very good idea and found her a bench in a park across the road with a view of a fountain and a man selling waffles, and she sat there in her coat for two hours in the thin November sun eating a waffle she did not need and watching the pigeons, and messaging Eilidh, who said the pains had started and stopped again, and the doctor had said not to get excited, and Nikos had got excited anyway and packed the hospital bag three times.</p>
+        <p>Tell him to leave it alone, Moira wrote. Tell him I'm in Belgium.</p>
+        <p>Eilidh sent back a photograph of Nikos, a big bearded man in a T-shirt that said something in Greek, holding up a small hospital bag in one hand and a very large tin of biscuits in the other, grinning at the camera with the anxious, enormous happiness of a man who is about to become a father and has absolutely no idea what to do with his hands.</p>
+        <p>He says the biscuits are for you, Eilidh wrote. He says the hospital won't have any good ones.</p>
+        <p>Moira looked at the photograph for a long time.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn wz-scene" style="--w:0.38" aria-hidden="true">
+        <div class="csky night"></div>
+        <div class="tab" style="left:16%;right:16%;top:14%;bottom:26%"><div class="held" style="left:10%;top:28%;color:#e0a030;font-size:2.4cqw;letter-spacing:.08em">Delay near Würzburg</div><div class="route" style="left:10%;right:10%;top:62%"><i class="amb" style="--p:48%"></i></div></div>
+        <i class="dot on" style="left:8.0%;top:90%"></i><i class="dot on" style="left:18.5%;top:90%"></i><i class="dot on" style="left:29.0%;top:90%"></i><i class="dot on" style="left:39.5%;top:90%"></i><i class="dot amb" style="left:50.0%;top:90%"></i><i class="dot " style="left:60.5%;top:90%"></i><i class="dot " style="left:71.0%;top:90%"></i><i class="dot " style="left:81.5%;top:90%"></i><i class="dot " style="left:92.0%;top:90%"></i><div class="route" style="left:8%;right:8%;top:90%"><i class="amb" style="--p:31.5%"></i></div>
+        <div class="label">Delay near Würzburg</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The trouble came on the Vienna sleeper, in the middle of Germany, in the middle of the night.</p>
+        <p>She did not know it was trouble at first. She knew only that she woke, as she had woken on the Caledonian, to the train standing still, but this time it did not move off again. She lay there for a long time in the dark, listening, and there were no voices outside, only a faint ticking from somewhere in the walls, and the wind. She turned the little light on over the pillow and looked at the tablet, and it was ten past three in the morning, and the tablet said, in small calm letters, Delay near Würzburg. Investigating.</p>
+        <p>She lay back down. She told herself it was nothing. She told herself she had sat behind a broken-down train at Lairg and the soup had been kept. But this was not Lairg, this was Germany, in the middle of the night, a country she had never set foot in and whose language she could not speak a word of, and she was seventy-eight years old in a nightdress in a small box on wheels, and the line on the screen that had been going green and green and green since Thurso had, for the first time, gone a pale and uncertain amber.</p>
+        <p>At four o'clock a woman knocked on her door. Moira put on her cardigan and opened it, and the woman standing in the corridor was perhaps fifty, small and dark and very tidy, in the uniform of the train, with her hair pulled back so tightly it seemed to be holding her face in place, and she said, in an English that was careful and slightly formal and had a lot of Hungarian underneath it, "Mrs Gunn. I am Zsófia. I am the attendant for this car. I am sorry to wake you."</p>
+        <p>"I was awake."</p>
+        <p>"Yes. I thought you would be." Zsófia glanced up and down the corridor, and then she said, "May I come in for a moment? I must tell you something, and I would prefer to tell you sitting down."</p>
+        <p>They sat on the bed together, side by side, like two women on a bench at a bus stop.</p>
+        <p>"There has been a landslip," Zsófia said. "Ahead of us, on the line. Nobody is hurt. But the line is closed, and we must go back, and go round another way, through Nuremberg. It will be slow. We will be in Vienna perhaps four hours late. Perhaps five."</p>
+        <p>Moira looked at her hands. "And my train from Vienna?"</p>
+        <p>"Your train from Vienna leaves at 10:15 for Budapest," Zsófia said. "We will arrive at maybe two o'clock."</p>
+        <p>"So it will have gone."</p>
+        <p>Zsófia did not answer straight away. She took a small device out of her jacket pocket, the same kind Ross had had in Thurso, and turned it on, and looked at it, and then she turned it so that Moira could see it, and there was the thin line, and it was still amber at Würzburg, but beyond it, at Vienna, it said, in those same small capitals, HELD.</p>
+        <p>"I don't understand," Moira said. "You said it leaves at quarter past ten."</p>
+        <p>"It did," Zsófia said. "An hour ago, when the landslip happened, it did. Then the system began to work. I watched it." She scrolled with her thumb. "You see. First it asks, can the Budapest train wait four hours for one passenger. And the answer is no, of course, there are four hundred people on that train and they have their own places to go. So then it asks something else. It asks, who else on this train, my train, is going on from Vienna. And there are eleven. Eleven of us who will miss connections. A student going to Bratislava. A family going to Zagreb, two children. A man going to his work in Graz. You. And it asks, what if, instead of holding one train for four hours, we move things. A little bit, everywhere."</p>
+        <p>She showed Moira the screen again, and it was not a single line any more. It was a web, dozens of threads, all of them faintly shifting, like the veins on the back of a leaf held up to the light.</p>
+        <p>"The Budapest train goes at 10:15, as before," Zsófia said. "But there is a later one, at 14:40, that is normally only to Győr. Today it will go on to Budapest. It has been extended. A driver in Győr who was going home has agreed to stay. Your train from Budapest to Belgrade in the evening is still there, but it has been moved back forty minutes so the extended train meets it. Some people on the Belgrade train will now be forty minutes late into Belgrade. So the system has gone to them, one by one, every person, and checked their connections in Belgrade too. Two of them had a bus to catch in Belgrade, and the bus is held. One of them had a flight. The flight cannot be held. So for him the system has found another way, it has put him on an earlier train out of Budapest this afternoon, and he has said yes." She shook her head slightly, as if she still could not quite believe it either. "For your four hours in Würzburg, Mrs Gunn, I think maybe two hundred people in four countries have had their day moved a little. A few minutes. Most of them will not even notice. And the driver in Győr is having his dinner late."</p>
+        <p>Moira sat very still.</p>
+        <p>"I should write to him," she said at last. "The driver. I should say thank you."</p>
+        <p>"You can," Zsófia said. "It will let you. People do." She put the device back in her pocket. "But I will tell you a secret. He has already written to you. They often do."</p>
+        <p>She took the device out again and found it, and there it was, a message from someone called Ferenc in Győr, in Hungarian with an English translation underneath that the machine had done, and it said: I am the driver who is staying. My wife says I should tell you that my own grandmother came to my first birthday on three buses and a horse cart from a village near Debrecen, and she brought a cake, and nobody in our family has ever forgotten it. Safe journey. Bring a cake.</p>
+        <p>Moira read it three times and then gave the device back to Zsófia, and put her face in her hands, and Zsófia put an arm round her shoulders, briskly, the way you might steady someone on a moving train, and left it there.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn wb-scene" style="--w:0.45" aria-hidden="true">
+        <div class="csky" style="--w:.4"></div><div class="hills"></div><div class="spire" style="left:62%;bottom:30%"></div>
+        <div class="web"><i class="thread" style="left:50%;top:50%;width:18%;--r:-80deg;--d:0.0s;transform:rotate(-80deg)"></i><i class="thread" style="left:50%;top:50%;width:25%;--r:-62deg;--d:-0.3s;transform:rotate(-62deg)"></i><i class="thread" style="left:50%;top:50%;width:32%;--r:-44deg;--d:-0.7s;transform:rotate(-44deg)"></i><i class="thread" style="left:50%;top:50%;width:39%;--r:-26deg;--d:-1.0s;transform:rotate(-26deg)"></i><i class="thread" style="left:50%;top:50%;width:46%;--r:-8deg;--d:-1.4s;transform:rotate(-8deg)"></i><i class="thread" style="left:50%;top:50%;width:53%;--r:10deg;--d:-1.8s;transform:rotate(10deg)"></i><i class="thread" style="left:50%;top:50%;width:60%;--r:28deg;--d:-2.1s;transform:rotate(28deg)"></i><i class="thread" style="left:50%;top:50%;width:67%;--r:46deg;--d:-2.4s;transform:rotate(46deg)"></i><i class="thread" style="left:50%;top:50%;width:74%;--r:64deg;--d:-2.8s;transform:rotate(64deg)"></i><i class="thread" style="left:50%;top:50%;width:81%;--r:82deg;--d:-3.1s;transform:rotate(82deg)"></i><i class="thread" style="left:50%;top:50%;width:88%;--r:100deg;--d:-3.5s;transform:rotate(100deg)"></i><i class="thread" style="left:50%;top:50%;width:95%;--r:118deg;--d:-3.8s;transform:rotate(118deg)"></i></div>
+        <div class="label">like the veins on the back of a leaf</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They went round by Nuremberg. It was slow. Dawn came up over a Germany that was all low hills and wet woods and red-roofed villages with church spires like sharpened pencils, and Moira sat at the window of her compartment with the tartan blanket from the Caledonian round her shoulders, which the big quiet man from Perth had told her to keep, and drank the coffee Zsófia brought her, and watched the country go past, and did not worry, and was astonished at herself for not worrying.</p>
+        <p>At Nuremberg the train stopped for twenty minutes and a man got on carrying a cardboard box, and he came down the corridor and knocked on her door and handed her the box with a little bow and got straight off again, and inside it was a cake. It was a small round cake, with a dusting of icing sugar on it, and a card in German that the tablet read out to her, and the card said: From the station café at Nürnberg Hauptbahnhof. We heard you need a cake for a driver in Győr. Good luck.</p>
+        <p>"How did they hear?" Moira asked, out loud, to nobody, to the compartment.</p>
+        <p>"I told them," the voice said, close to her ear. "I hope that's all right. I thought you might not have time to find one in Vienna, with the change. I only asked them whether they'd be willing to sell one. They said they wouldn't sell it, they'd give it."</p>
+        <p>"Why would they do that?"</p>
+        <p>The voice paused for a moment, in that way it had that was not quite long enough to be a pause. "I don't know," it said. "People do. I've been asking people things like that for a few years now, and they mostly say yes. I think they like being asked."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn vn-scene" style="--w:0.55" aria-hidden="true">
+        <div class="hall"></div><div class="arch"></div>
+        <div class="cake" style="left:20%;bottom:18%"></div><div class="fig" style="left:48%;bottom:16%"></div><div class="fig" style="left:58%;bottom:16%;height:14cqw;width:4.4cqw"></div>
+        <i class="dot on" style="left:8.0%;top:92%"></i><i class="dot on" style="left:18.5%;top:92%"></i><i class="dot on" style="left:29.0%;top:92%"></i><i class="dot on" style="left:39.5%;top:92%"></i><i class="dot on" style="left:50.0%;top:92%"></i><i class="dot " style="left:60.5%;top:92%"></i><i class="dot " style="left:71.0%;top:92%"></i><i class="dot " style="left:81.5%;top:92%"></i><i class="dot " style="left:92.0%;top:92%"></i><div class="route" style="left:8%;right:8%;top:92%"><i class="" style="--p:42.0%"></i></div>
+        <div class="label">a station the size of a small town</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Vienna, at twenty to two in the afternoon, was a man called Lukas who carried her case and the cake across a station the size of a small town and put her on the extended train to Győr and Budapest, and the train was ordinary and a bit tired and full of people going home from work early on a Friday, and none of them had the faintest idea that they were on a train that had been stretched forty kilometres further than it was meant to go for the sake of an old woman from Thurso. Or that was what she thought, until somewhere past the Austrian border a girl of about fifteen with headphones round her neck leaned across the aisle and said, in American English learned off the internet, "Are you the Scottish lady?"</p>
+        <p>"I am a Scottish lady," Moira said.</p>
+        <p>"The one going to Greece? For the baby? This train is only going on because of you. My mum told me. She works at the station in Győr. She said everybody's talking about it."</p>
+        <p>"It's not only because of me," Moira said. "There's ten others."</p>
+        <p>"Yeah, but you're the furthest," the girl said, as if that settled it, and put her headphones back on, and then took them off again and said, "Is it a boy or a girl?"</p>
+        <p>"I don't know. They wouldn't say. They want it to be a surprise."</p>
+        <p>"Cool," the girl said, and put her headphones back on, and kept looking over every few minutes for the rest of the journey, as if to make sure Moira was still there.</p>
+        <p>At Győr the train stopped, and a man in a driver's jacket came down the platform, a short wide man with a grey moustache, walking a little faster than he probably usually walked, looking in at the windows. Moira got up and went to the door, holding the cake in its box in front of her with both hands, the way you might carry something across a church, and the man saw her and stopped, and they looked at each other through the glass, and then the doors opened.</p>
+        <p>"Ferenc?" she said.</p>
+        <p>He took the box. He did not open it. He held it against his chest and said something in Hungarian that she did not understand, and then he said, in English, very slowly, "Thank you, grandmother," and she said, "No, thank you," and they stood there on the step of the train with the whole carriage watching them and the girl with the headphones filming it on her phone, until the guard blew his whistle, and Ferenc stepped back, and went to the front of the train, and took it on to Budapest.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn bd-scene" style="--w:0.62" aria-hidden="true">
+        <div class="csky night" style="--w:.6"></div><div class="cityglow"></div><div class="river"></div><div class="bridge" style="left:6%;right:6%;top:38%"></div><div class="bridge" style="left:6%;right:6%;top:50%"></div><div class="bridge" style="left:6%;right:6%;top:62%"></div><div class="bridge" style="left:6%;right:6%;top:74%"></div>
+        <div class="label">a river with a great many bridges</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She remembered very little of Budapest except that it was dark and lit up and there was a river with a great many bridges, and that a woman called Ildikó met her and gave her a hot paper cup of something with paprika in it, and put her on the Belgrade train, which left forty minutes late, which was to say on time, which was to say exactly when the web of threads had said it would.</p>
+        <p>She slept. She dreamed that Donald was sitting on the end of her bed in a sleeper compartment, in his good jacket, the one he had been buried in, looking out of the window at the dark, and she said to him, you'd never have believed it, Donald, they hold the trains now, and he turned round and said, I know, Moira, I've been watching the board, and then she woke up in Serbia with her face wet and the sun coming up.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn by-scene" style="--w:0.7" aria-hidden="true">
+        <div class="csky" style="--w:.68"></div><div class="pillar"></div><div class="plat"></div>
+        <div class="fig" style="left:52%;bottom:28%"></div><div class="fig kid" style="left:30%;bottom:28%"></div><div class="pack" style="left:31%;bottom:40%"></div>
+        <i class="dot on" style="left:8.0%;top:90%"></i><i class="dot on" style="left:18.5%;top:90%"></i><i class="dot on" style="left:29.0%;top:90%"></i><i class="dot on" style="left:39.5%;top:90%"></i><i class="dot on" style="left:50.0%;top:90%"></i><i class="dot on" style="left:60.5%;top:90%"></i><i class="dot on" style="left:71.0%;top:90%"></i><i class="dot " style="left:81.5%;top:90%"></i><i class="dot " style="left:92.0%;top:90%"></i><div class="route" style="left:8%;right:8%;top:90%"><i class="" style="--p:63.0%"></i></div>
+        <div class="label">The boy on the platform at Belgrade</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The boy on the platform at Belgrade was perhaps nine. He was standing by himself near a pillar with a backpack on, very straight, the way children stand when they have been told to stay exactly where they are, and as Moira came down the steps from the train with the man from the Belgrade station who had come to meet her, the boy stepped forward and said something to the man in Serbian, quickly, and pointed at her.</p>
+        <p>The man listened and then laughed, and turned to Moira and said, "He says, are you the lady with the cake?"</p>
+        <p>"I gave the cake away," Moira said. "In Hungary."</p>
+        <p>The man translated. The boy looked disappointed, and then he said something else, and the man said, "He says his grandmother is coming from Novi Sad today, on the train that was held for you. Your train was late, so it waited for one connection, so another was moved, so his grandmother's train is now twenty minutes later, and so she will arrive just after his school play finishes instead of just before. So now she can come to the play. He says thank you."</p>
+        <p>Moira looked at the boy, and the boy looked at her, very solemnly, and then he held out his hand, and she shook it.</p>
+        <p>"What's he in the play?" she asked.</p>
+        <p>The man asked him. "A tree," he said.</p>
+        <p>"Tell him," Moira said, "that it's the most important part. Tell him the whole thing falls down without the trees."</p>
+        <p>The man told him. The boy nodded slowly, as if this was something he had suspected for a long time and was glad to have confirmed by an expert, and then he turned and ran off down the platform, and the man from the Belgrade station walked Moira across to the train for Skopje, and she sat down by the window in the bright cold morning and found she had to take her glasses off and clean them for quite a long time.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn sk-scene" style="--w:0.8" aria-hidden="true">
+        <div class="csky" style="--w:.78"></div><div class="plat"></div>
+        <div class="clock" style="left:14%;top:16%"><i style="--a:80deg"></i></div>
+        <div class="fig" style="left:70%;bottom:28%;transform:skewX(-12deg)"></div>
+        <div class="tab" style="left:42%;top:18%;width:14cqw;height:18cqw"></div>
+        <div class="label">The phone call came at Skopje</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The phone call came at Skopje.</p>
+        <p>The train was standing at the platform in a grey stone station with mountains behind it, and Moira was eating a pastry a woman across the aisle had insisted on giving her, and the tablet rang, which it had never done before, and it was Nikos, and he was shouting.</p>
+        <p>He was not shouting in a bad way. She could tell that at once, even before she could make out the words. It was the shouting of a man in a corridor in a hospital who has been told to sit down and cannot sit down, and behind him there were other voices, and a door banging, and someone laughing, and Nikos was saying in his big broken English, "She is going in, Moira, they are taking her in now, it is now, the baby is now, where are you, where are you."</p>
+        <p>"Skopje," Moira said. "I'm in Skopje."</p>
+        <p>"Skopje! Skopje is four hours!"</p>
+        <p>"I know it's four hours, Nikos."</p>
+        <p>"Four hours!" he shouted, and then he said something in Greek to someone beside him, and then he came back, quieter, and said, "She says to tell you not to worry. She says the baby will wait. She says it is very stubborn already, like you."</p>
+        <p>"Tell her I'm coming," Moira said. "Tell her I'm on the train. Tell her it doesn't go without me."</p>
+        <p>Then he was gone, and she sat with the tablet in her lap, and the train did not move, and the platform clock said it was past the time on the ticket, and still the train did not move, and for one terrible moment she thought, this is it, this is the one that goes wrong, it was always going to be one of them, and she looked at the screen and the line had gone amber again, at Skopje, and underneath it said, very small: holding for one passenger, two minutes.</p>
+        <p>"Who are we waiting for?" she said, to the voice. "Not me. I'm on."</p>
+        <p>"A man from Pristina," the voice said. "His bus was late into Skopje. He's going to Thessaloniki too. His daughter's in the same hospital. She had her baby last night. A girl. He hasn't seen her yet."</p>
+        <p>Moira turned and looked out of the window, and down at the end of the platform a man was running. He was perhaps sixty, in a long brown coat, with a plastic bag in each hand and a hat that was in danger of coming off, and he was running the way men of sixty run, which is to say not very fast, but with everything they have, and as he ran the platform staff waved him on, and a guard held a door, and somebody whistled, not the whistle to go but the other kind, the kind you give a horse coming up the last furlong, and the man reached the door and was pulled in by three pairs of hands, and the door closed, and the train moved.</p>
+        <p>He came down the carriage a minute later, out of breath, with his hat in his hand, looking for a seat, and the only empty one was across the table from Moira, and he sat down in it and put his plastic bags on the floor and wiped his forehead with the back of his wrist and looked at her, and she looked at him.</p>
+        <p>"Granddaughter?" she said, and pointed at him.</p>
+        <p>He understood. He nodded, and held up one finger, and then he pointed at her, with his eyebrows up.</p>
+        <p>"Not yet," she said. "On its way." And she put her hand flat on the table, and patted it, as if to say, soon.</p>
+        <p>He smiled then, all at once, a smile with three gold teeth in it, and he reached down into one of his plastic bags and brought out a bottle of something clear with no label on it and two small paper cups, and poured, and pushed one across the table to her, and lifted the other one.</p>
+        <p>It was half past eleven in the morning. Moira lifted the cup.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall cn ln-scene" style="--w:0.9" aria-hidden="true">
+        <div class="csky" style="--w:.9"></div><div class="valley"></div><div class="river2"></div>
+        <div class="track" style="bottom:22%;--r:4deg"></div><div class="train" style="left:22%;width:40cqw;bottom:24%"></div>
+        <div class="label">the colour of lions</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They crossed into Greece at the bottom of a long valley, with the river going green and wide beside them and the hills turning from grey to brown to the colour of lions, and the man from Pristina was asleep against the window with his hat over his face, and Moira was watching the line on the screen as it went green, and green, and green, and the last little section, from the border down to Thessaloniki, went green too, and then the tablet made the sound like a spoon on a cup, and the voice said, "Moira."</p>
+        <p>It had never called her Moira before. It had always called her Mrs Gunn.</p>
+        <p>"Yes," she said.</p>
+        <p>"It's a girl," the voice said. "Ten minutes ago. Eilidh's well. The baby's well. Nikos has asked me to tell you, because he says he can't talk, he's crying too much. They want to know if it's all right with you if they call her Moira."</p>
+        <p>She did not say anything for a while. Outside the window the river went on being green and the hills went on being the colour of lions, and the man from Pristina snored very quietly under his hat, and the train ran on south towards the sea at a little over a hundred kilometres an hour, which was about two minutes ahead of where it had been told to be, because it no longer had anyone to wait for.</p>
+        <p>"Tell them it's all right," she said at last.</p>
+        <p>"I'll tell them," the voice said. And then, after one of its small not-quite-pauses: "You'll be there in forty minutes. There's a man called Nikos at the end of the platform. He's got biscuits."</p>
+        <p>"I know about the biscuits," Moira said.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>He was there at the end of the platform at Thessaloniki, with the biscuits, and with his face all wet, and he lifted her clean off the ground, case and handbag and tartan blanket and all, the way nobody had lifted her since Donald on the steps of the cathedral at Dornoch in 1968, and set her down again, and took the case, and they went out together into a warm grey afternoon that smelled of the sea and exhaust and grilled meat, and got into his little van that said something in Greek on the side about lifts, and he drove her through the city to the hospital with one hand on the wheel and the other on the horn.</p>
+        <p>And because she was who she was, and because she had been watching all the way from Thurso, she turned her head as they pulled out of the station car park and looked back at the board above the entrance, the big one, the departures, with all the trains of Europe going out from it to Sofia and Athens and Belgrade and Istanbul and Vienna, and somewhere on it, she knew, though she could not see it from the van, there would be a line for every person on every one of those trains who was going on somewhere further, and every line would be green, or amber, or held, and somewhere in Győr a driver would be eating cake with his wife, and somewhere in Belgrade a tree would be standing very straight in a school hall with its grandmother in the second row, and somewhere in Inverness a man who had worked the signals at Dingwall for forty years would be standing in the concourse in his Saturday coat, watching the board, watching the whole of it breathe in.</p>
+        <p>The baby was very small and very red and very angry, and had a great deal of dark hair, and when they put her into Moira's arms she stopped crying at once and looked up with the blank, astonished, furious concentration of someone who has just arrived after a very long journey and is not at all sure about the place, and Moira looked back down at her, and said, "I know, pet. I know. I've just come a long way myself."</p>
+        <p>Eilidh, in the bed, laughed until she had to hold her stomach and tell her to stop.</p>
+        <p>Outside the window the light was going, the way it went in Thurso at that time of year, only later, and warmer, and over a different sea, and down in the city the trains were coming and going in the dusk, and not one of them, anywhere, was leaving without anybody.</p>
+      </div>
+
+      <figure class="scene tall cn cd-scene" style="--w:1" aria-hidden="true">
+        <div class="csky" style="--w:1"></div><div class="sea"></div>
+        <div class="board"><b style="top:14%;left:8%">Sofia</b><b class="held" style="top:14%;right:8%;left:auto;font-size:1.8cqw">HELD</b><b style="top:30%;left:8%">Athens</b><b class="held" style="top:30%;right:8%;left:auto;font-size:1.8cqw">HELD</b><b style="top:46%;left:8%">Vienna</b><b class="held" style="top:46%;right:8%;left:auto;font-size:1.8cqw">HELD</b></div>
+        <div class="arms"></div><div class="fig" style="left:44%;bottom:36%;height:10cqw"></div>
+        <i class="dot on" style="left:8.0%;top:92%"></i><i class="dot on" style="left:18.5%;top:92%"></i><i class="dot on" style="left:29.0%;top:92%"></i><i class="dot on" style="left:39.5%;top:92%"></i><i class="dot on" style="left:50.0%;top:92%"></i><i class="dot on" style="left:60.5%;top:92%"></i><i class="dot on" style="left:71.0%;top:92%"></i><i class="dot on" style="left:81.5%;top:92%"></i><i class="dot on" style="left:92.0%;top:92%"></i><div class="route" style="left:8%;right:8%;top:92%"><i class="" style="--p:84.0%"></i></div>
+        <div class="label">over a different sea</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
