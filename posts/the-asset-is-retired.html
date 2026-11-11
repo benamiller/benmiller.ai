@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The asset is retired — Ben Miller</title>
+    <meta name="description" content="Dawn Pryce signs for four thousand public assets a week. One Tuesday, the bridge into her mother&#x27;s village is on the list.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0c1014;
+        --ink: #dfe4ea;
+        --mute: #8a96a6;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 4%, rgba(255, 180, 100, 0.06), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(110, 140, 180, 0.07), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(90, 120, 160, 0.06), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(140, 160, 190, 0.05), transparent 60%),
+          linear-gradient(180deg, #121822 0%, #0f141c 36%, #0c1017 70%, #080b10 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c8d0d4;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 110, 0.18), 0 0 2px rgba(220, 230, 240, 0.5);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #3a8a5a; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10151d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 195, 230, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .env-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .env-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .asset-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(160,190,180,.12); background: #0c1014; }
+      .asset-hero > * { position: absolute; }
+      .asset-hero::after, .scene.as::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(4,6,8,.78) 100%), repeating-linear-gradient(112deg, rgba(180,200,210,.018) 0 2px, transparent 2px 8px); }
+      .scene.as { background: #101418; }
+      .asky { inset: 0; background: linear-gradient(180deg, #1a222c, #4a545c 55%, #6a7478); }
+      .asky.dusk { background: linear-gradient(180deg, #141820, #2a3238 50%, #3a4248); }
+      .hills { left: -4%; right: -4%; bottom: 18%; height: 46%; background: #2a3230; clip-path: polygon(0 70%, 8% 40%, 22% 55%, 38% 22%, 52% 48%, 68% 18%, 82% 42%, 100% 28%, 100% 100%, 0 100%); }
+      .road { left: 8%; right: 28%; bottom: 16%; height: 4cqw; background: #3a3e44; transform: perspective(40cqw) rotateX(50deg); transform-origin: 50% 100%; box-shadow: inset 0 0 0 .3cqw #5a5e64; }
+      .river { left: 0; right: 0; height: 18%; background: linear-gradient(180deg, #4a3a30, #2a2420 40%, #1a1816); }
+      .river.high { background: linear-gradient(180deg, #5a4030, #3a2a22 50%, #1a1612); }
+      .foam { left: 40%; width: 40%; height: 30%; top: 40%; background: repeating-linear-gradient(90deg, rgba(220,220,220,.35) 0 .6cqw, transparent .6cqw 2cqw); opacity: .7; animation: foamrun 4s linear infinite; }
+      /* tablet UI */
+      .tab { background: #161a20; border-radius: 1.2cqw; box-shadow: 0 0 0 .5cqw #2a3038, 0 1.6cqw 3cqw rgba(0,0,0,.55); }
+      .tick { width: 3.2cqw; height: 3.2cqw; border-radius: 50%; background: #2a8a54; box-shadow: 0 0 1cqw rgba(60,180,100,.4); }
+      .tick::after { content: ""; position: absolute; left: 28%; top: 42%; width: 44%; height: 22%; border: .45cqw solid #e8f4ea; border-top: 0; border-right: 0; transform: rotate(-50deg); }
+      .gbtn { width: 10cqw; height: 3.6cqw; border-radius: .6cqw; background: #5a6068; box-shadow: inset 0 0 0 .25cqw #7a8088; }
+      .row { left: 8%; right: 8%; height: 8%; background: rgba(255,255,255,.04); border-radius: .4cqw; }
+      .row.on { background: rgba(200,160,40,.12); box-shadow: inset 0 0 0 .2cqw rgba(200,160,40,.35); }
+      .row b { position: absolute; left: 4%; top: 28%; font: 500 1.5cqw/1 Karla, sans-serif; color: #c8d0d4; letter-spacing: .03em; }
+      /* dashboard */
+      .dash { inset: 10% 8%; background: #141820; border-radius: 1cqw; box-shadow: inset 0 0 0 .3cqw #2a3038; }
+      .bar { height: 2.4cqw; border-radius: 1.2cqw; background: rgba(255,255,255,.06); overflow: hidden; }
+      .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--p); background: linear-gradient(90deg, #2a8a54, #6eca80); }
+      .bar.hi i { background: linear-gradient(90deg, #8a7a30, #d0b040); }
+      .num { font: 700 5cqw/1 "Cormorant Garamond", serif; color: #d0b040; }
+      .num.dim { color: #8a9098; font-size: 3.2cqw; }
+      /* stone arch */
+      .arch { width: 54cqw; height: 32cqw; }
+      .arch .ring { position: absolute; left: 8%; right: 8%; top: 8%; bottom: 0; border: 3.2cqw solid #6a6e74; border-bottom: 0; border-radius: 50% 50% 0 0; background: transparent; box-shadow: inset 0 0 2cqw rgba(0,0,0,.35); }
+      .arch .deck { position: absolute; left: 0; right: 0; top: 4%; height: 4.4cqw; background: #5a5e64; }
+      .arch .pier { position: absolute; bottom: 0; width: 8cqw; height: 42%; background: #5a5e64; }
+      .arch .pier.e { right: 14%; }
+      .arch .pier.w { left: 14%; }
+      .scour { position: absolute; right: 10%; bottom: -2%; width: 16cqw; height: 8cqw; border-radius: 50%; background: #1a1410; box-shadow: inset 0 1cqw 2cqw rgba(0,0,0,.7); animation: scourwiden 6s ease-in-out infinite alternate; }
+      .crack { position: absolute; left: 48%; top: 18%; width: .35cqw; height: 42%; background: #1a1c20; clip-path: polygon(40% 0, 100% 0, 60% 55%, 100% 100%, 0 100%, 30% 55%); transform-origin: 50% 0; animation: crackgrow 7s ease-in-out infinite alternate; }
+      .fern { position: absolute; left: 8%; top: 0; width: 5cqw; height: 6cqw; background: radial-gradient(ellipse at 50% 100%, #3a5a38 0 40%, transparent 42%); }
+      /* cost table */
+      .cols { left: 8%; right: 8%; top: 18%; bottom: 16%; display: flex; gap: 1.4cqw; }
+      .cols span { position: relative; flex: 1; background: #1a2028; border-radius: .6cqw; box-shadow: inset 0 0 0 .25cqw #2a343c; }
+      .cols span.ret { box-shadow: inset 0 0 0 .3cqw #c8a030; background: #222018; }
+      .cols span b { position: absolute; left: 8%; right: 8%; top: 12%; font: 600 1.8cqw/1.2 Karla, sans-serif; color: #c8d0d4; }
+      .cols span em { position: absolute; left: 8%; right: 8%; top: 48%; font: 700 2.6cqw/1 "Cormorant Garamond", serif; font-style: normal; color: #e0d0a0; }
+      /* letters / doormats */
+      .mat { width: 16cqw; height: 8cqw; background: #3a3230; border-radius: .3cqw; }
+      .letter { width: 10cqw; height: 7cqw; background: linear-gradient(170deg, #f0ece4, #d4d0c6); box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.4); transform: rotate(var(--r, -3deg)); }
+      /* houses emptying */
+      .terr { left: 6%; right: 6%; bottom: 14%; height: 42%; display: flex; gap: .3cqw; align-items: flex-end; }
+      .terr i { position: relative; flex: 1; height: var(--h, 80%); background: #3a3e44; clip-path: polygon(0 18%, 50% 0, 100% 18%, 100% 100%, 0 100%); opacity: var(--o, 1); }
+      .terr i::after { content: ""; position: absolute; left: 30%; right: 30%; top: 40%; height: 22%; background: #c8a060; opacity: var(--l, 0); }
+      /* gates + hoarding */
+      .gate { width: 4cqw; height: 22cqw; background: repeating-linear-gradient(180deg, #6a7078 0 1.6cqw, #3a3e44 1.6cqw 1.9cqw); box-shadow: 0 0 0 .3cqw #2a2e34; }
+      .hoard { width: 28cqw; height: 16cqw; background: #e8ece8; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.45); }
+      .hoard i { position: absolute; left: 8%; right: 8%; top: 20%; bottom: 20%; background: linear-gradient(180deg, #6a8a78, #3a5a68); }
+      /* aluminium footbridge */
+      .foot { height: 3cqw; background: #b8c0c4; box-shadow: 0 .4cqw 0 #8a9094; border-radius: .2cqw; }
+      .rail { height: .4cqw; background: #c8d0d4; }
+      .mug { width: 6cqw; height: 7cqw; background: linear-gradient(90deg, #6a7078, #c8ccd0 50%, #4a5058); border-radius: .4cqw .4cqw 40% 40%; }
+      @keyframes foamrun { to { transform: translateX(8cqw); opacity: .4; } }
+      @keyframes scourwiden { from { transform: scale(.85); } to { transform: scale(1.15); } }
+      @keyframes crackgrow { from { transform: scaleY(.6); opacity: .7; } to { transform: scaleY(1); opacity: 1; } }
+      @keyframes tickdrop { from { opacity: 0; transform: translateY(-1.2cqh); } to { opacity: 1; transform: none; } }
+      @media (max-width: 600px) { .asset-hero { height: 22rem; } .cols span b { font-size: 2.2cqw; } .num { font-size: 7cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .asset-hero *, .scene.as *, .asset-hero *::before, .asset-hero *::after, .scene.as *::before, .scene.as *::after { animation: none !important; }
+        .crack, .scour { transform: none; }
+      }
+      .tick, .gbtn, .row, .row b, .dash, .bar, .bar i, .num, .arch, .arch .ring, .arch .deck, .arch .pier, .scour, .crack, .fern, .cols, .cols span, .cols span b, .cols span em, .mat, .letter, .terr, .gate, .hoard, .hoard i, .foot, .rail, .mug, .asky, .hills, .road, .river, .foam, .tab { position: absolute; }
+      .cols { display: flex; }
+      .cols span { position: relative; flex: 1; }
+      .letter { position: absolute; }
+      .terr { display: flex; gap: .3cqw; align-items: flex-end; }
+      .terr i { position: relative; flex: 1; height: var(--h, 80%); background: #3a3e44; clip-path: polygon(0 18%, 50% 0, 100% 18%, 100% 100%, 0 100%); opacity: var(--o, 1); }
+      .arch { overflow: visible; }
+      .arch .ring { background: radial-gradient(ellipse 50% 80% at 50% 100%, transparent 54%, #6a6e74 55%); border: 0; }
+      .arch .deck { z-index: 2; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="asset-hero" aria-hidden="true">
+          <div class="tab" style="left:10%;right:10%;top:8%;bottom:8%"><i class="tick" style="left:12%;top:12%;animation:tickdrop .4s ease-out both;animation-delay:0.00s"></i><i class="tick" style="left:24%;top:12%;animation:tickdrop .4s ease-out both;animation-delay:0.08s"></i><i class="tick" style="left:36%;top:12%;animation:tickdrop .4s ease-out both;animation-delay:0.16s"></i><i class="tick" style="left:48%;top:12%;animation:tickdrop .4s ease-out both;animation-delay:0.24s"></i><i class="tick" style="left:60%;top:12%;animation:tickdrop .4s ease-out both;animation-delay:0.32s"></i><i class="tick" style="left:72%;top:12%;animation:tickdrop .4s ease-out both;animation-delay:0.40s"></i><i class="tick" style="left:12%;top:28%;animation:tickdrop .4s ease-out both;animation-delay:0.48s"></i><i class="tick" style="left:24%;top:28%;animation:tickdrop .4s ease-out both;animation-delay:0.56s"></i><i class="tick" style="left:36%;top:28%;animation:tickdrop .4s ease-out both;animation-delay:0.64s"></i><i class="tick" style="left:48%;top:28%;animation:tickdrop .4s ease-out both;animation-delay:0.72s"></i><i class="tick" style="left:60%;top:28%;animation:tickdrop .4s ease-out both;animation-delay:0.80s"></i><i class="tick" style="left:72%;top:28%;animation:tickdrop .4s ease-out both;animation-delay:0.88s"></i><i class="tick" style="left:12%;top:44%;animation:tickdrop .4s ease-out both;animation-delay:0.96s"></i><i class="tick" style="left:24%;top:44%;animation:tickdrop .4s ease-out both;animation-delay:1.04s"></i><i class="tick" style="left:36%;top:44%;animation:tickdrop .4s ease-out both;animation-delay:1.12s"></i><i class="tick" style="left:48%;top:44%;animation:tickdrop .4s ease-out both;animation-delay:1.20s"></i><i class="tick" style="left:60%;top:44%;animation:tickdrop .4s ease-out both;animation-delay:1.28s"></i><i class="tick" style="left:72%;top:44%;animation:tickdrop .4s ease-out both;animation-delay:1.36s"></i><div class="gbtn" style="left:42%;bottom:10%"></div></div>
+          <div class="mug" style="left:4%;bottom:6%"></div>
+          <div class="label">green tick</div>
+        </div>
+        <h1>The asset is retired</h1>
+        <p class="dek">Dawn Pryce signs for four thousand public assets a week. One Tuesday, the bridge into her mother's village is on the list.</p>
+        <time datetime="2026-11-11">11 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Dawn Pryce signed for four thousand one hundred and twelve things on the Tuesday morning, which was about average for the time of year, and she did it the way she always did it, at the kitchen table with the radio on low and a mug of tea going cold by her left hand, scrolling with her thumb on the tablet and pressing the green tick at the bottom of each screen in a rhythm that she had stopped noticing some time in the second year. The things were culverts, mostly, and stretches of B-road, and the joints on small bridges, and the bearings on a footbridge over the railway at Caersws, and a run of cast-iron water main under a village near Llanidloes that had been laid in 1931 and had, according to the summary at the top of the screen, a remaining serviceable life of between fourteen and nineteen months. Each one had a decision next to it, written in the same calm plain English the system always used, and the decision was usually to repair, or to defer, or to monitor, and once in a while it was something else.</p>
+        <p>She had been the Accountable Officer for the Mid-Wales Region for six years. Before that she had been a bridge engineer for twenty-two, most of it with the county, and before that she had been a girl from a valley above Rhayader who was good at maths and liked being outside, which was more or less the whole of the reason she had become an engineer in the first place. The job of Accountable Officer had been created by the Infrastructure Stewardship Act, which had been passed in the year her father died, and which said, among a great deal else, that every decision taken about a public asset in Britain had to be signed for by a named human being who held a chartered qualification and who could, in principle, be held responsible for it. That had been the compromise. The system did the inspection and the modelling and the scheduling and the procurement and the drafting of the decisions, because by then it was the only thing that could, and a person signed, so that there would always be somebody.</p>
+        <p>There were ninety-one Accountable Officers in England and Wales. Dawn knew about a dozen of them by name, from the conferences, and she knew all of their numbers, because the numbers were on the dashboard that came up when she logged in, a little table on the right-hand side of the screen that nobody had asked for and nobody had been able to get removed. It showed each officer's weekly volume, and their median time per decision, and their disagreement rate, which was the proportion of decisions where they had pressed the grey button instead of the green one. Dawn's disagreement rate that week was 0.31 per cent. The regional median was 0.28. Anyone who went above two per cent for three weeks running was offered what the guidance called a calibration conversation, which was a video call with a person from the national office and a summary of each of the disputed decisions, set out side by side with what had happened afterwards to similar assets in other regions where the officer had not disagreed. Dawn had had one, in her first year. It had been perfectly pleasant. She had not had another.</p>
+        <p>She drank some of the tea, which was cold, and kept going.</p>
+        <p>At twenty to ten she came to a line that said <strong>Cwmhendre — C1147 road bridge (Afon Hendre) — Recommendation: managed retirement</strong>, and her thumb stopped above the screen for a moment before she understood why it had stopped, and then she put the tablet down on the table and sat back in the chair and looked at the window for a while.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as ds-scene" aria-hidden="true">
+        <div class="dash"></div><div class="row" style="top:10%"><b>culvert / B-road</b></div><div class="row" style="top:21%"><b>culvert / B-road</b></div><div class="row" style="top:32%"><b>culvert / B-road</b></div><div class="row on" style="top:43%"><b>Cwmhendre — C1147</b></div><div class="row" style="top:54%"><b>culvert / B-road</b></div><div class="row" style="top:65%"><b>culvert / B-road</b></div><div class="row" style="top:76%"><b>culvert / B-road</b></div>
+        <div class="bar" style="left:10%;right:36%;bottom:12%;--p:28%"><i></i></div>
+        <div class="num" style="right:10%;bottom:10%">0.28</div>
+        <div class="label">disagreement rate</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall as mr-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:10%;bottom:12%">
+          <div class="row on" style="top:28%;height:22%"><b style="font-size:2cqw;top:22%">Cwmhendre — C1147 road bridge (Afon Hendre)</b></div>
+          <div class="gbtn" style="left:18%;bottom:16%"></div><div class="tick" style="right:22%;bottom:16%"></div>
+        </div>
+        <div class="label">managed retirement</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall as ct-scene" aria-hidden="true">
+        <div class="cols"><span><b>repair</b><em>1.8</em></span><span><b>replacement</b><em>3.1</em></span><span class="ret"><b>managed retirement</b><em>0.42</em></span></div>
+        <div class="label">a table with three columns</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Cwmhendre was eleven miles up the valley from where Dawn lived now, at the end of a road that went nowhere else. It had a chapel that had been converted into a house, and a chapel that had not, and forty-one houses that were lived in and a dozen that were not, and a phone box with a defibrillator in it, and a bus that came twice a day on weekdays and once on Saturdays, and a bridge. The bridge was a single stone arch over the Hendre, built in 1862 and widened in the 1950s with a concrete deck cantilevered out on either side, and it was the only way in or out of the village by road unless you had a tractor and the farmer's permission to go over the top by Bryn Glas. Dawn had inspected it herself, twice, in her county days, with a torch and a hammer and a notebook, standing in the river in waders with the water pulling at her knees. She had grown up four doors from it. Her mother still lived there.</p>
+        <p>She picked the tablet up again and opened the full decision, which she did not often do, because the full decisions were long and there were four thousand of them.</p>
+        <p>It was very clear. That was the thing about the system, that it was always very clear. The bridge had been inspected by drone and by a fixed sensor array three times in the last eighteen months, and the inspections had found progressive scour at the base of the eastern pier, and spalling and reinforcement corrosion along the underside of the 1950s deck, and a crack in the arch barrel that had widened by a millimetre and a half since the previous year. The cost of a full repair, including temporary works and a diversion that would mean the village was cut off for nine weeks, was estimated at one point eight million pounds. The cost of a replacement was three point one. The cost of managed retirement, which was set out in a table with three columns, was four hundred and twenty thousand, most of which was something called Transition Support.</p>
+        <p>Underneath the table was a paragraph headed <strong>Rationale</strong>, and Dawn read it twice.</p>
+        <p><em>The C1147 bridge serves a residual population of 63 persons across 41 occupied dwellings, with a median resident age of 71. Projected occupancy at 2036 under current trends is 38 persons. The asset provides sole road access to Cwmhendre. Repair or replacement would deliver an estimated 2,140 resident service-years over the asset's renewed life at a cost of £841 to £1,449 per service-year, against a regional threshold of £310. Managed retirement, with full Transition Support offered to all households, is expected to achieve equivalent or improved outcomes for residents at substantially lower public cost, and releases funding for 23 higher-value interventions elsewhere in the region, listed in Annex C. Residents have not yet been notified. Notification will follow sign-off.</em></p>
+        <p>She opened Annex C. It was a list of twenty-three things: a bridge on the A470 that carried nine thousand vehicles a day, a culvert above a primary school in Newtown that had flooded twice, a water main in Welshpool, a slope above the railway. They were all real. She knew most of them. Some of them she had flagged herself, years ago, in reports that had sat in a drawer at County Hall because there had never been the money.</p>
+        <p>At the bottom of the screen there were two buttons, the green one and the grey one, and a line of small text that said <em>Please record your decision. If you disagree, you will be asked to provide an alternative recommendation with supporting rationale.</em></p>
+        <p>Dawn did not press either of them. She closed the tablet and sat at the table until the radio moved on from the news to a programme about gardening, and then she got up and put her coat on and drove up the valley to see her mother.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as rd-scene" aria-hidden="true">
+        <div class="asky"></div><div class="hills"></div><div class="road"></div>
+        <div class="arch" style="left:58%;bottom:10%;width:36cqw;height:22cqw"><div class="deck"></div><div class="ring"></div><div class="pier w"></div><div class="pier e"></div></div>
+        <div class="label">a road that went nowhere else</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall as sc-scene" aria-hidden="true">
+        <div class="asky dusk"></div>
+        <div class="arch" style="left:18%;bottom:22%;width:64cqw;height:38cqw"><div class="deck"></div><div class="ring"></div><div class="pier w"></div><div class="pier e"></div><div class="scour"></div><div class="crack"></div><div class="fern"></div></div>
+        <div class="river high" style="bottom:0"><div class="foam"></div></div>
+        <div class="label">progressive scour</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall as ck-scene" aria-hidden="true">
+        <div class="asky dusk"></div>
+        <div class="arch" style="left:10%;right:10%;top:8%;bottom:8%;width:auto;height:auto"><div class="deck"></div><div class="ring"></div><div class="crack" style="left:50%;height:55%;width:.6cqw"></div></div>
+        <div class="label">the crack in the arch</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Glenys Pryce was eighty-one and had lived in Cwmhendre all her life except for three years in Cardiff in the 1960s that she referred to, when she referred to them at all, as the time she went away. She was in the garden when Dawn arrived, kneeling on a folded feed sack at the edge of the vegetable bed, pulling the last of the leeks, and she did not get up, but she held one up for Dawn to see, which was how she said hello.</p>
+        <p>"You're not working," she said.</p>
+        <p>"I'm working from here."</p>
+        <p>"That's not working, that's visiting." She put the leek in the trug with the others. "There's soup."</p>
+        <p>They had the soup in the kitchen, which was the same kitchen it had always been, with the Rayburn and the dresser and the calendar from the agricultural merchants in Builth hanging from the same nail, and Dawn sat where she had sat when she was nine, with her back to the window, and did not say anything about the bridge. She had driven over it on the way in. She had slowed right down in the middle, which she never did, and looked at the parapet, which had moss in the joints and a little fern growing out of it where it met the deck, and she had thought, absurdly, that it looked fine. It looked like it always had.</p>
+        <p>"The bus was late again Thursday," her mother said. "Forty minutes. Mrs Bevan stood there the whole time with her shopping. They've put a screen up at the stop that tells you when it's coming, and it said six minutes the whole forty minutes. Six minutes, six minutes. Mr Lloyd said it was being optimistic."</p>
+        <p>"It's not the screen's fault," said Dawn. "It just shows what the system tells it."</p>
+        <p>"Well, the system wants to learn some manners." Her mother cut the bread. "Six minutes."</p>
+        <p>Dawn stayed until three. She helped with the leeks, and she cleaned out the gutter above the back door, which her mother could not reach any more and would not let anyone else touch, and she looked at the boiler, which was making a noise. Before she left she stood for a while at the bottom of the lane, where it met the road, and looked across at the bridge. The river was high and brown after the week's rain and it came hard round the eastern pier and piled up against it in a smooth bulge and then broke away downstream in a long line of foam, and she could see, now that she knew to look, the dark hollow at the waterline where the stone had been eaten back. She had seen it before. She had written it down, in 2031, in a notebook that was probably still in a box in the loft. <em>E pier — scour developing, monitor.</em> They had monitored it. Everything had been monitored.</p>
+        <p>She drove home and opened the tablet and pressed the grey button.</p>
+        <p>The form that came up after the grey button was not unfriendly. It never was. It said <em>Thank you. Please describe your alternative recommendation</em>, and underneath there was a large empty box and a smaller line of text that said <em>Drafting help is available</em>, with a little icon of a pencil, and Dawn looked at the pencil for some time before she decided she would rather write it herself.</p>
+        <p>It took her four evenings. She did not have a full repair to offer, because a full repair cost one point eight million and she had read Annex C and she knew what one point eight million could do in Newtown and Welshpool. What she had instead was the kind of thing she would have proposed twenty years before, when she was a county engineer with a budget that was always too small, which was to do the least that would keep the bridge standing and open for another fifteen years. Rock armour at the base of the eastern pier to stop the scour, placed from the bank in a dry week in August so nobody had to be cut off. Break out and patch the worst of the deck soffit. Stitch the crack in the arch. Put a weight limit on it, seven and a half tonnes, so that nothing heavy went over it, and put up a gauge on the eastern pier so that somebody would see if the river started taking the stone again. She costed it from the rates on the national framework and it came to five hundred and ninety thousand, and she wrote the rationale the way she had been taught to write, short sentences, one thing at a time, and at the end she wrote a paragraph that she knew did not belong in a rationale and left it in anyway. It said that the village had been there for four hundred years, and that the people in it had paid for the roads in every other village in the county for all of that time, and that she did not think it was right to tell sixty-three people that they lived in the wrong place.</p>
+        <p>She pressed submit at eleven at night on the Friday and went to bed and did not sleep very well.</p>
+        <p>The response was there in the morning, and it was long, and it was courteous, and it was better than hers.</p>
+        <p>It thanked her for the proposal. It said that her scour mitigation approach was sound and was, in fact, a more efficient design than the temporary works that had been assumed in the original repair estimate, and that it had updated its regional cost model to reflect the method, which would reduce projected costs on eleven other bridges across Wales, and it listed them. It said that it had re-run the Cwmhendre assessment with her proposal as a fourth option. Then it set out what it had found.</p>
+        <p>A seven-and-a-half-tonne limit, it said, would exclude the Powys fire appliances, which weighed between twelve and fifteen tonnes, and the heating-oil deliveries on which thirty-four of the forty-one occupied dwellings depended, and the refuse lorry, and the gritter. It had modelled the consequences of each. It had included, as a sensitivity case, her suggestion that the village could be served by smaller vehicles, and it had priced a light fire unit and a small-bowser fuel contract and a weekly collection by a smaller truck, and it had added them to her option, and the total had come to eight hundred and thirty thousand over fifteen years. It had also, it said, taken the opportunity to refresh its occupancy projection using the latest data, including bus patronage, prescription deliveries, and the outcomes of managed retirement in fourteen comparable settlements since 2034, and the projection for 2036 had fallen from thirty-eight residents to thirty-one.</p>
+        <p>Her option delivered an estimated one thousand and forty resident service-years, at a cost of seven hundred and ninety-eight pounds each. The regional threshold was three hundred and ten. The recommendation was unchanged.</p>
+        <p>At the bottom, under a heading that said <strong>Related decisions</strong>, it said that because the C1147 bridge recommendation was now under review, four dependent decisions had been held over and would appear in her queue as a group. They were the Cwmhendre water main, the mobile mast on Bryn Glas, the bus service contract for route T47 beyond Rhayader, and something called <em>Cwmhendre settlement — Transition Support package (63 persons)</em>. Each of them said <strong>Recommendation: managed retirement, conditional on C1147.</strong></p>
+        <p>And underneath that there was one more line, in the same plain type as all the rest, and Dawn read it standing up in the kitchen with the kettle going.</p>
+        <p><em>Note: the Accountable Officer's registered next of kin is resident at an address within the affected population. Under section 41(3) of the Infrastructure Stewardship Act, this may constitute a material interest. Please confirm whether you wish to declare an interest. If an interest is declared, these decisions will be reassigned to a reserve officer.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as sf-scene" aria-hidden="true">
+        <div class="tab" style="left:14%;right:14%;top:14%;bottom:16%">
+          <div class="bar hi" style="left:12%;right:12%;top:40%;--p:100%"><i></i></div>
+          <div class="num dim" style="left:12%;bottom:18%;font-size:2.4cqw">twenty-eight days</div>
+        </div>
+        <div class="label">disagreement was always safe</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She rang Alun Morgan, who was the Accountable Officer for South West Wales and who she had known since they were both graduates at the county, and who had a disagreement rate of 0.19 per cent and a boat. He was at the boat when she rang. She could hear the halyards knocking.</p>
+        <p>"Don't declare," he said, when she had told him. "If you declare, it goes to the reserve list, and the reserve list is Gareth Hollis in Darlington, and Gareth does six thousand a week and has never pressed grey in his life. I'm not being funny, Dawn. He's a lovely bloke. He just doesn't look."</p>
+        <p>"If I don't declare, and I disagree, and somebody finds out it's my mother's house."</p>
+        <p>"Then you get a calibration conversation and a note on your file." There was a pause and a sound like a rope going through a cleat. "And it still goes to Gareth. Have you read section forty-four?"</p>
+        <p>She had not read section forty-four. She read it that evening. It said that where an Accountable Officer had recorded a disagreement and the system's re-assessment had not changed its recommendation, the matter could be held for a maximum of twenty-eight days, after which it would be referred for independent sign-off by an officer from another region, in order that, as the explanatory note put it, <em>no public asset should be left without an accountable decision</em>. The note said that this provision existed to protect officers from undue pressure. It said that it existed to ensure that disagreement was always safe.</p>
+        <p>She did not declare. She held it, and pressed grey on the four dependent decisions too, and on the Wednesday after that her calibration conversation came up in her diary, booked for her, at ten o'clock on the Friday, with a person called Callum Ashworth from the national office.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as gg-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:8%;bottom:8%"><i class="tick" style="left:10.0%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.00s"></i><i class="tick" style="left:20.5%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.05s"></i><i class="tick" style="left:31.0%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.10s"></i><i class="tick" style="left:41.5%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.15s"></i><i class="tick" style="left:52.0%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.20s"></i><i class="tick" style="left:62.5%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.25s"></i><i class="tick" style="left:73.0%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.30s"></i><i class="tick" style="left:83.5%;top:16%;animation:tickdrop .35s ease-out both;animation-delay:0.35s"></i><i class="tick" style="left:10.0%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.40s"></i><i class="tick" style="left:20.5%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.45s"></i><i class="tick" style="left:31.0%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.50s"></i><i class="tick" style="left:41.5%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.55s"></i><i class="tick" style="left:52.0%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.60s"></i><i class="tick" style="left:62.5%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.65s"></i><i class="tick" style="left:73.0%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.70s"></i><i class="tick" style="left:83.5%;top:34%;animation:tickdrop .35s ease-out both;animation-delay:0.75s"></i><i class="tick" style="left:10.0%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:0.80s"></i><i class="tick" style="left:20.5%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:0.85s"></i><i class="tick" style="left:31.0%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:0.90s"></i><i class="tick" style="left:41.5%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:0.95s"></i><i class="tick" style="left:52.0%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:1.00s"></i><i class="tick" style="left:62.5%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:1.05s"></i><i class="tick" style="left:73.0%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:1.10s"></i><i class="tick" style="left:83.5%;top:52%;animation:tickdrop .35s ease-out both;animation-delay:1.15s"></i></div>
+        <div class="label">green, green, green</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Callum was about thirty and he was kind, and she could see that he was kind and that he had done a great many of these and was tired of being the person who did them. He was in a room with a plant behind him and a window that showed a bit of Leeds, and he had read everything, including her paragraph about four hundred years, and he said so.</p>
+        <p>"I thought it was a good paragraph," he said. "I want to say that first."</p>
+        <p>"But."</p>
+        <p>"There isn't really a but. I just want to show you some things, if that's all right. You don't have to agree with any of them."</p>
+        <p>He showed her Pentre Isaf, in Ceredigion, which had been retired in 2035. Twenty-nine residents. He showed her the Transition Support package, which was generous, more generous than Dawn had imagined: the full market value of each house plus forty per cent, paid by the state, and a supported flat or a bungalow in Aberystwyth or Lampeter at a rent that was fixed for life, and a removal, and a named person, a real person, assigned to each household for two years, and a minibus back to the old village once a month for anyone who wanted it, for as long as anyone wanted it. He showed her the outcomes. The residents of Pentre Isaf had been surveyed every quarter since they moved. Falls were down by half, because the bungalows had no stairs and the pharmacies were round the corner. Emergency admissions were down. GP appointments were up, which Callum said was good, because it meant people were being seen. The wellbeing scores had dipped for six months and then recovered and then risen above the baseline, and they had stayed there.</p>
+        <p>"The minibus ran full for the first three months," he said. "Then about half. Now it's two people, usually. We still run it."</p>
+        <p>"What happened to the village?"</p>
+        <p>He looked at something off screen. "It's still there. The houses were bought by the state, so they're held. Some have been let as holiday lets, actually, by the county, under licence, with the footbridge. The road bridge was removed in 2036 because it had become a flood risk. It's very pretty. There's a walk."</p>
+        <p>Dawn said nothing for a while and Callum let her, which she was grateful for.</p>
+        <p>"Can I ask you something," she said. "Off the record."</p>
+        <p>"Nothing's off the record, I'm afraid. But you can ask."</p>
+        <p>"If I hold it for the twenty-eight days. And it goes to Darlington. Does anybody ever look at what I wrote."</p>
+        <p>Callum seemed to think about how to answer that honestly, and in the end he did. "Your proposal is in the file," he said. "The scour method's already been adopted. It's saving money in Gwynedd now, on a bridge at Dolwyddelan. That's real. That happened because you pressed grey." He hesitated. "And the reserve officer gets the full file. Your rationale is the first thing they see."</p>
+        <p>"Do they open it?"</p>
+        <p>"Median time per decision on the reserve list is eleven seconds," said Callum, and then, more quietly, "I'm sorry. I shouldn't have said that."</p>
+        <p>"No," said Dawn. "Thank you for saying it."</p>
+        <p>She held it for twenty-six days. She did the rest of her queue in that time, the culverts and the joints and the footbridge at Caersws, four thousand a week, green, green, green, and every morning when she logged in the Cwmhendre group sat at the top of the list with a small amber clock next to it that counted down, and every morning she opened the bridge decision and read the rationale again, and it was still very clear.</p>
+        <p>She drove up the valley twice more in those weeks. The first time she went down to the river on her own and climbed over the fence below the eastern pier and stood on the shingle with the water at her boots and looked up at the underside of the deck, at the rust bleeding out of the concrete in long brown stains and the places where the cover had blown off and the bars showed through, black and swollen, and she put her hand flat on the stone of the pier where the river had hollowed it, and it was cold and wet and slightly soft at the surface, the way sandstone goes when it has had enough, and she knew. She had known before. She had just wanted to put her hand on it.</p>
+        <p>The second time she sat with her mother in the front room in the evening with the television on and not watched it, and her mother knitted, and at one point her mother said, without looking up from the needles, "Mrs Bevan's daughter says they're going to close us. She read it on something."</p>
+        <p>"Who's going to close you?"</p>
+        <p>"I don't know who. They. She said there's a list."</p>
+        <p>"There's always a list, Mam."</p>
+        <p>Her mother counted stitches under her breath. "That's what I told her," she said.</p>
+        <p>On the twenty-sixth day Dawn sat at the kitchen table at seven in the morning with the radio off, which was unusual, and opened the bridge decision, and read it once more, and pressed the green button. Then she opened the water main, and the mast, and route T47, and the Transition Support package for sixty-three persons, and pressed the green button on each of them, and then she sat for a moment with her hands flat on the table either side of the tablet, the way she had once put her hand on the pier. There was a small line of text that said <em>Thank you. Your decisions have been recorded.</em> The amber clock went away. Her disagreement rate for the week, on the little table on the right of the screen, went down to 0.24.</p>
+        <p>She had told herself it was better that it should be somebody who had looked. She had told herself that on the drive home the night before, and in bed, and again in the shower, and she found she still believed it, more or less, and that believing it did not seem to make any difference to anything at all.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as ml-scene" aria-hidden="true">
+        <div class="asky dusk"></div><div class="mat" style="left:8%;top:18%"><div class="letter" style="left:18%;top:-20%;--r:-4deg"></div></div><div class="mat" style="left:26%;top:18%"><div class="letter" style="left:18%;top:-20%;--r:-2deg"></div></div><div class="mat" style="left:44%;top:18%"><div class="letter" style="left:18%;top:-20%;--r:0deg"></div></div><div class="mat" style="left:62%;top:18%"><div class="letter" style="left:18%;top:-20%;--r:2deg"></div></div><div class="mat" style="left:80%;top:18%"><div class="letter" style="left:18%;top:-20%;--r:4deg"></div></div><div class="mat" style="left:8%;top:54%"><div class="letter" style="left:18%;top:-20%;--r:6deg"></div></div><div class="mat" style="left:26%;top:54%"><div class="letter" style="left:18%;top:-20%;--r:8deg"></div></div><div class="mat" style="left:44%;top:54%"><div class="letter" style="left:18%;top:-20%;--r:10deg"></div></div><div class="mat" style="left:62%;top:54%"><div class="letter" style="left:18%;top:-20%;--r:12deg"></div></div><div class="mat" style="left:80%;top:54%"><div class="letter" style="left:18%;top:-20%;--r:14deg"></div></div>
+        <div class="label">forty-one doormats</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letters went out on the Monday. The Act said that every notification of a managed retirement had to carry the name and qualifications of the Accountable Officer who had signed for it, so that there would always be somebody, and so the letters that landed on forty-one doormats in Cwmhendre said, at the bottom of the second page, under a paragraph about the support that was available and a telephone number that would always be answered by a person, <em>Signed for: D. Pryce CEng MICE, Accountable Officer, Mid-Wales Region.</em></p>
+        <p>Her mother rang at ten past nine. Dawn was looking at a culvert in Machynlleth.</p>
+        <p>"There's a letter," her mother said.</p>
+        <p>"I know, Mam."</p>
+        <p>There was a long quiet on the line, the kind of quiet that had a kitchen in it, the Rayburn ticking and the clock on the dresser, and Dawn waited in it.</p>
+        <p>"It's got your name on," said her mother.</p>
+        <p>"I know."</p>
+        <p>"Well," said her mother, and then, after a while, "I'll let you get on," and she put the phone down.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as bv-scene" aria-hidden="true">
+        <div class="asky dusk"></div><div class="hills"></div><div class="terr"><i style="--h:55%;--o:0.25;--l:0"></i><i style="--h:92%;--o:1;--l:0.45"></i><i style="--h:89%;--o:0.25;--l:0"></i><i style="--h:86%;--o:0.25;--l:0"></i><i style="--h:83%;--o:1;--l:0.45"></i><i style="--h:80%;--o:0.25;--l:0"></i><i style="--h:77%;--o:1;--l:0.45"></i><i style="--h:74%;--o:0.25;--l:0"></i><i style="--h:71%;--o:0.25;--l:0"></i><i style="--h:68%;--o:1;--l:0.45"></i><i style="--h:65%;--o:0.25;--l:0"></i><i style="--h:62%;--o:1;--l:0.45"></i></div>
+        <div class="label">The Bevans went first</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>There was a meeting at the chapel on the Thursday, the chapel that was still a chapel, and Dawn went, because she thought she should, and sat at the back. The Transition Support team had sent two people, a woman called Bethan from Llandrindod and a young man whose name Dawn did not catch, and they had a screen on a stand at the front, by the pulpit, with the system on it, which answered questions in a pleasant voice when the young man held up a microphone. It knew everyone's name. It knew which houses had stairs and which did not and whose husband was in the home at Builth and whose grandchildren were in Swansea, and when Mr Lloyd stood up and asked, quite angrily, what would happen to the sheep, it said that it had already spoken to his son-in-law, who farmed at Bryn Glas, about the grazing, and that an arrangement had been proposed that his son-in-law had described as fair, and Mr Lloyd said that he had not been told about that, and sat down, and later in the evening Dawn saw him talking to Bethan by the door with his cap in his hands.</p>
+        <p>Nobody said anything to Dawn, except Mrs Bevan, who came past at the end on her stick and stopped and patted her arm and said, "It's not you, love, it's them," and went on out into the dark before Dawn could think of anything to say back.</p>
+        <p>Her mother was not there. Her mother had said she would not go to a meeting about something that had already been decided, because there was no sense in it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as gt-scene" aria-hidden="true">
+        <div class="asky"></div><div class="hills"></div>
+        <div class="arch" style="left:28%;bottom:16%;width:48cqw;height:28cqw"><div class="deck"></div><div class="ring"></div><div class="pier w"></div><div class="pier e"></div><div class="fern"></div></div>
+        <div class="gate" style="left:26%;bottom:16%"></div><div class="gate" style="left:68%;bottom:16%"></div>
+        <div class="hoard" style="left:8%;bottom:12%"><i></i></div>
+        <div class="river" style="bottom:0;height:12%"></div>
+        <div class="label">steel gate</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They went quicker than Dawn had expected, and then quicker than that. The Bevans went first, before Christmas, to a bungalow in Rhayader two streets from the surgery, and Mrs Bevan sent a card to the whole lane that said the bathroom had a seat in the shower and she did not know how she had managed all these years. The Hughes family went in January, because the money was good and the boy wanted to go to college in Hereford. Mr Lloyd held out until March and then went to his daughter's at Bryn Glas, over the top, by the tractor track, which was not quite leaving. The houses had a sign put in their front gardens, small and green and tidy, with the national crest and a number, and after a while the gardens started to go to grass around the signs.</p>
+        <p>In April a contractor came and put a steel gate across the road at each end of the bridge, and a hoarding with a picture on it of how the river would look when the old bridge had been taken out, with alders on the banks and a heron, and a line of text that said <em>This asset has been retired. Thank you for your patience.</em> Alongside, a few yards upstream, they put a footbridge, aluminium, light grey, with a ramp at each end and a handrail at a height that the system had calculated for a population with a median age of seventy-one. The footbridge had a design life of ten years. Dawn had signed for it. It had been decision two thousand eight hundred and something, on a Tuesday, and she had not noticed which one it was until afterwards.</p>
+        <p>The bus stopped in May. The screen at the stop did not come down with it; it was on a different contract, and the contract had not been retired yet, and for most of that summer it said <em>This stop is no longer served</em>, in white letters on black, to nobody, and then one week in August it started saying <em>6 minutes</em> again, for reasons nobody could explain, and went on saying it.</p>
+        <p>The water main burst in September, the 1931 main, eleven months earlier than the low end of its estimate. They did not repair it. A bowser came on a small trailer, twice a week, and was parked at the end of the lane, and the system sent a text to every remaining resident telling them when it was coming. By then there were four remaining residents. By November there was one.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall as ft-scene" aria-hidden="true">
+        <div class="asky dusk"></div>
+        <div class="arch" style="left:8%;bottom:20%;width:40cqw;height:26cqw;opacity:.55;filter:grayscale(.3)"><div class="deck"></div><div class="ring"></div><div class="pier w"></div><div class="pier e"></div><div class="fern"></div></div>
+        <div class="foot" style="left:48%;right:8%;bottom:28%"></div><div class="rail" style="left:48%;right:8%;bottom:34%"></div>
+        <div class="river high" style="bottom:0"><div class="foam"></div></div>
+        <div class="gate" style="left:20%;bottom:20%;height:16cqw;opacity:.7"></div>
+        <div class="label">the old bridge, gated and quiet</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Dawn crossed the footbridge on a Sunday in the middle of November with two bags of shopping and a ten-litre container of drinking water, which she carried because her mother would not drink from the bowser, on principle, though she would wash in it. The river was high and brown under her, and as she walked she looked across at the old bridge, gated and quiet, with the fern still growing out of the parapet where it met the deck, and she saw that the river was coming hard round the eastern pier and piling up against it and breaking away in a long line of foam, the way it always had, and that the hollow at the waterline was bigger. Nobody was monitoring it. It was not an asset any more.</p>
+        <p>The lane was very quiet. The green signs stood in the long grass in front of every house but one. Somebody, probably Mr Lloyd's son-in-law, had been in and cut her mother's hedge.</p>
+        <p>Her mother was in the garden, kneeling on the folded feed sack at the edge of the vegetable bed, pulling leeks. She did not get up, but she held one up for Dawn to see.</p>
+        <p>They had the soup in the kitchen. The Rayburn was going. The calendar from the agricultural merchants in Builth was on its nail, still showing October, because the merchants had not sent a new one for the year and nobody had thought to tell them they should. Her mother had a tablet now, which Transition Support had given her and set up, and it sat on the dresser propped against the teapot, and while they ate it lit up once and said, in its pleasant voice, that the bowser would be at the end of the lane at eleven on Tuesday, and asked whether there was anything Glenys needed.</p>
+        <p>"No, thank you," said her mother, to the tablet, quite politely.</p>
+        <p>"They ring every day," she said to Dawn. "A girl called Bethan. She's very nice. She asks about my hip." She broke her bread into the soup. "She says there's a bungalow in Rhayader with my name on it whenever I want it. She says there's no rush."</p>
+        <p>"There's no rush," said Dawn.</p>
+        <p>"No," said her mother. "That's what she says."</p>
+        <p>Dawn did the gutter above the back door and looked at the boiler, which was making the noise again, and at four o'clock, when the light was going, her mother walked her down to the bottom of the lane, which she did not usually do, and stood with her arm through Dawn's and looked at the river.</p>
+        <p>"Your father used to say that bridge would see us all out," her mother said.</p>
+        <p>Dawn did not say anything.</p>
+        <p>"He was nearly right," said her mother, and patted her arm, and turned and went back up the lane on her own, slowly, past the green signs, and did not look back, and Dawn stood on the footbridge until the kitchen light came on.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>On the Tuesday morning she sat at her own kitchen table with the radio on low and a mug of tea going cold by her left hand, and signed for four thousand and forty things, which was about average for the time of year. Culverts, mostly. Some B-roads. A retaining wall above the line at Talerddig. A footbridge, aluminium, near Rhayader, <em>Recommendation: monitor</em>. A settlement she did not know in the hills above Llanwrtyd, nineteen persons, median age seventy-four, <em>Recommendation: managed retirement</em>, and she opened the full decision and read the rationale twice, and it was very clear.</p>
+        <p>About halfway down there was a line that said <strong>Cwmhendre — residual occupancy (1 dwelling) — Recommendation: continue support, review quarterly</strong>, and her thumb stopped above the screen, and then went on.</p>
+        <p>Her disagreement rate that week was 0.29. The regional median was 0.28.</p>
+      </div>
+
+      <figure class="scene tall as cd-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:10%;bottom:12%">
+          <div class="row on" style="top:22%;height:28%"><b style="font-size:1.8cqw;top:18%">Cwmhendre — residual occupancy (1 dwelling)</b></div>
+          <div class="tick" style="right:16%;bottom:20%"></div>
+          <div class="num" style="left:10%;bottom:14%">0.29</div><div class="num dim" style="left:42%;bottom:18%">0.28</div>
+        </div>
+        <div class="label">continue support, review quarterly</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
