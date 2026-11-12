@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The station kept the curve — Ben Miller</title>
+    <meta name="description" content="At Mace Head on the Connemara coast, Nora Keane has drawn the year&#x27;s carbon dioxide peak up her father&#x27;s doorframe for thirty-one years. One May, the machine that checks the air decides it must be broken.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #16110c;
+        --ink: #efe4d2;
+        --mute: #9a8a72;
+        --cream: #f4ead8;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 8%, rgba(255, 190, 90, 0.16), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(80, 140, 150, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(180, 130, 60, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(60, 130, 100, 0.06), transparent 60%),
+          linear-gradient(180deg, #1c1610 0%, #16110c 36%, #120e0a 70%, #0e0b08 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(230, 200, 140, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 160, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #e8d5b0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 90, 0.28), 0 0 2px rgba(255, 230, 180, 0.45);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #eee4d4;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #d4a84a; }
+      .prose strong { font-weight: 700; color: #f0e0c0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #16120e;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(230, 190, 120, 0.14);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .station-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .station-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .station-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(230,190,120,.16); background: #16110c; }
+      .station-hero > * { position: absolute; }
+      .station-hero::after, .scene.st::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(12,8,4,.72) 100%), repeating-linear-gradient(112deg, rgba(255,220,160,.02) 0 2px, transparent 2px 8px); }
+      .scene.st { background: #16120e; container-type: size; }
+      .ssky { inset: 0; background: linear-gradient(185deg, #1a2430 0%, #3a4a58 28%, #8a9aa4 48%, #c8b080 68%, #e8c888 82%, #7a8a88 100%); }
+      .ssky.dawn { background: linear-gradient(105deg, #2a343c 0%, #5a6a74 32%, #d4b070 62%, #f0d090 78%, #8a9aa0 100%); }
+      .ssky.gold { background: linear-gradient(180deg, #2a2018, #8a5a28 42%, #e0a848 68%, #c89050 100%); }
+      .ssky.dusk { background: linear-gradient(180deg, #1a1820, #3a3238 40%, #6a5850 70%, #8a7060 100%); }
+      .ssky.storm { background: linear-gradient(180deg, #1a1c20, #3a4048 55%, #5a6068); }
+      .ssky.split { background: linear-gradient(90deg, #2a2018 0 50%, #6a8aaa 50% 100%); }
+      .sea { left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, #6a8088, #3a4a52 40%, #2a343c); box-shadow: inset 0 1cqw 2cqw rgba(255,230,180,.18); }
+      .sea.slate { background: linear-gradient(180deg, #4a545c, #2a3238); height: 24%; }
+      .sea .shim { inset: 8% 0 auto; height: 22%; background: repeating-linear-gradient(90deg, rgba(255,240,200,.18) 0 2cqw, transparent 2cqw 7cqw); opacity: .55; animation: seashim 8s linear infinite; }
+      .head { left: -4%; right: -4%; bottom: 18%; height: 36%; background: #2a2820; clip-path: polygon(0 80%, 6% 62%, 14% 70%, 22% 48%, 34% 58%, 48% 36%, 62% 52%, 74% 30%, 86% 48%, 100% 28%, 100% 100%, 0 100%); }
+      .head.low { bottom: 16%; height: 28%; background: #2e2c24; clip-path: polygon(0 60%, 18% 40%, 40% 55%, 62% 28%, 82% 48%, 100% 32%, 100% 100%, 0 100%); }
+      .bog { left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg, #3a3828, #2a2418); clip-path: polygon(0 28%, 100% 8%, 100% 100%, 0 100%); }
+      .road { left: 8%; width: 18cqw; bottom: 0; height: 48%; background: #3a342c; clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); box-shadow: inset 0 0 0 .4cqw #5a5044; }
+      .hut { width: 16cqw; height: 12cqw; background: #4a4036; box-shadow: 0 .6cqw 1.4cqw rgba(0,0,0,.4); }
+      .hut::before { content: ""; position: absolute; left: -8%; right: -8%; bottom: 78%; height: 55%; background: #3a3028; clip-path: polygon(0 100%, 50% 0, 100% 100%); }
+      .hut.sm { width: 10cqw; height: 8cqw; }
+      .gdoor { width: 36%; height: 68%; left: 32%; bottom: 0; background: #1e6b3c; box-shadow: inset 0 0 0 .35cqw #165230, 0 0 1.6cqw rgba(40,140,70,.35); }
+      .gdoor.lit { box-shadow: inset 0 0 0 .35cqw #165230, 0 0 2.4cqw rgba(80,200,110,.5); }
+      .mast { width: 1.15cqw; background: linear-gradient(90deg, #8a9094, #e8ecec 45%, #6a7074); box-shadow: 0 0 1cqw rgba(200,220,230,.25); }
+      .mast .inlet { width: 3.4cqw; height: 2.2cqw; left: 50%; transform: translateX(-50%); background: #c8d0c8; clip-path: polygon(28% 100%, 72% 100%, 100% 28%, 82% 0, 18% 0, 0 28%); box-shadow: 0 0 .6cqw rgba(200,220,210,.35); }
+      .mast .tether { left: 50%; width: .28cqw; transform: translateX(-50%); background: rgba(200,210,200,.45); }
+      .bottles { width: 7cqw; height: 8cqw; }
+      .bottles i { width: 2.2cqw; height: 100%; background: linear-gradient(90deg, #4a5054, #9aa0a4 45%, #3a4044); border-radius: 1cqw 1cqw 20% 20%; }
+      .bottles i:nth-child(2) { left: 2.6cqw; height: 86%; top: 14%; }
+      .fence { height: 11cqw; background: repeating-linear-gradient(90deg, #3a3228 0 .7cqw, transparent .7cqw 4.8cqw); }
+      .fence::after { content: ""; position: absolute; left: 0; right: 0; top: 28%; height: 44%; border-top: .25cqw solid #6a6258; border-bottom: .25cqw solid #6a6258; }
+      .wall { inset: 0; background: linear-gradient(90deg, #2a221c, #3a2e24 42%, #261e18); }
+      .frame { width: 22cqw; background: linear-gradient(90deg, #3a2414, #8a6238 36%, #6a4a2c 58%, #3a2418); box-shadow: inset -.6cqw 0 0 #2a1a10, 1cqw 0 2cqw rgba(0,0,0,.35); }
+      .frame .mk { left: 8%; width: 42%; height: .38cqw; background: rgba(32,24,16,.72); }
+      .frame .mk.soft { background: rgba(90,80,70,.55); }
+      .frame .mk.ink { background: #1a1410; height: .45cqw; }
+      .frame .mk.thick { height: .7cqw; }
+      .frame .mk.shake { transform: rotate(-4deg); }
+      .frame .mk b { left: 112%; top: -1.1cqw; width: 22cqw; font: 500 1.7cqw/1 Karla, sans-serif; color: rgba(240,220,180,.86); letter-spacing: .03em; white-space: nowrap; }
+      .frame .box { left: 4%; width: 52%; height: 2.2cqw; border: .28cqw solid rgba(40,28,16,.7); background: transparent; }
+      .gpanel { background: #1e6b3c; box-shadow: inset 0 0 0 .7cqw #165230, inset 0 0 0 1.8cqw #196338; }
+      .gpanel::after { content: ""; position: absolute; left: 14%; top: 52%; width: 1.7cqw; height: 1.7cqw; border-radius: 50%; background: #c8b060; box-shadow: 0 0 .6cqw rgba(200,176,80,.4); }
+      .words { font: 600 2.4cqw/1.15 Caveat, cursive; color: #1a1410; text-shadow: 0 0 1px rgba(255,240,200,.2); z-index: 5; }
+      .words em { position: relative; display: block; left: auto; top: auto; margin-top: .12em; font-style: italic; font-size: .78em; color: #1a1410; }
+      .step { width: 18cqw; height: 5cqw; background: #5a4030; box-shadow: 0 .4cqw 0 #3a2818; clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); }
+      .tab { background: #1a1612; border-radius: 1.2cqw; box-shadow: 0 0 0 .5cqw #2a2620, 0 1.6cqw 3cqw rgba(0,0,0,.55); }
+      .tab.paper { background: #f4efe6; box-shadow: 0 0 0 .5cqw #d8d0c4, 0 1.6cqw 3cqw rgba(0,0,0,.4); }
+      .row { left: 8%; right: 8%; height: 10%; background: rgba(255,255,255,.04); border-radius: .4cqw; }
+      .row.flag { background: rgba(200,140,40,.16); box-shadow: inset 0 0 0 .2cqw rgba(200,140,40,.4); height: 22%; }
+      .row b { position: absolute; left: 4%; right: 4%; top: 22%; font: 500 1.55cqw/1.25 Karla, sans-serif; color: #e8dcc0; letter-spacing: .02em; }
+      .tab.paper .row b { color: #2a2420; }
+      .num { font: 700 5.4cqw/1 "Cormorant Garamond", serif; color: #e8b84a; }
+      .num.dim { color: #8a8070; font-size: 2.8cqw; }
+      .num.ink { color: #2a6aa8; }
+      .cmd { left: 8%; right: 8%; height: 18%; background: rgba(255,255,255,.05); border-radius: .5cqw; }
+      .cmd b { position: absolute; left: 5%; top: 30%; font: 500 1.7cqw/1 Karla, sans-serif; color: #d4a84a; }
+      .done { font: 600 2.2cqw/1 Karla, sans-serif; color: #6eca80; }
+      .plot { left: 8%; right: 8%; top: 10%; bottom: 14%; background: #f7f4ee; border-radius: .6cqw; box-shadow: inset 0 0 0 .3cqw #e0d8cc; overflow: hidden; }
+      .seg { height: .42cqw; background: #2a6aa8; transform-origin: 0 50%; border-radius: .2cqw; }
+      .field { left: -2%; right: -2%; bottom: 0; height: 52%; background:
+        linear-gradient(180deg, #8a8a80 0%, #6e6e66 36%, #4a4a44 100%);
+        clip-path: polygon(0 30%, 12% 18%, 28% 26%, 46% 10%, 64% 22%, 80% 8%, 100% 16%, 100% 100%, 0 100%); }
+      .field.flat { clip-path: none; height: 46%; background:
+        linear-gradient(180deg, #7a7a72 0%, #5c5c56 42%, #3e3e38 100%);
+        box-shadow: inset 0 1.4cqw 2cqw rgba(40,40,36,.25); }
+      .plots { left: 0; right: 0; bottom: 8%; height: 36%; background:
+        repeating-linear-gradient(95deg, transparent 0 7cqw, rgba(40,40,36,.18) 7cqw 7.4cqw); opacity: .7; }
+      .dust { left: 8%; right: 14%; top: 26%; height: 28%; background:
+        radial-gradient(ellipse at 42% 70%, rgba(190,190,180,.7) 0 24%, rgba(160,160,150,.28) 48%, transparent 72%);
+        filter: blur(1.4cqw); animation: dustfall 6s ease-in-out infinite alternate; }
+      .gate { width: 22cqw; height: 16cqw; background: repeating-linear-gradient(90deg, #5a5044 0 1.1cqw, transparent 1.1cqw 2.4cqw); box-shadow: inset 0 0 0 .4cqw #3a342c; }
+      .gate::before, .gate::after { content: ""; position: absolute; top: 0; bottom: 0; width: 1.2cqw; background: #4a4036; }
+      .gate::before { left: 0; } .gate::after { right: 0; }
+      .trap { width: 16cqw; height: 10cqw; background: #c8c0b4; border-radius: .4cqw; box-shadow: 0 .5cqw 1cqw rgba(0,0,0,.35), inset 0 0 0 .3cqw #a8a094; }
+      .trap::after { content: ""; position: absolute; left: 18%; right: 18%; top: 22%; bottom: 22%; background: #6a8a94; border-radius: 50%; box-shadow: inset 0 0 1cqw #3a4a52; }
+      .tank { width: 5cqw; height: 14cqw; background: linear-gradient(90deg, #4a5458, #c8d0d4 45%, #3a4448); border-radius: 1.4cqw 1.4cqw 20% 20%; }
+      .volcano { width: 40%; height: 38%; background: #3a3230; clip-path: polygon(0 100%, 38% 18%, 50% 0, 62% 18%, 100% 100%); }
+      .glow { width: 16cqw; height: 16cqw; border-radius: 50%; background: radial-gradient(circle, rgba(255,200,80,.45), transparent 70%); filter: blur(1cqw); }
+      .ring { border: .45cqw solid rgba(240,220,180,.35); border-radius: 50%; }
+      .site { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: #e8b84a; box-shadow: 0 0 1.2cqw rgba(232,184,74,.7); }
+      .site b { left: 140%; top: -20%; white-space: nowrap; font: 500 1.5cqw/1 Karla, sans-serif; color: #f0e0c0; letter-spacing: .06em; text-transform: uppercase; }
+      .rock { left: -2%; right: -2%; bottom: 0; height: 32%; background: #3a3028; clip-path: polygon(0 70%, 12% 40%, 28% 58%, 44% 28%, 62% 50%, 80% 22%, 100% 44%, 100% 100%, 0 100%); }
+      .sleet { inset: 0; background: repeating-linear-gradient(118deg, rgba(230,235,240,.0) 0 2cqw, rgba(230,235,240,.35) 2.2cqw 2.45cqw, transparent 2.45cqw 5.5cqw); animation: sleetrain 1.6s linear infinite; }
+      .anem { width: 4.4cqw; height: 4.4cqw; }
+      .anem::before, .anem::after { content: ""; position: absolute; background: #c8d0d4; }
+      .anem::before { left: 46%; top: 0; bottom: 0; width: .4cqw; }
+      .anem::after { left: 0; right: 0; top: 46%; height: .4cqw; }
+      .anem i { position: absolute; width: 1.6cqw; height: 1.6cqw; border-radius: 50%; background: #d8e0e4; }
+      .picker { width: 8cqw; height: 40%; background: linear-gradient(90deg, #c8a040, #e8c060); clip-path: polygon(40% 0, 60% 0, 70% 100%, 30% 100%); opacity: .7; }
+      .car { width: 10cqw; height: 4cqw; background: #3a3030; border-radius: .6cqw .6cqw 0 0; }
+      .car::before { content: ""; position: absolute; left: 18%; right: 28%; bottom: 70%; height: 90%; background: #2a2424; border-radius: .4cqw .4cqw 0 0; }
+      @keyframes seashim { to { transform: translateX(8cqw); } }
+      @keyframes dustfall { from { transform: translateY(-2cqw); opacity: .7; } to { transform: translateY(3cqw); opacity: .35; } }
+      @keyframes sleetrain { to { background-position: 6cqw 8cqw; } }
+      @keyframes drawcurve { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+      @keyframes inletpulse { from { filter: brightness(1); } to { filter: brightness(1.35); } }
+      .mast .inlet { animation: inletpulse 3.2s ease-in-out infinite alternate; }
+      .plot .linewrap { inset: 0; animation: drawcurve 2.4s ease-out both; }
+      @media (max-width: 600px) { .station-hero { height: 22rem; } .num { font-size: 7cqw; } .frame .mk b { font-size: 2cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .station-hero *, .scene.st *, .station-hero *::before, .station-hero *::after, .scene.st *::before, .scene.st *::after { animation: none !important; }
+        .plot .linewrap { clip-path: none; }
+        .dust { transform: none; opacity: .45; }
+      }
+      .ssky, .sea, .sea .shim, .head, .bog, .road, .hut, .gdoor, .mast, .mast .inlet, .mast .tether, .bottles, .bottles i, .fence, .wall, .frame, .frame .mk, .frame .mk b, .frame .box, .gpanel, .words, .words em, .step, .tab, .row, .row b, .num, .cmd, .cmd b, .done, .plot, .plot .linewrap, .seg, .field, .plots, .dust, .gate, .trap, .tank, .volcano, .glow, .ring, .site, .site b, .rock, .sleet, .anem, .anem i, .picker, .car { position: absolute; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="station-hero" aria-hidden="true">
+          <div class="ssky dawn"></div>
+          <div class="sea"><i class="shim"></i></div>
+          <div class="head"></div>
+          <div class="fence" style="left:4%;bottom:22%;width:32%;height:11cqw"></div>
+          <div class="bottles" style="left:22%;bottom:22%"><i></i><i></i></div>
+          <div class="hut sm" style="left:32%;bottom:22%"></div>
+          <div class="hut" style="left:40%;bottom:22%"><i class="gdoor lit"></i></div>
+          <div class="hut sm" style="left:54%;bottom:22%"></div>
+          <div class="mast" style="left:68%;bottom:26%;height:60%"><i class="inlet" style="top:6%"></i><i class="tether" style="top:8%;height:88%"></i><i class="inlet" style="top:26%"></i><i class="tether" style="top:28%;height:68%"></i><i class="inlet" style="top:46%"></i><i class="tether" style="top:48%;height:48%"></i><i class="inlet" style="top:66%"></i><i class="tether" style="top:68%;height:28%"></i></div>
+          <div class="label">the green door</div>
+        </div>
+        <h1>The station kept the curve</h1>
+        <p class="dek">At Mace Head on the Connemara coast, Nora Keane has drawn the year's carbon dioxide peak up her father's doorframe for thirty-one years. One May, the machine that checks the air decides it must be broken.</p>
+        <time datetime="2026-11-12">12 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Nora Keane drove out to the station at a quarter to seven on the first Monday in June, the way she had driven out on nearly every Monday for thirty-one years, down the bog road from Carna with the window open an inch and the sea on her left going from grey to pewter as the light came up behind her, and she parked the car where she always parked it, on the gravel beside the gas bottles, nose to the wall, so the wind off the Atlantic would hit the back of it and not the doors. The wind was from the west-south-west at about eighteen knots, which she knew before she looked at anything, because she had been reading the wind on that headland since she was a child and could tell eighteen from twenty-two by the sound it made in the fence wire. West-south-west was good. West-south-west meant the air coming in over the rocks at Mace Head had not touched land since Newfoundland, and whatever was in it was what the northern half of the world had put there and mixed up and sent round, and nothing that a farmer in Galway had added on the way.</p>
+        <p>The station was three huts and a mast. The mast was twenty-three metres tall and had inlets at four heights, little upturned funnels with mesh over them, and from each inlet a line ran down the mast and into the main hut, where the air was dried and pumped and measured, every second of every day, by instruments that cost more than the house Nora lived in and were, in her opinion, a great deal less well behaved. The main hut was the one with the green door. Her father had painted the door that colour in 1986 with paint left over from the boat, and the university had repainted it three times since, and each time they had painted it the same green, because somebody had asked her what colour it should be and she had told them.</p>
+        <p>She let herself in, put the kettle on in the corner, and stood for a moment with her coat still on, listening. The room had a sound of its own, a low steady hum from the pumps and the cooling fans and the analysers, with a tick every few seconds from the valve manifold switching between inlets, and she had learned long ago that she could hear trouble before any screen could show it. A pump going in the bearings sang a little higher. A valve sticking ticked late. That morning the hum was the hum it always was, and the ticks came when they should, and she took her coat off and hung it on the hook behind the door, beside the doorframe with the pencil marks on it, and sat down at the desk to read the weekend.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st mk-scene" aria-hidden="true">
+        <div class="wall"></div>
+        <div class="frame" style="left:16%;top:6%;bottom:12%;width:36cqw">
+          <i class="mk soft" style="bottom:10.00%"><b>1987 — 349.8</b></i>
+          <i class="mk soft" style="bottom:11.19%"></i>
+          <i class="mk soft" style="bottom:12.37%"></i>
+          <i class="mk soft" style="bottom:13.56%"></i>
+          <i class="mk soft" style="bottom:14.74%"></i>
+          <i class="mk soft" style="bottom:15.93%"></i>
+          <i class="mk soft" style="bottom:17.11%"></i>
+          <i class="mk soft" style="bottom:18.30%"></i>
+          <i class="mk soft" style="bottom:19.48%"></i>
+          <i class="mk soft" style="bottom:20.67%"></i>
+          <i class="mk soft" style="bottom:21.85%"></i>
+          <i class="mk soft" style="bottom:23.04%"></i>
+          <i class="mk soft" style="bottom:24.22%"></i>
+          <i class="mk soft" style="bottom:25.41%"></i>
+          <i class="mk soft" style="bottom:26.60%"></i>
+          <i class="mk soft" style="bottom:27.78%"></i>
+          <i class="mk soft" style="bottom:28.97%"></i>
+          <i class="mk soft" style="bottom:30.15%"></i>
+          <i class="mk soft" style="bottom:31.34%"></i>
+          <i class="mk soft" style="bottom:32.52%"></i>
+          <i class="mk soft" style="bottom:33.71%"></i>
+          <i class="mk soft" style="bottom:34.89%"></i>
+          <i class="mk soft" style="bottom:36.08%"></i>
+          <i class="mk soft" style="bottom:37.26%"></i>
+          <i class="mk soft" style="bottom:38.45%"></i>
+          <i class="mk soft" style="bottom:39.64%"></i>
+          <i class="mk soft thick" style="bottom:40.82%"><b>2013</b></i>
+          <i class="mk soft" style="bottom:42.31%"></i>
+          <i class="mk soft" style="bottom:43.81%"></i>
+          <i class="mk soft" style="bottom:45.30%"></i>
+          <i class="mk soft" style="bottom:46.80%"></i>
+          <i class="mk soft" style="bottom:48.29%"></i>
+          <i class="mk soft shake" style="bottom:49.78%"><b>2019 — 414.6</b></i>
+          <i class="mk" style="bottom:51.20%"></i>
+          <i class="mk" style="bottom:52.61%"></i>
+          <i class="mk" style="bottom:54.02%"></i>
+          <i class="mk" style="bottom:55.43%"></i>
+          <i class="mk" style="bottom:56.84%"><b>2024</b></i>
+          <i class="mk" style="bottom:58.37%"></i>
+          <i class="mk" style="bottom:59.89%"></i>
+          <i class="mk" style="bottom:61.42%"></i>
+          <i class="mk ink" style="bottom:62.94%"></i>
+          <i class="mk ink" style="bottom:64.47%"></i>
+          <i class="mk ink" style="bottom:65.99%"><b>2030</b></i>
+          <i class="mk ink" style="bottom:67.26%"></i>
+          <i class="mk ink" style="bottom:68.52%"></i>
+          <i class="mk ink" style="bottom:69.79%"></i>
+          <i class="mk ink" style="bottom:71.05%"></i>
+          <i class="mk ink" style="bottom:72.32%"><b>2035</b></i>
+          <i class="mk ink" style="bottom:73.05%"></i>
+          <i class="mk ink" style="bottom:73.79%"></i>
+          <i class="mk ink" style="bottom:74.53%"></i>
+          <i class="mk ink" style="bottom:75.26%"></i>
+          <i class="mk ink" style="bottom:76.00%"><b>457.3</b></i>
+          <i class="box" style="bottom:39.72%"></i>
+        </div>
+        <div class="gpanel" style="left:calc(16% + 36cqw);top:6%;bottom:12%;width:22cqw"></div>
+        <div class="label">the pencil marks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall st fg-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:10%;bottom:12%">
+          <div class="row" style="top:12%"><b>May 2041</b></div>
+          <div class="row flag" style="top:30%"><b>May 2041 monthly mean is below May 2040 (−0.41 ppm)</b></div>
+          <div class="num" style="left:10%;bottom:16%">−0.41</div>
+          <div class="num dim" style="right:10%;bottom:18%">ppm</div>
+        </div>
+        <div class="label">Flagged for review</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The pencil marks ran up the inside of the doorframe on the left-hand side, from about the height of her knee to a little above her head, and there were fifty-four of them. Each one was a short horizontal line with a year written beside it and a number, and the number was the highest monthly average of carbon dioxide the station had recorded that year, which almost always came in May, at the end of the northern winter, before the forests and the fields of half a world woke up and started breathing it back in. Her father had started the marks. He had been a technician at the station from 1974, when it was a single hut and a much shorter mast and most of what it did was catch air in steel flasks and post them to a laboratory in Boulder, Colorado, and in 1987 he had stood in this doorway with a pencil and drawn a line at about the height of his belt and written beside it <em>1987 — 349.8</em>. Nobody had asked him to. When she had asked him why, years later, he had said it was so the number had somewhere to live in the building that wasn't a computer, and then he had said that he liked to see it climb, the way you liked to see a child's height go up the kitchen wall, and then he had gone quiet for a while and said that wasn't really it.</p>
+        <p>The numbers had climbed. That was the whole of what they did. They climbed by a part per million or so a year in the eighties, then a bit faster, then a good deal faster, and the lines on the doorframe crept up the wood the way the water had crept up the slip at Ard in the big tides, a little higher each time, never back. Her father had made the line for 2013, when the number crossed four hundred, a bit thicker than the others, and drawn a small box round it. He had made his last line in 2019, at 414.6, with his hand shaking a bit, and had died in the spring of 2021 before he could make another, and Nora had made every one since. 2024, 426.1. 2030, 441.0. 2035, 451.3. The line for 2040 was just above the top of her head, and she had to stand on the step to reach it, and it said <em>457.3</em>.</p>
+        <p>She did not look at the doorframe that morning. She read the weekend.</p>
+        <p>The weekend had been clean. That was the first thing the summary told her, in the plain flat English that Cuntas always used, and she was glad of it, because the weekend before had been a mess of easterlies dragging the smell of Galway city and a peat fire in Rosmuc across the inlets, and most of it had been flagged and set aside as local. This weekend the wind had been out of the west nearly all the time, with a short swing to the north on Sunday night that Cuntas had marked as polar maritime and kept. Forty-nine hours of baseline air out of a possible sixty. The instruments were all in tolerance. The calibration gases had run at three o'clock on Saturday morning and again at three on Sunday and both had come back inside a tenth of a part per million of their certificates. There was one small item at the bottom, a note about a temperature excursion in the second analyser's cell on Saturday afternoon, which had lasted four minutes and corrected itself.</p>
+        <p>And there was the month.</p>
+        <p>The month was May. Cuntas had closed it at midnight on Sunday, the way it closed every month, by taking all the hours of baseline air and throwing out the ones that weren't and weighting the rest and producing a single number to two decimal places, with an uncertainty. It put the number in the monthly table, and it put the table in the summary, and above the table it put a line in bold that it did not often put there, and the line said:</p>
+        <p><strong>May 2041 monthly mean is below May 2040 (−0.41 ppm). Flagged for review: probable instrument or calibration drift. See attached diagnostics.</strong></p>
+        <p>Nora read the line twice. Then she got up and made the tea, because the kettle had boiled while she was reading, and she brought the tea back to the desk and put it down by her left hand and read the line a third time.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st cu-scene" aria-hidden="true">
+        <div class="tab" style="left:10%;right:10%;top:12%;bottom:14%">
+          <div class="row" style="top:16%"><b>Cuntas</b></div>
+          <div class="cmd" style="top:38%"><b>Rerun May with everything</b></div>
+          <div class="row" style="top:64%;height:22%"><b>I do not have a remaining explanation for this value that I consider more likely than that it is correct.</b></div>
+        </div>
+        <div class="label">Cuntas</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Cuntas had been at the station for nine years. It was not really at the station, any more than the weather was, but it lived on the station's machines and on a great many other machines in Dublin and Frankfurt and wherever else, and it did for Mace Head what it did for every atmospheric site in Europe, which was everything that a team of a dozen people used to do and a fair bit that nobody had ever had time for. It watched the instruments. It ran the calibrations. It sorted the air, deciding hour by hour which of it was clean ocean air from the west and which had been dirtied by Ireland, using the wind and the radon count and the back-trajectories and a dozen other things that it weighed together in ways Nora had once tried to follow in a paper and given up on. It wrote the monthly reports and sent them where they had to go. When something was wrong it told her, usually before it went wrong, and it had been right so often for so long that she had stopped checking most of what it said, the way you stop checking a good watch.</p>
+        <p>It was not often wrong. When it was, it was wrong in interesting ways. Once it had decided for most of a February that a pod of seals hauled out on the rocks below the mast were a local source of methane, which they were, though not on the scale Cuntas had imagined, and she had gone down with binoculars and counted them and come back and told it, and it had thanked her and adjusted. Once it had flagged the whole of a week's data because a gull had built a nest in the mesh of the ten-metre inlet. She had found the gull.</p>
+        <p>She opened the diagnostics. They were long, as they always were, and as clear as they always were, and they said in effect that Cuntas did not believe its own number. The May mean was 456.89. The May before had been 457.30. In every year of the station's record, every single one, going back to before she was born, May had been higher than the May before, by anything from half a part per million to over three, and a fall of four tenths was so far outside anything that had happened at Mace Head or anywhere else that the most likely explanation, by a wide margin, was that something in the measuring had shifted. Cuntas listed the candidates in order. The calibration tanks might have drifted together, which was unlikely but not unheard of. The new drying system installed in March might be stripping a very small amount of carbon dioxide out of the sample along with the water. The Saturday temperature excursion in the second analyser might be the visible tip of a slower fault. The baseline selection might have shifted because of an unusual run of weather. It gave each of these a probability and suggested a set of checks, and at the bottom it said that, pending the checks, it had held the May value back from the monthly submission to the World Data Centre, which it was due to send on Wednesday.</p>
+        <p>Nora sat back in the chair and drank some of the tea.</p>
+        <p>She thought about the drier first, because she did not trust the drier. It had come from a firm in Munich with a lovely brochure and she had spent most of March on the floor of the hut with a spanner, getting it to sit right, and she would not have been surprised to find it was eating a bit of the signal. Then she thought about the tanks. Then, because she could not help it, she thought about Colm.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st ba-scene" aria-hidden="true">
+        <div class="ssky dusk"></div>
+        <div class="sea slate" style="height:20%"></div>
+        <div class="field"></div>
+        <div class="plots"></div>
+        <div class="dust"></div>
+        <div class="road" style="left:40%;width:14cqw;height:50%"></div>
+        <div class="label">crushed basalt</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Colm Mac Donncha farmed the land on the other side of the bog road, forty acres of rough grazing and a few fields of good ground going down to the shore at Maínis, and for the last two years his fields had been grey. Not all the time. In April and again in September a lorry came up from the quay at Ros a' Mhíl with forty tonnes of crushed basalt from a quarry near Ballymena, ground as fine as flour, and a contractor from Clifden came out with a spreader on the back of a tractor and laid it on the fields like a frost, and for a few days afterwards the whole of Colm's place looked like it had been dusted with cement, and then the rain came in off the sea and washed it into the ground and the grass came up greener than before. He was paid for it. He was paid quite well for it, by a scheme Nora had read about in the Tribune, run out of Brussels through the Department, that put a price on every tonne of carbon dioxide pulled out of the air and locked away in the soil and the sea as the rock dust weathered. She had asked him about it once, at the shop, and he had said the money was grand but the real thing was the lime, he hadn't had to buy lime in two years, and the grass was the best it had ever been, and his father would have thought he was mad.</p>
+        <p>There were thousands of Colms now. She knew that, in the way you knew a fact from the radio. The basalt was going on fields from Brazil to Punjab to the Ukraine, by the hundred million tonnes, out of quarries and mine tailings and steelworks slag, and the schedule for all of it, which field and which week and how fine the grind and where the lorry should go next, was worked out by systems not so different from Cuntas, which had read every soil survey and rainfall record on earth and knew where a tonne of rock would do the most. She knew that the grids had changed, too, that the coal had gone and most of the gas was going, that the big ships ran on ammonia now and the cars mostly on nothing, that there were machines in Iceland and Wyoming and Oman that pulled carbon dioxide out of the open air and pumped it underground and that those machines had got cheaper every year for fifteen years the way the solar panels had, faster than anybody but the people building them had predicted, because the people building them had had help. She knew that the ocean people in Kiel thought the North Atlantic was taking up more than it had. She knew all of it, the way you knew the size of the sun.</p>
+        <p>But she also knew the doorframe. Fifty-four lines, and every one of them higher than the one before, and she had stood under them for thirty-one years drawing the next one, and the knowing of all those other things had never once moved a single line down. In 2035 the radio had been full of it, peak emissions, the year the world's smokestacks put out less than the year before, and the line for 2035 had gone up by two parts per million all the same, because that was what a bath did when you turned the tap down but not off, it kept filling, just slower. The people on the radio had explained that too, very patiently. The line for 2036 had gone up. The line for 2037. Slower each year, she would grant them that, a part per million and a half, a part per million, three quarters, and the last few years the lines had been so close together on the wood that she had to write the numbers off to the side at a slant so they would fit. But up.</p>
+        <p>So she did not trust the drier, and she did not trust the number, and she got up from the desk and went to find a spanner.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st ck-scene" aria-hidden="true">
+        <div class="wall"></div>
+        <div class="tank" style="left:10%;bottom:16%"></div>
+        <div class="tank" style="left:17%;bottom:16%;height:12cqw"></div>
+        <div class="trap" style="left:32%;bottom:28%"></div>
+        <div class="tab" style="left:54%;right:8%;top:16%;bottom:16%">
+          <div class="num" style="left:8%;top:22%;font-size:4.2cqw">456.88</div>
+          <div class="num dim" style="left:8%;top:52%">± 0.06 ppm</div>
+        </div>
+        <div class="label">the old cold trap</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It took her the whole of Monday and most of Tuesday, and she did every one of the checks that Cuntas suggested and two that it hadn't, and she did them the old way, with her own hands, as well as letting Cuntas do them its way, because that was how she had been taught, and because her father had told her once that the day you let the machine check itself was the day you'd better start looking for a new job.</p>
+        <p>She bypassed the drier and ran the sample through the old cold trap, the glass one that sat in a bath of chilled alcohol and that she had kept on the shelf against every attempt by the university to have it thrown out, and she compared an hour of air through the new system with an hour through the old one, and then another hour, and another. They agreed to within two hundredths. She opened up the second analyser and looked at the cell and the heater and the thermistor and found a small brown crust on one of the connectors, which was salt, because everything at Mace Head got salt in it eventually, and she cleaned it and put it back and ran it against the first analyser for six hours, and they agreed to within three hundredths, and the temperature excursion on Saturday had been, as far as either she or Cuntas could tell, a loose connection and nothing more. She ran the working calibration tanks against the station's two highest-grade reference tanks, which she kept in a locked cage at the back of the hut and used twice a year, and which had been filled and certified in Boulder and flown over at a cost she did not like to think about, and the working tanks had drifted by less than a tenth in eighteen months. She sat with Cuntas for two hours on Tuesday afternoon going through the baseline selection for May, hour by hour, and arguing with it about a handful of hours on the eleventh when the wind had backed southerly for a while, and in the end they threw out those hours and the number moved by a hundredth.</p>
+        <p>At five o'clock on Tuesday she typed into the box at the bottom of the screen, <em>Rerun May with everything</em>, and Cuntas reran it, and the line came back.</p>
+        <p><strong>May 2041 monthly mean: 456.88 ± 0.06 ppm. Year-on-year change: −0.42 ppm. All instrumental and calibration checks within tolerance. Drift hypothesis not supported by checks.</strong></p>
+        <p>And then, underneath, a line she had not seen it write before.</p>
+        <p><em>I do not have a remaining explanation for this value that I consider more likely than that it is correct. I recommend comparison with other baseline sites before submission.</em></p>
+        <p>She looked at that for a long time.</p>
+        <p>Then she thought, Mauna Loa. Cape Grim.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st lo-scene" aria-hidden="true">
+        <div class="ssky split"></div>
+        <div class="glow" style="left:12%;top:18%"></div>
+        <div class="rock" style="width:50%;height:36%"></div>
+        <div class="hut sm" style="left:16%;bottom:28%"><i class="gdoor"></i></div>
+        <div class="glow" style="left:68%;top:22%;background:radial-gradient(circle,rgba(255,230,180,.5),transparent 70%)"></div>
+        <div class="volcano" style="left:58%;bottom:8%;width:38%;height:48%"></div>
+        <div class="label">Mauna Loa</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It was half past five in the evening at Mace Head, which made it half past six in the morning in Hawaii, and Leilani Kahale picked up on the second ring sounding like she had already been up for an hour, which she had.</p>
+        <p>Nora had known Leilani for twenty years, since they had both been young enough to be sent to the same training course in Boulder and old enough to sit in the back row and make remarks about the lecturer, and they spoke perhaps four times a year, about tanks and inlets and pumps and the ludicrous price of everything, and once, when Nora's father died, for most of a night. Leilani ran the instruments at the observatory on Mauna Loa, the station that had started the whole thing in 1958, the one whose curve was in every textbook and on the side of buses and printed on tea towels, the sawtooth line climbing up the page with its little yearly wobble, and she was, as far as Nora was concerned, the only person in the world who would understand what she was about to ask.</p>
+        <p>"Have you closed May," Nora said.</p>
+        <p>There was a silence on the line that went on for long enough that Nora thought the call had dropped.</p>
+        <p>"You too," Leilani said.</p>
+        <p>"I've had the analysers apart. I've run it against the reference tanks. I've had the old cold trap out."</p>
+        <p>"You still have that thing?"</p>
+        <p>"I'm looking at it."</p>
+        <p>"We've had the whole of the instrument team on it since Friday," Leilani said. "Our system flagged it as drift on Thursday night, before we'd even closed the month. We've been through everything. I had a guy from the lab fly out yesterday with a suitcase of tanks. It's not drift."</p>
+        <p>"How much," Nora said.</p>
+        <p>"Minus point three five on May. Minus point two on the twelve-month running mean, but the running mean's been flat since February, we just kept telling ourselves it was noise." She paused. "What have you got?"</p>
+        <p>"Minus point four two."</p>
+        <p>"Huh," Leilani said, and then she laughed, a short surprised laugh, and then she didn't say anything at all for a bit, and Nora could hear a bird somewhere on the other side of the world, outside a window seven thousand miles away on the side of a volcano, singing.</p>
+        <p>"Cape Grim," Nora said.</p>
+        <p>"I'll call Hamish," Leilani said. "He'll be in bed. I don't care."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st fo-scene" aria-hidden="true">
+        <div class="ssky gold"></div>
+        <div class="rock"></div>
+        <div class="ring" style="left:22%;top:10%;width:56%;height:70%"></div>
+<i class="site" style="left:48%;top:10%"><b>Alert</b></i><i class="site" style="left:22%;top:38%"><b>Mace Head</b></i><i class="site" style="left:30%;top:58%"><b>Mauna Loa</b></i><i class="site" style="left:62%;top:72%"><b>Cape Grim</b></i>
+        <div class="label">It's the same air</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall st nt-scene" aria-hidden="true">
+        <div class="tab" style="left:10%;right:10%;top:14%;bottom:16%">
+          <div class="cmd" style="top:22%;height:24%"><b>Submit May on Wednesday with the note. Remove the drift flag.</b></div>
+          <div class="done" style="left:10%;top:58%">Done</div>
+        </div>
+        <div class="label">Remove the drift flag</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Hamish Doyle at Cape Grim, on the north-western tip of Tasmania, was in bed, and did not seem to mind. The southern hemisphere was a different matter, he said, the seasons were the other way round and the southern air was further from most of the change and slower to show it, but his twelve-month mean had been going sideways since the start of the year and his own system had been flagging it every week as a possible drift, and he had spent half of April trying to find a leak that wasn't there. By the time the three of them were on the call together it was gone seven at Mace Head and the light outside the hut window had gone long and gold on the rocks, and they had Alert in the Canadian Arctic on as well, a young man called Pierre-Luc whom Nora had never met, sitting in a parka in a room that looked like the inside of a fridge, and he had a minus point three on May and had been told by his own system to replace an analyser that did not need replacing.</p>
+        <p>Four baseline stations, on four sides of the world, with four separate sets of instruments and four separate sets of tanks and four separate systems sorting the air, and every one of the systems had looked at its number and decided it must be broken.</p>
+        <p>"It's the same air," Pierre-Luc said, a little shyly, as if he wasn't sure he was allowed to say it. "It's all the same air. It goes round."</p>
+        <p>"It does," said Hamish. "Takes about a year to mix between the hemispheres. We'll be a bit behind you."</p>
+        <p>Nobody said anything for a moment. Nora found that she was looking at the doorframe.</p>
+        <p>"So what do we do," Leilani said. "Officially."</p>
+        <p>They talked about it for another hour, and most of it was procedure, which was a relief, because procedure was a thing you could hold on to. They would each submit their May values to the World Data Centre on Wednesday as they were, unflagged, with a note. The note would say that the values had been checked against reference standards and independent methods and were believed to be correct. They would not say anything else, to anybody, because it was one month, and one month was weather, and the curve had wobbled before and gone back. The proper number was the annual mean, the whole year, and that would not be known for seven months, and the people who would say what it meant were in Boulder and Geneva and Bern and would want a great deal more than four phone calls before they said anything at all.</p>
+        <p>"Agreed," Leilani said.</p>
+        <p>"Agreed," Hamish said.</p>
+        <p>"Agreed," Pierre-Luc said.</p>
+        <p>"Agreed," Nora said, and they said goodnight, and good morning, and get back to bed you eejit, and the screen went dark.</p>
+        <p>She sat in the hut for a while after that, with the pumps humming and the valves ticking, and then she typed into the box, <em>Submit May on Wednesday with the note. Remove the drift flag.</em></p>
+        <p><em>Done</em>, Cuntas wrote. And then, after a moment, the way it sometimes did when she had been talking to it for a long time, <em>I've updated my priors for year-on-year change at this site. Thank you for the checks.</em></p>
+        <p>She did not answer it. She put on her coat and went home.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st ms-scene" aria-hidden="true">
+        <div class="ssky dawn"></div>
+        <div class="sea"><i class="shim"></i></div>
+        <div class="head low"></div>
+        <div class="hut" style="left:28%;bottom:20%"><i class="gdoor lit"></i></div>
+        <div class="mast" style="left:58%;bottom:22%;height:64%"><i class="inlet" style="top:6%"></i><i class="tether" style="top:8%;height:88%"></i><i class="inlet" style="top:26%"></i><i class="tether" style="top:28%;height:68%"></i><i class="inlet" style="top:46%"></i><i class="tether" style="top:48%;height:48%"></i><i class="inlet" style="top:66%"></i><i class="tether" style="top:68%;height:28%"></i></div>
+        <div class="car" style="left:8%;bottom:20%"></div>
+        <div class="label">the clean air</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall st ac-scene" aria-hidden="true">
+        <div class="ssky dusk"></div>
+        <div class="sea slate" style="height:16%"></div>
+        <div class="field"></div>
+        <div class="plots"></div>
+        <div class="dust" style="top:20%"></div>
+        <div class="gate" style="left:36%;bottom:16%"></div>
+        <div class="label">Everybody's forty acres</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The weather that summer was ordinary. It rained in July and was fine for the first two weeks of August and then rained again, and the tourists came out to Carna in their hired cars and stopped in the lay-by on the bog road to take photographs of the mast, and some of them knocked on the green door and asked what it was, and Nora, who had a speech for this, gave it to them. She told them the station measured the air, the clean air, coming in off the ocean from three thousand miles away, and that it had been doing it since before she was born, and that the numbers went to a place in America where they were put together with the numbers from Hawaii and the Arctic and Tasmania and two hundred other places, and that this was how the world knew how much carbon dioxide there was in the sky. She showed them the inlets on the mast and the hum of the analysers and the cold trap on its shelf, and if they were interested, and some of them were, she showed them the doorframe.</p>
+        <p>She did not tell them about May. She found she wanted to, very badly, and that the wanting was itself a good reason not to.</p>
+        <p>June closed, and June was down on the June before by a third of a part per million. July was down by a half. Leilani rang on the fourth of August and said, "Are you seeing what I'm seeing," and Nora said, "I'm not saying a word to you until December," and Leilani laughed and said, "Me neither," and then they talked for forty minutes about a pump.</p>
+        <p>In September the lorry came up from Ros a' Mhíl again and the contractor came out from Clifden with the spreader, and Colm's fields went grey, and Nora stopped the car on the bog road on her way home and got out and stood at the gate for a while in the wind and watched the dust go down. Colm saw her and came over, wiping his hands on his trousers.</p>
+        <p>"You're looking at my rocks," he said.</p>
+        <p>"I am."</p>
+        <p>"Do they do anything at all, would you say? For your machines up there?"</p>
+        <p>She thought about it.</p>
+        <p>"Your forty acres?" she said. "No. Not that I could see. I couldn't tell them from the seals."</p>
+        <p>"Ah well," he said, looking a bit disappointed.</p>
+        <p>"Everybody's forty acres, though," she said, and he looked at her, and she found that she could not quite say anything more, and she patted the top of the gate and got back in the car.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st sm-scene" aria-hidden="true">
+        <div class="ssky storm"></div>
+        <div class="head low" style="bottom:0;height:36%"></div>
+        <div class="mast" style="left:48%;bottom:20%;height:62%"><i class="inlet" style="top:6%"></i><i class="tether" style="top:8%;height:88%"></i><i class="inlet" style="top:26%"></i><i class="tether" style="top:28%;height:68%"></i><i class="inlet" style="top:46%"></i><i class="tether" style="top:48%;height:48%"></i><i class="inlet" style="top:66%"></i><i class="tether" style="top:68%;height:28%"></i></div>
+        <div class="anem" style="left:62%;top:28%"><i style="left:-10%;top:-10%"></i><i style="right:-10%;bottom:-10%"></i></div>
+        <div class="picker" style="left:22%;bottom:16%"></div>
+        <div class="sleet"></div>
+        <div class="label">the anemometer</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>By October the people in Boulder and Bern had started ringing. They rang politely, and they asked about tanks, and about the drier, and about the cold trap, which seemed to delight them, and one of them, a woman from the Bern group with a voice like a schoolteacher, asked Nora to describe exactly how she had decided that the drift hypothesis was wrong, and listened for twenty minutes without interrupting, and at the end said, "Thank you. That's very helpful. We've had eleven stations do it eleven ways and it's good to have one where somebody actually took the cell apart."</p>
+        <p>In November a paper went up on the preprint server from a group in Kiel and another from a group in Melbourne, both very cautious, both full of words like <em>tentative</em> and <em>consistent with</em>, and the Irish Times ran four paragraphs about it on page nine under the headline <em>Carbon dioxide growth may have stalled, scientists suggest</em>, and Nora's sister in Galway rang her up and read it to her down the phone and said, "Is that you? Is that your machine?" and Nora said it was one of the machines, and her sister said, "Well what does it mean," and Nora said, "It means wait for December."</p>
+        <p>She had a cold for most of November and worked through it, and in the last week of the month there was a storm that took the anemometer off the top of the mast and she had to have a man out from Galway with a cherry picker to put it back, in sleet, while she stood at the bottom shouting up instructions he could not hear. Cuntas ran the station without the wind data for four days by working out from the radon and the trajectories and the other stations which way the air was probably coming from, and it was right, she checked afterwards, every hour of it, and she told it so, and it said thank you.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st cv-scene" aria-hidden="true">
+        <div class="plot"><div class="linewrap"><i class="seg" style="left:5.00%;top:83.75%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:5.70%;top:89.29%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:6.67%;top:82.50%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:7.37%;top:88.04%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:8.33%;top:81.26%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:9.03%;top:86.80%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:10.00%;top:80.01%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:10.70%;top:85.56%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:11.67%;top:78.77%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:12.37%;top:84.31%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:13.33%;top:77.52%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:14.03%;top:83.07%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:15.00%;top:76.28%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:15.70%;top:81.82%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:16.67%;top:75.03%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:17.37%;top:80.58%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:18.33%;top:73.79%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:19.03%;top:79.33%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:20.00%;top:72.54%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:20.70%;top:78.09%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:21.67%;top:71.30%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:22.37%;top:76.84%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:23.33%;top:70.05%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:24.03%;top:75.60%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:25.00%;top:68.81%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:25.70%;top:74.35%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:26.67%;top:67.57%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:27.37%;top:73.11%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:28.33%;top:66.32%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:29.03%;top:71.86%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:30.00%;top:65.08%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:30.70%;top:70.62%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:31.67%;top:63.83%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:32.37%;top:69.38%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:33.33%;top:62.59%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:34.03%;top:68.13%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:35.00%;top:61.34%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:35.70%;top:66.89%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:36.67%;top:60.10%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:37.37%;top:65.64%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:38.33%;top:58.85%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:39.03%;top:64.40%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:40.00%;top:57.61%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:40.70%;top:63.15%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:41.67%;top:56.36%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:42.37%;top:61.91%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:43.33%;top:55.12%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:44.03%;top:60.66%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:45.00%;top:53.87%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:45.70%;top:59.42%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:46.67%;top:52.63%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:47.37%;top:58.17%;width:3.61%;transform:rotate(-74.48deg)"></i><i class="seg" style="left:48.33%;top:51.39%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:49.03%;top:56.93%;width:3.77%;transform:rotate(-75.16deg)"></i><i class="seg" style="left:50.00%;top:49.82%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:50.70%;top:55.36%;width:3.77%;transform:rotate(-75.16deg)"></i><i class="seg" style="left:51.67%;top:48.25%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:52.37%;top:53.79%;width:3.77%;transform:rotate(-75.16deg)"></i><i class="seg" style="left:53.33%;top:46.68%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:54.03%;top:52.22%;width:3.77%;transform:rotate(-75.16deg)"></i><i class="seg" style="left:55.00%;top:45.11%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:55.70%;top:50.65%;width:3.77%;transform:rotate(-75.16deg)"></i><i class="seg" style="left:56.67%;top:43.54%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:57.37%;top:49.09%;width:3.77%;transform:rotate(-75.16deg)"></i><i class="seg" style="left:58.33%;top:41.97%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:59.03%;top:47.52%;width:3.73%;transform:rotate(-74.98deg)"></i><i class="seg" style="left:60.00%;top:40.49%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:60.70%;top:46.03%;width:3.73%;transform:rotate(-74.98deg)"></i><i class="seg" style="left:61.67%;top:39.01%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:62.37%;top:44.55%;width:3.73%;transform:rotate(-74.98deg)"></i><i class="seg" style="left:63.33%;top:37.53%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:64.03%;top:43.07%;width:3.73%;transform:rotate(-74.98deg)"></i><i class="seg" style="left:65.00%;top:36.04%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:65.70%;top:41.59%;width:3.73%;transform:rotate(-74.98deg)"></i><i class="seg" style="left:66.67%;top:34.56%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:67.37%;top:40.10%;width:3.79%;transform:rotate(-75.22deg)"></i><i class="seg" style="left:68.33%;top:32.96%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:69.03%;top:38.50%;width:3.79%;transform:rotate(-75.22deg)"></i><i class="seg" style="left:70.00%;top:31.36%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:70.70%;top:36.90%;width:3.79%;transform:rotate(-75.22deg)"></i><i class="seg" style="left:71.67%;top:29.76%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:72.37%;top:35.30%;width:3.79%;transform:rotate(-75.22deg)"></i><i class="seg" style="left:73.33%;top:28.16%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:74.03%;top:33.70%;width:3.79%;transform:rotate(-75.22deg)"></i><i class="seg" style="left:75.00%;top:26.56%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:75.70%;top:32.10%;width:3.79%;transform:rotate(-75.22deg)"></i><i class="seg" style="left:76.67%;top:24.96%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:77.37%;top:30.50%;width:3.65%;transform:rotate(-74.66deg)"></i><i class="seg" style="left:78.33%;top:23.63%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:79.03%;top:29.17%;width:3.65%;transform:rotate(-74.66deg)"></i><i class="seg" style="left:80.00%;top:22.30%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:80.70%;top:27.84%;width:3.65%;transform:rotate(-74.66deg)"></i><i class="seg" style="left:81.67%;top:20.97%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:82.37%;top:26.52%;width:3.65%;transform:rotate(-74.66deg)"></i><i class="seg" style="left:83.33%;top:19.64%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:84.03%;top:25.19%;width:3.65%;transform:rotate(-74.66deg)"></i><i class="seg" style="left:85.00%;top:18.32%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:85.70%;top:23.86%;width:3.38%;transform:rotate(-73.39deg)"></i><i class="seg" style="left:86.67%;top:17.54%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:87.37%;top:23.09%;width:3.38%;transform:rotate(-73.39deg)"></i><i class="seg" style="left:88.33%;top:16.77%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:89.03%;top:22.31%;width:3.38%;transform:rotate(-73.39deg)"></i><i class="seg" style="left:90.00%;top:16.00%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:90.70%;top:21.54%;width:3.38%;transform:rotate(-73.39deg)"></i><i class="seg" style="left:91.67%;top:15.22%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:92.37%;top:20.77%;width:3.38%;transform:rotate(-73.39deg)"></i><i class="seg" style="left:93.33%;top:14.45%;width:2.93%;transform:rotate(76.17deg)"></i><i class="seg" style="left:94.03%;top:19.99%;width:2.32%;transform:rotate(-65.38deg)"></i><i class="seg" style="left:95.00%;top:15.88%;width:1.91%;transform:rotate(68.48deg)"></i></div></div>
+        <div class="num ink" style="right:10%;top:14%;font-size:3.4cqw;z-index:4">453.71</div>
+        <div class="num dim" style="right:10%;top:28%;z-index:4">−0.19 ppm</div>
+        <div class="label">the first annual decrease</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>December closed at midnight on the thirty-first, which was a Tuesday, and Nora was not at the station when it did. She was at her sister's in Galway, with her sister's husband and their two grown children and the children's children, and a great deal of food, and the television on with the sound down showing fireworks over somewhere, and at about a quarter past midnight her phone buzzed in her pocket and she did not take it out. She did not take it out at half past either. She sat on the sofa with her great-niece Saoirse asleep against her shoulder, six years old and heavy as a sack of meal, and she found that she did not need to look, and also that she did not want to look here, in this warm loud room with the paper hats and the wrapping paper and the dog asleep under the table. It wasn't the place for it.</p>
+        <p>She drove out to Carna on the first of January at eleven in the morning, in rain, with a headache, along a bog road that was empty except for a single ewe standing in the middle of it near Cill Chiaráin who looked at her with deep suspicion and declined to move until she got out and asked it to. The sea was the colour of slate. The wind was out of the west at twenty-five knots and the fence wire was singing a high thin note that she knew meant gusts of forty. She parked the car where she always parked it, nose to the wall, and let herself in through the green door, and put the kettle on, and stood in the hum.</p>
+        <p>The summary was waiting. Cuntas had closed the year.</p>
+        <p>It had done what it always did, taken every month and every hour of clean air in all twelve of them and weighted them and averaged them, and set the annual mean beside the annual mean for every year of the record in a long column going back to before she was born, and it had drawn the curve, the way it always drew the curve, in thin blue on white, from 1987 at the bottom left to 2041 at the top right, climbing all the way. Except that it did not climb all the way. For fifty-three years it climbed, a steep smooth upward line with the little annual sawtooth on it like the edge of a breadknife, and then at the very right-hand end of the page, in the last year, it stopped climbing, and leaned, very slightly, a hair, the width of a pencil line, down.</p>
+        <p><strong>2041 annual mean: 453.71 ± 0.04 ppm. Change from 2040: −0.19 ppm.</strong></p>
+        <p>There was no flag. There was no note. There was nothing underneath it at all, and she sat and looked at the nothing for a while.</p>
+        <p>Then she typed, <em>Is that right?</em></p>
+        <p><em>Yes</em>, Cuntas wrote. <em>I've compared it with the provisional annual means from Mauna Loa, Alert, Cape Grim, Ny-Ålesund, and South Pole, which were posted overnight. All six sites show a decrease. This is the first annual decrease in the record at any of them.</em></p>
+        <p>She read that, and then she read it again, and then she typed, <em>Thank you</em>, and it said, <em>You're welcome</em>, and she got up from the desk.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>The step was where it always was, under the desk by the cold trap, a little wooden thing her father had made out of a fish box. She pulled it out and set it down in front of the doorframe on the left-hand side and stood on it, carefully, because her knees were sixty-three years old and the floor was concrete, and she looked at the lines.</p>
+        <p>Fifty-four of them, all the way up the wood. Her father's in his small upright hand, the early ones gone soft and silver with age, the line for 1987 down at the height of her hip with <em>349.8</em> beside it, and then up and up, the box round 2013, the shaky line for 2019, and her own above that, the ink she had switched to in 2028 when the pencil kept smudging, the numbers off to the side at a slant where they had got too close to fit. 2038. 2039. 2040, <em>457.3</em>, at the very top, just above her eyes.</p>
+        <p>She had always drawn the May number, because that was what her father had drawn, the peak of the year, the high-water mark. May 2041 was 456.88. That was what went on the door. She had known it since June. She took the pen out of the pocket of her cardigan and held it up to the wood and found where 456.88 went, and it went below the line for 2040. Not far. Less than the width of her little finger. But below, and there was no room there, because 2040 sat right on top of 2039 which sat right on top of 2038, and she would have to draw it in among them, a line in the wrong place, crossing over the numbers of years that had already happened.</p>
+        <p>She stood on the fish box with the pen in her hand for a long time.</p>
+        <p>The pumps hummed. A valve ticked, and switched the sample from the ten-metre inlet to the twenty-three, and ticked again. Outside the wind got up and threw a handful of rain at the window and the fence wire went up a semitone. Somewhere out in the west, two thousand miles off, the air that would come in over the rocks next week was moving over the open sea with nothing in front of it, and it had a little less in it than it had last year, and some of what was missing was lying in the soil of forty acres on the other side of the bog road under a grey dust that the rain had already washed in.</p>
+        <p>Then she reached up past the line for 2040, to the bare wood just above it, where the next line would have gone in any other year, and she wrote, small and clear, in her own hand, not a line this time but just the words.</p>
+        <p><em>2041. Down.</em></p>
+        <p>And under it, smaller, because there was room and because she wanted to, <em>Daddy.</em></p>
+        <p>She got down off the step and put it back under the desk. She drank the tea, which was cold. Then she sat down and opened the January calibration schedule, because the tanks were due on the third and the drier was making a noise she didn't like, and she rang Leilani, who would be asleep, and did not care.</p>
+      </div>
+
+      <figure class="scene tall st cd-scene" aria-hidden="true">
+        <div class="wall"></div>
+        <div class="frame" style="left:16%;top:6%;bottom:12%;width:36cqw">
+          <i class="mk soft" style="bottom:10.00%"><b>1987 — 349.8</b></i>
+          <i class="mk soft" style="bottom:11.19%"></i>
+          <i class="mk soft" style="bottom:12.37%"></i>
+          <i class="mk soft" style="bottom:13.56%"></i>
+          <i class="mk soft" style="bottom:14.74%"></i>
+          <i class="mk soft" style="bottom:15.93%"></i>
+          <i class="mk soft" style="bottom:17.11%"></i>
+          <i class="mk soft" style="bottom:18.30%"></i>
+          <i class="mk soft" style="bottom:19.48%"></i>
+          <i class="mk soft" style="bottom:20.67%"></i>
+          <i class="mk soft" style="bottom:21.85%"></i>
+          <i class="mk soft" style="bottom:23.04%"></i>
+          <i class="mk soft" style="bottom:24.22%"></i>
+          <i class="mk soft" style="bottom:25.41%"></i>
+          <i class="mk soft" style="bottom:26.60%"></i>
+          <i class="mk soft" style="bottom:27.78%"></i>
+          <i class="mk soft" style="bottom:28.97%"></i>
+          <i class="mk soft" style="bottom:30.15%"></i>
+          <i class="mk soft" style="bottom:31.34%"></i>
+          <i class="mk soft" style="bottom:32.52%"></i>
+          <i class="mk soft" style="bottom:33.71%"></i>
+          <i class="mk soft" style="bottom:34.89%"></i>
+          <i class="mk soft" style="bottom:36.08%"></i>
+          <i class="mk soft" style="bottom:37.26%"></i>
+          <i class="mk soft" style="bottom:38.45%"></i>
+          <i class="mk soft" style="bottom:39.64%"></i>
+          <i class="mk soft thick" style="bottom:40.82%"><b>2013</b></i>
+          <i class="mk soft" style="bottom:42.31%"></i>
+          <i class="mk soft" style="bottom:43.81%"></i>
+          <i class="mk soft" style="bottom:45.30%"></i>
+          <i class="mk soft" style="bottom:46.80%"></i>
+          <i class="mk soft" style="bottom:48.29%"></i>
+          <i class="mk soft shake" style="bottom:49.78%"><b>2019 — 414.6</b></i>
+          <i class="mk" style="bottom:51.20%"></i>
+          <i class="mk" style="bottom:52.61%"></i>
+          <i class="mk" style="bottom:54.02%"></i>
+          <i class="mk" style="bottom:55.43%"></i>
+          <i class="mk" style="bottom:56.84%"><b>2024</b></i>
+          <i class="mk" style="bottom:58.37%"></i>
+          <i class="mk" style="bottom:59.89%"></i>
+          <i class="mk" style="bottom:61.42%"></i>
+          <i class="mk ink" style="bottom:62.94%"></i>
+          <i class="mk ink" style="bottom:64.47%"></i>
+          <i class="mk ink" style="bottom:65.99%"><b>2030</b></i>
+          <i class="mk ink" style="bottom:67.26%"></i>
+          <i class="mk ink" style="bottom:68.52%"></i>
+          <i class="mk ink" style="bottom:69.79%"></i>
+          <i class="mk ink" style="bottom:71.05%"></i>
+          <i class="mk ink" style="bottom:72.32%"><b>2035</b></i>
+          <i class="mk ink" style="bottom:73.05%"></i>
+          <i class="mk ink" style="bottom:73.79%"></i>
+          <i class="mk ink" style="bottom:74.53%"></i>
+          <i class="mk ink" style="bottom:75.26%"></i>
+          <i class="mk ink" style="bottom:76.00%"><b>457.3</b></i>
+          <i class="box" style="bottom:39.72%"></i>
+          <div class="words" style="left:12%;top:2.5%;right:6%">2041. Down.<em>Daddy.</em></div>
+        </div>
+        <div class="gpanel" style="left:calc(16% + 36cqw);top:6%;bottom:12%;width:22cqw"></div>
+        <div class="step" style="left:18%;bottom:6%"></div>
+        <div class="label">2041. Down.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
