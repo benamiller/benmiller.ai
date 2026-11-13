@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The glove kept the reach — Ben Miller</title>
+    <meta name="description" content="Bev Liddle spent eleven years making sure she never dropped anything, then two years teaching the machines how to drop things well. Then her hands kept the lesson.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0a0c10;
+        --ink: #d5dde4;
+        --mute: #7e8a98;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 80% 6%, rgba(200, 110, 30, 0.10), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 12% 20%, rgba(40, 70, 100, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(30, 50, 80, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(180, 90, 20, 0.05), transparent 60%),
+          linear-gradient(180deg, #12141a 0%, #0e1016 36%, #0a0c12 70%, #07080c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c4ccd2;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(200, 120, 40, 0.22), 0 0 2px rgba(200, 210, 220, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #d4923a; }
+      .prose strong { font-weight: 700; color: #e8d0a0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10131a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(200, 140, 70, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .glove-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .glove-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .glove-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.65), inset 0 0 0 1px rgba(200,140,70,.14); background: #0c1016; }
+      .glove-hero > * { position: absolute; }
+      .glove-hero::after, .scene.gv::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(4,6,10,.78) 100%), repeating-linear-gradient(112deg, rgba(200,160,100,.016) 0 2px, transparent 2px 8px); }
+      .scene.gv { background: #10131a; container-type: size; }
+      .shed { inset: 0; background: linear-gradient(180deg, #1a140e 0%, #141820 40%, #0e1218 100%); }
+      .shed.dark { background: linear-gradient(180deg, #0a0c10, #10141c 55%, #0c1016); }
+      .shed.home { background: linear-gradient(180deg, #1a1816, #2a2420 60%, #1a1614); }
+      .shed.care { background: linear-gradient(180deg, #1c2026, #2a3036 50%, #1a1e22); }
+      .lamp { width: 7cqw; height: 2.2cqw; border-radius: 50%; background: #e09830; box-shadow: 0 0 2cqw #e09830, 0 10cqw 18cqw rgba(200,110,20,.42); }
+      .lamp.dim { background: #3a4a58; box-shadow: 0 0 1.2cqw #3a4a58, 0 8cqw 14cqw rgba(40,70,100,.2); opacity: .7; }
+      .rack { background: repeating-linear-gradient(90deg, #2a2e34 0 1.1cqw, transparent 1.1cqw 8cqw),
+        repeating-linear-gradient(180deg, transparent 0 5.5cqw, #3a3e46 5.5cqw 6cqw, transparent 6cqw 11cqw);
+        box-shadow: inset 0 0 0 .35cqw #1a1e24; }
+      .rack .bin { width: 6.4cqw; height: 3.6cqw; background: #2a3238; box-shadow: inset 0 .4cqw 0 #1a2024, 0 0 0 .25cqw #4a5056; }
+      .ylbl { height: .7cqw; width: 5cqw; background: #d4b030; }
+      .aisle { background: linear-gradient(180deg, #1a1e24, #12161c); clip-path: polygon(46% 6%, 54% 6%, 98% 100%, 2% 100%);
+        box-shadow: inset 0 0 8cqw rgba(0,0,0,.5); }
+      .aisle .glow { left: 48%; top: 8%; width: 4%; height: 80%; background: linear-gradient(180deg, rgba(200,110,20,.0), rgba(200,110,20,.18)); }
+      .floor { left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(180deg, #1a1c20, #0e1014); }
+      .hand { width: 22cqw; height: 28cqw; }
+      .hand .palm { left: 22%; top: 42%; width: 52%; height: 48%; background: #7a6a5c; border-radius: 40% 40% 36% 36%; }
+      .hand .fing { width: 12%; background: #7a6a5c; border-radius: 1.2cqw 1.2cqw 40% 40%; }
+      .hand.gloved .palm, .hand.gloved .fing { background: #5a5e64; }
+      .hand .fing i { width: .7cqw; height: .7cqw; border-radius: 50%; background: #9ad0e0; box-shadow: 0 0 .5cqw rgba(154,208,224,.6); left: 50%; transform: translateX(-50%); }
+      .hand .tab { left: 28%; top: 82%; width: 44%; height: 10%; background: #3a3e44; border-radius: .3cqw; }
+      .band { width: 16cqw; height: 3.2cqw; background: #2a2c30; border-radius: 1.6cqw; }
+      .band .lens { left: 50%; top: 50%; width: 2cqw; height: 2cqw; border-radius: 50%; background: #0a0c10; transform: translate(-50%,-50%); box-shadow: inset 0 0 0 .35cqw #1a1c20, 0 0 .6cqw #4ad0e0; }
+      .bowl { width: 22cqw; height: 10cqw; background: radial-gradient(ellipse at 50% 0%, #8a6a48 0 30%, #5a4030 70%); border-radius: 50% 50% 45% 45%; }
+      .bowl .fr { border-radius: 50%; }
+      .env { width: 20cqw; height: 12cqw; background: #e8e0d4; box-shadow: 0 .5cqw 1.2cqw rgba(0,0,0,.4); }
+      .env .win { left: 12%; top: 22%; width: 44%; height: 36%; background: rgba(180,200,220,.35); box-shadow: inset 0 0 0 .25cqw #c8c0b4; }
+      .tab { background: #14181e; border-radius: 1.2cqw; box-shadow: 0 0 0 .5cqw #2a3038, 0 1.6cqw 3cqw rgba(0,0,0,.55); }
+      .row { left: 8%; right: 8%; height: 10%; background: rgba(255,255,255,.04); border-radius: .4cqw; }
+      .row b { position: absolute; left: 4%; top: 26%; font: 500 1.7cqw/1 Karla, sans-serif; color: #c8d0d4; letter-spacing: .03em; }
+      .bar { height: 2.2cqw; border-radius: 1.1cqw; background: rgba(255,255,255,.06); overflow: hidden; }
+      .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--p, 70%); background: linear-gradient(90deg, #2a8a54, #6eca80); }
+      .bar.am i { background: linear-gradient(90deg, #8a5a10, #e0a040); width: var(--p, 48%); }
+      .num { font: 700 4.6cqw/1 "Cormorant Garamond", serif; color: #e0b050; }
+      .num.dim { color: #8a9098; font-size: 2.4cqw; }
+      .task { left: 8%; right: 8%; background: rgba(255,255,255,.05); border-radius: .5cqw; }
+      .task b { position: absolute; left: 5%; right: 5%; top: 28%; font: 500 1.6cqw/1.3 Karla, sans-serif; color: #d4923a; }
+      .task.fail b { color: #e07050; }
+      .reach { width: 22cqw; height: 40cqw; }
+      .reach .body { left: 38%; top: 28%; width: 24%; height: 48%; background: #d8dce0; border-radius: 1.2cqw; box-shadow: 0 .4cqw 1cqw rgba(0,0,0,.35); }
+      .reach .head { left: 30%; top: 10%; width: 40%; height: 22%; background: #e8ecee; border-radius: 50% 50% 40% 40%; transform: rotate(12deg); box-shadow: 0 0 1cqw rgba(200,220,230,.3); }
+      .reach .head::after { content: ""; position: absolute; left: 28%; top: 36%; width: 18%; height: 18%; border-radius: 50%; background: #1a1c20; }
+      .reach .arm { width: 10%; background: #c8ccd0; border-radius: 1cqw; transform-origin: 50% 0; }
+      .reach .arm.l { left: 22%; top: 32%; height: 42%; transform: rotate(18deg); }
+      .reach .arm.r { right: 22%; top: 32%; height: 38%; transform: rotate(-12deg); }
+      .reach .arm.low { right: 4%; top: 40%; height: 48%; transform: rotate(58deg); }
+      .reach .arm.in { left: 6%; top: 30%; height: 48%; transform: rotate(-48deg); }
+      .reach.hang .arm.l { transform: rotate(8deg); height: 46%; }
+      .reach.hang .arm.r { transform: rotate(-8deg); height: 46%; }
+      .fence { background: repeating-linear-gradient(90deg, #6a7078 0 .45cqw, transparent .45cqw 2.2cqw); box-shadow: inset 0 0 0 .35cqw #3a4048; }
+      .sign { background: #1a1e24; box-shadow: 0 0 0 .35cqw #4a5058; }
+      .sign b { position: absolute; left: 8%; right: 8%; top: 28%; font: 600 1.5cqw/1.2 Karla, sans-serif; color: #e0b050; letter-spacing: .08em; text-transform: uppercase; }
+      .item { border-radius: .4cqw; background: #6a8aaa; }
+      .item.mug { width: 5cqw; height: 6.5cqw; background: linear-gradient(90deg, #8a2020, #c44040 50%, #6a1818); border-radius: .4cqw .4cqw 40% 40%; }
+      .item.cup { width: 5.5cqw; height: 4.8cqw; background: #e8ece8; border-radius: 40% 40% 30% 30%; }
+      .item.beak { width: 6cqw; height: 7cqw; background: #e8e0a8; border-radius: 40% 40% 30% 30%; }
+      .item.beak::after { content: ""; position: absolute; left: 18%; right: 18%; top: -18%; height: 28%; background: #d0c890; border-radius: 50%; }
+      .spill { background: radial-gradient(ellipse at 80% 10%, rgba(230,235,240,.9) 0 16%, rgba(210,220,228,.5) 36%, transparent 70%);
+        clip-path: polygon(70% 0, 88% 0, 100% 18%, 40% 100%, 0 92%, 48% 28%); }
+      .table { height: 3.2cqw; background: #5a4030; box-shadow: 0 .5cqw 0 #3a2818; }
+      .plate { width: 14cqw; height: 3cqw; background: #e8e4dc; border-radius: 50%; }
+      .star { width: 3.2cqw; height: 3.2cqw; background: #e0b050; clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+      .knit { width: 7cqw; height: 16cqw; opacity: .55; }
+      .knit .body { left: 36%; top: 32%; width: 28%; height: 48%; background: #8a9098; border-radius: .5cqw; }
+      .knit .head { left: 30%; top: 10%; width: 40%; height: 22%; background: #9aa0a8; border-radius: 50% 50% 40% 40%; transform: rotate(10deg); }
+      .knit .arm { width: 11%; background: #8a9098; border-radius: .5cqw; }
+      .trolley { width: 10cqw; height: 8cqw; background: #3a4048; border-radius: .4cqw; }
+      .door { width: 10cqw; height: 22cqw; background: #3a3230; box-shadow: inset 0 0 0 .4cqw #2a2422; }
+      .bed { width: 28cqw; height: 8cqw; background: #6a6870; border-radius: .4cqw; }
+      .window { background: linear-gradient(180deg, #3a4a58, #6a7a88); box-shadow: inset 0 0 0 .35cqw #2a3038; }
+      @keyframes fallspin { from { transform: translateY(-4cqh) rotate(-20deg); opacity: .2; } to { transform: none; } }
+      @keyframes armcatch { from { transform: rotate(-10deg); } to { transform: rotate(55deg); } }
+      .pkt { width: 1cqw; height: 1cqw; border-radius: 50%; background: #9ad0e0; box-shadow: 0 0 .6cqw #9ad0e0; opacity: .8; }
+      .remote { background: #10141a; border-radius: .6cqw; box-shadow: 0 0 0 .3cqw #2a3038; }
+      @keyframes barfill { from { width: 0; } to { width: var(--p, 70%); } }
+      .bar i { animation: barfill 1.6s ease-out both; }
+      .item.drop { animation: fallspin .8s ease-in both; }
+      .reach .arm.low { animation: armcatch 1s ease-out both; }
+      @media (max-width: 600px) { .glove-hero { height: 22rem; } .num { font-size: 6.4cqw; } .task b { font-size: 2cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .glove-hero *, .scene.gv *, .glove-hero *::before, .glove-hero *::after, .scene.gv *::before, .scene.gv *::after { animation: none !important; }
+        .bar i { width: var(--p, 70%); }
+        .reach .arm.low { transform: rotate(55deg); }
+        .item.drop { transform: none; opacity: 1; }
+      }
+      .shed, .lamp, .rack, .rack .bin, .ylbl, .aisle, .aisle .glow, .floor, .hand, .hand .palm, .hand .fing, .hand .fing i, .hand .tab, .band, .band .lens, .bowl, .bowl .fr, .env, .env .win, .tab, .row, .row b, .bar, .bar i, .num, .task, .task b, .reach, .reach .body, .reach .head, .reach .arm, .fence, .sign, .sign b, .item, .spill, .table, .plate, .star, .knit, .knit .body, .knit .head, .knit .arm, .trolley, .door, .bed, .window, .pkt, .remote { position: absolute; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="glove-hero" aria-hidden="true">
+          <div class="shed"></div>
+<i class="lamp" style="left:8%;top:4%"></i><i class="lamp" style="left:25%;top:4%"></i><i class="lamp" style="left:42%;top:4%"></i><i class="lamp" style="left:59%;top:4%"></i><i class="lamp" style="left:76%;top:4%"></i>
+          <div class="rack" style="left:6%;top:16%;bottom:10%;width:38%"><i class="bin" style="left:6%;top:18%"></i><i class="ylbl" style="left:6.5%;top:16%"></i><i class="bin" style="left:28%;top:18%"></i><i class="ylbl" style="left:28.5%;top:16%"></i><i class="bin" style="left:50%;top:18%"></i><i class="ylbl" style="left:50.5%;top:16%"></i><i class="bin" style="left:72%;top:18%"></i><i class="ylbl" style="left:72.5%;top:16%"></i><i class="bin" style="left:6%;top:46%"></i><i class="ylbl" style="left:6.5%;top:44%"></i><i class="bin" style="left:28%;top:46%"></i><i class="ylbl" style="left:28.5%;top:44%"></i><i class="bin" style="left:50%;top:46%"></i><i class="ylbl" style="left:50.5%;top:44%"></i><i class="bin" style="left:72%;top:46%"></i><i class="ylbl" style="left:72.5%;top:44%"></i></div>
+          <div class="rack" style="right:6%;top:16%;bottom:10%;width:38%"><i class="bin" style="left:6%;top:18%"></i><i class="ylbl" style="left:6.5%;top:16%"></i><i class="bin" style="left:28%;top:18%"></i><i class="ylbl" style="left:28.5%;top:16%"></i><i class="bin" style="left:50%;top:18%"></i><i class="ylbl" style="left:50.5%;top:16%"></i><i class="bin" style="left:72%;top:18%"></i><i class="ylbl" style="left:72.5%;top:16%"></i><i class="bin" style="left:6%;top:46%"></i><i class="ylbl" style="left:6.5%;top:44%"></i><i class="bin" style="left:28%;top:46%"></i><i class="ylbl" style="left:28.5%;top:44%"></i><i class="bin" style="left:50%;top:46%"></i><i class="ylbl" style="left:50.5%;top:44%"></i><i class="bin" style="left:72%;top:46%"></i><i class="ylbl" style="left:72.5%;top:44%"></i></div>
+          <div class="aisle" style="left:28%;right:28%;top:10%;bottom:0"><i class="glow"></i></div>
+<div class="hand gloved" style="left:42%;bottom:10%;width:18cqw;height:24cqw;z-index:4"><i class="palm"></i><i class="fing" style="left:18%;top:21.099999999999998%;height:38%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:32%;top:15.599999999999998%;height:48%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:46%;top:13.399999999999999%;height:52%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:60%;top:16.7%;height:46%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:74%;top:24.4%;height:32%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="tab"></i></div>
+          <div class="label">the Follingsby Park shed</div>
+        </div>
+        <h1>The glove kept the reach</h1>
+        <p class="dek">Bev Liddle spent eleven years making sure she never dropped anything, then two years teaching the machines how to drop things well. Then her hands kept the lesson.</p>
+        <time datetime="2026-11-13">13 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Bev Liddle had picked at the Follingsby Park shed for eleven years, and in all that time nobody had ever asked her how she did it, which was fair enough, because she wouldn't have been able to tell them. You walked to the bay the handheld told you to walk to, you looked at the shelf, you put your hand in, and the thing was in your hand. That was it. That was the job. If you'd asked her to explain the bit in the middle, the bit between looking and having, she'd have laughed at you and said she'd been doing it since she was a bairn, reaching into the biscuit tin at her nana's in Concord without looking because the lid was too high to see over.</p>
+        <p>So when the letter came round in the March saying that the site had been chosen for the Demonstration Programme, and that pickers who opted in would receive an enhanced rate of nineteen pounds forty an hour plus a completion bonus, and that the work would be "substantially similar to your current role, performed while wearing a lightweight sensing glove and head-mounted camera," she read it twice at the kitchen table and then read it out loud to Kayleigh, who was in the front room with the baby on her knee and the telly on with no sound.</p>
+        <p>"Nineteen forty," said Kayleigh.</p>
+        <p>"Nineteen forty."</p>
+        <p>"For doing what you do anyway."</p>
+        <p>"With a glove on."</p>
+        <p>Kayleigh shifted Ava onto the other knee and looked at her mother over the top of the baby's head the way she'd looked at her since she was about fourteen, as if Bev were a slightly slow customer at a till. "Mam," she said. "They want to know how you do it so they can get the robots to do it."</p>
+        <p>"I know that."</p>
+        <p>"So you'd be teaching the robots to do your job."</p>
+        <p>"I know that, pet. I can read."</p>
+        <p>"And you'd still do it."</p>
+        <p>Bev folded the letter back along its creases and put it under the fruit bowl, where she put everything that needed thinking about, the council tax and the car insurance and the leaflet from the doctor's about the bowel screening. "They'll get the robots anyway," she said. "Whether it's my hands or somebody else's. Might as well be nineteen forty."</p>
+        <p>That was the whole argument, really, and everybody on the shift made it in some form or other in the canteen that week, with their trays and their phones and their bits of toast. Dennis, who'd been on goods-in since the place opened, said it like a man doing sums. Lorraine said it angrily, as if somebody had already wronged her. The young lads said it with a shrug and went back to their phones. Kev Tulip, who was the union rep for what that was worth now, stood up at the end of the Wednesday dinner break and said that the branch had looked at the agreement and there was nothing in it they could stop, and that the enhanced rate was guaranteed for the eighteen months of the programme, and that after that it would be "subject to review," and then he sat down again and ate his pie, and nobody asked him anything, because there was nothing to ask.</p>
+        <p>Two hundred and eight of the two hundred and forty pickers opted in. Bev was one of them.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gv bw-scene" aria-hidden="true">
+        <div class="shed home"></div>
+        <div class="table" style="left:10%;right:10%;bottom:22%"></div>
+        <div class="env" style="left:22%;bottom:26%"><i class="win"></i></div>
+        <div class="bowl" style="left:38%;bottom:32%"><i class="fr" style="left:18%;top:-40%;width:5cqw;height:5cqw;background:#8a2020"></i><i class="fr" style="left:48%;top:-48%;width:6cqw;height:6cqw;background:#3a8a40"></i><i class="fr" style="left:30%;top:-28%;width:4.5cqw;height:4.5cqw;background:#d4a024"></i></div>
+        <div class="label">under the fruit bowl</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall gv gl-scene" aria-hidden="true">
+        <div class="shed"></div>
+<div class="hand gloved" style="left:8%;top:16%;width:34cqw;height:66cqw"><i class="palm"></i><i class="fing" style="left:18%;top:21.099999999999998%;height:38%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:32%;top:15.599999999999998%;height:48%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:46%;top:13.399999999999999%;height:52%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:60%;top:16.7%;height:46%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:74%;top:24.4%;height:32%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="tab"></i></div>
+        <div class="band" style="left:48%;top:18%"><i class="lens"></i></div>
+        <i class="pkt" style="left:46%;top:40%"></i><i class="pkt" style="left:56%;top:34%"></i><i class="pkt" style="left:66%;top:30%"></i>
+        <div class="remote" style="left:70%;top:16%;width:22%;height:36%">
+          <div class="bar" style="left:12%;right:12%;top:40%;--p:70%"><i></i></div>
+        </div>
+        <div class="label">the sensors</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The glove was grey and thin and felt like the inside of a wetsuit. It came up past the wrist and fastened with a tab, and along the back of each finger there was a line of tiny raised dots, like braille, that a lad from the company told them were the sensors. There was a second, matching one for the left hand. On her head she wore a band, like a sweatband for tennis, with a little black lens at the front that sat just above the middle of her eyebrows. The first morning she put it on, she caught sight of herself in the mirror in the ladies' and thought she looked like a woman in a film about the future, the cheap kind, and then she thought that she was a woman in the future, and that it wasn't a film, and that it was quarter to six and she was on bay forty-one at six.</p>
+        <p>The handheld still told her where to go. That was the funny thing. For the first few weeks, nothing changed at all except the glove. She walked the same aisles under the same long lights and reached into the same tote bins and pulled out phone cases and dog leads and packets of hair bobbles and novelty socks and, once, a rubber chicken that screamed when she squeezed it, which made Lorraine laugh so hard on the next aisle that she had to sit down on a kick step. She put them in the same trolley. She scanned them with the same gun. And all the while the glove felt her do it, and the lens watched her do it, and somewhere in a building she would never see, in a country she wasn't sure of, it was all being turned into whatever it was turned into.</p>
+        <p>The company was called Palmline. Their robots, when they eventually came, would be called Palmline Reach, but nobody had seen one yet except in the video they'd been shown in the induction, which had a woman's voice over piano music and showed a white machine with two arms and a sort of tilted head picking strawberries, folding a shirt, and handing a cup of tea to an old man in a chair who smiled at it. <em>Every Reach learns from real hands,</em> the voice said. <em>Hands like yours.</em> Then the screen had shown a lot of hands, all different colours and ages, reaching for things in slow motion, and Bev had looked down at her own hands in her lap and thought that they did not look like the hands in the video, which had all had very nice nails.</p>
+        <p>After a month there was a new screen on the end of each aisle. It showed your name and a number. The number was your demonstration count, which was the number of picks you had done with the glove on that the system had accepted as usable, and next to it there was a little bar that was green or amber, and the bar was your quality score.</p>
+        <p>Bev's bar was green. Most people's bars were green. Lorraine's was amber for a week because she'd been flicking things into the trolley instead of placing them, which she'd always done, and the lad from the company came out from the office with his tablet and stood next to her for an hour and said, very nicely, that the Reach needed to see a consistent place motion, and that flicking introduced variance, and Lorraine said she'd been flicking for nine years and never broke anything, and the lad said that wasn't really the point, and Lorraine said what was the point then, and the lad said the point was the data, and after that Lorraine placed things, and her bar went green.</p>
+        <p>The count went up every day. That was the only thing that changed. Bev would get to her aisle at six and look at the screen and there it would be, eighteen thousand and something, twenty-two thousand and something, thirty-one thousand. It was a bit like watching your step count, Kayleigh said, when Bev told her about it, and Bev said yes, it was a bit like that, except that every step you took was a step that somebody else would take instead of you.</p>
+        <p>She hadn't meant to say it like that. It came out. Kayleigh didn't say anything, and after a while Bev went and put the kettle on.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gv ct-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:10%;bottom:12%">
+          <div class="row" style="top:14%"><b>Bev Liddle</b></div>
+          <div class="num" style="left:8%;top:34%">58,212</div>
+          <div class="num dim" style="left:8%;top:56%">demonstration count</div>
+          <div class="bar" style="left:8%;right:8%;bottom:16%;--p:86%"><i></i></div>
+        </div>
+        <div class="label">demonstration count</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall gv pl-scene" aria-hidden="true">
+        <div class="shed"></div>
+<i class="lamp" style="left:8%;top:3%"></i><i class="lamp" style="left:25%;top:3%"></i><i class="lamp" style="left:42%;top:3%"></i><i class="lamp" style="left:59%;top:3%"></i><i class="lamp" style="left:76%;top:3%"></i>
+        <div class="rack" style="left:8%;top:18%;bottom:12%;width:36%"><i class="bin" style="left:6%;top:18%"></i><i class="ylbl" style="left:6.5%;top:16%"></i><i class="bin" style="left:28%;top:18%"></i><i class="ylbl" style="left:28.5%;top:16%"></i><i class="bin" style="left:50%;top:18%"></i><i class="ylbl" style="left:50.5%;top:16%"></i><i class="bin" style="left:72%;top:18%"></i><i class="ylbl" style="left:72.5%;top:16%"></i><i class="bin" style="left:6%;top:46%"></i><i class="ylbl" style="left:6.5%;top:44%"></i><i class="bin" style="left:28%;top:46%"></i><i class="ylbl" style="left:28.5%;top:44%"></i><i class="bin" style="left:50%;top:46%"></i><i class="ylbl" style="left:50.5%;top:44%"></i><i class="bin" style="left:72%;top:46%"></i><i class="ylbl" style="left:72.5%;top:44%"></i></div>
+<div class="reach " style="left:52%;bottom:18%;width:28%;height:68%"><i class="head"></i><i class="body"></i><i class="arm l in"></i><i class="arm r"></i></div>
+        <div class="fence" style="left:0;right:0;bottom:0;height:26%"></div>
+        <div class="sign" style="left:30%;bottom:20%;width:26cqw;height:7cqw"><b>PILOT CELL</b></div>
+        <div class="label">PILOT CELL</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall gv fl-scene" aria-hidden="true">
+        <div class="shed"></div>
+        <div class="rack" style="left:8%;top:12%;bottom:8%;width:40%"><i class="bin" style="left:6%;top:18%"></i><i class="ylbl" style="left:6.5%;top:16%"></i><i class="bin" style="left:28%;top:18%"></i><i class="ylbl" style="left:28.5%;top:16%"></i><i class="bin" style="left:50%;top:18%"></i><i class="ylbl" style="left:50.5%;top:16%"></i><i class="bin" style="left:72%;top:18%"></i><i class="ylbl" style="left:72.5%;top:16%"></i><i class="bin" style="left:6%;top:46%"></i><i class="ylbl" style="left:6.5%;top:44%"></i><i class="bin" style="left:28%;top:46%"></i><i class="ylbl" style="left:28.5%;top:44%"></i><i class="bin" style="left:50%;top:46%"></i><i class="ylbl" style="left:50.5%;top:44%"></i><i class="bin" style="left:72%;top:46%"></i><i class="ylbl" style="left:72.5%;top:44%"></i></div>
+<div class="reach hang" style="left:52%;top:10%;width:28%;height:70%"><i class="head"></i><i class="body"></i><i class="arm l"></i><i class="arm r"></i></div>
+        <div class="item drop" style="left:66%;bottom:22%;width:4cqw;height:8cqw;background:#4a8aaa;border-radius:.6cqw"></div>
+        <div class="tab" style="left:8%;right:8%;bottom:8%;height:18%">
+          <div class="row" style="top:22%;height:60%"><b>FAIL WELL. RECOVER BETTER.</b></div>
+        </div>
+        <div class="label">unrecovered fault</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In the June the first Reach came.</p>
+        <p>There was only one of it, and it was kept behind a wire fence at the far end of the shed, past the conveyor junction, in a space where they used to keep the broken pallets. The company had put up a sign on the fence with the Palmline logo and the words PILOT CELL. AUTHORISED STAFF ONLY. You could see it from the end of aisle sixty if you leaned out past the racking, and at break times there were always two or three people leaning out to have a look.</p>
+        <p>It was smaller than Bev had expected. In the video it had seemed tall, but that must have been the camera, because in real life it would have come up to about her chin. It stood in front of a shelf unit that was exactly like the shelves in the aisles, with the same bins and the same yellow labels, and it picked things. It picked very slowly. It would stand there with its two arms hanging and its head tilted, and then the head would tilt a bit more, and then one arm would come up and go into a bin, and stay in the bin, and you'd count to three or four, and then the arm would come out again with something in it, and put the something in a tote, and go back to hanging.</p>
+        <p>"I could do six in that time," Dennis said, at the fence, with his tea.</p>
+        <p>"You could do six in that time now," said Lorraine.</p>
+        <p>The next week it was quicker. The week after that it was quicker again. By the end of July it was picking at about half the speed of a slow picker, which was faster than the young lad on aisle twelve who was always on his phone, and people stopped making jokes about it at the fence, and then they stopped going to the fence. There were four of them by then, then nine. In September the company took down the fence and put up a longer one, further along, around aisles fifty-five to sixty, and Bev, who had picked aisle fifty-seven for two years before she was moved to forty-one, stood at the new fence one dinner time and watched a Reach go into a bin that she knew had a broken divider on the left-hand side, one that caught your knuckle if you weren't careful, and she watched it bring its hand in at an angle, just slightly, just the way she did, so that the knuckle missed the divider.</p>
+        <p>She went back to her aisle and didn't say anything to anybody about it. Her count that day was fifty-eight thousand, two hundred and twelve.</p>
+        <p>The letters came in the October after, at the end of the eighteen months, and they came the way the first one had come, in the post, to the house, with a window in the envelope, so that Bev found hers on the mat when she got in from the Saturday shift and had to stand in the hall with her coat on to read it.</p>
+        <p>It thanked her. It thanked her quite a lot, in fact, for a letter. It said that her contribution to the Demonstration Programme had been <em>exceptional,</em> and that her final accepted demonstration count was two hundred and four thousand, nine hundred and seventy, and that this placed her in the top decile of contributors across all Palmline partner sites in the United Kingdom and Ireland. It said that, as a result of the programme's success, the Follingsby Park site would be transitioning to a Reach-led picking model from the first of December, and that the majority of picking roles would be concluding. It said that a small number of contributors had been selected to continue in a new role, and that she was one of them, and that the new role was called Recovery Demonstrator, and that the rate was thirteen pounds ten an hour, and that it was a fixed-term contract of twelve months, and that further details would follow.</p>
+        <p>She sat down on the stairs with her coat still on.</p>
+        <p>There were thirty-one of them kept on, in the end, out of two hundred and eight. Lorraine was one, and turned it down, and told Bev in the car park that she'd rather stack shelves at the big Asda in Boldon than do whatever this was, and that she didn't even know what it was, and that she bet Bev didn't either. Dennis wasn't one. Dennis had been on goods-in, and goods-in was a different programme, and that had concluded in the August, and he'd gone to his son's in Leeds, and he'd stopped answering on the group chat after a while, which wasn't like him. The young lad from aisle twelve was one, which made everybody laugh in a sour sort of way, until somebody pointed out that he was probably one precisely because he was always on his phone and was always dropping things.</p>
+        <p>That was the job. That was what Recovery Demonstrator meant. Jordan Pyle from Palmline explained it to the thirty-one of them on the first Monday in December, in the training room upstairs with the blinds down and a big screen on the wall, and he explained it very well, Bev thought afterwards, very clearly and without any fuss, as if it were the most ordinary thing in the world.</p>
+        <p>The Reach, he said, was very good now at picking. It was very good at reaching into a bin and taking out the thing that was meant to be taken out. That was thanks to them, he said, and he meant it, and he did a little round of applause on his own at the front, and a few of them joined in, and then stopped.</p>
+        <p>What the Reach was not good at, he said, was things going wrong.</p>
+        <p>He showed them a video. A Reach was picking a bottle of shampoo, and the shampoo slipped as it came out of the bin, and turned in the air, and the Reach's hand closed on nothing, and the bottle hit the floor and bounced and rolled under the racking. The Reach stood there. Its head tilted. Then it reached into the bin again, as if the shampoo were still there.</p>
+        <p>"That's an unrecovered fault," Jordan said. "It's not the robot's fault, it just hasn't seen enough of them. In the old programme you lot almost never dropped anything. Which is brilliant, but it means the model's barely seen a drop. It's barely seen a snag, or a tear, or a tangle. Two strings of fairy lights wound together. A bag that splits. A box that's been put in the wrong way round. It needs to see thousands of each. It needs to see a human hand get it wrong, and then put it right." He clicked to the next slide. It said, in big letters, FAIL WELL. RECOVER BETTER. "That's what you're for."</p>
+        <p>The young lad from aisle twelve put his hand up and asked if they had to drop things on purpose.</p>
+        <p>"In a controlled way," said Jordan. "Yes."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gv kn-scene" aria-hidden="true">
+        <div class="shed dark"></div>
+<i class="lamp dim" style="left:10%;top:4%"></i><i class="lamp dim" style="left:26%;top:4%"></i><i class="lamp dim" style="left:42%;top:4%"></i><i class="lamp dim" style="left:58%;top:4%"></i><i class="lamp dim" style="left:74%;top:4%"></i>
+        <div class="aisle" style="left:8%;right:8%;top:8%;bottom:0"></div>
+<div class="knit" style="left:4.0%;bottom:10%;opacity:0.28"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:13.6%;bottom:10%;opacity:0.36000000000000004"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:23.2%;bottom:10%;opacity:0.44000000000000006"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:32.8%;bottom:10%;opacity:0.52"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:42.4%;bottom:10%;opacity:0.6000000000000001"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:52.0%;bottom:10%;opacity:0.28"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:61.599999999999994%;bottom:10%;opacity:0.36000000000000004"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:71.2%;bottom:10%;opacity:0.44000000000000006"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:80.8%;bottom:10%;opacity:0.52"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:90.39999999999999%;bottom:10%;opacity:0.6000000000000001"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:4.0%;bottom:38%;opacity:0.28"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:13.6%;bottom:38%;opacity:0.36000000000000004"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:23.2%;bottom:38%;opacity:0.44000000000000006"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:32.8%;bottom:38%;opacity:0.52"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:42.4%;bottom:38%;opacity:0.6000000000000001"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:52.0%;bottom:38%;opacity:0.28"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:61.599999999999994%;bottom:38%;opacity:0.36000000000000004"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:71.2%;bottom:38%;opacity:0.44000000000000006"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:80.8%;bottom:38%;opacity:0.52"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div><div class="knit" style="left:90.39999999999999%;bottom:38%;opacity:0.6000000000000001"><i class="head"></i><i class="body"></i><i class="arm" style="left:18%;top:36%;height:40%;transform:rotate(14deg)"></i><i class="arm" style="right:18%;top:36%;height:40%;transform:rotate(-14deg)"></i></div>
+        <div class="label">three hundred and sixty of them</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall gv tk-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:8%;bottom:8%">
+          <div class="task" style="top:10%;height:22%"><b>Grasp item. Introduce slip at extraction. Recover before floor contact.</b></div>
+          <div class="task fail" style="top:38%;height:22%"><b>Slip not detected.</b></div>
+          <div class="task" style="top:66%;height:22%"><b>Grasp item. Introduce tear. Contain spill. Place.</b></div>
+        </div>
+        <div class="label">Slip not detected.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall gv ca-scene" aria-hidden="true">
+        <div class="shed"></div>
+        <div class="rack" style="left:6%;top:10%;bottom:14%;width:30%"><i class="bin" style="left:6%;top:18%"></i><i class="ylbl" style="left:6.5%;top:16%"></i><i class="bin" style="left:28%;top:18%"></i><i class="ylbl" style="left:28.5%;top:16%"></i><i class="bin" style="left:50%;top:18%"></i><i class="ylbl" style="left:50.5%;top:16%"></i><i class="bin" style="left:72%;top:18%"></i><i class="ylbl" style="left:72.5%;top:16%"></i><i class="bin" style="left:6%;top:46%"></i><i class="ylbl" style="left:6.5%;top:44%"></i><i class="bin" style="left:28%;top:46%"></i><i class="ylbl" style="left:28.5%;top:44%"></i><i class="bin" style="left:50%;top:46%"></i><i class="ylbl" style="left:50.5%;top:44%"></i><i class="bin" style="left:72%;top:46%"></i><i class="ylbl" style="left:72.5%;top:44%"></i></div>
+<div class="hand gloved" style="left:30%;top:18%;width:24cqw;height:36cqw;transform:rotate(18deg)"><i class="palm"></i><i class="fing" style="left:18%;top:21.099999999999998%;height:38%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:32%;top:15.599999999999998%;height:48%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:46%;top:13.399999999999999%;height:52%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:60%;top:16.7%;height:46%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:74%;top:24.4%;height:32%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="tab"></i></div>
+        <div class="item drop" style="left:48%;top:42%;width:5cqw;height:7cqw;background:#6a8a4a;border-radius:50%"></div>
+<div class="hand gloved" style="left:44%;bottom:10%;width:26cqw;height:32cqw;transform:rotate(-28deg)"><i class="palm"></i><i class="fing" style="left:18%;top:21.099999999999998%;height:38%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:32%;top:15.599999999999998%;height:48%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:46%;top:13.399999999999999%;height:52%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:60%;top:16.7%;height:46%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="fing" style="left:74%;top:24.4%;height:32%"><i style="top:18%"></i><i style="top:46%"></i><i style="top:74%"></i></i><i class="tab"></i></div>
+        <div class="bar" style="left:10%;right:10%;bottom:12%;--p:92%"><i></i></div>
+        <div class="label">compound variance</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The Recovery Cell was at the far end of the shed, in the old pilot cell space behind the first fence, which had been put back up. Everything else, everything from aisle one to aisle ninety, belonged to the Reaches now. There were three hundred and sixty of them. They didn't need the lights on, so most of the lights were off, and when Bev walked from the clocking-in machine to the cell in the mornings she walked along the main gangway in a kind of dim blue-grey, with the aisles going off to either side into near-dark, and in the near-dark there was a constant soft sound, a sort of patient whirring and clicking, like a lot of people knitting in another room.</p>
+        <p>In the cell there were six shelf units, and on the shelf units there were bins, and in the bins there was everything you could think of, and some things you couldn't. Each demonstrator had a station. Each station had a screen. The screen gave you a task.</p>
+        <p><em>Grasp item. Introduce slip at extraction. Recover before floor contact.</em></p>
+        <p><em>Grasp item. Introduce slip at extraction. Allow floor contact. Recover from floor.</em></p>
+        <p><em>Grasp item with two-item entanglement. Separate. Place primary item.</em></p>
+        <p><em>Grasp item from inverted packaging. Reorient. Place.</em></p>
+        <p><em>Grasp item. Introduce tear. Contain spill. Place.</em></p>
+        <p>At first it was impossible. That was the thing nobody would have believed. Bev had spent eleven years and two hundred thousand demonstrations making her hands not drop things, and now when she told them to drop something, they wouldn't. She'd take a packet of bath bombs out of a bin and think <em>drop it</em> and her fingers would tighten. She'd think <em>let it slip</em> and it would come out cleanly and sit in her palm like a fat little egg. Her screen would go amber. <em>Slip not detected.</em> She'd put it back and try again.</p>
+        <p>"You're thinking about it," Jordan said, coming round with his tablet on the second day. "Don't think about it. Just let go."</p>
+        <p>"I've never just let go of anything in my life," said Bev, and the woman at the next station, Angela from nights, laughed so suddenly that she dropped what she was holding, and her screen went green, and she looked at it and said "Oh, for God's sake," and then she laughed again, and Bev did too, and that was the first good morning.</p>
+        <p>It came, after a while. That was the other thing nobody would have believed. You could learn to fail. You could learn to fail in all sorts of ways. You could learn to let a thing go from the very ends of your fingers, so that it turned as it fell, and then catch it low, near your knee, with your other hand coming across. You could learn to pull a bag so that the side seam went but not the bottom. You could learn to knock a bin with your wrist as you came out, not hard, just enough to tip the next thing in it sideways, so that the camera saw the knock and then saw you straighten it. Jordan said that the best demonstrators did this without the screen even asking, that they built little failures into their recoveries, a fumble inside a catch, so that each demonstration had two or three faults in it instead of one, and that this was called <em>compound variance,</em> and that it was gold.</p>
+        <p>There was a new screen on the end of the cell, like the old ones on the aisles. It had their names on it and a number, and next to the number there was a bar, but the bar wasn't for quality now. It was for variance. Green meant you were giving them faults they hadn't seen. Amber meant your faults were starting to look like each other. Red meant they had enough of your faults, thank you, and you'd be talked to.</p>
+        <p>Bev's bar was green for most of the first year. She got good at it. She got very good. There was a week in the March when she was, according to a little star that appeared next to her name, the highest-variance demonstrator at any Palmline site in Europe, and Jordan brought in a box of Greggs doughnuts with a card on them that said WELL DONE BEV and everybody clapped, properly this time, and she went red and said it was nothing, it was only dropping things, anybody could drop things.</p>
+        <p>Nobody could drop things like she could, though. That was true. She knew it was true. She'd catch herself, in the cell, doing something she couldn't have explained, letting a jar of pickled onions roll off the edge of her fingers and then trapping it against her hip with her forearm before her hand had even started to move, and she'd stand there for a second afterwards with the jar against her hip and her heart going and the green bar ticking up, and she'd feel something that she supposed was pride. It was hard to tell, in the cell, in the blue-grey light, with the knitting sound coming from all the aisles behind her.</p>
+        <p>Her contract was renewed in the October, for another twelve months, at twelve pounds eighty. There were nineteen of them now.</p>
+        <p>It started at home, the first time, with a mug.</p>
+        <p>It was a Sunday and Kayleigh had come round with Ava, who was walking now and into everything, and Bev was taking the mugs out of the cupboard above the kettle, the way she had taken mugs out of that cupboard for twenty-six years, and the one with the Sunderland crest on it came off the end of her fingers and turned in the air, and her other hand came across low and took it about a foot off the lino, and she stood there bent over with the mug in her hand and her heart going.</p>
+        <p>"Good catch," said Kayleigh, from the table.</p>
+        <p>"Aye," said Bev.</p>
+        <p>She hadn't meant to drop it. That was the thing. She put it on the side and looked at it and looked at her hand, and then she made the tea, and she didn't say anything, because what would you say.</p>
+        <p>It happened again on the Tuesday with a tin of beans in the Co-op, and again on the Thursday with her keys at the front door, which she let go of and caught against the door with her knee before she even knew they'd gone. After that she stopped counting. It was only small things. It was only the very ends of her fingers opening a fraction too soon, as if they'd been told to, and then the rest of her body coming in to put it right, quick and clever and low, the way it did fifty times an hour in the cell. Nothing ever broke. She was too good for anything to break. But she started to notice Kayleigh noticing, and once, when Bev let go of a plate of biscuits and trapped it against the edge of the table with her wrist, she saw her daughter's face do a thing it hadn't done since Bev's dad was poorly at the end, a sort of careful stillness, and then Kayleigh said, "Mam, are you all right?" in a voice like a nurse's.</p>
+        <p>"I'm grand," said Bev. "It's the job."</p>
+        <p>"Dropping things is the job."</p>
+        <p>"Dropping things is the job."</p>
+        <p>Kayleigh looked at the plate, still pinned against the table, and at Bev's wrist pinning it, and then she picked Ava up off the floor and held her a bit tighter than she needed to, and said she'd better be getting back.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gv am-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:10%;bottom:12%">
+          <div class="row" style="top:16%"><b>Bev Liddle</b></div>
+          <div class="num dim" style="left:8%;top:38%">variance</div>
+          <div class="bar am" style="left:8%;right:8%;bottom:20%;--p:44%"><i></i></div>
+        </div>
+        <div class="label">the bar went amber</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall gv by-scene" aria-hidden="true">
+        <div class="shed home"></div>
+        <div class="table" style="left:10%;right:10%;bottom:22%"></div>
+        <div class="env" style="left:20%;bottom:26%"><i class="win"></i></div>
+        <div class="bowl" style="left:40%;bottom:32%"><i class="fr" style="left:18%;top:-40%;width:5cqw;height:5cqw;background:#8a2020"></i><i class="fr" style="left:48%;top:-48%;width:6cqw;height:6cqw;background:#3a8a40"></i></div>
+        <div class="num dim" style="left:12%;top:14%;font-size:3cqw">ninety-one thousand and six</div>
+        <div class="label">ninety-one thousand and six</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In the cell, the bar went amber in the August.</p>
+        <p>Jordan came to see her about it. He brought his tablet and pulled up a stool, and he was kind about it, he was always kind, he said it wasn't her fault, it was if anything a sign of how good she was. The model had learned her, he said. It had learned her faults. Two years of her letting things go from the ends of her fingers and catching them low with the other hand coming across, two years of compound variance, and now when it saw her start a fumble, it knew how the fumble would end. "You've got a style," he said. "It's a brilliant style. It's in every Reach in Europe. But it's a style, and we've got it now."</p>
+        <p>"So what do you want, then?"</p>
+        <p>He looked a bit embarrassed. "Honestly? What we need now is people who aren't good at it. First-timers. People who drop things and don't know how to pick them up. The model's seen every clever recovery there is. It hasn't seen enough panic."</p>
+        <p>"You want panic."</p>
+        <p>"We want naive faults," he said. "That's the term. We're bringing a new cohort in through an agency. Students, mostly. Short contracts. Some of them have never worked a shelf in their life." He smiled. "They're terrible. It's great."</p>
+        <p>Her letter came in the post in the September, in the envelope with the window. It thanked her. It said that her final accepted recovery count was ninety-one thousand and six, and that the Recovery Demonstrator role was concluding, and it gave a number for the Palmline Transitions Service, which she rang, and which was a woman in an office somewhere who was very nice and told her about a course in customer service and a course in social care, and Bev said she'd think about it, and put the letter under the fruit bowl.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall gv te-scene" aria-hidden="true">
+        <div class="shed care"></div>
+        <div class="window" style="left:6%;top:8%;width:20%;height:32%"></div>
+        <div class="bed" style="left:6%;bottom:14%"></div>
+<div class="reach " style="left:36%;bottom:8%;width:32%;height:78%"><i class="head"></i><i class="body"></i><i class="arm l"></i><i class="arm r low"></i></div>
+        <div class="item cup" style="left:66%;top:62%"></div>
+        <div class="label">It does the teas</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Her mam was in Ashfield House on the Spout Lane side of Washington, in a room on the first floor with a window onto the car park and a bit of the old Concord rooftops beyond, the same roofs Bev had grown up under, and Bev went on Wednesdays and Sundays and had done for four years. The October after she finished at Follingsby she went on a Wednesday, the way she always did, and signed in at the desk, and went up in the lift, and there was a Reach in her mam's room.</p>
+        <p>It was standing by the bed with its arms hanging and its head tilted, and her mam was sitting up in her cardigan looking at it with an expression Bev knew from when the window cleaner used to come, a sort of pleased suspicion.</p>
+        <p>"They've got them now," said her mam. "They brought them in Monday. It does the teas."</p>
+        <p>"Does it."</p>
+        <p>"Watch," said her mam, and then to the Reach, louder, as if it were deaf, "Pet, could I have a cup of tea?"</p>
+        <p>The Reach went over to the little trolley by the door, where there was a flask and some cups, and it poured a cup of tea, slowly and carefully, and it put in milk, and it brought it back across the room, and as it reached out to give the cup to her mam the cup came off the end of its fingers and turned in the air, and its other arm came across low and took it about a foot above the carpet, without spilling a drop, and straightened, and handed it over.</p>
+        <p>"Ee," said her mam, taking the cup, delighted. "Did you see that? It's clever, that one. It does that every time. I think it's showing off."</p>
+        <p>Bev stood in the doorway with her bag on her shoulder.</p>
+        <p>"Sit down, Beverley," said her mam. "You're letting the heat out."</p>
+        <p>She sat down. The Reach went back to the corner and stood with its arms hanging, and her mam drank her tea and talked about the woman across the hall who had a son in Australia, and the new girl on nights who couldn't do hair, and how she didn't need the girls so much now with the Reach, and how there were fewer of them anyway, you hardly saw them, and Bev said yes and no and fancy that, and watched the Reach in the corner, and the Reach, as far as she could tell, did not watch her.</p>
+      </div>
+
+      <hr class="break">
+
+      <div class="prose">
+        <p>Kayleigh brought Ava round on the Sunday. Ava was nearly three now, and she had a beaker with a lid and two handles and a picture of a rabbit on the side, and she liked to sit up at the kitchen table on two cushions on Bev's dad's old chair and bang the beaker on the wood and say "Nana. Nana. Nana," until Bev looked.</p>
+        <p>"I'm looking, pet."</p>
+        <p>"Nana, look."</p>
+        <p>"I'm looking."</p>
+        <p>Ava put the beaker near the edge of the table. She looked at Bev. She pushed it a little bit further. She looked at Bev again, with that face that bairns get, the whole of her lit up with the badness of it, and she pushed it again, and it went over.</p>
+        <p>Bev's hand was already there. It had been there before Ava's had finished moving. It was down by the edge of the table, open, under the beaker, exactly where the beaker was going to be.</p>
+        <p>Her fingers opened.</p>
+        <p>She watched the beaker go past them. It turned once in the air, rabbit, lid, rabbit, and hit the lino and bounced, and the lid came off, and milk went out across the floor in a long white tongue towards the cooker. Ava screamed with laughter. Kayleigh said "Ava!" from the sink and then "Oh, Mam, I'm sorry, she's been doing that all week," and came over with the tea towel.</p>
+        <p>Bev didn't move. She sat at the table with her hand still down by the edge of it, open, palm up, and she looked at it. It was an ordinary hand. It was her hand. The knuckles were a bit big now and there was a white scar on the side of the thumb from a box cutter in 2019 and there was nothing about it, nothing at all, that would tell you anything.</p>
+        <p>"Mam?" said Kayleigh, on her knees on the floor with the tea towel going grey.</p>
+        <p>"I'm grand," said Bev, and she closed her hand, and opened it, and closed it again, and somewhere a long way off, in a room with the lights off, three hundred and sixty of them went on knitting.</p>
+      </div>
+
+      <figure class="scene tall gv cd-scene" aria-hidden="true">
+        <div class="shed home"></div>
+        <div class="table" style="left:6%;right:18%;top:18%;height:3.2cqw"></div>
+<div class="hand" style="left:28%;top:22%;width:26cqw;height:34cqw;transform:rotate(12deg)"><i class="palm"></i><i class="fing" style="left:18%;top:26.599999999999998%;height:28%"></i><i class="fing" style="left:32%;top:22.2%;height:36%"></i><i class="fing" style="left:46%;top:21.099999999999998%;height:38%"></i><i class="fing" style="left:60%;top:23.299999999999997%;height:34%"></i><i class="fing" style="left:74%;top:28.799999999999997%;height:24%"></i></div>
+        <div class="item beak" style="left:58%;top:52%;transform:rotate(28deg)"></div>
+        <div class="spill" style="left:12%;right:16%;bottom:6%;height:32%"></div>
+        <div class="label">an ordinary hand</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
