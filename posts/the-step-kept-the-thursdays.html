@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The step kept the Thursdays — Ben Miller</title>
+    <meta name="description" content="A pharmacist in Millom agrees to host the machine that makes one boy&#x27;s medicine, fresh, every Wednesday night, and learns that a miracle mostly looks like Thursdays.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #16110c;
+        --ink: #efe4d2;
+        --mute: #9a8a72;
+        --cream: #f4ead8;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 8%, rgba(255, 190, 90, 0.16), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(80, 140, 150, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(180, 130, 60, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(60, 130, 100, 0.06), transparent 60%),
+          linear-gradient(180deg, #1c1610 0%, #16110c 36%, #120e0a 70%, #0e0b08 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(230, 200, 140, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(255, 220, 160, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #e8d5b0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(255, 190, 90, 0.28), 0 0 2px rgba(255, 230, 180, 0.45);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #eee4d4;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #d4a84a; }
+      .prose strong { font-weight: 700; color: #f0e0c0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #16120e;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(230, 190, 120, 0.14);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .step-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .step-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .step-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(230,190,120,.16); background: #16110c; }
+      .step-hero > * { position: absolute; }
+      .step-hero::after, .scene.st::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(12,8,4,.7) 100%), repeating-linear-gradient(112deg, rgba(255,220,160,.02) 0 2px, transparent 2px 8px); }
+      .scene.st { background: #16120e; container-type: size; }
+      .sky { inset: 0; background: linear-gradient(185deg, #2a241c 0%, #5a4a38 36%, #c8a070 68%, #e8c888 86%, #7a6a58 100%); }
+      .sky.dusk { background: linear-gradient(180deg, #2a2018, #8a5a28 48%, #e0a848 72%, #c89050 100%); }
+      .sky.night { background: linear-gradient(180deg, #121014, #1a1816 50%, #2a2018); }
+      .sky.shop { background: linear-gradient(180deg, #1c1814, #2a2420 60%, #1a1612); }
+      .street { left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(180deg, #4a443c, #2a2620); }
+      .front { left: 18%; right: 18%; top: 10%; bottom: 18%; background: #1e4a38; box-shadow: 0 1.2cqw 3cqw rgba(0,0,0,.4), inset 0 0 0 .5cqw #16382a; }
+      .front .win { background: linear-gradient(180deg, #e8c888, #8a6a40); box-shadow: inset 0 0 0 .4cqw #c8a060, 0 0 2cqw rgba(232,184,74,.25); }
+      .front .lintel { left: 0; right: 0; top: 0; height: 14%; background: #16382a; }
+      .door { background: #1a3a2c; box-shadow: inset 0 0 0 .45cqw #0e2a1e; }
+      .door .pane { left: 14%; right: 14%; top: 12%; height: 36%; background: linear-gradient(180deg, #d4b070, #8a6a40); }
+      .bell { width: 2.4cqw; height: 2.4cqw; border-radius: 50%; background: #d4b060; box-shadow: 0 .4cqw 0 #8a7030, 0 0 .8cqw rgba(212,176,96,.5); }
+      .steps { width: 36%; }
+      .steps .t { left: 0; right: 0; height: 28%; background: #6a5a48; box-shadow: inset 0 .4cqw 0 #8a7a64, 0 .3cqw 0 #3a3028; }
+      .rail { width: 1.1cqw; background: #c8b080; border-radius: .5cqw; box-shadow: inset -.3cqw 0 0 #8a7048; }
+      .rail .worn { left: 0; right: 0; height: 10%; background: #3a2a1c; border-radius: .4cqw; opacity: .85; }
+      .post { width: 1.6cqw; background: #b8a070; border-radius: .3cqw; }
+      .hotel { font: 600 1.6cqw/1 Karla, sans-serif; color: #f0d090; letter-spacing: .16em; text-transform: uppercase; text-shadow: 0 0 1cqw rgba(240,208,144,.55); }
+      .env { width: 28cqw; height: 18cqw; background: #f0e8dc; box-shadow: 0 .6cqw 1.6cqw rgba(0,0,0,.4); }
+      .env .nhs { left: 8%; top: 12%; width: 28%; height: 22%; background: #005eb8; border-radius: .3cqw; }
+      .env .logo { left: 42%; top: 10%; width: 16cqw; height: 10cqw; }
+      .threadhand { width: 12cqw; height: 12cqw; }
+      .threadhand .h { left: 16%; top: 36%; width: 46%; height: 50%; background: #6a6a70; border-radius: 40% 36% 40% 40%; }
+      .threadhand .f { width: 11%; background: #6a6a70; border-radius: .5cqw .5cqw 40% 40%; }
+      .threadhand .th { left: 62%; top: 22%; width: 46%; height: .4cqw; background: #d4b060; box-shadow: 0 0 .6cqw rgba(212,176,96,.5); transform: rotate(16deg); transform-origin: 0 50%; }
+      .strand { left: 8%; right: 8%; height: 12cqw; display: flex; gap: .5cqw; align-items: center; }
+      .strand i { position: relative; flex: 1; height: 4.2cqw; border-radius: 50%; background: #c8b890; box-shadow: 0 .2cqw .4cqw rgba(0,0,0,.25); }
+      .strand i.bad { background: #c04030; top: 3.2cqw; height: 5cqw; box-shadow: 0 0 1.2cqw rgba(192,64,48,.55); }
+      .cupboard { left: 12%; right: 12%; top: 10%; bottom: 12%; background: #e8e2d6; box-shadow: inset 0 0 0 .5cqw #c8c0b4, 0 1cqw 2cqw rgba(0,0,0,.35); }
+      .cupboard .vent { left: 28%; right: 28%; top: 6%; height: 14%; background: #c8ccd0; border-radius: .4cqw; box-shadow: inset 0 0 0 .3cqw #8a9094, inset 0 1.4cqw 0 repeating-linear-gradient(90deg, #8a9094 0 .6cqw, #c8ccd0 .6cqw 1.2cqw); }
+      .cupboard .vent { background: repeating-linear-gradient(90deg, #8a9094 0 .55cqw, #c8ccd0 .55cqw 1.1cqw); }
+      .cupboard .sink { left: 8%; bottom: 18%; width: 30%; height: 18%; background: #b8c0c4; border-radius: .4cqw; box-shadow: inset 0 .6cqw 0 #9aa2a6; }
+      .cupboard .fl { left: 0; right: 0; bottom: 0; height: 16%; background: linear-gradient(180deg, #d0cac0, #c0baae); box-shadow: inset 0 .3cqw 0 #eee8dc; }
+      .ramp { width: 22%; height: 10%; background: #6a5a48; clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+      .spin { background: #4a4e54; border-radius: 1cqw; box-shadow: 0 1cqw 2.4cqw rgba(0,0,0,.45), inset 0 0 0 .4cqw #6a6e74; }
+      .spin .col { width: 10%; background: linear-gradient(180deg, #8a9096, #3a3e44); border-radius: .4cqw; }
+      .spin .res { width: 8%; background: #6a8aaa; border-radius: .5cqw; box-shadow: inset 0 0 0 .25cqw #4a6a88; }
+      .spin .eye { width: 3.2cqw; height: 3.2cqw; border-radius: 50%; background: #e0a040; box-shadow: 0 0 1.2cqw #e0a040; }
+      .spin .eye.ok { background: #4aca70; box-shadow: 0 0 1.2cqw #4aca70; }
+      .spin .thread { height: .4cqw; background: #e8c060; box-shadow: 0 0 .6cqw rgba(232,192,96,.5); }
+      .tab { background: #1a1612; border-radius: 1.2cqw; box-shadow: 0 0 0 .5cqw #2a2620, 0 1.6cqw 3cqw rgba(0,0,0,.55); }
+      .tab.paper { background: #f4efe6; box-shadow: 0 0 0 .5cqw #d8d0c4, 0 1.6cqw 3cqw rgba(0,0,0,.4); }
+      .row { left: 8%; right: 8%; height: 10%; background: rgba(255,255,255,.05); border-radius: .4cqw; }
+      .row.ok { background: rgba(60,160,90,.16); }
+      .row.bad { background: rgba(180,50,40,.18); }
+      .row b { position: absolute; left: 4%; right: 4%; top: 26%; font: 500 1.55cqw/1 Karla, sans-serif; color: #e8dcc0; letter-spacing: .03em; }
+      .tab.paper .row b { color: #2a2420; }
+      .num { font: 700 4.8cqw/1 "Cormorant Garamond", serif; color: #e8b84a; }
+      .num.dim { color: #8a8070; font-size: 2.4cqw; }
+      .num.ok { color: #6eca80; }
+      .num.bad { color: #e07050; }
+      .blind { inset: 0; background: repeating-linear-gradient(180deg, rgba(8,6,4,.7) 0 1.6cqw, rgba(8,6,4,.15) 1.6cqw 2.4cqw); }
+      .glow { background: radial-gradient(ellipse at 50% 0%, rgba(232,140,40,.45), transparent 70%); }
+      .chair { width: 14cqw; height: 16cqw; background: #4a3a2c; clip-path: polygon(10% 30%, 90% 30%, 92% 100%, 8% 100%, 12% 40%, 8% 40%, 8% 30%); }
+      .syr { width: 6cqw; height: 22cqw; background: #e8ece8; border-radius: 40% 40% 20% 20%; box-shadow: 0 .4cqw 1cqw rgba(0,0,0,.3); }
+      .syr .cap { left: 18%; right: 18%; top: -12%; height: 18%; background: #9ec9b0; border-radius: .4cqw; }
+      .syr .pl { left: 30%; right: 30%; bottom: -8%; height: 14%; background: #c8c0b4; }
+      .tray { width: 22cqw; height: 14cqw; background: #d8d4cc; border-radius: .6cqw; box-shadow: inset 0 0 0 .3cqw #b8b4ac; }
+      .dot { width: 2.4cqw; height: 2.4cqw; border-radius: 50%; background: #e07090; box-shadow: 0 0 .8cqw rgba(224,112,144,.45); }
+      .fred { width: 12cqw; height: 7cqw; background: linear-gradient(180deg, #6a2a78, #3a1844); border-radius: .4cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.35); }
+      .fred::after { content: ""; position: absolute; left: 10%; right: 10%; top: 22%; bottom: 22%; border: .25cqw solid #e8c060; border-radius: .3cqw; }
+      .week { left: 8%; right: 8%; top: 22%; bottom: 18%; display: flex; gap: 1cqw; }
+      .week i { position: relative; flex: 1; background: #2a2420; border-radius: .5cqw; }
+      .week i.on { background: #3a3020; box-shadow: inset 0 0 0 .3cqw #e8b84a, 0 0 1.4cqw rgba(232,184,74,.3); }
+      .week i b { position: absolute; left: 0; right: 0; top: 40%; text-align: center; font: 600 1.8cqw/1 Karla, sans-serif; color: #c8b8a0; letter-spacing: .06em; }
+      .week i.on b { color: #e8c060; }
+      .plot { left: 10%; right: 10%; top: 16%; bottom: 16%; background: #f4efe6; border-radius: .6cqw; box-shadow: inset 0 0 0 .3cqw #e0d8cc; overflow: hidden; }
+      .plot .ln { height: .5cqw; background: #2a6aa8; transform-origin: 0 50%; border-radius: .2cqw; }
+      .hug { width: 16cqw; height: 18cqw; background: #8a6a50; border-radius: 50% 50% 40% 40%; }
+      .card { width: 18cqw; height: 12cqw; background: #f4efe6; box-shadow: 0 .4cqw 1cqw rgba(0,0,0,.35); transform: rotate(-4deg); }
+      .card i { left: 10%; right: 10%; top: 28%; height: 18%; background: #3a3a38; }
+      .mat { left: 30%; right: 30%; bottom: 18%; height: 8%; background: #3a2a22; }
+      .figc, .figa { width: 8cqw; height: 16cqw; }
+      .figc .bd, .figa .bd { left: 28%; top: 28%; width: 44%; height: 48%; background: #4a3a30; border-radius: .4cqw; }
+      .figc .hd, .figa .hd { left: 30%; top: 8%; width: 40%; height: 24%; background: #5a4a40; border-radius: 50%; }
+      .figc .arm, .figa .arm { width: 14%; background: #4a3a30; border-radius: .4cqw; }
+      .figa .bd { background: #6a4a58; }
+      .figa .hd { background: #7a5a68; }
+      .fridge { width: 16cqw; height: 20cqw; background: #d0d4d0; border-radius: .5cqw; box-shadow: inset 0 0 0 .35cqw #a8aca8; }
+      .ledge { height: 4cqw; background: #5a4a3c; box-shadow: 0 .4cqw 0 #3a2e24; }
+      .rest { width: 14cqw; height: 10cqw; }
+      .rest .palm { left: 18%; top: 28%; width: 54%; height: 58%; background: #7a5a48; border-radius: 40%; }
+      .rest .fg { width: 14%; background: #7a5a48; border-radius: .5cqw .5cqw 40% 40%; }
+      @keyframes typetick { 0%, 70% { opacity: .4; } 80%, 100% { opacity: 1; } }
+      @keyframes bellring { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(18deg); } 60% { transform: rotate(-12deg); } }
+      .bell.ring { animation: bellring .9s ease-in-out 2; }
+      .spin .eye { animation: typetick 1.6s ease-in-out infinite; }
+      @media (max-width: 600px) { .step-hero { height: 22rem; } .num { font-size: 6.5cqw; } .week i b { font-size: 2.4cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .step-hero *, .scene.st *, .step-hero *::before, .step-hero *::after, .scene.st *::before, .scene.st *::after { animation: none !important; }
+        .spin .eye { opacity: 1; }
+        .bell.ring { transform: none; }
+      }
+      .sky, .street, .front, .front .win, .front .lintel, .door, .door .pane, .bell, .steps, .steps .t, .rail, .rail .worn, .post, .hotel, .env, .env .nhs, .env .logo, .threadhand, .threadhand .h, .threadhand .th, .cupboard, .cupboard .vent, .cupboard .sink, .ramp, .spin, .spin .col, .spin .res, .spin .eye, .spin .thread, .tab, .row, .row b, .num, .blind, .glow, .chair, .syr, .syr .cap, .syr .pl, .tray, .dot, .fred, .plot, .plot .ln, .hug, .card, .card i, .mat, .figc, .figa, .figc .bd, .figc .hd, .figc .arm, .figa .bd, .figa .hd, .figa .arm, .fridge, .threadhand .f, .cupboard .fl, .ledge, .rest, .rest .palm, .rest .fg { position: absolute; }
+      .strand, .week { display: flex; }
+      .strand i, .week i { position: relative; flex: 1; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="step-hero" aria-hidden="true">
+          <div class="sky dusk"></div>
+          <div class="street"></div>
+          <div class="front" style="bottom:30%">
+            <i class="lintel"></i>
+            <i class="win" style="left:8%;top:22%;width:22%;height:36%"></i>
+            <i class="win" style="right:8%;top:22%;width:22%;height:36%"></i>
+            <div class="door" style="left:36%;right:36%;top:20%;bottom:0"><i class="pane"></i></div>
+            <i class="bell" style="left:48%;top:16%"></i>
+          </div>
+          <div class="steps" style="left:32%;right:32%;bottom:10%;height:22%"><i class="t" style="bottom:0%;left:6%;right:6%"></i><i class="t" style="bottom:30%;left:3%;right:3%"></i><i class="t" style="bottom:60%;left:0%;right:0%"></i><i class="post" style="left:2%;bottom:0;height:28%"></i><i class="post" style="left:2%;bottom:78%;height:22%"></i><i class="rail" style="left:2.4%;bottom:24%;height:58%"><i class="worn" style="top:48%"></i></i></div>
+          <div class="hotel" style="left:6%;bottom:8%">Station Hotel</div>
+          <div class="label">three steps</div>
+        </div>
+        <h1>The step kept the Thursdays</h1>
+        <p class="dek">A pharmacist in Millom agrees to host the machine that makes one boy's medicine, fresh, every Wednesday night, and learns that a miracle mostly looks like Thursdays.</p>
+        <time datetime="2026-11-16">16 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>There were three steps up to the door of Hartley's Pharmacy on Lapstone Road, and Gwen Thornley had watched Callum Pirie go up them, or not go up them, for most of the nine years he had been alive.</p>
+        <p>They were not big steps. Old Mr Hartley, who had owned the shop before her and had owned it for thirty-four years before that, used to say the builder in 1911 must have been a short man in a hurry, because each one was barely the height of a paperback, and the rail that ran up the left-hand side had been painted so many times that it had gone soft at the edges, like a bar of soap. Most people did not notice them at all. Most people came up off the pavement and in through the door with the bell going over their heads and were at the counter asking for something for a chesty cough before they had any idea there had been steps involved. That was the point of a step, Gwen thought, when she thought about it, which was not often. A good step was one you never had to think about.</p>
+        <p>Callum had to think about them. He had to think about them the way other boys his age thought about the top board at the baths in Barrow, as a thing to be approached with a plan. When he was four he had gone up them on his hands and knees, laughing, with his mum Shona behind him saying go on, go on, you've got it, and Gwen had come round the counter to hold the door. When he was six he had gone up them standing, both hands on the rail, one foot and then the other foot onto each step before trying the next, like a man testing ice. When he was eight he had stopped trying, and Shona had started leaving him in the car with the radio on and the window down an inch, and coming in on her own for the prescriptions, and Gwen had started bringing the bag out to the kerb, which was not something she did for anybody else, and which nobody in Millom would ever have mentioned to her, because that was the kind of town it was.</p>
+        <p>The prescriptions were the reason Callum came at all. There were a lot of them, and they changed often, and none of them did very much. There was the steroid that made his face round and his temper short. There was the one for his heart that the cardiologist in Newcastle had added when he was seven, as a precaution, she said, and the one for his stomach because of the steroid, and the calcium, and the vitamin D, and a supplement that a woman in a Facebook group in Ohio swore by and that the consultant had said would not hurt. Gwen knew them all by heart and could have filled the box blindfold. She knew which ones Callum hated the taste of and had a little store of the blackcurrant syrup that made the worst of them go down, which she was not strictly supposed to have, and which she paid for out of her own pocket.</p>
+        <p>What he had was a spelling mistake. That was how the geneticist at the Royal Victoria Infirmary had explained it to Shona when he was three, in a room with a box of tissues on the table that nobody touched, and that was how Shona had explained it to Gwen the week after, standing at the counter with her car keys in her hand, not crying, just tired in a way Gwen recognised from her own sister. One letter wrong in one gene, out of all the letters there were. The gene made a protein that held muscle fibres together when they worked, and in Callum the protein came out the wrong shape, so every time he ran or climbed or lifted something, a few more fibres tore and did not mend. It was not one of the big named conditions with a charity and a fun run. The geneticist had found eleven other children in the world with the same letter wrong, and two of them were in the same family in Portugal, and none of them was older than fifteen.</p>
+        <p>Gwen had not said anything clever. She had said, that's a lot to carry, love, and Shona had said, yeah, and then she had asked whether the shop still did the Calpol in the strawberry flavour or only the plain, and the conversation had gone back to being about things that could be fixed.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st lt-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="env" style="left:28%;top:18%;width:36cqw;height:24cqw"><i class="nhs"></i><div class="threadhand" style="left:42%;top:10%;width:18cqw;height:16cqw"><i class="h"></i><i class="f" style="left:18%;top:12.8%;height:28%"></i><i class="f" style="left:29%;top:9.2%;height:28%"></i><i class="f" style="left:40%;top:8.0%;height:34%"></i><i class="f" style="left:51%;top:9.2%;height:28%"></i><i class="f" style="left:62%;top:12.8%;height:28%"></i><i class="th"></i></div></div>
+        <div class="label">a hand holding a thread</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall st gn-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="strand" style="top:38%;height:12cqw"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class='bad'></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="label">One letter wrong</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letter came in the second week of September, addressed to the Responsible Pharmacist, which was her, and it came in an envelope with the NHS logo and a second logo underneath it that Gwen did not recognise, a small grey drawing of a hand holding a thread.</p>
+        <p>She read it at the dispensing bench at half past eight with her coat still on, and then she read it again with her coat off, and then she went into the back and put the kettle on and read it a third time while it boiled. It was from something called the Bespoke Medicines Service, which was apparently a part of the NHS now, with a headquarters in a converted mill in Leeds, and it said that her pharmacy had been identified as the nearest suitable community site to a patient enrolled on the Single Patient Therapies Programme, and would she be willing, subject to a site visit and training, to host a Compounding Unit for the duration of that patient's treatment.</p>
+        <p>It did not say which patient. It did not need to. There were six thousand people in Millom and Gwen could think of only one of them who had a letter wrong that nobody had a medicine for.</p>
+        <p>She rang Shona from the back room, with the door shut.</p>
+        <p>"I wasn't allowed to say," Shona said, before Gwen had properly finished the sentence. Her voice was very high and fast. "They made me promise. They said they had to ask you first and you might say no and then they'd have to go to Whitehaven or Barrow and it'd be a drive every week and I said she won't say no, Gwen won't say no, and they said they had to ask properly anyway. Are you saying no?"</p>
+        <p>"I don't know what I'm saying yes to," Gwen said. "Shona, what is it?"</p>
+        <p>What it was, as far as Shona could explain it, and as far as Gwen could follow over the phone with the kettle clicking off behind her, was this. In Leeds there was a machine, or a model, or a team of people working with a model, she was not clear which, that could look at one child's spelling mistake and design a medicine for that child alone. Not for the eleven in the world. For Callum. A little stretch of something, Shona said, like a patch, that would go into his muscle cells and tell them to skip the wrong letter when they read the gene, so the protein came out shorter but the right shape, or near enough the right shape to hold. They had been doing it for a couple of years for children with things in the brain, Shona said, and it had been slow and cost a fortune, and now it was faster, and the model had designed Callum's patch in four days in July, and they had tested it on his own cells grown in a dish, and on some mice, and it had worked on the cells and the mice, and the ethics people had said yes in August.</p>
+        <p>"The thing is it doesn't keep," Shona said. "That's the bit. It's not like a tablet. They have to make it fresh, every week, and it goes off in two days, so they can't post it from Leeds, it'd be no good by the time it got here. So they've got these boxes. These machines. They put one near you and they send the recipe down the wire and the machine makes it in the night. And the nearest one they can put it is in a chemist's. With a clean room. And you've got a clean room."</p>
+        <p>Gwen did have a clean room, of a sort. It was a cupboard at the back of the shop, eight feet by six, that Mr Hartley had had fitted out in 1997 when the health board had paid community pharmacies to make up methadone and some of the hospital's sterile eye drops, and it had a sealed floor and a sink and a filtered air unit in the ceiling that she had kept serviced every year since out of a kind of stubbornness, because the money for the eye drops had stopped in 2009 and nobody had asked her to make anything sterile since. Her area manager at the wholesaler had told her more than once she could get rid of it and put the stock room in there and free up the space by the door, and she had always said she would think about it, and had never thought about it at all.</p>
+        <p>"It might not work," Shona said. "They said that a lot. They said it might do nothing. They said even if it works it's not a cure, it just slows it down, and they don't know how much. They said it's a weekly injection under the skin and I'd learn to do it myself."</p>
+        <p>"I know, love."</p>
+        <p>"Are you saying no?"</p>
+        <p>"No," Gwen said. "I'm not saying no."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st cl-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="cupboard"><i class="vent"></i><i class="sink"></i><i class="fl"></i></div>
+        <div class="ramp" style="left:12%;bottom:8%"></div>
+        <div class="label">the clean room</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The woman who came to do the site visit was called Anita Okafor, and she arrived on the 9.14 from Lancaster with a wheeled case and a pair of trainers in a carrier bag, and she spent forty minutes inside the cupboard at the back with a torch and a particle counter while Gwen served customers with half her attention and listened for the sound of something being found wrong.</p>
+        <p>Nothing was found wrong. Anita came out with dust on her knees and said that whoever had put the air unit in had done it properly, which nobody did anymore, and that the floor was sound, and that the power would need a dedicated circuit and a battery backup, which the Service would pay for, and that the only thing she was worried about was the step down from the dispensary, which was three inches and would need a little ramp for the trolley.</p>
+        <p>"Everybody's got a step," Gwen said.</p>
+        <p>"Everybody's got a step," Anita agreed. She sat on the stool by the dispensing bench and drank the tea Gwen made her and explained, slowly, with diagrams on her phone, what would happen and what Gwen would have to do, and Gwen wrote it all down in biro on the back of an order form because she had never trusted herself with anything she had only heard.</p>
+        <p>The unit would come in a crate. It was about the size of a chest freezer laid on its side, and inside it there were what Anita called the reservoirs, which were cartridges of the building blocks, sealed and sterile, and a column where the building blocks were joined together one at a time in the right order, and a second stage where the finished strands were cleaned and checked and made up into single doses in sealed syringes. The order came from Leeds. Every Wednesday at six in the evening, the design for that week's batch would arrive down a secure line, and the unit would start, and it would run for about nine hours, and at the end of it, it would test its own product with a little instrument built into the side and print a report. The report would tell Gwen whether the batch was what it was supposed to be. It would be in plain language, Anita said, and in numbers, and if the numbers were inside the lines, Gwen would sign it and the batch was released, and if they were outside the lines, she would not sign it, and she would ring Leeds.</p>
+        <p>"Why do you need me to sign it," Gwen said, "if the machine knows?"</p>
+        <p>Anita looked at her over the tea for a moment as if it was a question she had been asked before and had stopped giving the short answer to.</p>
+        <p>"Because the machine knows whether it made what it was told to make," she said. "It doesn't know whether it's Thursday and the lad's got a temperature and his mum looks like she hasn't slept, and he shouldn't have it this week. It doesn't know whether the fridge got left open. It doesn't know whether the person picking it up is who they say they are. That's still a pharmacist. That's still you."</p>
+        <p>"And the design changes? Every week?"</p>
+        <p>"Sometimes. Not much. The first few weeks they'll be adjusting the dose. After that they'll look at his bloods and his scans and the physio's numbers, and the model in Leeds will suggest tweaks, and a person there signs them off, and the new version comes down the line. Most weeks it'll be the same as last week. The model's very boring once it's got where it wants to be." She smiled. "We like boring."</p>
+        <p>Gwen asked her what the model was called and Anita said it had a long official name that nobody used, and that the people who worked with it called it Weft, because it worked out the thread and the machines did the weaving. The machines did not have a name. The engineers called them CUs.</p>
+        <p>"I'll call it something," Gwen said.</p>
+        <p>"Everybody does," said Anita.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st sp-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="spin" style="left:14%;right:14%;top:18%;bottom:16%"><i class="res" style="left:12%;top:18%;height:28%"></i><i class="res" style="left:22%;top:18%;height:28%"></i><i class="res" style="left:32%;top:18%;height:28%"></i><i class="res" style="left:42%;top:18%;height:28%"></i><i class="res" style="left:52%;top:18%;height:28%"></i>          <i class="col" style="left:46%;top:12%;bottom:12%"></i>          <i class="thread" style="left:18%;right:18%;top:48%"></i>          <i class="eye ok" style="right:8%;bottom:12%"></i>        </div>
+        <div class="label">the Spindle</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The crate came on the first of October, on a lorry that could not get down Lapstone Road because of the parked cars, so the driver and his mate brought it the last forty yards on a pallet truck, over the cobbles at the end by the Station Hotel, with Gwen walking in front of them like a woman leading a horse. They took it round the back, down the lane where the bins were, because the back door was flat, and they put it in the clean room where the old shelving had been, and the electrician from Barrow fitted the circuit and the battery, and Anita came back for three days and trained her.</p>
+        <p>The training was mostly about what not to touch. Gwen had expected something more like the methadone course she had done in 1998, with a manual and a quiz at the end, and instead it was Anita standing beside her in a paper gown in the cupboard, both of them in hairnets, saying no, leave that, it does that itself, and no, don't open that, you only open that if the screen tells you to, and yes, that light is supposed to be amber, it'll go green, give it a minute. It was humbling, Gwen thought, to be fifty-nine and have spent thirty-six years being the person in the room who knew what the tablets were, and to stand next to a grey box that hummed and clicked and knew more than she did about the one thing that mattered most in the building. On the second day she said something like that out loud, and Anita said that the box couldn't drive to Shona's house when the car had a flat, and Gwen said that was true, and felt better, and was a bit ashamed of feeling better.</p>
+        <p>She called it the Spindle. She did not tell anybody she called it the Spindle, but she did, in her head, from the second day, because of the grey hand holding the thread on the letter, and because of a story her nan used to tell about a girl and a spindle that she could no longer remember the end of.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st ni-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="glow" style="left:20%;right:20%;top:0;height:40%"></div>
+        <div class="blind"></div>
+        <div class="chair" style="left:12%;bottom:14%"></div>
+        <div class="tab" style="left:42%;right:10%;top:22%;bottom:22%">
+          <div class="row" style="top:28%;height:28%"><b>ORDER RECEIVED: PATIENT REF 0447-C</b></div>
+        </div>
+        <div class="label">ORDER RECEIVED</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall st fl-scene" aria-hidden="true">
+        <div class="tab paper" style="left:10%;right:10%;top:10%;bottom:12%">
+          <div class="row ok" style="top:16%"></div>
+          <div class="row ok" style="top:32%"></div>
+          <div class="row bad" style="top:48%;height:22%"><b>PURITY 91.2% (SPECIFICATION: ≥ 94.0%)</b></div>
+          <div class="num bad" style="left:8%;bottom:10%;font-size:2.8cqw">Do not release</div>
+        </div>
+        <div class="label">Do not release</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first run was the second Wednesday in October, and Gwen stayed in the shop all night for it, though she did not need to.</p>
+        <p>The instructions said a pharmacist had to be on the premises at release, which was whenever the batch finished, which would be some time after three in the morning. It did not say she had to be there for the hours in between. Her husband, Keith, said as much over tea, and said she would be no use to anybody on Thursday if she didn't sleep, and then he made her a flask of soup and a round of cheese and pickle and drove her down to the shop at half past five and carried in the camping chair from the garage without being asked, because he had been married to her for thirty-one years and knew how the argument would end.</p>
+        <p>She sat in the dispensary with the shop lights off and the street light coming in orange through the blind. The Spindle hummed through the wall. At six o'clock exactly the screen in the cupboard window, which she could see from her chair if she leaned, changed from a grey square to a line of text that said ORDER RECEIVED: PATIENT REF 0447-C, BATCH 001, and then it began to make small noises, little pumps and valves going in turn like someone typing a long way off, and she sat and listened to them as if they were something she ought to understand.</p>
+        <p>She did the crossword. She ate half the sandwich. At nine she rang Shona, because she had said she would, and Shona answered on the first ring and said she was not sleeping either and Callum was, and they talked for twenty minutes about nothing, about the bins and the price of the gas and whether Shona's brother would ever sell that van, and when they rang off, Gwen sat for a long time looking at the shelves of other people's medicines in the dark and thinking about how many of them she had handed over the counter in her life, and how few of them had been made for a person rather than for a number of people who were roughly the same.</p>
+        <p>At ten past four the screen went amber and stayed amber.</p>
+        <p>She had been asleep in the camping chair. She woke because the typing noises had stopped, and the silence was louder than they had been. She put on the gown and the hairnet with her hands not quite steady and went to the window, and the report was there, on the screen and coming out of the little printer, and the first two lines were green and the third line said PURITY 91.2% (SPECIFICATION: ≥ 94.0%) in red, and underneath it in plain language it said: Batch does not meet release specification. Do not release. Contact Bespoke Medicines Service.</p>
+        <p>She rang Leeds. A young man answered, Yorkshire accent, sounding very awake, and said his name was Sam and he was on nights, and he had already seen it come through, and was she all right.</p>
+        <p>"I'm fine," she said, which was not quite true. "What happened?"</p>
+        <p>"Let me have a look." There was a pause and the sound of him typing. "Right. It's the first run on a new unit, and it's a cold night up your way, isn't it? It looks like one of the reservoirs was a couple of degrees under, so the joining was a bit slow in the middle of the strand, so you've got more of the short bits than we like. It's not dangerous, it's just not good enough. The unit's done exactly what it should. It caught it." He sounded pleased, almost, as though a child had done well on a test. "Can you see a panel on the left-hand side marked R3?"</p>
+        <p>She could. He talked her through it, the warming jacket on the third cartridge that had not come up to temperature because the old wall it was against was colder than the engineers had allowed for, and how to reseat it, and then he said Weft had already made a tiny change to the timing to give the slow step longer, and he had signed it off, and the new order was on its way. The second run would take a little under nine hours, he said. It would be ready around half past one in the afternoon.</p>
+        <p>"His appointment's at ten," Gwen said.</p>
+        <p>"Can his appointment be at two?"</p>
+        <p>She rang Shona at seven. Shona went very quiet, and then said, of course it can, of course, it's fine, and Gwen could hear in the fine that it had not been fine, that she had built the morning up the way you build up anything you have waited six years for, and now she would have to hold it up for four more hours on her own.</p>
+        <p>"It did the right thing," Gwen said. "The machine. It knew it wasn't good enough and it said so. That's what you want."</p>
+        <p>"I know."</p>
+        <p>"I wouldn't give him anything I wasn't sure of."</p>
+        <p>"I know, Gwen," said Shona. "I know you wouldn't. That's why it's you."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st gr-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="tab paper" style="left:8%;top:10%;bottom:12%;width:48%">
+          <div class="row ok" style="top:14%"></div>
+          <div class="row ok" style="top:32%"></div>
+          <div class="row ok" style="top:50%"></div>
+          <div class="row ok" style="top:68%"></div>
+        </div>
+        <div class="tray" style="left:62%;top:28%"><div class="syr" style="left:36%;top:8%"><i class="cap"></i><i class="pl"></i></div></div>
+        <div class="label">every line of the report was green</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall st dt-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="ledge" style="left:10%;right:10%;bottom:28%"></div>
+        <div class="dot" style="left:28%;bottom:34%;width:3.6cqw;height:3.6cqw"></div>
+        <div class="fred" style="left:52%;bottom:32%"></div>
+        <div class="label">a pink dot</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The second batch came off at twenty-six minutes past one, and every line of the report was green, and Gwen read it four times anyway, with her finger under each number, the way she had been taught to read a controlled-drugs register in 1990 by a man in Preston who had since died. Then she signed the screen with the plastic pen, and signed the paper copy as well, because nobody had told her not to, and put the paper copy in a new lever-arch file she had bought from the Co-op that morning and labelled 0447-C in black marker.</p>
+        <p>The dose was a single syringe, pre-filled, with a cap the colour of a mint and a label that had Callum's name on it, and his date of birth, and the batch number, and her pharmacy's name, which she had not expected and which made her stand very still for a second in the cupboard with the syringe in its sealed tray in both hands. Then she put it in the little fridge in the consultation room and went out front and served Mrs Dobson her repeat for the water tablets and asked after her grandson in the Navy, because it was ten to two and there were still people who needed their water tablets.</p>
+        <p>Shona brought Callum round the back, down the lane past the bins, because the back door was flat. He was in his school jumper and he had a carrier bag with his Switch in it and a look on his face that Gwen knew from a hundred boys at that counter who had been promised it would only be a little scratch. Shona's face was a different look altogether. She had done the training at the hospital in Whitehaven the week before, on an orange and then on a practice pad and then on the nurse, and she had said on the phone she felt fine about it, and she did not look fine about it.</p>
+        <p>They went into the consultation room, the three of them, which was really a cubicle with a chair and a stool and a sharps bin and a poster about shingles, and Gwen got the syringe out of the fridge and checked the name and the date of birth with Callum himself, out loud, the way you did, and he said it all back to her in a bored voice with a little smile at the corner because he knew she knew his date of birth and she knew he knew. Then she gave the tray to Shona.</p>
+        <p>Shona's hands shook so much that the first time she tried to take the cap off she couldn't. She laughed, a cracked sort of laugh, and said sorry, sorry, and Callum said, Mum, it's fine, and pulled up the leg of his school trousers and pinched the bit of his thigh the nurse had shown them, and held it, and waited. Shona breathed out. She took the cap off. She did it the way she had done it on the orange, quick and straight, and pressed the plunger slowly, and counted under her breath to ten, and took it out, and Gwen held out the sharps bin and the syringe went in with a little plastic knock.</p>
+        <p>"Is that it?" Callum said.</p>
+        <p>"That's it," said Gwen.</p>
+        <p>He looked at his leg. There was a pink dot and nothing else. He pulled his trouser leg down and picked up his carrier bag and said, can I have a Freddo, and Shona put her face in her hands and laughed until she was crying, and Gwen went out to the front and got him a Freddo from the stand by the till and did not charge anybody for it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st th-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="week"><i class=""><b>M</b></i><i class=""><b>T</b></i><i class=""><b>W</b></i><i class=" on"><b>T</b></i><i class=""><b>F</b></i><i class=""><b>S</b></i><i class=""><b>S</b></i></div>
+        <div class="label">It became Thursdays</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It became Thursdays.</p>
+        <p>That was the thing about it that nobody had told her and that she could not have explained to anybody who had not done it. It stopped being a miracle very quickly and became a Thursday. The order came down the line at six on Wednesday, and the Spindle typed away to itself through the night, and Gwen stopped sleeping in the shop after the third week, because Sam in Leeds told her that the unit would text her if anything went amber and she could be there in eight minutes in the car, and Keith pointed out that she was not twenty-five. She came in at seven on Thursdays instead of half eight. She read the report with her finger under the numbers. She signed. The syringe went in the little fridge. At ten past four, after school, Shona and Callum came round the back, past the bins, and they did the name and the date of birth, and the pink dot, and the Freddo, which by November Callum had started paying for himself out of his pocket money because he said it was embarrassing.</p>
+        <p>Some weeks the design changed and most weeks it didn't. Anita had been right about that. The report had a line on it that said DESIGN VERSION, and it went from 1.0 to 1.1 in the third week, when the dose went up a little, and to 1.2 in the sixth week, and then it sat at 1.2 for a long time and Gwen found that she was glad of it, the way you are glad of a road that stops having roadworks on it.</p>
+        <p>Nothing happened for a long time. That was the other thing nobody had told her.</p>
+        <p>There was a physiotherapist from the community team called Bryony Hale, who came to the primary school every fortnight and timed Callum doing things in the hall after the dinner tables had been folded away. She timed how long it took him to get up off the floor from lying on his back, and how long it took him to walk ten metres, and how many steps he could climb on the PE bench before he had to stop. The numbers went to Leeds and to Newcastle, and Shona wrote them down as well, in the back of her diary, and on Thursdays she would sometimes show Gwen the page across the counter while Callum was choosing his chocolate, without saying anything, and the numbers would be the same as the fortnight before, or a little worse, or a little better, in a way that meant nothing at all.</p>
+        <p>In the first week of December the floor number was worse. Fourteen seconds. It had been twelve in September. Shona did not show Gwen the page that week. She stood at the counter and paid for the Calpol and the plasters she did not need and said it was a cold going round, everybody was a bit off, and Gwen said yes, it was a cold, it was everywhere, and they both looked at the Christmas cards on the string behind the till.</p>
+        <p>On the Wednesday night that week Gwen went down to the shop at nine o'clock for no reason, and sat in the dispensary in her coat, and listened to the Spindle typing through the wall, and found that she was talking to it, under her breath, which she had not done before and did not do again. She did not remember afterwards what she said. Something about doing its best. Something her nan might have said to a pan of jam.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st sb-scene" aria-hidden="true">
+        <div class="plot"><i class="ln" style="left:12%;top:58.00%;width:27.62%;transform:rotate(-29.67deg)"></i><i class="ln" style="left:36%;top:31.33%;width:24.96%;transform:rotate(15.90deg)"></i><i class="ln" style="left:60%;top:44.67%;width:25.84%;transform:rotate(21.75deg)"></i><i class="dot" style="left:12%;top:58.00%;width:1.8cqw;height:1.8cqw;background:#2a6aa8;box-shadow:none;margin-left:-.9cqw;margin-top:-.9cqw"></i><i class="dot" style="left:36%;top:31.33%;width:1.8cqw;height:1.8cqw;background:#2a6aa8;box-shadow:none;margin-left:-.9cqw;margin-top:-.9cqw"></i><i class="dot" style="left:60%;top:44.67%;width:1.8cqw;height:1.8cqw;background:#2a6aa8;box-shadow:none;margin-left:-.9cqw;margin-top:-.9cqw"></i><i class="dot" style="left:84%;top:63.33%;width:1.8cqw;height:1.8cqw;background:#2a6aa8;box-shadow:none;margin-left:-.9cqw;margin-top:-.9cqw"></i><div class="num dim" style="left:8%;top:8%;font-size:2.2cqw">14</div><div class="num dim" style="right:10%;bottom:14%;font-size:2.2cqw">11.6</div></div>
+        <div class="label">Stable</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The consultant in Newcastle, Dr Lindqvist, saw Callum in the middle of January, and did the bloods and the scan, and rang Shona herself afterwards, which she had never done before, on a Friday evening at ten to seven.</p>
+        <p>Shona came into the shop on the Saturday morning, which was not a Thursday, without Callum, and waited by the hair dye until the shop was empty, and then came to the counter and put both hands flat on it.</p>
+        <p>"Stable," she said.</p>
+        <p>Gwen waited.</p>
+        <p>"That's what she said. She said the scan's stable. She said the bit in his thighs that was going to fat, it hasn't gone any further since October. She said the enzyme in his blood that tells them how much is breaking down, it's half what it was." Shona swallowed. "She said she'd never been able to say stable to me before. She said she wanted to ring me herself to say it."</p>
+        <p>"Oh, love."</p>
+        <p>"It's not better. She was really clear. It's not better. It's just stopped getting worse."</p>
+        <p>"I know."</p>
+        <p>"Nobody's ever said that," Shona said. "Not once. Not since he was three."</p>
+        <p>Gwen came round the counter, which she did not do, and put her arms round her, which she also did not do, and they stood there among the hair dye and the reading glasses for a minute, until the bell went and it was Ray Kitching in for his inhalers, who looked at them both and said, I'll come back, and went out again, and came back ten minutes later as though nothing had happened, which was the kind of town it was.</p>
+        <p>In February the floor number was thirteen seconds. In March it was eleven point six. Bryony Hale, who was not a person who said things she was not sure of, wrote on the bottom of the sheet she sent to Leeds, in biro, that he was getting up with less of a push off his knees, and Shona photographed that line on her phone and showed it to Gwen across the counter on the Thursday, and Gwen looked at it for a long time.</p>
+        <p>The design went to 1.3 in March. Sam on nights said it was nothing dramatic. Weft had seen something in the bloods and thought the strand could be a touch longer at one end to get into the cells a bit better, and a doctor in Leeds had looked at it for a whole afternoon and agreed. The run that week took nine hours and twelve minutes instead of eight and fifty, and every line was green.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st se-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="env" style="left:12%;top:20%"><i class="nhs"></i><div class="threadhand" style="left:44%;top:8%;width:14cqw;height:10cqw"><i class="h"></i><i class="f" style="left:18%;top:12.8%;height:28%"></i><i class="f" style="left:29%;top:9.2%;height:28%"></i><i class="f" style="left:40%;top:8.0%;height:34%"></i><i class="f" style="left:51%;top:9.2%;height:28%"></i><i class="f" style="left:62%;top:12.8%;height:28%"></i><i class="th"></i></div></div>
+        <div class="card" style="left:58%;top:36%"><i></i><i style="top:52%"></i></div>
+<div class="threadhand" style="left:72%;top:18%;width:12cqw;height:10cqw;opacity:.7"><i class="h"></i><i class="f" style="left:18%;top:12.8%;height:28%"></i><i class="f" style="left:29%;top:9.2%;height:28%"></i><i class="f" style="left:40%;top:8.0%;height:34%"></i><i class="f" style="left:51%;top:9.2%;height:28%"></i><i class="f" style="left:62%;top:12.8%;height:28%"></i><i class="th"></i></div>
+        <div class="label">a second patient</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Another letter came in March, with the grey hand holding the thread. The Service was asking whether Hartley's Pharmacy would be willing to take a second patient on the same unit. A man in his forties, the letter said, in Bootle, eight miles up the coast, with a different letter wrong in a different gene, whose medicine could be made on the same Spindle on Monday nights. The Service would pay for a second set of reservoirs and for a part-time technician, if she could find one. The Service understood that she was a single-handed pharmacy and would understand if she declined.</p>
+        <p>She had been going to retire at sixty-one. That had been the plan for as long as she had had a plan, since before Mr Hartley died and left her the business at a price that was really a gift. Keith had a caravan picked out at Silecroft. They had talked about the Lakes, about going to see his sister in Tasmania while they still had the knees for it.</p>
+        <p>She showed Keith the letter over tea, and he read it twice, and put it down by the brown sauce.</p>
+        <p>"Silecroft's not going anywhere," he said.</p>
+        <p>She wrote back that she would, and she put a card in the window of the shop asking for a dispensing technician, part-time, some nights, training given, and a girl called Ellie Tyson who had done two years of chemistry at Lancaster before her mum got ill and she came home, and who had been working on the till at the Co-op ever since, came in the next day with the card in her hand, and asked what the nights were for.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall st cm-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="street"></div>
+        <div class="front" style="top:6%;bottom:34%">
+          <i class="lintel"></i>
+          <i class="win" style="left:8%;top:22%;width:22%;height:36%"></i>
+          <i class="win" style="right:8%;top:22%;width:22%;height:36%"></i>
+          <div class="door" style="left:36%;right:36%;top:20%;bottom:0"><i class="pane"></i></div>
+          <i class="bell ring" style="left:48%;top:16%"></i>
+        </div>
+        <div class="steps" style="left:34%;right:34%;bottom:10%;height:28%"><i class="t" style="bottom:0%;left:6%;right:6%"></i><i class="t" style="bottom:30%;left:3%;right:3%"></i><i class="t" style="bottom:60%;left:0%;right:0%"></i><i class="post" style="left:2%;bottom:0;height:28%"></i><i class="post" style="left:2%;bottom:78%;height:22%"></i><i class="rail" style="left:2.4%;bottom:24%;height:58%"><i class="worn" style="top:48%"></i></i></div>
+        <div class="mat"></div>
+        <div class="figc" style="left:46%;bottom:28%;z-index:5"><i class="hd"></i><i class="bd"></i><i class="arm" style="left:8%;top:32%;height:36%;transform:rotate(18deg)"></i></div>
+        <div class="figa" style="left:28%;bottom:8%;z-index:5"><i class="hd"></i><i class="bd"></i></div>
+        <div class="label">I did the steps</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It was the second Thursday in April when it happened, and Gwen nearly missed it, because she was on the phone to the wholesaler about a short delivery of the blood pressure tablets that everybody in the town seemed to be on.</p>
+        <p>She heard the bell over the door. She heard it the way she had heard it a hundred thousand times, which was not really hearing at all, and she said, just a minute, love, into the air without looking up, and went on telling the man in Preston that she had ordered three hundred and got sixty. And then something about the quality of the silence made her look up, and Callum Pirie was standing inside the front door of the shop, on the mat, in his school jumper, slightly out of breath, with one hand still on the brass handle and the bell still trembling over his head.</p>
+        <p>Through the glass behind him she could see Shona on the pavement at the bottom of the three steps, with her arms folded tight across her chest and her hand over her mouth.</p>
+        <p>He had not come round the back. He had come up the front.</p>
+        <p>Gwen said to the man in Preston that she would ring him back, and put the phone down without waiting to hear whether he minded.</p>
+        <p>"I did the steps," Callum said. He said it very casually, the way boys say things that matter enormously to them, looking at the chocolate stand rather than at her.</p>
+        <p>"I heard," said Gwen.</p>
+        <p>"One hand," he said. "On the rail. Mum wasn't allowed to help."</p>
+        <p>"I saw."</p>
+        <p>She did not make a fuss. She had been in the job long enough to know when a fuss was wanted and when it was not, and it was not. She went into the consultation room and got the syringe out of the little fridge, and checked the name and the date of birth, and he said them back to her in his bored voice with the smile in the corner of it, and Shona came in a minute later, up the steps behind him, wiping her face with the sleeve of her coat, and they did the pink dot, and the sharps bin, and the Freddo, which he paid for, and then they went out the way they had come in, down the three steps to the pavement, him first, one hand on the rail.</p>
+        <p>At half past five Gwen turned the sign on the door to closed and put the bolt across and did the till. Then, instead of going out the back to the car, she went to the front and unbolted the door again and went out and stood on the pavement on Lapstone Road in the last of the light, with the Station Hotel's sign coming on down at the end of the street, and looked at the steps.</p>
+        <p>They were not big steps. Each one was barely the height of a paperback. The rail had been painted so many times it had gone soft at the edges, and there was a dark patch on it, halfway up, where for a hundred and fifteen years people had put their hands without thinking about it.</p>
+        <p>She put her own hand there for a moment. Then she went back inside and locked up, and went home, and Keith had done a shepherd's pie, and on Wednesday at six the order came down the line from Leeds, design version 1.3, same as last week, and the Spindle started typing.</p>
+      </div>
+
+      <figure class="scene tall st cd-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="street" style="height:36%"></div>
+        <div class="steps" style="left:22%;right:22%;bottom:12%;height:70%"><i class="t" style="bottom:0%;left:6%;right:6%"></i><i class="t" style="bottom:30%;left:3%;right:3%"></i><i class="t" style="bottom:60%;left:0%;right:0%"></i><i class="post" style="left:2%;bottom:0;height:28%"></i><i class="post" style="left:2%;bottom:78%;height:22%"></i><i class="rail" style="left:2.4%;bottom:24%;height:58%"><i class="worn" style="top:48%"></i></i></div>
+        <div class="hotel" style="right:8%;top:12%">Station Hotel</div>
+        <div class="rest" style="left:12%;bottom:48%;z-index:6;transform:rotate(-28deg)"><i class="palm"></i><i class="fg" style="left:16%;top:10%;height:42%"></i><i class="fg" style="left:29%;top:7%;height:42%"></i><i class="fg" style="left:42%;top:6%;height:50%"></i><i class="fg" style="left:55%;top:7%;height:42%"></i></div>
+        <div class="label">a hundred and fifteen years</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
