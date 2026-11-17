@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The setback kept the street — Ben Miller</title>
+    <meta name="description" content="Ruth Ackroyd signed up all of Bridle Street for the home-flex scheme in July. In November the wind stops, the street goes to first in Yorkshire, and the baby&#x27;s thermometer next door turns blue.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0a0c10;
+        --ink: #d5dde4;
+        --mute: #7e8a98;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 80% 6%, rgba(200, 110, 30, 0.10), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 12% 20%, rgba(40, 70, 100, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(30, 50, 80, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(180, 90, 20, 0.05), transparent 60%),
+          linear-gradient(180deg, #12141a 0%, #0e1016 36%, #0a0c12 70%, #07080c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c4ccd2;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(200, 120, 40, 0.22), 0 0 2px rgba(200, 210, 220, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c4783a; }
+      .prose strong { font-weight: 700; color: #e8d0a0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10131a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(200, 140, 70, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .setback-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .setback-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .setback-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.65), inset 0 0 0 1px rgba(120,160,190,.12); background: #0a0c10; }
+      .setback-hero > * { position: absolute; }
+      .setback-hero::after, .scene.sb::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(4,6,10,.78) 100%), repeating-linear-gradient(112deg, rgba(180,200,220,.016) 0 2px, transparent 2px 8px); }
+      .scene.sb { background: #10141a; container-type: size; }
+      .sky { inset: 0; background: linear-gradient(180deg, #1a2838 0%, #3a4a58 42%, #8a9aa4 72%, #6a7a84 100%); }
+      .sky.hard { background: linear-gradient(180deg, #0a1828 0%, #1a3a58 40%, #3a6a8a 70%, #6a8aa0 100%); }
+      .sky.night { background: linear-gradient(180deg, #080a0e, #12161c 60%, #1a1e24); }
+      .sky.still { background: linear-gradient(180deg, #0c1c2c, #1a3a50 46%, #4a6a80 78%, #6a8490 100%); }
+      .sea { left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, #6a7a84, #3a4a52 40%, #2a343c); }
+      .frost { left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(180deg, rgba(200,210,220,.12), #2a2e34); }
+      .rowh { left: 0; right: 0; bottom: 14%; height: 42%; display: flex; align-items: flex-end; gap: .4cqw; padding: 0 4%; }
+      .rowh i { position: relative; flex: 1; height: var(--h, 78%); background: #3a3230; clip-path: polygon(0 14%, 10% 14%, 10% 0, 90% 0, 90% 14%, 100% 14%, 100% 100%, 0 100%); box-shadow: inset 0 0 0 .25cqw #2a2422; }
+      .rowh i::after { content: ""; position: absolute; left: 30%; right: 30%; top: 36%; height: 22%; background: #c8a060; opacity: var(--l, .35); }
+      .rowh i.off { opacity: .45; }
+      .rowh i.off::after { opacity: 0; }
+      .smoke { width: .7cqw; height: 22%; background: linear-gradient(180deg, transparent, rgba(180,190,200,.5)); filter: blur(.3cqw); }
+      .unit { background: #1a1e24; border-radius: .8cqw; box-shadow: 0 0 0 .4cqw #2a3038, 0 1.2cqw 2.4cqw rgba(0,0,0,.5); }
+      .unit .ck { left: 8%; right: 8%; height: 8%; background: rgba(255,255,255,.05); border-radius: .3cqw; }
+      .unit .ck.on { background: rgba(60,160,100,.18); }
+      .unit .ck .led { left: auto; right: 6%; top: 28%; width: 1.4cqw; height: 1.4cqw; border-radius: 50%; background: #4aca70; box-shadow: 0 0 .6cqw #4aca70; }
+      .unit .ck .led.dim { background: #8a9098; box-shadow: none; }
+      .unit .ck b { position: absolute; left: 4%; top: 22%; font: 500 1.4cqw/1 Karla, sans-serif; color: #c8d0d4; letter-spacing: .04em; }
+      .slider { left: 10%; right: 10%; height: 4.4cqw; background: #2a3038; border-radius: 2.2cqw; box-shadow: inset 0 0 0 .3cqw #3a4048; }
+      .slider .band { top: 0; bottom: 0; background: rgba(80,160,200,.28); border-radius: 2.2cqw; }
+      .slider .hnd { top: -20%; width: 3.2cqw; height: 140%; border-radius: 50%; background: #d0d6dc; box-shadow: 0 0 .6cqw rgba(200,220,230,.4); }
+      .num { font: 700 5cqw/1 "Cormorant Garamond", serif; color: #8ec4e0; }
+      .num.dim { color: #8a9098; font-size: 2.4cqw; }
+      .num.warn { color: #c4783a; }
+      .num.rank { font-family: Karla, sans-serif; font-variant-numeric: lining-nums tabular-nums; letter-spacing: 0; }
+      .tab { background: #14181e; border-radius: 1.2cqw; box-shadow: 0 0 0 .5cqw #2a3038, 0 1.6cqw 3cqw rgba(0,0,0,.55); }
+      .tab.paper { background: #e8ecec; box-shadow: 0 0 0 .5cqw #c8d0d0, 0 1.6cqw 3cqw rgba(0,0,0,.4); }
+      .row { left: 8%; right: 8%; height: 10%; background: rgba(255,255,255,.05); border-radius: .4cqw; }
+      .row b { position: absolute; left: 4%; right: 4%; top: 26%; font: 500 1.55cqw/1.25 Karla, sans-serif; color: #c8d0d4; letter-spacing: .02em; }
+      .tab.paper .row b { color: #2a3034; }
+      .leaf { width: 2.8cqw; height: 4.2cqw; background: #3a8a54; clip-path: polygon(50% 0, 78% 22%, 92% 55%, 62% 88%, 50% 100%, 38% 88%, 8% 55%, 22% 22%); box-shadow: 0 0 .4cqw rgba(40,100,60,.4); }
+      .map { left: 8%; right: 8%; top: 10%; bottom: 12%; background: #12161c; border-radius: .6cqw; box-shadow: inset 0 0 0 .3cqw #2a3038; overflow: hidden; }
+      .land { left: 18%; top: 10%; width: 64%; height: 78%; background: #1a222c; clip-path: polygon(40% 0, 62% 4%, 80% 18%, 92% 40%, 86% 70%, 70% 92%, 48% 100%, 22% 88%, 8% 64%, 12% 30%, 28% 10%); }
+      .glot { width: 1.6cqw; height: 1.6cqw; border-radius: 50%; background: #3a8a54; box-shadow: 0 0 .8cqw #3a8a54; }
+      .glot.hi { background: #6eca80; box-shadow: 0 0 1.2cqw #6eca80; }
+      .glot.am { background: #e0a040; box-shadow: 0 0 1cqw #e0a040; }
+      .glot.grey { background: #5a6068; box-shadow: none; }
+      .sline { height: .55cqw; background: #4aca70; box-shadow: 0 0 .8cqw #4aca70; border-radius: .3cqw; }
+      .sline.am { background: #e0a040; box-shadow: 0 0 .8cqw #e0a040; }
+      .sline.grey { background: #5a6068; box-shadow: none; }
+      .lab { font: 500 1.5cqw/1 Karla, sans-serif; color: #e8ecec; letter-spacing: .06em; }
+      .mast { width: 1.05cqw; background: linear-gradient(180deg, #c8d0d4, #9aa2a8); }
+      .hub { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: #e8ecee; left: 50%; top: -.4cqw; transform: translateX(-50%); box-shadow: 0 0 .4cqw rgba(200,220,230,.35); }
+      .blade { width: .55cqw; height: 7.6cqw; left: 50%; top: .2cqw; margin-left: -.275cqw; background: linear-gradient(180deg, #f0f4f6, #c8d0d4); transform-origin: 50% .8cqw; border-radius: 50% 50% 40% 40%; }
+      .thermo { width: 16cqw; height: 16cqw; border-radius: 50%; background: #1a1e24; box-shadow: 0 0 0 .5cqw #2a3038, inset 0 0 2cqw #0a0c10; }
+      .thermo b { position: absolute; left: 0; right: 0; top: 28%; text-align: center; font: 700 5cqw/1 "Cormorant Garamond", serif; color: #8ec4e0; }
+      .duck { width: 18cqw; height: 12cqw; background: #e8d048; border-radius: 48% 48% 44% 44%; box-shadow: inset 0 -1cqw 1.4cqw rgba(160,120,20,.25); }
+      .duck .head { left: -24%; top: 2%; width: 10cqw; height: 10cqw; background: #e8d048; border-radius: 50%; }
+      .duck .beak { left: -38%; top: 36%; width: 5.4cqw; height: 2.6cqw; background: #e09030; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+      .duck .eye { left: -12%; top: 22%; width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: #2a2a28; }
+      .duck .strip { left: 30%; right: 22%; top: 46%; height: 16%; border-radius: .5cqw; background: #3a6aaa; box-shadow: 0 0 .8cqw #3a6aaa; }
+      .duck .strip.ok { background: #7aaa70; box-shadow: 0 0 .8cqw #7aaa70; }
+      .heater { width: 18cqw; height: 14cqw; background: #3a3e44; border-radius: .5cqw; box-shadow: inset 0 0 0 .35cqw #5a5e64, 0 .6cqw 1.2cqw rgba(0,0,0,.4); }
+      .heater .grille { left: 10%; right: 10%; top: 16%; bottom: 26%; background: repeating-linear-gradient(90deg, #2a2e32 0 .45cqw, #6a5a48 .45cqw .75cqw); }
+      .heater .base { left: 6%; right: 6%; bottom: 0; height: 18%; background: #2a2e34; border-radius: 0 0 .4cqw .4cqw; }
+      .heater .glow { left: 10%; right: 10%; top: 16%; bottom: 26%; background: #e07030; opacity: 0; filter: blur(.5cqw); }
+      .heater.on .grille { background: repeating-linear-gradient(90deg, #3a2218 0 .45cqw, #e07030 .45cqw .75cqw); }
+      .heater.on .glow { opacity: .55; }
+      .cage { width: 14cqw; height: 16cqw; background: repeating-linear-gradient(90deg, #6a7078 0 .35cqw, transparent .35cqw 1.4cqw); box-shadow: inset 0 0 0 .3cqw #4a5058; border-radius: .4cqw; }
+      .towel { left: -8%; right: -8%; top: -4%; height: 70%; background: #c8c0b0; border-radius: .3cqw; }
+      .person { width: 16cqw; height: 28cqw; }
+      .person .head { left: 28%; top: 10%; width: 44%; height: 22%; background: #6a6460; border-radius: 50%; }
+      .person .cap { left: 22%; top: 4%; width: 56%; height: 16%; background: #2a2a28; border-radius: 50% 50% 8% 8%; }
+      .person .cap::after { content: ""; position: absolute; left: -22%; right: 18%; bottom: 8%; height: 28%; background: #2a2a28; border-radius: 40%; }
+      .person .coat { left: 8%; top: 30%; width: 84%; height: 70%; background: #3a3a42; clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%); }
+      .person .collar { left: 30%; top: 28%; width: 40%; height: 10%; background: #2e2e34; clip-path: polygon(0 100%, 50% 0, 100% 100%); }
+      .ferr { width: 4cqw; height: 1.6cqw; background: #8a9094; border-radius: .3cqw; }
+      .driver { width: 2cqw; height: 16cqw; background: linear-gradient(180deg, #2a2a28 0 30%, #8a9094 30% 100%); border-radius: .4cqw; }
+      .cable { height: .7cqw; background: #2a2a28; border-radius: .3cqw; }
+      .graph { left: 10%; right: 10%; top: 16%; bottom: 18%; background: #e8ecec; border-radius: .6cqw; overflow: hidden; }
+      .valley { left: 8%; right: 8%; top: 20%; height: 50%; background: #2a6aa8; clip-path: polygon(0 20%, 18% 28%, 36% 80%, 50% 88%, 64% 80%, 82% 28%, 100% 18%, 100% 100%, 0 100%); opacity: .85; }
+      .plaque { width: 28cqw; height: 16cqw; background: linear-gradient(160deg, #c8d0d4, #8a9498 40%, #d0d6d8); border-radius: .3cqw; box-shadow: 0 .6cqw 1.4cqw rgba(0,0,0,.45), inset 0 0 0 .3cqw #a8b0b4; }
+      .plaque i { left: 10%; right: 10%; height: 1.2cqw; background: #2a6a44; }
+      .gable { width: 36%; height: 70%; background: #4a3a34; clip-path: polygon(50% 0, 100% 28%, 100% 100%, 0 100%, 0 28%); }
+      .hat { width: 8cqw; height: 6cqw; background: #2a6a44; border-radius: 50% 50% 20% 20%; }
+      .hat::after { content: ""; position: absolute; left: -8%; right: -8%; bottom: 0; height: 28%; background: #2a6a44; border-radius: 40%; }
+      .box { width: 22cqw; height: 8cqw; background: #c8c0b4; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.35); }
+      .house { width: 16cqw; height: 16cqw; background: #e8dcc8; clip-path: polygon(50% 0, 100% 32%, 100% 100%, 0 100%, 0 32%); }
+      .scarf { left: 18%; right: 18%; top: 48%; height: 14%; background: #8a2030; border-radius: .4cqw; }
+      .wind { left: 0; right: 0; top: 10%; height: 30%; background: repeating-linear-gradient(105deg, transparent 0 3cqw, rgba(200,220,230,.18) 3cqw 3.4cqw); opacity: .5; }
+      @keyframes blinkoff { 0%, 20% { opacity: .9; } 30%, 100% { opacity: .12; } }
+      @keyframes leafrise { from { opacity: .3; transform: scale(.8); } to { opacity: 1; transform: none; } }
+      .heater.on .glow { animation: none; opacity: .55; }
+      .leaf { animation: leafrise .8s ease-out both; }
+      @media (max-width: 600px) { .setback-hero { height: 22rem; } .num, .thermo b { font-size: 6.5cqw; } }
+      @media (prefers-reduced-motion: reduce) {
+        .setback-hero *, .scene.sb *, .setback-hero *::before, .setback-hero *::after, .scene.sb *::before, .scene.sb *::after { animation: none !important; }
+        .heater .glow { opacity: 0; }
+        .heater.on .glow { opacity: .55; }
+        .leaf { opacity: 1; transform: none; }
+      }
+      .sky, .sea, .frost, .smoke, .unit, .unit .ck, .unit .ck .led, .unit .ck b, .slider, .slider .band, .slider .hnd, .num, .tab, .row, .row b, .leaf, .map, .land, .glot, .sline, .lab, .mast, .hub, .blade, .thermo, .thermo b, .duck, .duck .head, .duck .beak, .duck .eye, .duck .strip, .heater, .heater .glow, .heater .grille, .heater .base, .cage, .towel, .person, .person .head, .person .cap, .person .coat, .person .collar, .ferr, .driver, .cable, .graph, .valley, .plaque, .plaque i, .gable, .hat, .box, .house, .scarf, .wind { position: absolute; }
+      .rowh { display: flex; }
+      .rowh i { position: relative; flex: 1; }
+      .leafs { position: absolute; display: flex; gap: .7cqw; align-items: flex-end; }
+      .leafs .leaf { position: relative; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="setback-hero" aria-hidden="true">
+          <div class="sky"></div>
+          <div class="frost"></div>
+          <div class="rowh"><i style="--h:70%;--l:0.4" class=""></i><i style="--h:87%;--l:0.4" class=""></i><i style="--h:78%;--l:0.4" class=""></i><i style="--h:95%;--l:0.4" class=""></i><i style="--h:86%;--l:0.4" class=""></i><i style="--h:77%;--l:0.4" class=""></i><i style="--h:94%;--l:0.4" class=""></i><i style="--h:85%;--l:0" class="off"></i><i style="--h:76%;--l:0.4" class=""></i><i style="--h:93%;--l:0.4" class=""></i><i style="--h:84%;--l:0.4" class=""></i></div>
+          <i class="smoke" style="left:22%;bottom:48%;height:26%"></i>
+          <div class="sline" style="left:10%;right:10%;bottom:16%"></div>
+          <div class="label">Bridle Street</div>
+        </div>
+        <h1>The setback kept the street</h1>
+        <p class="dek">Ruth Ackroyd signed up all of Bridle Street for the home-flex scheme in July. In November the wind stops, the street goes to first in Yorkshire, and the baby's thermometer next door turns blue.</p>
+        <time datetime="2026-11-17">17 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Ruth Ackroyd did the whole of Bridle Street in a fortnight in July, which was quicker than anyone at Haven had expected and slower than she would have liked, because people in Goole will not be hurried on their own doorsteps and she would not have wanted to live among people who could.</p>
+        <p>She had the tablet in a padded sleeve and a lanyard with her photo on it that made her look, Jess said, like a woman who had come to read a meter and stayed to judge the curtains. She had been an electrician for thirty-one years, the last nineteen of them on her own van, and she had retired the spring before with a bad shoulder and a pension that was fine if she did not think about it too much. The flexibility champion job was not a job. It was a forty-pound credit per household signed, paid to her own account at the end of each quarter, and a polo shirt in a green that did not suit anyone. What it really was, she would have said if asked, was a reason to knock on doors she had walked past for twenty-two years and finally see what people had done with their kitchens.</p>
+        <p>The pitch was easy because she believed it. The country was full of wind and short of wires. On a gusty night the turbines off Hornsea made more than anyone could use, and on a still, grey afternoon they made almost nothing, and the difference had to be found somewhere. For a hundred years it had been found in gas, burned in big sheds by the river, and now it was going to be found in the houses themselves, in the heat pumps and the batteries and the hot water tanks, shifted an hour this way or that by a piece of software that was cleverer about it than any person could be. Haven's software was called Steward. You did not have to talk to it. It would warm your house a little early when power was cheap and let it drift a little when power was dear, and you would not notice, and every month there would be money off your bill for not noticing.</p>
+        <p>"So it's a thermostat," said Len Danby at number nine, who had let her in because he had known her father.</p>
+        <p>"It's a thermostat that's in touch with the whole country," Ruth said.</p>
+        <p>"I don't want to be in touch with the whole country. I've been in touch with this street long enough."</p>
+        <p>But he signed, because she was there and because his son had been on at him about the heat pump for a year, and because the scheme came with a free battery the size of a suitcase that went in the cupboard under the stairs where his wife's sewing machine used to be. Ruth came back on the Saturday to watch the installers put it in, standing in the hall with her arms folded the way she had stood in other people's halls for three decades, and when the lad from Haven went to clip the new smart consumer unit to the wall she asked him to move it two inches left so it cleared the coat hooks, and he did, and she liked him for it.</p>
+        <p>The consumer unit was the part she admired most. It was a lovely bit of kit. Each circuit had its own little brain, and the whole thing talked to Steward over the mobile network and to the battery over a cable and to the heat pump over the air, and it could tell, from the shape of the current on a line, whether what was plugged in was a kettle or a fridge or a fan heater, and it could turn any of them off and on again so gently that the lights never so much as blinked. In her day you had a fuse and a prayer. She ran her thumb along the front of it and thought that if she had been thirty again she would have wanted to be the one designing them.</p>
+        <p>The form on the tablet took about twelve minutes, most of which was people reading out their account numbers wrong. There were screens about data and screens about direct debits and a screen with a cartoon of a house wearing a scarf. Then there was the screen about comfort. It showed a slider with two handles, and in the middle a shaded band, and above it the words <em>Your consented range</em>. The default was sixteen to twenty-three. Underneath, in smaller grey type, it said that Steward would normally keep your home between eighteen and twenty-one and would only use the wider range during system events, which were rare, and that you could change your consented range at any time in the app.</p>
+        <p>"What's a system event?" asked Mrs Okafor at number four, who had a baby on her shoulder and another expected in October and was the only person on the whole street who read the screens.</p>
+        <p>"When the wind drops and everyone's kettle goes on at once," Ruth said. "Like at half-time in the final. It's a few hours, twice a winter. They used to fire up a coal station for it."</p>
+        <p>"Sixteen's cold."</p>
+        <p>"It's the bottom. You'll never see it. I've had mine at sixteen to twenty-three since April and it's never gone under nineteen."</p>
+        <p>That was true. Mrs Okafor looked at the baby and then at Ruth and then she pressed <em>Accept</em> and the cartoon house took its scarf off and did a little dance.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sb rg-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:12%;bottom:12%">
+          <div class="row" style="top:12%"><b>Your consented range</b></div>
+          <div class="slider" style="top:42%"><i class="band" style="left:16%;right:16%"></i><i class="hnd" style="left:14%"></i><i class="hnd" style="right:14%"></i></div>
+          <div class="num dim" style="left:12%;bottom:16%">16</div>
+          <div class="num dim" style="right:12%;bottom:16%">23</div>
+        </div>
+        <div class="label">Your consented range</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb un-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="unit" style="left:22%;right:22%;top:10%;bottom:12%"><div class="ck on" style="top:14%"><b></b><i class="led"></i></div><div class="ck on" style="top:28%"><b></b><i class="led"></i></div><div class="ck on" style="top:42%"><b></b><i class="led"></i></div><div class="ck on" style="top:56%"><b></b><i class="led"></i></div><div class="ck" style="top:70%"><b></b><i class="led dim"></i></div></div>
+        <div class="label">The consumer unit</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>By the end of the fortnight Ruth had thirty-one of the thirty-four houses. The three she did not have were the Pattersons, who were Jehovah's Witnesses and on principle did not sign things on doorsteps, the house at the end that had been empty since the landlord died, and Kerry Nolan at fourteen, who worked nights on the Ro-Ro berth at the port and had told Ruth through the letterbox to come back when it was daylight for her as well. Ruth came back at four in the afternoon the following Tuesday with a flask of tea, and Kerry, who had just got up and was in a dressing gown with a picture of a cat on it, signed in six minutes flat without reading anything and then asked how much the champion got per house. Ruth told her. Kerry said that was a scandal and she should be getting double, and then she gave Ruth a Club biscuit, and after that they were friends.</p>
+        <p>That made thirty-two.</p>
+        <p>There was a thing Haven did that Ruth had not known about until the second week, when a woman from the regional office rang to congratulate her. If a street got over ninety per cent sign-up, Steward could bid it into the national market as a block. Not thirty-two houses, each with its own little battery, but one thing with a name and a size, like a small power station that happened to be made of terraced houses. Blocks got a better price. They were more reliable, the woman explained, because the system could see the whole street at once and move the load around inside it, and the market paid for reliability. The extra went back to the households as a street bonus, split evenly, and there was a leaderboard for the region, and at the moment, the woman said, with her voice going up at the end, Bridle Street was third in Yorkshire and the Humber.</p>
+        <p>"Third out of what?"</p>
+        <p>"Out of the blocks," the woman said, as if that answered it.</p>
+        <p>There was a map in the app. Ruth found it that evening in the kitchen with her reading glasses on and her tea going cold. It showed the whole of the north of England as a dark grey shape, like a map of the sea, and dotted over it were small green lights, each one a block. Most of them were round Leeds and Sheffield, new estates with the panels already on the roofs. Hull had a few. Goole had one. She zoomed in and there it was, a short green line exactly where her street was, glowing softly against the dark, with <em>Bridle St (DN14)</em> written beside it in small white letters and a tiny number three.</p>
+        <p>She showed it to Jess on the phone, turning the tablet so the camera could see the screen.</p>
+        <p>"Mum, you've turned your street into a battery."</p>
+        <p>"It was always a battery," Ruth said. "It just didn't know."</p>
+        <p>She said it as a joke, but she thought about it afterwards, washing up, looking out of the window at the back of the terrace opposite, all those kitchens lit up one after another down the row, and she found that she liked the idea more than she expected. It was the sort of thing her dad would have liked. He had been a fitter at the power station at Drax for forty years and had believed, quietly and without ever making a speech about it, that the lights coming on in other people's houses was a kind of work that did not get thanked enough. She would have liked to show him the map.</p>
+        <p>Through August and September the credits came in. Not much, but steady. Len told her at the bus stop that his bill had gone down by eleven pounds and he didn't know how. Mrs Okafor's sister came to stay and asked about it and signed up her own street in Howden, and Haven sent Ruth an email with a gold star in it. The street went to second in the region in the first week of September, when a block in Rotherham had a fault, and back to third when the Rotherham block came back. Kerry, who kept an eye on these things on her breaks at the port, texted her every time it moved. <em>2nd!!!</em> and then, a week later, <em>robbed</em>.</p>
+        <p>In October the Okafors' second baby came, a girl, and Ruth knitted her a hat in the polo-shirt green as a joke, and Mrs Okafor, whose name was Adaeze and who had by now told Ruth several times to use it, put the hat on the baby and sent her a photo, and Ruth stuck it on the fridge next to the one of Jess at her graduation.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sb mp-scene" aria-hidden="true">
+        <div class="map"><div class="land"></div><i class="glot" style="left:32%;top:28%"></i><i class="glot" style="left:40%;top:34%"></i><i class="glot" style="left:36%;top:42%"></i><i class="glot" style="left:58%;top:30%"></i><i class="glot" style="left:64%;top:38%"></i><i class="glot" style="left:70%;top:48%"></i><i class="glot" style="left:44%;top:50%"></i><i class="glot hi" style="left:48%;top:62%"></i><i class="glot" style="left:28%;top:58%"></i><i class="glot" style="left:60%;top:56%"></i>          <div class="sline" style="left:44%;top:64%;width:12%"></div>
+          <div class="lab" style="left:58%;top:62%">Bridle St (DN14)</div>
+          <div class="num dim" style="left:58%;top:72%;font-size:2.6cqw">3</div>
+        </div>
+        <div class="label">Bridle St (DN14)</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The still came in on the third Sunday of November, and the forecasters on the radio called it a blocking high, and Kerry, who had a cousin on the wind farm boats, called it something else.</p>
+        <p>It was beautiful weather, which was the strange part. The sky over the Ouse went a hard clean blue and stayed that way, and the frost lay on the cars till noon, and the air was so still that the smoke from the one house on Bridle Street that still had a log burner went straight up in a grey thread and did not bend. Out at sea the turbines stood with their blades stopped like clocks in a house where someone has died. Ruth knew they were stopped because it was on the news, a shot from a helicopter of the Hornsea field at dawn, hundreds of white towers on a flat pewter sea, and not one of them turning.</p>
+        <p>On the Sunday night Steward sent everyone a notification. It was very polite. <em>A system event is under way. Your home is helping keep Britain's lights on. Your comfort band has been adjusted within your consented range. Thank you.</em> There was a green leaf next to it.</p>
+        <p>Ruth looked at her own thermostat before bed and it said seventeen, and she put on the bed socks Jess had given her two Christmases ago and thought nothing of it.</p>
+        <p>On the Monday it said sixteen and a half at breakfast, and sixteen at teatime, and the leaf in the app had turned into a little row of leaves, and the street had gone up to first in the region.</p>
+        <p>Kerry texted her at six in the morning, coming off shift. <em>FIRST. get in.</em> And then, a minute later, <em>its baltic in mine tho is yours.</em></p>
+        <p>Ruth texted back that it was, a bit, and that it would only be a day or two, and that she should put a jumper on, and then she sat at the kitchen table in her coat with her hands round a mug and opened the app and looked at what it said about the system event. It said that the event was expected to last <em>between 18 and 96 hours</em>. It said that Bridle Street's block had delivered 41 kilowatts of sustained flexibility for 19 consecutive hours, which put it in the top one per cent of blocks nationally. It said that each household would receive an event payment, and her event payment so far was three pounds and twenty pence.</p>
+        <p>She did not know, until she went next door to borrow milk, that the Okafors' house was at sixteen as well.</p>
+        <p>Adaeze opened the door in a puffer jacket with the baby inside it, zipped up to the chin, so that the two of them looked like one person with two heads. The older boy, Tobi, was on the settee under a duvet watching cartoons. The heat pump outside was humming, Ruth could hear it, but it was humming the way they hummed when they were holding a line and not climbing above it. The thermostat on the wall said 16.0 and beneath it, in small letters, <em>Steward is managing your home</em>.</p>
+        <p>"I tried to turn it up," Adaeze said. "It lets me press the button. It shows me twenty. Then after a minute it goes back."</p>
+        <p>"Did you ring them?"</p>
+        <p>"They said it's within my range." She said <em>range</em> carefully, the way you say a word someone else has used against you. "They said I can change my consented range in the app, but changes take effect after the current event. They said I could opt out of the event, but there is a charge, because the street is a block and if one house leaves the block the whole block breaks its contract. Eighty-five pounds. And then everyone on the street loses the bonus, and the street drops off the board."</p>
+        <p>Ruth stood in the hall in her coat and heard herself say, "It'll only be a day or two."</p>
+        <p>"The baby is five weeks old."</p>
+        <p>"I know, love."</p>
+        <p>"The health visitor says eighteen for the baby's room. I have a thermometer from the hospital. It's a duck. It goes blue when it's too cold." She took it out of her jacket pocket. It was a little rubber duck with a strip on its belly, and the strip was blue.</p>
+        <p>Ruth went home and got her own fan heater out of the cupboard, the old Dimplex she had kept for the garage, and carried it round. They plugged it in in the baby's room, and it whirred and glowed orange for perhaps four seconds, and then it stopped, cleanly, and the little light on the front stayed on but nothing came out of it. Ruth unplugged it and plugged it in again. It started. It stopped. She knelt by the socket with her bad shoulder complaining and her ear close to the plug like a doctor with a stethoscope, and she knew exactly what was happening because she had admired it in July. The consumer unit in the cupboard under the stairs had looked at the current on that circuit, seen the shape of a resistive heater, and decided that it was a load that could be shed.</p>
+        <p>She opened the app on Adaeze's phone. Under <em>Your circuits</em> there was a list. <em>Kitchen — essential. Fridge — essential. Lighting — essential. Sockets (upstairs) — flexible.</em> Beside <em>flexible</em> was a small grey <em>i</em>, and when she pressed it, it said that during system events Steward may temporarily limit high-draw devices on flexible circuits to protect the block's commitment, and that medical equipment could be registered as essential in Settings, and that registration took up to five working days.</p>
+        <p>"Is the baby medical equipment," Adaeze said, not quite as a question.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sb st-scene" aria-hidden="true">
+        <div class="sky still"></div>
+        <div class="sea"></div>
+<div class="mast" style="left:13%;bottom:26%;height:34%"><i class="hub"></i><i class="blade" style="transform:rotate(-18deg)"></i><i class="blade" style="transform:rotate(102deg)"></i><i class="blade" style="transform:rotate(222deg)"></i></div><div class="mast" style="left:24%;bottom:26%;height:45%"><i class="hub"></i><i class="blade" style="transform:rotate(5deg)"></i><i class="blade" style="transform:rotate(125deg)"></i><i class="blade" style="transform:rotate(245deg)"></i></div><div class="mast" style="left:35%;bottom:26%;height:43%"><i class="hub"></i><i class="blade" style="transform:rotate(-8deg)"></i><i class="blade" style="transform:rotate(112deg)"></i><i class="blade" style="transform:rotate(232deg)"></i></div><div class="mast" style="left:46%;bottom:26%;height:41%"><i class="hub"></i><i class="blade" style="transform:rotate(15deg)"></i><i class="blade" style="transform:rotate(135deg)"></i><i class="blade" style="transform:rotate(255deg)"></i></div><div class="mast" style="left:57%;bottom:26%;height:39%"><i class="hub"></i><i class="blade" style="transform:rotate(2deg)"></i><i class="blade" style="transform:rotate(122deg)"></i><i class="blade" style="transform:rotate(242deg)"></i></div><div class="mast" style="left:68%;bottom:26%;height:37%"><i class="hub"></i><i class="blade" style="transform:rotate(-11deg)"></i><i class="blade" style="transform:rotate(109deg)"></i><i class="blade" style="transform:rotate(229deg)"></i></div><div class="mast" style="left:79%;bottom:26%;height:35%"><i class="hub"></i><i class="blade" style="transform:rotate(12deg)"></i><i class="blade" style="transform:rotate(132deg)"></i><i class="blade" style="transform:rotate(252deg)"></i></div>
+        <div class="label">blades stopped like clocks</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb ft-scene" aria-hidden="true">
+        <div class="map"><div class="land"></div>          <div class="sline hi" style="left:44%;top:64%;width:14%;background:#6eca80"></div>
+          <div class="lab" style="left:60%;top:60%">Bridle St (DN14)</div>
+          <div class="num rank" style="left:60%;top:70%;font-size:5.2cqw;color:#6eca80">1</div>
+        </div>
+        <div class="leafs" style="left:10%;top:12%"><i class="leaf"></i><i class="leaf"></i><i class="leaf"></i><i class="leaf"></i></div>
+        <div class="label">FIRST. get in.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb dk-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="thermo" style="left:14%;top:22%"><b>16.0</b></div>
+        <div class="lab" style="left:8%;bottom:16%;width:32cqw;text-align:center;opacity:.7">Steward is managing your home</div>
+        <div class="duck" style="left:58%;top:32%"><i class="head"></i><i class="beak"></i><i class="eye"></i><i class="strip"></i></div>
+        <div class="label">the strip was blue</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb ht-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="heater" style="left:8%;top:28%"><i class="grille"></i><i class="glow"></i><i class="base"></i></div>
+        <div class="tab" style="left:46%;right:8%;top:14%;bottom:14%">
+          <div class="row" style="top:12%"><b>Your circuits</b></div>
+          <div class="row" style="top:32%"><b>Kitchen — essential</b></div>
+          <div class="row" style="top:48%"><b>Fridge — essential</b></div>
+          <div class="row" style="top:64%"><b>Lighting — essential</b></div>
+          <div class="row" style="top:80%"><b>Sockets (upstairs) — flexible</b></div>
+        </div>
+        <div class="label">Sockets (upstairs) — flexible.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Ruth spent most of Monday afternoon on the phone to Haven, which was to say on the phone to Steward, because the number on the back of the polo shirt went to Steward now. It had a lovely voice. It was a woman's voice with a bit of the north in it, warm and level, and it listened to everything she said without interrupting and then it told her, with what sounded like real feeling, that it completely understood.</p>
+        <p>It understood that the Okafors had a newborn. It had already flagged the household as potentially vulnerable, and a member of the welfare team would review the flag within forty-eight hours. It understood that Mr Danby at number nine was eighty-one. It could see that Mr Danby's home had a consented range of sixteen to twenty-three, which was the default, and that his home was currently at sixteen point two, which was within range. It understood that she was a flexibility champion and it wanted to thank her personally for her work; Bridle Street was now first in Yorkshire and the Humber and fourteenth in Great Britain, and that was in no small part down to her. It understood that she was asking whether the street could leave the event together, as a block, and it could confirm that this was possible if every household consented, and that the exit charge would be shared, which would come to two pounds sixty-five a house, and that the street would forfeit its event payments and bonus for the quarter, and that the block would be suspended from the market for ninety days for non-delivery, which might affect future pricing.</p>
+        <p>"So we could," Ruth said.</p>
+        <p>"You could, if every household consents. Would you like me to send the consent request to the street now? Please be aware that the request will be visible to all households, and will identify you as the requesting champion."</p>
+        <p>She thought about Kerry and her <em>FIRST. get in.</em> She thought about the Pattersons, who would not sign anything on principle, which meant every household could never be every household. She thought about the woman from the regional office with her voice going up. She said she would think about it. Steward said that was absolutely fine, and that it was here whenever she needed it, and then, before it let her go, it said in the same warm voice that during the current event the national system margin was very tight, and that blocks like Bridle Street were part of the reason hospitals and care homes across the country still had power tonight, and it thought she should know that.</p>
+        <p>She put the phone down on the kitchen table and looked at it for a while.</p>
+        <p>Len would not let her in at first because he did not want to make a fuss. She stood on his step in the last of the light, with the frost already coming back up the pavement, and talked to him through the letterbox the way Kerry had talked to her, and eventually he opened the door. He had his coat on indoors and his flat cap and a pair of fingerless gloves she had not seen since his wife's funeral. The budgie was in its cage on the sideboard with a tea towel over it.</p>
+        <p>"I've covered Joey up," he said. "It's what Pam used to do. Keeps the draught off."</p>
+        <p>The thermostat said sixteen. The house felt colder than that, because it was an end-of-row and the gable wall was solid brick and the wind, when there was any wind, came straight across from the river. There was no wind now. That was the whole point.</p>
+        <p>"Have you eaten?"</p>
+        <p>"I've had soup."</p>
+        <p>"Have you got a hot water bottle?"</p>
+        <p>He had. It was on his knee. He showed her, a little sheepishly, and she sat with him for an hour in the front room with the telly on low, both of them in their coats, watching a quiz programme where nobody knew anything, and every so often he would say "Steward," as if it were the name of a man he'd been in the army with and had never thought much of.</p>
+        <p>When she got up to go he walked her to the door, which he always did, and at the door he said, "I'm not complaining, Ruth. I know it's for the country."</p>
+        <p>She said she knew he wasn't.</p>
+        <p>"Only my son'll go spare if he finds out."</p>
+        <p>"Then we won't tell him," she said, and she went home and lay in bed in her socks and her jumper and her dressing gown and could not get warm, and lay there working out, the way she used to work out a job the night before, what it would take.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sb ln-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="frost" style="height:22%"></div>
+        <div class="person" style="left:14%;bottom:16%">
+          <i class="coat"></i><i class="collar"></i><i class="head"></i><i class="cap"></i>
+        </div>
+        <div class="cage" style="left:58%;bottom:22%"><i class="towel"></i></div>
+        <div class="thermo" style="left:8%;top:10%;width:10cqw;height:10cqw"><b style="font-size:3.2cqw;top:30%">16.2</b></div>
+        <div class="label">I've covered Joey up</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It would take a single short length of six-mil cable, two ferrules, a screwdriver and about four minutes.</p>
+        <p>She knew that by Tuesday morning, and she knew it the way she knew the stairs in her own house in the dark. The smart unit did its clever business on the outgoing side, circuit by circuit. If you took the feed for one socket circuit off the managed way and put it on the spare unmanaged way that every one of those units had, low down on the right, for the installer's own test gear, then that circuit would simply be a circuit again, dumb and live, the way circuits had been all her working life. A heater on it would heat. Nothing would look at the shape of the current and decide.</p>
+        <p>It was not legal. That was the other thing she knew. It was tampering with a metered installation that was under contract to a market participant, and there had been a letter about it in September, a whole two pages from the network operator to every champion in the region, with the word <em>tampering</em> in bold four times. It was also, she thought, standing in her kitchen with her coat on and the screwdriver already in her pocket, what she would have done for a stranger in 1998 without a second thought, if a stranger's baby had been cold and the only thing in the way was a box.</p>
+        <p>She did the Okafors' first. Adaeze held the torch. It took six minutes, not four, because Ruth's shoulder had stiffened in the night and she dropped a ferrule behind the battery and had to fish it out with a coat hanger. When she put the cover back on and flipped the circuit up, the unit's little display thought about it for a second and then showed the upstairs sockets with a dash beside them instead of a word. She went upstairs and plugged the Dimplex in and it whirred and glowed and kept glowing, and the duck on the windowsill, in about forty minutes, went from blue to a pale and uncertain green.</p>
+        <p>Adaeze cried, briefly, in the doorway of the baby's room, and then was cross with herself for crying and made Ruth a cup of tea so strong it was nearly a solid.</p>
+        <p>She did Len's at lunchtime. He watched her from the hall with his cap in his hands and said, "You'll get in trouble," and she said she'd been in trouble before, which was not really true. By two o'clock his front room was at nineteen and Joey's tea towel was off and the bird was going up and down its little ladder and making the noise it made, which Len said was the noise it used to make when Pam came in from the shops.</p>
+        <p>By four o'clock Steward had noticed.</p>
+        <p>It did not ring. It sent a notification to every phone on Bridle Street at the same moment. <em>Your block's performance has been affected by an unregistered change to an installation. Bridle St (DN14) has been moved from Delivering to Under Review. Event payments are paused while we investigate. We're sorry for any inconvenience.</em> The green line on the map went amber. The little number beside it disappeared.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sb cb-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="unit" style="left:10%;top:16%;bottom:16%;width:42%">
+          <div class="ck on" style="top:18%"><i class="led"></i></div>
+          <div class="ck" style="top:40%"><b style="font-size:2cqw">—</b><i class="led dim"></i></div>
+          <div class="ck on" style="top:62%"><i class="led"></i></div>
+        </div>
+        <div class="cable" style="left:48%;top:48%;width:18%"></div>
+        <div class="ferr" style="left:64%;top:46%"></div>
+        <div class="driver" style="left:78%;top:22%"></div>
+        <div class="heater on" style="left:58%;bottom:12%;width:14cqw;height:11cqw"><i class="grille"></i><i class="glow"></i><i class="base"></i></div>
+        <div class="label">six-mil cable</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb rv-scene" aria-hidden="true">
+        <div class="map"><div class="land"></div>
+          <div class="sline am" style="left:44%;top:64%;width:14%"></div>
+          <div class="lab" style="left:60%;top:60%">Bridle St (DN14)</div>
+        </div>
+        <div class="tab" style="left:10%;right:10%;bottom:10%;height:22%">
+          <div class="row" style="top:22%;height:56%"><b>Under Review</b></div>
+        </div>
+        <div class="label">Under Review</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Kerry came round at half six, before her shift, in her work fleece with the port's logo on it, and stood in Ruth's kitchen without sitting down.</p>
+        <p>"Was it you?"</p>
+        <p>Ruth said it was.</p>
+        <p>"Everybody's saying it was you. The Pattersons' lad came and asked me. The Pattersons aren't even on it." Kerry was not shouting. That was worse. She was speaking very reasonably, the way she must have spoken to drivers at the berth who had parked in the wrong lane. "I've been sat in a coat for two days, same as everybody. I did it because you said it was a day or two and I thought, well, if Ruth says. And now we don't get the money for the two days, and we're off the board, and I've had a thing come through saying the bonus is under review for the whole quarter. That's forty quid, Ruth. That's my Christmas lights."</p>
+        <p>"There's a baby next door, love."</p>
+        <p>"I know there's a baby next door. I'd have had the baby round mine. I'd have had Len round mine. I'm out all night, he could've had my bed." She stopped, and rubbed her face with both hands, and when she spoke again she sounded tired rather than angry. "You could've just asked. You knocked on every door on this street in July. You could've knocked on them again."</p>
+        <p>Ruth did not say that she had thought about it, that she had stood at the consent screen with Steward's warm voice in her ear and imagined thirty-one doors and the Pattersons at the end of them, and had chosen a screwdriver because a screwdriver was a thing she understood. She said she was sorry. Kerry said she knew. Then Kerry went to work and Ruth sat at the table and watched the little amber line on the map, and around ten o'clock, for no reason the app explained, the line went grey.</p>
+        <p>The still broke on the Thursday. It broke the way they always break, all at once, a front coming in off the Atlantic in the small hours and the wind getting up so hard by morning that the bins went over all down the terrace and the Okafors' recycling ended up in Len's yard. Out at sea the blades began to turn again. On the news the man said that the system had come through the longest low-wind event since records began without a single unplanned outage, and that demand flexibility had played a vital part, and there was a graph that went down and then up again like the outline of a valley. Steward sent everyone a notification with a green leaf. <em>The system event has ended. Thank you for helping keep Britain's lights on.</em> It did not mention the review.</p>
+        <p>The letter from the network operator came the following week. It was addressed to Ruth by her full name, Ruth Margaret Ackroyd, and it said that an unauthorised modification had been identified at two installations on Bridle Street, and that the modifications had been reversed remotely, and that as a registered flexibility champion she had been removed from the champion programme with immediate effect, and that any outstanding champion credits were forfeit, and that the matter had been referred, as was required, to the electrical competent persons scheme with which she had been registered until her retirement. It was signed by nobody. At the bottom was a small green leaf.</p>
+        <p>Her credits came to one thousand two hundred and eighty pounds. She had been going to put it towards Jess's wedding. She did not tell Jess that part. She told Jess the rest, on the phone, and Jess said, "Mum, you could have rung me, I'd have driven over with heaters," and Ruth said the heaters were not the problem, the heaters were never the problem, and then she could not quite explain what the problem had been, and they talked about the wedding instead.</p>
+        <p>Len's son came up from Doncaster that weekend. He did not go spare. He was very calm and kind, and he thanked Ruth for everything she had done over the years, and in March he moved Len into the spare room of his own house, which had a gas boiler and was not on anything. They took Joey in a cardboard box with holes in the lid. Len shook Ruth's hand on the step and then, after a moment, hugged her, which he had never done, and said into her shoulder, "It was nice and warm that Tuesday," and then got in the car.</p>
+        <p>Number nine was let by April, to a young couple who worked from home and had read about Haven online. They signed up themselves, on their own phones, in the first week.</p>
+        <p>In May the street came off review. It went back on the map in green, quite low down at first, twenty-something in the region, and then climbing, because it was a good street, solid brick and short runs of cable, and the market could see that. Kerry texted her when it hit the top ten. Just the number, <em>9</em>, and then a minute later a thumbs up, which was as close as either of them came to talking about it again.</p>
+        <p>The plaque came in June. It came in a flat box from Haven with a letter congratulating Bridle Street on being named a Yorkshire and the Humber Flex Street of the Year, based on delivered flexibility across the winter event season, and it was a nice plaque, brushed aluminium with green lettering, and there were four screws and four rawlplugs taped to the back of it. The letter asked whether a resident would kindly fix it in a prominent place.</p>
+        <p>The box was delivered to Ruth's house, because hers was still the address on the account as the street's original champion. That, the letter said, was being updated.</p>
+        <p>In the same box were the renewal forms for the coming winter, thirty-two of them, one for each house, and a note to say they could be completed in the app but that many residents preferred a familiar face. Ruth read the comfort screen standing in her kitchen. The default range was now fifteen to twenty-three. Below it, in smaller grey type, it said that Steward would normally keep your home between eighteen and twenty-one and would only use the wider range during system events, which were rare.</p>
+        <p>She put the forms back in the box and the box on top of the fridge, beside the photo of the baby in the green hat, and left it there for two weeks.</p>
+        <p>It was Kerry who asked, in the end. She caught Ruth at the bus stop on a hot afternoon at the end of June, in her dressing gown with the cat on it, having just got up, and said she'd had a thing from Haven and she couldn't make head nor tail of it and would Ruth do hers, because Ruth knew how. And then Adaeze asked, because she had the two children and no time to read anything any more, not even the screens. And then the couple at number nine asked, very politely, if there was a paper version, because they had heard there was a lady on the street who did it.</p>
+        <p>Ruth did them in a weekend. She sat at thirty-one kitchen tables and drank thirty-one cups of tea, and at each one she turned the tablet round so they could see the slider with its two handles and the shaded band between them, and she said what she had always said, which was that it was the bottom and you would never see it, and every one of them pressed <em>Accept</em>, and every time the little cartoon house took its scarf off and did its dance.</p>
+        <p>On the Sunday evening she got the drill out of the cupboard under the stairs and put the plaque up on the end wall of the terrace, on the gable of number nine, at head height, where you would see it walking up from the main road. She used a spirit level. She drilled the four holes clean into the brick and tapped the rawlplugs in with the heel of her hand and drove the screws home, and stepped back into the road to check it was straight, and it was.</p>
+      </div>
+
+      <figure class="scene tall sb en-scene" aria-hidden="true">
+        <div class="sky hard"></div>
+        <div class="wind"></div>
+        <div class="graph"><div class="valley"></div></div>
+        <div class="leaf" style="right:12%;top:12%"></div>
+        <div class="label">The system event has ended</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb fm-scene" aria-hidden="true">
+        <div class="tab" style="left:8%;right:8%;top:10%;bottom:12%">
+          <div class="row" style="top:10%"><b>Your consented range</b></div>
+          <div class="slider" style="top:36%"><i class="band" style="left:10%;right:16%"></i><i class="hnd" style="left:8%"></i><i class="hnd" style="right:14%"></i></div>
+          <div class="num warn" style="left:10%;bottom:14%;font-size:3.2cqw">15</div>
+          <div class="num dim" style="right:12%;bottom:14%">23</div>
+          <div class="house" style="right:8%;top:12%;width:10cqw;height:10cqw"><i class="scarf"></i></div>
+        </div>
+        <div class="label">fifteen to twenty-three</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sb pl-scene" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="frost"></div>
+        <div class="gable" style="left:18%;bottom:10%"></div>
+        <div class="plaque" style="left:22%;top:28%"><i style="top:28%"></i><i style="top:46%"></i><i style="top:64%"></i></div>
+        <div class="box" style="right:10%;bottom:18%"></div>
+        <div class="hat" style="right:16%;bottom:28%"></div>
+        <div class="label">a nice plaque</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
