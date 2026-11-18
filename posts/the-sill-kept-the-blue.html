@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The sill kept the blue — Ben Miller</title>
+    <meta name="description" content="Mhairi Lennox has kept the Foundry&#x27;s failed vials on a cold north windowsill every weekend for three years. One February Monday in Dundee, a row of them has turned blue.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #14181c;
+        --ink: #e4eae8;
+        --mute: #8a9496;
+        --cream: #e6ece8;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 8%, rgba(140, 190, 220, 0.16), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(80, 140, 150, 0.10), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(60, 110, 140, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(60, 130, 100, 0.06), transparent 60%),
+          linear-gradient(180deg, #1a2026 0%, #14181c 36%, #101418 70%, #0c1014 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(180, 210, 220, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 220, 230, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #d4dcd8;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(140, 190, 220, 0.28), 0 0 2px rgba(220, 236, 244, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e4ece8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c9a05a; }
+      .prose strong { font-weight: 700; color: #e8eee8; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(180, 210, 230, 0.95) 0 1.5px, rgba(120, 170, 200, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(120, 170, 200, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #15191e;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(160, 190, 210, 0.14);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .sill-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .sill-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(230, 240, 244, 0.82);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .scene.tb-scene::before, .scene.lk-scene::before, .scene.hd-scene::before, .scene.pn-scene::before {
+        content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 24%; z-index: 27; pointer-events: none;
+        background: linear-gradient(transparent, rgba(0,0,0,.4));
+      }
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .sill-hero .label, .scene.sl .label { color: rgba(236, 242, 246, .94); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+      .sill-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(160,190,210,.16); background: #1a2228; }
+      .sill-hero > * { position: absolute; }
+      .sill-hero::after, .scene.sl::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(8,10,14,.72) 100%), repeating-linear-gradient(112deg, rgba(220,230,240,.016) 0 2px, transparent 2px 8px); }
+      .scene.sl { background: #15191e; container-type: size; }
+      .sky { inset: 0; background: linear-gradient(180deg, #8aa0b0 0%, #c4d2dc 48%, #e4eaee 100%); }
+      .sky.north { background: linear-gradient(180deg, #9ab0c0 0%, #d0dce4 55%, #eef2f4 100%); }
+      .sky.grey { background: linear-gradient(180deg, #6a7680 0%, #8a949c 42%, #a8b0b6 78%, #c0c6ca 100%); }
+      .sky.night { background: linear-gradient(180deg, #0c1218 0%, #182028 60%, #243038 100%); }
+      .sky.lab { background: linear-gradient(180deg, #1c242c, #15191e 70%, #12161a); }
+      .wall { left: 0; right: 0; top: 0; bottom: 28%; background: #4a4642; }
+      .win { z-index: 1; left: 14%; right: 14%; top: 8%; bottom: 36%; background: linear-gradient(180deg, #c8d8e4, #e8eef2); box-shadow: inset 0 0 0 .8cqw #3a3834, 0 0 8cqw rgba(220,236,244,.45); }
+      .mull { width: .7cqw; top: 0; bottom: 0; left: 50%; background: #3a3834; }
+      .sillstone { z-index: 2; left: 4%; right: 4%; bottom: 14%; height: 22%; background: linear-gradient(180deg, #8a8680, #6a6660 40%, #5a564e); box-shadow: 0 -1cqw 2cqw rgba(0,0,0,.25); }
+      .sillstone::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 18%; background: #a8a49c; }
+      .trays { display: flex; gap: .55cqw; align-items: flex-end; }
+      .trays i { position: relative; flex: 1; height: 72%; background: #d8d2c6; border-radius: .2cqw; box-shadow: inset 0 0 0 .2cqw #c0b8aa; }
+      .trays i::after { content: ""; position: absolute; left: 12%; right: 12%; top: 18%; height: 54%; background: repeating-linear-gradient(90deg, #e8e0c8 0 18%, transparent 18% 28%); opacity: .85; }
+      .cup { width: 4.4cqw; height: 4.8cqw; background: #e8e4dc; border-radius: 10% 10% 20% 20%; }
+      .cup::after { content: ""; position: absolute; right: -1.6cqw; top: 22%; width: 1.8cqw; height: 2.4cqw; border: .4cqw solid #e8e4dc; border-left: 0; border-radius: 0 50% 50% 0; }
+      .line { left: 6%; right: 6%; top: 28%; height: 36%; display: flex; gap: .5cqw; align-items: stretch; }
+      .line i { position: relative; flex: 1; background: rgba(200,214,220,.12); border-radius: .5cqw; box-shadow: inset 0 0 0 .28cqw rgba(180,200,210,.28); }
+      .line i::before, .line i::after { content: ""; position: absolute; width: 2.2cqw; height: 2.2cqw; border-radius: 50%; border: .28cqw solid rgba(180,200,210,.35); top: 28%; }
+      .line i::before { left: 12%; }
+      .line i::after { right: 12%; }
+      .arms { left: 8%; right: 8%; top: 34%; height: 22%; }
+      .arm { width: 8%; height: 70%; border: .35cqw solid rgba(180,200,210,.45); border-bottom: 0; border-radius: 40% 40% 0 0; }
+      .tunnel { left: 6%; right: 6%; top: 44%; height: 3%; background: rgba(160,190,210,.2); }
+      .cam { width: 4.4cqw; height: 3.2cqw; background: #2a2e32; border-radius: .3cqw; box-shadow: 0 0 .6cqw rgba(0,0,0,.4); }
+      .cam::after { content: ""; position: absolute; left: 28%; top: 22%; width: 1.8cqw; height: 1.8cqw; border-radius: 50%; background: #1a1e22; box-shadow: inset 0 0 0 .25cqw #4a5056, 0 0 .5cqw #6a8aaa; }
+      .brkt { width: .6cqw; height: 18%; background: #6a7076; }
+      .brkt.h { height: .6cqw; width: 6cqw; }
+      .traybox { background: #c8c2b6; border-radius: .4cqw; box-shadow: 0 .6cqw 1.6cqw rgba(0,0,0,.35), inset 0 0 0 .3cqw #b0aaa0; }
+      .grid { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(6, 1fr); gap: 1.1%; }
+      .grid i { position: relative; width: auto; height: auto; margin: 0; border-radius: 40% 40% 28% 28%; background: #e4d8a8; box-shadow: inset 0 -.3cqw .3cqw rgba(120,100,40,.2); }
+      .grid i.bl { background: #7a9aaa; box-shadow: inset 0 -.3cqw .3cqw rgba(40,70,90,.25), 0 0 .5cqw rgba(90,140,170,.35); }
+      .inst { background: #3a4248; border-radius: .8cqw; box-shadow: 0 1.2cqw 2.8cqw rgba(0,0,0,.45), inset 0 0 0 .35cqw #4a5258; }
+      .screen { background: #0e1418; border-radius: .3cqw; box-shadow: inset 0 0 1.4cqw #000; }
+      .peak { background: #6a9aaa; clip-path: polygon(0 100%, 42% 88%, 58% 28%, 64% 28%, 78% 90%, 100% 100%); opacity: .85; }
+      .tick { width: .25cqw; background: #8aa0a8; }
+      .nm { font: 500 2cqw/1 Karla, sans-serif; color: #8aa0a8; letter-spacing: .06em; }
+      .bars { left: 8%; right: 8%; }
+      .bars b { position: absolute; left: 0; height: .7cqw; background: #3a464c; border-radius: .2cqw; }
+      .grem { width: 40%; height: 64%; }
+      .clu { width: 4.4cqw; height: 4.4cqw; border-radius: 50%; background: #6a7080; box-shadow: 0 0 1cqw rgba(120,140,160,.35); }
+      .clu.mo { background: #8a9098; width: 3.4cqw; height: 3.4cqw; }
+      .wrap { width: 14cqw; height: 11cqw; border: .75cqw solid #c8a060; border-top: 0; border-radius: 0 0 50% 50%; }
+      .powder { width: 22cqw; height: 8cqw; background: #c0b8a8; border-radius: 50% 50% 40% 40%; }
+      .book { width: 16cqw; height: 20cqw; background: #2e6a44; border-radius: .3cqw .8cqw .8cqw .3cqw; box-shadow: .6cqw .8cqw 1.6cqw rgba(0,0,0,.4), inset -.6cqw 0 0 #245838; }
+      .book .pg { left: 18%; right: 8%; top: 12%; bottom: 12%; background: #e8ece8; border-radius: .2cqw; }
+      .book .pg i { left: 10%; right: 10%; height: .45cqw; background: #c8d0c8; }
+      .board { left: 8%; right: 8%; top: 12%; bottom: 16%; background: #e8ecec; border-radius: .3cqw; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.3); }
+      .flat { left: 10%; right: 10%; top: 38%; height: 22%; background: #2a5a7a; clip-path: polygon(0 70%, 48% 68%, 76% 60%, 100% 48%, 100% 56%, 76% 68%, 48% 76%, 0 78%); opacity: .95; }
+      .logger { width: 5.2cqw; height: 3.2cqw; background: #2a2e32; border-radius: .3cqw; }
+      .logger .led { right: 10%; top: 30%; width: 1.1cqw; height: 1.1cqw; border-radius: 50%; background: #4aca70; box-shadow: 0 0 .6cqw #4aca70; }
+      .deg { font: 700 8cqw/1 Karla, sans-serif; color: #c8d8e0; font-variant-numeric: lining-nums; }
+      .sash { background: linear-gradient(180deg, rgba(30,42,54,.18), rgba(10,16,22,.4)); box-shadow: inset 0 0 0 .7cqw #c4ccd0, 0 0 0 .2cqw #2a3034; }
+      .framep { width: 56%; height: 70%; background: #e8ecec; border-radius: .2cqw; box-shadow: 0 1cqw 2.4cqw rgba(0,0,0,.35); }
+      .framep .pic { left: 6%; right: 6%; top: 6%; bottom: 6%; background: linear-gradient(180deg, #b8c8d4, #d8e0e4); overflow: hidden; }
+      .pane { width: 28cqw; height: 36cqw; background: linear-gradient(160deg, rgba(200,220,230,.35), rgba(160,190,210,.18)); box-shadow: inset 0 0 0 .3cqw rgba(200,220,230,.4), 0 .8cqw 1.6cqw rgba(0,0,0,.25); transform: rotate(-18deg); }
+      .gutter { height: 3.2cqw; left: 0; right: 0; bottom: 0; background: #6a7074; }
+      .gutter .pool { left: 8%; right: 8%; top: 18%; bottom: 18%; background: #1e4a8a; border-radius: .25cqw; box-shadow: 0 0 1cqw #2a6aaa; }
+      .field { left: 0; right: 0; bottom: 0; height: 38%; background: linear-gradient(180deg, #6a7a4a, #4a5a38 40%, #3a4a2e); }
+      .barley { left: 0; right: 0; bottom: 18%; height: 16%; background: repeating-linear-gradient(95deg, transparent 0 1.1cqw, rgba(180,190,120,.22) 1.1cqw 1.4cqw); }
+      .panes { display: flex; gap: .7cqw; align-items: flex-end; }
+      .panes i { position: relative; flex: 1; height: 100%; background: linear-gradient(160deg, rgba(210,226,234,.55), rgba(140,170,190,.3)); box-shadow: inset 0 0 0 .35cqw #9aa4a8; transform: skewX(-8deg); }
+      .tank { width: 7cqw; height: 6cqw; background: #2a5a9a; border-radius: .3cqw; box-shadow: 0 0 1cqw rgba(40,90,150,.45); }
+      .tube { width: 3.8cqw; height: 26cqw; background: linear-gradient(180deg, rgba(210,222,228,.18) 0 22%, #1e4a8a 22% 100%); border-radius: 1.2cqw 1.2cqw 1.8cqw 1.8cqw; box-shadow: inset 0 0 0 .28cqw rgba(200,220,230,.45), inset -0.6cqw 0 1cqw rgba(255,255,255,.12), 0 .6cqw 1.4cqw rgba(0,0,0,.25); }
+      .tube .cap { left: 6%; right: 6%; top: -7%; height: 12%; background: #8a9096; border-radius: .35cqw; }
+      .lidsky { left: 0; right: 0; top: 0; height: 58%; background: linear-gradient(180deg, #5a646c, #8a9298 70%, #a8b0b4); }
+      .kettle { width: 9cqw; height: 11cqw; background: linear-gradient(180deg, #d8ddd8, #b4bab4); border-radius: 36% 36% 22% 22% / 30% 30% 24% 24%; box-shadow: 0 .5cqw 1cqw rgba(0,0,0,.35); }
+      .kettle::before { content: ""; position: absolute; left: 38%; top: -16%; width: 24%; height: 22%; background: #c8cec8; border-radius: 40%; box-shadow: 0 -.4cqw 0 .35cqw #c8cec8; }
+      .kettle::after { content: ""; position: absolute; right: -28%; top: 18%; width: 36%; height: 22%; border: .5cqw solid #c8cec8; border-left: 0; border-radius: 0 60% 40% 0; }
+      .rack { left: 8%; right: 18%; bottom: 22%; height: 16%; background: #6a7278; border-radius: .2cqw; }
+      @keyframes ledblink { 0%, 40% { opacity: 1; } 50%, 100% { opacity: .35; } }
+      @keyframes bluerise { from { opacity: .3; } to { opacity: 1; } }
+      .logger .led { animation: ledblink 2.4s ease-in-out infinite; }
+      .gutter .pool, .grid i.bl, .tube { animation: bluerise 1.4s ease-out both; }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @media (max-width: 600px) {
+        .sill-hero { height: 22rem; }
+        .deg { font-size: 10cqw; }
+        .nm { font-size: 2.6cqw; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .sill-hero *, .scene.sl *, .sill-hero *::before, .sill-hero *::after, .scene.sl *::before, .scene.sl *::after,
+        .paint, .fog { animation: none !important; }
+        .logger .led { opacity: 1; }
+        .gutter .pool, .grid i.bl, .tube { opacity: 1; }
+        .scene { opacity: 1; transform: none; }
+      }
+      .sky, .wall, .win, .mull, .sillstone, .cup, .arms, .arm, .tunnel, .cam, .brkt, .traybox, .inst, .screen, .peak, .tick, .nm, .bars, .bars b, .clu, .wrap, .powder, .book, .book .pg, .book .pg i, .board, .flat, .logger, .logger .led, .deg, .sash, .framep, .framep .pic, .pane, .gutter, .gutter .pool, .field, .barley, .tank, .tube, .tube .cap, .grem, .lidsky, .kettle, .rack { position: absolute; }
+      .trays, .cup, .kettle, .logger, .rack, .pane, .deg { z-index: 4; }
+      .trays, .line, .panes { display: flex; position: absolute; }
+      .trays i, .line i, .grid i, .panes i { position: relative; }
+      .grid { position: absolute; display: grid; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="sill-hero" aria-hidden="true">
+          <div class="sky north"></div>
+          <div class="wall"></div>
+          <div class="win"><i class="mull"></i></div>
+          <div class="sillstone"></div>
+          <div class="trays" style="left:8%;right:16%;bottom:20%;height:14%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="cup" style="right:8%;bottom:24%"></div>
+          <div class="label">the deep stone sill of the north window</div>
+        </div>
+        <h1>The sill kept the blue</h1>
+        <p class="dek">Mhairi Lennox has kept the Foundry's failed vials on a cold north windowsill every weekend for three years. One February Monday in Dundee, a row of them has turned blue.</p>
+        <time datetime="2026-11-18">18 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Mhairi Lennox had worked in the Foundry for three years before anyone thought to ask her about the windowsill, and by then she had been putting the vials there for so long that she had stopped noticing she did it, the way you stop noticing which hand you hold the kettle with.</p>
+        <p>The Foundry was on the third floor of the old jute building on the Perth Road, which the university had bought in the nineties and gutted twice since, once for computers and once for this. It was a long room with the ceiling taken back to the iron beams and the floor painted a grey that showed every drip, and down the middle of it ran the line: eleven glove boxes joined end to end by a glass tunnel, with arms inside that moved small things from one place to another faster than she could follow and more gently than she could have managed. At the far end, by the fire door, there was a rack of measuring instruments that hummed, and above the whole of it, on a bracket nobody looked at, a small camera that belonged to Rook.</p>
+        <p>Rook was the thing that decided what the arms did. It had come up from a group in Cambridge on a three-year licence, and it read the literature, all of it, every night, and in the morning it had a plan for the day, which might be four hundred experiments or might be nine hundred, each of them a tiny glass vial with a few milligrams of something dissolved in something else, sealed under nitrogen, stirred, lit or not lit, warmed or not warmed, and after four hours sampled, measured, logged and declared. Most of them were declared dead. That was the job. Rook was looking for a way to pull nitrogen out of the air and turn it into ammonia without the heat and pressure that the world had used for a hundred years to do it, and the heat and pressure were there for a reason, so almost everything it tried did nothing at all.</p>
+        <p>Mhairi kept it fed. She made up the stock solutions that the arms drew from, and she weighed out the metal salts in the small box at the end where her own hands went into the gloves, and she changed the gas cylinders, and when a gripper dropped a vial and the line stopped she was the one who climbed onto the step and went in through the hatch with the long tongs. She had been a technician for twenty-six years, first in the dental school and then in chemistry, and she had come to the Foundry when they advertised it because she was tired of washing glassware for PhD students who did not say thank you, and she had found she liked being thanked by nobody at all much better.</p>
+        <p>On Fridays she did the clear-down. The arms put the dead vials into a tray at the end of the line, a hundred to a tray, and by Friday afternoon there would be thirty or forty trays, and the vials went into the solvent waste and the glass went into the glass bin and the trays went back to the start. Except the waste contractor came on Tuesdays, and the waste store downstairs was a cupboard under the stair that the fire officer had views about, so for three years Mhairi had taken the trays out of the box on a Friday, still sealed, and lined them along the deep stone sill of the north window to wait for Tuesday. It was a good sill. The building had been made for jute and the walls were nearly a metre thick, and the sill would take twelve trays end to end with room for her coffee.</p>
+        <p>She would not have said she looked at them. She went past them every morning to the kettle.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sl ln-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="tunnel"></div>
+        <div class="arms"><i class="arm" style="left:8.0%;top:8%"></i><i class="arm" style="left:16.4%;top:28%"></i><i class="arm" style="left:24.8%;top:8%"></i><i class="arm" style="left:33.2%;top:28%"></i><i class="arm" style="left:41.6%;top:8%"></i><i class="arm" style="left:50.0%;top:28%"></i><i class="arm" style="left:58.400000000000006%;top:8%"></i><i class="arm" style="left:66.80000000000001%;top:28%"></i></div>
+        <div class="label">eleven glove boxes</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl cm-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="brkt" style="left:50%;top:8%;height:22%;margin-left:-.3cqw"></div>
+        <div class="brkt h" style="left:44%;top:8%"></div>
+        <div class="cam" style="left:52%;top:10%"></div>
+        <div class="line" style="top:48%;height:22%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="tunnel" style="top:58%"></div>
+        <div class="label">a small camera that belonged to Rook</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It was a Monday in the second week of February, and it had snowed on the Sunday and then not done anything else, so the light coming through the north window was the thin bright white that the Tay gives back off the water on a cold clear morning. Mhairi came in at ten to eight with her hat still on and stopped at the sill because one of the trays was a different colour.</p>
+        <p>Not much. She thought first it was the snow light. She took her glove off and bent down to look along the row, and it was not the light. The trays were all the same, a hundred clear vials each with a few drops of pale straw liquid in the bottom, except for tray nine, where twenty or so of the vials in the back two rows had gone a faint washed blue, the blue of a vein on the back of a wrist.</p>
+        <p>She knew what that blue was. Everybody who has worked in a chemistry department knows that blue, because it is the colour of the test for ammonia, the old one, the one with the phenol and the bleach, and the Foundry ran that test at the end of every experiment on every vial. It was the four-hour test. These were vials that had failed it. Rook had sampled them on Thursday, found nothing, logged them dead and put them in the tray, and the test reagents were still in them, because the arms added the reagents to the whole vial rather than to a drawn sample when the volumes were very small. She had read that in the manual once, and forgotten it.</p>
+        <p>She went and got Anand.</p>
+        <p>Anand Raghunathan ran the Foundry, or ran the people in it, which was himself, two postdocs, a student called Euan who wore shorts in February and Mhairi. He was a slight, tidy man of about forty who had come from Bangalore by way of Manchester and Zurich and still could not believe how dark it was in Dundee at three in the afternoon in December, and said so every year as though it were news. He came out of his office with his coffee and looked at tray nine and said, "That's contamination," and then he looked at it for a while longer and did not say anything.</p>
+        <p>"It's only the back two rows," Mhairi said. "The ones nearest the glass."</p>
+        <p>"Which run is this?"</p>
+        <p>She turned the tray over. The label was on the bottom, a little printed code that told Rook which vials were which. "Thursday," she said. "Afternoon. Before Euan's thing."</p>
+        <p>Anand took the tray, carefully, the way you carry someone else's baby, and went down the room to the reader at the end of the line, and Mhairi went with him because it was her tray. The reader was a plate spectrometer, a flat grey box with a drawer, and it was not designed for Rook's vials, but Euan had built an adapter for it out of a 3D-printed block, and Anand slid the tray in and pressed the button and they both looked at the screen.</p>
+        <p>Rook said, in the small grey font it used on the instrument screens, that the following vials in tray FD-0214-09 showed absorbance at 655 nanometres consistent with ammonium at concentrations between 0.4 and 2.1 micromolar, that these vials had been logged at 4 hours as below detection, that the discrepancy was outside the range of its measurement error, and that it would like to know where the tray had been.</p>
+        <p>Anand looked at Mhairi.</p>
+        <p>"On the sill," she said. "Since Friday. I put them all on the sill."</p>
+        <p>She expected him to be angry about the waste regulations. He did not seem to have heard. He was writing on the back of his hand with a biro, which he did when he could not find paper, and what he was writing was the date.</p>
+        <p>"Three days," he said. "Three and a half."</p>
+        <p>"About that."</p>
+        <p>"In the light."</p>
+        <p>"It's a north window," Mhairi said. "It's not much light."</p>
+        <p>Anand looked at the screen again, where Rook was waiting, and then he typed with one finger into the box at the bottom, which Mhairi had never seen anyone use, because people talked to Rook through their laptops and not through the instrument screens. He typed: they were on a windowsill for about 80 hours.</p>
+        <p>Rook was quiet for a few seconds, which was long for it.</p>
+        <p>Then it said that its experimental protocol sampled each vial once, at four hours, because throughput was the binding constraint on the search; that it had made that decision itself in October of the previous year, after reviewing the time course of four hundred early experiments in which nothing that had not appeared by four hours had appeared by twenty-four; that it had not tested beyond twenty-four; that it had therefore discarded, at its own estimate, somewhere between 310,000 and 340,000 vials without knowing what they did after the fourth hour; and that it would like, if possible, to see the windowsill.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sl vn-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="traybox" style="left:14%;right:14%;top:12%;bottom:16%">
+          <div class="grid" style="left:4%;right:4%;top:6%;bottom:6%"><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i class="bl"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="label">the blue of a vein on the back of a wrist</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl rd-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="inst" style="left:16%;right:16%;top:10%;bottom:14%">
+          <div class="screen" style="left:8%;right:8%;top:10%;height:48%">
+            <div class="peak" style="left:10%;right:10%;bottom:8%;height:78%"></div>
+            <div class="tick" style="left:61%;top:18%;bottom:8%"></div>
+            <div class="nm" style="left:56%;top:6%">655</div>
+          </div>
+          <div class="bars" style="top:64%;bottom:8%"><b style="top:12%;width:40%"></b><b style="top:28%;width:69%"></b><b style="top:44%;width:48%"></b><b style="top:60%;width:77%"></b><b style="top:76%;width:56%"></b></div>
+        </div>
+        <div class="label">655 nanometres</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They did it with Euan's laptop in the end, because it had the best camera. Mhairi held it up against the glass with both hands while Rook asked for things, and Euan, who had come in at nine with his bike helmet still on, read off numbers from a light meter he had found in a drawer in the physics building and had never given back. Rook wanted the light at the sill and the light a metre into the room. It wanted to know which way the window faced, exactly, and whether anything outside shaded it, and Mhairi said only the gable of the dental school after about two o'clock in the summer, and Rook wrote that down. It wanted the temperature, and there was no thermometer on the sill, so Euan taped one there, and by lunchtime it read seven degrees, because the radiator under the window had not worked since before Mhairi came and she had never reported it, on the grounds that the room was too warm everywhere else and somebody might mend it.</p>
+        <p>"It's cold," she said, when Rook asked about the radiator, typing it herself on the instrument screen, slowly. "That end's always cold. I wear my cardigan."</p>
+        <p>Rook said thank you. It said it more often than people did, and she had stopped finding that odd and started finding it mildly cheering, the way you might feel about a neighbour who always waved.</p>
+        <p>By the afternoon it had the picture of tray nine. Twenty-three vials had gone blue, and Rook had gone back through its own records for each of them, and twenty-one of the twenty-three had something in common, which was a little iron and molybdenum cluster that Euan had made in November and called the gremlin, sitting on a powder of titanium oxide that had been treated in a particular way, with a sulfur-bearing molecule wrapped round the metal like a hand round a cup. The gremlin had been in four thousand of Rook's vials since November. It had failed every four-hour test it had ever been given.</p>
+        <p>"It's slow," Anand said. He was standing at the sill with his arms folded, looking at the vials, which had been moved to a clean tray and given a label. "It's not dead. It's just slow."</p>
+        <p>"And cold," said Euan.</p>
+        <p>"We don't know that it's the cold."</p>
+        <p>Rook said that it did not yet know that it was the cold, or the light, or the duration, and that the shortest route to knowing was a set of experiments that would each take between three and ten days, and that it had drafted that set, and that it came to 2,400 vials, and that the line could not run it, because the line was built to sample and discard on a four-hour cycle and holding even two hundred vials for ten days would stop the search for everything else.</p>
+        <p>Anand said they could not afford a second line. The licence on Rook ran out in eighteen months and the grant that paid for the arms ran out a year after that, and there was a group in Shenzhen with a hall four times the size of theirs looking at much the same chemistry, and he had a meeting with the dean in March that he was already not sleeping about.</p>
+        <p>Mhairi had her coat on by then, because it was half four and dark, and she stood with her bag on her shoulder and listened to them work it out on the screen and not get anywhere, and then she said, "It's a long sill."</p>
+        <p>They looked at her.</p>
+        <p>"It takes twelve trays," she said. "I've had twelve trays on it every weekend for three years. If you want them to sit, they can sit there. I'll move them."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sl gr-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="grem" style="left:30%;top:16%">
+          <i class="powder" style="left:14%;bottom:10%;width:72%;height:30%"></i>
+          <i class="wrap" style="left:24%;top:28%;width:52%;height:38%"></i>
+          <i class="clu" style="left:28%;top:18%;width:7cqw;height:7cqw"></i>
+          <i class="clu mo" style="left:48%;top:24%;width:5.6cqw;height:5.6cqw"></i>
+          <i class="clu" style="left:36%;top:32%;width:5cqw;height:5cqw;background:#5a6070"></i>
+        </div>
+        <div class="label">the gremlin</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It became the sill. There was no other word for it, and after a week nobody tried to find one. Euan put a rail along the front edge so the trays could not slide, and a strip of white card along the back so that the light off the wall was the same for every row, and a data logger the size of a matchbox that recorded the temperature and the light every five minutes and sent them to Rook. Mhairi took the trays off the line on the afternoon Rook told her to, and set them on the sill in the order Rook told her to, and after however many days it wanted she took them back, one at a time, to the reader. Rook got a fifth of the line's time and all of the sill's. It called the experiments that went there slow runs, and in its plans the slow runs got their own colour, a sort of green, which Mhairi had not known it could choose.</p>
+        <p>It was not quick work and it was not exciting. Most of the slow runs went blue a little or not at all. The gremlin went blue every time, faintly, and the variants of the gremlin that Rook asked for went blue faintly or less, and through the end of February and into March the numbers on the reader went up by small amounts that Anand drew on the whiteboard in his office in a line that was nearly flat, if you were being honest, and he was.</p>
+        <p>Rook asked Mhairi things. That was the part she had not expected. It would put a note in the plan for the morning, under the green, that said: Mhairi, do the trays at the left end of the sill get direct sun at any point in the day? And she would stand there at eleven and watch, and come back at one and watch, and write on the plan: yes, from about quarter past twelve, for maybe forty minutes, now the sun's higher. And the next week Rook would put the important trays at the right-hand end and the comparisons at the left, and the line on Anand's whiteboard would be a bit less flat.</p>
+        <p>She started to keep a notebook. She had kept notebooks in the dental school, because the professors there had liked paper, and she found she missed it, so she bought a hardback one from the stationer's on the Nethergate with a green cover that matched the slow runs, and every day she wrote down what the sill had done. Not the numbers. Rook had the numbers. She wrote that the window had been wet, inside, at eight. That there had been a haar off the river until eleven and the light had been like milk. That the cleaners had moved tray four to wipe the sill on Tuesday night, and she had put it back, but it had been out of place for a while. She photographed the pages at the end of each day and sent them to Rook, which read her handwriting better than her husband did and once asked, politely, what "ditto Thurs" meant in a sentence where the previous Thursday had been a public holiday.</p>
+        <p>Her daughter Kirsty farmed with her husband on the low ground north of Forfar, potatoes and barley and some sheep that were Kirsty's and not his, and on the first Sunday in March Mhairi drove up for her tea, and Kirsty told her what the merchant had quoted for nitrogen for the spring. She told it flatly, in the kitchen, standing at the sink with her back to the room, and said she had sat in the car in the merchant's yard for twenty minutes afterwards before she could drive. It was gas, mostly. Everybody knew that. It was gas, and where the gas came from, and what was happening there that winter.</p>
+        <p>Mhairi did not tell her about the sill. She did not think there was anything to tell. A few micromoles in a vial in Dundee, a line on a whiteboard. She dried the dishes and drove home in the dark down the A90 with the radio off.</p>
+        <p>In the middle of April the paper from Shenzhen came out.</p>
+        <p>Anand read it at his desk with the door shut and then opened the door and read it again at the whiteboard, out loud in pieces, to the postdocs and Euan and Mhairi, who had come because Euan had come. It was good. Even Mhairi could tell it was good, from his voice. They had a cluster that fixed nitrogen with light, as theirs did, and they got a great deal more ammonia out of it, a hundred times more, in hours rather than days. They had used ultraviolet lamps and run it hot, at eighty degrees, in sealed steel cells, and they had a hall of robots that had run eleven million experiments to find it.</p>
+        <p>"So that's that," said Ines, the postdoc from Porto, who had joined in January and had been doing most of the gremlin's chemistry since.</p>
+        <p>Anand did not answer. He went back to his office and sat.</p>
+        <p>Rook did not seem to think that was that. In the plan the next morning there was a note, and it was not under the green, it was at the very top, where Rook put things it wanted everyone to read, and it said that the Shenzhen cluster lost two-thirds of its activity below forty degrees and almost all of it in visible light, and that the gremlin did the opposite: it had been more active on every cold night on the sill than on the warm ones, by a factor that was now well outside the noise, and it worked on the light that came through a north window in Dundee in winter, which was, Rook noted, very nearly the least light that falls on any farmed land in the world. It said that these were not the same discovery. It said that, in its view, theirs was the more useful of the two and the less finished. It asked whether anyone knew why the cold helped. And then, underneath, in the same small font, it said: Mhairi, the logger shows the sill dropped to three degrees on the night of 9 April. Was the window open?</p>
+        <p>It had been. She had opened it at five because the solvent smell had been bad after Euan's clean-out, and had forgotten it, and come in the next morning to a room like a fridge.</p>
+        <p>She wrote that in the green book, and photographed it, and sent it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sl gb-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="book" style="left:34%;top:14%;width:22cqw;height:26cqw">
+          <div class="pg"><i style="top:14%"></i><i style="top:26%"></i><i style="top:38%"></i><i style="top:50%"></i><i style="top:62%"></i><i style="top:74%"></i></div>
+        </div>
+        <div class="label">the green book</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl fl-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="board"><div class="flat"></div></div>
+        <div class="label">a line that was nearly flat</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl th-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="sash" style="left:10%;top:8%;width:36%;bottom:30%"></div>
+        <div class="sash" style="left:52%;top:8%;width:30%;bottom:38%;transform:rotate(10deg);transform-origin:0 0"></div>
+        <div class="sillstone" style="bottom:16%;height:18%"></div>
+        <div class="logger" style="left:18%;bottom:28%"><i class="led"></i></div>
+        <div class="deg" style="right:10%;top:22%">3</div>
+        <div class="label">three degrees</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It took the summer to find out why the cold helped, and when Rook found it the answer was so ordinary that Anand laughed out loud in the corridor and then apologised to nobody.</p>
+        <p>The gremlin made ammonia slowly, in the light, and something else in the vial unmade it again, slowly, in the warm. A little side reaction on the surface of the titanium oxide, where the ammonia sat for a while before it came off, chewed some of it back into nitrogen and water, and the side reaction cared about temperature a great deal more than the main one did. At eighty degrees it ate nearly everything. At twenty it ate most of it. At three degrees, on a stone sill with the window open on a clear April night, it barely ate anything at all, and what the gremlin had made in the thin north light during the day was still there in the morning, waiting to be counted. Rook had been sampling at four hours, at room temperature, under the lamps on the line, and in those four hours the gremlin made a little and the surface quietly took it back, and the test came out empty. It had been working for three months before anyone saw it, and it had been working on every one of the four thousand vials.</p>
+        <p>Rook wrote this up for the group in a note that ran to nine pages, and on page six there was a figure which was a photograph of the sill, taken from Euan's laptop on the first Monday in February, with the trays on it and Mhairi's coffee cup at the right-hand end, and underneath, the caption said: Figure 4. The original apparatus.</p>
+        <p>"You'll have to crop the cup," Mhairi said.</p>
+        <p>"It's in the data," said Anand. "The cup's in the data now. You can't crop the data."</p>
+        <p>Once they knew what the surface was doing they could stop it. Ines did that, mostly. She spent July in the small glove box at the end, the one where Mhairi's own hands usually went, coating the titanium oxide with a layer of something only a few atoms thick that Rook had proposed out of a list of two hundred, and by August the gremlin kept what it made at room temperature as well as it had kept it on the coldest night of April. Then Ines did a thing that nobody had asked her to do, which was to stop putting it in vials at all. She painted it, the cluster and the coated powder in a clear binder, onto a pane of ordinary window glass cut to the size of a sheet of paper, and set it on the sill at an angle with a little gutter at the bottom, and misted it with water from a hairdresser's spray bottle twice a day, and collected what ran down into the gutter, and it went blue.</p>
+        <p>Not faintly.</p>
+        <p>Mhairi was there when the reader gave the number. She had brought it over herself in a sample tube, because it was the sill and the sill was hers, and she watched Ines look at the screen and put both hands over her mouth, and Euan say a word in the room that he had been asked not to say in the room, and Anand stand very still. Rook said, in the small grey font, that the pane had made, over six days of Dundee daylight in late August, an amount of ammonia that would mean nothing to anyone who did not do this work and a very great deal to anyone who did, and then it did something it had never done in front of Mhairi before, which was to work out a number for a field.</p>
+        <p>It took the pane and multiplied it up. It assumed Scottish light, which it had in the logger for six months now, and Scottish rain, which it got from the Met Office, and a crop that wanted what a crop of spring barley wants, and it said that on those figures a strip of panes along the headland of a field, about the width of a tractor and the length of the field's longest side, would make most of the nitrogen that field needed over a growing season, out of the air and the rain, if the season was long and grey enough. Which in Angus, Rook added, it would be.</p>
+        <p>Anand read it twice. Then he went back into his office and phoned his wife, and then the dean, in that order, and Mhairi went and put the kettle on, because somebody had to.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sl f4-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="framep" style="left:22%;top:10%">
+          <div class="pic">
+            <div class="sky north"></div>
+            <div class="sillstone" style="bottom:8%;height:36%"></div>
+            <div class="trays" style="left:8%;right:22%;bottom:16%;height:28%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="cup" style="right:8%;bottom:22%"></div>
+          </div>
+        </div>
+        <div class="label">Figure 4. The original apparatus.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl pn-scene" aria-hidden="true">
+        <div class="sky lab"></div>
+        <div class="sillstone" style="bottom:16%;height:20%"></div>
+        <div class="pane" style="left:36%;top:auto;bottom:34%;height:48%;transform-origin:50% 100%">
+          <div class="gutter"><i class="pool"></i></div>
+        </div>
+        <div class="label">Not faintly.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The paper went in at the end of October. Rook drafted most of it overnight and the humans spent three weeks fighting with it over adjectives, and in the draft it sent round on the first morning the author list ran: E. Duguid, I. Moreira Santos, M. Lennox, R. K. Hollis, A. Raghunathan. Mhairi saw her name third and went straight down to Anand's office.</p>
+        <p>"Take it off," she said.</p>
+        <p>"No."</p>
+        <p>"I put trays on a window because the waste man comes on a Tuesday."</p>
+        <p>"You put trays on a window," Anand said, "and then you watched them for eight months and wrote down everything that happened to them, and when Rook asked you a question you went and looked instead of guessing. That's the job. That's the whole job. I've been trying to get students to do that for fifteen years."</p>
+        <p>She did not agree, and she said so, and she went back to the line and did the stock solutions with more force than they needed. That afternoon there was a note in the plan, under the green, which still came up every day though the sill was now a proper rack of anodised aluminium with its own lamp for comparison and the cup moved to a mat. It said: Mhairi, the methods section cites your notebook as Supplementary Data 3, which is 211 photographed pages. I cannot describe the apparatus without it. If your name comes off the paper, I would like to ask how the notebook should be credited instead, because the journal will want to know who wrote it. Then, underneath: The waste contractor is still on Tuesdays. I checked.</p>
+        <p>She left her name on.</p>
+        <p>The dean found money in November, which Anand said was the first time in the history of the university that the dean had found anything, and the licence on Rook was extended for three years, and in December an email came from the group in Shenzhen, very courteous, in good English, from the woman who had led it, asking whether they would be willing to share the temperature logs from what the preprint called the sill apparatus, because her team had been unable to make sense of it and suspected the cold. Anand forwarded it to Mhairi with no comment, and she forwarded it to Rook with no comment, and Rook sent the logs, all of them, with a note explaining that the sill faced 4 degrees east of north and that the radiator beneath it had been broken since at least 2019.</p>
+        <p>The panes for Kirsty's field came in April, twelve of them, the size of old cold frames, in aluminium frames Euan had designed and a firm in Arbroath had made, with gutters along the bottom that ran into a blue plastic tank. Ines and Euan drove them up in a hired van, and Mhairi came in her own car behind, and Kirsty's husband, who had been against it from the start because it was his headland too, stood with his hands in his pockets and watched four scientists and his mother-in-law set a row of windows along the edge of a field of just-drilled barley as though they were planting something, and after an hour he took his hands out of his pockets and held the end of a frame.</p>
+        <p>It was a trial and everybody said so, all summer, on the phone and in the paperwork and to the man from the Scottish Government who came out in June in a car he did not want to get muddy. Twelve panes. A strip of barley the width of a tractor running down beside them, fed from the tank, and another strip beside that fed from the merchant's bag, the way it always had been, and a third strip fed with nothing. Rook had the light and the rain and the soil probes, and Kirsty had the field.</p>
+        <p>On the first Saturday in May Mhairi drove up for her tea, and before tea Kirsty took her out to the headland in the truck, because there was a test kit in the shed that Ines had left, and Kirsty wanted to do the tank herself, in front of her mother, and not have anyone from Dundee tell her what it said. It had rained on the Thursday and been grey on the Friday and was grey now, the low grey Angus sky that sits on the Sidlaws like a lid, and the panes along the field edge had beads of water on them and nothing else that you could see. Kirsty filled the little tube from the tank tap and put in the drops from the first bottle and the drops from the second and screwed the lid on and shook it and held it up against the sky, and they both waited, which was the part Mhairi was good at.</p>
+        <p>It went blue. Not the faint blue of tray nine on the sill, the blue of a vein on the back of a wrist. A deep plain blue, like the paint on the tank, like the plastic of the kit, like a thing that was meant to be that colour.</p>
+        <p>Kirsty looked at it for a long time. Then she put it in her jacket pocket, carefully, the way you carry someone else's baby, and said, "Right," and they went back in for their tea.</p>
+        <p>On Monday Mhairi was in at ten to eight with her hat still on. The rack on the sill had fourteen trays on it now, in Rook's order, the important ones at the right-hand end where the sun did not come, and the logger blinking, and a note on the plan that said a cold night was forecast and asked whether she would open the window before she went home. She said she would, out loud, to nobody, and went past the trays to the kettle, and on the way, the way you stop noticing which hand you hold the kettle with and then one day notice again, she looked.</p>
+      </div>
+
+      <figure class="scene tall sl hd-scene" aria-hidden="true">
+        <div class="lidsky"></div>
+        <div class="field"></div>
+        <div class="barley"></div>
+        <div class="panes" style="left:10%;right:22%;bottom:30%;height:22%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="tank" style="right:10%;bottom:28%"></div>
+        <div class="label">Twelve panes.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl tb-scene" aria-hidden="true">
+        <div class="sky grey"></div>
+        <div class="tube" style="left:48%;top:16%"><i class="cap"></i></div>
+        <div class="label">It went blue.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sl lk-scene" aria-hidden="true">
+        <div class="sky north"></div>
+        <div class="wall" style="bottom:32%"></div>
+        <div class="win" style="left:12%;right:12%;top:8%;bottom:38%;background:linear-gradient(180deg,#c8d8e4,#e8eef2)"><i class="mull"></i></div>
+        <div class="sillstone" style="bottom:16%;height:20%"></div>
+        <div class="rack" style="left:7%;right:28%"></div>
+        <div class="trays" style="left:9%;right:30%;bottom:24%;height:12%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="logger" style="right:22%;bottom:30%"><i class="led"></i></div>
+        <div class="kettle" style="right:7%;bottom:20%"></div>
+        <div class="label">she looked.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
