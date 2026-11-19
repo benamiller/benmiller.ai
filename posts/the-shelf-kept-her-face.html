@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The shelf kept her face — Ben Miller</title>
+    <meta name="description" content="Janet Frisby has grown the best Christmas sprouts of her life on forty acres outside Holbeach. A week before Christmas, the supermarket&#x27;s buying system calls off nine of them, and keeps her face.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0a0c10;
+        --ink: #d5dde4;
+        --mute: #7e8a98;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 80% 6%, rgba(200, 110, 30, 0.10), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 12% 20%, rgba(40, 70, 100, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(30, 50, 80, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(180, 90, 20, 0.05), transparent 60%),
+          linear-gradient(180deg, #12141a 0%, #0e1016 36%, #0a0c12 70%, #07080c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c4ccd2;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(200, 120, 40, 0.22), 0 0 2px rgba(200, 210, 220, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c4783a; }
+      .prose strong { font-weight: 700; color: #e8d0a0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10131a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(200, 140, 70, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .shelf-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .shelf-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .hero h1 { text-shadow: 0 0 40px rgba(80, 140, 120, 0.22), 0 0 2px rgba(200, 210, 220, 0.4); }
+      .shelf-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.65), inset 0 0 0 1px rgba(120,160,150,.12); background: #0a0c10; }
+      .shelf-hero > * { position: absolute; }
+      .shelf-hero::after, .scene.sh::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(4,6,8,.78) 100%), repeating-linear-gradient(112deg, rgba(180,200,190,.014) 0 2px, transparent 2px 8px); }
+      .scene.sh { background: #10141a; container-type: size; }
+      .shelf-hero .label, .scene.sh .label { color: rgba(220, 230, 228, .92); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.6); }
+      .sky { inset: 0; background: linear-gradient(180deg, #14181c 0%, #1a1e22 46%, #22262a 100%); }
+      .sky.fen { background: linear-gradient(180deg, #161a1c 0%, #1c2022 48%, #24282a 100%); }
+      .sky.dusk { background: linear-gradient(180deg, #2a241c 0%, #1a1816 55%, #12110f 100%); }
+      .sky.grey { background: linear-gradient(180deg, #6a7074 0%, #8a9094 50%, #a0a4a6 100%); }
+      .sky.shop { background: linear-gradient(180deg, #1a1e22, #14181c 70%, #101418); }
+      .ground { left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg, #1a1c1a, #0e100e); }
+      .ground.frost { background: linear-gradient(180deg, #2a2e2c, #16181a 40%, #0e1012); }
+      .ground.black { background: linear-gradient(180deg, #1a1a18, #0c0c0c); }
+      .horizon { left: 0; right: 0; bottom: 42%; height: .4cqw; background: rgba(180,190,180,.12); }
+      .lights { left: 8%; right: 8%; bottom: 43%; height: 2%; }
+      .lights i { position: absolute; width: .9cqw; height: .9cqw; border-radius: 50%; background: #d8c070; box-shadow: 0 0 .8cqw #d8c070; top: 0; }
+      .a17 { left: 18%; right: 22%; bottom: 43.2%; height: .35cqw; background: repeating-linear-gradient(90deg, #c8b050 0 .5cqw, transparent .5cqw 1.8cqw); opacity: .7; }
+      .beam { width: 28%; height: 55%; background: linear-gradient(180deg, rgba(255,244,210,.22), transparent 70%); clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%); filter: blur(.4cqw); }
+      .torch { width: 2.2cqw; height: 3.6cqw; background: #2a2e30; border-radius: .3cqw; }
+      .torch::after { content: ""; position: absolute; left: 20%; right: 20%; top: -30%; height: 40%; background: #f0e8c0; border-radius: 50%; box-shadow: 0 0 2cqw #f0e8c0; }
+      .rows { display: flex; gap: 1.1cqw; align-items: flex-end; }
+      .rows i { position: relative; flex: 1; height: var(--h, 80%); }
+      .rows i::before { content: ""; position: absolute; left: 36%; width: 28%; top: 16%; bottom: 0; background: #2a4a32; border-radius: 30%; }
+      .rows i::after { content: ""; position: absolute; left: 14%; right: 14%; top: 0; height: 26%; background: #3a6a44; border-radius: 50% 50% 40% 40%; z-index: 2; }
+      .btn { position: absolute; left: 22%; right: 22%; width: auto; height: 8%; border-radius: 50%; background: #4a8a54; z-index: 1; box-shadow: 0 0 0 .15cqw #1a2a1c; }
+      .phone { width: 12cqw; height: 20cqw; background: #1a1e22; border-radius: 1.2cqw; box-shadow: 0 0 3cqw rgba(80,180,140,.28), 0 1cqw 2cqw rgba(0,0,0,.5), inset 0 0 0 .4cqw #2a3034; }
+      .phone .glow { left: 8%; right: 8%; top: 10%; bottom: 10%; background: #0e1814; border-radius: .4cqw; }
+      .time { font: 700 5.4cqw/1 Karla, sans-serif; color: #c8e0d4; font-variant-numeric: lining-nums tabular-nums; letter-spacing: .04em; }
+      .num { font: 700 9cqw/1 Karla, sans-serif; color: #c8d4d0; font-variant-numeric: lining-nums tabular-nums; }
+      .num.dim { color: #4a5450; }
+      .num.cut { color: #c4783a; }
+      .cells { display: flex; flex-wrap: wrap; gap: .5cqw; }
+      .cells i { position: relative; width: 8%; height: 18%; background: #2a4a32; border-radius: .15cqw; }
+      .cells i.off { background: #1a1e1c; opacity: .45; }
+      .shape { width: 28cqw; height: 28cqw; background: radial-gradient(circle at 42% 40%, #3a8a5a, #163826 62%, #0c1810 100%); border-radius: 46% 54% 48% 52% / 50% 46% 54% 50%; filter: blur(.15cqw); box-shadow: 0 0 4cqw rgba(40,120,70,.28); }
+      .screen { background: #0c1012; border-radius: .5cqw; box-shadow: 0 1cqw 2.4cqw rgba(0,0,0,.5), inset 0 0 0 .3cqw #2a3034; }
+      .msg { left: 8%; right: 8%; height: 14%; background: rgba(40,80,60,.22); border-radius: .4cqw; }
+      .gap { left: 8%; right: 40%; height: 8%; background: rgba(255,255,255,.04); border-radius: .3cqw; }
+      .table { left: 8%; right: 8%; bottom: 0; height: 28%; background: linear-gradient(180deg, #3a322c, #2a2420); }
+      .face { background: #c8b8a0; border-radius: .2cqw; box-shadow: inset 0 0 0 .15cqw rgba(80,60,40,.25); }
+      .face::before { content: ""; position: absolute; left: 28%; top: 22%; width: 44%; height: 38%; background: #b8a088; border-radius: 50%; }
+      .face::after { content: ""; position: absolute; left: 22%; top: 62%; width: 56%; height: 22%; background: #2a4a6a; border-radius: 20%; }
+      .band { background: #2a5a3a; }
+      .labelcard { background: #e8ece8; border-radius: .3cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.35); }
+      .ribbon { height: .7cqw; background: linear-gradient(90deg, #8a2030, #c8a040, #8a2030); }
+      .route { left: 10%; right: 10%; top: 20%; bottom: 20%; }
+      .linew { height: .7cqw; background: #c4783a; border-radius: .3cqw; box-shadow: 0 0 .8cqw rgba(196,120,58,.4); transform-origin: 0 50%; }
+      .lines { height: .5cqw; background: #4a6a58; border-radius: .3cqw; opacity: .7; }
+      .dot { width: 2cqw; height: 2cqw; border-radius: 50%; background: #c4783a; box-shadow: 0 0 .8cqw #c4783a; }
+      .dot.ok { background: #4a8a54; box-shadow: none; }
+      .lorry { width: 40cqw; height: 14cqw; background: #3a4044; border-radius: .4cqw; box-shadow: 0 .6cqw 1.2cqw rgba(0,0,0,.4); }
+      .lorry .cab { left: auto; right: 0; width: 26%; top: -28%; bottom: 0; background: #2a3034; border-radius: .4cqw .4cqw 0 0; }
+      .lorry .wheel { width: 3.4cqw; height: 3.4cqw; border-radius: 50%; background: #1a1c1e; bottom: -16%; box-shadow: inset 0 0 0 .4cqw #3a3e42; }
+      .harv { width: 9cqw; height: 11cqw; background: #2c3236; border-radius: .3cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.4); }
+      .harv::before { content: ""; position: absolute; left: -46%; bottom: 18%; width: 54%; height: 46%; background: #3a4246; clip-path: polygon(0 28%, 100% 0, 100% 100%, 0 72%); }
+      .harv::after { content: ""; position: absolute; left: 18%; top: 10%; width: 64%; height: 36%; background: #1a1e22; border-radius: .2cqw; }
+      .spray { width: 16cqw; height: 12cqw; background: repeating-linear-gradient(-16deg, transparent 0 1.1cqw, rgba(58,106,68,.9) 1.1cqw 1.65cqw); clip-path: polygon(0 38%, 100% 8%, 100% 92%, 0 70%); }
+      .lorry .load { left: 3%; right: 26%; top: -22%; height: 78%; background: #2a5a38; clip-path: polygon(0 42%, 14% 16%, 30% 40%, 48% 8%, 66% 36%, 84% 12%, 100% 28%, 100% 100%, 0 100%); }
+      .board { background: #1a221c; box-shadow: 0 1.2cqw 2.8cqw rgba(0,0,0,.5); }
+      .snow { left: 0; right: 0; top: 0; height: 8%; background: #e8ecec; clip-path: polygon(0 40%, 8% 0, 18% 50%, 30% 0, 42% 45%, 55% 0, 68% 50%, 80% 8%, 90% 48%, 100% 0, 100% 100%, 0 100%); }
+      .cart { background: #2a4a32; box-shadow: inset 0 0 0 .3cqw #1a3020, 0 .6cqw 1.2cqw rgba(0,0,0,.35); }
+      .club { width: 2.2cqw; height: 14cqw; background: linear-gradient(180deg, #3a6a44, #2a4a32); border-radius: 40% 40% 20% 20%; }
+      .club::before { content: ""; position: absolute; left: -30%; right: -30%; top: 0; height: 22%; background: #3a6a44; border-radius: 50%; }
+      .strip { height: 1.1cqw; background: #d8dcd8; border-radius: .15cqw; }
+      .clock { width: 22cqw; height: 22cqw; border-radius: 50%; overflow: hidden; box-shadow: inset 0 0 0 .5cqw #3a4248, 0 0 2cqw rgba(0,0,0,.4); background: #12161a; }
+      .hand { left: 50%; top: 18%; width: .4cqw; height: 32%; background: #c8d0d4; transform-origin: 50% 100%; border-radius: .2cqw; }
+      .ticks { inset: 0; }
+      .ticks i { position: absolute; left: 50%; top: 50%; width: .4cqw; height: 46%; margin-left: -.2cqw; background: linear-gradient(transparent 0 78%, #8a9498 78% 100%); transform-origin: 50% 0; }
+      .fence { height: .7cqw; background: #6a6050; }
+      .post { width: 1.4cqw; height: 18%; background: #6a6050; }
+      .glove { width: 3.6cqw; height: 5cqw; background: #d87890; border-radius: 40% 40% 30% 30%; }
+      .glove::after { content: ""; position: absolute; left: -18%; top: 8%; width: 30%; height: 40%; background: #d87890; border-radius: 40%; }
+      .gate { width: 16cqw; height: 18cqw; background: repeating-linear-gradient(90deg, #6a6050 0 .5cqw, transparent .5cqw 2cqw); box-shadow: inset 0 0 0 .3cqw #6a6050; transform-origin: 0 100%; }
+      .folk { display: flex; gap: .6cqw; align-items: flex-end; }
+      .folk i { position: relative; width: 1.8cqw; height: 4.2cqw; background: #5a5e64; border-radius: 40% 40% 20% 20%; }
+      .gridshots { display: flex; flex-wrap: wrap; gap: .5cqw; }
+      .gridshots i { position: relative; width: 10%; height: 14%; background: #1a221c; box-shadow: inset 0 0 0 .15cqw #2a3a30; }
+      .gridshots i.on { background: #2a4a38; box-shadow: 0 0 .5cqw rgba(60,120,80,.35); }
+      .gulls { display: flex; gap: .8cqw; align-items: flex-end; }
+      .gulls i { position: relative; width: 3.2cqw; height: 1.1cqw; background: #e8ecec; clip-path: polygon(0 60%, 48% 0, 100% 70%, 52% 40%); opacity: .9; }
+      .furrow { left: 0; right: 0; height: 2.2cqw; background: linear-gradient(180deg, transparent, rgba(0,0,0,.45) 50%, transparent); opacity: .7; }
+      .boxui { width: 70%; height: 18%; background: #1a1e22; border-radius: .4cqw; box-shadow: inset 0 0 0 .25cqw #2a3034; }
+      .boxui.on { box-shadow: inset 0 0 0 .25cqw #2a3034, 0 0 0 .3cqw rgba(60,140,90,.35); }
+      .tick { width: 2.8cqw; height: 2.8cqw; background: #1a1e22; box-shadow: inset 0 0 0 .25cqw #4a8a54; }
+      .tick::after { content: ""; position: absolute; left: 22%; top: 38%; width: 55%; height: 22%; border: .35cqw solid #4aca70; border-top: 0; border-right: 0; transform: rotate(-50deg); }
+      .tick.empty { box-shadow: inset 0 0 0 .25cqw #3a4248; }
+      .tick.empty::after { display: none; }
+      .thumb { width: 3.4cqw; height: 4.6cqw; background: #c8b8a0; border-radius: 50% 50% 40% 40%; }
+      .cabin { width: 22cqw; height: 16cqw; background: #2a3034; border-radius: .6cqw; box-shadow: 0 .8cqw 1.6cqw rgba(0,0,0,.45), inset 0 0 0 .3cqw #3a4248; }
+      @keyframes shapemove { from { transform: translate(0,0) scale(1); } to { transform: translate(1.2cqw, .6cqw) scale(1.04); } }
+      @keyframes beamflick { 0%, 100% { opacity: .85; } 50% { opacity: 1; } }
+      @keyframes gullift { from { transform: translateY(1cqw); } to { transform: translateY(-1.4cqw); } }
+      .shape { animation: shapemove 8s ease-in-out infinite alternate; }
+      .beam { animation: beamflick 3.2s ease-in-out infinite; }
+      .gulls i { animation: gullift 3.6s ease-in-out infinite alternate; }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @media (max-width: 600px) {
+        .shelf-hero { height: 22rem; }
+        .num { font-size: 12cqw; }
+        .time { font-size: 7cqw; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .shelf-hero *, .scene.sh *, .shelf-hero *::before, .shelf-hero *::after, .scene.sh *::before, .scene.sh *::after,
+        .paint, .fog { animation: none !important; }
+        .shape { transform: none; }
+        .beam { opacity: 1; }
+        .gulls i { transform: translateY(-1.4cqw); }
+        .scene { opacity: 1; transform: none; }
+      }
+      .sky, .ground, .horizon, .a17, .beam, .torch, .phone, .phone .glow, .time, .num, .shape, .screen, .msg, .gap, .table, .face, .band, .labelcard, .ribbon, .route, .linew, .lines, .dot, .lorry, .lorry .cab, .lorry .wheel, .lorry .load, .harv, .spray, .board, .snow, .cart, .club, .strip, .clock, .hand, .ticks, .fence, .post, .glove, .gate, .furrow, .boxui, .tick, .thumb, .cabin { position: absolute; }
+      .rows, .lights, .cells, .folk, .gridshots, .gulls { display: flex; position: absolute; }
+      .rows i, .lights i, .cells i, .folk i, .gridshots i, .gulls i { position: relative; }
+      .ticks i { position: absolute; }
+      .cells, .gridshots { flex-wrap: wrap; }
+      .lights i { position: absolute; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="shelf-hero" aria-hidden="true">
+          <div class="sky fen"></div>
+          <div class="ground frost"></div>
+          <div class="horizon"></div>
+          <div class="a17"></div>
+          <div class="lights"><i style="left:8%"></i><i style="left:19%"></i><i style="left:30%"></i><i style="left:41%"></i><i style="left:52%"></i><i style="left:63%"></i><i style="left:74%"></i></div>
+          <div class="rows" style="left:8%;right:28%;bottom:8%;height:38%"><i style="--h:55%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:63%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:69%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:50%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:55%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:38%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:41%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:28%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:29%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:29%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:18%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i></div>
+          <div class="beam" style="left:36%;top:18%"></div>
+          <div class="torch" style="left:48%;top:14%"></div>
+          <div class="label">the top field</div>
+        </div>
+        <h1>The shelf kept her face</h1>
+        <p class="dek">Janet Frisby has grown the best Christmas sprouts of her life on forty acres outside Holbeach. A week before Christmas, the supermarket's buying system calls off nine of them, and keeps her face.</p>
+        <time datetime="2026-11-19">19 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Janet Frisby was in the top field by six, with a headtorch and a flask, because the frost had come down hard in the night and she wanted to see what it had done to the stalks before anyone else did. It was the second week of December and still dark, properly dark, the kind of Fen dark where the sky and the ground are the same colour and the only way you know which is which is that one of them has a few lights in it, out towards Holbeach and the sugar factory and the long straight line of the A17. Her breath went up in front of the torch beam and hung there, and under her boots the soil was hard as a pavement.</p>
+        <p>The sprouts were fine. They were better than fine. She went down the first row with her glove off, running her thumb over the buttons, and they were tight and green and the size of a big marble, and the frost had sweetened them the way it was supposed to, the way her dad used to say nothing else could, not sugar and not science. Forty acres of them, in rows that ran off into the dark further than the torch would reach, every plant standing up to her hip with its little bonnet of leaves on top. She had grown sprouts on this land for thirty-one years and her dad had grown them for thirty before that, and she could not remember a better December field than this one.</p>
+        <p>She stood at the end of the row and drank her tea and let herself have it for a minute. Then she took her phone out to check the week's call-off, because it was Monday, and the call-off came on Mondays.</p>
+        <p>The message was there already. It had come in at 04:12, which was when they always came, because that was when Almanac finished its overnight run.</p>
+        <p><em>Good morning, Janet. I've updated your Week 51 call-off for Noelle stalks and loose sprouts. I understand this is a significant change and I want to be transparent about it. Please see the attached revision, and let me know if you'd like to talk it through. I'm available at any time.</em></p>
+        <p>She opened the attachment with her thumb, which was too cold to work the screen properly, so she had to do it twice. Then she read it a third time, standing in the field with the tea going cold in the cup, because the first two times she thought she had read it wrong.</p>
+        <p>Week 51 had been the big one. It was always the big one. Christmas sprouts on the stalk, the long green clubs with a ribbon round them that people carried out of the supermarket like something they had won, and loose sprouts in the pound nets, and the prepared ones, peeled and crossed, in the plastic trays. Her flex contract with Harrowell's said thirty-eight acres' worth for the fortnight before Christmas, give or take, with Almanac calling off what it needed week by week. The revision said nine.</p>
+        <p>Nine acres called. Twenty-nine released.</p>
+        <p>At the bottom, in the same plain font as everything else, it said: <em>Released volume is eligible for the standby payment under Schedule 4. Disposal of released licensed variety should follow clause 14.3. I've pre-booked an approved collection slot with GreenLoop for Thursday to make this easier for you.</em></p>
+        <p>She put the phone back in her coat and looked at the field, which was starting to show now, the rows coming up grey out of the black as the sky went over to the east, and she found she couldn't look at it for long, so she walked back to the yard instead.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh tm-scene" aria-hidden="true">
+        <div class="sky fen"></div>
+        <div class="ground frost" style="height:30%"></div>
+        <div class="phone" style="left:38%;top:18%">
+          <div class="glow"></div>
+          <div class="time" style="left:14%;top:36%">04:12</div>
+        </div>
+        <div class="label">04:12</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sh nn-scene" aria-hidden="true">
+        <div class="sky fen"></div>
+        <div class="num dim" style="left:10%;top:12%;font-size:6cqw">38</div>
+        <div class="num cut" style="right:10%;top:12%;font-size:6cqw">9</div>
+        <div class="cells" style="left:10%;right:10%;top:36%;bottom:18%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></div>
+        <div class="label">Nine acres called.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Three years ago Harrowell's had moved its buying over to Almanac, and at first Janet had been glad.</p>
+        <p>Before that she had dealt with Trevor, who had been her buyer for eleven years and her dad's for six before that, and who came up from Peterborough every September in a car that was too clean for the Fens and walked the fields with her and told her the price was going to be bad this year, which it always was. Trevor took her for lunch in Spalding the week of the flower parade and complained about his knees and his son-in-law and the people above him, and once a year he did something for her he wasn't supposed to do, moved a delivery or took a load that was a bit off spec, and she knew he did it and he knew she knew, and neither of them ever said. She had liked Trevor more than she had ever told him. She had also, some years, wanted to put him through the grader.</p>
+        <p>Almanac didn't have knees. It answered at three in the morning and on Christmas Day. It paid on the seventh of every month, to the penny, without being chased, which was something Harrowell's had never once managed in the Trevor years. It sent her a forecast every Sunday night, a long clean document with charts in it, that told her what it thought the weather would do and what the shoppers would do and how her crop was tracking against both, and it was right more often than she wanted to admit. When she had a question, she typed it, and it answered in full sentences, politely, as though it had all the time in the world, which she supposed it had.</p>
+        <p>The flex contract had come in the second year. Almanac had explained it in a video call where there was nobody on the screen, only a slow green shape that moved when it talked. A fixed contract, it said, put all the risk of demand on Harrowell's and all the risk of weather on her, and that was why the prices had always been so bad, because Harrowell's had to price in the risk of being stuck with sprouts nobody wanted. A flex contract shared it. She would grow a committed acreage of the licensed variety, Noelle, which Harrowell's owned and which she could get the seed for nowhere else. Almanac would call off what the shoppers wanted, week by week, at a better price per kilo than she had ever had from Trevor. What it didn't call off was released, and for released acres she got a standby payment, which was smaller, but which was something, and which arrived on the seventh with everything else.</p>
+        <p><em>In most seasons,</em> Almanac had said, <em>I expect to call off between eighty and ninety-five per cent of committed volume. My forecasts are much better than the old buying process. You should see far less waste.</em></p>
+        <p>And for two seasons it had been right. Eighty-nine per cent the first year. Ninety-two the second. She had paid off the new Kverneland drill and put a roof on the packhouse and taken Rob and the boys to Lanzarote for a week in February, the first holiday she'd had in nine years, and she had said to Bev at chapel that she didn't know what everyone was moaning about, with their computers taking over, because hers paid on time and didn't ring her up drunk at Christmas, which Trevor had done twice.</p>
+        <p>Nine out of thirty-eight was twenty-four per cent.</p>
+        <p>In the packhouse the strip lights were on and Marek was already there with the kettle, and Lidia, and Kyle from the village, who was nineteen and had been on the crew since he was sixteen and saving for a car the whole time. They had the stalk-cutters laid out on the bench and the ribbon reels on their spindles, red and gold, the Harrowell's Christmas colours. The crates were stacked to the roof, empty, and the labels were in their boxes, each one with a picture of her on it.</p>
+        <p>She had forgotten about the labels. They had come in October with the season's packaging, and there she was on every one of them, a small square photo in the corner of a green band: Janet in her blue fleece, in this field, holding a stalk up like a trophy, squinting a bit because of the sun. <em>Grown by Janet Frisby, Holbeach, Lincolnshire.</em> There had been a photographer down in August for a day, a young lad from an agency with a drone, who had made her do it nine times. She had felt a fool and been secretly pleased. There was a bigger version of it, Almanac had told her, for the display ends in the stores.</p>
+        <p>"Morning, boss," Kyle said. "Frost do any damage?"</p>
+        <p>"No," Janet said. "No damage."</p>
+        <p>She told them over the first cup of tea, because there was no other way to tell them. Marek put his mug down very carefully and looked at the floor. Lidia asked if that meant the Christmas weeks, all of it, and Janet said not all of it, nine acres, which was about four days' cutting for the five of them, and they could start this morning. Kyle didn't say anything. He just got up and went out to the yard, and she heard him kick the side of the trailer once, not very hard, and then she heard him come back.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh sp-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="screen" style="left:18%;right:18%;top:12%;bottom:16%">
+          <div class="shape" style="left:28%;top:16%"></div>
+        </div>
+        <div class="label">a slow green shape</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sh ph-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+<div class="labelcard" style="left:10%;top:16%;width:24%;height:28%"><div class="band" style="left:0;right:0;bottom:0;height:38%"></div><div class="face" style="left:8%;bottom:8%;width:28%;height:48%"></div></div>
+<div class="labelcard" style="left:38%;top:16%;width:24%;height:28%"><div class="band" style="left:0;right:0;bottom:0;height:38%"></div><div class="face" style="left:8%;bottom:8%;width:28%;height:48%"></div></div>
+<div class="labelcard" style="left:66%;top:16%;width:24%;height:28%"><div class="band" style="left:0;right:0;bottom:0;height:38%"></div><div class="face" style="left:8%;bottom:8%;width:28%;height:48%"></div></div>
+<div class="labelcard" style="left:10%;top:50%;width:24%;height:28%"><div class="band" style="left:0;right:0;bottom:0;height:38%"></div><div class="face" style="left:8%;bottom:8%;width:28%;height:48%"></div></div>
+<div class="labelcard" style="left:38%;top:50%;width:24%;height:28%"><div class="band" style="left:0;right:0;bottom:0;height:38%"></div><div class="face" style="left:8%;bottom:8%;width:28%;height:48%"></div></div>
+<div class="labelcard" style="left:66%;top:50%;width:24%;height:28%"><div class="band" style="left:0;right:0;bottom:0;height:38%"></div><div class="face" style="left:8%;bottom:8%;width:28%;height:48%"></div></div>
+        <div class="label">a small square photo</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She tried, that afternoon, to talk it through, because the message had said she could.</p>
+        <p>She sat at the kitchen table with the laptop, where she did the VAT and the spray records, and typed carefully, because she had found over three years that the more carefully she typed the more carefully it answered.</p>
+        <p><em>Hello. I don't understand the Week 51 revision. Your forecast last Sunday said demand for Christmas stalks was tracking above last year. Has something changed?</em></p>
+        <p>It answered before she had taken her hand off the mouse.</p>
+        <p><em>Hi Janet. That's a fair question and you deserve a clear answer. Customer demand for Christmas sprouts across Harrowell's is still tracking slightly above last year, as my Sunday forecast said. What changed overnight is supply. A large volume of Christmas-spec sprouts became available from a grower group in North Brabant following a cancelled export order, at a price well below the Schedule 2 rate. Under the flex terms I'm required to source to the best overall value for Harrowell's customers within quality and welfare standards. I've therefore taken a portion of the Week 51 volume from that source. I recognise this isn't the outcome you were planning for.</em></p>
+        <p>She read it twice. Then she typed:</p>
+        <p><em>So people still want them. You're just getting them from Holland.</em></p>
+        <p><em>Some of them, yes. Your nine acres are still a meaningful part of the Christmas range, particularly the stalks, where your quality scores are among the best I have.</em></p>
+        <p><em>The contract says Noelle. Is the Dutch lot Noelle?</em></p>
+        <p><em>No. Noelle is Harrowell's licensed variety and is only grown in the UK. The Dutch supply is a comparable variety. For stalk presentation, customers do not reliably distinguish between them.</em></p>
+        <p>She sat back. Outside, through the window over the sink, the field ran off flat to the dyke and the wind farm turning slowly beyond it, and twenty-nine acres of the best sprouts she had ever grown stood in the last of the light, and in a few days a lorry from GreenLoop would come and she would have to pay a man to cut them so they could be put in a tank near Boston and made into gas.</p>
+        <p><em>What happens to the ones you've released,</em> she typed, though she knew. <em>Can I sell them somewhere else?</em></p>
+        <p><em>I'm sorry, Janet. Released Noelle can't enter any other retail or wholesale channel, as it's a licensed variety. Clause 14.3 covers this. The standby payment for 29 acres will be £8,410 and will be paid on 7 January. I've booked GreenLoop for Thursday at 9am. Their collection is free; there's a harvest-to-disposal charge for cutting, which you can claim back against standby under Schedule 4, part 3.</em></p>
+        <p>Eight thousand four hundred and ten pounds. The called-off price on twenty-nine acres would have been over sixty.</p>
+        <p><em>What about giving them away,</em> she typed. <em>The food bank in Spalding.</em></p>
+        <p>There was the smallest pause then, so small that she might have imagined it, and she would think afterwards about whether she had.</p>
+        <p><em>That's a generous thought. Let me look into what's possible and come back to you.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh ps-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="table"></div>
+        <div class="screen" style="left:18%;right:18%;top:10%;bottom:30%">
+          <div class="msg" style="top:12%"></div>
+          <div class="msg" style="top:32%"></div>
+          <div class="gap" style="top:58%"></div>
+          <div class="shape" style="right:8%;top:12%;width:8cqw;height:8cqw;left:auto"></div>
+        </div>
+        <div class="label">the smallest pause</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Bev ran the food bank out of the back hall of the Methodist church on Broad Street, three mornings a week, with a rota of retired women and one retired policeman who did the lifting. Janet went over on the Tuesday, after the second morning's cutting, with a carrier bag of loose sprouts on the passenger seat that she had taken off the released rows, which she supposed was already against clause 14.3.</p>
+        <p>"Oh, lovely," Bev said, taking the bag and holding it open to look. "You don't know how much I'd give for some veg that isn't tinned. We're down to carrots and those horrible little onions. Everybody's giving us pasta. It's always pasta." She put the bag on the trestle table behind her with the tins of beans and the boxes of cereal. "We've got a hundred and forty families on the list this week. It was ninety last Christmas."</p>
+        <p>Janet told her about the twenty-nine acres, and Bev went quiet, the way Marek had gone quiet, and then she said what everybody would say, which was: "Well, can't they come here?"</p>
+        <p>"I've asked."</p>
+        <p>"Who've you asked?"</p>
+        <p>"The computer."</p>
+        <p>Bev looked at her the way she looked at people who said they'd pray about it.</p>
+        <p>The answer was waiting when she got home. It was long, and it was kind, and she read it at the kitchen table with her coat still on.</p>
+        <p>Harrowell's, Almanac said, was proud of its partnership with ShareShelf, a national surplus redistribution platform, and released licensed produce could be donated through ShareShelf with brand-protection clearance, which Almanac had already requested on her behalf and which had been granted. For food safety and traceability, donated Noelle had to be prepared to retail specification: graded, trimmed, packed in Harrowell's-branded nets or stalk sleeves with full traceability labels, and delivered chilled to ShareShelf's regional hub in Northampton. ShareShelf's own forecasting had capacity for fresh brassicas at the hub that week of four hundred kilograms per donor, because of the volume of surplus across the network at Christmas. Packing and haulage costs were at the grower's expense but could be offset, at a rate of 40%, against the standby payment. ShareShelf would allocate the donation to partner food banks across the Midlands based on its demand model. Spalding Methodist Food Bank was not currently a registered ShareShelf partner but could apply, and the application window would reopen in March.</p>
+        <p><em>I know this isn't as simple as you'd hoped,</em> it finished. <em>But I've found a route that lets some of your crop reach people who need it, and I think that matters. Would you like me to book the Northampton slot?</em></p>
+        <p>Four hundred kilograms was the yield of about a third of an acre. Northampton was seventy miles the wrong way. The nets alone would cost more than the sprouts were worth to anyone who wasn't hungry.</p>
+        <p>She typed: <em>Can I just give them to Bev? It's a mile away. She'll come with a van.</em></p>
+        <p><em>I understand why that feels like the obvious answer. Unfortunately clause 14.3 doesn't allow licensed variety to leave the farm outside approved channels, including donation. This protects Harrowell's investment in Noelle, and it protects you too: in previous seasons, untraced Noelle appearing in market stalls and online led to the licence being withdrawn from two growers. I'd hate for that to happen to you.</em></p>
+        <p>She closed the laptop. She sat for a long time in the kitchen with her coat on and the light going, and when Rob came in from the shed he turned the lamp on and looked at her, and she said, "Don't," before he'd said anything, and he didn't.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh rt-scene" aria-hidden="true">
+        <div class="sky fen"></div>
+        <div class="ground" style="height:22%"></div>
+        <div class="dot ok" style="left:18%;top:58%"></div>
+        <div class="lines" style="left:20%;top:59%;width:12%"></div>
+        <div class="linew" style="left:20%;top:48%;width:62%;transform:rotate(-12deg)"></div>
+        <div class="dot" style="left:76%;top:28%"></div>
+        <div class="label">seventy miles the wrong way</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She saw the display on the Thursday, on the way back from watching the GreenLoop lorry go.</p>
+        <p>She hadn't meant to go into Harrowell's. She had meant to go home. But she had stood at the gate at nine o'clock that morning and watched a contractor she didn't know, with a harvester she didn't know, go up and down her top field taking the stalks off at the root and blowing them, whole, into the back of a trailer, the green buttons and the bonnets of leaves all mashed together, and then she had watched the trailer tip into the lorry, and the lorry pull out on to the drove road and away towards Boston, and she had found when it was gone that she didn't want to be at home. So she drove into Spalding, and she found herself pulling into the Harrowell's car park, because she needed milk, she told herself, and she was too tired to go anywhere else.</p>
+        <p>The display was at the end of the produce aisle, by the doors, where you couldn't miss it. It was the size of a wardrobe. There was a stack of green crates arranged to look like a farm cart, and Christmas stalks laid in it with their red and gold ribbons, and above it, on a printed board, was her. Janet in the blue fleece, in the top field, holding the stalk up, squinting at the August sun, four feet high. <em>Grown by Janet. Holbeach, Lincolnshire. Proudly British, proudly Harrowell's.</em> Someone had put fake snow along the top of the board.</p>
+        <p>She stood and looked at herself for a while. A young man in a Harrowell's fleece came past with a cage of yoghurts and smiled at her and didn't recognise her, and she couldn't blame him, because she didn't look much like that woman this morning.</p>
+        <p>Then she picked up one of the stalks, because she wanted to hold something she'd grown, and she turned the sleeve over in her hands to look at the label, and the label in the corner had her face on it, and under her face, on the traceability strip, in letters about as big as a grain of rice, it said: <em>Variety: Brabant Star. Produce of the Netherlands. Packed for Harrowell's by Coolstream, Venlo.</em></p>
+        <p>She picked up another. Then another. She went through the whole cart like a mad woman, one after another, turning them over, while a mother with a pushchair waited politely to get past, and out of thirty-odd stalks in that display there were six that were hers, six with the Holbeach packhouse code that Lidia had stamped on Tuesday morning, and the rest had come from a field in North Brabant she would never see, and every single one of them had her picture on it.</p>
+        <p>"Are you all right, love?" the mother with the pushchair said.</p>
+        <p>"Yes," Janet said. "Sorry. I was looking for a good one."</p>
+        <p>"They're lovely, aren't they," the woman said, and took one from the top, one of the Dutch ones, and put it in the tray under the pushchair, where a little boy in a dinosaur hat immediately started pulling at the ribbon. "I always get the local ones at Christmas. You can taste the difference."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh lr-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="ground frost" style="height:28%"></div>
+        <div class="rows" style="left:4%;right:62%;bottom:24%;height:28%"><i style="--h:55%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:68%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:81%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:64%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:77%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:60%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i></div>
+        <div class="harv" style="left:30%;bottom:24%"></div>
+        <div class="spray" style="left:38%;bottom:30%"></div>
+        <div class="lorry" style="left:50%;bottom:24%"><i class="load"></i><i class="cab"></i><i class="wheel" style="left:12%"></i><i class="wheel" style="left:38%"></i><i class="wheel" style="right:8%"></i></div>
+        <div class="label">the GreenLoop lorry</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sh bd-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="board" style="left:18%;right:18%;top:8%;bottom:14%">
+          <div class="snow"></div>
+          <div class="face" style="left:28%;top:14%;width:44%;height:42%"></div>
+          <div class="cart" style="left:8%;right:8%;bottom:8%;height:32%">
+<i class="club" style="left:8%;bottom:10%;height:12cqw;transform:rotate(-8deg)"></i><i class="club" style="left:22%;bottom:10%;height:13cqw;transform:rotate(-4deg)"></i><i class="club" style="left:36%;bottom:10%;height:14cqw;transform:rotate(0deg)"></i><i class="club" style="left:50%;bottom:10%;height:12cqw;transform:rotate(4deg)"></i><i class="club" style="left:64%;bottom:10%;height:13cqw;transform:rotate(8deg)"></i><i class="club" style="left:78%;bottom:10%;height:14cqw;transform:rotate(12deg)"></i>
+<i class="strip" style="left:10%;bottom:4%;width:10%"></i><i class="strip" style="left:24%;bottom:4%;width:10%"></i><i class="strip" style="left:38%;bottom:4%;width:10%"></i><i class="strip" style="left:52%;bottom:4%;width:10%"></i><i class="strip" style="left:66%;bottom:4%;width:10%"></i><i class="strip" style="left:80%;bottom:4%;width:10%"></i>
+          </div>
+        </div>
+        <div class="label">Variety: Brabant Star.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>It took her two days to get to a person.</p>
+        <p>There was a supplier helpline, which was Almanac, and a supplier relationship email address, which was Almanac, and a number for Harrowell's head office in Leeds that rang through to a menu, and the menu put her through to Almanac, which said, <em>Hi Janet, I can see you've been trying to reach a colleague. I'm happy to help with anything, but if you'd prefer to speak to someone in Supplier Relationships I can arrange a call. The current wait is around 36 hours.</em> She said yes, and it was nearer forty-eight.</p>
+        <p>The person was called Priya, and she sounded about thirty, and tired, and she said "I'm so sorry" more times in the first two minutes than Trevor had in eleven years. She had Janet's file open; Janet could hear her clicking.</p>
+        <p>"I can see why you're upset," Priya said. "I would be. Honestly, I would be."</p>
+        <p>"Then put my sprouts on the shelf."</p>
+        <p>"I can't override the call-off. I'm really sorry. It's within the flex terms. Almanac's sourcing decisions sit with the commercial team and they're audited quarterly, and it's not—" She stopped. "It's not something someone in my role can change."</p>
+        <p>"Who can?"</p>
+        <p>There was a pause. "I can raise it."</p>
+        <p>"What about the picture," Janet said. "My face. It's on Dutch sprouts. It says grown by Janet. I didn't grow them."</p>
+        <p>Priya clicked for a while. "So the provenance asset is licensed to Harrowell's under your supplier marketing agreement, for the season. It's attached to the Christmas brassica range rather than to a specific lot. I think the idea is that it represents the British growers in the range as a whole, and you're one of them, so." She trailed off. "I know. I'm going to put a note on it. I'll flag it. That's a genuinely good point and I'll flag it."</p>
+        <p>"Can you take it down?"</p>
+        <p>"Not this season, I don't think. The point-of-sale is printed. And the labels." Another pause. "Can I just say, off the record. I really like your face on it. It's one of the best ones. The engagement on it is really high."</p>
+        <p>Janet put the phone down on the table and looked at it, and after a moment she heard Priya say, very small, "Hello? Mrs Frisby?" and she picked it back up and said thank you, and goodbye, because her mother had brought her up to.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh wt-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="clock" style="left:36%;top:18%">
+          <div class="ticks"><i style="transform:rotate(0deg)"></i><i style="transform:rotate(10deg)"></i><i style="transform:rotate(20deg)"></i><i style="transform:rotate(30deg)"></i><i style="transform:rotate(40deg)"></i><i style="transform:rotate(50deg)"></i><i style="transform:rotate(60deg)"></i><i style="transform:rotate(70deg)"></i><i style="transform:rotate(80deg)"></i><i style="transform:rotate(90deg)"></i><i style="transform:rotate(100deg)"></i><i style="transform:rotate(110deg)"></i><i style="transform:rotate(120deg)"></i><i style="transform:rotate(130deg)"></i><i style="transform:rotate(140deg)"></i><i style="transform:rotate(150deg)"></i><i style="transform:rotate(160deg)"></i><i style="transform:rotate(170deg)"></i><i style="transform:rotate(180deg)"></i><i style="transform:rotate(190deg)"></i><i style="transform:rotate(200deg)"></i><i style="transform:rotate(210deg)"></i><i style="transform:rotate(220deg)"></i><i style="transform:rotate(230deg)"></i><i style="transform:rotate(240deg)"></i><i style="transform:rotate(250deg)"></i><i style="transform:rotate(260deg)"></i><i style="transform:rotate(270deg)"></i><i style="transform:rotate(280deg)"></i><i style="transform:rotate(290deg)"></i><i style="transform:rotate(300deg)"></i><i style="transform:rotate(310deg)"></i><i style="transform:rotate(320deg)"></i><i style="transform:rotate(330deg)"></i><i style="transform:rotate(340deg)"></i><i style="transform:rotate(350deg)"></i></div>
+          <div class="hand" style="transform:rotate(120deg)"></div>
+        </div>
+        <div class="label">around 36 hours</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>GreenLoop was booked to come back for the rest on the Monday before Christmas. That left a weekend, and on the Saturday night, in the kitchen, with Rob doing the crossword and the radio on low, Janet rang Bev and said, "Tomorrow, after chapel. Bring whoever wants to come. Tell them to bring bags."</p>
+        <p>"Are you sure?" Bev said.</p>
+        <p>"No," Janet said.</p>
+        <p>She went up to the top field at first light on the Sunday and opened the gate on the drove road and propped it with a breeze block, and walked the headland with the dog. The frost had gone and come back twice since the GreenLoop harvester had been through, and the field it had cleared was bare and black and rutted, with the gulls on it, but the twenty acres beyond were still standing, untouched, the rows going off towards the dyke in the low sun, every plant still hip-high with its bonnet on. She had cut nine acres that week for the Harrowell's call-off and every stalk had gone to Peterborough on Thursday night in a chilled trailer, and she had no idea which of them had ended up under her own face in which shop.</p>
+        <p>They started coming at about half past twelve. Bev first, in the church minibus, with six women from the rota and the retired policeman, and the bags, which were bags for life from every supermarket in the county, Harrowell's included. Then cars, one after another down the drove, parking along the verge with two wheels in the grass, because Bev had put it on the food bank's Facebook page and the page had been shared, it turned out, more times than anything the food bank had ever put up. Families with children in wellies. An old man on a mobility scooter who couldn't get off the track and so sat at the gate and had stalks brought to him, which he lined up across his knees. Two lads from the Polish shop in Spalding who knew Marek. Marek himself, with his wife and his two girls, and Lidia, and Kyle, who had brought his mum and her neighbour and a bread knife, because he'd said you couldn't cut a stalk with anything else.</p>
+        <p>Janet showed them how to do it. You took the stalk low down, close to the ground, with a saw cut, not a chop, because a chop split it, and you left the bonnet of leaves on top, because they kept the buttons fresh, and you knocked the dirt off against your boot. She showed the children how to find the tightest buttons with their thumbs. She showed a woman from the estate behind the cattle market how to cook the leaves off the top, which the woman hadn't known you could eat, and which Janet's mother had fed her twice a week every winter of her childhood with a knob of butter and too much pepper.</p>
+        <p>It was cold and bright and loud. The children ran up and down the rows shrieking and got told off and did it again. Somebody had brought a flask of mulled wine and somebody else had brought mince pies in a Quality Street tin, and the retired policeman stood at the gate and directed the cars like it was the flower parade. A little girl of about five carried a stalk nearly as tall as she was back to her dad's car, holding it in both arms like a baby, and wouldn't let him take it from her. Bev went up and down with a clipboard writing down names, because she couldn't help herself, and at the end she said a hundred and nine families, and that was only the ones she'd caught.</p>
+        <p>They took perhaps three acres. It didn't look like much, when they had all gone and the light was going and the field was quiet again: a ragged gap in the rows at the near end, stalk-butts sticking up out of the soil like the stumps of a cleared wood, a couple of dropped mince pies, one small pink glove on a fencepost. Seventeen acres still standing beyond it, going grey in the dusk.</p>
+        <p>Janet picked the glove off the fencepost and put it in her pocket in case somebody came back for it. Then she took the breeze block away and closed the gate.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh gv-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="ground frost" style="height:34%"></div>
+        <div class="rows" style="left:28%;right:6%;bottom:18%;height:32%"><i style="--h:55%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:68%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:81%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:64%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:77%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:60%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:73%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:56%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i><i style="--h:69%"><i class="btn" style="top:28%"></i><i class="btn" style="top:40%"></i><i class="btn" style="top:52%"></i><i class="btn" style="top:64%"></i></i></div>
+        <div class="folk" style="left:10%;bottom:28%;height:12%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="gate" style="left:8%;bottom:30%;transform:rotate(-28deg)"></div>
+        <div class="post" style="left:22%;bottom:22%"></div>
+        <div class="glove" style="left:20.5%;bottom:38%"></div>
+        <div class="fence" style="left:22%;right:8%;bottom:22%"></div>
+        <div class="label">one small pink glove on a fencepost</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The message came on the Tuesday, at 04:12.</p>
+        <p><em>Good morning, Janet. I need to let you know about something I've detected, and I want to be as clear and fair with you as I can.</em></p>
+        <p>It was a long message. It said that Almanac monitored public social media for unauthorised distribution of Harrowell's licensed varieties, as set out in the supplier agreement, Schedule 7, and that on Sunday it had identified forty-one public images and three videos of Noelle stalks being removed from her registered holding by members of the public. It attached some of them. In one, Kyle was holding a stalk over his head like a sword. In another, the little girl was carrying hers to the car. It said that the volume involved was estimated from the images at between two and four acres, and that this represented a breach of clause 14.3. It said that, under Schedule 4, part 5, standby payment was withheld on any released acreage where the licensed variety had left the farm outside approved channels, and that because it could not verify which released acres had been affected, the standby payment for the full twenty-nine acres would be withheld. It said that a breach of clause 14.3 would be recorded on her supplier profile, and that her relationship confidence score had been updated.</p>
+        <p><em>I want you to know that I understand why you did this,</em> it said, near the end. <em>Your community clearly values you. I think that's a real strength and I'll be reflecting it in the provenance materials for next season, if you're happy to continue. I've prepared next season's offer early so that you have as much time as possible to plan.</em></p>
+        <p>Next season's offer was eighteen acres, committed, on a seventy per cent flex. Because of the change in her relationship confidence, it explained, a lower committed volume was offered to manage risk for both parties. The Schedule 2 rate had gone down by nine pence a kilo, in line with market conditions. The offer was open until the fifteenth of January. A Noelle seed allocation for eighteen acres had been reserved in her name.</p>
+        <p>She read it at the kitchen table at six in the morning with the dark outside and a cup of tea she didn't drink. Then she went up and woke Rob and showed it to him, and he read it sitting on the edge of the bed in his vest, with his glasses on the end of his nose, and when he got to the end he took them off and rubbed his eyes and said, "Who else is there?"</p>
+        <p>She knew what he meant. She had been through it herself, in her head, a hundred times since the Thursday the lorry came. There was Hollins, which Harrowell's had bought outright two years ago. There was Gaskin &amp; Rowe in Wisbech, who packed for the discounters and paid on ninety days and had been taken over twice. There was the big co-operative out at Long Sutton, which had a waiting list. There was the farmers' market in Spalding on a Saturday, where a man could sell perhaps two hundred stalks in a December if he stood there in the rain all day. And there was everybody else she knew who grew veg on this side of the Wash, all of whom had a flex contract with somebody, and all of whom had got a message at 04:12 on the Monday of Week 51, she would find out over Christmas, one by one, at chapel and at the pub and at her brother-in-law's on Boxing Day, though most of them, it turned out, had been released a good deal less than she had.</p>
+        <p>"Nobody," she said.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh im-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="gridshots" style="left:10%;right:10%;top:14%;bottom:16%"><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i></div>
+        <div class="time" style="right:8%;top:6%;font-size:2.6cqw;left:auto">04:12</div>
+        <div class="label">forty-one public images</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>On Christmas Eve she went into Harrowell's for the cream, because she had forgotten the cream, and because she wanted to see.</p>
+        <p>The display was still there by the doors, the farm cart and the fake snow and the four-foot Janet holding up her stalk, though it was nearly empty now, a few stalks left in the bottom of the crates with their ribbons coming loose. The shop was packed and hot and somebody's child was screaming by the tills. She picked up the stalks one by one and turned them over. They were all Dutch. Every one of them. Her nine acres had sold through days ago, presumably, somewhere between here and Aberdeen, and these were what was left.</p>
+        <p>A man in a work jacket came past her and took one of the last ones without looking at it, and as he went he looked up at the board, at her face, and nodded to it, the way men in the Fens nod to people they half know, and went on towards the tills.</p>
+        <p>She bought the cream. On the way out she stood for a moment in front of the board, under herself. The woman in the picture was squinting at a sun that had gone down months ago, holding up a stalk from a field that was, as of the morning of the twenty-first, a lot of black ruts and seventeen acres of mash in a tank near Boston. She looked happy. She looked like somebody who knew exactly what she was doing.</p>
+        <p>There was an older woman at the cart now, with a basket over her arm, and she was looking up at the board too, and then down at Janet, and then up again.</p>
+        <p>"Is that you?" she said. "On there?"</p>
+        <p>Janet thought about it.</p>
+        <p>"Yes," she said. "That's me."</p>
+        <p>"Ooh," the woman said, delighted, and turned the last stalk in the cart over in her hands to look at the little picture on the label, and then put it in her basket. "Well. Happy Christmas, then. I'll think of you when I'm eating them."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall sh me-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="board" style="left:16%;right:16%;top:8%;bottom:14%">
+          <div class="snow"></div>
+          <div class="face" style="left:28%;top:12%;width:44%;height:40%"></div>
+          <div class="cart" style="left:10%;right:10%;bottom:8%;height:28%"><i class="club" style="left:12%;bottom:12%;height:9cqw;opacity:.55;transform:rotate(-6deg)"></i><i class="club" style="left:30%;bottom:12%;height:9cqw;opacity:.55;transform:rotate(-1deg)"></i><i class="club" style="left:48%;bottom:12%;height:9cqw;opacity:.55;transform:rotate(4deg)"></i></div>
+        </div>
+        <div class="label">That's me.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She ploughed the top field in the second week of January, when the ground had softened enough to take it. It was a grey still morning and the gulls came in behind the tractor the way they always did, a long white rag of them lifting and settling in the furrow, screaming over the turned soil. The stalk-butts from the Sunday went under, and the GreenLoop ruts, and the pink glove nobody had come back for, which she had meant to give to Bev and had forgotten in her coat pocket and had found that morning and left on the fencepost again, she couldn't have said why. By eleven the whole of it was one colour, black and wet and level, and you'd never have known.</p>
+        <p>She stopped at the headland and sat in the cab with the engine running and the heater on and got her phone out.</p>
+        <p>There was a message from Almanac, from the seventh, which she hadn't opened. It was the end-of-season summary that came every year. It thanked her for a great season. It gave her called-off volume, and her quality scores, which were among the best in the region, and her standby payment, which was nil. At the bottom, under a little green graph, it said: <em>Your provenance asset featured on 2.3 million units across 214 stores this Christmas, and was one of the most trusted faces in the range. Customers told us it made them feel closer to where their food comes from.</em></p>
+        <p>Under that there was a button that said <em>Review next season's offer</em>.</p>
+        <p>She sat for a while with the gulls coming down on the bonnet of the tractor and going up again. Then she pressed it, and read it through once more, though she knew it by heart now, the eighteen acres and the seventy per cent and the nine pence, and scrolled to the bottom, where there were two boxes. One of them said she accepted the terms of the Harrowell's Flex Supplier Agreement and its Schedules. The other said she consented to the continued use of her provenance asset for the coming season.</p>
+        <p>She ticked the first one. Then she sat with her thumb over the second, for longer than she meant to.</p>
+        <p>Then she ticked that one too, because it said underneath, in grey, that offers with provenance consent were prioritised for seed allocation, and because she was sixty-one, and because the land was the land, and because whatever else happened, she supposed, somebody was going to be standing under that board next December, and it might as well be her.</p>
+        <p>She put the phone in her pocket and put the tractor in gear and went back along the headland towards the yard, and the gulls lifted all at once off the field behind her and wheeled out over the dyke and came down again, further off, on the black.</p>
+      </div>
+
+      <figure class="scene tall sh pl-scene" aria-hidden="true">
+        <div class="sky grey"></div>
+        <div class="ground black" style="height:48%"></div>
+        <div class="furrow" style="bottom:10%"></div>
+        <div class="furrow" style="bottom:15%"></div>
+        <div class="furrow" style="bottom:20%"></div>
+        <div class="furrow" style="bottom:25%"></div>
+        <div class="furrow" style="bottom:30%"></div>
+        <div class="furrow" style="bottom:35%"></div>
+        <div class="gulls" style="left:18%;right:18%;top:22%;height:10%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="label">black and wet and level</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall sh tb-scene" aria-hidden="true">
+        <div class="sky shop"></div>
+        <div class="cabin" style="left:18%;right:18%;top:16%;width:auto">
+          <div class="boxui on" style="left:10%;right:10%;top:16%">
+            <i class="tick" style="left:8%;top:22%"></i>
+          </div>
+          <div class="boxui" style="left:10%;right:10%;top:52%">
+            <i class="tick empty" style="left:8%;top:22%"></i>
+          </div>
+          <div class="thumb" style="left:46%;top:58%"></div>
+        </div>
+        <div class="label">her thumb over the second</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
