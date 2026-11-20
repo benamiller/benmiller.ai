@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The plot kept the quiet — Ben Miller</title>
+    <meta name="description" content="Kerry Ashworth has been on Barrow&#x27;s housing list for nine years, and her son can hear the takeaway fan through every wall. Then the council asks her to design a house for the garage court behind her mum&#x27;s.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #14181c;
+        --ink: #e4eae8;
+        --mute: #8a9496;
+        --cream: #e6ece8;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 84% 8%, rgba(140, 190, 220, 0.16), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 22%, rgba(80, 140, 150, 0.10), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(60, 110, 140, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(60, 130, 100, 0.06), transparent 60%),
+          linear-gradient(180deg, #1a2026 0%, #14181c 36%, #101418 70%, #0c1014 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(180, 210, 220, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 220, 230, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #d4dcd8;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(140, 190, 220, 0.28), 0 0 2px rgba(220, 236, 244, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e4ece8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c9a05a; }
+      .prose strong { font-weight: 700; color: #e8eee8; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(180, 210, 230, 0.95) 0 1.5px, rgba(120, 170, 200, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(120, 170, 200, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #15191e;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(160, 190, 210, 0.14);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .plot-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .plot-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(230, 240, 244, 0.82);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .hero h1 { text-shadow: 0 0 40px rgba(180, 200, 210, 0.28), 0 0 2px rgba(220, 236, 244, 0.35); }
+      .plot-hero .label, .scene.pl .label { color: rgba(236, 242, 246, .94); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+      .plot-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(160,190,210,.16); background: #1a2228; }
+      .plot-hero > * { position: absolute; }
+      .plot-hero::after, .scene.pl::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(8,10,14,.72) 100%), repeating-linear-gradient(112deg, rgba(220,230,240,.016) 0 2px, transparent 2px 8px); }
+      .scene.pl { background: #15191e; container-type: size; }
+
+      .sky { inset: 0; background: linear-gradient(180deg, #6a7a88 0%, #8a9aa6 42%, #b0bcc4 100%); }
+      .sky.dusk { background: linear-gradient(180deg, #2a2430 0%, #4a3a40 48%, #6a5048 100%); }
+      .sky.kitchen { background: linear-gradient(180deg, #2a2826, #1c1a18 70%, #141210); }
+      .sky.shed { background: linear-gradient(180deg, #3a4046 0%, #2a3036 40%, #1c2228 100%); }
+      .sky.sunday { background: linear-gradient(180deg, #8a969e 0%, #b4bec4 52%, #d0d6da 100%); }
+      .sky.night { background: linear-gradient(180deg, #12161c 0%, #1a2028 60%, #243038 100%); }
+      .sky.paper { background: linear-gradient(180deg, #2a3238, #1c2228 70%, #161a1e); }
+
+      .ground { left: 0; right: 0; bottom: 0; height: 36%; background: linear-gradient(180deg, #3a3c3a, #2a2c2a); z-index: 1; }
+      .ground.tarmac { background: linear-gradient(180deg, #3e403e, #2c2e2c); }
+      .ground.tarmac::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 7cqw, rgba(0,0,0,.12) 7cqw 7.3cqw), repeating-linear-gradient(18deg, transparent 0 11cqw, rgba(255,255,255,.03) 11cqw 11.4cqw); }
+      .ground.garden { background: linear-gradient(180deg, #3a4638, #2a3228); height: 28%; }
+      .roofs { left: 0; right: 0; bottom: 36%; height: 10%; background: repeating-linear-gradient(90deg, #4a5054 0 8cqw, #3a4044 8cqw 9cqw, #52585c 9cqw 16cqw); clip-path: polygon(0 60%, 6% 20%, 12% 55%, 20% 10%, 30% 50%, 42% 8%, 54% 52%, 66% 12%, 78% 48%, 90% 16%, 100% 50%, 100% 100%, 0 100%); z-index: 2; }
+
+      .gdoor { z-index: 4; width: 8cqw; height: 16cqw; background: linear-gradient(180deg, #7a8a68, #6a7a58 40%, #5a6a4c); border-radius: .3cqw .3cqw 0 0; box-shadow: inset 0 0 0 .25cqw rgba(220,230,200,.12), 0 .3cqw .6cqw rgba(0,0,0,.25); }
+      .gdoor::before { content: ""; position: absolute; left: 12%; right: 12%; top: 14%; bottom: 18%; background: repeating-linear-gradient(180deg, rgba(200,210,180,.18) 0 .35cqw, transparent .35cqw 3.2cqw); }
+      .gdoor::after { content: ""; position: absolute; left: 50%; margin-left: -.7cqw; bottom: 22%; width: 1.4cqw; height: 1.4cqw; border-radius: 50%; background: #3a3e36; box-shadow: 0 0 0 .2cqw rgba(200,210,180,.2); }
+      .gdoor.lone { width: 14cqw; height: 22cqw; }
+      .gdoor.up { height: 5cqw; background: linear-gradient(180deg, #7a8a68, #5a6a4c); }
+      .doors { display: flex; gap: .7cqw; align-items: flex-end; z-index: 4; }
+      .doors i { position: relative; flex: 1; height: 100%; background: linear-gradient(180deg, #7a8a68, #6a7a58 40%, #5a6a4c); border-radius: .3cqw .3cqw 0 0; box-shadow: inset 0 0 0 .25cqw rgba(220,230,200,.12); }
+      .doors i::before { content: ""; position: absolute; left: 14%; right: 14%; top: 16%; bottom: 20%; background: repeating-linear-gradient(180deg, rgba(200,210,180,.18) 0 .3cqw, transparent .3cqw 28%); }
+      .doors.side { flex-direction: column; align-items: stretch; gap: .5cqw; }
+      .doors.side i { flex: 1; width: 100%; height: auto; border-radius: .3cqw 0 0 .3cqw; }
+
+      .bud { z-index: 5; width: 10cqw; height: 16cqw; }
+      .bud::before { content: ""; position: absolute; left: 42%; width: 16%; top: 30%; bottom: 0; background: #4a3a28; border-radius: 40%; }
+      .bud::after { content: ""; position: absolute; left: 8%; right: 8%; top: 0; height: 70%; background:
+        radial-gradient(circle at 30% 40%, #7a6a9a 0 1.1cqw, transparent 1.2cqw),
+        radial-gradient(circle at 62% 28%, #8a7aaa 0 1.3cqw, transparent 1.4cqw),
+        radial-gradient(circle at 48% 18%, #6a5a88 0 1.2cqw, transparent 1.3cqw),
+        radial-gradient(circle at 70% 48%, #7a6a9a 0 1cqw, transparent 1.1cqw),
+        radial-gradient(circle at 28% 22%, #5a6a48 0 2.2cqw, transparent 2.3cqw),
+        radial-gradient(circle at 58% 50%, #4a5a3a 0 2.6cqw, transparent 2.7cqw),
+        radial-gradient(circle at 44% 38%, #5a6a44 0 2.4cqw, transparent 2.5cqw); }
+
+      .wall { left: 0; right: 0; top: 0; bottom: 0; background: #3a342e; }
+      .fanbox { width: 18cqw; height: 18cqw; border-radius: 50%; background: conic-gradient(from 20deg, #2a2c2e, #5a5e62, #2a2c2e 40%, #6a6e72 50%, #2a2c2e 80%, #4a4e52); box-shadow: inset 0 0 0 .8cqw #2a2c2e, 0 0 0 .4cqw #1a1c1e, 0 .6cqw 1.4cqw rgba(0,0,0,.4); }
+      .fanbox::before { content: ""; position: absolute; inset: 22%; border-radius: 50%; background: #1a1c1e; }
+      .humring { border-radius: 50%; box-shadow: 0 0 0 .35cqw rgba(200, 190, 160, .28); animation: hum 3.6s ease-out infinite; }
+      .humring.b { animation-delay: 1.2s; }
+      .humring.c { animation-delay: 2.4s; }
+      .upwin { width: 16cqw; height: 12cqw; background: linear-gradient(180deg, #2a3038, #1a1e24); box-shadow: inset 0 0 0 .5cqw #3a3632, 0 0 6cqw rgba(255, 200, 120, .08); }
+
+      .defenders { width: 16cqw; height: 10cqw; }
+      .defenders::before, .defenders::after { content: ""; position: absolute; top: 18%; width: 6cqw; height: 8cqw; background: #1a1c1e; border-radius: 40%; box-shadow: inset 0 0 0 .4cqw #3a3e42, 0 .3cqw .6cqw rgba(0,0,0,.35); }
+      .defenders::before { left: 0; }
+      .defenders::after { right: 0; }
+      .defenders i { left: 18%; right: 18%; top: 0; height: 1.2cqw; background: #2a2e32; border-radius: 1cqw; }
+      .ttable { display: flex; gap: .7cqw; align-items: flex-end; z-index: 4; }
+      .ttable i { position: relative; width: 6.2cqw; background: #d8d4c8; border-radius: .2cqw; box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.25), inset 0 0 0 .15cqw #c8c4b8; }
+      .ttable i::before { content: ""; position: absolute; left: 12%; right: 12%; top: 14%; bottom: 10%; background: repeating-linear-gradient(180deg, #3a4a5a 0 .22cqw, transparent .22cqw 1.15cqw); opacity: .55; }
+      .boxroom { left: 0; right: 0; bottom: 0; height: 22%; background: #2a2622; z-index: 1; }
+
+      .wave { height: 10cqw; }
+      .wave i { position: absolute; width: 1.1cqw; height: 1.1cqw; border-radius: 50%; background: #8ec8b8; box-shadow: 0 0 .6cqw rgba(140, 200, 180, .45); }
+      .wave.hi i { background: #c4b070; box-shadow: 0 0 .6cqw rgba(200, 170, 80, .4); }
+      .hzline { left: 8%; right: 8%; height: .2cqw; background: rgba(200,210,214,.16); }
+
+      .plotmap { inset: 12% 8% 16% 8%; background:
+        linear-gradient(180deg, #1c2824, #15201c);
+        box-shadow: inset 0 0 0 .3cqw rgba(160,190,180,.12);
+        border-radius: .4cqw;
+        background-image:
+          repeating-linear-gradient(90deg, transparent 0 8cqw, rgba(160,190,180,.08) 8cqw 8.3cqw),
+          repeating-linear-gradient(0deg, transparent 0 6cqw, rgba(160,190,180,.07) 6cqw 6.3cqw),
+          linear-gradient(180deg, #1c2824, #15201c);
+      }
+      .osq { width: 3.2cqw; height: 3.2cqw; background: #e07a30; box-shadow: 0 0 1cqw rgba(224,122,48,.45); border-radius: .15cqw; z-index: 4; }
+      .osq.here { width: 4cqw; height: 4cqw; box-shadow: 0 0 0 .35cqw rgba(255,210,160,.55), 0 0 1.4cqw rgba(224,122,48,.6); }
+
+      .plan { inset: 10% 8% 16% 8%; background: #2c322e; border-radius: .4cqw; box-shadow: inset 0 0 0 .3cqw rgba(160,190,180,.1); }
+      .backrow { left: 22%; right: 8%; top: 8%; height: 18%; background: #5a6a4c; border-radius: .2cqw; opacity: .85; }
+      .siderow { left: 8%; width: 16%; top: 8%; bottom: 22%; background: #5a6a4c; border-radius: .2cqw; opacity: .85; }
+      .lyon { left: 28%; right: 8%; bottom: 0; height: 20%; background: #4a5054; clip-path: polygon(0 40%, 8% 0, 18% 35%, 30% 0, 48% 38%, 62% 0, 78% 32%, 90% 0, 100% 40%, 100% 100%, 0 100%); }
+      .clkshad { left: 38%; top: 24%; width: 6cqw; height: 48%; background: linear-gradient(180deg, rgba(20,16,12,.55), rgba(20,16,12,.12)); clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); transform-origin: 50% 0; animation: sweep 14s ease-in-out infinite alternate; z-index: 5; }
+      .sun { width: 5cqw; height: 5cqw; border-radius: 50%; background: #f0d48a; box-shadow: 0 0 2.4cqw rgba(240,212,140,.55); }
+
+      .micra { width: 18cqw; height: 5.6cqw; background: #3a6a9a; border-radius: 1.4cqw 2.6cqw .5cqw .5cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3); z-index: 6; }
+      .micra::before { content: ""; position: absolute; left: 22%; right: 20%; top: -78%; height: 86%; background: #2a5478; border-radius: 1cqw 1.8cqw 0 0; box-shadow: inset 0 -.3cqw 0 rgba(180,210,230,.15); }
+      .micra::after { content: ""; position: absolute; left: 10%; right: 10%; bottom: -28%; height: 48%; background: radial-gradient(circle at 16% 50%, #1a1c1e 0 1.15cqw, transparent 1.25cqw), radial-gradient(circle at 84% 50%, #1a1c1e 0 1.15cqw, transparent 1.25cqw); }
+      .bnch { width: 12cqw; height: 1.6cqw; background: #7a6050; border-radius: .2cqw; z-index: 5; }
+      .bnch::before { content: ""; position: absolute; left: 0; right: 0; top: -3.2cqw; height: 1.3cqw; background: #8a7060; border-radius: .2cqw; }
+      .bnch::after { content: ""; position: absolute; left: 8%; width: 1cqw; top: -3cqw; height: 4.6cqw; background: #5a4030; box-shadow: 8.8cqw 0 0 #5a4030; }
+
+      .clt { width: 10cqw; height: 32cqw; background: #c8b898; border-radius: .2cqw; box-shadow: 0 .6cqw 1.2cqw rgba(0,0,0,.3), inset 0 0 0 .2cqw #b8a888; z-index: 4; }
+      .clt::before { content: ""; position: absolute; inset: 6%; background:
+        repeating-linear-gradient(90deg, rgba(90,70,40,.28) 0 .18cqw, transparent .18cqw 1.1cqw),
+        repeating-linear-gradient(0deg, rgba(90,70,40,.12) 0 .18cqw, transparent .18cqw 1.4cqw); }
+      .clt::after { content: ""; position: absolute; left: 0; right: 0; top: 46%; height: 22%; background:
+        repeating-linear-gradient(0deg, rgba(70,50,28,.35) 0 .2cqw, transparent .2cqw 1.1cqw),
+        rgba(200,184,152,.15); }
+      .rack { left: 0; right: 0; bottom: 0; height: 8%; background: #2a2e32; z-index: 2; }
+
+      .qroom { width: 28cqw; height: 22cqw; background: #d8d2c6; border-radius: .3cqw; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.35); z-index: 5; }
+      .qroom::before { content: ""; position: absolute; left: 8%; top: 18%; width: 28%; height: 48%; background: #8aa0b0; box-shadow: inset 0 0 0 .35cqw #c8c2b6; }
+      .qroom::after { content: ""; position: absolute; right: 12%; top: 18%; width: 22%; bottom: 14%; background: #c8c0b2; box-shadow: inset 0 0 0 .3cqw #b8b0a2; }
+      .pucks { display: flex; gap: 1.2cqw; justify-content: space-around; align-items: flex-end; z-index: 4; }
+      .pucks i { position: relative; width: 3.2cqw; height: 1.6cqw; background: #1a1c1e; border-radius: 40%; box-shadow: 0 .3cqw .4cqw rgba(0,0,0,.4); }
+      .trolley { left: 28%; right: 28%; height: 2cqw; background: #3a4044; z-index: 3; border-radius: .2cqw; }
+
+      .culvert { height: 8cqw; background: repeating-linear-gradient(90deg, #6a4038 0 1.6cqw, #5a3830 1.6cqw 1.8cqw, #7a4840 1.8cqw 3.4cqw); border-radius: 40%; box-shadow: inset 0 1.4cqw 1.6cqw rgba(0,0,0,.45); z-index: 3; transform: rotate(-12deg); }
+      .culvert::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: 18%; height: 28%; background: #3a5060; border-radius: 40%; opacity: .7; }
+      .cpad { width: 6.4cqw; height: 3.2cqw; background: #8a8e90; border-radius: .2cqw; box-shadow: 0 .4cqw .6cqw rgba(0,0,0,.3); z-index: 4; }
+      .house12 { width: 26cqw; height: 14cqw; background: #c8c2b6; border-radius: .2cqw; transform: rotate(-8deg); transform-origin: 50% 100%; z-index: 6; box-shadow: 0 .8cqw 1.4cqw rgba(0,0,0,.3); }
+      .house12::before { content: ""; position: absolute; left: -4%; right: -4%; bottom: 100%; height: 55%; background: #6a5048; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+      .house12::after { content: ""; position: absolute; left: 38%; bottom: 0; width: 14%; height: 58%; background: #b83a32; }
+
+      .mcrane { width: 4cqw; background: #9aa2a6; z-index: 6; }
+      .mcrane::before { content: ""; position: absolute; left: 100%; top: 6%; width: 36cqw; height: 1.4cqw; background: #9aa2a6; }
+      .mcrane::after { content: ""; position: absolute; left: -40%; bottom: 0; width: 180%; height: 2cqw; background: #8a8e90; }
+      .cable { width: .3cqw; background: #c8ccce; z-index: 6; transform-origin: 50% 0; }
+      .parcel { width: 16cqw; height: 12cqw; background: #e8ece8; border-radius: .3cqw; box-shadow: 0 .8cqw 1.6cqw rgba(0,0,0,.3); z-index: 7; animation: lower 8s ease-in-out infinite alternate; }
+      .parcel::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 46%, rgba(0,0,0,.08) 50%, transparent 54%); }
+      .leg { width: 10cqw; height: 1.6cqw; background: #8a8e90; z-index: 4; }
+
+      .rhouse { width: 32cqw; height: 20cqw; background: #d0ccc4; border-radius: .2cqw; z-index: 5; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.3); }
+      .rhouse::before { content: ""; position: absolute; left: -8%; right: -8%; bottom: 100%; height: 62%; background: #6a5248; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+      .rdoor { width: 6.4cqw; height: 12cqw; background: #c43a2e; border-radius: .2cqw .2cqw 0 0; z-index: 6; box-shadow: inset 0 0 0 .25cqw rgba(255,200,180,.15); }
+      .rdoor::after { content: ""; position: absolute; right: 14%; top: 48%; width: 1cqw; height: 1cqw; border-radius: 50%; background: #d4b060; }
+      .hedge { height: 6cqw; background: #3a5a3c; border-radius: 50% 50% 0 0; z-index: 4; }
+      .gravel { left: 0; right: 0; bottom: 0; height: 22%; background: repeating-linear-gradient(90deg, #7a7670 0 .8cqw, #8a8680 .8cqw 1.4cqw, #706c66 1.4cqw 2cqw); z-index: 1; }
+
+      .irenebnch { width: 22cqw; height: 1.8cqw; background: #7a6050; border-radius: .2cqw; z-index: 5; }
+      .irenebnch::before { content: ""; position: absolute; left: 0; right: 0; top: -4cqw; height: 1.5cqw; background: #8a7060; border-radius: .2cqw; }
+      .irenebnch::after { content: ""; position: absolute; left: 8%; width: 1.4cqw; top: -3.8cqw; height: 5.6cqw; background: #5a4030; box-shadow: 16.6cqw 0 0 #5a4030; }
+      .brasspl { width: 16cqw; height: 5.2cqw; background: linear-gradient(180deg, #d4b46a, #b89040); border-radius: .25cqw; box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.3), inset 0 .15cqw 0 rgba(255,240,200,.35); z-index: 6; }
+      .brasspl .ins { position: absolute; inset: 8% 6%; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: #3a2a10; text-align: center; font-size: 1.35cqw; line-height: 1.35; display: flex; align-items: center; justify-content: center; }
+
+      .keyring { width: 22cqw; height: 16cqw; z-index: 5; }
+      .ring { width: 5cqw; height: 5cqw; border: .55cqw solid #c4c8ca; border-radius: 50%; left: 38%; top: 8%; }
+      .key { width: 3cqw; height: 10cqw; background: #c4c8ca; border-radius: 50% 50% 20% 20%; }
+      .key::before { content: ""; position: absolute; left: 22%; width: 56%; top: 8%; height: 22%; border: .35cqw solid #2a2e32; border-radius: 50%; background: transparent; }
+      .key::after { content: ""; position: absolute; left: 55%; width: 45%; bottom: 8%; height: 28%; background: #c4c8ca; clip-path: polygon(0 0, 100% 20%, 100% 40%, 40% 40%, 40% 100%, 0 100%); }
+      .fob { width: 12cqw; height: 7.2cqw; background: #2a4a6a; border-radius: .4cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3); z-index: 6; }
+      .fob .ins { position: absolute; inset: 10% 6%; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: #e8ece8; text-align: center; font-size: 1.5cqw; line-height: 1.25; display: flex; align-items: center; justify-content: center; }
+
+      .lowshelf { left: 10%; right: 10%; height: 1.4cqw; background: #8a8070; border-radius: .15cqw; z-index: 5; box-shadow: 0 .4cqw .6cqw rgba(0,0,0,.25); }
+      .qwall { inset: 0; background: linear-gradient(180deg, #d8d4cc, #c8c4bc); }
+      .qwall::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: #b8b0a4; }
+
+      .qdoor { width: 16cqw; height: 32cqw; background: #c8c0b2; border-radius: .3cqw; box-shadow: inset 0 0 0 .4cqw #b8b0a2, 0 .8cqw 1.6cqw rgba(0,0,0,.3); z-index: 5; }
+      .palm { width: 7cqw; height: 9cqw; background: #c4a07a; border-radius: 40% 40% 36% 36%; z-index: 6; }
+      .palm::before { content: ""; position: absolute; left: 8%; top: -28%; width: 18%; height: 42%; background: #c4a07a; border-radius: 40%; box-shadow: 1.4cqw 0.2cqw 0 #c4a07a, 2.8cqw 0.1cqw 0 #c4a07a, 4.2cqw 0.3cqw 0 #c4a07a; }
+
+      .bonnet { width: 8cqw; height: 6.5cqw; background: #4a7aaa; border-radius: .3cqw; transform: rotate(-28deg); transform-origin: 0 100%; z-index: 8; box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.25); }
+      .folk { width: 3.2cqw; height: 8cqw; background: #4a4e52; border-radius: 40% 40% 20% 20%; z-index: 7; }
+      .folk.b { background: #3a4a3c; }
+      .folk::before { content: ""; position: absolute; left: 18%; right: 18%; top: -28%; height: 32%; background: #c4a07a; border-radius: 50%; }
+
+      .cranejib { width: 2.2cqw; background: #9aa2a6; z-index: 5; }
+      .cranejib::before { content: ""; position: absolute; left: 0; top: 0; width: 16cqw; height: .9cqw; background: #9aa2a6; }
+      .wparcel { width: 7cqw; height: 5cqw; background: #e8ece8; border-radius: .2cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.25); z-index: 6; }
+
+      .nums { font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums; }
+      .scene.sh-scene .label, .scene.co-scene .label, .scene.rd-scene .label {
+        color: rgba(18, 16, 14, .78); text-shadow: 0 1px 2px rgba(255,255,255,.45);
+      }
+      .scene.sh-scene::before, .scene.rd-scene::before {
+        content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; z-index: 27; pointer-events: none;
+        background: linear-gradient(transparent, rgba(0,0,0,.28));
+      }
+
+      @keyframes hum { 0% { transform: scale(.55); opacity: .5; } 100% { transform: scale(1.55); opacity: 0; } }
+      @keyframes sweep { from { transform: rotate(-38deg); } to { transform: rotate(32deg); } }
+      @keyframes lower { from { top: 16%; } to { top: 48%; } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (max-width: 600px) {
+        .plot-hero { height: 22rem; }
+        .brasspl { width: 28cqw; height: 9cqw; }
+        .brasspl .ins { font-size: 1.7cqw; }
+        .fob .ins { font-size: 2cqw; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .plot-hero *, .scene.pl *, .plot-hero *::before, .plot-hero *::after, .scene.pl *::before, .scene.pl *::after,
+        .paint, .fog { animation: none !important; }
+        .humring { opacity: .35; transform: scale(1); }
+        .clkshad { transform: rotate(-14deg); }
+        .parcel { top: 40%; }
+        .scene { opacity: 1; transform: none; }
+      }
+
+      .sky, .ground, .roofs, .gdoor, .bud, .wall, .fanbox, .humring, .upwin, .defenders, .defenders i, .boxroom,
+      .wave, .hzline, .plotmap, .osq, .plan, .backrow, .siderow, .lyon, .clkshad, .sun, .micra, .bnch,
+      .clt, .rack, .qroom, .trolley, .culvert, .cpad, .house12, .mcrane, .cable, .parcel, .leg,
+      .rhouse, .rdoor, .hedge, .gravel, .irenebnch, .brasspl, .keyring, .ring, .key, .fob,
+      .lowshelf, .qwall, .qdoor, .palm, .bonnet, .folk, .cranejib, .wparcel { position: absolute; }
+      .doors, .ttable, .pucks { display: flex; position: absolute; }
+      .doors i, .ttable i, .pucks i { position: relative; }
+      .wave i { position: absolute; }
+      .brasspl .ins, .fob .ins { position: absolute; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="plot-hero" aria-hidden="true">
+          <div class="sky"></div>
+          <div class="roofs"></div>
+          <div class="ground tarmac" style="height:42%"></div>
+          <div class="doors" style="left:34%;right:8%;bottom:34%;height:22%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="gdoor" style="left:6%;bottom:16%;width:10cqw;height:22cqw"></div>
+          <div class="gdoor" style="left:12%;bottom:22%;width:8.9cqw;height:19.8cqw"></div>
+          <div class="gdoor" style="left:18%;bottom:28%;width:7.8cqw;height:17.6cqw"></div>
+          <div class="gdoor" style="left:24%;bottom:32%;width:6.7cqw;height:15.4cqw"></div>
+          <div class="bud" style="left:44%;bottom:26%"></div>
+          <div class="label">Eleven garages in an L</div>
+        </div>
+        <h1>The plot kept the quiet</h1>
+        <p class="dek">Kerry Ashworth has been on Barrow's housing list for nine years, and her son can hear the takeaway fan through every wall. Then the council asks her to design a house for the garage court behind her mum's.</p>
+        <time datetime="2026-11-20">20 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Kerry Ashworth found out about the garage court on a Tuesday in October, at her mum's kitchen table on Lyon Street, with a mug of tea in front of her and Rhys upstairs in the box room with his ear defenders on, lining up his train timetables in the order they had been printed. She had come round because the boiler in the flat on Walney Road had gone again, and because the flat was on the first floor above a takeaway, and the extractor fan on the takeaway ran from four in the afternoon to midnight with a sound like somebody holding a hairdryer against the wall. Rhys could hear it in every room. He could hear it in the bath with his head under the water. On the bad nights he slept in the airing cupboard with a pillow, because it was the only place the hum was quieter than the boiler, and on the nights the boiler was broken he did not sleep much at all.</p>
+        <p>She had been on the housing list for nine years. She knew the number of her bidding reference better than she knew her own phone number, and she knew what band she was in and what band she would need to be in, and she knew, because she had asked so many times that the woman at the council had stopped pretending otherwise, that a three-bedroom house in Barrow with a garden and no shared walls was not something that came up. It came up maybe twice a year, and when it came up four hundred people bid for it.</p>
+        <p>The letter was on the side, propped against the bread bin, where her mum had left it. It had come to Pat because Pat was a council tenant too, on the street that backed onto the garages, and it was addressed to The Occupier in a way that made it look like junk.</p>
+        <p>"Read it," Pat said. "Before you say anything. Just read it."</p>
+        <p>It was from the council and the housing association together, and it had a picture on the front of a little house with a pitched roof and a red door, standing on its own on a patch of gravel with a hedge behind it. The picture was a drawing, not a photo, so Kerry did not trust it. Underneath it said that the town had counted every scrap of land it owned that nobody was using, and there were more of them than anyone had thought. There were two hundred and eleven garage courts in Barrow, most of them built in the sixties for cars that had got too big to fit in them, and half the garages were empty or full of rubbish or rented for nine pounds a month to people who had died. There were corner plots and verges and the ends of closes and the bits behind pubs. The letter called them the leftover land, which Kerry thought was honest of it.</p>
+        <p>The council was going to build on them. Not flats, and not the big estates that took ten years and came with a consultation that went round and round until everybody who wanted a house had moved away. One house at a time, or two, or four, made in the old shed at Buccleuch Dock where they used to make submarine sections, and put up in under a fortnight. And the people on the list would design them.</p>
+        <p>"Design them," Kerry said.</p>
+        <p>"Read the next bit."</p>
+        <p>The next bit said that anyone on the housing register in Band B or above could book a session with Joiner, which was the name they had given to the planning system the council had been using since the spring. It said that Joiner would sit with you, at your own kitchen table if you wanted, on a tablet the council would lend you, and talk to you about how you lived and who lived with you and what the house needed to do. Then it would look at every leftover plot in the town and tell you which ones a house like yours would fit on. It said that nothing would be decided without the neighbours, and that the houses would be council houses, at council rents, for life.</p>
+        <p>Kerry put the letter down.</p>
+        <p>"It's a computer," she said.</p>
+        <p>"I know it's a computer."</p>
+        <p>"Mum. They had a computer doing the bidding three years ago and it put me in Band C because it thought Rhys was a lodger."</p>
+        <p>"I know."</p>
+        <p>"It took me four months."</p>
+        <p>"I know, love. I was there." Pat put a plate of custard creams down between them, which was what she did instead of arguing. "Mavis Postlethwaite's grandson's had one. Out the back of the Crown, where the bins were. He's in it now. She says it's lovely. She says it's warm."</p>
+        <p>Kerry ate a custard cream and looked out of the kitchen window, over the back yard, over the wall and the alley, at the garage court. She had been looking at it all her life without seeing it. Eleven garages in an L, with green up-and-over doors that had gone chalky, and a square of cracked tarmac with a buddleia growing out of a drain in the middle of it. Kids used to play football against the doors when she was a kid. She had played football against the doors. Now nobody did anything there, and the buddleia had got so big it had a bird in it.</p>
+        <p>She booked the session on her phone before she went home, mostly so that she could say she had.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl fn-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="wall" style="left:0;right:0;top:0;bottom:0;background:#3a342e"></div>
+        <div class="upwin" style="left:12%;top:10%"></div>
+        <div class="humring" style="left:42%;top:28%;width:28cqw;height:28cqw"></div>
+        <div class="humring b" style="left:39%;top:24%;width:34cqw;height:34cqw"></div>
+        <div class="humring c" style="left:36%;top:20%;width:40cqw;height:40cqw"></div>
+        <div class="fanbox" style="left:48%;top:34%"></div>
+        <div class="label">the extractor fan</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl tm-scene" aria-hidden="true">
+        <div class="sky kitchen"></div>
+        <div class="boxroom"></div>
+        <div class="defenders" style="left:8%;top:22%"><i></i></div>
+        <div class="ttable" style="left:28%;right:8%;bottom:22%;height:48%"><i style="height:58%"></i><i style="height:75%"></i><i style="height:92%"></i><i style="height:71%"></i><i style="height:88%"></i><i style="height:67%"></i><i style="height:84%"></i><i style="height:63%"></i></div>
+        <div class="label">his train timetables</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The tablet came in a padded envelope on the Thursday, with a charger and a sticker on the back that said BARROW HOMES – PROPERTY OF WESTMORLAND AND FURNESS COUNCIL, and a card with a number to ring if it went wrong. She set it up on the kitchen table in the flat at half past six, after tea, with the extractor fan going through the wall like it always did. Rhys was on the settee with his defenders on and his knees up, reading the 1987 Furness Line timetable for the fourth time that week.</p>
+        <p>The voice that came out of it was a man's voice, not young and not old, with nothing much of an accent, and the first thing it said was that it was sorry to have taken so long. Kerry had not expected that.</p>
+        <p>"You've been on the list since 2017," Joiner said. "That's a long time to wait for anything. I've read the notes on your file, but notes are only what somebody chose to write down, so I'd rather you told me. Who lives with you?"</p>
+        <p>"Me and my son. Rhys. He's eleven."</p>
+        <p>"And what does the house need to do for the two of you?"</p>
+        <p>She sat with that for a moment. Nobody had ever asked it that way. The forms asked how many bedrooms and whether anyone used a wheelchair and whether you had pets.</p>
+        <p>"It needs to be quiet," she said.</p>
+        <p>"Tell me what quiet means for Rhys."</p>
+        <p>So she told it. She had not meant to talk for long, but it kept asking the next thing, the thing underneath, and it did not hurry her. She told it about the extractor fan, and the boiler, and the airing cupboard. She told it that Rhys was autistic and that the noise was not something he could get used to, the way people always said he would, the way his dad had said he would before his dad went to Leeds and stopped ringing. She told it that it was not loud noise that was the worst. Loud noise he could see coming, a bus or a dog or a lad on a motorbike, and he could put his hands over his ears. It was the steady noise, the hum, the noise that was always there and that nobody else could hear. Fridges. Fans. Transformers. The buzz off the light in the kitchen at school. He said it was like having a thread pulled through his head, slowly, that never came out the other end.</p>
+        <p>"Does he have anywhere that's quiet now?"</p>
+        <p>"The airing cupboard. When the boiler's off."</p>
+        <p>"What does he do in there?"</p>
+        <p>"Reads. Lies down. Sometimes he just lies there." She looked over at him on the settee. He had not looked up. "He's not sad in there. That's the thing. People think he's hiding. He's not. It's the only place he can think."</p>
+        <p>There was a pause, not a long one, but long enough that she noticed it.</p>
+        <p>"Would he talk to me himself?" Joiner said. "Not now, if he's reading. Whenever he wants. I'd like to know what the airing cupboard sounds like to him."</p>
+        <p>Rhys did talk to it, but not that night. It was Sunday, and he did it on his own, in his bedroom with the door shut, for forty minutes, and Kerry stood on the landing for some of it and could not hear the words, only his voice going on in the flat, careful way he had when he was explaining a thing properly, and then a long gap while the tablet said something back, and then his voice again. When he came out he gave her the tablet and went to get a drink of milk and said nothing about it at all, which was normal. But at bedtime he said, without looking at her, "It asked what frequency the takeaway fan is."</p>
+        <p>"Did you know?"</p>
+        <p>"I measured it. On the app. Hundred and twenty hertz with a peak at two-forty." He got into bed. "It said that's a bad one. It said most walls let that through."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl hz-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="hzline" style="top:32%"></div>
+        <div class="hzline" style="top:68%"></div>
+        <div class="wave" style="left:0;right:0;top:18%;height:28%"><i class="" style="left:6.00%;top:42.00%"></i><i class="" style="left:9.26%;top:56.64%"></i><i class="" style="left:12.52%;top:66.95%"></i><i class="" style="left:15.78%;top:69.91%"></i><i class="" style="left:19.04%;top:64.64%"></i><i class="" style="left:22.30%;top:52.69%"></i><i class="" style="left:25.56%;top:37.58%"></i><i class="" style="left:28.81%;top:23.78%"></i><i class="" style="left:32.07%;top:15.36%"></i><i class="" style="left:35.33%;top:14.79%"></i><i class="" style="left:38.59%;top:22.24%"></i><i class="" style="left:41.85%;top:35.53%"></i><i class="" style="left:45.11%;top:50.72%"></i><i class="" style="left:48.37%;top:63.34%"></i><i class="" style="left:51.63%;top:69.67%"></i><i class="" style="left:54.89%;top:67.83%"></i><i class="" style="left:58.15%;top:58.38%"></i><i class="" style="left:61.41%;top:44.09%"></i><i class="" style="left:64.67%;top:29.19%"></i><i class="" style="left:67.93%;top:18.06%"></i><i class="" style="left:71.19%;top:14.00%"></i><i class="" style="left:74.44%;top:18.19%"></i><i class="" style="left:77.70%;top:29.41%"></i><i class="" style="left:80.96%;top:44.34%"></i><i class="" style="left:84.22%;top:58.58%"></i><i class="" style="left:87.48%;top:67.93%"></i><i class="" style="left:90.74%;top:69.63%"></i><i class="" style="left:94.00%;top:63.18%"></i></div>
+        <div class="wave hi" style="left:0;right:0;top:54%;height:28%"><i class="hi" style="left:6.00%;top:42.00%"></i><i class="hi" style="left:9.26%;top:61.61%"></i><i class="hi" style="left:12.52%;top:59.79%"></i><i class="hi" style="left:15.78%;top:38.53%"></i><i class="hi" style="left:19.04%;top:21.06%"></i><i class="hi" style="left:22.30%;top:26.48%"></i><i class="hi" style="left:25.56%;top:48.85%"></i><i class="hi" style="left:28.81%;top:63.74%"></i><i class="hi" style="left:32.07%;top:54.87%"></i><i class="hi" style="left:35.33%;top:31.93%"></i><i class="hi" style="left:38.59%;top:20.00%"></i><i class="hi" style="left:41.85%;top:32.11%"></i><i class="hi" style="left:45.11%;top:55.03%"></i><i class="hi" style="left:48.37%;top:63.71%"></i><i class="hi" style="left:51.63%;top:48.67%"></i><i class="hi" style="left:54.89%;top:26.34%"></i><i class="hi" style="left:58.15%;top:21.13%"></i><i class="hi" style="left:61.41%;top:38.72%"></i><i class="hi" style="left:64.67%;top:59.90%"></i><i class="hi" style="left:67.93%;top:61.52%"></i><i class="hi" style="left:71.19%;top:41.81%"></i><i class="hi" style="left:74.44%;top:22.31%"></i><i class="hi" style="left:77.70%;top:24.33%"></i><i class="hi" style="left:80.96%;top:45.66%"></i><i class="hi" style="left:84.22%;top:62.99%"></i><i class="hi" style="left:87.48%;top:57.38%"></i><i class="hi" style="left:90.74%;top:34.96%"></i><i class="hi" style="left:94.00%;top:20.23%"></i></div>
+        <div class="label">Hundred and twenty hertz</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Joiner came back to her ten days later with a list. It was not a long list. It said that of the two hundred and eleven garage courts and the four hundred and something other bits of leftover land, a house for a woman and an eleven-year-old boy who needed one room in it to be as quiet as a recording studio would fit on thirty-one of them. Of those thirty-one, nineteen were next to a main road or a railway or a substation, and it had crossed them off, because it said there was no point building him a quiet room and then putting a substation at the bottom of the garden. Of the twelve that were left, five were more than a mile from Rhys's school, and Rhys did not do buses well.</p>
+        <p>That left seven. It showed her them on a map, as little orange squares. One was on the edge of the park in Hawcoat, which would have been lovely, except Joiner said in its plain way that the residents' association in Hawcoat had already objected to every plot offered to them and that it did not want to make her wait another year on a plot that might never go through. One was behind a doctor's surgery. One was at the end of a close in Newbarns. And one was the garage court behind Lyon Street.</p>
+        <p>"That's my mum's," Kerry said. "That's behind my mum's house."</p>
+        <p>"I know," Joiner said. "That's why I put it first. Your file says your mother has Rhys three afternoons a week while you're at work. The walk from her back gate to the plot would be about forty metres."</p>
+        <p>Kerry did not say anything for long enough that the screen dimmed.</p>
+        <p>"I should say what's hard about it," Joiner said, "before you get attached. There are eleven garages. Eight are empty. Two are let to people who live on Lyon Street and use them for storage, and they've both said they'd take a garage somewhere else if we found one, and we have. The last one, number seven, is let to Mr Bernard Kneale at number 40. He's eighty. It was his wife's. She died in 2023. Her car is still in it. He's said no."</p>
+        <p>"What kind of car?"</p>
+        <p>"A 1998 Nissan Micra. Blue. He starts it every Sunday."</p>
+        <p>Kerry knew Bernard Kneale. Everybody on Lyon Street knew Bernard Kneale, the way you know a lamp post. He had worked at the yard for forty-four years and he had been a shop steward and he had once stood in the road for most of an afternoon to stop the council taking down a tree. He had a wife called Irene who made the best scones at the church fair, and Kerry had not known that Irene had died, and she felt bad about it, sitting there in the kitchen with the fan going.</p>
+        <p>"So it's off," she said.</p>
+        <p>"It's not off," Joiner said. "It's harder. I can draw you a house that doesn't need garage seven. It would be smaller downstairs. It would lose the second bathroom and it would have to go up a bit higher at the back. But the quiet room fits either way. I'd rather ask Mr Kneale what he'd want than decide for him. Would you come?"</p>
+        <p>"To his house?"</p>
+        <p>"To the court. On Saturday. I've asked all the neighbours. I've said there'll be tea."</p>
+        <p>Saturday was grey and dry, with the wind coming in off the Channel the way it did in November, so that everyone stood with their shoulders up. There were more people in the garage court than Kerry had expected. There was her mum, in her good coat, with a flask. There were the Dobsons from number 32 and the young couple from 36 with the baby in a sling, and old Mr Fell, who came to everything, and two lads from the end of the street who had come because somebody said there would be bacon rolls. There was a woman from the council called Amira Siddiqui, in a hi-vis vest over a duffel coat, who had brought a trestle table and a tea urn and the bacon rolls, and on the table there was a screen about the size of a door, propped against a garage, with the court on it drawn from above.</p>
+        <p>And there was Bernard Kneale, standing in front of number seven with his hands in his pockets, in a flat cap and the same anorak he had worn for as long as Kerry could remember. He did not come to the table. He stood by his door the way he had stood in front of the tree.</p>
+        <p>Amira did the welcome, quickly and without notes, and then she said that Joiner would show them some drawings and answer anything anyone wanted to ask, and that nothing would go ahead if the street did not want it, and she meant that. Then she stepped back, and the screen woke up, and the voice came out of a little speaker on the table and said good morning, and thanked them for coming out in the cold.</p>
+        <p>It showed them the house first. It was not a big house. It was two storeys at the front and two at the back, in timber, clad in a grey-green that Joiner said had been chosen to match the slate on the backs of Lyon Street, so that from your kitchen window it would look like it had always been there. It had a pitched roof with solar on the south side. It had a little garden at the front where the buddleia was, and Joiner said the buddleia could stay, if they wanted it to stay, because it was the best thing for butterflies in the whole court. It had a red door. Kerry had not asked for a red door. She had mentioned, in passing, about an hour into the first conversation, that the house on the letter had a red door and that it was the first thing she had liked about it.</p>
+        <p>Then it showed them the shadows. It had worked out where the sun would be at every hour of every day of the year, and it showed them the house's shadow moving across the backs of Lyon Street like the hand of a clock, and there was a sort of murmur in the court when people saw that at midwinter the shadow did not quite reach the Dobsons' back wall and at midsummer it fell short of anybody's yard at all. Mrs Dobson said, "Well, I never," which was the most anyone had said.</p>
+        <p>The young couple asked about the noise of building it. Joiner said nine working days on site, eight till four, no Sundays, and that the loudest thing would be a crane for two of those days. Mr Fell asked whether there would be parking. Joiner said no, there would not, and that it would not pretend otherwise, and that the four spaces at the mouth of the court would be kept for Lyon Street, painted, with a little sign. Mr Fell seemed satisfied with that, as if he had expected to be lied to and had been let down gently.</p>
+        <p>Then Joiner said, "Mr Kneale, I wonder if I could ask you something."</p>
+        <p>Everybody turned. Bernard did not move from in front of his door.</p>
+        <p>"I've drawn two houses," Joiner said. "One of them needs your garage. One of them doesn't. I'm going to show you both, and then I'd like you to tell me what you think of the one that doesn't, because if you don't like it I'll draw it again."</p>
+        <p>The screen split in two. On the left was the house they had seen. On the right was a different house. It was the same house, nearly, but it had been pushed into the corner of the L so that its back stepped around the end of the garage row, and the garage row had been cut down from eleven to one. One garage stood on its own at the edge of the plot, with its green door, between the new house and the alley, like a shed at the bottom of a garden. Joiner had drawn the Micra inside it. It had drawn it blue.</p>
+        <p>"I'd take the other ten down," Joiner said. "I'd leave yours where it is. I'd put a new roof on it, because the old one is asbestos cement and it's starting to go, and I'd put a light in it, and a socket, so the battery doesn't need a jump in the winter. You'd keep your key. You'd get to it the way you do now, down the alley. The house would lose its second bathroom, and Ms Ashworth's son would have a smaller bedroom, but the quiet room stays the same size." There was a little pause. "I'd want Ms Ashworth to say whether that's all right, too."</p>
+        <p>Kerry was looking at Bernard. Bernard was looking at the screen. For a long time he did not say anything, and the wind came round the corner of the garages and rattled the up-and-over doors, all of them, all down the row, the way it had done her whole childhood.</p>
+        <p>"What's a quiet room," Bernard said.</p>
+        <p>So Kerry told him. She had not planned to. She stood by the trestle table with a bacon roll going cold in her hand and she told Bernard Kneale and the Dobsons and the couple with the baby and Mr Fell and the two lads about the extractor fan, and the hundred and twenty hertz, and the airing cupboard, and how Rhys was not hiding in there. She did not cry, which she was proud of afterwards. Her mum held her elbow, which she was also glad of afterwards.</p>
+        <p>Bernard looked at her the whole time. When she finished, he took his hands out of his pockets and walked across to the trestle table and looked at the right-hand drawing up close, with his nose nearly on the screen, the way people of his age looked at things.</p>
+        <p>"Irene drove that car to Morecambe every August for twenty-two years," he said. "She wouldn't go on the motorway. She went round by Greenodd."</p>
+        <p>Nobody said anything.</p>
+        <p>"She'd have liked a lad having a room to think in." He straightened up. "I want a light that comes on when I open the door. I'm not standing in the dark with a torch at my age."</p>
+        <p>"I can do that," Joiner said.</p>
+        <p>"And a bench. Outside. Where I can sit." He pointed at a spot on the drawing, by the garage door, facing the buddleia. "There."</p>
+        <p>"I can do that too."</p>
+        <p>Bernard nodded, once, as if a deal had been struck at the end of a long night in a meeting room at the yard, and went back to stand in front of number seven, and put his hands back in his pockets. Kerry ate the cold bacon roll because she did not know what else to do. Her mum was crying a bit, which was all right, because her mum cried at the end of Countdown.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl mp-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="plotmap"><i class="osq " style="left:14%;top:22%"></i><i class="osq " style="left:32%;top:18%"></i><i class="osq " style="left:58%;top:24%"></i><i class="osq " style="left:74%;top:16%"></i><i class="osq " style="left:22%;top:52%"></i><i class="osq " style="left:48%;top:58%"></i><i class="osq here" style="left:68%;top:48%"></i></div>
+        <div class="label">little orange squares</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl ck-scene" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="plan">
+          <div class="sun" style="right:4%;top:0;left:auto"></div>
+          <div class="backrow"></div>
+          <div class="siderow"></div>
+          <div class="house12" style="left:28%;top:28%;width:16cqw;height:10cqw;transform:none"></div>
+          <div class="lyon"></div>
+          <div class="clkshad"></div>
+        </div>
+        <div class="label">like the hand of a clock</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl sv-scene" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="ground tarmac" style="height:30%"></div>
+        <div class="gdoor lone" style="left:18%;bottom:22%"></div>
+        <div class="micra" style="left:22%;bottom:24%"></div>
+        <div class="bnch" style="left:52%;bottom:28%"></div>
+        <div class="bud" style="left:72%;bottom:28%"></div>
+        <div class="label">number seven</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They went to see the shed in December. Amira arranged it, and Rhys came, because the shed was in the old Buccleuch Dock and Rhys had read about Buccleuch Dock in a book about the yard and wanted to see where the cranes had been. Kerry had warned Amira about the noise. Amira had said, "Ask Joiner," and Joiner had said that the shed would be on a quiet day, with only the finishing bay running, and that there was a room in the middle of it he thought Rhys would want to see.</p>
+        <p>The man who met them at the gate was called Dougie Tyson. He was about sixty, broad, with a white beard and a lanyard, and he had been a fitter on the boats for thirty years until his knees went. He shook Kerry's hand and nodded at Rhys without trying to shake his, which Kerry noticed, and which made her think that Joiner had said something.</p>
+        <p>Inside, the shed was so big that it had its own weather. You could feel the air move under the roof, way up, where the old gantry rails still ran along the girders. Down on the floor there were lines of what looked like enormous flat-pack furniture, wall panels as long as a bus standing on end in racks, and floor cassettes stacked like slices of bread, and on the far side a row of whole rooms, bathrooms and kitchens, finished, with taps on, waiting on trolleys to be married up to the rest of a house.</p>
+        <p>"That's yours," Dougie said, and pointed.</p>
+        <p>There was a long panel on a rack with a label on it in marker pen, ASHWORTH – LYON ST – REAR GF – 04, and next to it another, and another. Kerry walked along them and touched one. It was wood, smooth, pale, and much heavier than it looked when she leaned on it.</p>
+        <p>"Cross-laminated," Dougie said. "Spruce, from Kielder, mostly. Glued in layers, each one the other way. It's like a submarine hull, if you think about it, which I do because I'm daft. It's not the thickness that stops the noise. It's that every layer's going a different way to the one next to it, so the sound can't find its feet."</p>
+        <p>The quiet room was in the middle of the finishing bay. It was not a mock-up. It was the actual room, the one that would go into their house, sitting on its own on a trolley with its door open, a box about three metres by three and a half with a window at one end. Dougie said they had built it first, before anything else in the house, because Joiner had asked them to, so that Rhys could try it.</p>
+        <p>"There's a gap," Dougie said, to Rhys, as if Rhys had asked. "All the way round. The room sits inside the house on these." He knelt down by the trolley and pointed at a row of little black blocks, like hockey pucks, under the edge of the floor. "Rubber springs. Tuned. Your machine told us the number you gave it, hundred and twenty and two-forty, and the bloke from Salford who does the acoustics sat with it for a week, and they picked the springs so those two go into the room and don't come out the other side. Then there's the wall, and an air gap, and another wall. Then the door's got a seal on it like a fridge. We'll put the ventilation through a baffle, so it doesn't hum, and it's not on the same circuit as anything else."</p>
+        <p>Rhys was looking at the springs. He did not say anything.</p>
+        <p>"Go in, if you want," Dougie said. "I'll shut the door. You knock when you want out and I'll open it straight away. Or there's a handle on the inside. Either."</p>
+        <p>Rhys went in. Dougie shut the door. It closed with a soft, heavy sound like a car door on an expensive car, and then there was nothing, not from inside, not anything.</p>
+        <p>Kerry stood by the trolley in the middle of the shed with her arms folded. Somewhere at the back of the shed a radio was on, and a forklift was beeping, and up in the roof the wind was moving the old gantry chains so that they ticked against the girders. Amira looked at her phone and then put it away. Dougie got a tin of travel sweets out of his pocket and offered them round.</p>
+        <p>Seven minutes, Kerry thought. Ten. She was about to say something when Dougie touched her arm and nodded at the little window at the end of the box.</p>
+        <p>She walked round and looked in. Rhys was lying on the floor of the quiet room on his back, with his ear defenders off and on his chest, with his hands folded on top of them, and his eyes open, looking at the ceiling. His face was a face she had not seen on him since he was very small, and she could not have said what it was, except that it was not doing anything. It was not holding anything off.</p>
+        <p>He stayed in there for thirty-five minutes. When he knocked, Dougie opened the door, and Rhys came out and put his defenders back on and stood beside the trolley and looked at the springs again.</p>
+        <p>"What did it sound like?" Kerry said.</p>
+        <p>Rhys thought about it for a long time, the way he did, as if he was going to be held to the answer.</p>
+        <p>"Like inside a coat," he said.</p>
+        <p>They took the garages down in the second week of January. It took a day and a half. Kerry had thought it would take longer, and she had thought she would feel something about it, about the doors she had kicked a ball against, but mostly she stood at her mum's back bedroom window with a cup of tea and watched a man in a mask and white overalls lift the old roofs off in whole sheets, wrapped in plastic, and lower them into a skip with a lid, and then a small digger nibble the block walls down to the slab as neatly as if it was eating a biscuit. Number seven stood on its own at the end with its green door shut and the Micra inside it, under a dust sheet that Bernard had put over it himself the night before.</p>
+        <p>On the Wednesday they broke the tarmac to lay the foundations, and found the culvert.</p>
+        <p>It was not on any drawing. It was a brick tunnel about as high as a man's knee, running diagonally under the court, Victorian, with water at the bottom of it, going somewhere. The lad on the digger stopped the moment the bucket touched brick, and the site went quiet, and by eleven o'clock there was a man from United Utilities in the court with a camera on a little tracked robot, sending it up the tunnel while everyone watched the screen on his tablet. Kerry watched it from her mum's yard with her heart in her shoes. She had read enough about building to know that this was the kind of thing that stopped everything for a year.</p>
+        <p>The tunnel went up under Lyon Street and down towards the old dock. It was a storm drain, from when the street was built, that somebody had forgotten about in about 1930, and it was still working, still taking the rain off half the backs of Lyon Street. It was in good nick. The man from United Utilities said you could not build on top of it and you could not move it, not without digging up half the street.</p>
+        <p>Kerry rang Amira. Amira said, "Give it till tonight."</p>
+        <p>At six o'clock, after tea, the tablet on the kitchen table in the flat lit up, with the extractor going through the wall, and Joiner said that it was sorry about the culvert, and that it had not known, and that it should have asked for a camera survey before anybody broke ground, and that it had added that to every garage court in the town that had not been started yet, so that nobody else would have the day she had had. Then it showed her the house again. It had turned it. Not much. About twelve degrees. The front door had moved round so that it faced up the court instead of across it, and the house sat on six concrete pads instead of a slab, three either side of the line of the tunnel, like a person stepping over a puddle. The quiet room was in the same place relative to everything else, at the back, on the ground floor, on its springs. The garden was a different shape. The buddleia was still there.</p>
+        <p>"The man from the water company would like a hatch, so he can get to it," Joiner said. "I've put it under the front path. You'll have a little cast-iron cover with a crest on it. It's nice, actually. It was going to be thrown away from a job in Ulverston."</p>
+        <p>"How long does this take?" Kerry said.</p>
+        <p>"Dougie's people need to change two floor cassettes. They've started. It adds four days."</p>
+        <p>She said thank you. She did not know what else to say to it. She had spent nine years saying thank you to people who had not done anything, and it felt strange to say it to something that had.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl cl-scene" aria-hidden="true">
+        <div class="sky shed"></div>
+        <div class="rack"></div>
+<div class="clt" style="left:16%;bottom:16%;height:28cqw"></div><div class="clt" style="left:32%;bottom:16%;height:30cqw"></div><div class="clt" style="left:48%;bottom:16%;height:32cqw"></div><div class="clt" style="left:64%;bottom:16%;height:28cqw"></div><div class="clt" style="left:80%;bottom:16%;height:30cqw"></div>
+        <div class="label">Cross-laminated</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl co-scene" aria-hidden="true">
+        <div class="sky shed"></div>
+        <div class="trolley" style="bottom:18%"></div>
+        <div class="pucks" style="left:32%;right:32%;bottom:20%;height:4%"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="qroom" style="left:36%;bottom:26%"></div>
+        <div class="label">Like inside a coat</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl pd-scene" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="ground tarmac" style="height:40%"></div>
+        <div class="culvert" style="left:6%;right:6%;bottom:28%"></div>
+<div class="cpad" style="left:16%;top:38%"></div><div class="cpad" style="left:34%;top:34%"></div><div class="cpad" style="left:52%;top:30%"></div><div class="cpad" style="left:22%;top:58%"></div><div class="cpad" style="left:40%;top:54%"></div><div class="cpad" style="left:58%;top:50%"></div>
+        <div class="house12" style="left:28%;bottom:42%"></div>
+        <div class="label">six concrete pads</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The house went up in the last week of January, in nine working days, the way Joiner had said, plus the four.</p>
+        <p>The cassettes came round from the dock on the back of two lorries at seven in the morning, wrapped in white plastic like Christmas presents, and a mobile crane parked at the mouth of the court with its legs out on big pads, and the whole of Lyon Street came out into its back yards to watch, in dressing gowns, with mugs. The two lads from the end of the street skived school. Mr Fell brought a folding chair. The young couple held the baby up so it could see the crane, and the baby was not interested in the crane, only in its own feet, but they held it up anyway.</p>
+        <p>They put the quiet room in first, on its springs, on its own, before anything else. It came over the backs of the houses on the end of the crane wrapped in its white plastic like a big parcel, turning slowly in the wind, with two men on ropes at the corners keeping it steady, and it went down onto the pads so gently that Kerry, standing in her mum's yard with her hands over her mouth, did not see the moment it touched. Then the walls of the house went up around it. Then the floors. By the end of the second day it had a roof. By the end of the fourth it had windows, triple-glazed, and the red door, which came round on the back of a van on its own, and which Dougie carried up the path himself.</p>
+        <p>Bernard Kneale was there every day. He did not watch from his yard. He came out of his back gate at eight with a flask and walked down the alley and sat on his bench, which had been the first thing they built on the site, in the first week, before the garages came down, as if Joiner had wanted to make sure he had somewhere to sit before he had to sit through anything. It was a plain bench, wood, with a back, facing the buddleia, and it had a little brass plate on it that he had not asked for and that Kerry had not known about until she saw it. It said IRENE KNEALE, 1946–2023. SHE WENT ROUND BY GREENODD.</p>
+        <p>On the seventh day he got up off the bench and walked over to where Dougie was standing with his clipboard and said something, and Dougie laughed, and after that Bernard was in a hi-vis vest that was too big for him, holding the bottom of a ladder. Nobody said anything about whether he was allowed. Amira looked the other way.</p>
+        <p>On the twelfth day the electrician finished, and the man from building control came and walked round with a torch and signed something, and on the thirteenth day Amira came at four o'clock with two keys on a ring with a plastic fob that said 40A LYON STREET COURT. They had given it a number. The house was 40A because it was behind Bernard's, and Bernard had said that was correct, because it was.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl cr-scene" aria-hidden="true">
+        <div class="sky sunday"></div>
+        <div class="ground garden" style="height:22%"></div>
+        <div class="leg" style="left:8%;bottom:20%"></div>
+        <div class="leg" style="left:28%;bottom:20%"></div>
+        <div class="mcrane" style="left:22%;top:4%;bottom:20%"></div>
+        <div class="cable" style="left:54%;top:8%;height:40%"></div>
+        <div class="parcel" style="left:46%;top:40%"></div>
+        <div class="label">like a big parcel</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl rd-scene" aria-hidden="true">
+        <div class="sky sunday"></div>
+        <div class="gravel"></div>
+        <div class="hedge" style="left:8%;right:8%;bottom:20%"></div>
+        <div class="rhouse" style="left:34%;bottom:22%"></div>
+        <div class="rdoor" style="left:47%;bottom:22%"></div>
+        <div class="label">the red door</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl bp-scene" aria-hidden="true">
+        <div class="sky sunday"></div>
+        <div class="ground garden" style="height:28%"></div>
+        <div class="bud" style="right:10%;left:auto;bottom:26%"></div>
+        <div class="irenebnch" style="left:28%;bottom:26%"></div>
+        <div class="brasspl" style="left:32%;bottom:38%"><span class="ins">IRENE KNEALE, 1946–2023.<br>SHE WENT ROUND BY GREENODD.</span></div>
+        <div class="label">SHE WENT ROUND BY GREENODD</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl ky-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="ring" style="left:28%;top:22%"></div>
+        <div class="key" style="left:26%;top:30%;transform:rotate(-28deg)"></div>
+        <div class="key" style="left:36%;top:32%;transform:rotate(18deg)"></div>
+        <div class="fob" style="left:48%;top:36%"><span class="ins">40A LYON STREET COURT</span></div>
+        <div class="label">40A LYON STREET COURT</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>They moved in on a Saturday, the first Saturday in February, with her mum's nephew's van and three trips. Rhys carried his timetables himself, in two boxes, and would not let anyone else touch them, and he put them in the quiet room first, before his bed, before his clothes, before anything, on the low shelf that Joiner had drawn along one wall at the height Rhys had told it his arm reached when he was lying on the floor.</p>
+        <p>That night, after the van had gone back and her mum had gone home through the back gate, forty metres, with a plate of the scones that Mrs Dobson had brought round, Kerry walked through the house with the lights off. She did it slowly. She stood in the kitchen and listened. There was the fridge, very faintly, which was a new fridge and which Joiner had picked because it was the quietest one it could find for under four hundred pounds. There was the rain on the roof, which was soft, because the roof had a layer in it for that too. Out the back there was the wind in the buddleia. There was no hum. She stood there and listened for it the way you check your pocket for a phone you know you've left at home, and it was not there.</p>
+        <p>She went to the quiet room. The door was shut. She did not open it. She put her hand flat on it, on the cool painted wood, and there was nothing on the other side, no sound at all, which was the point, which was what she had wanted for nine years and what he had wanted for eleven, and she could not hear him, and she stood there with her hand on the door anyway for a long time.</p>
+        <p>In the morning he was asleep in his own bed, in his own small bedroom, upstairs. He had gone in the quiet room until about ten, he told her at breakfast, and then he had come out and gone up to bed, because he had wanted to see what it was like to sleep upstairs. He said it was fine. He said the bedroom was not as quiet as the quiet room, but that was all right, because it was not meant to be. He said it was quieter than the airing cupboard.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall pl sh-scene" aria-hidden="true">
+        <div class="qwall"></div>
+        <div class="lowshelf" style="bottom:28%"></div>
+        <div class="ttable" style="left:14%;right:14%;bottom:30%;height:22%"><i style="height:40%"></i><i style="height:53%"></i><i style="height:66%"></i><i style="height:49%"></i><i style="height:62%"></i><i style="height:45%"></i></div>
+        <div class="label">the low shelf</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl hd-scene" aria-hidden="true">
+        <div class="sky kitchen"></div>
+        <div class="qdoor" style="left:42%;top:12%"></div>
+        <div class="palm" style="left:46%;top:36%"></div>
+        <div class="label">She put her hand flat on it</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>On the Sunday, at eleven, they heard the Micra.</p>
+        <p>It was faint through the triple glazing, a cough and then a rattle and then the small steady grumble of a 1998 engine idling in a garage with its door up. Rhys went to the window in the kitchen and looked out at it, at the green door rolled up and the blue car inside under the new light that came on when you opened it, and Bernard in the driver's seat with the door open and one foot out on the concrete, the way people his age sat in cars that were not going anywhere.</p>
+        <p>Rhys put his defenders on and went outside. Kerry let him. She watched from the kitchen window. He walked round the edge of the garden, past the buddleia, past the cast-iron hatch with the crest on it, and stopped a few feet from the garage and stood there, and after a while Bernard turned his head and saw him and said something. Rhys said something back. Bernard pointed at the bonnet. Rhys came a step closer. Bernard reached across and pulled the catch, and got out, slowly, holding the door, and lifted the bonnet and propped it, and the two of them stood side by side and looked at the engine running, Bernard in his anorak and Rhys in his defenders, neither of them saying anything for a long time.</p>
+        <p>When Rhys came back in his cheeks were pink from the cold and he took the defenders off and put them on the table.</p>
+        <p>"Thirty-one hertz at idle," he said. "Roughly. It goes up when he touches the pedal."</p>
+        <p>"Is that a bad one?"</p>
+        <p>He thought about it, properly, as if he would be held to it.</p>
+        <p>"No," he said. "It's all right. It stops."</p>
+        <p>He went back to the quiet room with his timetables. Kerry put the kettle on and stood at the window while it boiled. Over the roofs of Lyon Street, towards Hawcoat and Ormsgill and Newbarns, she could see the tops of three cranes standing in the grey morning, still, because it was Sunday, each one over a court she had never looked at properly, each one with a parcel waiting at the bottom of it, wrapped in white.</p>
+      </div>
+
+      <figure class="scene tall pl bn-scene" aria-hidden="true">
+        <div class="sky sunday"></div>
+        <div class="ground tarmac" style="height:28%"></div>
+        <div class="gdoor up" style="left:16%;bottom:48%;width:30cqw"></div>
+        <div class="micra" style="left:20%;bottom:28%"></div>
+        <div class="bonnet" style="left:32%;bottom:40%"></div>
+        <div class="folk" style="left:54%;bottom:28%"></div>
+        <div class="folk b" style="left:60%;bottom:28%"></div>
+        <div class="label">Thirty-one hertz at idle</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall pl tc-scene" aria-hidden="true">
+        <div class="sky sunday"></div>
+        <div class="roofs" style="bottom:28%;height:14%"></div>
+        <div class="ground" style="height:28%;background:linear-gradient(180deg,#3a3e40,#2a2e30)"></div>
+        <div class="cranejib" style="left:14%;top:10%;bottom:42%"></div>
+        <div class="wparcel" style="left:18%;bottom:28%"></div>
+        <div class="cranejib" style="left:42%;top:10%;bottom:42%"></div>
+        <div class="wparcel" style="left:46%;bottom:28%"></div>
+        <div class="cranejib" style="left:70%;top:10%;bottom:42%"></div>
+        <div class="wparcel" style="left:74%;bottom:28%"></div>
+        <div class="label">wrapped in white</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
