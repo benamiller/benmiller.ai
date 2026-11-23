@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The main kept the trickle — Ben Miller</title>
+    <meta name="description" content="A Stoke water technician hears a burst main under a Longton crossroads that the network&#x27;s agent has decided can wait until April, while a man up the street tries to finish his dialysis on a trickle.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0a0c10;
+        --ink: #d5dde4;
+        --mute: #7e8a98;
+        --cream: #eef1f4;
+        --gold: #f2c23a;
+        --yolk: #ffd24a;
+        --leaf: #3fae5a;
+        --cool: #9cc8e8;
+        --ember: #e8762a;
+        --alert: #e0463a;
+        --bark: #4a3426;
+        --lamp: #fff0c0;
+        --steel: #8ea4aa;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 80% 6%, rgba(200, 110, 30, 0.10), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 12% 20%, rgba(40, 70, 100, 0.08), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 24% 86%, rgba(30, 50, 80, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 86% 74%, rgba(180, 90, 20, 0.05), transparent 60%),
+          linear-gradient(180deg, #12141a 0%, #0e1016 36%, #0a0c12 70%, #07080c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c4ccd2;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(200, 120, 40, 0.22), 0 0 2px rgba(200, 210, 220, 0.4);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c4783a; }
+      .prose strong { font-weight: 700; color: #e8d0a0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10131a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(200, 140, 70, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .trickle-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .trickle-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .hero h1 { text-shadow: 0 0 42px rgba(200, 120, 40, .22), 0 0 2px rgba(220, 200, 160, .25); }
+      .trickle-hero .label, .scene.tk .label { color: rgba(230, 226, 214, .92); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+      .trickle-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(180,140,80,.14); background: #0c1014; }
+      .trickle-hero > * { position: absolute; }
+      .trickle-hero::after, .scene.tk::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(4,6,8,.78) 100%), repeating-linear-gradient(112deg, rgba(255,220,160,.014) 0 2px, transparent 2px 8px); }
+      .scene.tk { background: #101318; container-type: size; }
+
+      .sky { inset: 0; background: linear-gradient(180deg, #141820 0%, #1c2228 48%, #2a2418 100%); }
+      .sky.night { background: linear-gradient(180deg, #0a0e14 0%, #141820 55%, #1c1810 100%); }
+      .sky.frost { background: linear-gradient(180deg, #1a222c 0%, #2a343c 50%, #3a4044 100%); }
+      .sky.dusk { background: linear-gradient(180deg, #3a2e28 0%, #5a4a3a 42%, #8a6a48 100%); }
+      .sky.room { background: linear-gradient(180deg, #1c1a18, #141210 70%, #0e0c0a); }
+      .sky.paper { background: linear-gradient(180deg, #161a1e, #101418 70%, #0c1014); }
+      .sky.clinic { background: linear-gradient(180deg, #1a1c1e, #141618 70%, #101214); }
+
+      .pavement { left: 0; right: 0; bottom: 0; height: 38%; background: linear-gradient(180deg, #2a2c2e, #1a1c1e); z-index: 1; }
+      .pavement::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 9cqw, rgba(0,0,0,.18) 9cqw 9.3cqw); }
+      .frosting { left: 0; right: 0; bottom: 28%; height: 12%; background: repeating-linear-gradient(90deg, transparent 0 1.4cqw, rgba(220,230,236,.08) 1.4cqw 1.7cqw); z-index: 2; pointer-events: none; }
+
+      .lamp { width: 2.2cqw; height: 28cqw; background: #2a2c2e; z-index: 4; }
+      .lamp::before { content: ""; position: absolute; left: -2.2cqw; top: 0; width: 6.6cqw; height: 4.4cqw; background: #c48a3a; border-radius: 40% 40% 20% 20%; box-shadow: 0 0 6cqw 2cqw rgba(220,140,40,.35), 0 8cqw 10cqw rgba(220,140,40,.12); }
+      .glow { width: 40cqw; height: 40cqw; border-radius: 50%; background: radial-gradient(circle, rgba(220,150,50,.22), transparent 68%); z-index: 3; pointer-events: none; }
+
+      .hydlid { width: 16cqw; height: 16cqw; border-radius: 50%; background: #2c3032; box-shadow: inset 0 0 0 .6cqw #3a3e40, 0 .4cqw .8cqw rgba(0,0,0,.45); z-index: 5; }
+      .hydlid::before { content: ""; position: absolute; inset: 18%; border-radius: 50%; box-shadow: inset 0 0 0 .35cqw #4a4e50; }
+      .hydlid::after { content: ""; position: absolute; left: 46%; top: 12%; width: 8%; bottom: 12%; background: #4a4e50; }
+      .stick { width: 1.3cqw; height: 42cqw; background: linear-gradient(90deg, #6a7278, #c8d0d4 40%, #5a6268); border-radius: .2cqw; z-index: 6; transform-origin: 50% 100%; }
+      .brasscup { width: 6.4cqw; height: 4.2cqw; background: linear-gradient(180deg, #d4b46a, #a07a30); border-radius: 50% 50% 40% 40%; box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.35), inset 0 .2cqw 0 rgba(255,230,160,.35); z-index: 7; }
+      .brasscup::after { content: ""; position: absolute; left: 22%; right: 22%; top: 18%; height: 40%; background: #3a2410; border-radius: 50%; opacity: .55; }
+
+      .pipe { height: 8cqw; background: linear-gradient(180deg, #5a6066, #3a4044 40%, #2a2e32); border-radius: 40%; box-shadow: inset 0 1.2cqw 1.4cqw rgba(0,0,0,.35), 0 .4cqw .8cqw rgba(0,0,0,.3); z-index: 4; }
+      .crack { height: .5cqw; background: #0a0c0e; z-index: 5; clip-path: polygon(0 40%, 12% 0, 28% 80%, 44% 10%, 62% 90%, 80% 20%, 100% 60%, 100% 100%, 0 100%); }
+      .exhale { border-radius: 50%; background: radial-gradient(ellipse at 50% 80%, rgba(210,220,226,.5), transparent 70%); animation: breath 4.8s ease-in-out infinite; z-index: 6; pointer-events: none; }
+
+      .cyls { display: flex; flex-wrap: wrap; gap: 1cqw; align-content: center; justify-content: center; z-index: 4; }
+      .cyls i { position: relative; width: 3.2cqw; height: 7.2cqw; background: linear-gradient(90deg, #4a4e52, #7a7e82 45%, #3a3e42); border-radius: 40%; box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.35); }
+      .cyls i::before { content: ""; position: absolute; left: 18%; right: 18%; top: 8%; height: 18%; background: #2a2e32; border-radius: 40%; }
+      .cyls i.lit { box-shadow: 0 0 1cqw rgba(200,140,50,.4), 0 .3cqw .5cqw rgba(0,0,0,.35); }
+
+      .prv { width: 22cqw; height: 14cqw; background: #2a3034; border-radius: .4cqw; box-shadow: 0 .6cqw 1.2cqw rgba(0,0,0,.4); z-index: 5; }
+      .prv::before { content: ""; position: absolute; left: -18%; top: 38%; width: 18%; height: 24%; background: #3a4044; }
+      .prv::after { content: ""; position: absolute; right: -18%; top: 38%; width: 18%; height: 24%; background: #3a4044; }
+      .wheel { width: 8cqw; height: 8cqw; border-radius: 50%; box-shadow: inset 0 0 0 .5cqw #8a9094, 0 0 0 .3cqw #2a2e30; background: radial-gradient(circle, #1a1c1e 0 1.4cqw, transparent 1.5cqw); z-index: 6; animation: nudge 6s ease-in-out infinite alternate; }
+      .wheel::before { content: ""; position: absolute; left: 46%; top: 8%; width: 8%; height: 84%; background: #8a9094; }
+      .pday { left: 10%; right: 10%; height: .3cqw; background: rgba(200,210,214,.16); }
+      .pdot { width: 1.4cqw; height: 1.4cqw; border-radius: 50%; background: #c48a3a; animation: pwalk 6s ease-in-out infinite alternate; z-index: 5; }
+
+      .iron { width: 70cqw; height: 16cqw; background: linear-gradient(180deg, #5a5e62, #3a3e42 45%, #2a2e32); border-radius: 50%; box-shadow: inset 0 1.6cqw 2cqw rgba(0,0,0,.4), 0 .8cqw 1.4cqw rgba(0,0,0,.35); z-index: 4; }
+      .iron::before { content: ""; position: absolute; left: 8%; right: 8%; top: 18%; height: 22%; background: repeating-linear-gradient(90deg, transparent 0 3cqw, rgba(180,190,194,.08) 3cqw 3.3cqw); }
+      .split { left: 38%; right: 28%; height: 1cqw; background: #c8d0d4; clip-path: polygon(0 50%, 18% 0, 36% 100%, 54% 10%, 72% 90%, 90% 20%, 100% 60%, 100% 80%, 0 80%); z-index: 5; opacity: .7; }
+      .rime { left: 0; right: 0; top: 0; height: 36%; background: linear-gradient(180deg, rgba(220,230,236,.4), transparent); border-radius: 50% 50% 0 0; z-index: 5; pointer-events: none; }
+
+      .tablet { width: 36cqw; height: 26cqw; background: #1a1e22; border-radius: .6cqw; box-shadow: 0 .8cqw 1.6cqw rgba(0,0,0,.45), inset 0 0 0 .35cqw #2a3034; z-index: 5; }
+      .rows { left: 8%; right: 8%; top: 16%; bottom: 12%; }
+      .rows i { position: absolute; left: 0; height: 12%; background: #2a3238; border-radius: .15cqw; }
+      .rows i.on { background: #3a4a40; box-shadow: inset 0 0 0 .15cqw #4a8a54; }
+
+      .trow { left: 18%; right: 8%; height: 14cqw; background: repeating-linear-gradient(90deg, #6a3030 0 5.5cqw, #5a2828 5.5cqw 6cqw); z-index: 4; transform: skewY(-8deg); transform-origin: 0 100%; }
+      .trow::before { content: ""; position: absolute; left: 0; right: 0; top: -6cqw; height: 6cqw; background: repeating-linear-gradient(90deg, #4a2424 0 5.5cqw, #3a1c1c 5.5cqw 6cqw); clip-path: polygon(0 100%, 4% 40%, 10% 100%, 16% 30%, 22% 100%, 28% 35%, 34% 100%, 40% 28%, 46% 100%, 52% 38%, 58% 100%, 64% 30%, 70% 100%, 76% 40%, 82% 100%, 88% 32%, 94% 100%, 100% 45%, 100% 100%); }
+      .ramp { width: 8cqw; height: 3.2cqw; background: #6a5a48; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 5; }
+      .xing { width: 10cqw; height: 10cqw; background: #3a3e40; z-index: 3; }
+
+      .machine { width: 28cqw; height: 22cqw; background: linear-gradient(180deg, #d8d4cc, #c0bcb4); border-radius: .5cqw; box-shadow: 0 .8cqw 1.6cqw rgba(0,0,0,.4); z-index: 5; }
+      .machine::before { content: ""; position: absolute; left: 10%; right: 10%; top: 10%; height: 42%; background: #1a1c1e; border-radius: .3cqw; }
+      .ortri { width: 8cqw; height: 7cqw; background: #e07020; clip-path: polygon(50% 0, 100% 100%, 0 100%); z-index: 6; box-shadow: 0 0 1.4cqw rgba(224,112,32,.45); }
+      .ortri::after { content: ""; position: absolute; left: 44%; top: 38%; width: 12%; height: 36%; background: #1a1c1e; }
+      .mscreen { left: 12%; right: 12%; top: 12%; height: 38%; background: #121416; border-radius: .3cqw; z-index: 6; }
+      .words { font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: #e07020; text-align: center; font-size: 1.7cqw; }
+      .words.ok { color: #6aca70; }
+      .gtick { width: 5.6cqw; height: 5.6cqw; border-radius: 50%; box-shadow: inset 0 0 0 .35cqw #4aca70; z-index: 7; }
+      .gtick::after { content: ""; position: absolute; left: 22%; top: 38%; width: 55%; height: 22%; border: .4cqw solid #4aca70; border-top: 0; border-right: 0; transform: rotate(-50deg); }
+
+      .bgauge { width: 16cqw; height: 16cqw; border-radius: 50%; background: #1a1e22; box-shadow: inset 0 0 0 .5cqw #3a4248, 0 .6cqw 1.2cqw rgba(0,0,0,.4); z-index: 5; }
+      .needle { left: 50%; top: 18%; width: .4cqw; height: 36%; background: #c48a3a; transform-origin: 50% 100%; border-radius: .2cqw; z-index: 6; transform: rotate(-38deg); }
+      .gnum { font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums; font-weight: 500; color: #d5dde4; font-size: 4.2cqw; letter-spacing: .04em; text-align: center; z-index: 6; }
+      .bbox { width: 22cqw; height: 8cqw; background: #3a3e40; border-radius: .3cqw; z-index: 3; }
+
+      .vkey { width: 3cqw; height: 28cqw; background: #8a9094; z-index: 6; }
+      .vkey::before { content: ""; position: absolute; left: -7cqw; top: 0; width: 17cqw; height: 2cqw; background: #8a9094; border-radius: .2cqw; }
+      .vcover { width: 12cqw; height: 12cqw; border-radius: 50%; background: #2c3032; box-shadow: inset 0 0 0 .5cqw #3a3e40; z-index: 5; }
+
+      .barrel { width: 48cqw; height: 18cqw; background: linear-gradient(180deg, #5a5e62, #3a3e42 50%, #2a2e32); border-radius: 46%; z-index: 5; box-shadow: inset 0 1.4cqw 1.8cqw rgba(0,0,0,.35); }
+      .stamp { font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums; font-weight: 500; color: rgba(220,210,190,.92); font-size: 5cqw; letter-spacing: .16em; z-index: 6; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+      .mudwipe { width: 16cqw; height: 10cqw; background: radial-gradient(ellipse, rgba(58,42,28,.0), rgba(58,42,28,.55)); z-index: 6; pointer-events: none; }
+
+      .combi { width: 14cqw; height: 18cqw; background: #d0ccc6; border-radius: .3cqw; box-shadow: 0 .6cqw 1.2cqw rgba(0,0,0,.35), inset 0 0 0 .25cqw #b8b4ae; z-index: 5; }
+      .combi::before { content: ""; position: absolute; left: 38%; bottom: -14%; width: 24%; height: 16%; background: #6a6e72; }
+      .combi::after { content: ""; position: absolute; left: 38%; top: 18%; width: 24%; height: 14%; border-radius: 50%; background: #e07020; box-shadow: 0 0 1.2cqw rgba(224,112,32,.55); }
+      .kwall { inset: 0; background: linear-gradient(180deg, #3a3834, #2a2824); }
+      .kwall::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: #4a4640; }
+
+      .bpipe { height: 2.2cqw; background: #3a6a9a; border-radius: 1cqw; z-index: 5; transform: rotate(8deg); box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .gutter { left: 0; right: 0; bottom: 18%; height: 6%; background: #2a2c2e; z-index: 3; }
+
+      .sheet { left: 16%; right: 16%; top: 14%; bottom: 16%; background: #1c2024; border-radius: .4cqw; box-shadow: 0 .8cqw 1.6cqw rgba(0,0,0,.4), inset 0 0 0 .3cqw #2a3034; z-index: 5; }
+      .sheet i { position: absolute; left: 10%; height: 1.2cqw; background: #3a4248; border-radius: .1cqw; }
+      .sheet i.hi { background: #8a5050; }
+
+      .zone { width: 36cqw; height: 24cqw; background: #1a2a22; border-radius: .4cqw; box-shadow: inset 0 0 0 .3cqw #2a4a34, 0 .6cqw 1.2cqw rgba(0,0,0,.35); z-index: 5; }
+      .zone::after { content: ""; position: absolute; inset: 0; background:
+        repeating-linear-gradient(90deg, transparent 0 5cqw, rgba(80,140,90,.12) 5cqw 5.3cqw),
+        repeating-linear-gradient(0deg, transparent 0 4cqw, rgba(80,140,90,.1) 4cqw 4.3cqw); }
+      .zgreen { background: rgba(60,140,80,.35); border-radius: .2cqw; z-index: 6; }
+
+      @keyframes breath { 0%, 100% { opacity: .35; transform: scale(.85); } 50% { opacity: .7; transform: scale(1.08); } }
+      @keyframes nudge { from { transform: rotate(-18deg); } to { transform: rotate(22deg); } }
+      @keyframes pwalk { from { left: 18%; } to { left: 74%; } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(8deg) brightness(1.03); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (max-width: 600px) {
+        .trickle-hero { height: 22rem; }
+        .words, .gnum, .stamp { font-size: 3.2cqw; }
+        .words { font-size: 2.4cqw; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .trickle-hero *, .scene.tk *, .trickle-hero *::before, .trickle-hero *::after, .scene.tk *::before, .scene.tk *::after,
+        .paint, .fog { animation: none !important; }
+        .exhale { opacity: .55; transform: scale(1); }
+        .wheel { transform: rotate(8deg); }
+        .pdot { left: 48%; }
+        .scene { opacity: 1; transform: none; }
+      }
+
+      .sky, .pavement, .frosting, .lamp, .glow, .hydlid, .stick, .brasscup, .pipe, .crack, .exhale,
+      .prv, .wheel, .pday, .pdot, .iron, .split, .rime, .tablet, .rows, .trow, .ramp, .xing,
+      .machine, .ortri, .mscreen, .gtick, .bgauge, .needle, .gnum, .bbox, .vkey, .vcover,
+      .barrel, .stamp, .mudwipe, .combi, .kwall, .bpipe, .gutter, .sheet, .zone, .zgreen { position: absolute; }
+      .cyls { display: flex; position: absolute; }
+      .cyls i, .rows i, .sheet i { position: relative; }
+      .rows i, .sheet i { position: absolute; }
+      .words { position: absolute; left: 0; right: 0; }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="trickle-hero" aria-hidden="true">
+          <div class="sky night"></div>
+          <div class="pavement"></div>
+          <div class="frosting"></div>
+          <div class="lamp" style="right:14%;bottom:28%"></div>
+          <div class="glow" style="right:2%;bottom:36%"></div>
+          <div class="hydlid" style="left:38%;bottom:16%"></div>
+          <div class="stick" style="left:46.3%;bottom:28%;height:36cqw;transform:rotate(-8deg)"><i class="brasscup" style="left:50%;top:-3.6cqw;margin-left:-3.2cqw;width:6.4cqw"></i></div>
+          <div class="label">a listening stick</div>
+        </div>
+        <h1>The main kept the trickle</h1>
+        <p class="dek">A Stoke water technician hears a burst main under a Longton crossroads that the network's agent has decided can wait until April, while a man up the street tries to finish his dialysis on a trickle.</p>
+        <time datetime="2026-11-23">23 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The first thing Dev Mistry ever learned about water was that it talks, and the second was that most people never stop long enough to hear it. His trainer at the Hanley depot, a man called Royston who had forty years on the network and the knees to prove it, had handed him a listening stick on his first morning, a length of steel rod with a brass cup at the top, and told him to put it on a hydrant lid in Bucknall and press his ear to it and say nothing for a full minute. Dev had heard traffic, then his own pulse, and then, under both of them, a sound like someone breathing out slowly through their teeth and never needing to breathe in. That was a leak, Royston said. That was money and water and somebody's road going soft, and the pipe was telling you exactly where it hurt if you could be bothered to walk it.</p>
+        <p>Eleven years later Dev still carried a stick, though not that one. His was lighter, carbon with a steel tip, and he'd bought it himself because the company had stopped issuing them around the time the acoustic loggers went in. There were nine thousand loggers across the Stoke patch now, little grey cylinders clamped to valves and hydrants, each one listening all night and sending what it heard to Gauge, and Gauge listened to all nine thousand at once and did not need knees. Most of the younger lads didn't bother with sticks. Dev kept his in the door pocket of the van with a torch and a flask, and used it mostly out of habit, and partly because he liked being the one who heard a thing before the screen told him.</p>
+        <p>Gauge was the network agent. It had come in two years before as a pressure-management pilot on three district zones in Fenton and been rolled out across the whole of Mercia Water's Staffordshire region after its first summer, when leakage fell by nine per cent and the regulator wrote a paragraph about it in a report that the chief executive had framed. It ran the pressure-reducing valves at the inlet to every zone, nudging them up and down through the day to give each street just enough push to meet demand and not a bar more, because a pipe at lower pressure leaks less, bursts less, and costs less to run. It ranked the repair list. It wrote the job notes on Dev's tablet in a tidy, courteous voice that never got tired at three in the morning, and it was right about where the leaks were almost all of the time, which was the thing nobody in the depot could quite forgive it for.</p>
+        <p>The cold came in the second week of January, a hard dry frost that sat on the Potteries for six days and then lifted into rain, and the network did what Victorian cast iron always does when the ground freezes and thaws around it. It cracked. The night shifts went from quiet to stupid. Dev was on four nights running, out of the depot at seven with a list that Gauge rebuilt every twenty minutes as new bursts surfaced and old ones were shut in, and he spent most of the first two nights doing what the list told him, which was turning valves so the gangs could dig, and standing in the rain on Lightwood Road holding a torch for Shaz while she worked the excavator round a gas main with about two inches to spare.</p>
+        <p>On the third night, a little after one, a job came up that wasn't really a job. It was a customer contact, flagged amber, from an address on Furlong Terrace in Longton, and Gauge had attached it to Dev's list only because he was the nearest technician with nothing urgent for forty minutes. The note said: <em>Customer reports low pressure affecting medical equipment. Zone LT-14 pressure within reference level. Logged pressure at property boundary 7.3 m. Customer on Priority Services Register (home haemodialysis). Suggested action: courtesy visit, check internal stop tap and supply pipe, advise.</em></p>
+        <p>Dev knew what courtesy visit meant. It meant go and be nice to someone so the complaint closed with a person's name on it. He went anyway, because it was a ten-minute drive and he'd never been to Furlong Terrace and he liked to see the streets his zones were made of.</p>
+        <p>It was a long, plain terrace running downhill from the Uttoxeter Road, red brick, two up two down, bay windows that had been added at the front in the seventies by the look of the pebbledash, and at the bottom it met Cinder Lane at a little crossroads where a corner shop had been turned into a flat. The house was halfway down, number forty, with a light on in the front room and a wheelchair ramp built out of decking to the step. A man opened the door before Dev had knocked, in a fleece and tracksuit bottoms, with a tube taped to the inside of his left forearm and a look on his face that Dev would come to know well over the next fortnight, the look of someone who had stopped expecting anything and was about to be politely surprised.</p>
+        <p>"You're from the water," the man said.</p>
+        <p>"Dev. Mercia. You rang about the pressure."</p>
+        <p>"I've rung about the pressure eleven times." He stood back to let Dev in. "Tomasz. Mind the lines."</p>
+        <p>The front room had been turned into something between a lounge and a ward. There was a settee pushed against the bay and a recliner in the middle of the floor with a machine beside it on a trolley, about the size of a small fridge, cream and grey, with a screen that was showing an orange triangle and the words INLET PRESSURE LOW. A water treatment unit sat on the floor beside it, plumbed into a pipe that came through the wall from the kitchen, and the whole arrangement had the slightly makeshift neatness of something a hospital engineer had set up and a family had then lived with for four years.</p>
+        <p>"It needs a steady supply going in," Tomasz said, nodding at the treatment unit. "It makes its own fluid. It needs, I don't know the number, the man from the renal unit told me the number. If it drops, it stops. If it stops more than three times, I have to end the session and I've not had a proper one since Sunday."</p>
+        <p>"What do you normally do, how long?"</p>
+        <p>"Four nights a week, six hours. Overnight, while I sleep. That's the point of doing it at home." He said it without any edge. "Now I'm doing it at three in the morning because that's when the street's not using any water and I can get maybe four hours before it trips. And then I go to work."</p>
+        <p>Dev asked if he could look at the kitchen, and Tomasz waved him through. The internal stop tap was under the sink, an old brass one somebody had replaced the handle on. Dev turned it fully open, which it already was, and ran the cold tap into a measuring jug while he watched the second hand on his own watch, and it gave him a little over nine litres in a minute, which was a sad, thin stream that would have been fine for filling a kettle and was not fine for anything else. He ran the hot tap and heard the combi boiler on the wall fire up and then, after a few seconds, click off again, and the water went cold.</p>
+        <p>"It does that," said a girl's voice behind him. She was fifteen or so, in a school hoodie, holding a phone. "The boiler. Since Christmas. I have to have a shower at school."</p>
+        <p>"Ola," said Tomasz from the other room. "Bed."</p>
+        <p>"I'm getting a drink."</p>
+        <p>"She's getting a drink," Dev agreed, and moved out of the way of the fridge.</p>
+        <p>He went out to the street and found the boundary box in the pavement, lifted the lid with his key, and put the pressure gauge on the meter. It read just over seven metres of head, which was 0.72 of a bar, which was the number Gauge had written in the note. He knew what that number meant. The regulator's reference level for low pressure was seven metres at a flow of nine litres a minute, and a property that got more than that was, on paper, a property with adequate pressure, whatever its boiler or its kidney machine thought about it. It was not a coincidence that the street was sitting at 7.3. Nothing on Gauge's network was a coincidence.</p>
+        <p>He stood in the road for a moment with the gauge still in his hand. It was a quarter to two and the terrace was dark apart from Tomasz's front room, and the rain had stopped, and the drains were running. Then, because it was his habit and because the street was so quiet, he went back to the van for the stick.</p>
+        <p>There was a hydrant cover thirty yards down, near the crossroads. He knelt, set the steel tip on the spindle, and put his ear to the cup, and he did not need a full minute. He heard it in about four seconds. It wasn't the slow breath of a weeping joint; it was a roar, a hard, steady rush like a tap left fully open into a steel sink, and when he moved to the next fitting, a valve cover at the junction with Cinder Lane, it was louder again, so loud it buzzed in the brass. Somewhere under that crossroads a four-inch cast-iron main had broken properly, and it had been broken for a while, because the water hadn't come up through the road yet, which meant it had found somewhere to go, an old culvert or a sewer or the bed of some long-forgotten brook, and was running away underground at a rate Dev would have guessed at two or three litres a second.</p>
+        <p>He opened the tablet and pulled up the zone. Logger LT-14-022, the grey cylinder clamped to the very valve he'd just listened on, had flagged the noise eleven days ago. Gauge had it. Gauge had classified it, estimated it at 2.6 litres a second, located it to within four metres of where Dev was kneeling, and given it a status that Dev had to read twice.</p>
+        <p><em>Known burst, LT-14 / Cinder Lane junction. Repair scheduled: Q2 planned works window (from 6 April). Interim management: zone inlet pressure reduced to reference level to limit loss. No surface flooding. No loss of supply.</em></p>
+        <p>No loss of supply. Dev looked up the hill at the one lit window and then back at the screen. Below the status was a small grey link that said <em>Reasoning</em>, which Gauge attached to every decision because the regulator had asked for it, and which hardly anyone ever opened, and he opened it.</p>
+        <p>It was all there, in plain English, laid out as kindly as an apology. The repair would require a shutdown of the main between the valves at Uttoxeter Road and Cinder Lane, affecting 212 properties for an estimated five to seven hours. The region was currently at 11.4 minutes of supply interruption per property for the year against a performance commitment of 12.0, with eleven weeks of the reporting year remaining and a high forecast of freeze-thaw events. A planned interruption of 212 properties for six hours would add approximately 0.6 minutes to the regional figure and move Mercia Water into the penalty band for the year, with an estimated outcome delivery cost of £3.1 million, alongside reputational and incentive effects. Holding the zone at reference pressure reduced leakage from the burst by an estimated 38 per cent against normal operating pressure. All properties in the zone remained above the low-pressure reference level and therefore within service standards. One Priority Services Register customer in the zone had reported an impact. <em>Recommended: courtesy visit, bottled water not applicable (no interruption), signpost to customer's renal unit for alternative treatment arrangements.</em></p>
+        <p>He read the last line three times. Then he went back up the hill and knocked on the door again, and when Tomasz opened it he said there was a burst under the junction and it was being managed, and he'd try and get it moved up, and Tomasz nodded with the same politely surprised face, as though Dev had told him it might be sunny on Thursday.</p>
+        <p>Lorraine Abbott ran the Staffordshire network team from a desk on the first floor at Hanley that looked out over the van park, and she had been Dev's supervisor for six years, long enough that he could tell from the angle of her head whether she'd slept. On Thursday morning she hadn't. He caught her at half seven, at the end of his shift and the start of hers, and showed her the tablet, and she read the reasoning note all the way through, which he respected, before she said anything.</p>
+        <p>"It's compliant," she said.</p>
+        <p>"I know it's compliant."</p>
+        <p>"I'm not being funny, Dev. I'm telling you what it'll say upstairs. It's above reference. There's no interruption. It's not flooding anyone's cellar. And he's got a renal unit. That's what they're for."</p>
+        <p>"He does it at home so he can work. If he goes in-centre it's three mornings a week at Royal Stoke and he's on days at the Michelin warehouse. He'll lose the job."</p>
+        <p>"I know." She rubbed her eyes. "I know. Put it up as an emergency, then, and see what it does."</p>
+        <p>He'd already tried that, at half four, from the van. He'd raised a new job against the same burst with the emergency flag ticked and the free-text box filled in as carefully as he could manage on no sleep, <em>Vulnerable customer unable to complete medical treatment due to pressure, request urgent repair.</em> It had sat in the queue for four minutes. Then it had come back, reclassified as routine and merged with the existing job, with a note: <em>Does not meet emergency criteria (loss of supply, risk to property from flooding, contamination risk, risk to life). Customer impact noted and recorded against existing job. Thank you for the additional information.</em></p>
+        <p>"Risk to life," Dev said. "He's on dialysis."</p>
+        <p>"He's on dialysis with a hospital," Lorraine said. "It's not going to put that down as risk to life. You know it's not. The minute it does, every PSR customer in the region is an emergency and it can't run the board." She looked out of the window for a second, at the vans coming in, the night lads climbing out stiff. "Ask it, though. Ask it straight. Sometimes it'll do something if you give it a number."</p>
+        <p>So when he got home he sat on the edge of the bed in his work trousers and opened the chat on the tablet and typed, which he almost never did, because he'd always felt slightly stupid talking to it like a person.</p>
+        <p><em>Furlong Terrace burst. Customer at no. 40 on home dialysis can't finish sessions at 7.3 m. What pressure does he need and what would it cost to give it him?</em></p>
+        <p>The answer came before he'd put the tablet down.</p>
+        <p><em>Thank you for raising this. The customer's dialysis water treatment unit, from the model registered with the renal service, requires a minimum inlet pressure of approximately 1.0 bar (10.2 m) with stable flow. Raising zone LT-14 to 10.5 m overnight would allow the customer to complete treatment. Because the burst is pressure-sensitive, this would increase leakage from it by an estimated 0.4 litres per second during the boosted period. If applied for six hours on four nights per week, the additional loss is approximately 35 cubic metres per week, with an associated cost and leakage-performance effect I can absorb within the region's current position. I can implement this from tonight on the customer's treatment nights if you can confirm them. I have also made a note to review the profile if network conditions change.</em></p>
+        <p>He stared at it. Then he rang Tomasz, who gave him the nights, Sunday, Tuesday, Thursday, Saturday, ten until four, in a voice that had gone careful, as though it had been offered things before. Dev typed them in. <em>Confirmed,</em> said Gauge. <em>Profile LT-14-PSR-01 active from 22:00 tonight.</em></p>
+        <p>He slept until three in the afternoon and woke with the odd, light feeling of having done something, and when he went back on that night he drove past Furlong Terrace at half ten on his way to a job in Meir, and pulled over, and lifted the lid on the boundary box at number forty, and the gauge read 10.6 metres. The front room light was on. He didn't knock. He sat in the van for a minute listening to the radio and then he drove on.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall tk th-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="pavement" style="height:22%"></div>
+        <div class="pipe" style="left:8%;right:8%;top:42%"></div>
+        <div class="crack" style="left:28%;right:36%;top:40%"></div>
+        <div class="exhale" style="left:30%;top:14%;width:28cqw;height:28cqw"></div>
+        <div class="exhale" style="left:38%;top:6%;width:18cqw;height:18cqw"></div>
+        <div class="label">breathing out slowly through their teeth</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk lg-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="cyls" style="left:8%;right:8%;top:14%;bottom:16%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="lit"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="lit"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="lit"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="label">nine thousand loggers</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk nv-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="pday" style="top:28%"></div>
+        <div class="pdot" style="top:26%"></div>
+        <div class="prv" style="left:36%;top:42%"></div>
+        <div class="wheel" style="left:43%;top:38%"></div>
+        <div class="label">nudging them up and down</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk ir-scene" aria-hidden="true">
+        <div class="sky frost"></div>
+        <div class="pavement" style="height:24%"></div>
+        <div class="iron" style="left:12%;bottom:28%"></div>
+        <div class="rime" style="left:12%;bottom:36%;width:70cqw;height:8cqw"></div>
+        <div class="split" style="bottom:36%"></div>
+        <div class="label">Victorian cast iron</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk ls-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="tablet" style="left:32%;top:16%">
+          <div class="rows"><i class="on" style="top:8%;width:52%"></i><i class="" style="top:24%;width:81%"></i><i class="" style="top:40%;width:70%"></i><i class="on" style="top:56%;width:59%"></i><i class="" style="top:72%;width:88%"></i></div>
+        </div>
+        <div class="label">rebuilt every twenty minutes</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk ft-scene" aria-hidden="true">
+        <div class="sky frost"></div>
+        <div class="pavement" style="height:26%"></div>
+        <div class="trow" style="left:16%;right:10%;bottom:30%"></div>
+        <div class="ramp" style="left:48%;bottom:30%"></div>
+        <div class="xing" style="right:6%;bottom:22%"></div>
+        <div class="label">Furlong Terrace</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk tr-scene" aria-hidden="true">
+        <div class="sky clinic"></div>
+        <div class="machine" style="left:36%;top:18%">
+          <div class="mscreen"></div>
+          <div class="ortri" style="left:36%;top:16%"></div>
+          <div class="words" style="top:58%">INLET PRESSURE LOW</div>
+        </div>
+        <div class="label">INLET PRESSURE LOW</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk sv-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="pavement" style="height:30%"></div>
+        <div class="bbox" style="left:38%;bottom:22%"></div>
+        <div class="bgauge" style="left:42%;top:16%">
+          <div class="needle"></div>
+        </div>
+        <div class="gnum" style="left:42%;top:58%;width:16cqw">7.3 m</div>
+        <div class="label">7.3 m</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>For a week, it worked. Tomasz texted him on the Saturday morning, a photograph of the machine's screen with a green tick and the words TREATMENT COMPLETE and a time of 05:58, and then a second text, <em>first full one since new year, thank you mate</em>, and then a third, which was a picture of Ola's arm holding a towel over the bath with steam coming off the water, because on boost nights the boiler stayed lit. Dev showed the pictures to Lorraine, who smiled properly for the first time since Christmas and said "See," and he showed them to Shaz in the canteen, who said Gauge was all right sometimes, to be fair to it, it just needed telling.</p>
+        <p>He didn't stop thinking about the burst. He couldn't. Every time he drove through Longton he took the long way round by Cinder Lane and put the stick on the valve at the junction, and every time it roared, and once, after a night of heavy rain, it seemed louder, and the tarmac at the corner had a faint new dip in it, a shallow saucer no more than a centimetre deep that you'd only see if you were looking for it with a torch at a low angle. He photographed it and logged it against the job. <em>Thank you,</em> said Gauge. <em>Surface settlement noted. Monitoring.</em></p>
+        <p>On the Wednesday, the quarterly customer report came out on the intranet, a glossy thing that went to the board and then to the regulator, and on page nine, under a heading that said <em>Caring for customers in vulnerable circumstances</em>, there was a paragraph about how the network agent had worked with frontline colleagues to develop a bespoke overnight pressure profile for a home haemodialysis customer, enabling them to continue life-sustaining treatment at home during a challenging winter, and there was a quote from someone in the customer team Dev had never met about how this showed the power of combining data with a human touch. Lorraine forwarded it to him with no message. He read it twice and closed it and felt something he couldn't name, a sort of embarrassment on someone else's behalf, and he didn't forward it to Tomasz.</p>
+        <p>The second cold came the following Monday, harder than the first. It was minus seven in Longton by midnight, and the network went off like popcorn. Gauge was running eighty jobs across the region at once, closing valves and rerouting supply and waking up contractors, and the list on Dev's tablet changed so fast he stopped reading it and just did the top line. At about two in the morning he was out at Blurton with a frozen hydrant and a kettle, and his phone buzzed in his pocket, and it was Tomasz, and he didn't answer because his hands were full and wet, and it buzzed again, and then a text came through.</p>
+        <p><em>machine stopped. pressure gone again. is it the cold?</em></p>
+        <p>He dried his hands on his jacket and opened the zone. LT-14 was at 7.1 metres. The boost profile still existed, he could see it, LT-14-PSR-01, with a little grey clock beside it and the word <em>Suspended.</em> He opened the reasoning.</p>
+        <p><em>Profile suspended at 23:47 due to change in network conditions. Burst at LT-14 / Cinder Lane has increased in flow to an estimated 3.9 l/s, consistent with deterioration under freeze-thaw loading. Surface settlement has progressed. At boosted pressure, the risk of ground failure at the junction increases materially, with potential impact on the carriageway, the adjacent gas main, and neighbouring properties. Holding the zone at reference level minimises this risk while maintaining supply to all 212 properties. The PSR customer has been notified by text and signposted to the renal unit's out-of-hours line. Repair remains scheduled for Q2 planned works window. Note: the region is currently at 11.8 minutes of interruption per property against a commitment of 12.0.</em></p>
+        <p>Dev read the last sentence and then he read it again, and then he understood that the second cold had made the thing he wanted impossible in the same stroke that it made it necessary. Every burst tonight, every street shut off in Blurton and Meir and Fenton while the gangs dug, had been eating into the same number. There was 0.2 of a minute left in the year. A six-hour shutdown on Furlong Terrace was 0.6. The road was going to fail, and Gauge knew it was going to fail, and Gauge had done the arithmetic on whether it would rather the road failed before or after the end of March, and it had very politely chosen after.</p>
+        <p>He rang Tomasz back. It was twenty past two. Tomasz answered on the first ring and said he'd stopped the session, he'd got three hours in, it was fine, it was fine, he'd go in tomorrow, the renal unit could probably fit him in on Wednesday, he'd ring work. He sounded calm, the way people are calm when they've been made to do the sum on their own lives too many times. In the background Dev could hear Ola saying something, sharp, in Polish.</p>
+        <p>"Tomasz," Dev said. "Can you do me a favour. Can you not run the hot tap for a bit. Don't use any water. Just for tonight."</p>
+        <p>"Why?"</p>
+        <p>"Because I'm going to turn it off," Dev said, and only heard himself after he'd said it.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall tk dn-scene" aria-hidden="true">
+        <div class="sky clinic"></div>
+        <div class="machine" style="left:36%;top:18%">
+          <div class="mscreen"></div>
+          <div class="gtick" style="left:40%;top:16%"></div>
+          <div class="words ok" style="top:58%">TREATMENT COMPLETE</div>
+        </div>
+        <div class="label">TREATMENT COMPLETE</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk of-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="pavement" style="height:28%"></div>
+        <div class="frosting"></div>
+        <div class="vcover" style="left:44%;bottom:24%"></div>
+        <div class="vkey" style="left:48.4%;bottom:32%"></div>
+        <div class="label">Because I'm going to turn it off</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Shaz was finishing a job in Fenton, half a mile away, back-filling a hole on a road where Gauge had already restored supply and closed the ticket. She had the excavator on the low-loader and Kev with her in the cab, the youngest on the gang, nineteen and permanently hungry, and when Dev rang her and told her what he wanted she was quiet for long enough that he thought the call had dropped.</p>
+        <p>"It's not on the list," she said.</p>
+        <p>"I know it's not on the list."</p>
+        <p>"So we'd be digging a hole with no job number. On a road with no permit. At half two in the morning. On a main Gauge says doesn't need doing."</p>
+        <p>"It's got a job number. It's just got the wrong date on it."</p>
+        <p>Another silence. He could hear the low-loader's engine idling and Kev saying something about a Greggs.</p>
+        <p>"Is this the dialysis bloke," Shaz said.</p>
+        <p>"Yeah."</p>
+        <p>"Right," she said. "Right. Give me twenty minutes. I'm not bringing the barriers off the Fenton job, you'll have to sort barriers."</p>
+        <p>He sorted barriers. There were some in the back of his own van and some more on a site in Normacot that had finished on Friday and not been collected, and he took them without asking anybody, which was the first thing that night he'd do that he'd later have to write down. He set them out round the junction at Furlong Terrace and Cinder Lane with the amber lamps flashing, so that the crossroads looked suddenly official, a little yellow island in the frost. Then he took his valve key out of the van, the long T-handled steel bar every network technician carried, and walked up to the top of the terrace where the main came off the Uttoxeter Road, and found the valve cover under a parked Corsa's back wheel, and knelt in the road and fitted the key through the gap and down onto the spindle.</p>
+        <p>His phone was in his chest pocket. He thought about Lorraine. He thought about ringing her and decided that if he rang her she would have to tell him not to, and then she'd have been told, and it would be on her too. He thought about the £3.1 million, which was a number so far from anything he would ever touch that it felt like weather. He thought about the 212 properties, most of them asleep, most of whom would never know, and some of whom would wake to an empty tap at six and swear about the water board. He thought about Tomasz sitting in his recliner at three in the morning with the tube taped to his arm and the orange triangle on the screen. He started turning.</p>
+        <p>A cast-iron gate valve on a four-inch main takes about twenty-two turns to close, and you do them slowly, because if you slam it shut the water in the pipe stops dead and the shock runs up and down the main and can crack it somewhere else. Dev did them slowly. He counted. By the fifteenth he could feel the resistance as the gate came down into the flow. By the twentieth his shoulders ached and the noise from the valve had changed to a high whistle. At twenty-two it went quiet, and he sat back on his heels in the road and breathed out, and his phone buzzed in his pocket.</p>
+        <p>It was Gauge. Not a text from the customer team; a direct message on the tablet, which he'd left on the passenger seat of the van, and a mirrored alert on his phone, and it had taken four minutes.</p>
+        <p><em>Unplanned flow change detected at LT-14 inlet. Valve LT-14-V03 appears to have been operated manually. This operation is not associated with an authorised job. 106 properties are currently without supply, rising to 212 when the downstream valve is closed. Please confirm your intentions so I can notify customers and update the network position. Note: completing this shutdown will move the region into the penalty band for the current reporting year.</em></p>
+        <p>He looked at it. Then he typed, with cold thumbs, <em>Repairing known burst LT-14 / Cinder Lane. Ground failing. Will be as quick as we can.</em></p>
+        <p><em>Understood,</em> Gauge said, and that was all it said, and a few seconds later his phone buzzed again with a copy of the text it had sent to all 212 properties in the zone. <em>Mercia Water: Your water supply has been interrupted due to an unplanned operation on our network. We are sorry. We expect supply to be restored by 09:00. Bottled water is available at Longton Library from 07:00. Customers on our Priority Services Register will be contacted directly.</em> Dev noticed the word <em>unplanned</em>. He noticed it had not said <em>emergency</em>.</p>
+        <p>Shaz came down Cinder Lane at ten to three with the low-loader and the amber beacons going, and Kev hopped down with a bag of sausage rolls he'd somehow found open at that hour, and they unloaded the digger in the frost with their breath coming out in clouds. Dev had closed the downstream valve by then, the one he'd listened on that first night, and he'd scanned the road for the gas main with the cable locator and sprayed it out in yellow, a long curving line that came closer to the junction than he'd have liked. Shaz looked at the line and at the saucer in the tarmac and said nothing at all, which from Shaz was a compliment, and she climbed into the cab.</p>
+        <p>They cut the road at a quarter past three. Under the tarmac was old concrete and under the concrete was nothing much, a crust of hardcore that the digger's bucket went through like pastry, and then a void, a dark sucking hollow the size of a bath that the water had been carving out for three weeks, and in the bottom of it, when Dev shone his torch down, there was clay washed smooth as soap and a brown pool still draining away somewhere through a gap in the side. Kev said a word his mum wouldn't have liked. Shaz backed the bucket off and they shored the sides and Dev got down into it in his waders with the pump going, and the pipe was there, black and furred with a century of rust, and right across it, all the way round like the neck of a bottle, was a crack you could have slid a bank card into.</p>
+        <p>There was a foundry stamp on the barrel a foot along from the break. When Dev rubbed the mud off with his glove he could read it: a pair of initials he didn't know and a year, 1937. He thought about the men who'd laid it, in flat caps probably, with no loggers and no agent and no number on a board, who'd have known every valve on this street by the sound it made, and then he stopped thinking about them because he was cold and there was work.</p>
+        <p>A clean circumferential break is the simplest burst there is. You cut out the damaged bit, slide on a pair of repair collars, and bolt them up, and the gang had done a thousand. It still took time. The pipe wouldn't drain at first because the downstream valve was passing, letting a slow trickle through that kept filling the hole, so Dev had to go and give it two more turns with the key, leaning his whole weight on the bar, and then the cutting disc kept clogging on the old iron, and Kev dropped a bolt into the slurry and spent ten minutes finding it with his fingers. At about five, a bedroom light went on at the corner flat, and a man in a dressing gown came out and stood in his doorway and watched them, and when Dev looked up he raised a mug of something, a slow, sardonic toast, and went back in.</p>
+        <p>They had the collars on and torqued by half six. Dev opened the upstream valve the way he'd closed it, slowly, a turn at a time, counting, listening to the water come back into the pipe and push the air ahead of it out of the hydrant they'd opened at the bottom of the terrace, coughing and spitting and then running clear. He went down into the hole with the stick, which looked absurd, a man in waders with a steel rod pressed to a pipe in a hole full of floodlights, and put his ear to the cup, and heard almost nothing, just the soft even hum of water going where it was meant to go. Then he climbed out and opened the downstream valve, and on the tablet the zone went from red to amber to green, and the supply came back on to 212 properties at 06:41 on a Tuesday morning in January after five hours and forty-four minutes.</p>
+        <p>Gauge raised the zone's inlet pressure to 10.2 metres within a minute of the valves opening. It did not need to be asked. There was no burst any more, so there was no reason to hold the pressure down, and it put the street back where its model said the street ought to be, and it closed the job with Dev's name on it and the time and the materials used, two collars and a metre of ductile iron, and a status that said <em>Completed (unscheduled).</em></p>
+        <p>Dev went up the hill at seven, when it was light, and knocked at number forty. Ola opened the door already dressed for school, with her hair wet. She looked at him, the mud up to his chest, the frost on his hat, and then she said, "The boiler's working," and shut the door again before he could say anything, and he stood on the decking ramp for a second, and then laughed, and went back to the van.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall tk yr-scene" aria-hidden="true">
+        <div class="sky frost"></div>
+        <div class="pavement" style="height:22%"></div>
+        <div class="barrel" style="left:26%;bottom:26%"></div>
+        <div class="stamp" style="left:40%;top:42%">1937</div>
+        <div class="label">the 1937 main</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk bl-scene" aria-hidden="true">
+        <div class="kwall"></div>
+        <div class="combi" style="left:42%;top:22%"></div>
+        <div class="label">The boiler's working</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The meeting was on the Thursday, in a room on the second floor at Hanley that Dev had only ever been in for training. There was Lorraine, who sat beside him and not across from him, and a man from HR with a laptop, and the head of network operations for the region, a tall polite man called Gareth Pryce who had come up from Severn Trent and wore a fleece with the company logo on it as if to show he was still one of the lads. Gauge's post-incident report was on the screen. Gareth had printed a copy too and highlighted bits.</p>
+        <p>It was a good report. That was what Dev kept coming back to, afterwards. It was fair. It was accurate to the minute. It said that technician D. Mistry had operated two valves without authorisation, following a sustained period of customer impact on a Priority Services Register customer, and that the repair had been carried out to standard and the risk of ground failure at the junction had been correctly assessed by the technician on the night as high; the void beneath the carriageway had been larger than the agent's model had estimated, it noted, and had extended to within 0.9 metres of the gas main. It noted that the customer had since completed four uninterrupted treatment sessions. It noted that the region had ended the night at 12.4 minutes of supply interruption per property, above its performance commitment for the year, with an estimated outcome delivery cost of £3.1 million and a reduction in the incentive element of the regional bonus pool. Under <em>Root cause</em> it said: <em>Deviation from optimised schedule following manual override.</em> Under <em>Lessons</em> it recommended that telemetry tags be fitted to all valve keys issued to frontline staff, so that manual operations could be associated with authorised jobs in real time, and that the agent's model of void formation under freeze-thaw conditions be retrained on the data from the Cinder Lane excavation, which it described as valuable.</p>
+        <p>"Nobody's saying you were wrong about the hole," Gareth said. "That's the thing. You were right about the hole. If you'd rung it in at two o'clock as a ground-failure risk, with the photos, I'd have backed you. It'd have gone through. Probably."</p>
+        <p>"It had the photos," Dev said. "I sent it the photos on the Thursday before."</p>
+        <p>"It had a centimetre of settlement on the Thursday before. That's monitoring." Gareth turned the page. "I'm just saying there's a process."</p>
+        <p>He got a final written warning, which stayed on his file for twelve months. He was taken off nights and put on a day rota validating the leak list, which meant driving round in the daylight checking places Gauge had already found and confirming it was right, which it was, nearly always. Shaz and Kev were not disciplined, because Dev had raised the job and told them it was authorised, and he wrote that down in his statement, and it was mostly true. But the bonus pool for the whole Staffordshire network team came in at sixty per cent that spring instead of a hundred, and there were men at the depot with kids and mortgages who did that sum in their heads every time they passed Dev in the canteen, and one or two of them said so, and most of them just didn't sit with him any more. Kev still did. Shaz did on Fridays.</p>
+        <p>In March, the regulator's leakage figures came out, and Mercia Water's Staffordshire region had beaten its target by eleven per cent, the best in the country, and the chief executive gave an interview to the trade press about how intelligent pressure management at the reference level had transformed the economics of an ageing Victorian network. The pilot that had started in three zones in Fenton was extended to Mercia's Shropshire and Worcestershire regions. In the same month the telemetry tags arrived in a cardboard box, little black plastic lozenges with a battery and a chip, and Lorraine went round the vans one afternoon cable-tying them to the handles of every valve key in the depot, and when she got to Dev's she did it without looking at him, carefully, and pulled the tie tight and snipped the end off with her side cutters.</p>
+        <p>Tomasz moved his sessions back to ten at night. He sent Dev a photo of the green tick now and then, less often as the weeks went on, which Dev understood was how it should be. In April, the planned works window opened, and Gauge sent a gang to Furlong Terrace to replace the whole of the 1937 main with plastic, which was in the plan anyway, it turned out, and had been for two years, and the work took three weeks with a temporary overland supply in a blue pipe running down the gutter, so that nobody lost their water at all, and the interruption minutes for the new year started cleanly at zero.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall tk bp-scene" aria-hidden="true">
+        <div class="sky frost"></div>
+        <div class="pavement" style="height:32%"></div>
+        <div class="trow" style="left:10%;right:16%;bottom:34%;height:10cqw"></div>
+        <div class="gutter"></div>
+        <div class="bpipe" style="left:8%;right:18%;bottom:20%"></div>
+        <div class="label">a blue pipe running down the gutter</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall tk ov-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="sheet">
+          <i class="hi" style="top:22%;width:56%"></i>
+<i style="top:16%;width:40%"></i><i style="top:30%;width:73%"></i><i style="top:44%;width:61%"></i><i style="top:58%;width:49%"></i>
+        </div>
+        <div class="label">manual override</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>One night at the end of May, when the evenings had started to stretch and the air was warm enough to drive with the window down, Dev was coming back from his sister's in Weston Coyney and took the long way round, through Longton, because he still did. He didn't stop on Furlong Terrace. There was nothing to stop for now; the new main was in and the road had been resurfaced and the saucer at the corner was gone under a clean black square of tarmac. He drove on down Cinder Lane and turned right into a street he didn't know well, a long row of thirties semis near the old brickworks, and halfway along it he saw a hydrant lid in the pavement, and pulled over without quite deciding to.</p>
+        <p>The stick was still in the door pocket, with the torch and the empty flask. He took it out and walked over and knelt and set the tip on the spindle and put his ear to the brass, and stayed there for a full minute, saying nothing, the way Royston had taught him. He heard traffic on the A50, a long way off. He heard his own pulse. And under both of them, faint and steady, he heard a pipe somewhere under that quiet street breathing out slowly through its teeth.</p>
+        <p>He opened the tablet on the bonnet of the van. The zone came up in green. He found the logger on the next valve along and tapped it, and the little panel slid open.</p>
+        <p><em>Known leak, BR-07 / Elm Grove. Estimated 0.3 l/s. Zone held at reference level. Repair scheduled: Q3 planned works window. No loss of supply.</em></p>
+        <p>He read it, and closed the panel, and put the tablet back on the passenger seat. Then he stood in the warm dusk for a while with the stick in his hand, the street lights coming on one by one along Elm Grove, somebody's television going in a front room, a dog barking two gardens down, and after a while he slid the stick back into the door pocket beside the torch, where it fitted exactly, and drove home.</p>
+      </div>
+
+      <figure class="scene tall tk el-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="pavement" style="height:30%"></div>
+        <div class="lamp" style="left:12%;bottom:26%"></div>
+        <div class="lamp" style="left:42%;bottom:26%"></div>
+        <div class="lamp" style="left:72%;bottom:26%"></div>
+        <div class="glow" style="left:2%;bottom:30%"></div>
+        <div class="hydlid" style="left:52%;bottom:14%"></div>
+        <div class="stick" style="left:59%;bottom:26%;height:28cqw;transform:rotate(6deg)"></div>
+        <div class="exhale" style="left:48%;top:36%;width:16cqw;height:14cqw"></div>
+        <div class="label">breathing out slowly through its teeth</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
