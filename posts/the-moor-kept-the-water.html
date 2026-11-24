@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The moor kept the water — Ben Miller</title>
+    <meta name="description" content="A Somerset Levels farmer who still keeps the 2014 flood line on her kitchen door frame is asked by the river&#x27;s AI to let the water onto her fields on purpose, early, so the village downstream stays dry.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #141c18;
+        --ink: #e8eee6;
+        --mute: #8a968c;
+        --cream: #eaf2e6;
+        --gold: #d4b45a;
+        --yolk: #e8c86a;
+        --leaf: #5a9a62;
+        --cool: #9bb8c0;
+        --ember: #c46e4a;
+        --alert: #c45a3a;
+        --bark: #3a2e22;
+        --lamp: #f4e8c4;
+        --steel: #8aa0a4;
+        --biro: #3a6cb0;
+        --flood: #7aa8b4;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 54% 34% at 78% 6%, rgba(210, 200, 140, 0.14), transparent 62%),
+          radial-gradient(ellipse 48% 30% at 12% 18%, rgba(110, 160, 130, 0.12), transparent 60%),
+          radial-gradient(ellipse 44% 28% at 30% 88%, rgba(80, 120, 90, 0.10), transparent 62%),
+          radial-gradient(ellipse 36% 22% at 88% 78%, rgba(150, 180, 190, 0.08), transparent 60%),
+          linear-gradient(180deg, #1a2420 0%, #141c18 36%, #101814 70%, #0c140e 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(180, 210, 220, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 220, 230, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #d6e0d6;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(200, 190, 120, 0.26), 0 0 2px rgba(220, 230, 200, 0.35);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #e6eee6;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c9b06a; }
+      .prose strong { font-weight: 700; color: #e8eee8; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(200, 210, 160, 0.95) 0 1.5px, rgba(120, 160, 110, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(160, 170, 100, 0.35));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #151c18;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(170, 200, 170, 0.14);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .moor-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 8, 6, 0.58) 100%),
+          repeating-linear-gradient(112deg, rgba(240, 255, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .moor-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(230, 240, 244, 0.82);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .hero h1 { text-shadow: 0 0 40px rgba(200, 190, 120, 0.26), 0 0 2px rgba(220, 230, 200, 0.35); }
+      .moor-hero .label, .scene.mr .label { color: rgba(236, 244, 232, .94); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+
+      .moor-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(170,200,170,.16); background: #1a221c; }
+      .moor-hero > * { position: absolute; }
+      .moor-hero::after, .scene.mr::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(8,12,10,.7) 100%), repeating-linear-gradient(112deg, rgba(220,240,220,.016) 0 2px, transparent 2px 8px); }
+      .scene.mr { background: #151c18; container-type: size; }
+
+      .sky { inset: 0; background: linear-gradient(180deg, #6a7a78 0%, #8a9a8e 46%, #b0beb0 100%); }
+      .sky.kitchen { background:
+        linear-gradient(180deg, #3a322c 0%, #2a2420 58%, #1c1816 100%); }
+      .sky.wash { background: linear-gradient(180deg, #8a9aa0 0%, #b4c0c0 50%, #c8d4cc 100%); }
+      .sky.hill { background: linear-gradient(180deg, #5a6a68 0%, #7a8a80 40%, #9aada0 100%); }
+      .sky.dusk { background: linear-gradient(180deg, #2a2830 0%, #4a4450 48%, #6a6058 100%); }
+      .sky.may { background: linear-gradient(180deg, #6a8890 0%, #8aa8a0 48%, #c4d4c0 100%); }
+      .sky.paper { background: linear-gradient(180deg, #2a322e, #1c2420 70%, #161c18); }
+      .sky.night { background: linear-gradient(180deg, #121816 0%, #1a2220 60%, #24302c 100%); }
+      .sky.storm { background: linear-gradient(180deg, #2a3238 0%, #3a4448 50%, #5a6468 100%); }
+
+      .field { left: 0; right: 0; bottom: 0; height: 42%; z-index: 1;
+        background: linear-gradient(180deg, #3a5a3c 0%, #2a422c 55%, #1e3220 100%); }
+      .field.wet { background: linear-gradient(180deg, #3a5844 0%, #2a4234 60%, #1c3028 100%); }
+      .field.pale { height: 48%; background: linear-gradient(180deg, #4a6a4c, #3a5440); }
+      .field.mud { height: 36%; background: linear-gradient(180deg, #5a4a38, #3a3228); }
+      .sill { left: 0; right: 0; bottom: 0; height: 14%; z-index: 2;
+        background: linear-gradient(180deg, #3a322c, #2a2420); box-shadow: inset 0 1px 0 rgba(220,200,160,.12); }
+
+      /* door frame — hero and reprises */
+      .kitchwall { inset: 0; background:
+        linear-gradient(90deg, #3a322c 0 22%, #4a4038 22% 78%, #3a322c 78%),
+        linear-gradient(180deg, #4a423a, #2e2824);
+        background-blend-mode: multiply; }
+      .jamb { z-index: 4; width: 9cqw; top: 0; bottom: 14%;
+        background: linear-gradient(90deg, #5a4638, #8a6e58 18%, #7a5e4a 82%, #4a382c);
+        box-shadow: inset -.3cqw 0 0 rgba(0,0,0,.25), inset .3cqw 0 0 rgba(255,220,180,.08), 0 0 2cqw rgba(0,0,0,.25); }
+      .jamb.l { left: 30%; }
+      .jamb.r { left: 61%; }
+      .lintel { z-index: 5; left: 30%; width: 40cqw; height: 6cqw; top: 0;
+        background: linear-gradient(180deg, #6a5244, #4a3a30);
+        box-shadow: inset 0 -.3cqw 0 rgba(0,0,0,.3); }
+      .doorleaf { z-index: 3; left: 39%; width: 22cqw; top: 6cqw; bottom: 14%;
+        background: linear-gradient(90deg, #3a342e, #4a4238 40%, #3a342e);
+        box-shadow: inset 0 0 0 .35cqw rgba(80,60,40,.4); }
+      .doorleaf::before { content: ""; position: absolute; left: 12%; right: 12%; top: 10%; bottom: 12%;
+        border: .25cqw solid rgba(200,180,140,.1); }
+      .yardglow { z-index: 2; left: 39%; width: 22cqw; top: 6cqw; bottom: 14%;
+        background: linear-gradient(180deg, rgba(160,190,150,.35), rgba(80,110,80,.15) 60%, rgba(40,50,40,.4)); }
+      .bline { z-index: 6; height: .5cqw; width: 9cqw; background: #8a8e90;
+        box-shadow: 0 0 .45cqw rgba(160,160,160,.4), 0 .15cqw 0 rgba(0,0,0,.25);
+        border-radius: .2cqw; }
+      .bline.grey { background: #8a8e90; }
+      .bline.blue { background: #3a6cb0; box-shadow: 0 0 .6cqw rgba(58,108,176,.5); height: .45cqw; }
+      .skirting { left: 0; right: 0; bottom: 0; height: 14%; z-index: 3;
+        background: linear-gradient(180deg, #4a4038, #2a2420 40%, #1c1816);
+        box-shadow: inset 0 1px 0 rgba(220,200,160,.14); }
+
+      /* levels landscape */
+      .rhyne { z-index: 2; height: .7cqw; background: #1a2a28; box-shadow: 0 0 .8cqw rgba(80,140,140,.25); transform-origin: left center; }
+      .bank { z-index: 3; background: linear-gradient(180deg, #6a5a44, #4a3e30); }
+      .river { z-index: 4; background: linear-gradient(180deg, #c8dce0, #7aa0b0 40%, #4a7080);
+        box-shadow: 0 0 2cqw rgba(160,200,210,.35); }
+      .river.shimmer { animation: shimmer 7s ease-in-out infinite alternate; }
+      .road { z-index: 5; background: #4a4e4c; box-shadow: 0 .2cqw 0 #3a3e3c; }
+
+      /* saucers */
+      .saucer { z-index: 3; border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 40%, #4a6a4c 0 42%, #3a5440 70%, #2a3e30 100%);
+        box-shadow: inset 0 -1cqw 2cqw rgba(0,0,0,.25), 0 0 0 .25cqw rgba(180,200,160,.12); }
+      .saucer.wet { background: radial-gradient(ellipse at 50% 45%, #7aa8b0 0 28%, #4a6a58 52%, #3a5444 100%); }
+      .rthread { z-index: 4; height: .55cqw; background: #9bb8c0; border-radius: 1cqw; box-shadow: 0 0 .6cqw rgba(155,184,192,.4); }
+
+      /* eleven thousand marks */
+      .swarm { z-index: 3; inset: 16% 8% 20% 8%;
+        background-image:
+          radial-gradient(circle, #d4e0b0 0 1.1px, transparent 1.2px),
+          radial-gradient(circle, #b8c898 0 .9px, transparent 1px),
+          radial-gradient(circle, #e8f0c8 0 1.2px, transparent 1.3px);
+        background-size: 4.4cqw 4.8cqw, 3.6cqw 5.2cqw, 5.1cqw 3.9cqw;
+        background-position: 0 0, 1.6cqw 2cqw, 2.4cqw 1cqw;
+        opacity: .92; mask-image: radial-gradient(ellipse at 50% 50%, #000 60%, transparent 100%); }
+      .gates { position:absolute; inset:0; }
+      .gatebit { position:absolute; z-index: 4; width: 1.6cqw; height: 2.2cqw; background: #c4d4a0;
+        box-shadow: 0 0 .8cqw rgba(220,230,160,.55); border-radius: .15cqw; }
+      .gatebit::after { content: ""; position: absolute; left: 50%; top: -1.2cqw; width: 1.1cqw; height: .8cqw;
+        margin-left: -.55cqw; background: #d8e8a8; box-shadow: 0 0 .6cqw rgba(255,240,160,.5); }
+
+      /* leaky dam close-up */
+      .stream { z-index: 2; left: 0; right: 0; height: 10cqw;
+        background: linear-gradient(180deg, #8ab0b8, #4a7080 50%, #2a4850);
+        box-shadow: 0 0 3cqw rgba(140,190,200,.25); }
+      .log { z-index: 5; height: 4.4cqw; border-radius: 2.2cqw;
+        background: linear-gradient(180deg, #8a6a48, #5a3e2a 55%, #3a2818);
+        box-shadow: 0 .5cqw 1cqw rgba(0,0,0,.35), inset 0 .3cqw 0 rgba(255,220,180,.12); }
+      .lboard { z-index: 6; width: 2.2cqw; background: linear-gradient(90deg, #7a6a48, #5a4a30);
+        border-radius: .2cqw; box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.3); }
+      .motor { z-index: 7; width: 2.6cqw; height: 2cqw; border-radius: .3cqw; background: #1a1c1e;
+        box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.4), inset 0 0 0 .2cqw #2a2e30; }
+      .spole { z-index: 6; width: .55cqw; background: #4a4e4c; }
+      .spanel { z-index: 7; width: 5.2cqw; height: 3.6cqw; border-radius: .15cqw;
+        background: linear-gradient(135deg, #1a2a3a, #2a4a5a 40%, #1a2830);
+        box-shadow: inset 0 0 0 .2cqw #3a3e42, 0 .3cqw .6cqw rgba(0,0,0,.35), 0 0 1.2cqw rgba(180,220,255,.15);
+        transform: rotate(-8deg); }
+      .spanel::before { content: ""; position: absolute; inset: 12%;
+        background: repeating-linear-gradient(90deg, rgba(120,180,200,.25) 0 28%, transparent 28% 33%); }
+
+      /* two humps chart */
+      .chart { z-index: 3; left: 10%; right: 10%; top: 18%; bottom: 22%;
+        background:
+          repeating-linear-gradient(180deg, transparent 0 19%, rgba(200,220,200,.08) 19% 19.4%),
+          linear-gradient(180deg, rgba(20,28,24,.4), rgba(12,16,14,.2));
+        box-shadow: inset 0 0 0 .25cqw rgba(200,220,190,.1); border-radius: .3cqw; }
+      .hump { z-index: 4; position: absolute; bottom: 0; height: 100%;
+        background: #8ab0b8; opacity: .45;
+        clip-path: polygon(0 100%, 8% 92%, 22% 40%, 38% 8%, 52% 22%, 70% 70%, 88% 92%, 100% 100%); }
+      .hump.flat { background: #c4d46a; opacity: .55;
+        clip-path: polygon(0 100%, 10% 94%, 28% 62%, 48% 48%, 68% 52%, 86% 70%, 100% 92%, 100% 100%, 0 100%); }
+      .chtag { z-index: 8; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-size: 1.6cqw; letter-spacing: .18em; text-transform: uppercase; color: rgba(230,236,220,.7); }
+
+      /* plan of fields */
+      .house { z-index: 5; width: 10cqw; height: 7cqw;
+        background: linear-gradient(180deg, #8a5a44, #6a4030);
+        box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3); }
+      .house::before { content: ""; position: absolute; left: -8%; right: -8%; bottom: 72%; height: 55%;
+        background: #4a3024; clip-path: polygon(0 100%, 50% 0, 100% 100%); }
+      .yard { z-index: 4; background: #5a5448; }
+      .lowf { z-index: 2; background: #3a5a3c; }
+      .lowf.held { background: linear-gradient(180deg, #6a9aa8 0 40%, #4a6a58 100%);
+        box-shadow: inset 0 0 2cqw rgba(140,190,200,.25); }
+
+      /* pages / decision line */
+      .sheet { z-index: 4; width: 22cqw; height: 28cqw; background: #e8ece4;
+        box-shadow: 0 .6cqw 1.4cqw rgba(0,0,0,.35), inset 0 0 0 .15cqw #d0d4cc;
+        transform: rotate(-3deg); }
+      .sheet::before { content: ""; position: absolute; left: 12%; right: 12%; top: 12%; bottom: 22%;
+        background: repeating-linear-gradient(180deg, #c8ccc4 0 .25cqw, transparent .25cqw 2.1cqw); opacity: .55; }
+      .sheet.b { transform: rotate(2deg); left: 40%; top: 22%; }
+      .sheet.c { transform: rotate(-1deg); left: 52%; top: 26%; }
+      .dline { z-index: 6; height: 1.1cqw; background: #2a4a28; opacity: .85; }
+
+      /* wood */
+      .canopy { z-index: 2; left: 0; right: 0; top: 0; height: 38%;
+        background:
+          radial-gradient(ellipse at 20% 80%, #2a4a30 0 18%, transparent 19%),
+          radial-gradient(ellipse at 50% 70%, #1e3a26 0 22%, transparent 23%),
+          radial-gradient(ellipse at 80% 85%, #2a4a30 0 20%, transparent 21%),
+          linear-gradient(180deg, #1a2e20, transparent 80%); }
+      .trunk { z-index: 3; width: 2.4cqw; background: linear-gradient(90deg, #3a2a1c, #5a4030, #3a2a1c); }
+
+      /* kitchen window + white board */
+      .win { z-index: 5; background: linear-gradient(180deg, #8aa0a0, #c4d4c8);
+        box-shadow: inset 0 0 0 .7cqw #4a4038, 0 .5cqw 1.2cqw rgba(0,0,0,.3); }
+      .win::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: .5cqw; background: #4a4038; margin-left: -.25cqw; }
+      .win::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: .5cqw; background: #4a4038; }
+      .wboard { z-index: 6; width: 6cqw; height: 20cqw; background: #f2f4ee;
+        box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.3), inset 0 0 0 .2cqw #d8dcd4; }
+      .wboard i { position: absolute; left: 58%; right: 12%; height: .28cqw; background: #1a1c1a; }
+      .wboard .n { position: absolute; left: 6%; width: 50%; text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-variant-numeric: lining-nums; font-size: 3.4cqw; font-weight: 500; color: #1a1c1a;
+        line-height: 1; text-shadow: none; }
+      .gpost { z-index: 5; width: .7cqw; background: #8a9090; }
+
+      /* staircase of dams */
+      .stepdam { z-index: 5; height: 2.6cqw; border-radius: 1.3cqw;
+        background: linear-gradient(180deg, #7a5a3a, #4a3420); box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.3); }
+      .overtop { z-index: 4; height: 1.6cqw; background: linear-gradient(180deg, #c8e0e4, #7aa0b0);
+        border-radius: 0 0 40% 40%; opacity: .85; }
+
+      /* sluice */
+      .concrete { z-index: 5; background: linear-gradient(180deg, #8a908c, #6a706c 40%, #5a605c);
+        box-shadow: inset 0 0 0 .35cqw rgba(220,220,210,.12), 0 .5cqw 1cqw rgba(0,0,0,.3); }
+      .igate { z-index: 6; background: linear-gradient(90deg, #3a3e40, #5a6264 30%, #2a2e30);
+        box-shadow: inset 0 0 0 .25cqw rgba(180,190,190,.2); }
+      .spill { z-index: 4; background: linear-gradient(100deg, #8a6a48, #6a4e38 40%, #5a7068);
+        opacity: .92; }
+
+      /* gauge typography */
+      .gnum { z-index: 6; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-weight: 500; color: #e8eee6; letter-spacing: -.04em;
+        text-shadow: 0 2px 12px rgba(0,0,0,.6); white-space: nowrap; }
+      .gbar { z-index: 4; background: #4a5450; }
+      .gfill { z-index: 5; background: linear-gradient(180deg, #9bb8c0, #4a7080); }
+
+      /* cranes — long legs, horizontal body, high neck */
+      .crane { z-index: 6; }
+      .crane .lg { position: absolute; width: .38cqw; background: #3a342c; border-radius: .2cqw; transform-origin: bottom center; }
+      .crane .body { position: absolute; width: 7cqw; height: 1.7cqw; border-radius: 50%;
+        background: #6a6860; box-shadow: 0 .2cqw .5cqw rgba(0,0,0,.25); }
+      .crane .neck { position: absolute; width: .38cqw; height: 8.5cqw; background: #6a6860; border-radius: .2cqw;
+        transform-origin: bottom center; }
+      .crane .head { position: absolute; width: 1.7cqw; height: .5cqw; background: #5a584e; border-radius: 40% 70% 50% 40%; }
+      .crane .head::before { content: ""; position: absolute; left: 10%; top: -35%; width: .7cqw; height: .55cqw;
+        background: #c45a3a; border-radius: 50%; }
+      .crane .head::after { content: ""; position: absolute; right: -.7cqw; top: 28%; width: .85cqw; height: .22cqw;
+        background: #3a342c; border-radius: 0 40% 40% 0; }
+      .crane.chick .body { background: #7a5a3a; width: 4.2cqw; height: 1.2cqw; }
+      .crane.chick .neck { background: #7a5a3a; height: 4.2cqw; }
+      .crane.chick .head { background: #6a4a2e; height: .4cqw; width: 1.1cqw; }
+      .crane.chick .head::before { background: #c46e4a; width: .4cqw; height: .35cqw; }
+      .reed { z-index: 3; width: .28cqw; background: #6a5a38; transform-origin: bottom center; }
+      .reed::after { content: ""; position: absolute; top: -2.8cqw; left: 50%; width: .7cqw; height: 3.2cqw;
+        margin-left: -.35cqw; background: #8a7a48; border-radius: 50% 50% 40% 40%; opacity: .9; }
+
+      .wellies { z-index: 5; width: 3.2cqw; height: 3.4cqw; }
+      .wellies::before, .wellies::after { content: ""; position: absolute; bottom: 0; width: 1.35cqw; height: 3.2cqw;
+        background: #2a4a30; border-radius: .3cqw .3cqw .6cqw .6cqw; box-shadow: inset 0 -.4cqw 0 #1a3020; }
+      .wellies::before { left: 0; }
+      .wellies::after { right: 0; }
+
+      .phone { position:absolute; z-index:7; width:8cqw; height:14cqw; border-radius:1cqw;
+        background: linear-gradient(180deg,#1a1c1e,#2a2e30);
+        box-shadow:0 .5cqw 1.2cqw rgba(0,0,0,.4),0 0 3cqw rgba(180,210,160,.25); }
+      .phone::before { content:""; position:absolute; inset:8% 10% 12%; background:linear-gradient(180deg,#9bb89a,#3a5a40); border-radius:.3cqw; opacity:.85; }
+      .table { z-index: 2; left: 0; right: 0; bottom: 0; height: 28%;
+        background: linear-gradient(180deg, #5a4638, #3a2e26); }
+
+      @keyframes shimmer { from { filter: brightness(1); } to { filter: brightness(1.12); } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(6deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes spillmove { from { opacity: .7; } to { opacity: 1; } }
+
+      @media (max-width: 600px) {
+        .moor-hero { height: 22rem; }
+        .chtag { font-size: 2.4cqw; }
+        .gnum { letter-spacing: -.02em; }
+        .wboard .n { font-size: 4.2cqw; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog { animation: none !important; }
+        .moor-hero *, .scene.mr *, .moor-hero *::before, .moor-hero *::after, .scene.mr *::before, .scene.mr *::after,
+        .paint, .fog { animation: none !important; transition: none !important; }
+        .scene { animation: none !important; opacity: 1; transform: none; }
+        .river.shimmer, .spill { filter: none; opacity: .9; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="moor-hero" aria-hidden="true">
+          <div class="sky kitchen"></div>
+          <div class="kitchwall"></div>
+          <div class="yardglow" style="left:39%;width:22cqw"></div>
+          <div class="jamb l"></div>
+          <div class="jamb r"></div>
+          <div class="lintel"></div>
+          <div class="doorleaf"></div>
+          <div class="bline grey" style="left:30%;top:54%"></div>
+          <div class="bline grey" style="left:61%;top:54%"></div>
+          <div class="skirting"></div>
+          <div class="label">Forty-one inches</div>
+        </div>
+        <h1>The moor kept the water</h1>
+        <p class="dek">A Somerset Levels farmer who still keeps the 2014 flood line on her kitchen door frame is asked by the river's AI to let the water onto her fields on purpose, early, so the village downstream stays dry.</p>
+        <time datetime="2026-11-24">24 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Ann Coombe could tell you the exact height of the water in her kitchen in February 2014, because she had marked it on the door frame in biro the morning it went down, and she had never painted over it. Forty-one inches. Her husband Clive had wanted to sand it off when they moved back in that summer, and she'd told him to leave it, and he'd left it, and then he'd died in 2019 of something that had nothing to do with water, and after that nobody was going to sand anything. The line was still there, gone grey at the edges where hands had rubbed it going in and out of the back door for twenty years, at about the height of a nine-year-old's chin. She knew that because her grandson Alfie was nine and liked to stand against it.</p>
+        <p>The farm was at Northmoor, on the Somerset Levels, a long way below the road and a little way below the river. People from away never quite believed that part. They came down the lane from the A361 expecting fields and found fields, flat and wide and cut through with ditches the locals called rhynes, and the river Parrett held up above them on its banks like a gutter on a roof. In a dry year you could forget it. In a wet year you could stand in the yard and look up at the water going past.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr gt-scene" aria-hidden="true">
+        <div class="sky wash"></div>
+        <div class="field pale" style="height:58%"></div>
+        <div class="rhyne" style="left:8%;width:70%;bottom:38%;transform:rotate(-2deg)"></div>
+        <div class="rhyne" style="left:18%;width:64%;bottom:26%;transform:rotate(1.5deg)"></div>
+        <div class="rhyne" style="left:4%;width:80%;bottom:16%;transform:rotate(-1deg)"></div>
+        <div class="bank" style="left:0;right:0;bottom:52%;height:8%"></div>
+        <div class="river shimmer" style="left:0;right:0;bottom:56%;height:5.5%"></div>
+        <div class="bank" style="left:0;right:0;bottom:61%;height:3.5%;background:linear-gradient(180deg,#5a4a38,#3a3228)"></div>
+        <div class="road" style="left:0;right:0;bottom:68%;height:2.2%"></div>
+        <div class="label">like a gutter on a roof</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She ran beef now, a hundred and twenty head of Devon and Hereford crosses, having given up the milking the year after Clive went because she couldn't do the four o'clocks on her own and wouldn't pay a stranger to. Her son Jamie came over three days a week from Bridgwater, where he worked for a firm that fitted heat pumps, and brought Alfie at weekends. The house was brick, built in 1880 by people who had known exactly where they were building it and had put it on the one bit of the farm that sat eighteen inches higher than the rest, which was why the water had only got to forty-one inches and not to the ceiling.</p>
+        <p>The letter from the Rivers Authority came in the first week of October. It was a proper letter, on paper, with a reference number at the top and a woman's name at the bottom, Priya Lal, Catchment Engineer, Parrett and Tone, and Ann read it standing at the table with her coat still on. It said the Authority was writing to the owners of land in the Northmoor, Saltmoor and Curry Moor flood storage areas about an updated operating plan for the coming winter. It said the plan had been prepared with the help of the Authority's catchment model, known as Rhyne, and that it involved a number of changes to how water would be held and released across the whole of the Parrett and Tone, from the hills down to the sea. It said that under some conditions the plan would ask to put water onto part of her land on purpose, and that she would be paid for it, and that Ms Lal would like to come and explain.</p>
+        <p>Ann put the letter down and took her coat off and put the kettle on and then picked the letter up again.</p>
+        <p>She knew about Rhyne in the way everyone on the Levels knew about it, which was not very well. It had been running for three years. It had been on Points West. There was a man on the parish council who said it was the best thing to happen to the moors since the Dutch and a man in the Rose and Crown who said it was a computer in Exeter deciding which of them got drowned. She'd never had anything to do with it. Her rhynes were cleared by the drainage board the way they'd always been cleared, and the pumps at Northmoor went on when the water got high the way they always had, and she had assumed that was all still men in vans.</p>
+        <p>She rang Jamie, who said, "Mum, they're not going to flood you on purpose," and then read the letter when she sent him a photo of it and rang back twenty minutes later and said, "Right. Okay. They are."</p>
+        <p>Priya Lal came on a Thursday. She was younger than Ann had expected, maybe thirty-five, in a Rivers Authority fleece and wellies that had been used, and she had a laptop and a printed map, and she had the good sense to ask if she could see the door frame before she showed Ann anything. Ann hadn't mentioned the door frame. Priya said the parish clerk had told her about it.</p>
+        <p>She looked at it for a while. She didn't touch it.</p>
+        <p>"Forty-one," she said.</p>
+        <p>"Forty-one."</p>
+        <p>"I was at school in Taunton," Priya said. "We got a day off. I thought it was brilliant." She said it as if confessing something and then sat down at the table and opened the map.</p>
+        <p>The map showed the whole catchment, which was a bigger thing than Ann usually thought about. The Parrett came up out of Dorset and the Tone came down off the Brendon Hills, past Wiveliscombe and through Taunton, and the Isle and the Yeo and the Cary came in from the sides, and all of it, every drop that fell on about seventeen hundred square kilometres of Somerset, eventually had to get out past Burrowbridge and through Bridgwater to the sea. In between, the moors sat low and flat like a series of saucers, and when the rivers couldn't carry what was coming, the saucers filled. That had always been the arrangement. In 2014 it had been the arrangement for eight weeks.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr sc-scene" aria-hidden="true">
+        <div class="sky wash"></div>
+        <div class="saucer" style="left:8%;top:28%;width:28cqw;height:16cqw"></div>
+        <div class="saucer wet" style="left:36%;top:40%;width:34cqw;height:20cqw"></div>
+        <div class="saucer" style="left:62%;top:22%;width:26cqw;height:15cqw"></div>
+        <div class="saucer" style="left:18%;top:58%;width:22cqw;height:12cqw"></div>
+        <div class="rthread" style="left:22%;top:36%;width:24cqw;transform:rotate(18deg)"></div>
+        <div class="rthread" style="left:48%;top:32%;width:22cqw;transform:rotate(-12deg)"></div>
+        <div class="rthread" style="left:40%;top:58%;width:18cqw;transform:rotate(8deg)"></div>
+        <div class="label">like a series of saucers</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"What's different," Priya said, "is that we've stopped trying to run it from the bottom."</p>
+        <p>She explained it carefully, the way people explain things they have explained to angry rooms before. For two hundred years, she said, the whole system had been managed from the low end. You dredged the rivers and raised the banks and ran the pumps, and you tried to get the water through the Levels and out to the sea as fast as it would go, and when it came faster than that you lost a moor. What Rhyne did was look at the whole thing at once. It had the rain radar and the forecasts and the river gauges and the soil moisture probes and the tide tables for the Bristol Channel, and it had something like eleven thousand bits of the catchment it could actually do something with.</p>
+        <p>"Eleven thousand," Ann said.</p>
+        <p>"Eleven thousand and some," said Priya. "Most of them are tiny."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr el-scene" aria-hidden="true">
+        <div class="sky hill"></div>
+        <div class="field" style="height:28%;background:linear-gradient(180deg,#3a5a3c,#2a3e2c)"></div>
+        <div class="swarm"></div>
+        <div class="gates"><i class="gatebit" style="left:18.4%;top:18%"></i><i class="gatebit" style="left:49.4%;top:18%"></i><i class="gatebit" style="left:74.2%;top:18%"></i><i class="gatebit" style="left:18.4%;top:40%"></i><i class="gatebit" style="left:43.2%;top:40%"></i><i class="gatebit" style="left:74.2%;top:40%"></i><i class="gatebit" style="left:12.2%;top:62%"></i><i class="gatebit" style="left:37.0%;top:62%"></i></div>
+        <div class="label">Eleven thousand and some</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Most of them were upstream. Over the last three years the Authority had been paying farmers on the hills to hold water back. Leaky wooden dams across the little streams in the woods. Scrapes in the corners of fields that filled up in a storm and drained slowly afterwards. Hedges planted across slopes. Old field drains blocked off. Maize, which left the soil bare and let the rain run straight off the hills, replaced with grass on the steep ground. None of it was much on its own. A leaky dam held a few bath-fulls. But there were thousands of them now, and since last year about four hundred of them had gates, cheap ones, a board on a hinge with a little motor and a battery and a solar panel the size of a paperback, and Rhyne could open and shut them.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr pn-scene" aria-hidden="true">
+        <div class="sky hill"></div>
+        <div class="canopy" style="height:32%"></div>
+        <div class="field mud" style="height:24%"></div>
+        <div class="stream" style="top:48%"></div>
+        <div class="log" style="left:12%;right:12%;top:46%"></div>
+        <div class="lboard" style="left:46%;top:50%;height:12cqw"></div>
+        <div class="motor" style="left:45%;top:42%"></div>
+        <div class="spole" style="left:70%;top:22%;bottom:40%"></div>
+        <div class="spanel" style="left:66%;top:18%"></div>
+        <div class="label">a solar panel the size of a paperback</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"So it can hold the water up in the hills," Ann said.</p>
+        <p>"For a bit. Hours, mostly. Sometimes a day. It can't stop the water coming. What it can do is decide when it comes." Priya turned the laptop round. There was a chart on it, a hump shaped like a hill, labelled Burrowbridge, and a second, flatter hump under it. "This is a storm like January 2014, the way the river would have run then. This is the same storm with the hills holding back what they can and letting it out late. The peak at Burrowbridge comes down by about forty centimetres."</p>
+        <p>Ann looked at the two humps for a long time.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr hm-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="chart">
+          <div class="hump" style="left:4%;width:52%;height:88%"></div>
+          <div class="hump flat" style="left:28%;width:66%;height:62%"></div>
+        </div>
+        <div class="chtag" style="left:12%;top:12%">Burrowbridge</div>
+        <div class="label">the two humps</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"And where does the rest go?" she said, because she had farmed below a river for forty years and knew that water didn't disappear just because someone had drawn a flatter line.</p>
+        <p>Priya took a breath. "Some of it goes onto Northmoor," she said. "On purpose. Early. Before the river's at its peak."</p>
+        <p>This was the part of the letter Ann had read four times. The plan, Priya said, was that in a big enough storm Rhyne would ask the drainage board to open the old sluice at the top of Northmoor and let the river spill onto the lowest ground on purpose, about two hundred acres of it, about a third of which was Ann's. Not the house. Not the yard. The low fields along the river, Long Ground and Withy Mead and the one Clive had always called the Pit. Water on them maybe a foot deep, maybe two, for maybe ten days. Holding that water there, at that time, was what took the last bit off the peak. Without it, Rhyne's model said there was roughly a one in five chance in a 2014-sized winter that the bank at Burrowbridge would overtop and the village would go under. With it, roughly one in sixty.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr lf-scene" aria-hidden="true">
+        <div class="sky wash"></div>
+        <div class="lowf held" style="left:0;right:36%;bottom:0;height:40%"></div>
+        <div class="bank" style="left:0;right:36%;bottom:40%;height:7%"></div>
+        <div class="river shimmer" style="left:0;right:36%;bottom:46%;height:5%"></div>
+        <div class="field" style="left:58%;right:0;bottom:0;height:62%;background:linear-gradient(180deg,#4a6a4c,#3a5440);z-index:3"></div>
+        <div class="yard" style="left:68%;bottom:38%;width:16cqw;height:9cqw;z-index:4"></div>
+        <div class="house" style="left:71%;bottom:44%"></div>
+        <div class="label">Long Ground and Withy Mead</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"And what are my chances?" Ann said.</p>
+        <p>"Of water in the house? The model says lower than they are now. Because the river won't get as high." Priya didn't say this like a salesman. She said it like someone who knew she was going to be asked to show her working, and then she showed it, three pages of it, with error bars, which she called the honest bit.</p>
+        <p>The payment was more than Ann had expected. There was a standing fee every year for agreeing, and a much bigger one for each time the fields were actually flooded, and a fund for fencing and reseeding afterwards, and a separate thing about moving the cattle off the low ground in good time, which the Authority would pay for too. It was more, if she was being straight with herself, than those three fields made in a normal year.</p>
+        <p>"No," Ann said.</p>
+        <p>Priya nodded as if she'd expected it, and folded the map, and left the three pages on the table. "Will you think about it?"</p>
+        <p>"I've thought about it."</p>
+        <p>"Will you keep thinking about it?" Priya said, and Ann, who had been brought up to be polite to people in her kitchen, said she supposed she would.</p>
+        <p>Jamie came round that night and they argued, which they did not do often. He said it was a lot of money for three fields that flooded half the winters anyway. He said Burrowbridge had six hundred people in it and the school. He said the river didn't care whether you said yes or no. Ann said she knew all that. She said she had stood in this kitchen in forty-one inches of water and watched a man on the television tell her it had been nobody's fault, and now a different man, a computer as it happened, was asking her to let the water in early, through a gate, on purpose, and to be grateful, and she was not going to be the one who opened the door. That was what she said. She said it louder than she meant to, with Alfie on the stairs.</p>
+        <p>Afterwards, when Jamie had gone, Alfie came down in his pyjamas and stood against the door frame.</p>
+        <p>"I'm past it," he said. "Look."</p>
+        <p>He was. Just. The line was at his lip now.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr ps-scene" aria-hidden="true">
+        <div class="sky kitchen"></div>
+        <div class="kitchwall"></div>
+        <div class="jamb l"></div>
+        <div class="jamb r"></div>
+        <div class="lintel"></div>
+        <div class="doorleaf"></div>
+        <div class="bline grey" style="left:30%;top:48%"></div>
+        <div class="bline grey" style="left:61%;top:48%"></div>
+        <div class="skirting"></div>
+        <div class="label">I'm past it</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"You'll be over it by Christmas," she said, and sent him back to bed, and sat at the table with the three pages for a long time.</p>
+        <p>It was the error bars that made her ring Priya back, in the end. Ann had read a lot of official documents in her life, insurance letters, drainage board minutes, the Environment Agency's report on 2014 that had taken two years to come out and had used the word lessons forty-three times, and none of them had ever told her how likely it was that they were wrong. These did. There was a whole page of it. The model had been trained on a hundred and twenty years of river records and the last three winters of the new gauges, and on six thousand synthetic storms, and it said plainly that it was least sure about the very biggest ones, because there weren't many of those to learn from, and it put numbers on how unsure. At the bottom, in a different font, as if someone had added it on their own, it said: The decision about your land is yours. We will show you anything you want to see.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr dc-scene" aria-hidden="true">
+        <div class="sky kitchen"></div>
+        <div class="table"></div>
+        <div class="sheet" style="left:22%;top:18%"></div>
+        <div class="sheet b"></div>
+        <div class="sheet c"></div>
+        <div class="dline" style="left:54%;width:16cqw;top:68%"></div>
+        <div class="label">The decision about your land is yours</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"I want to see the hills," Ann said on the phone.</p>
+        <p>So on a wet Tuesday at the end of October Priya picked her up in a Rivers Authority pickup and drove her up the Tone, out past Taunton and Wellington and up through the lanes toward Wiveliscombe, where the land started to tilt and fold and the hedges went from straight to wandering. Ann had lived in Somerset all her life and could not remember the last time she had been up here. You didn't, from the moors. The hills were where the water came from, not anywhere you went.</p>
+        <p>The farm they stopped at belonged to a man called Tom Venn, who was about Ann's age and ran sheep and some suckler cows on two hundred acres of steep ground above the Tone, and who met them in the yard with a dog and the look of a man who had been told he was going to be a show-and-tell.</p>
+        <p>"You're the Northmoor one," he said.</p>
+        <p>"I am."</p>
+        <p>"They tell me you're the reason my brook's got gates on it."</p>
+        <p>"Is that right?" said Ann, and Tom laughed, and it was all right after that.</p>
+        <p>He walked them up the stream that ran through his bottom wood. Ann had imagined something like a reservoir. What she saw was a lot of logs. Every forty or fifty yards there was a tree trunk laid across the stream, staked in at the ends, with a gap under it at the bottom so that a normal flow ran straight through and only a flood backed up behind it. Some of them were just that. Every third or fourth one had a board fixed to it on a hinge, a plain piece of treated larch with a stubby black motor on top and a cable running to a pole with a panel on it, and when the board was down it closed most of the gap.</p>
+        <p>"In summer you'd walk past them," Tom said. "Everybody does. Ramblers think it's beavers."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr bv-scene" aria-hidden="true">
+        <div class="sky hill"></div>
+        <div class="canopy"></div>
+        <div class="trunk" style="left:14%;top:28%;bottom:18%"></div>
+        <div class="trunk" style="left:78%;top:22%;bottom:16%"></div>
+        <div class="field mud" style="height:22%"></div>
+        <div class="stream" style="top:58%;height:8cqw"></div>
+        <div class="log" style="left:22%;width:36cqw;top:56%"></div>
+        <div class="log" style="left:48%;width:30cqw;top:68%"></div>
+        <div class="label">Ramblers think it's beavers</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>There were twenty-six on his farm. Up on the slopes there were four scrapes, shallow hollows in the corners of fields, grassed over, that sheep grazed most of the year. There was a hedge he'd planted across the hill in 2029 that he was clearly prouder of than of anything else he showed them. There was a field at the top he'd taken out of maize.</p>
+        <p>"I got paid for the maize," he said. "Not as much as the maize, if I'm honest. But I'm not hauling the topsoil out of the brook every spring, so." He shrugged in the way farmers shrug when they mean they've done the sum and it's close enough.</p>
+        <p>What surprised her was how much he knew. He knew which of his boards had gone down in last January's storm and for how long. He had it on his phone. Rhyne sent him a message every time it moved one, a plain little line that said which gate and why, and how much water it expected to hold and for how long, and he could ring a number and ask it questions, which he admitted he did more often than he needed to.</p>
+        <p>"It's polite," he said. "I'll give it that. I asked it once why it shut number fourteen in the middle of the night when it wasn't even raining up here, and it told me there was a band coming in off the Quantocks at four in the morning and it wanted fourteen full before the band got to Bishops Lydeard. And then it said thank you for asking. I've had vets less civil."</p>
+        <p>Ann asked if she could talk to it. Priya gave her the phone.</p>
+        <p>She didn't know what she expected. A voice, she supposed, and it was one, an ordinary woman's voice with a bit of the West Country in it that she suspected was put on and didn't hold against it. She asked it the question she'd been carrying since the kitchen, which was not about chances or centimetres.</p>
+        <p>"If you open the sluice on my fields," she said, "and then the storm comes the other way and the river doesn't get high, and you've flooded me for nothing. What then?"</p>
+        <p>"Then you've been flooded for nothing, and you'll be paid as if it was for something," Rhyne said. "That will happen. I'd rather tell you now than have you find out. In about one in four of the winters I've simulated where I'd ask for Northmoor, the storm turns out smaller than the forecast and the water on your land does less good than I'd hoped. I can't open the sluice after the forecast is certain, because by then it's too late for it to help. I have to open it while I'm still guessing."</p>
+        <p>"So you guess."</p>
+        <p>"I make the best guess I can, and I tell people how good it is," it said. "Ms Coombe, may I ask you something back?"</p>
+        <p>She said it could.</p>
+        <p>"In 2014, when the water came into your house, did anyone tell you beforehand that it might?"</p>
+        <p>Ann stood in Tom Venn's wet wood with the logs and the boards and the little black motors and the stream running through the gaps under them, the same water, she thought, that would be going past her yard in two days' time and up over the line on her door frame if enough of it came at once, and she didn't answer for a while.</p>
+        <p>"No," she said. "Nobody told us anything."</p>
+        <p>"I'll tell you everything," Rhyne said. "I'll tell you when I'm thinking about it, and when I've asked, and when the gate opens, and how high the water is on your fields every hour while it's there. If you want me to stop telling you, you can say so."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr tl-scene" aria-hidden="true">
+        <div class="sky hill"></div>
+        <div class="canopy" style="height:44%"></div>
+        <div class="field mud" style="height:30%"></div>
+        <div class="stream" style="top:62%;height:6cqw"></div>
+        <div class="log" style="left:10%;width:40cqw;top:60%"></div>
+        <div class="phone" style="left:62%;bottom:36%"></div>
+        <div class="label">I'll tell you everything</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>On the drive back down Priya said nothing for a long while and then said, "It doesn't always ask questions like that. It's not a script."</p>
+        <p>"I didn't think it was," said Ann.</p>
+        <p>She signed in the second week of November, at the kitchen table, with Jamie there as a witness and Alfie under the table with the dog. There were three conditions she'd added, which Priya had taken away and brought back agreed. The first was that the old bank around the house and yard, which had been there since 1880 and had held in 2014 until the very last night, would be built up eighteen inches and properly faced, at the Authority's expense, before Christmas. The second was that she would be rung, by a person and not only by Rhyne, before the sluice opened. The third was that the Authority would put a gauge board in Long Ground, a proper white board with black numbers on it, where she could see it from the kitchen window.</p>
+        <p>"You'll have it on your phone," Priya said.</p>
+        <p>"I don't want it on my phone," said Ann. "I want to look out the window."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr wn-scene" aria-hidden="true">
+        <div class="sky wash"></div>
+        <div class="field pale" style="height:55%"></div>
+        <div class="bank" style="left:0;width:28%;bottom:0;height:44%"></div>
+        <div class="gpost" style="left:62%;bottom:16%;height:32cqw"></div>
+        <div class="wboard" style="left:59.2%;bottom:28%">
+          <i style="bottom:22%"></i><i style="bottom:50%"></i><i style="bottom:78%"></i>
+          <span class="n" style="bottom:66%">2</span><span class="n" style="bottom:38%">1</span>
+        </div>
+        <div class="win" style="left:0;top:0;width:18%;bottom:0"></div>
+        <div class="win" style="right:0;top:0;width:10%;bottom:0;box-shadow:inset 0 0 0 .7cqw #4a4038"></div>
+        <div class="label">I want to look out the window</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The bank went up in the first week of December, two men and a small digger and a lorry of clay from somewhere near Langport, and Alfie spent the whole of a Saturday watching them with his face pressed to the glass. The gauge board went in the week after. It stood out in the middle of Long Ground on a galvanised post, white against the green, and from the kitchen you could read it if you knew it was there, which within a few days Ann did without looking.</p>
+        <p>The cattle came off the low ground early that year. Rhyne had said December, and Ann, who would normally have kept them on Withy Mead until it got too soft to bear them, did as she was asked and brought them up onto the higher fields by the road and into the sheds, and paid for the extra silage with the first of the Authority's money, and felt odd about it, as if she'd sold something she hadn't been asked to give.</p>
+        <p>It rained for most of December. That wasn't news on the Levels. The rhynes filled and the pumps at Northmoor ran and the river rose and fell and rose, and every couple of days Ann's phone buzzed with a message, plain and short, the way Tom had said. Gates on the Halse Water closed overnight, holding about thirty thousand cubic metres. Tone at Bathpool falling. No action needed at Northmoor. She found she read them. She found, by Christmas, that she was reading them before the weather.</p>
+        <p>Over Christmas Alfie asked the speaker in the kitchen what Rhyne was doing, and Ann told him off for it, and then let him do it anyway, because the answer was so long and detailed and so entirely about streams near Dulverton that he got bored halfway through and went to play with the dog, which was a result of a kind.</p>
+        <p>On New Year's Eve Jamie stood against the door frame himself, as a joke, and of course he was miles over. He put his hand flat on the grey biro line and said, "You know they're going to ask, don't you. This winter. It's been too wet not to."</p>
+        <p>"I know," Ann said.</p>
+        <p>"And you'll be all right."</p>
+        <p>"I said I would, didn't I."</p>
+        <p>He looked at her the way he'd looked at her at Clive's funeral, as if he wasn't sure who was looking after whom, and then he went and got two glasses of the bad port and they watched the fireworks over Bridgwater from the yard, and you could hear the river going past behind the bank in the dark, a long sound, not loud, like somebody breathing out.</p>
+        <p>January was dry, almost unbelievably, for three weeks. The moors drained. The cattle stood in the sheds and complained. Ann's phone told her that gates were opening across the hills to let out what they'd been holding, so that they'd be empty if they were needed, which hadn't occurred to her, and which she thought about for a whole afternoon. A reservoir was only any use, she supposed, if you let it go. She'd never thought about the water upstream as something anyone was keeping for her. She'd only ever thought about it as something on its way.</p>
+        <p>The storm had a name by the time it reached Ireland. It came in on the first Sunday in February, a deep low off the Atlantic sitting on top of a mild wet southwesterly that had been building all week, and on the Thursday before, the forecasts started to agree with each other in the way that people on the Levels had learned to dread.</p>
+        <p>Rhyne's first message came on the Thursday at ten past eight in the morning, while Ann was mucking out. It said that a storm on Saturday night and Sunday was now likely to produce flows in the Tone and Parrett comparable to January 2014, coming on top of saturated ground, and that it was beginning to prepare. It said that it was likely, though not yet certain, to ask the drainage board to open the Northmoor sluice, probably on Saturday afternoon. It said that it would tell her as soon as it knew more. It gave a number for how sure it was, which was sixty-eight per cent, and said it would update the number twice a day.</p>
+        <p>At four that afternoon it was seventy-four. On Friday morning it was eighty-one. On Friday afternoon Priya rang, as promised, a person and not a computer, and said, "It's going to ask. I'm sorry."</p>
+        <p>"Don't be sorry," said Ann. "You told me."</p>
+        <p>She spent Friday doing the things she'd done in 2014, because her body did them before she asked it to. She moved the photographs off the bottom shelves. She put the good chairs up on the table. She got the generator out of the barn and checked it. She told Jamie not to come, and Jamie came anyway, with Alfie, because the school was closing on Monday and the forecast had frightened him and he said he would rather be frightened here. Ann didn't argue. She made up the spare room.</p>
+        <p>All of Friday night and Saturday, up in the hills, the water started to stay where it was put.</p>
+        <p>She knew this because Rhyne told her, a line at a time, and because for the first time in her life she found herself wanting to know what was happening on land she had never seen. Gates closing on the Halse Water and the Hillfarrance Brook. Gates closing on the upper Tone above Clatworthy. Tom Venn's number fourteen and the twenty-five others in his bottom wood. The rain came in across Exmoor and the Brendons on Saturday morning, and the little streams that would have run down into the Tone all at once and in a hurry instead backed up behind larch boards and log dams, into hollows in the corners of sheep fields, behind hedges planted across hills, into soil that had had grass on it for three years instead of maize and took it in like a sponge. None of it was much. A few bath-fulls here, a swimming pool there. Rhyne gave the total every few hours, in cubic metres, and then, because it seemed to have worked out that nobody on the Levels could picture a cubic metre, in Northmoors. By Saturday lunchtime the hills were holding about a third of a Northmoor of water that would otherwise already have been in the river.</p>
+        <p>Tom rang her at two. She hadn't expected him to.</p>
+        <p>"Mine are all full," he said. "Brook's running over the tops of half of them. Looks like a staircase. I thought you'd want to know."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr st-scene" aria-hidden="true">
+        <div class="sky storm"></div>
+        <div class="field" style="height:22%;background:linear-gradient(180deg,#2a3e2c,#1a2a1c)"></div>
+        <div class="overtop" style="left:14%;top:29%;width:16cqw"></div>
+        <div class="stepdam" style="left:14%;top:32%;width:16cqw"></div>
+        <div class="overtop" style="left:28%;top:38%;width:16cqw"></div>
+        <div class="stepdam" style="left:28%;top:41%;width:16cqw"></div>
+        <div class="overtop" style="left:42%;top:47%;width:16cqw"></div>
+        <div class="stepdam" style="left:42%;top:50%;width:16cqw"></div>
+        <div class="overtop" style="left:56%;top:56%;width:16cqw"></div>
+        <div class="stepdam" style="left:56%;top:59%;width:16cqw"></div>
+        <div class="overtop" style="left:70%;top:65%;width:16cqw"></div>
+        <div class="stepdam" style="left:70%;top:68%;width:16cqw"></div>
+        <div class="stream" style="top:78%;height:6cqw;background:linear-gradient(180deg,#b8d0d4,#4a7080)"></div>
+        <div class="label">Looks like a staircase</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"Thank you," Ann said, and meant it more than she could have said.</p>
+        <p>At ten to three, Priya rang again. "It's asked," she said. "The board's opening the sluice at half past. Do you want to be there?"</p>
+        <p>Ann did not want to be there. She put on her coat and went.</p>
+        <p>The Northmoor sluice was an old thing, a concrete box in the river bank with an iron gate in it that the drainage board had refitted with a new motor and kept in good order since 2014, at the top of the moor where Long Ground met the bank. There were two men from the board in high-vis and Priya in her fleece and a lad from the Bridgwater Mercury with a camera, and it was raining sideways, and the river on the other side of the bank was high and brown and fast and full of whole branches. Ann stood next to Priya and watched the men check something on a tablet and then check it again.</p>
+        <p>"You can say no," Priya said quietly. "Even now. It's in the contract. If you say stop, we stop."</p>
+        <p>"I know," said Ann.</p>
+        <p>One of the board men looked over at her, a question in it. She nodded.</p>
+        <p>It wasn't dramatic. That was what she remembered afterwards. In 2014 the water had come over the top of the bank further down, in the night, in a roar, and it had felt like the end of the world. This time the gate went up slowly, a few inches, with a hum from the motor, and the river came through it in a smooth brown tongue, and ran down the channel on the moor side and out across the bottom of Long Ground, spreading as it went, filling the hoofprints and the tractor ruts first, then the low places, then the grass. It looked, she thought, almost tidy. It looked like something being put away.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr sl-scene" aria-hidden="true">
+        <div class="sky storm"></div>
+        <div class="field wet" style="height:40%"></div>
+        <div class="lowf held" style="left:0;right:42%;bottom:0;height:36%"></div>
+        <div class="bank" style="left:50%;right:0;bottom:28%;height:16%"></div>
+        <div class="river" style="left:54%;right:0;bottom:42%;height:7%"></div>
+        <div class="concrete" style="left:42%;bottom:26%;width:20cqw;height:28cqw"></div>
+        <div class="igate" style="left:47%;bottom:42%;width:5.5cqw;height:10cqw"></div>
+        <div class="spill" style="left:14%;bottom:26%;width:34cqw;height:10cqw;clip-path:polygon(100% 10%,100% 55%,0 100%,0 62%)"></div>
+        <div class="label">a concrete box in the river bank</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>By dark the water was at the white board. By ten that night, from the kitchen window with the yard light on, she could read it: forty centimetres, and the field beyond it silver to the hedge.</p>
+        <p>She didn't sleep much. Nobody did. The wind got up after midnight and the rain came harder, and Rhyne's messages came every hour, as promised, and she read every one. Northmoor at fifty-two centimetres. Curry Moor gates opening at 01:40. Tone at Bathpool near peak. Upper catchment stores at eighty-eight per cent and beginning planned release from 03:00. The tide in the Channel was high at five past four, and that was the moment, Rhyne said, that mattered most, when the sea pushed back up the Parrett and the river had the least room to get out, and everything upstream was timed around it.</p>
+        <p>At about half past three Alfie came downstairs because the wind had woken him, and found his grandmother in her coat at the kitchen table with her phone, and sat down opposite her without saying anything, and she made him a hot chocolate, and they sat together and looked at the window.</p>
+        <p>At ten past four the message said: Burrowbridge gauge 8.61 metres and steady. Banks holding. This is the peak.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr gg-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="gbar" style="left:14%;top:18%;bottom:20%;width:6cqw;border-radius:.3cqw"></div>
+        <div class="gfill" style="left:14%;bottom:20%;width:6cqw;height:52%;border-radius:0 0 .3cqw .3cqw"></div>
+        <div class="gnum" style="left:26%;top:28%;font-size:11cqw">8.61</div>
+        <div class="chtag" style="left:28%;top:58%;font-size:2.4cqw;letter-spacing:.2em">metres and steady</div>
+        <div class="label">Burrowbridge gauge 8.61 metres and steady</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>In 2014 it had been nearly half a metre higher.</p>
+        <p>She read it twice, then read it out to Alfie, who did not know what any of it meant and said, "Is that good?"</p>
+        <p>"Yes," Ann said. "That's good." And then, because she found she couldn't say anything else, she went and stood at the back door for a while with her hand flat against the frame.</p>
+        <p>The water stayed on Long Ground and Withy Mead and the Pit for eleven days. It went to sixty-three centimetres at the board at its highest, on the Sunday afternoon, and never came within a hundred yards of the new bank around the house. Rhyne let it out again slowly through the sluice and the pumps once the river had dropped, a few centimetres a day, telling her each morning how much was gone and how much was left, until one morning the board stood on mud and then on grass the colour of an old tea towel, and then it was over.</p>
+        <p>Burrowbridge stayed dry. So did Moorland and Fordgate and the road. The A361 was shut for two days at Athelney, which happened most winters and annoyed everyone exactly as much as usual. On Points West the woman from the Rivers Authority, who was not Priya but Priya's boss, said the scheme had performed as designed, and the man from the Rose and Crown said on the local Facebook group that it was a fluke and the storm had turned, and somebody posted the rainfall figures underneath, and somebody else posted a photograph of Tom Venn's brook running over its staircase of log dams like a weir, and the thread went on for nine hundred comments and nobody changed their mind, which was also usual.</p>
+        <p>The money arrived in March, in one payment, with a breakdown on the remittance that listed the days and the depths. Ann sat at the table with it and found she was not quite sure what to feel. It was a lot. It would pay for the reseeding and the fencing with plenty over, and for the first time since the milking had gone she wouldn't have to think hard about the summer. She put most of it into the farm account and a bit of it into an account for Alfie, and the rest she spent on something she hadn't expected to want, which was a day out.</p>
+        <p>She took Alfie up the Tone in Jamie's car on a Saturday in April, through Taunton and Wellington and up through the lanes, and Tom Venn met them in the yard with the same dog, and walked them up through his bottom wood. The stream was low and clear and ran through the gaps under the logs as if they weren't there. The boards on the gated ones were up. There were primroses on the banks. A ramblers' path crossed the brook on stepping stones a little way up, and a couple in matching jackets were stopped on it, looking down at a log dam, and the woman said to the man, "Beavers, do you think?" and Tom caught Ann's eye and didn't say anything.</p>
+        <p>Alfie wanted to know which one was number fourteen. Tom showed him. It was a log and a board and a motor and a little solar panel on a pole, exactly like the others. Alfie put his hand on the board and looked at it for a long time with the seriousness of a nine-year-old who has been told that something is important and is trying to see where the importance is kept.</p>
+        <p>"It stopped the water," he said.</p>
+        <p>"Some of it," said Tom. "A bit. It and about eleven thousand mates."</p>
+        <p>"How much?"</p>
+        <p>Tom got his phone out and asked, and Rhyne told him, in cubic metres and then in bathtubs, and Alfie did a sum on his fingers that was wrong but close, and was satisfied.</p>
+        <p>On the way home Ann asked Jamie to stop at the top of the Polden Hills, where you could pull in at a gateway and see the whole of the Levels laid out below you, the moors and the rhynes and the river raised up on its banks and the tower of Burrowbridge Mump on its little hill with its broken church on top, all flat and green and wet in the spring light, and further off the line of the Quantocks and further still, faint, the Brendons where they had been that morning. She had lived down there all her life and never seen it from up here, or if she had, she'd never looked. It was smaller than she'd thought. It was all one thing.</p>
+        <p>In May the cranes came to the Pit.</p>
+        <p>There had been cranes on the Levels for twenty years, since the reintroduction, a few dozen pairs on the RSPB reserves at West Sedgemoor and on the wetter moors, tall grey birds with red on their heads and a call like nothing else in England, a sort of trumpet that had been blown underwater. Ann had seen them from the road. They had never come onto the farm. The Pit had always been drained too quickly for them, and grazed too hard, and they liked their ground wet and quiet.</p>
+        <p>This spring the Pit had stayed wet. Rhyne had held a little water on it after the rest had gone, a few centimetres in the lowest corner, because it had something to do with refilling the peat, which had been drying out for a hundred years and shrinking with it, and which the Authority was paying a separate fee to keep damp. Ann had agreed to that without thinking very hard, because by then she was in the habit. And one morning in the second week of May she looked out of the kitchen window to check the white board, which she still did every morning although there was nothing to read, and there were two cranes standing in the corner of the Pit, up to their knees in the shallow water, absolutely still.</p>
+        <p>She rang Jamie. She didn't know who else to ring. Jamie said, "Mum, it's half six," and then, "Wait, what?" and then put Alfie on, who was already dressed, it turned out, because he had been up since five building something out of cardboard. Ann held the phone up to the window, which was no good at all, the birds were two grey dots, and she knew it was no good and did it anyway.</p>
+        <p>They nested. She was told not to go near them and didn't. In June there was one chick, a gangly brown thing on legs that didn't seem to belong to it yet, and the RSPB woman came out with a telescope and wrote things down and told Ann it was the first crane to be raised on Northmoor in four hundred years, give or take, as far as anyone knew. Ann said that was nice. She said it the way she'd say anything was nice. Then she went into the house and stood at the back door for a minute with her hand on the frame and didn't do anything else.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr cr-scene" aria-hidden="true">
+        <div class="sky may"></div>
+        <div class="lowf held" style="height:36%"></div>
+        <div class="reed" style="left:10%;bottom:14%;height:16cqw;transform:rotate(-8deg)"></div>
+        <div class="reed" style="left:16%;bottom:12%;height:13cqw;transform:rotate(6deg)"></div>
+        <div class="reed" style="left:84%;bottom:14%;height:15cqw;transform:rotate(10deg)"></div>
+        <div class="reed" style="left:90%;bottom:12%;height:11cqw;transform:rotate(-4deg)"></div>
+        <div class="crane" style="left:16%;bottom:18%;width:16%;height:46%;transform:scaleX(1)"><div style="position:absolute;left:28%;bottom:0;width:5%;height:40%;background:#3a342c;transform:rotate(10deg);transform-origin:bottom center;border-radius:2px"></div><div style="position:absolute;left:48%;bottom:0;width:5%;height:40%;background:#3a342c;transform:rotate(-10deg);transform-origin:bottom center;border-radius:2px"></div><div style="position:absolute;left:8%;bottom:36%;width:58%;height:7%;background:#6a6860;border-radius:40px;box-shadow:0 2px 6px rgba(0,0,0,.25)"></div><div style="position:absolute;left:58%;bottom:40%;width:5%;height:36%;background:#6a6860;border-radius:2px;transform:rotate(22deg);transform-origin:bottom center"></div><div style="position:absolute;left:70%;bottom:70%;width:18%;height:3.2%;background:#5a584e;border-radius:40% 70% 50% 40%"></div><div style="position:absolute;left:72%;bottom:72%;width:6%;height:2.4%;background:#c45a3a;border-radius:50%"></div><div style="position:absolute;left:86%;bottom:70.6%;width:8%;height:1.4%;background:#3a342c;border-radius:0 40% 40% 0"></div></div>
+        <div class="crane" style="left:52%;bottom:17%;width:16%;height:46%;transform:scaleX(-1)"><div style="position:absolute;left:28%;bottom:0;width:5%;height:40%;background:#3a342c;transform:rotate(10deg);transform-origin:bottom center;border-radius:2px"></div><div style="position:absolute;left:48%;bottom:0;width:5%;height:40%;background:#3a342c;transform:rotate(-10deg);transform-origin:bottom center;border-radius:2px"></div><div style="position:absolute;left:8%;bottom:36%;width:58%;height:7%;background:#6a6860;border-radius:40px;box-shadow:0 2px 6px rgba(0,0,0,.25)"></div><div style="position:absolute;left:58%;bottom:40%;width:5%;height:36%;background:#6a6860;border-radius:2px;transform:rotate(22deg);transform-origin:bottom center"></div><div style="position:absolute;left:70%;bottom:70%;width:18%;height:3.2%;background:#5a584e;border-radius:40% 70% 50% 40%"></div><div style="position:absolute;left:72%;bottom:72%;width:6%;height:2.4%;background:#c45a3a;border-radius:50%"></div><div style="position:absolute;left:86%;bottom:70.6%;width:8%;height:1.4%;background:#3a342c;border-radius:0 40% 40% 0"></div></div>
+        <div class="crane chick" style="left:38%;bottom:18%;width:11%;height:28%;transform:scaleX(1)"><div style="position:absolute;left:28%;bottom:0;width:5%;height:40%;background:#3a342c;transform:rotate(10deg);transform-origin:bottom center;border-radius:2px"></div><div style="position:absolute;left:48%;bottom:0;width:5%;height:40%;background:#3a342c;transform:rotate(-10deg);transform-origin:bottom center;border-radius:2px"></div><div style="position:absolute;left:8%;bottom:36%;width:58%;height:7%;background:#7a5a3a;border-radius:40px;box-shadow:0 2px 6px rgba(0,0,0,.25)"></div><div style="position:absolute;left:58%;bottom:40%;width:5%;height:36%;background:#7a5a3a;border-radius:2px;transform:rotate(22deg);transform-origin:bottom center"></div><div style="position:absolute;left:70%;bottom:70%;width:18%;height:3.2%;background:#6a4a2e;border-radius:40% 70% 50% 40%"></div><div style="position:absolute;left:72%;bottom:72%;width:6%;height:2.4%;background:#c45a3a;border-radius:50%"></div><div style="position:absolute;left:86%;bottom:70.6%;width:8%;height:1.4%;background:#3a342c;border-radius:0 40% 40% 0"></div></div>
+        <div class="label">the first crane to be raised on Northmoor</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Alfie came for the summer holidays. On the first morning he stood against the door frame without being asked, and Ann got the biro out of the drawer and he stood very straight and she made a new mark, at the top of his head, and wrote his name and the year beside it. It was a good four inches over the old line now. He turned round and looked at the two of them, the grey one and the new blue one, one above the other.</p>
+        <p>"Will you paint over it?" he said. "The old one."</p>
+        <p>Ann looked at it. Forty-one inches. Clive's hand on her shoulder in the wet kitchen, the smell of it, the man on the television.</p>
+        <p>"No," she said. "I don't think so. I think we'll leave them both."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall mr bt-scene" aria-hidden="true">
+        <div class="sky kitchen"></div>
+        <div class="kitchwall"></div>
+        <div class="jamb l"></div>
+        <div class="jamb r"></div>
+        <div class="lintel"></div>
+        <div class="doorleaf"></div>
+        <div class="bline grey" style="left:30%;top:54%"></div>
+        <div class="bline grey" style="left:61%;top:54%"></div>
+        <div class="bline blue" style="left:30%;top:44%"></div>
+        <div class="bline blue" style="left:61%;top:44%"></div>
+        <div class="skirting"></div>
+        <div class="label">the grey one and the new blue one</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Out of the kitchen window, past the yard and the bank and the white board, the cranes were walking the Pit with their chick between them, slowly, picking at the shallow water, and beyond them the river went past on its way to the sea, high up on its banks where it had always been, going the way it had always gone, a long sound, not loud.</p>
+      </div>
+
+    </article>
+  </body>
+</html>
