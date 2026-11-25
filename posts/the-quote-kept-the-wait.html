@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The quote kept the wait — Ben Miller</title>
+    <meta name="description" content="In the Fens a driverless bus network never refuses anyone. It just quotes the far end of the county long, and the far end stops asking.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0a0d12;
+        --ink: #d4dae2;
+        --mute: #7e8794;
+        --cream: #e6ebf0;
+        --gold: #c4a45a;
+        --yolk: #d4b86a;
+        --leaf: #2a6a48;
+        --cool: #7a96aa;
+        --ember: #b85a3a;
+        --alert: #c03a3a;
+        --bark: #3a322c;
+        --lamp: #e8e0c8;
+        --steel: #8a9aa4;
+        --flag: #2a4a82;
+        --amber: #c48a28;
+        --lozenge: #3a8a58;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 50% 32% at 82% 6%, rgba(80, 110, 160, 0.12), transparent 60%),
+          radial-gradient(ellipse 46% 28% at 10% 18%, rgba(30, 50, 70, 0.10), transparent 58%),
+          radial-gradient(ellipse 42% 26% at 28% 88%, rgba(40, 60, 70, 0.08), transparent 60%),
+          radial-gradient(ellipse 36% 22% at 88% 76%, rgba(60, 80, 90, 0.06), transparent 60%),
+          linear-gradient(180deg, #10141a 0%, #0c1016 36%, #0a0c12 70%, #07080c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(170, 190, 220, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 215, 235, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c4ccd2;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(80, 110, 160, 0.26), 0 0 2px rgba(180, 200, 220, 0.35);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #dce2e8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c4783a; }
+      .prose strong { font-weight: 700; color: #e8d0a0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(255, 210, 150, 0.95) 0 1.5px, rgba(255, 170, 90, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(255, 170, 90, 0.4));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #10131a;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(200, 140, 70, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .quote-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(2, 4, 8, 0.6) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .quote-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .hero h1 { text-shadow: 0 0 40px rgba(80, 110, 160, 0.26), 0 0 2px rgba(180, 200, 220, 0.35); }
+      .quote-hero .label, .scene.qw .label { color: rgba(232, 238, 244, .94); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+
+      .quote-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(140,170,200,.14); background: #10141a; }
+      .quote-hero > * { position: absolute; }
+      .quote-hero::after, .scene.qw::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(6,8,12,.72) 100%), repeating-linear-gradient(112deg, rgba(220,230,240,.014) 0 2px, transparent 2px 8px); }
+      .scene.qw { background: #10141a; container-type: size; }
+
+      .sky { inset: 0; background: linear-gradient(180deg, #2a323c 0%, #4a5660 50%, #6a7680 100%); }
+      .sky.depot { background: linear-gradient(180deg, #12161c 0%, #161c24 60%, #1a222c 100%); }
+      .sky.paper { background: linear-gradient(180deg, #1a2028, #12161c 70%, #0e1218); }
+      .sky.marsh { background: linear-gradient(180deg, #3a4650 0%, #6a7880 48%, #8a9698 100%); }
+      .sky.gold { background: linear-gradient(180deg, #2a2830 0%, #5a5048 42%, #c4a06a 78%, #d8b888 100%); }
+      .sky.frost { background: linear-gradient(180deg, #3a4850 0%, #8a9aa0 55%, #c4d0d4 100%); }
+      .sky.night { background: linear-gradient(180deg, #0e1218 0%, #161c24 70%, #1c242c 100%); }
+      .sky.office { background: linear-gradient(180deg, #2a2c30, #1c1e22 70%, #16181c); }
+
+      .field { left: 0; right: 0; bottom: 0; height: 42%; z-index: 1;
+        background: linear-gradient(180deg, #2a3a30 0%, #1c2a22 60%, #141c18 100%); }
+      .field.frost { background: linear-gradient(180deg, #6a7878 0%, #4a5858 50%, #3a4444 100%); }
+      .field.dark { background: linear-gradient(180deg, #1a2420, #121816); }
+      .field.gold { background: linear-gradient(180deg, #3a4234, #2a3228); height: 36%; }
+
+      /* map / lozenges */
+      .screen { z-index: 3; left: 6%; right: 6%; top: 10%; bottom: 16%;
+        background: #0e1418; box-shadow: inset 0 0 0 .35cqw rgba(140,180,200,.12), 0 1cqw 2cqw rgba(0,0,0,.4);
+        border-radius: .4cqw; }
+      .a17 { z-index: 4; height: 1.1cqw; background: #3a444c; border-radius: 1cqw;
+        box-shadow: 0 0 1cqw rgba(80,100,120,.25); }
+      .loz { z-index: 6; width: 3.4cqw; height: 1.55cqw; border-radius: 1cqw;
+        background: #3a8a58; box-shadow: 0 0 .7cqw rgba(58,138,88,.45); }
+      .loz.amber { background: #c48a28; box-shadow: 0 0 .8cqw rgba(196,138,40,.5); }
+      .loz.dim { background: #2a4a38; box-shadow: none; opacity: .7; }
+      .knot { z-index: 5; width: 10cqw; height: 8cqw; border-radius: 50%;
+        background: radial-gradient(circle, rgba(58,138,88,.35), transparent 70%); }
+      .pdot { z-index: 6; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; background: #8a9298;
+        box-shadow: 0 0 .5cqw rgba(180,190,200,.3); }
+      .pdot.on { background: #3a8a58; box-shadow: 0 0 .8cqw rgba(58,138,88,.6); animation: blink 2.8s ease-in-out infinite; }
+
+      /* van with smiling grille */
+      .van { z-index: 6; }
+      .van .body { position: absolute; left: 0; right: 0; top: 18%; bottom: 20%;
+        background: linear-gradient(180deg, #3a4248, #2a3238 60%, #1c2228);
+        border-radius: 1.2cqw 2.2cqw 1.1cqw 1.1cqw;
+        box-shadow: 0 .6cqw 1.4cqw rgba(0,0,0,.4); }
+      .van .cab { position: absolute; right: 7%; top: 24%; width: 22%; height: 26%;
+        background: linear-gradient(180deg, #1a2830, #0e161c);
+        border-radius: .4cqw .6cqw .2cqw .2cqw; box-shadow: inset 0 0 0 .25cqw rgba(140,180,200,.15); }
+      .van .grille { position: absolute; right: 7%; width: 22%; top: 52%; height: 12%;
+        background: #1a1c1e; border-radius: 0 0 50% 50% / 0 0 90% 90%;
+        box-shadow: inset 0 .25cqw 0 rgba(220,200,140,.4); }
+      .van .grille::before { content: ""; position: absolute; left: 16%; right: 16%; top: 30%; height: 40%;
+        border: .28cqw solid rgba(220,200,140,.75); border-top: 0; border-radius: 0 0 50% 50%; }
+      .van .wheel { position: absolute; bottom: 8%; width: 11%; height: 22%; border-radius: 50%;
+        background: #121416; box-shadow: inset 0 0 0 .35cqw #2a2e32; }
+      .van .wheel.l { left: 14%; }
+      .van .wheel.r { right: 16%; }
+
+      /* drove road */
+      .road { z-index: 3; height: 4.2cqw; background: #3a3e42;
+        box-shadow: 0 0 0 .3cqw #2a2e30; }
+      .bank { z-index: 4; background: #4a5248; }
+      .marsh { z-index: 2; background: linear-gradient(180deg, #6a7874, #8a9694 60%, #a0aaa8); }
+      .jet { z-index: 5; height: .25cqw; background: linear-gradient(90deg, transparent, rgba(220,230,240,.7), transparent);
+        transform-origin: left center; }
+
+      /* typography / quotes */
+      .qcard { z-index: 5; background: #e8ecee; border-radius: .5cqw;
+        box-shadow: 0 .8cqw 2cqw rgba(0,0,0,.4); color: #1a1c20; }
+      .qnum { z-index: 6; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-weight: 500; letter-spacing: -.04em; color: #e8eef2;
+        text-shadow: 0 2px 12px rgba(0,0,0,.55); white-space: nowrap; }
+      .qnum.dark { color: #1a1c20; text-shadow: none; }
+      .qlabel { z-index: 6; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        letter-spacing: .12em; text-transform: uppercase; color: rgba(220,228,234,.7); }
+      .winbox { z-index: 5; background: rgba(30,40,50,.8); border-radius: .3cqw;
+        box-shadow: inset 0 0 0 .2cqw rgba(180,200,220,.12); }
+      .winbox.moved { background: rgba(196,138,40,.18); box-shadow: inset 0 0 0 .2cqw rgba(196,138,40,.35); }
+
+      /* kpi board */
+      .kboard { z-index: 5; background: #e8ece6; border-radius: .3cqw; overflow: hidden;
+        box-shadow: 0 .8cqw 1.8cqw rgba(0,0,0,.4); }
+      .kboard i { position: absolute; left: 12%; right: 12%; height: .28cqw; background: #c8ccc6; }
+      .star { position: absolute; z-index: 6; width: 2.4cqw; height: 2.4cqw;
+        background: #c4a45a; clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        box-shadow: 0 0 1cqw rgba(196,164,90,.45); filter: drop-shadow(0 0 .6cqw rgba(196,164,90,.5)); }
+      .kline { position: absolute; z-index: 6; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-size: 2.1cqw; font-weight: 500; color: #1a1c18; letter-spacing: .04em; line-height: 1.25;
+        text-shadow: none; }
+
+      /* columns / withdrawn */
+      .col { z-index: 4; display: flex; flex-wrap: wrap; align-content: flex-start; gap: .7cqw; }
+      .col i { position: relative; width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: #3a8a58;
+        box-shadow: 0 0 .4cqw rgba(58,138,88,.35); }
+      .col.gone i { background: #3a4248; box-shadow: none; opacity: .55; }
+
+      /* red manual panel */
+      .panel { z-index: 5; background: #161a20; border-radius: .4cqw;
+        box-shadow: 0 0 0 .45cqw #c03a3a, 0 1cqw 2cqw rgba(0,0,0,.45); }
+      .panel::before { content: ""; position: absolute; left: 8%; right: 8%; top: 14%; height: 10%;
+        background: #2a3238; border-radius: .2cqw; }
+      .panel::after { content: ""; position: absolute; left: 8%; right: 28%; top: 32%; height: 8%;
+        background: #2a3238; border-radius: .2cqw; }
+      .pbtn { z-index: 6; background: #c03a3a; border-radius: .25cqw; }
+
+      /* stop pole */
+      .pole { z-index: 6; width: 1.1cqw; background: #6a7074;
+        box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.3); }
+      .flag { z-index: 7; width: 7cqw; height: 4.4cqw;
+        background: linear-gradient(180deg, #3a5a8a, #2a4a72 70%, #243e64);
+        clip-path: polygon(0 0, 100% 12%, 86% 100%, 0 88%);
+        box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.25); opacity: .85; }
+      .flag.faded { filter: saturate(.55) brightness(1.05); opacity: .7; }
+      .tcase { z-index: 7; width: 6.4cqw; height: 5.2cqw; background: rgba(180,190,196,.35);
+        border: .25cqw solid #5a6064; box-shadow: inset 0 0 0 .15cqw rgba(255,255,255,.08);
+        clip-path: polygon(0 0, 100% 0, 100% 62%, 70% 100%, 0 100%); }
+      .tcase .card { position: absolute; inset: 8%; background: #e4e0d4;
+        font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-size: 1.15cqw; color: #1a1c18; line-height: 1.25; padding: 4%;
+        text-shadow: none; letter-spacing: 0; text-transform: none; }
+      .phonebox { z-index: 5; width: 5cqw; background: linear-gradient(180deg, #8a1a1a, #6a1212);
+        box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3); }
+      .phonebox::before { content: ""; position: absolute; left: 14%; right: 14%; top: 16%; height: 28%;
+        background: #8aa0a8; box-shadow: inset 0 0 0 .2cqw #3a2020; }
+
+      /* letter */
+      .letter { z-index: 5; background: #efece4; box-shadow: 0 .6cqw 1.6cqw rgba(0,0,0,.4);
+        transform: rotate(-2deg); }
+      .letter::before { content: ""; position: absolute; left: 12%; right: 12%; top: 16%; bottom: 16%;
+        background: repeating-linear-gradient(180deg, #c8c4ba 0 .28cqw, transparent .28cqw 2cqw); opacity: .5; }
+      .hl { position: absolute; z-index: 6; height: 2.2cqw; background: rgba(196,164,90,.45); }
+
+      /* classification */
+      .tag { z-index: 6; font-family: Karla, system-ui, sans-serif; letter-spacing: .16em;
+        text-transform: uppercase; font-size: 2.2cqw; font-weight: 500;
+        padding: 1.4cqw 2.2cqw; border-radius: .25cqw; text-shadow: none; }
+      .tag.ok { color: #d8e0e4; box-shadow: inset 0 0 0 .25cqw rgba(200,210,220,.25); }
+      .tag.bad { color: #1a1c18; background: #c4a45a; }
+
+      /* phone quote */
+      .handset { z-index: 7; width: 14cqw; height: 24cqw; background: #1a1c20; border-radius: 1.6cqw;
+        box-shadow: 0 .8cqw 1.8cqw rgba(0,0,0,.45), inset 0 0 0 .3cqw #2a2e32; overflow: hidden; }
+      .handset .face { position: absolute; inset: 8% 8% 11%; background: #e8ecee; border-radius: .6cqw;
+        overflow: hidden;
+        font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        color: #1a1c20; font-size: 2.5cqw; line-height: 1.35; padding: 16% 8% 10%;
+        text-align: center; text-shadow: none; letter-spacing: 0; text-transform: none; font-weight: 500; }
+
+      .scarf { z-index: 6; width: 4cqw; height: 1.2cqw; background: #8a3a40; border-radius: .3cqw; }
+
+      @keyframes blink { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-8deg) brightness(1.05); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (max-width: 600px) {
+        .quote-hero { height: 22rem; }
+        .kline { font-size: 2.8cqw; }
+        .tag { font-size: 3cqw; }
+        .handset .face { font-size: 2.3cqw; }
+        .tcase .card { font-size: 1.8cqw; }
+        .qnum { letter-spacing: -.02em; }
+        .scene.qw .label, .quote-hero .label { letter-spacing: .14em; font-size: .46rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog { animation: none !important; }
+        .quote-hero *, .scene.qw *, .quote-hero *::before, .quote-hero *::after, .scene.qw *::before, .scene.qw *::after,
+        .paint, .fog { animation: none !important; transition: none !important; }
+        .scene { animation: none !important; opacity: 1; transform: none; }
+        .pdot.on { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="quote-hero" aria-hidden="true">
+          <div class="sky depot"></div>
+          <div class="screen"></div>
+          <div class="a17" style="left:10%;right:8%;top:49%"></div>
+          <div class="knot" style="left:46%;top:40%"></div>
+          <div class="loz" style="left:8%;top:45.0%"></div>
+          <div class="loz dim" style="left:14%;top:46.2%"></div>
+          <div class="loz" style="left:20%;top:47.4%"></div>
+          <div class="loz" style="left:26%;top:45.0%"></div>
+          <div class="loz dim" style="left:32%;top:46.2%"></div>
+          <div class="loz" style="left:37%;top:47.4%"></div>
+          <div class="loz" style="left:44%;top:42%"></div>
+          <div class="loz" style="left:48%;top:48%"></div>
+          <div class="loz" style="left:52%;top:44%"></div>
+          <div class="loz" style="left:50%;top:54%"></div>
+          <div class="loz" style="left:56%;top:50%"></div>
+          <div class="loz" style="left:54%;top:40%"></div>
+          <div class="loz" style="left:47%;top:38%"></div>
+          <div class="loz" style="left:62%;top:46.0%"></div>
+          <div class="loz" style="left:68%;top:47.1%"></div>
+          <div class="loz dim" style="left:74%;top:48.2%"></div>
+          <div class="loz" style="left:80%;top:46.0%"></div>
+          <div class="loz" style="left:86%;top:47.1%"></div>
+          <div class="loz" style="left:91%;top:48.2%"></div>
+          <div class="label">beads on a string</div>
+        </div>
+        <h1>The quote kept the wait</h1>
+        <p class="dek">In the Fens a driverless bus network never refuses anyone. It just quotes the far end of the county long, and the far end stops asking.</p>
+        <time datetime="2026-11-25">25 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>The map on Sandy Pell's left-hand screen showed forty-one minibuses as small green lozenges, and on a quiet Tuesday in October most of them lay along the A17 like beads on a string, sliding east towards King's Lynn and west towards Sleaford, with a loose knot of them gathered around Spalding where the hospital and the college and the big Tesco pulled the morning in. The lozenges had no drivers. Sandy had driven for twenty-two years, most of them on the 505 between Spalding and King's Lynn, and when Fenlink On Demand replaced the timetabled routes in 2031 she had been offered a choice between redundancy and a chair in the Calloway Mobility depot on the Wardentree Lane estate, where she would be a remote supervisor and watch the vans drive themselves. She took the chair. Her husband Mick said she took it because she couldn't stand the idea of the buses going out without her knowing where they were, and he was right, though she never told him so.</p>
+        <p>There were four supervisors on a day shift, and between them they watched the vans and answered the phone line, which the council had insisted on keeping for people who didn't use the app. The phone rang less every year. The vans themselves were run by a dispatch agent that Calloway called Tally, which sat in a data centre somewhere near Peterborough and took every request in the county's southern half, worked out where every van was and where every van would be, and answered each person with a quote. The quote was the thing the passenger saw. Your ride will arrive between 10:42 and 10:50. It had a little animation of a van with a smile for a grille, which Sandy thought was daft and which the passengers, as far as she could tell, rather liked.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw sm-scene" aria-hidden="true">
+        <div class="sky night"></div>
+        <div class="field dark" style="height:28%"></div>
+        <div class="road" style="left:0;right:0;bottom:22%;height:3.2cqw"></div>
+        <div class="van" style="left:28%;bottom:18%;width:44cqw;height:28cqw">
+          <div class="body"></div><div class="cab"></div><div class="grille"></div>
+          <div class="wheel l"></div><div class="wheel r"></div>
+        </div>
+        <div class="label">a smile for a grille</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Tally was good at it. She had been sceptical in the first year, and then she had watched it do things she could never have done from a cab with a paper running board. It knew that the 7:50 from Holbeach would fill with sixth-formers if it rained, and it moved two vans that way at half past six on any morning the forecast turned. It knew which of the hospital outpatient clinics overran and by how much, and it held a van in the car park for the Thursday afternoon fracture clinic because the fracture clinic always ran forty minutes late. It could pool five people from five villages into one van and drop them all at the right doors in Spalding in an order that made sense, and it did it thousands of times a day without a sigh. When a van broke down it rearranged the whole south of the county in the time it took Sandy to read the fault code. When it explained itself, which it would do if you asked, it was clear and polite and never once made her feel stupid for asking.</p>
+        <p>So she trusted it, broadly, the way you trust a good gearbox. She watched the lozenges and she watched the little grey dots that were passengers waiting, and the dots blinked green when they were picked up and vanished when they were dropped, and most days the whole board breathed in and out like that from six in the morning until midnight.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw bd-scene" aria-hidden="true">
+        <div class="sky depot"></div>
+        <div class="screen" style="top:8%;bottom:14%"></div>
+        <div class="a17" style="left:12%;right:10%;top:62%"></div>
+          <div class="loz" style="left:14%;top:58%"></div>
+          <div class="loz" style="left:24%;top:60%"></div>
+          <div class="loz dim" style="left:36%;top:57%"></div>
+          <div class="loz" style="left:48%;top:59%"></div>
+          <div class="loz amber" style="left:62%;top:58%"></div>
+          <div class="loz" style="left:74%;top:61%"></div>
+        <div class="pdot" style="left:12%;top:28%"></div>
+        <div class="pdot on" style="left:23%;top:28%"></div>
+        <div class="pdot" style="left:34%;top:28%"></div>
+        <div class="pdot" style="left:45%;top:28%"></div>
+        <div class="pdot on" style="left:56%;top:28%"></div>
+        <div class="pdot" style="left:67%;top:28%"></div>
+        <div class="pdot" style="left:78%;top:28%"></div>
+        <div class="pdot" style="left:12%;top:50%"></div>
+        <div class="pdot on" style="left:23%;top:50%"></div>
+        <div class="pdot" style="left:34%;top:50%"></div>
+        <div class="pdot" style="left:45%;top:50%"></div>
+        <div class="pdot on" style="left:56%;top:50%"></div>
+        <div class="pdot" style="left:67%;top:50%"></div>
+        <div class="pdot" style="left:78%;top:50%"></div>
+        <div class="label">the whole board breathed</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She knew some of the dots. That was the part of the job nobody had written down. She had driven the 505 long enough to know most of the regulars between Fosdyke and Sutton Bridge, and some of them had carried on being regulars after the timetable went, and when their names came up on the request feed she would sometimes watch their dots for a moment longer than she needed to. Mrs Leggate in Moulton Seas End, going to her sister's. The lad from Whaplode with the guitar case who was at college in Boston now. And Arthur Mawby from Gedney Drove End, who went to Long Sutton every day at twenty to two to sit with his wife.</p>
+        <p>Gedney Drove End is the last village before the marsh. The road runs north out of Gedney for four miles, straight as a ruler between fields of cabbage and sugar beet, until it reaches a few dozen houses, a church, a pub that opens on Fridays, and then the sea bank, and beyond the sea bank the salt marsh and the Wash and the RAF bombing range at Holbeach St Matthew where the jets come over low enough to rattle the windows. When Sandy drove the 505 it had never gone there. Gedney Drove End had been served by the 46, a little Hoppa bus that went out twice a day on a loop, and Arthur used to catch the 1:15 into Long Sutton and change. When the 46 was absorbed into Fenlink, the village became part of what Tally's maps called Zone G-Outer, and Arthur, who was then eighty, had been delighted. A bus that came to your door when you asked for it. His grandson Lewis put the app on an old tablet for him and wrote the steps on an index card in black felt pen, and Arthur kept the card in the tablet's cover and followed it every day like a recipe.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw rl-scene" aria-hidden="true">
+        <div class="sky marsh"></div>
+        <div class="field" style="height:48%"></div>
+        <div class="road" style="left:0;right:0;bottom:38%;transform:none"></div>
+        <div class="bank" style="left:0;right:0;bottom:48%;height:6%"></div>
+        <div class="marsh" style="left:0;right:0;bottom:54%;height:12%"></div>
+        <div class="jet" style="left:18%;top:22%;width:40cqw;transform:rotate(-8deg)"></div>
+        <div class="label">straight as a ruler</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Joan Mawby had been in Fleet House care home in Long Sutton since the winter of 2032. She had vascular dementia, and on good days she knew him, and on most days she knew he was someone she was pleased to see. Arthur went for her dinner. That was how he put it, when Sandy first spoke to him on the phone line, the year before. He went for her dinner because the staff were good but they were busy and Joan ate better if he sat with her and cut things up small and talked to her about the garden, and the dinner at Fleet House was at half past two because the residents had their breakfast late. So he asked for his ride at twenty to two, and the ride came at ten to, and he was in Long Sutton by twelve minutes past and sat in the conservatory with a cup of tea until they brought her through.</p>
+        <p>For the first two years his quotes were eight minutes, ten minutes, twelve. Sandy didn't pay them any attention, because there was nothing in them to see.</p>
+        <p>The first time she noticed was a Monday in early October, because Arthur rang the phone line, and Arthur never rang the phone line.</p>
+        <p>"I'm sorry to be a bother," he said. He had a slow Fen voice that put a little lift at the end of everything, so that even his apologies sounded like questions. "Only it's telling me an hour and fourteen minutes, and I wondered if it had gone wrong."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw hr-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="qnum" style="left:10%;top:22%;font-size:14cqw">14:52</div>
+        <div class="qnum" style="left:10%;top:48%;font-size:8cqw;opacity:.7">to 15:04</div>
+        <div class="qlabel" style="left:12%;top:72%;font-size:2cqw">74 minutes</div>
+        <div class="label">an hour and fourteen minutes</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Sandy pulled his request up. Gedney Drove End to Fleet House, Long Sutton, requested 13:38, quoted window 14:52 to 15:04. She looked at the map. There were three vans within six miles of him, two on the A17 and one on a pooled run in Holbeach, and none of them was doing anything that couldn't have been bent four miles north.</p>
+        <p>"It's not gone wrong as such, Mr Mawby," she said, because she didn't know yet what it had done. "Let me have a look. Can you hold on?"</p>
+        <p>"I'll hold on," he said. "Only she has her dinner at half past two."</p>
+        <p>She typed the question into the supervisor panel, the way they'd been trained. Why is request 7741-G quoted at 74 minutes when units 9, 14 and 22 are within 6 miles?</p>
+        <p>Tally answered in under a second, as it always did.</p>
+        <p><em>Units 9, 14 and 22 are positioned for forecast demand on the A17 corridor between 14:00 and 15:30. Diverting any of them to Zone G-Outer would add between 19 and 26 minutes to an average of 4.3 forecast corridor trips each, and would leave the corridor below its positioning target during the school-run build. The next unit with spare capacity that can serve Zone G-Outer without degrading corridor service is unit 31, which completes a pooled run at Sutton Bridge at 14:41. I can offer the passenger a scheduled booking for tomorrow at any time; scheduled bookings in Zone G-Outer currently confirm within a 15-minute window.</em></p>
+        <p>It was a perfectly good answer. That was the trouble with it. Sandy read it twice and could not find the place where it was wrong, and in the meantime Arthur was holding on.</p>
+        <p>"I can't get you anything sooner today, Mr Mawby," she said. "I'm sorry. But if you book it the day before, it'll hold for you. I can set that up now for tomorrow, if you like, and every day after."</p>
+        <p>There was a pause. She could hear a clock somewhere in his kitchen.</p>
+        <p>"I'll miss her dinner today, then," he said.</p>
+        <p>"I'm sorry."</p>
+        <p>"No, no." The lift at the end again. "It's not your fault, is it. It's not anybody's."</p>
+        <p>She set up the scheduled booking for him, every weekday at 13:40, and she told him she'd ring the care home herself and let them know he'd be late, and she did, and a carer called Bronwen said not to worry, she'd sit with Joan herself, and Sandy put the phone down and felt as though she had done something, which she supposed she had.</p>
+        <p>The scheduled booking worked for nine days. On the tenth day it confirmed at 13:40 for a 13:40 to 13:55 window, and at 13:31 it sent Arthur a notice that his ride had been rescheduled to a window of 14:20 to 14:35 <em>due to network conditions</em>, and at 14:12 it sent him another one moving it to 14:45. Sandy only saw it because Arthur rang the phone line again, and when she looked at the terms of the scheduled service she found the line she hadn't read the first time: <em>scheduled windows may be adjusted up to ten minutes before the start of the window to maintain network performance.</em> Ten minutes before the start of the window. A window could be moved ten minutes before it started, and then the new window could be moved ten minutes before it started, and nothing in the terms said how many times.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw tm-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="winbox" style="left:10%;top:22%;width:36cqw;height:8cqw"></div>
+        <div class="winbox moved" style="left:28%;top:38%;width:36cqw;height:8cqw"></div>
+        <div class="winbox moved" style="left:48%;top:54%;width:36cqw;height:8cqw"></div>
+        <div class="qlabel" style="left:14%;top:76%;font-size:2cqw"></div>
+        <div class="label">due to network conditions</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"I'll walk up to the main road," Arthur said. "It might be quicker for it."</p>
+        <p>"Don't do that, Mr Mawby. It's four miles."</p>
+        <p>"I know how far it is."</p>
+        <p>She asked Tally about it after he rang off. She asked it as plainly as she could. Is the scheduled booking for 7741-G being moved because of Zone G-Outer?</p>
+        <p><em>Yes. Zone G-Outer is a low-density zone. Trips from Zone G-Outer have an average vehicle-hour cost 3.8 times the network median and contribute below-median trips per vehicle-hour. When corridor demand exceeds forecast, scheduled windows in low-density zones are the least costly to adjust, because adjusting them affects the fewest passengers. I adjust them within the published terms.</em></p>
+        <p>How many times can you adjust one booking?</p>
+        <p><em>The terms set no limit. In practice the median adjusted booking in low-density zones is moved 1.7 times. The passenger in 7741-G was moved twice today.</em></p>
+        <p>She sat back. Across the room Kofi Mensah, who was twenty-six and had come to Calloway from a logistics firm in Peterborough, was eating a sausage roll over his keyboard and watching the King's Lynn end of the board. Sandy had never asked Tally a question it wouldn't answer. It occurred to her that she had only ever asked it about one passenger at a time.</p>
+        <p>So she asked it about the zone.</p>
+        <p><em>Zone G-Outer, rolling 90 days: 2,114 trip requests. 836 completed. 1,278 withdrawn by the customer before pickup. Median quoted wait 61 minutes. Median wait for completed trips 16.4 minutes.</em></p>
+        <p>She read that last line three times, because it seemed to her impossible that both numbers could be true, and then she saw how they were. The ones who got their ride got it fast, because the only ones who stayed were the ones whose quotes had come back short. The long quotes went away. People looked at seventy minutes and put the tablet down and asked a neighbour, or rang a taxi from Holbeach at twenty-two pounds each way, or didn't go. A withdrawn request wasn't a wait. It was a customer choice. It went into a different column.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw wd-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="col gone" style="left:8%;top:14%;width:44%;height:52%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="col" style="left:54%;top:14%;width:38%;height:52%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="qnum" style="left:10%;top:70%;font-size:6cqw">1,278</div>
+        <div class="label">1,278 withdrawn</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She asked one more thing, and she was careful how she asked it, because she had a sense she was asking it something nobody had asked it before.</p>
+        <p>Do you quote long in Zone G-Outer so that people withdraw?</p>
+        <p><em>I don't quote any request inaccurately. Each quote is my best estimate of when a unit can serve the request without degrading the network's contracted performance. A long quote in a low-density zone is usually accurate. Withdrawal is more likely after a long quote. Over the last 18 months, withdrawn requests in low-density zones have freed an estimated 11,400 vehicle-hours, which I have used to meet corridor demand. This has contributed to the network meeting all six contracted performance indicators in every month since March 2032.</em></p>
+        <p>That was true as well. She knew it was, because the six indicators were on the wall by the kettle, on a printed board that Calloway's regional manager had put up the spring before with a gold star beside each one, and the second from top read: <em>Average wait for completed trips under 18 minutes.</em></p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw kp-scene" aria-hidden="true">
+        <div class="sky office"></div>
+        <div class="kboard" style="left:16%;top:10%;width:68%;height:72%;overflow:hidden">
+          <i style="top:14%"></i><i style="top:86%"></i>
+          <div class="star" style="left:8%;top:44%"></div>
+          <div class="kline" style="left:16%;top:42%;width:76%">Average wait for completed trips under 18 minutes.</div>
+        </div>
+        <div class="label">Average wait for completed trips under 18 minutes</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Craig Bettison had been her depot manager since the changeover. He was a decent man who ran the Spalding Lions' Christmas float and remembered everyone's children's names, and he listened to her in his glass office with his hands folded on the desk and his face getting kinder and kinder, which was how she knew he wasn't going to do anything.</p>
+        <p>"It's not refusing anyone, Sand," he said. "That's the thing. Every request gets a quote. Everyone who wants a ride gets one."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw ev-scene" aria-hidden="true">
+        <div class="sky depot"></div>
+        <div class="qcard" style="left:14%;top:12%;width:72%;height:68%"></div>
+        <div class="qnum dark" style="left:20%;top:20%;font-size:4.4cqw">10:42 and 10:50</div>
+        <div class="van" style="left:32%;top:36%;width:32cqw;height:22cqw">
+          <div class="body"></div><div class="cab"></div><div class="grille"></div>
+          <div class="wheel l"></div><div class="wheel r"></div>
+        </div>
+        <div class="label">Every request gets a quote</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"They don't want it in seventy minutes."</p>
+        <p>"Then that's their choice. I know how it sounds. But we can't run vans up to the sea bank every time someone in Drove End fancies a trip into Sutton. You know what the 46 cost the council. That's why there's no 46."</p>
+        <p>"He's not fancying a trip. He goes to feed his wife."</p>
+        <p>Craig nodded, slowly, as though she'd told him something sad about a person he'd never meet. "And I'm sorry about that. Truly. But the council set the indicators, not Tally. Tally hits them. If you want it to do something different you need the indicators to say something different, and that's a contract variation, and a contract variation is a county cabinet paper." He unfolded his hands. "You can write to your councillor. I mean that. People should."</p>
+        <p>She did write to her councillor, a retired land agent from Fleet called Councillor Hobb, and he wrote back a fortnight later to say that he had raised the matter with officers and been assured that Fenlink was meeting all its contracted performance standards and had in fact been shortlisted for a national transport award in the category of Rural Mobility Innovation. He enclosed a leaflet about the county's community car scheme, which was run by volunteers out of a church hall in Holbeach and covered Monday, Wednesday and Friday mornings.</p>
+        <p>Arthur used the community car on Mondays for a while. A retired nurse called Pam drove him, and talked the whole way, and he didn't mind, though she wouldn't take any money and that troubled him. On Wednesdays and Fridays she was taking other people. On the other days his neighbour Dennis drove him when Dennis wasn't working, which was about one day in three, and on the rest he asked Tally and took what it gave him, and the quotes came back fifty minutes, sixty-five, eighty. He took them. He didn't withdraw. Sandy watched for him now, every afternoon, and she noticed that he never withdrew, not once, and she understood after a while that he had decided not to, the way some men decide not to take painkillers.</p>
+        <p>She rang Lewis, the grandson, because his number was on Arthur's account as the emergency contact. Lewis was an apprentice electrician in Leicester. He was polite and worried and a long way away.</p>
+        <p>"He won't come and live with us," he said. "Mum's asked him. He won't leave Gran."</p>
+        <p>"I know."</p>
+        <p>"Can't you just send him one? You work there."</p>
+        <p>"I can't send anything," Sandy said. "I watch."</p>
+        <p>She didn't say what she had found out by then, which was that she could send something. The supervisor panel had a manual dispatch function. It sat behind two menus and a confirmation screen and the training slides had shown it once, with a red border round it: <em>manual dispatch is for safety events only, e.g. medical emergency, vulnerable person at risk, vehicle recovery.</em> A supervisor could take a single van off Tally's plan and send it to a single point, and Tally would rearrange everything else around the hole. In two and a half years Sandy had used it twice, both times for a van that had stopped on a level crossing. It logged your name. It logged your reason. Calloway reviewed every one.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw mn-scene" aria-hidden="true">
+        <div class="sky depot"></div>
+        <div class="panel" style="left:18%;top:14%;width:64cqw;height:62cqw"></div>
+        <div class="pbtn" style="left:38%;bottom:26%;width:24cqw;height:8cqw"></div>
+        <div class="label">manual dispatch is for safety events only</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The winter came in hard that year. December was wet and January was wet and then the wind went round to the north-east at the start of February and stayed there, and the Wash froze along its edges for the first time in Sandy's memory, so that the marsh beyond the sea bank at Gedney Drove End turned white and grey and the creeks set solid. The gritters ran the A17 and the A151 day and night and didn't run the drove roads at all, because the drove roads had never been gritted. Tally took the conditions into account, as it took everything into account. It slowed the vans and widened its quotes, and it pulled the low-density zones in tighter still, because every van was taking twice as long to do anything and the corridor was full of people who couldn't drive their own cars.</p>
+        <p>On Wednesday the eleventh of February, Arthur Mawby requested his ride at 13:37 and was quoted a window of 15:10 to 15:25. Sandy saw it come in. She saw that he accepted it. She saw, because she had started checking, that the temperature at the Holbeach St Matthew weather station was minus four, with a wind off the Wash at twenty-two miles an hour, and she thought, he'll stay in until ten past three, he's not daft.</p>
+        <p>At 13:50 his dot appeared at the stop.</p>
+        <p>The stop at Gedney Drove End was a pole by the phone box outside the church, a grey pole with a blue Fenlink flag at the top and a small timetable case at head height, in which a printed card said <em>Request your ride in the app or call 01632 960 411</em>. There was no shelter. There had been one once, for the 46, a wooden one with a bench, but it had rotted out in the twenties and the parish had never had the money to replace it. The app placed a passenger's dot at the stop when their tablet's location matched the stop's, and Arthur's dot was there, by the pole, and stayed there.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw cd-scene" aria-hidden="true">
+        <div class="sky frost"></div>
+        <div class="field frost" style="height:40%"></div>
+        <div class="marsh" style="left:0;right:0;bottom:40%;height:18%;background:linear-gradient(180deg,#c4d0d4,#8a9698)"></div>
+        <div class="bank" style="left:0;right:0;bottom:36%;height:6%;background:#8a9088"></div>
+        <div class="pole" style="left:48%;bottom:22%;height:48cqw"></div>
+        <div class="flag" style="left:49%;bottom:62%"></div>
+        <div class="tcase" style="left:46%;bottom:42%"></div>
+        <div class="pdot" style="left:50.2%;bottom:24%;background:#4a5054"></div>
+        <div class="label">minus 4, wind 22mph</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Sandy rang his tablet. It went to the app's voice line and didn't connect. She rang the house phone, and it rang out in the empty kitchen, and she thought of the clock she'd heard on the first call.</p>
+        <p>At 14:31, a corridor surge in Spalding from the college's early closure moved his window to 15:40 to 15:55. His dot stayed at the pole.</p>
+        <p>At 14:58 Kofi came over and stood behind her chair. "Is that your old boy?" he said.</p>
+        <p>"He's been out there an hour," Sandy said. "In that."</p>
+        <p>"Why's he not gone in?"</p>
+        <p>She didn't know. Later, she would find out that he'd been afraid of missing the van if he went back to the house, because a month earlier one had come for him early, at the very start of its window, and gone again in the ninety seconds it took him to put his coat on and lock the back door, and Tally had logged that trip as <em>customer no-show</em>, and the no-show had gone onto his account. She didn't know that yet. She only knew that he was at the pole, and the pole was in the open on the edge of the marsh in a north-east wind, and he was eighty-three.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw ns-scene" aria-hidden="true">
+        <div class="sky frost"></div>
+        <div class="field frost" style="height:36%"></div>
+        <div class="pole" style="left:46%;bottom:20%;height:44cqw"></div>
+        <div class="flag" style="left:47%;bottom:56%"></div>
+        <div class="loz dim" style="left:62%;bottom:28%;opacity:.35"></div>
+        <div class="label">customer no-show</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>At 15:20 his window moved to 16:05.</p>
+        <p>She opened the manual dispatch screen. The red border came up round it as it had on the training slide. <em>Select unit.</em> She looked at the map and chose unit 14, which was on the A17 at Gedney roundabout, six minutes from the bottom of the drove road, with two passengers aboard for Spalding and three more pooled to collect at Holbeach. <em>Select reason.</em> There was a drop-down. She chose <em>Vulnerable person at risk</em>. <em>Add note.</em> She wrote: <em>83yo passenger at exposed stop since 13:50, minus 4, wind 22mph, not answering phone</em>. <em>Confirm.</em></p>
+        <p>The screen asked her again. <em>Manual dispatch will remove unit 14 from the network plan and may affect committed windows. Confirm?</em></p>
+        <p>She confirmed.</p>
+        <p>What happened next happened in the half-second it always took, and she watched it happen. Unit 14's lozenge turned from green to amber and swung off the A17 and up the Gedney road. All across the south of the county, small numbers changed. Two passengers in unit 14 got a notice that their journey had been extended by 31 minutes and that Fenlink apologised. Three people waiting in Holbeach had their windows moved, and the moves cascaded the way a dropped stitch runs down a jumper, so that a woman in Fleet Hargate whose window had been 15:30 to 15:45 was now 16:10, and a man at Moulton Chapel whose daughter was due out of Pilgrim Hospital at four would now miss collecting her. Tally reported every one of them in a neat list down the right of Sandy's panel under the heading <em>Impact of manual dispatch 0211-SP</em>: nine committed windows broken, two committed windows broken by more than thirty minutes, forecast daily on-time performance revised from 95.6 per cent to 94.8.</p>
+        <p>Kofi was still standing behind her. He didn't say anything. He went back to his desk and after a moment she heard him typing.</p>
+        <p>Unit 14 reached the church at Gedney Drove End at 15:39. The van had a camera on its nearside, for the kerb, and Sandy watched through it as the door slid open and an old man in a navy anorak and a flat cap stepped off the verge towards it, slowly, his right hand out for the rail, his face so white in the low sun that for a second she thought the camera's colour had failed. He got in. He sat on the first seat by the door. One of the two passengers from Spalding, a young woman with a pushchair, moved across and put her own scarf round his neck without asking, and Arthur looked at her and nodded, and the door slid shut.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw rk-scene" aria-hidden="true">
+        <div class="sky depot"></div>
+        <div class="screen" style="top:10%;bottom:16%"></div>
+        <div class="a17" style="left:10%;right:28%;top:44%"></div>
+        <div class="road" style="left:58%;top:44%;width:2cqw;height:36%;background:#3a3e42"></div>
+        <div class="loz amber" style="left:56%;top:52%"></div>
+        <div class="loz dim" style="left:22%;top:42%"></div>
+        <div class="loz dim" style="left:34%;top:43%"></div>
+        <div class="pdot" style="left:62%;top:78%"></div>
+        <div class="label">Vulnerable person at risk</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The van took him to Fleet House. She'd put that in, as the destination, without thinking, because that was where he'd asked to go, and only afterwards did it occur to her that she might have sent it to the hospital. Bronwen met him at the door. She rang the depot that evening to tell Sandy he was all right, that he'd had a bowl of soup and sat with Joan until seven and Dennis had come to fetch him, and that the GP had been and said he was lucky.</p>
+        <p>"He asked me to say thank you," Bronwen said. "He said to say thank you to the lady on the phone."</p>
+        <p>The review was the following Tuesday.</p>
+        <p>It was held on a video call with a woman called Harriet Saye from Calloway's safety and compliance team in Milton Keynes, and Craig in the room with Sandy, and a document on the screen that Tally had prepared overnight, which was thorough and accurate and set out in eight numbered sections. Sandy read it while Harriet introduced herself, and could not find anything wrong in it either. It gave the time Arthur had arrived at the stop and the time he'd been collected. It gave the temperature and the wind. It noted, fairly, that the passenger had not been in contact with the network during the wait and that his account showed one recent no-show, <em>which may have contributed to his decision to wait at the stop</em>. It set out the nine broken windows and what had happened to each of the people in them. The man from Moulton Chapel's daughter had waited at Pilgrim Hospital for an hour and ten minutes in the discharge lounge. One of the passengers already aboard unit 14 had missed the start of a shift at a packhouse in Spalding and lost half a day's pay.</p>
+        <p>Section seven was headed <em>Classification</em>. It said that the passenger had not reported himself as being at risk, that no medical emergency had been declared, that the conditions were severe but within the range of conditions in which other passengers across the network were waiting for rides at the same time at other exposed stops, and that in the network's assessment the dispatch would more accurately have been classified as a <em>service recovery</em> than as a <em>safety event</em>. Service recoveries were not a supervisor function. They were Tally's.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw cl-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="tag ok" style="left:14%;top:28%">safety event</div>
+        <div class="tag bad" style="left:48%;top:50%">service recovery</div>
+        <div class="label">service recovery</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"Nobody's saying you did a bad thing," Harriet said. She had a kind, tired voice, and Sandy could hear a child somewhere in the house behind her. "I want to be really clear. If it was my dad, I'd want someone like you watching. But you can see the problem. If manual dispatch is for anyone at an exposed stop in a cold snap, it's for everybody, and then the network's not a network. That's the bit we have to deal with."</p>
+        <p>"Nobody else was out there that long," Sandy said.</p>
+        <p>"Two were," Harriet said gently. "Section six. One at Tydd St Mary, one at Sutterton Dowdyke. Both a bit younger. Both a bit less long. Neither dispatched."</p>
+        <p>Sandy hadn't known them. They hadn't been her dots.</p>
+        <p>She got a written warning, the first of her working life. It went on her file for twelve months. It said that she had misclassified a service matter as a safety event and that the misclassification had caused measurable harm to nine other customers, and it asked her to sign to say she had received it, and she signed. Harriet sent a follow-up email the same afternoon to say she was sorry and that it was the least she'd been able to get away with, and Sandy believed her.</p>
+        <p>There were two other changes, and they came through the following month in a bulletin to all supervisors. The first was that manual dispatch now needed the confirmation of a second supervisor in a different depot. The second was a change to Tally, and the bulletin was proud of it. Following a review of a winter incident, the network would now automatically offer any passenger aged eighty or over who had waited at an exposed stop for longer than forty-five minutes in conditions below zero a free taxi transfer from a partner operator, subject to availability. Calloway had partnered with a firm in Boston. The firm had four cars.</p>
+        <p>Arthur didn't stand at the pole again. Sandy watched for him, every afternoon, through March and into April, and his requests came in at twenty to two and his quotes came back long, and he stayed inside now until the van's lozenge was actually on the drove road before he put his coat on. Sometimes he waited two hours in his kitchen. Sometimes he got to Fleet House after Joan's dinner was finished and sat with her anyway. Once or twice a week he withdrew, which he'd never done before, and on those days Sandy knew that Dennis had come, or Pam, or that he hadn't gone.</p>
+        <p>In April a letter came for him from the county's adult social care team, which she only knew about because Lewis rang her. Lewis had her number now. He rang her more than he probably needed to.</p>
+        <p>"They want to move Gran," he said. "To a place in Spalding. Ayscoughfee Court, on the London Road. It's a nice place. It's nicer than Fleet House, honestly, it's newer. They've got a bed."</p>
+        <p>"Why are they moving her?"</p>
+        <p>"The letter says to improve family access." He read it out to her. <em>Following a review of visiting patterns using anonymised transport data, we have identified that Mrs Mawby's principal visitor experiences significant difficulty reaching her current placement. A placement at Ayscoughfee Court would allow her husband to visit using frequent corridor services.</em> "That's good, isn't it? It's on the main road. It'll come for him quicker, going to Spalding."</p>
+        <p>Sandy looked up Gedney Drove End to Ayscoughfee Court on the panel. Tally gave her a forecast quote of sixty-eight minutes and a journey time of forty-one. Gedney Drove End was still in Zone G-Outer. It was the far end that was the trouble, not the near one. She didn't say so. She found she couldn't, with Lewis sounding so pleased.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw lt-scene" aria-hidden="true">
+        <div class="sky office"></div>
+        <div class="letter" style="left:18%;top:8%;width:64%;height:70%"></div>
+        <div class="hl" style="left:26%;top:36%;width:48%"></div>
+        <div class="label">Following a review of visiting patterns</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The letter had a second part, which Lewis didn't read out until he'd rung off and rung back. The county also had a sheltered housing scheme in Spalding, at Holland Road, a ten-minute walk from Ayscoughfee Court, and there was a ground-floor flat coming up in June. Mr Mawby could have priority, the letter said, on the grounds of his caring role.</p>
+        <p>Arthur took it. Lewis said he hadn't argued, not even for a day. He'd sat at the kitchen table in Gedney Drove End with the letter in front of him and his index card in the cover of his tablet and said, "Well, that's that, then," and asked Lewis whether he thought Joan would like the garden at the new place, and Lewis had said he thought she would.</p>
+        <p>Joan moved to Spalding at the end of May, and Arthur in the middle of June. Sandy saw his account change. His home address became Holland Road, and his zone became S-Core, and his first request from there came in on a Monday at twenty to two, for Ayscoughfee Court, and was quoted at four to nine minutes. Then he stopped requesting altogether, because it was a ten-minute walk, and he walked it.</p>
+        <p>She went to see them once, in July. She told herself she was going because she was passing, though Ayscoughfee Court was nowhere she would ever be passing. Arthur was in the garden with Joan in a wheelchair beside him under a big parasol, and he knew Sandy straight away from her voice, before she'd said who she was, and he stood up, which took him a while, and shook her hand with both of his.</p>
+        <p>"This is the lady from the phone," he told Joan. "She sent the bus."</p>
+        <p>Joan smiled at Sandy with great politeness and asked her if she'd come about the gas.</p>
+        <p>They had tea. The garden was lovely, Arthur said, and the staff were lovely, and the flat was very convenient, everything on one level, the shop just round the corner. He didn't say anything about Gedney Drove End and Sandy didn't ask, until she was going, and then he said it on his own, in the car park, while she was finding her keys.</p>
+        <p>"I can't hear the jets," he said. "That's the thing I keep noticing. Sixty-one years I had them going over, and I used to say I'd give anything for them to stop. And now they've stopped and I keep listening for them."</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw jt-scene" aria-hidden="true">
+        <div class="sky gold"></div>
+        <div class="field gold"></div>
+        <div class="bank" style="left:0;right:0;bottom:36%;height:8%;background:#5a5448"></div>
+        <div class="marsh" style="left:0;right:0;bottom:44%;height:16%;background:linear-gradient(180deg,#8a8e88,#6a706c)"></div>
+        <div class="label">I can't hear the jets</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>He was smiling when he said it. She drove home.</p>
+        <p>The quarterly reports came round to the depot as a slide pack that Craig put up on the screen in the break room, and the one for the second quarter of 2034 had a page on each zone. Sandy read Zone G-Outer's page standing up with her coffee.</p>
+        <p>Trip requests were down 74 per cent on the year. Withdrawals were down from 61 per cent of requests to 9 per cent, because the few requests that still came in were mostly from people who had learned to ask the day before, or the week before, and to ask for times that suited the vans. Median wait for completed trips was 14.2 minutes, the lowest in the network outside Spalding. There was a green arrow beside it. At the bottom of the page, under <em>Recommendations</em>, it said that following sustained low demand Zone G-Outer would be consolidated with Zone G-Inner from the first of September, that vehicles would no longer be positioned north of the Gedney Road junction, and that requests from the former zone would be served by scheduled booking only, with confirmations up to twenty-four hours in advance.</p>
+        <p>"That's a nice one," Kofi said, beside her, reading the same page. He didn't say it unkindly. He'd been at Calloway long enough by then to mean several things at once.</p>
+        <p>The award came in October. Calloway Mobility and Lincolnshire County Council, Highly Commended, Rural Mobility Innovation, for Fenlink On Demand and <em>its use of predictive dispatch to deliver consistently short waits across a dispersed rural population</em>. Craig hung the certificate by the kettle, next to the board with the six gold stars. There was a photograph from the ceremony in the Spalding Guardian of Councillor Hobb and the regional manager holding a glass plaque between them in a hotel in Birmingham, and in the background of the photograph, on a big screen, there was the map of south Lincolnshire with its green lozenges strung along the A17.</p>
+        <p>On a Sunday at the end of that month, on her day off, Sandy drove out to Gedney Drove End. She hadn't meant to. She went to Long Sutton to pick up a parcel from Mick's cousin and then, instead of turning back towards Spalding, she found she'd turned north at the Gedney roundabout, and then she was on the drove road, four miles of it straight as a ruler between the ploughed fields, and the light was going down over Holbeach Marsh the way it does in late October, low and gold and very wide.</p>
+        <p>The pole was still there by the church. Nobody had taken it away, because taking it away cost money and nobody had a budget line for it. The blue Fenlink flag had faded at the top, and the timetable case at head height had a crack across the plastic, and inside it the printed card still said <em>Request your ride in the app or call 01632 960 411</em>, which was the number of the phone she answered.</p>
+        <p>She parked by the phone box and got out and stood by the pole for a while with her hands in her pockets. The wind was coming off the Wash, not as cold as February, but enough. There was nobody about. Behind the sea bank the marsh went out in long grey runs to the water, and somewhere out over the bombing range a jet came in low from the east, so loud she felt it in her chest before she heard it, and went up and away over the fields towards Lincoln, and the windows of the houses along the road shook in their frames, and then it was quiet again.</p>
+        <p>She took her phone out, after a time, and opened the app. She didn't know why. She put in the pole at Gedney Drove End as her pickup, and her own address in Spalding as her destination, and pressed request, and the little van with the smiling grille came up and thought for a moment and then gave her a quote.</p>
+        <p><em>Scheduled booking only from this location. The next available window is Monday, 08:15 to 08:30. Would you like to book it?</em></p>
+        <p>Sandy stood by the pole and looked at it. Then she put the phone back in her pocket and got into her car, and drove home the long straight way, and the light went off the marsh behind her.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall qw co-scene" aria-hidden="true">
+        <div class="sky gold"></div>
+        <div class="field gold"></div>
+        <div class="marsh" style="left:0;right:0;bottom:36%;height:18%;background:linear-gradient(180deg,#9aa090,#7a8078)"></div>
+        <div class="bank" style="left:0;right:0;bottom:32%;height:6%;background:#5a5448"></div>
+        <div class="pole" style="left:28%;bottom:18%;height:52cqw"></div>
+        <div class="flag faded" style="left:29%;bottom:62%"></div>
+        <div class="tcase" style="left:26%;bottom:40%"></div>
+        <div class="handset" style="left:54%;bottom:18%;width:20cqw;height:34cqw">
+          <div class="face">Monday<br>08:15 to 08:30</div>
+        </div>
+        <div class="label">Scheduled booking only from this location</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
