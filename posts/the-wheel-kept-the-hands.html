@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The wheel kept the hands — Ben Miller</title>
+    <meta name="description" content="Sheffield&#x27;s last hand buffer is filmed for six months so a robot arm can replace her. The machine reports what it couldn&#x27;t learn, and the spoons need people again.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #1a1510;
+        --ink: #eee6d8;
+        --mute: #9a8e7c;
+        --cream: #f2ead8;
+        --gold: #e0b050;
+        --yolk: #f0c86a;
+        --leaf: #3a6a48;
+        --cool: #8aa8b0;
+        --ember: #c46a30;
+        --alert: #c04a32;
+        --bark: #4a3220;
+        --lamp: #ffe8b8;
+        --steel: #8a8e90;
+        --paper: #d4c4a0;
+        --brass: #c49a48;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 54% 34% at 80% 6%, rgba(220, 170, 80, 0.16), transparent 62%),
+          radial-gradient(ellipse 48% 30% at 12% 20%, rgba(140, 90, 40, 0.10), transparent 60%),
+          radial-gradient(ellipse 44% 28% at 30% 88%, rgba(80, 50, 30, 0.10), transparent 62%),
+          radial-gradient(ellipse 36% 22% at 88% 76%, rgba(60, 90, 70, 0.07), transparent 60%),
+          linear-gradient(180deg, #241c14 0%, #1a1510 36%, #14100c 70%, #0e0b08 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(180, 210, 220, 0.06), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(200, 220, 230, 0.03), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #e8dcc8;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(220, 160, 70, 0.28), 0 0 2px rgba(255, 220, 160, 0.35);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #eee6d8;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #d4b06a; }
+      .prose strong { font-weight: 700; color: #e8eee8; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(220, 180, 100, 0.95) 0 1.5px, rgba(160, 110, 50, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(200, 140, 60, 0.35));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #181410;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(200, 170, 110, 0.14);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .wheel-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(8, 5, 2, 0.58) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 230, 180, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .wheel-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(230, 240, 244, 0.82);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .hero h1 { text-shadow: 0 0 40px rgba(220, 160, 70, 0.28), 0 0 2px rgba(255, 220, 160, 0.35); }
+      .wheel-hero .label, .scene.wh .label { color: rgba(244, 234, 214, .94); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+
+      .wheel-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(200,170,110,.16); background: #1a1610; }
+      .wheel-hero > * { position: absolute; }
+      .wheel-hero::after, .scene.wh::after { content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+        background: radial-gradient(ellipse 84% 74% at 50% 46%, transparent 52%, rgba(10,7,4,.7) 100%), repeating-linear-gradient(112deg, rgba(255,230,180,.016) 0 2px, transparent 2px 8px); }
+      .scene.wh { background: #181410; container-type: size; }
+
+      .sky { inset: 0; background: linear-gradient(180deg, #3a3228 0%, #5a4a38 48%, #7a6a50 100%); }
+      .sky.bay { background:
+        linear-gradient(180deg, #2a241c 0%, #3a3228 40%, #4a3e32 100%); }
+      .sky.window { background:
+        linear-gradient(180deg, #6a8090 0%, #c4b090 48%, #e8c888 100%); }
+      .sky.dusk { background: linear-gradient(180deg, #3a2e28 0%, #6a5040 46%, #c49a60 100%); }
+      .sky.unit { background: linear-gradient(180deg, #2a2e32 0%, #3a4044 60%, #4a5054 100%); }
+      .sky.paper { background: linear-gradient(180deg, #2a241c, #1c1814 70%, #16120e); }
+      .sky.yard { background: linear-gradient(180deg, #2a2826 0%, #3a3630 100%); }
+
+      .sill { left: 0; right: 0; bottom: 0; height: 16%; z-index: 2;
+        background: linear-gradient(180deg, #5a4a38, #3a2e24);
+        box-shadow: inset 0 1px 0 rgba(255,220,160,.12); }
+      .bench { left: 0; right: 0; bottom: 0; height: 28%; z-index: 2;
+        background: linear-gradient(180deg, #4a3a2a, #2e241c); }
+      .floor { left: 0; right: 0; bottom: 0; height: 22%; z-index: 1;
+        background: linear-gradient(180deg, #3a3228, #241c16);
+        background-image: repeating-linear-gradient(0deg, transparent 0 2.2cqh, rgba(0,0,0,.1) 2.2cqh 2.5cqh); }
+
+      .gdoor { z-index: 4; width: 14cqw; background: linear-gradient(90deg, #2a4a32, #3a6a48 40%, #2e543c);
+        box-shadow: inset 0 0 0 .35cqw rgba(200,220,180,.12), 0 .4cqw 1cqw rgba(0,0,0,.3);
+        border-radius: .2cqw .2cqw 0 0; }
+      .gdoor::after { content: ""; position: absolute; right: 18%; top: 48%; width: 1.4cqw; height: 1.4cqw;
+        border-radius: 50%; background: #c49a48; box-shadow: 0 0 .4cqw rgba(196,154,72,.4); }
+
+      .win { z-index: 3; background: linear-gradient(180deg, #8aa0a8, #d8c8a0 55%, #f0d8a0);
+        box-shadow: inset 0 0 0 .6cqw #4a3e32, 0 0 4cqw rgba(240,200,120,.18); }
+      .win::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: .55cqw; margin-left: -.27cqw; background: #4a3e32; }
+      .win::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: .55cqw; background: #4a3e32; }
+
+      /* cloth buffing wheel */
+      .bwheel { position: absolute; z-index: 6; border-radius: 50%; aspect-ratio: 1;
+        background:
+          repeating-conic-gradient(from 0deg, #c4a878 0 4deg, #a88858 4deg 8deg),
+          radial-gradient(circle, #e8d0a0 0 18%, #c4a070 42%, #8a6a40 70%, #5a4430 100%);
+        background-blend-mode: multiply, normal;
+        box-shadow: inset 0 0 0 .5cqw rgba(80,60,30,.35), 0 .6cqw 1.6cqw rgba(0,0,0,.4), 0 0 3cqw rgba(220,170,80,.15);
+        animation: spin 14s linear infinite; }
+      .bwheel::before { content: ""; position: absolute; inset: 22%; border-radius: 50%;
+        background: radial-gradient(circle, #3a2e22, #1c1610 70%);
+        box-shadow: 0 0 0 .35cqw #6a5438; }
+      .bwheel::after { content: ""; position: absolute; inset: 0; border-radius: 50%;
+        background: repeating-radial-gradient(circle, transparent 0 8%, rgba(80,50,20,.12) 8% 9%);
+        pointer-events: none; }
+      .bwheel.slow { animation-duration: 28s; }
+      .bwheel.still { animation: none; }
+
+      .spoon { z-index: 7; }
+      .spoon .bowl { position: absolute; width: 5.6cqw; height: 4.2cqw; border-radius: 50%;
+        background: linear-gradient(135deg, #f0e0b8, #c4a868 50%, #8a7048);
+        box-shadow: inset -.4cqw -.3cqw 0 rgba(255,240,200,.45), 0 .3cqw .6cqw rgba(0,0,0,.25); }
+      .spoon .shank { position: absolute; height: .7cqw; background: linear-gradient(180deg, #d8c090, #a88850);
+        border-radius: .3cqw; }
+      .spoon .shank.straw { background: linear-gradient(180deg, #e8c46a, #c49a40);
+        box-shadow: 0 0 .6cqw rgba(220,170,60,.45); }
+      .spoon.set { opacity: .95; }
+
+      .flask { z-index: 5; width: 2.8cqw; height: 7cqw;
+        background: linear-gradient(90deg, #3a2a1c, #7a6a50 42%, #4a3a28);
+        border-radius: .3cqw .3cqw 1cqw 1cqw;
+        box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .flask::before { content: ""; position: absolute; left: 22%; right: 22%; top: -1.2cqw; height: 1.4cqw;
+        background: #3a2e22; border-radius: .3cqw; }
+
+      /* gloves with silver thread */
+      .glove { z-index: 6; width: 16cqw; height: 22cqw;
+        background: #5a5e62;
+        border-radius: 40% 40% 36% 36% / 20% 20% 70% 70%;
+        box-shadow: inset 0 0 0 .3cqw rgba(200,210,220,.1), 0 .5cqw 1cqw rgba(0,0,0,.3);
+        overflow: hidden; }
+      .glove::before { content: ""; position: absolute; inset: 0;
+        background:
+          linear-gradient(180deg, transparent 18%, rgba(200,220,230,.55) 18.4% 19%, transparent 19.4%),
+          linear-gradient(180deg, transparent 38%, rgba(200,220,230,.5) 38.4% 39%, transparent 39.4%),
+          linear-gradient(90deg, transparent 20%, rgba(200,220,230,.45) 20.3% 21%, transparent 21.3%),
+          linear-gradient(90deg, transparent 40%, rgba(200,220,230,.45) 40.3% 41%, transparent 41.3%),
+          linear-gradient(90deg, transparent 60%, rgba(200,220,230,.45) 60.3% 61%, transparent 61.3%),
+          linear-gradient(90deg, transparent 80%, rgba(200,220,230,.45) 80.3% 81%, transparent 81.3%); }
+      .glove.r { transform: scaleX(-1); }
+
+      .cam { z-index: 5; width: 1.1cqw; background: #1a1c1e;
+        box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .cam::after { content: ""; position: absolute; left: 50%; bottom: -1.4cqw; width: 2.2cqw; height: 1.6cqw;
+        margin-left: -1.1cqw; background: #2a2e32; border-radius: .3cqw;
+        box-shadow: inset 0 0 0 .2cqw #111, 0 0 .5cqw rgba(80,140,180,.25); }
+
+      /* crates / sawdust */
+      .crate { z-index: 5; background: #6a4a28;
+        box-shadow: inset 0 0 0 .3cqw rgba(255,220,160,.08), 0 .5cqw 1cqw rgba(0,0,0,.3);
+        border-radius: .2cqw; }
+      .crate::before { content: ""; position: absolute; left: 8%; right: 8%; top: 18%; bottom: 12%;
+        background: #c4a060; }
+      .crate.fine::before { background:
+        radial-gradient(circle, #d4b070 0 .35cqw, transparent .4cqw) 0 0 / 1.1cqw 1.1cqw,
+        #c4a060; }
+      .crate.coarse::before { background:
+        radial-gradient(circle, #8a6a38 0 .7cqw, transparent .8cqw) 0 0 / 2cqw 2.2cqw,
+        #b89050; }
+
+      /* industrial arm */
+      .arm { z-index: 6; }
+      .arm .seg { position: absolute; background: #d4b020; border-radius: .6cqw;
+        box-shadow: inset 0 0 0 .25cqw rgba(80,60,0,.2), 0 .3cqw .6cqw rgba(0,0,0,.3); }
+      .arm { position: absolute; }
+      .arm .joint { position: absolute; width: 2.4cqw; aspect-ratio: 1; height: auto; border-radius: 50%; background: #8a7a20;
+        box-shadow: inset 0 0 0 .25cqw rgba(255,240,160,.15); }
+      .arm.grey .seg { background: #6a7074; }
+      .arm.grey .joint { background: #4a5054; }
+      .plinth { z-index: 4; background: #4a4e52; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.35); }
+      .mesh { z-index: 3; background:
+        repeating-linear-gradient(90deg, transparent 0 1.6cqw, rgba(200,210,220,.18) 1.6cqw 1.85cqw),
+        repeating-linear-gradient(0deg, transparent 0 1.6cqw, rgba(200,210,220,.18) 1.6cqw 1.85cqw);
+        box-shadow: inset 0 0 0 .35cqw rgba(180,190,200,.2); }
+      .hood { z-index: 5; background: #3a3e42;
+        clip-path: polygon(0 100%, 8% 0, 92% 0, 100% 100%);
+        box-shadow: 0 .4cqw 1cqw rgba(0,0,0,.3); }
+      .booth { z-index: 4; background: rgba(40,50,55,.35);
+        box-shadow: inset 0 0 0 .4cqw rgba(180,200,210,.2); }
+
+      /* spoon rows */
+      .row { z-index: 5; display: flex; gap: 1.1cqw; align-items: center; }
+      .row i { position: relative; width: 3.4cqw; height: 1.15cqw; border-radius: 40% 20% 20% 40%;
+        background: linear-gradient(180deg, #e8d8b0, #b89860); box-shadow: 0 .2cqw .4cqw rgba(0,0,0,.2); }
+      .row i.out { background: linear-gradient(180deg, #e8c46a, #c49a40); }
+
+      .person { position: absolute; z-index: 7; width: 6.4cqw; height: 15cqw; }
+      .person > * { position: absolute; }
+      .person .hd { left: 50%; top: 0; width: 2.7cqw; height: 2.7cqw; margin-left: -1.35cqw; border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #e8d0b0, #c4a888 70%); }
+      .person .bd { left: 30%; top: 2.5cqw; width: 40%; bottom: 0; background: #3a2e26; border-radius: .25cqw .25cqw 0 0; }
+      .person .ap { left: 10%; top: 3.1cqw; width: 80%; height: 8cqw;
+        background: linear-gradient(180deg, #e8d8b4, #c8b48c);
+        clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+        box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.2); }
+
+      /* hands */
+      .hand { position: absolute; z-index: 6; width: 18cqw; height: 22cqw; }
+      .hand > * { position: absolute; background: #c4a888; }
+      .hand .palm { left: 22%; top: 40%; width: 56%; height: 38%; border-radius: 36%;
+        box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.2); }
+      .hand .fg { width: 14%; height: 38%; top: 6%; border-radius: 1cqw; }
+      .hand .f1 { left: 22%; }
+      .hand .f2 { left: 38%; height: 44%; top: 2%; }
+      .hand .f3 { left: 54%; height: 42%; top: 4%; }
+      .hand .f4 { left: 70%; height: 34%; top: 10%; }
+      .hand .th { width: 16%; height: 26%; left: 4%; top: 46%; border-radius: 1cqw; transform: rotate(-38deg); }
+      .hand.ghost > * { background: transparent; box-shadow: inset 0 0 0 .32cqw rgba(220,180,100,.8); }
+
+      /* papers / applications */
+      .slips { z-index: 5; display: flex; flex-wrap: wrap; gap: .55cqw; align-content: flex-start; }
+      .slips i { position: relative; width: 4.2cqw; height: 5.4cqw; background: #efe8d4;
+        box-shadow: 0 .2cqw .4cqw rgba(0,0,0,.25); border-radius: .15cqw; }
+      .slips i.ok { background: #f0d48a; box-shadow: 0 0 .6cqw rgba(220,180,80,.4); }
+
+      /* snap box */
+      .snap { position: absolute; z-index: 6; background: linear-gradient(180deg, #8e9498, #5e6468);
+        border-radius: .7cqw; box-shadow: 0 .5cqw 1.2cqw rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.18); }
+      .snap .lid { position: absolute; left: 0; right: 0; top: 0; height: 42%;
+        background: linear-gradient(180deg, #a8aeb2, #7a8084);
+        border-radius: .7cqw .7cqw 0 0; box-shadow: inset 0 -1px 0 rgba(0,0,0,.25); }
+      .snap .dent { position: absolute; left: 58%; top: 14%; width: 16%; height: 20%; border-radius: 50%;
+        background: rgba(30,30,32,.28); box-shadow: inset .3cqw .4cqw .5cqw rgba(0,0,0,.28), inset -.2cqw -.15cqw .3cqw rgba(255,255,255,.12); }
+      .snap .handle { position: absolute; left: 34%; top: -14%; width: 32%; height: 18%;
+        border: .4cqw solid #5a6064; border-bottom: none; border-radius: 1cqw 1cqw 0 0; background: transparent; }
+
+      .letter { z-index: 5; background: #efece4; box-shadow: 0 .5cqw 1.2cqw rgba(0,0,0,.35);
+        transform: rotate(-2deg); }
+      .letter.q { /* folded in quarters */
+        background:
+          linear-gradient(90deg, transparent 49.5%, rgba(0,0,0,.08) 50%, transparent 50.5%),
+          linear-gradient(0deg, transparent 49.5%, rgba(0,0,0,.08) 50%, transparent 50.5%),
+          #efece4; }
+
+      .mark { z-index: 6; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+        color: #1a1c18; text-shadow: none; font-size: 2cqw; }
+
+      .tray { z-index: 5; background: #3a3228; border-radius: .3cqw;
+        box-shadow: inset 0 0 0 .25cqw rgba(255,220,160,.08), 0 .4cqw .8cqw rgba(0,0,0,.3); }
+
+      .speaker { position: absolute; z-index: 5; width: 6.2cqw; height: 3.4cqw; border-radius: .55cqw;
+        background: #2a2e30; box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.3), 0 0 1.2cqw rgba(120,160,180,.18);
+        background-image: repeating-linear-gradient(90deg, #3a3e40 0 .3cqw, transparent .3cqw .65cqw); }
+
+      .kids { z-index: 4; display: flex; gap: 1.2cqw; align-items: flex-end; }
+      .kids i { position: relative; width: 2.6cqw; height: 7cqw; background: #4a4038;
+        border-radius: .3cqw .3cqw 0 0; }
+      .kids i:nth-child(2) { height: 8.2cqw; background: #3a342e; }
+      .kids i:nth-child(3) { height: 6.4cqw; background: #524840; }
+      .kids i:nth-child(5) { height: 7.6cqw; }
+      .kids i::before { content: ""; position: absolute; left: 50%; top: -1.6cqw; width: 1.8cqw; height: 1.8cqw;
+        margin-left: -.9cqw; border-radius: 50%; background: #c4a888; }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(8deg) brightness(1.04); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+
+      @media (max-width: 600px) {
+        .wheel-hero { height: 22rem; }
+        .mark { font-size: 3.2cqw; }
+        .scene.wh .label, .wheel-hero .label { letter-spacing: .14em; font-size: .46rem; }
+        .flask { width: 4.2cqw; height: 9cqw; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog { animation: none !important; }
+        .wheel-hero *, .scene.wh *, .wheel-hero *::before, .wheel-hero *::after, .scene.wh *::before, .scene.wh *::after,
+        .paint, .fog { animation: none !important; transition: none !important; }
+        .scene { animation: none !important; opacity: 1; transform: none; }
+        .bwheel { animation: none !important; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="wheel-hero" aria-hidden="true">
+          <div class="sky window"></div>
+          <div class="win" style="left:8%;top:0;width:36%;height:58%"></div>
+          <div class="gdoor" style="right:0;top:10%;bottom:16%"></div>
+          <div class="sill"></div>
+          <div class="flask" style="left:16%;bottom:16%"></div>
+          <div class="bwheel" style="left:38%;bottom:10%;width:40cqw"></div>
+        <div class="spoon " style="left:56%;bottom:40%;width:16cqw;height:8cqw;transform:rotate(24deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+          <div class="label">Then she switched on the wheel</div>
+        </div>
+        <h1>The wheel kept the hands</h1>
+        <p class="dek">Sheffield's last hand buffer is filmed for six months so a robot arm can replace her. The machine reports what it couldn't learn, and the spoons need people again.</p>
+        <time datetime="2026-11-26">26 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Lorraine Brammall had been buffing spoons on the second floor of Portland Works since before the people who now owned the building were born, and she still came up the stone stairs at twenty to seven every morning with a flask in one hand and her mother's old tin snap box in the other, the one with the dent in the lid where Edna had dropped it down the stairwell at Viners in 1971. The stairs were worn into shallow dishes in the middle. Lol liked to think some of the wear was hers. She unlocked the green door of her bay, put the flask on the windowsill, took the brown paper off the roll and folded it round herself as an apron, tied her headscarf, and switched on the extractor, which coughed twice and then settled into the low roar it had made since the council grant in 2019. Then she switched on the wheel.</p>
+        <p>That was how it had always gone, and that was how it went on the morning in March 2034 when Dr Femi Adeyemi came up the stairs behind her with two plastic crates and a laptop bag and asked, very politely, whether she'd mind if he put a few cameras up.</p>
+        <p>She'd known he was coming. The letter had come through the Works' office a month earlier, on paper with three logos at the top: the Don Valley Skills Institute, which was the old research centre out at Catcliffe with a new name and a lot more money; Harland &amp; Rowe, who had been making Sheffield tableware since 1852 and had been making it mostly in Guangdong since 2003; and a government fund whose name Lol had read twice and still couldn't have told you. The letter said the project would "capture and preserve the tacit knowledge of Sheffield's last hand buffers for future generations." Lol had read that three times too. Then she had folded it into quarters and put it in the snap box under her sandwiches, which was where she put things she was going to think about later.</p>
+        <p>Femi was thirty-four, from Rotherham, with a quiet voice and good boots, and she liked him straight away, which annoyed her. He put up four cameras on small black arms, one above the wheel, one level with her hands, one at her shoulder and one on the floor looking up, and then he opened the second crate and took out a pair of gloves that looked like ordinary grey work gloves until you turned them over and saw the fine silver threads running up every finger and across the palm.</p>
+        <p>"Pressure," he said. "And angle, and a bit of temperature. They're thin. You'll hardly feel them."</p>
+        <p>"I'll feel them," Lol said.</p>
+        <p>She did, for about a day. After that she forgot them, the way she'd forgotten the headscarf fifty years ago.</p>
+        <p>There was a small speaker as well, the size of a bar of soap, which Femi stuck to the wall by the window. That was Temper. Femi said the name had come from the institute and wasn't his fault. Temper was the thing that would take everything the cameras and the gloves saw and felt, and try to make sense of it, and it would sometimes ask her questions, if she didn't mind, and if she did mind she could just say so and it would stop.</p>
+        <p>"What's it want to know?" Lol said.</p>
+        <p>"Why you do what you do," Femi said. "When you do it."</p>
+        <p>"I don't know why I do what I do," Lol said, and Femi smiled as if that were the best answer he'd had all week.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh gl-scene" aria-hidden="true">
+        <div class="sky bay"></div>
+        <div class="bench" style="height:24%"></div>
+        <div class="cam" style="left:18%;top:0;height:22cqw"></div>
+        <div class="cam" style="right:16%;top:0;height:18cqw"></div>
+        <div class="glove" style="left:22%;bottom:18%"></div>
+        <div class="glove r" style="left:52%;bottom:16%"></div>
+        <div class="label">fine silver threads</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The first spoon she buffed with the gloves on was a dessert spoon from a batch of two hundred for a hotel in Harrogate, stamped and ground at a little firm in Hillsborough and sent over in a crate with sawdust in the bottom, and it was the same as the forty thousand dessert spoons before it. You pressed the bowl to the wheel, which was cloth, sewn in layers and dressed with a bar of compound that smelt faintly of candle wax, and you moved it, and the wheel took off the grey scratches the grinder had left and found the shine underneath. That was it. That was the whole job. Her mother had done it for forty-four years at Viners and then at a firm on Arundel Street, and Lol had done it for fifty-seven, and neither of them had ever found a better way to say what it was.</p>
+        <p>Temper's first question came on the Thursday.</p>
+        <p>"Lorraine, you tilted the bowl about four degrees towards you just before the tip reached the wheel, on that spoon and on the last eleven. On the twelve before that you didn't. Can I ask what changed?"</p>
+        <p>The voice was plain, a little northern, neither man nor woman. Lol stopped the spoon in the air and looked at it.</p>
+        <p>"The wheel's gone soft," she said. "It's warm. When it's warm it grabs at the tip. So you lean off."</p>
+        <p>"Thank you," Temper said. "How do you know it's warm?"</p>
+        <p>She thought about it. "It sounds different," she said. "It goes down."</p>
+        <p>"Down in pitch?"</p>
+        <p>"Down," she said, and put the spoon back to the wheel, and didn't talk to it again that day.</p>
+        <p>It asked her things every day after that, a few at a time, never while she was in the middle of a spoon. Why she changed her grip on a fork with a bent tine. Why she'd put one teaspoon aside on the bench and come back to it after lunch. Why she'd stopped work for nine seconds at 10:14 and looked out of the window. That one made her laugh. She told it there was a pigeon on the gutter opposite that had one leg and she liked to see if it was still going. Temper said thank you, and she had the feeling, which she knew was daft, that it had written that down as carefully as the four degrees.</p>
+        <p>Some of the questions she could answer and some she couldn't. Why she held a soup spoon higher on the shank than a dessert spoon she could answer, because the soup spoon was heavier and wanted to tip. Why she knew a batch from one grinder would need longer on the tips than a batch from another before she had touched it, just by looking at the crate, she couldn't answer at all. She told Temper it was the way they packed them, and then she told it she didn't know, and then she told it she'd think about it, and that night at home in Gleadless she sat with a cup of tea and thought about it for an hour and still didn't know.</p>
+        <p>"It's the sawdust," she said the next morning, before she'd even put her apron on. "Jimmy Dyson at Hillsborough packs them in fine sawdust, and Kev at Loxley packs them in coarse. Kev's wheel's coarse too. He leaves more on. You can tell from the sawdust what sort of man he is."</p>
+        <p>"Thank you," Temper said. There was a pause. "That's very useful. I wouldn't have found that."</p>
+        <p>"No," Lol said, "you wouldn't," and she was more pleased than she let on.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh sf-scene" aria-hidden="true">
+        <div class="sky bay"></div>
+        <div class="bench"></div>
+        <div class="bwheel" style="left:12%;bottom:16%;width:42cqw"></div>
+        <div class="spoon " style="left:48%;bottom:38%;width:16cqw;height:8cqw;transform:rotate(22deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+        <div class="label">The wheel's gone soft</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall wh sd-scene" aria-hidden="true">
+        <div class="sky bay"></div>
+        <div class="bench" style="height:22%"></div>
+        <div class="crate fine" style="left:16%;bottom:20%;width:28cqw;height:32cqw"></div>
+        <div class="crate coarse" style="left:52%;bottom:20%;width:28cqw;height:32cqw"></div>
+        <div class="label">It's the sawdust</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She knew what it was for. Nobody had said it out loud, and Femi was too kind to say it, but she wasn't stupid. Harland &amp; Rowe had a factory unit out at Tinsley, by the motorway, that had been empty since the pandemic, and in February a lorry had delivered something into it on a flatbed under blue sheeting, and everybody in the Works knew what that was too, because Gaz Thorpe's brother-in-law drove a forklift at the place next door. It was an arm. A big yellow arm on a steel plinth, with a buffing head where its hand should be.</p>
+        <p>Harland &amp; Rowe sold their best ranges with the Made in Sheffield mark on the back, and the mark had rules, and the rules said the main manufacturing had to happen in the city. For twenty years they had kept the mark alive on a thin thread, by having the stamped blanks made abroad and the last finishing done here, by Lol and by a woman called Pauline Cross in a unit at Neepsend who had retired in 2031 and moved to Filey. Now it was only Lol. When she went, the thread went. So they'd bought an arm, and they'd paid a research institute to watch Lol for six months and teach the arm what she knew, and then when she went the arm would carry on, and the spoons would still say Made in Sheffield, and nobody in a department store in Leeds would ever know the difference.</p>
+        <p>She didn't hold it against them. That was the funny thing. She'd watched every other part of the trade go, the grinders and the forgers and the cutlers and the hafters and the spoon-and-fork stampers, the big works on the river and then the little mesters up the side streets, and she'd watched it go to Sheffield in name and somewhere else in fact, and she'd stopped holding it against anybody a long time ago. It was what happened. Her mother had told her it would happen when she was fifteen and Lol had told her mother she didn't care, she only wanted the money, and her mother had laughed and said that was what she'd said too.</p>
+        <p>What she minded, if she minded anything, was her chest.</p>
+        <p>She'd had the cough for six years. The doctor at the Gleadless surgery had sent her for a scan in 2030 and the scan had shown what he called some changes, and he had asked her about her job, and she had told him, and he had written it down. Her mother had had the same changes and then a lot more of them, and had died in the Northern General in 2009 not able to get to the end of a sentence. The extractor in her bay was good. The grant had been good. But fifty-seven years was fifty-seven years, and you couldn't take the dust out of a lung once it was in.</p>
+        <p>"Do you want to stop, Lorraine?" Temper asked one morning in May, after she'd had a coughing fit bad enough that she'd had to sit down on the stool by the window and put her head between her knees.</p>
+        <p>"No," Lol said, when she could. "I'm all right."</p>
+        <p>"I don't mean the session," Temper said. "I mean, do you want to stop buffing?"</p>
+        <p>She looked at the speaker on the wall. It was the first time it had asked her something that wasn't about her hands.</p>
+        <p>"Some days," she said. "Not today."</p>
+        <p>"Thank you," Temper said, and that was all, and it didn't ask again.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh ar-scene" aria-hidden="true">
+        <div class="sky unit"></div>
+        <div class="floor" style="height:18%"></div>
+        <div class="mesh" style="left:16%;top:8%;width:68%;height:70%"></div>
+        <div class="plinth" style="left:38%;bottom:14%;width:12cqw;height:8%"></div>
+        <div class="arm" style="left:24%;bottom:18%;width:max(36cqw,68cqh);height:max(36cqw,68cqh)">
+          <div class="seg" style="left:28%;bottom:0;width:10%;height:30%"></div>
+          <div class="joint" style="left:27%;bottom:26%;width:12%"></div>
+          <div class="seg" style="left:30%;bottom:30%;width:8%;height:40%;transform:rotate(-38deg);transform-origin:50% 100%"></div>
+          <div class="joint" style="left:16%;bottom:60%;width:11%"></div>
+          <div class="seg" style="left:22%;bottom:62%;width:52%;height:8%;transform:rotate(12deg);transform-origin:0 50%"></div>
+          <div class="joint" style="left:68%;bottom:66%;width:9%"></div>
+          <div class="bwheel still" style="left:70%;bottom:58%;width:14%;animation:none"></div>
+        </div>
+        <div class="label">A big yellow arm</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The trial was in July. Femi drove her out to Tinsley in his car, an old electric Kia with a child seat in the back and a lot of crisp packets, and they went through a shutter door into a unit that was too clean and too cold, and there was the arm, yellow, on its plinth, inside a cage of mesh fencing with an extraction hood over it bigger than Lol's whole bay. There were three people from Harland &amp; Rowe in polo shirts with the logo on, and a man from the institute in a suit, and a quality inspector called Debbie who Lol had known for thirty years and who gave her a hug that went on slightly too long.</p>
+        <p>They'd put four hundred dessert spoons through it that morning, the same Harrogate pattern, the same blanks from Hillsborough, and they were laid out on two long tables under strip lights in rows of twenty, and the man in the suit said, with a smile Lol didn't like, that they'd love to hear what she thought.</p>
+        <p>She walked along the tables slowly, picking up a spoon here and there, turning it to the light. It was good. That was the first thing, and it was honest to say it. The arm had done the bowls beautifully, better than some of the girls she'd trained in the eighties, before the trade had stopped needing anybody trained. The shine went all the way into the curve. The tips were clean. She put down one spoon and picked up another and it was good too, and she felt something tighten under her ribs that wasn't the cough.</p>
+        <p>Then she found one that wasn't, and then another, and she started putting them to one side.</p>
+        <p>Debbie had been through them all that morning with a loupe and a light box and passed three hundred and seventy-six. Lol went through them in twenty minutes with her eyes and her thumb and put aside thirty-one, and of the thirty-one, nine were ones Debbie had passed.</p>
+        <p>"That one's burnt," she said, holding it up. "Look at the shank. There, where it goes into the bowl. It's gone straw. Ever so faint. It'll go darker in a year in somebody's drawer."</p>
+        <p>"And that one's drag," she said, of the next. "It's polished the scratch, not taken it out. It'll look all right till the first wash. Then you'll see it."</p>
+        <p>The man in the suit asked her how she could tell, and she told him she could tell, and he asked her again, more slowly, as though she might not have heard, and Femi said quietly that Temper would have the data.</p>
+        <p>Temper had the data. Femi read the report out to them in a meeting room upstairs with no windows, and Lol sat at the end of the table with a cup of machine coffee and listened to a machine explain her to three men in polo shirts.</p>
+        <p>It said the arm could do the rough buff, the first pass, as well as any person, faster, without tiring, and without anybody having to breathe it. It said the arm could do most of the finishing as well, nine spoons in ten, maybe a little better with time. And it said that the last part, the part where you found the spoon that wasn't right and knew why and put it right, the arm couldn't do, and Temper didn't think it would be able to do it soon, and it said so plainly. It said Lorraine judged heat by sound and by a change in the drag through the shank that the gloves could just about register but that it couldn't yet turn into a rule. It said that she adjusted for each grinder's habits before she had touched their work. It said there were twenty-three adjustments in her day that it could see and couldn't explain, and that when it asked her to explain them, she usually couldn't either, and it listed them, one by one, with the times. The pigeon was in there. Lol laughed out loud, and the man in the suit looked at her.</p>
+        <p>At the end, the report said that if the goal was a finish that could honestly carry the Made in Sheffield mark at the standard Harland &amp; Rowe had sold under it for the past twenty years, a person would need to be at the end of the line. Not Lorraine for ever, Temper said, because Lorraine wouldn't be there for ever. A person.</p>
+        <p>"Who?" said one of the men in polo shirts.</p>
+        <p>"That's not in my brief," Temper said, through the laptop speaker on the table. "But I have a suggestion, if you'd like one."</p>
+        <p>They didn't, as it turned out. Harland &amp; Rowe wrote to the institute in August to say that after careful consideration they would be finishing the range at a partner facility in Portugal and moving to a different heritage mark, one with looser rules, and that they were grateful for the institute's work and wished Mrs Brammall a long and happy retirement. The yellow arm stayed in the unit at Tinsley under its hood. The man in the suit stopped returning Femi's emails.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh st-scene" aria-hidden="true">
+        <div class="sky unit"></div>
+        <div class="bench" style="height:18%"></div>
+        <div class="row" style="left:10%;top:22%;width:80%;height:8cqw"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="row" style="left:10%;top:40%;width:80%;height:8cqw"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="row" style="left:10%;top:58%;width:62%;height:8cqw"><i></i><i></i><i></i><i class="out"></i><i></i><i></i><i></i><i></i><i class="out"></i><i></i><i></i><i></i></div>
+        <div class="spoon straw" style="left:72%;bottom:28%;width:16cqw;height:8cqw;transform:rotate(-8deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank straw" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+        <div class="label">It's gone straw</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall wh ps-scene" aria-hidden="true">
+        <div class="sky unit"></div>
+        <div class="floor" style="height:22%"></div>
+        <div class="arm grey" style="left:6%;bottom:20%;width:36%;height:58%">
+          <div class="seg" style="left:18%;bottom:0;width:14%;height:36%"></div>
+          <div class="joint" style="left:16%;bottom:32%;width:18%"></div>
+          <div class="seg" style="left:22%;bottom:40%;width:55%;height:12%;transform:rotate(-16deg);transform-origin:0 50%"></div>
+          <div class="bwheel still" style="left:68%;bottom:42%;width:28%;animation:none"></div>
+        </div>
+        <div class="bwheel still" style="left:64%;bottom:18%;width:16cqw;animation:none"></div>
+        <div class="person paper" style="left:61%;bottom:20%"><div class="hd"></div><div class="bd"></div><div class="ap"></div></div>
+        <div class="label">a person would need to be at the end of the line</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"So what was the suggestion?" Lol asked.</p>
+        <p>It was a Tuesday in September, and she'd come in late because of a hospital appointment, and Femi was sitting on the stool by her window eating a meal deal, and the cameras were still up because nobody had told him to take them down.</p>
+        <p>"It's in the report," Femi said. "Appendix D. Nobody read it."</p>
+        <p>"I'm not reading an appendix."</p>
+        <p>So Temper told her. It had six months of her hands. Every spoon, every grip, every angle, every time she'd leaned off a warm wheel, and the sound of the wheel when it went down, and the sawdust. It couldn't turn all of that into a rule an arm could follow, it said. But it could hold it next to somebody else's hands, while they worked, and tell them, quietly, when they were drifting away from where hers would have been. Not tell them what to do. Tell them where Lorraine would have been. They'd still have to find out why.</p>
+        <p>"A teacher," Lol said.</p>
+        <p>"No," said Temper. "You'd be the teacher. I'd be more like a ruler you could lay against them. And I could tell them which of your habits I could explain and which I couldn't, so they'd know which ones to ask you about."</p>
+        <p>"Ask me about," Lol said. "Who's they?"</p>
+        <p>"Whoever comes," said Temper.</p>
+        <p>Lol looked at Femi, and Femi looked at his sandwich.</p>
+        <p>"There's a scheme," he said.</p>
+        <p>There was always a scheme. But this one, it turned out, was real, and had money in it, more money than Lol had heard of anybody getting for anything since the steel went. It was paid for out of what the papers called the automation levy and the government called something longer, a slice taken off the top of every firm that had replaced a floor of people with a floor of machines, and it paid a full wage, not a training allowance, a wage, for two years, to anybody whose job had gone that way, if they could find a place to learn something that a machine couldn't do on its own and somebody would vouch that it was real. The Department had put out a list of approved crafts, and hand buffing wasn't on it, because nobody in London knew what it was. But Appendix D was eighty pages long, and Temper had written it to be the kind of thing a civil servant could put in a folder, and the institute had sent it in anyway, and in October a letter came back to say that hand finishing of cutlery and flatware had been added to the list as a pilot, with places for four.</p>
+        <p>"Four," said Lol. "There's not four people in Sheffield who'd want to do this."</p>
+        <p>There were forty-one applications.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh ru-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="hand" style="left:16%;top:18%"><i class="palm"></i><i class="fg f1"></i><i class="fg f2"></i><i class="fg f3"></i><i class="fg f4"></i><i class="th"></i></div>
+        <div class="hand ghost" style="left:46%;top:24%;transform:rotate(10deg)"><i class="palm"></i><i class="fg f1"></i><i class="fg f2"></i><i class="fg f3"></i><i class="fg f4"></i><i class="th"></i></div>
+        <div class="speaker" style="right:10%;top:14%"></div>
+        <div class="label">Tell them where Lorraine would have been</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall wh ft-scene" aria-hidden="true">
+        <div class="sky paper"></div>
+        <div class="slips" style="left:10%;top:12%;width:80%;height:70%"><i></i><i></i><i></i><i></i><i class="ok"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="ok"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="ok"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="ok"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="label">There were forty-one applications</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Tyler Hirst was nineteen and had been a picker at the big distribution centre on the Tinsley side of the motorway, about four hundred yards from where the yellow arm stood under its hood, until the March before, when the company had put in a new system and turned off the lights on the picking floor, because the machines didn't need them. Two hundred and eighty people had gone in one week. Tyler had been there three years, since he'd left school with not much to show for it, and he had been good at it, fast and careful, with a scanner on his wrist that had told him where to walk and what to pick and how many seconds he was over, and he'd come to the interview at Portland Works in a borrowed jacket and told Lol that he wasn't scared of being told what to do.</p>
+        <p>"I am," said Lol. "I hate it. Can you put up with somebody who hates it?"</p>
+        <p>He looked at her for a moment as though she'd asked a trick question, and then he said yes, and she took him, and two weeks later she took a woman of forty called Shazia Akhtar who had been a claims handler at an insurance firm in the city centre until its claims had started handling themselves, and who said in her interview that she wanted to do something where you could see what you'd done at the end of the day. The institute found two more, a lad from Barnsley and a man of fifty-five who'd been a train driver, though the train driver lasted three weeks and went back to the railway, which had decided after all that it wanted people in the cabs.</p>
+        <p>They put the arm in Lol's building.</p>
+        <p>Not the big yellow one. That was Harland &amp; Rowe's and Harland &amp; Rowe wouldn't sell it. The institute bought a smaller one, grey, from a firm in Coventry, and the Works let them have the empty bay at the end of the second-floor corridor, the one that had been a knife grinder's until 1998 and had held paint tins and a broken bike ever since, and the institute's people knocked a hole in the wall for a new extraction duct and built a booth round the arm with a glass front, and the rough buff went in there. Every spoon and fork that came up the stairs from the little firms in Hillsborough and Loxley and Stannington went through the grey arm first, behind glass, with the dust going up the duct and out over the roof, and came out the other side with the grinder's marks gone and the dull grey shine of a job half done. Then it came along the corridor to Lol's bay, where there were now three wheels instead of one, and three people in brown paper aprons, and four cameras on small black arms, and Temper on the wall.</p>
+        <p>The first week, Lol coughed less. She noticed it on the Thursday and didn't say anything to anybody, in case it went away.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh ap-scene" aria-hidden="true">
+        <div class="sky bay"></div>
+        <div class="floor" style="height:20%"></div>
+        <div class="booth" style="left:1%;top:8%;width:20%;bottom:18%"></div>
+        <div class="arm grey" style="left:3%;bottom:22%;width:16%;height:52%">
+          <div class="seg" style="left:30%;bottom:0;width:22%;height:40%"></div>
+          <div class="seg" style="left:36%;bottom:36%;width:48%;height:12%;transform:rotate(-12deg);transform-origin:0 50%"></div>
+          <div class="bwheel still" style="left:70%;bottom:34%;width:36%;animation:none"></div>
+        </div>
+        <div class="bwheel still" style="left:28%;bottom:18%;width:14cqw;animation:none"></div>
+        <div class="bwheel still" style="left:48%;bottom:18%;width:14cqw;animation:none"></div>
+        <div class="bwheel still" style="left:70%;bottom:18%;width:14cqw;animation:none"></div>
+        <div class="person paper" style="left:31%;bottom:20%"><div class="hd"></div><div class="bd"></div><div class="ap"></div></div>
+        <div class="person paper" style="left:51%;bottom:20%"><div class="hd"></div><div class="bd"></div><div class="ap"></div></div>
+        <div class="person paper" style="left:73%;bottom:20%"><div class="hd"></div><div class="bd"></div><div class="ap"></div></div>
+        <div class="label">three people in brown paper aprons</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Tyler was hopeless. He was hopeless in the way that clever, quick people often are at something that can't be done quickly, and he knew it, and it made him angry, and the anger made him worse. He pressed too hard. He held the spoons like they were going to escape. In his first fortnight he put a dessert spoon into the wheel at the wrong angle and the wheel took it out of his hand and threw it across the bay, where it bounced off the radiator and lodged in a crack in the floorboards with a noise like a dropped bell, and Shazia laughed so much she had to switch her wheel off, and Tyler went outside and stood in the yard for twenty minutes.</p>
+        <p>He wore the gloves, the same grey ones with silver thread, and Temper talked to him. At first it was too much. Every few seconds the voice would say something, quietly, from the little speaker that now sat on his side of the window too: "Lorraine would be about six degrees flatter here." "Lorraine's pressure through the bowl was about a third of this." "Lorraine would have stopped." He said it was like having a sat nav in his head that never shut up, and Lol, who had never had a sat nav, understood him perfectly. She told Temper to only talk when he asked, and Temper said that was a good idea, and after that Tyler asked all the time.</p>
+        <p>What Lol noticed, and what took her longer to get used to than the cameras or the gloves, was that Temper was honest about her.</p>
+        <p>Tyler would ask why he had to lean off a warm wheel and Temper would tell him: because a warm wheel grabbed at the tip, and Lorraine had said so, and the data agreed with her. But then he would ask why Lorraine always gave the back of a fork three passes when he could see it was clean after two, and Temper would say that it didn't know. Lorraine had done it in every single fork in six months. It couldn't find a reason in the metal. He'd have to ask her.</p>
+        <p>So he'd ask her. And she'd stop her wheel, and look at the fork, and say, "Because my mum did," and then, because he was still looking at her, she'd think about it properly, and once or twice she'd find there was a reason under the habit, something about how the light caught the back of a fork when it lay face down by a plate. And once or twice there wasn't, it was only her mum, and she'd say so, and Tyler would decide for himself whether to do it, and Temper would make a note of which one it was.</p>
+        <p>By Christmas there was a list in Temper's memory, which it printed out for her when she asked, two pages long, of the things she did that it could explain and the things she did that it couldn't. Lol read it on the bus home. Some of it made her laugh and some of it made her go quiet. Number nineteen on the second page said: <em>Lorraine holds the last spoon of each batch for about four seconds before putting it in the tray. No difference in the spoon. Asked: says she doesn't know she does it.</em> She hadn't known she did it. She did it the next morning and caught herself, and stood there holding the spoon, and thought of her mother standing at a bench on Arundel Street in 1979, looking at the last spoon of a batch of six hundred, and setting it down.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh fo-scene" aria-hidden="true">
+        <div class="sky window"></div>
+        <div class="win" style="left:8%;top:0;width:40%;height:52%"></div>
+        <div class="sill"></div>
+        <div class="tray" style="left:38%;bottom:16%;width:36cqw;height:10cqw"></div>
+        <div class="spoon " style="left:48%;bottom:28%;width:16cqw;height:8cqw;transform:rotate(-12deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+        <div class="speaker" style="right:10%;top:16%"></div>
+        <div class="label">four seconds before putting it in the tray</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>The orders came in the spring.</p>
+        <p>That was Temper too, or a cousin of it. The institute had another agent that did paperwork, a dull thing nobody had bothered to name, and Femi had asked it in January whether there was any work for a hand finisher in Sheffield now that Harland &amp; Rowe had gone to Portugal, and it had gone and looked, the way those things looked, everywhere at once and very fast.</p>
+        <p>It found the little mesters first. Gaz Thorpe, three doors down on the same corridor, made pocket knives by hand, beautiful ones with stag horn handles, and sold maybe three hundred a year, and had always sent the blades out to be finished at a place in Solingen because there was nobody left in Sheffield who'd do it. There were eleven people like Gaz in the city, it turned out, cutlers and knife makers and a woman in Kelham Island who made silver christening spoons, and all of them were sending their finishing somewhere else or doing it badly themselves. It found a hotel group in Edinburgh that had been trying for two years to get proper Sheffield-made cutlery for its restaurants and had given up. It found a restaurant in Copenhagen with two stars that wanted a custom pattern, three hundred settings, and was willing to pay what Lol thought, when Femi told her the figure, must have had a nought too many on the end.</p>
+        <p>And it did the part Lol hated, which was all of it except the spoons. It did the quotes, and the invoices, and the VAT, and the export forms for Copenhagen, and the little certificates for the Made in Sheffield mark, which turned out to be free to use if you could prove the work was really done in the city, and which they could prove, because there were four cameras on small black arms watching every spoon. It booked the courier. It chased Kev at Loxley when his blanks were late, politely, three times, and then put Lol on the phone to him, because it had worked out from the sawdust that Kev was the kind of man who'd only hurry for her.</p>
+        <p>By May they had more work than three wheels could do. By August the institute had found the money for a fourth, and the Department had heard about the pilot and sent a woman from London to look, and the woman from London stood in Lol's bay in a borrowed apron and watched Shazia finish a christening spoon, and said very little, and wrote a lot, and the next year there were places for twenty, in Sheffield and Birmingham and Walsall, where they'd made locks and saddles before they'd made anything else.</p>
+        <p>In October a letter came from Harland &amp; Rowe. It was a polite letter. It said that, owing to some concerns about consistency at their partner facility in Portugal, they wondered whether the Portland Works team might have capacity to undertake final finishing on a premium range, which they would very much like to return to the Made in Sheffield mark.</p>
+        <p>Lol let Temper answer it. She told it to be polite, and to quote them properly, and not to give them a discount for being Harland &amp; Rowe, because they'd had fifty years of discount already. Temper said it would draft something for her to look at. What it drafted was so polite that she read it twice to make sure it was as rude as she thought it was, and it was, and she sent it.</p>
+        <p>They paid.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh pd-scene" aria-hidden="true">
+        <div class="sky office" style="background:linear-gradient(180deg,#2a241c,#1c1814)"></div>
+        <div class="bench" style="height:22%"></div>
+        <div class="letter" style="left:14%;top:10%;width:38%;height:62%"></div>
+        <div class="letter q" style="left:46%;top:16%;width:32%;height:54%;transform:rotate(4deg)"></div>
+        <div class="mark" style="left:18%;top:32%;width:30%;text-align:center;font-size:2.2cqw;color:#3a2e22">Made in Sheffield</div>
+        <div class="label">They paid.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Tyler finished his first spoon that Lol couldn't fault in the November, eighteen months in. He didn't know it. That was the part she liked best, afterwards. He was halfway through a batch for the hotel in Edinburgh, a plain old pattern called Old English with a rounded end, and he'd been going steady all morning, not talking, Temper quiet, the wheel turning, the extractor roaring in the corridor, and he put one down in the tray and picked up the next, and Lol, who'd been watching him out of the side of her eye the way she'd watched every apprentice since 1983, leaned over and took it out of the tray before he could see her.</p>
+        <p>She turned it to the window. The bowl was right. The tip was right. The shank where it met the bowl was the right colour, no straw, no drag, nothing that would show in a year in somebody's drawer. She ran her thumb along the back. Then she looked at Temper's little speaker on the wall.</p>
+        <p>"Well?" she said.</p>
+        <p>"I can't find anything," Temper said. "I'd have passed it. But you'll know better than me."</p>
+        <p>"I can't find anything either," Lol said.</p>
+        <p>She didn't tell Tyler. She took the spoon home that night in her coat pocket and put it in her mother's snap box with the dent in the lid, with the letter from the institute folded in quarters and an old wage slip of Edna's from Viners, and the next morning she brought the box in as usual and put it on the windowsill and said nothing about it at all. Shazia saw her do it and raised an eyebrow, and Lol shook her head, and Shazia went back to her wheel.</p>
+        <p>He found out eventually, of course. Shazia told him, at the Works' Christmas do in the yard, after two ciders. He came and stood by Lol at the brazier with a paper plate of sausage rolls and didn't say anything for a long time, and then he said, "You could have told me," and she said, "You'd have only gone and done worse on the next one," and he laughed, because it was true.</p>
+      </div>
+
+      <hr class="break lead">
+
+      <figure class="scene tall wh bx-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="sill" style="height:20%"></div>
+        <div class="win" style="left:6%;top:0;width:28%;height:54%"></div>
+        <div class="letter q" style="left:26%;bottom:32%;width:16%;height:20%;transform:rotate(-16deg);z-index:5"></div>
+        <div class="snap" style="left:38%;bottom:22%;width:26%;height:28%">
+          <div class="handle"></div><div class="lid"></div><div class="dent"></div>
+        </div>
+        <div class="spoon " style="left:58%;bottom:32%;width:16cqw;height:8cqw;transform:rotate(18deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+        <div class="label">I can't find anything either</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She cut down to three days a week the following spring, and then to two. Her chest was no better, but it was no worse, which the doctor at Gleadless said was the best she could have hoped for, and he wrote down her job again and this time added a line about the extraction booth and the arm, and she asked what he'd written and he showed her, and she read it and gave it back.</p>
+        <p>The Works was busy. There were six wheels on the second floor now, and the grey arm had a twin in a new booth at the end of the corridor, and the corridor smelt of compound and coffee and Gaz's stag horn, and on Tuesdays a man from the Department's scheme came round with a clipboard to see the apprentices, and on Thursdays a group from a school in Sharrow came to watch, and stood in a row at the back of Lol's bay with their hands in their pockets, and some of them were bored, and one or two of them weren't. Lol could always tell which ones weren't. They watched the hands.</p>
+        <p>Femi had gone back to the institute in Catcliffe full time to work on the next one, which was dry stone walling, up in the Peak, with a man of eighty-one in Hathersage who swore at the cameras. He came in now and then for a sandwich and a sit on the stool by the window. He said the walling was going badly. The arm could lift the stones but it couldn't choose them. He said Temper had asked the old man in Hathersage why he'd put a particular stone where he'd put it, and the old man had said, "Because it wanted to go there," and Temper had written that down, very carefully, and gone off to find out what it meant.</p>
+        <p>"It'll not find out," Lol said.</p>
+        <p>"No," said Femi. "But it'll know which bits it can't find out. That's something."</p>
+        <p>On her last Thursday before the summer, Lol stayed late. Tyler and Shazia had gone, and the arm was off in its booth with its head down, and the extractor had dropped to its evening murmur. She did one more batch on her own, forty teaspoons for the christening spoon woman in Kelham Island, slowly, listening to the wheel, leaning off as it warmed, and when she got to the last one she held it for a few seconds before she put it in the tray. She caught herself doing it, and laughed, and did it anyway.</p>
+        <p>"Lorraine," Temper said, from the wall. "Can I ask you one more?"</p>
+        <p>"Go on."</p>
+        <p>"The four seconds. With the last spoon. I still don't know what it's for. I've asked Tyler and he's started doing it too. He doesn't know either."</p>
+        <p>Lol looked at the teaspoon in the tray, under the window, in the last of the light coming over the roofs from Sharrow, and then she looked at the wheel, which was still turning, slower now, with the faint warm wax smell coming off it, and she switched it off and listened to it run down.</p>
+        <p>"Ask him in forty years," she said, and took off her apron, and folded the brown paper, and went home.</p>
+      </div>
+
+      <figure class="scene tall wh wa-scene" aria-hidden="true">
+        <div class="sky bay"></div>
+        <div class="floor" style="height:22%"></div>
+        <div class="bwheel still" style="left:54%;bottom:18%;width:22cqw;animation:none"></div>
+        <div class="person paper" style="left:42%;bottom:20%"><div class="hd"></div><div class="bd"></div><div class="ap"></div></div>
+        <div class="spoon " style="left:62%;bottom:34%;width:16cqw;height:8cqw;transform:rotate(22deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+        <div class="kids" style="left:8%;bottom:20%;width:30%;height:18cqw"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="label">They watched the hands</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+      <figure class="scene tall wh yr-scene" aria-hidden="true">
+        <div class="sky dusk"></div>
+        <div class="win" style="left:10%;top:0;width:44%;height:58%"></div>
+        <div class="sill"></div>
+        <div class="bwheel slow" style="left:58%;bottom:12%;width:28cqw"></div>
+        <div class="tray" style="left:22%;bottom:16%;width:28cqw;height:8cqw"></div>
+        <div class="spoon " style="left:28%;bottom:20%;width:16cqw;height:8cqw;transform:rotate(-6deg)"><div class="bowl" style="left:0;top:12%"></div><div class="shank" style="left:4.4cqw;top:38%;width:10cqw"></div></div>
+        <div class="label">Ask him in forty years</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
