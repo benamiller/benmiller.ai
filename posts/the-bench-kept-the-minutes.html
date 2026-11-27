@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The bench kept the minutes — Ben Miller</title>
+    <meta name="description" content="In Hull&#x27;s Old Town the new benches tip you off after twenty minutes. The steward who drove an old man&#x27;s bus keeps his seat level outside his late wife&#x27;s shop, until the street&#x27;s AI works out why.">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+
+
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Karla:wght@400;500&family=Caveat:wght@500;600&display=swap");
+
+      :root {
+        --night: #0a1014;
+        --ink: #d0d6dc;
+        --mute: #7a848c;
+        --cream: #e2e6ea;
+        --gold: #a89060;
+        --yolk: #b8a070;
+        --leaf: #3c7a4e;
+        --cool: #6a8490;
+        --ember: #c4542c;
+        --alert: #b03030;
+        --bark: #2c322e;
+        --lamp: #b8c4cc;
+        --steel: #7a8a92;
+        --flag: #4a5a62;
+        --amber: #c48428;
+        --lozenge: #4a9a5c;
+      }
+
+      html { background: var(--night); }
+
+      body.story-page {
+        margin: 0;
+        background: var(--night);
+        color: var(--ink);
+        font-family: Karla, system-ui, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .paint, .fog, .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .paint {
+        background:
+          radial-gradient(ellipse 48% 30% at 86% 8%, rgba(70, 90, 100, 0.11), transparent 60%),
+          radial-gradient(ellipse 44% 26% at 8% 20%, rgba(40, 60, 55, 0.10), transparent 58%),
+          radial-gradient(ellipse 40% 24% at 30% 90%, rgba(50, 40, 30, 0.08), transparent 60%),
+          radial-gradient(ellipse 34% 22% at 90% 78%, rgba(140, 70, 40, 0.05), transparent 60%),
+          linear-gradient(180deg, #0e1418 0%, #0b1114 36%, #0a0e12 70%, #07090c 100%);
+        animation: paint-breathe 44s ease-in-out infinite alternate;
+      }
+
+      .fog {
+        background:
+          radial-gradient(ellipse 90% 24% at 50% 100%, rgba(140, 160, 160, 0.05), transparent 70%),
+          linear-gradient(90deg, transparent, rgba(180, 200, 200, 0.025), transparent);
+        animation: fog-drift 60s linear infinite alternate;
+      }
+
+      .grain {
+        opacity: 0.07;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+      }
+
+      .story {
+        position: relative;
+        z-index: 1;
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.4rem 8rem;
+      }
+
+      .story-top { margin-bottom: 0; }
+
+      .story a.wordmark {
+        color: #c4ccd2;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      .hero { margin: 2.6rem 0 3.4rem; }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 3.8rem);
+        font-weight: 600;
+        font-style: italic;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--cream);
+        text-shadow: 0 0 40px rgba(100, 90, 70, 0.22), 0 0 2px rgba(180, 190, 190, 0.28);
+        margin: 1.8rem 0 0.6rem;
+      }
+
+      .hero time {
+        display: block;
+        color: var(--mute);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+      }
+
+      .prose {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.28rem;
+        font-weight: 500;
+        line-height: 1.72;
+        color: #d6dce2;
+      }
+
+      .prose p { margin: 0; }
+      .prose p + p { margin-top: 1.35rem; }
+      .prose em { font-style: italic; color: #c48a62; }
+      .prose strong { font-weight: 700; color: #e8d0a0; }
+
+      hr.break {
+        border: 0;
+        width: 4.6rem;
+        height: 0.7rem;
+        margin: 3rem auto;
+        background:
+          radial-gradient(circle, rgba(180, 200, 200, 0.85) 0 1.5px, rgba(120, 150, 150, 0.3) 2.5px, transparent 4px) center / 1.55rem 100% repeat-x;
+        filter: drop-shadow(0 0 6px rgba(120, 150, 150, 0.35));
+        opacity: 0.85;
+      }
+      hr.break.lead { margin-bottom: 0; }
+
+      .scene {
+        position: relative;
+        margin: 3rem -0.4rem 3.4rem;
+        min-height: 16rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        isolation: isolate;
+        background: #0e1418;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(140, 170, 170, 0.12);
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+
+      .scene.tall { min-height: 20rem; height: 20rem; }
+
+      .scene::after, .minutes-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 84% 74% at 50% 46%, transparent 56%, rgba(4, 8, 10, 0.62) 100%),
+          repeating-linear-gradient(112deg, rgba(255, 240, 220, 0.018) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(24deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 5px);
+      }
+
+      .scene > *, .minutes-hero > * { position: absolute; }
+
+      .brush { border-radius: 50%; filter: blur(16px); }
+      .stroke { border-radius: 50%; filter: blur(5px); z-index: 25; mix-blend-mode: soft-light; }
+      .stroke.t1 { left: -6%; top: 8%; width: 56%; height: 9%; background: rgba(170, 195, 230, 0.14); transform: rotate(-6deg); }
+      .stroke.t2 { right: -8%; top: 44%; width: 48%; height: 7%; background: rgba(255, 180, 110, 0.12); transform: rotate(8deg); }
+      .stroke.t3 { left: 16%; bottom: 7%; width: 54%; height: 6%; background: rgba(120, 150, 190, 0.14); transform: rotate(-3deg); }
+
+      .label {
+        left: 0; right: 0; bottom: 4.5%;
+        z-index: 28;
+        text-align: center;
+        font-family: Karla, system-ui, sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 244, 228, 0.78);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+      }
+
+
+
+
+      .hero .dek { font-size: 1.15em; line-height: 1.5; opacity: .82; margin: .4em 0 .8em; }
+      .minutes-hero .label, .scene.mn .label { color: rgba(230, 234, 236, .92); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.65); }
+
+      .minutes-hero { position: relative; height: 26rem; margin: 0 -.4rem; border-radius: .5rem; overflow: hidden; isolation: isolate; container-type: size;
+        box-shadow: 0 34px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(140,170,170,.14); background: #10161a; }
+      .minutes-hero > * { position: absolute; }
+      .scene.mn { background: #0e1418; container-type: size; }
+
+      .sky { inset: 0; background: linear-gradient(180deg, #1a242a 0%, #2a3438 48%, #3a4448 100%); }
+      .sky.dawn { background: linear-gradient(180deg, #1c2830 0%, #3a4850 42%, #6a6e68 100%); }
+      .sky.street { background: linear-gradient(180deg, #1a2228 0%, #2a3236 55%, #3a4044 100%); }
+      .sky.dash { background: linear-gradient(180deg, #12181c, #0e1418 70%, #0c1014); }
+      .sky.cold { background: linear-gradient(180deg, #1a2028 0%, #2a323c 50%, #3a4248 100%); }
+      .sky.xmas { background: linear-gradient(180deg, #141820 0%, #1c222c 60%, #242830 100%); }
+      .sky.estuary { background: linear-gradient(180deg, #3a4a52 0%, #5a5e58 40%, #6a6458 100%); }
+      .sky.garden { background: linear-gradient(180deg, #6a8890 0%, #8aa0a0 45%, #a8b090 100%); }
+      .sky.room { background: linear-gradient(180deg, #2a2622, #1c1a18 70%, #161412); }
+
+      .pavement { left: 0; right: 0; bottom: 0; height: 28%; z-index: 2;
+        background: linear-gradient(180deg, #3a4246, #2a3034);
+        background-image: repeating-linear-gradient(0deg, transparent 0 2.4cqh, rgba(0,0,0,.12) 2.4cqh 2.7cqh); }
+      .sill { left: 0; right: 0; bottom: 0; height: 16%; z-index: 2;
+        background: linear-gradient(180deg, #3a4246, #262c30); }
+      .lawn { left: 0; right: 0; bottom: 0; height: 36%; z-index: 2;
+        background: linear-gradient(180deg, #4a6a48, #3a5438); }
+
+      .shop { z-index: 3; background: #1a1c1e;
+        box-shadow: inset 0 0 0 .45cqw #2a2e30; }
+      .shop .pane { position: absolute; left: 10%; right: 10%; top: 12%; bottom: 18%;
+        background: linear-gradient(180deg, #1c2228, #121416); }
+      .shop .sheet { position: absolute; left: 22%; right: 22%; top: 22%; bottom: 28%;
+        background: linear-gradient(180deg, #d8d4cc, #c4c0b6);
+        box-shadow: 0 .3cqw .6cqw rgba(0,0,0,.35); }
+      .houseno { z-index: 5; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-weight: 500; letter-spacing: .12em; color: #c8c4bc; text-shadow: none; font-size: 2.2cqw; }
+
+      .lamp { z-index: 8; width: 1.1cqw; background: linear-gradient(90deg, #1a1c1e, #3a3e42 40%, #1a1c1e); }
+      .lamp .arm { position: absolute; left: 50%; top: 8%; width: 7cqw; height: .7cqw; background: #2a2e32; }
+      .lamp .cam { position: absolute; right: -1.2cqw; top: 6%; width: 2.4cqw; height: 1.6cqw; border-radius: .25cqw;
+        background: #1a1c1e; box-shadow: inset 0 0 0 .2cqw #111, 0 0 .6cqw rgba(80,140,160,.3); }
+      .lamp .cam::after { content: ""; position: absolute; left: 50%; top: 50%; width: .7cqw; height: .7cqw; margin: -.35cqw 0 0 -.35cqw;
+        border-radius: 50%; background: #3a6a78; box-shadow: 0 0 .8cqw rgba(80,160,180,.45); }
+
+      /* oak bench */
+      .obench { z-index: 6; }
+      .obench > * { position: absolute; }
+      .obench .leg { width: 1.3cqw; background: #1a1c1e; bottom: 0; top: 42%; }
+      .obench .rail { height: 1cqw; background: #1a1c1e; }
+      .obench .slats { background:
+          repeating-linear-gradient(90deg, #c4a070 0 2.1cqw, #6a5438 2.1cqw 2.35cqw, #b89060 2.35cqw 4.4cqw);
+        border-radius: .2cqw; box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.35), inset 0 1px 0 rgba(255,230,180,.12); }
+      .obench .back { background:
+          repeating-linear-gradient(90deg, #c4a070 0 2.1cqw, #6a5438 2.1cqw 2.35cqw, #b89060 2.35cqw 4.4cqw);
+        border-radius: .2cqw; box-shadow: inset 0 1px 0 rgba(255,230,180,.1); }
+      .obench .obox { background: #5a5e62; border-radius: .25cqw;
+        box-shadow: inset 0 0 0 .2cqw rgba(0,0,0,.25), 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .obench .port { width: 1.4cqw; height: 1.4cqw; border-radius: 50%;
+        background: radial-gradient(circle, #1a1c1e 0 35%, #6a7074 36% 70%, #2a2e32 71%); }
+      .obench.side .slats { background:
+          repeating-linear-gradient(0deg, #c4a070 0 1.4cqw, #6a5438 1.4cqw 1.65cqw, #b89060 1.65cqw 3cqw); }
+      .obench.side.tip .slats { transform-origin: 90% 80%; transform: rotate(12deg); }
+
+      /* old green bench */
+      .gbench { z-index: 6; background: #2a5a3a; border-radius: .2cqw;
+        box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3); }
+      .gbench .arm { position: absolute; left: 50%; top: -30%; width: 1.2cqw; height: 80%; margin-left: -.6cqw;
+        background: #1e4a2c; border-radius: .3cqw; }
+
+      /* perch rail */
+      .prail { z-index: 6; height: 2.2cqw; background: #6a7074; border-radius: 1.1cqw;
+        box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.18); }
+      .prail .post { position: absolute; width: 1.1cqw; background: #4a5054; bottom: 0; top: 100%; height: 8cqw; }
+
+      .person { position: absolute; z-index: 7; width: 6cqw; height: 14cqw; }
+      .person.sit { height: 11cqw; }
+      .person.sit .bd { bottom: 0; }
+      .person > * { position: absolute; }
+      .person .hd { left: 50%; top: 0; width: 2.5cqw; height: 2.5cqw; margin-left: -1.25cqw; border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #d8c0a0, #b89878 70%); }
+      .person .cap { left: 50%; top: -.45cqw; width: 3.2cqw; height: 1.35cqw; margin-left: -1.6cqw;
+        background: #1a1c20; border-radius: .5cqw .5cqw 0 0; z-index: 2; }
+      .person .cap::after { content: ""; position: absolute; right: -0.7cqw; top: 50%; width: 1.1cqw; height: .45cqw; background: #2a2e32; }
+      .person .bd { left: 22%; top: 2.4cqw; width: 56%; bottom: 0; background: #2a3a58; border-radius: .3cqw .3cqw 0 0; }
+      .person.steward .bd { background: #3a4448; }
+      .person .zip { position: absolute; left: 48%; top: 2.6cqw; width: .35cqw; bottom: 28%; background: #8a9094; }
+      .person .stick { left: 78%; top: 28%; width: .7cqw; height: 80%; background: #6a4a28; border-radius: .3cqw; transform: rotate(8deg); }
+      .person.lean { height: 16cqw; }
+      .person.lean .bd { transform: rotate(10deg); transform-origin: 50% 100%; }
+
+      .bag { z-index: 6; width: 3.4cqw; height: 4cqw; background: #c4c0b4; border-radius: .2cqw;
+        box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.25); }
+
+      .key { z-index: 8; width: 1.1cqw; height: 5.4cqw; background: #8a9094; border-radius: .2cqw;
+        box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .key::before { content: ""; position: absolute; left: -.4cqw; top: -.8cqw; width: 1.9cqw; height: 1.9cqw; border-radius: 50%;
+        background: #8a9094; box-shadow: inset 0 0 0 .35cqw #5a6064; }
+
+      /* dashboard map */
+      .dots { z-index: 5; display: flex; flex-wrap: wrap; gap: 1.1cqw; align-content: center; }
+      .dots i { position: relative; width: 2.4cqw; height: 2.4cqw; border-radius: 50%; background: #3c7a4e;
+        box-shadow: 0 0 .5cqw rgba(60,122,78,.25); }
+      .dots i.am { background: #c48428; box-shadow: 0 0 .8cqw rgba(196,132,40,.45); }
+      .dots i.rd { background: #b03030; }
+      .flag { z-index: 8; font-family: Karla, system-ui, sans-serif; font-variant-numeric: lining-nums;
+        font-size: 1.35cqw; letter-spacing: .04em; color: #e8e0c8; text-shadow: 0 1px 2px rgba(0,0,0,.8);
+        background: rgba(20,24,28,.72); padding: .5cqw .8cqw; border-radius: .2cqw; white-space: nowrap; }
+
+      .bruise { z-index: 5; background: #c8ccd0; }
+      .bruise .knot { position: absolute; border-radius: 50%;
+        background: radial-gradient(ellipse 70% 80% at 45% 55%, #d45a28 0 28%, #c4542c 48%, rgba(196,84,44,.35) 70%, transparent 100%);
+        filter: blur(.55cqw); transform: rotate(-18deg); }
+
+      .graph { z-index: 5; background: #14181c; box-shadow: inset 0 0 0 .3cqw rgba(180,200,200,.08); }
+      .graph .ln { position: absolute; left: 8%; right: 8%; height: 0; }
+      .graph .ln::after { content: ""; position: absolute; inset: auto 0 auto 0; height: .45cqw; }
+      .graph .blue { bottom: 22%; }
+      .graph .blue::after { background: #4a7aaa; transform-origin: left center;
+        clip-path: polygon(0 100%, 8% 82%, 22% 68%, 38% 52%, 55% 38%, 72% 24%, 88% 12%, 100% 4%, 100% 100%);
+        height: 9cqh; bottom: 0; }
+      /* use a filled area via an inner div instead */
+      .graph .trace { position: absolute; left: 8%; right: 8%; bottom: 18%; height: 62%; }
+      .graph .trace b, .graph .trace g { position: absolute; left: 0; right: 0; bottom: 0; top: 0; }
+      .graph .trace b { background: #4a7aaa; clip-path: polygon(0 88%, 12% 78%, 28% 64%, 44% 50%, 60% 36%, 76% 22%, 92% 10%, 100% 4%, 100% 8%, 92% 14%, 76% 26%, 60% 40%, 44% 54%, 28% 68%, 12% 82%, 0 92%); }
+      .graph .trace g { background: #3c7a4e; clip-path: polygon(0 90%, 12% 80%, 28% 66%, 46% 48%, 58% 38%, 70% 36%, 85% 36%, 100% 36%, 100% 40%, 85% 40%, 70% 40%, 58% 42%, 46% 52%, 28% 70%, 12% 84%, 0 94%); opacity: .95; }
+
+      .poster { z-index: 6; background: #efece4; box-shadow: 0 .5cqw 1.2cqw rgba(0,0,0,.4); }
+      .poster .pic { position: absolute; left: 8%; right: 8%; top: 8%; height: 48%;
+        background: linear-gradient(180deg, #c8d0d4, #9aa4a8); }
+      .poster .who { position: absolute; left: 28%; top: 16%; width: 4cqw; height: 9cqw; }
+      .poster .who .hd { position: absolute; left: 50%; top: 0; width: 2.2cqw; height: 2.2cqw; margin-left: -1.1cqw; border-radius: 50%; background: #c4a888; }
+      .poster .who .hd::after { content: ""; position: absolute; left: -20%; right: -20%; top: -10%; height: 55%;
+        background: #5a3a4a; border-radius: 50% 50% 0 0; }
+      .poster .who .bd { position: absolute; left: 18%; top: 2cqw; right: 18%; bottom: 0; background: #5a4a6a; border-radius: .3cqw; }
+      .poster .kid { position: absolute; left: 48%; top: 28%; width: 2.6cqw; height: 5cqw; }
+      .poster .kid .hd { position: absolute; left: 50%; top: 0; width: 1.6cqw; height: 1.6cqw; margin-left: -.8cqw; border-radius: 50%; background: #d4b898; }
+      .poster .kid .bd { position: absolute; left: 20%; top: 1.4cqw; right: 20%; bottom: 0; background: #4a6a8a; border-radius: .2cqw; }
+      .poster .line { position: absolute; left: 6%; right: 6%; top: 60%; font-family: Karla, system-ui, sans-serif;
+        font-size: 1.55cqw; letter-spacing: .02em; color: #1a1c18; text-align: center; line-height: 1.3; text-transform: none; text-shadow: none; }
+      .poster .qr { position: absolute; left: 50%; bottom: 6%; width: 6cqw; height: 6cqw; margin-left: -3cqw;
+        background:
+          repeating-linear-gradient(90deg, #1a1c18 0 .45cqw, #efece4 .45cqw .8cqw),
+          repeating-linear-gradient(0deg, #1a1c18 0 .45cqw, #efece4 .45cqw .8cqw);
+        background-blend-mode: multiply; }
+
+      .phone { z-index: 7; background: #1a1c1e; border-radius: .8cqw;
+        box-shadow: 0 .5cqw 1.2cqw rgba(0,0,0,.45), inset 0 0 0 .35cqw #2a2e32; }
+      .phone .screen { position: absolute; left: 8%; right: 8%; top: 10%; bottom: 10%; background: #0e1210; border-radius: .3cqw; overflow: hidden; }
+      .leaves { position: absolute; inset: 0; }
+      .leaves i { position: absolute; width: 2.2cqw; height: 3.2cqw; background: #3c7a4e;
+        clip-path: ellipse(42% 48% at 50% 50%);
+        box-shadow: 0 0 .4cqw rgba(60,122,78,.4); }
+      .phone .msg { position: absolute; left: 8%; right: 8%; top: 22%; font-family: Karla, system-ui, sans-serif;
+        font-variant-numeric: lining-nums; font-size: 1.55cqw; line-height: 1.35; color: #b8c0c4;
+        text-align: center; text-shadow: none; letter-spacing: .01em; text-transform: none; }
+      .phone .boxline { position: absolute; left: 10%; right: 10%; bottom: 16%; height: 18%;
+        background: #1a1e22; border: .2cqw solid #3a4044; }
+
+      .squares { z-index: 5; display: flex; gap: 1.2cqw; align-items: center; }
+      .squares i { position: relative; width: 7cqw; height: 7cqw; background: #6a7074;
+        box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .squares i.off { background: transparent; box-shadow: inset 0 0 0 .28cqw #4a5054; }
+
+      .star { z-index: 4; width: .9cqw; height: .9cqw; background: #e8eef0; transform: rotate(45deg);
+        box-shadow: 0 0 1cqw rgba(230,240,245,.45); }
+      .wire { z-index: 3; height: .2cqw; background: rgba(200,210,220,.35); }
+
+      .pattern { z-index: 6; background: #efece4; box-shadow: 0 .3cqw .7cqw rgba(0,0,0,.3);
+        background-image:
+          repeating-linear-gradient(0deg, transparent 0 1.05cqw, rgba(40,50,50,.18) 1.05cqw 1.2cqw),
+          repeating-linear-gradient(90deg, transparent 0 1.05cqw, rgba(40,50,50,.18) 1.05cqw 1.2cqw); }
+      .pattern .mark { position: absolute; left: 8%; right: 8%; bottom: 10%; font-family: Karla, system-ui, sans-serif;
+        font-variant-numeric: lining-nums; font-size: 1.7cqw; letter-spacing: .08em; color: #1a1c18;
+        text-shadow: none; text-transform: none; }
+
+      .sign { z-index: 8; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-style: italic;
+        color: #f4efe6; text-shadow: 0 2px 10px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.8); letter-spacing: .04em; }
+      .holes { z-index: 5; display: flex; flex-wrap: wrap; gap: .5cqw; }
+      .holes i { position: relative; width: 2.6cqw; height: 2.6cqw; border-radius: 50%;
+        box-shadow: inset 0 .3cqw .4cqw rgba(0,0,0,.25); }
+      .holes i:nth-child(3n) { background: #b85a4a; }
+      .holes i:nth-child(3n+1) { background: #c4a070; }
+      .holes i:nth-child(3n+2) { background: #6a8a6a; }
+
+      .plaque { z-index: 7; background: linear-gradient(180deg, #c4a060, #8a6a38);
+        border-radius: .15cqw; box-shadow: 0 .3cqw .5cqw rgba(0,0,0,.3); }
+      .plaque .txt { position: absolute; inset: 12% 6%; font-family: Karla, system-ui, sans-serif;
+        font-size: 1.35cqw; letter-spacing: .05em; color: #2a2010; text-align: center; line-height: 1.3;
+        text-transform: none; text-shadow: none; }
+      .wbench { z-index: 6; background: #8a6a40;
+        box-shadow: 0 .4cqw .8cqw rgba(0,0,0,.3);
+        background-image: repeating-linear-gradient(90deg, transparent 0 3cqw, rgba(0,0,0,.12) 3cqw 3.3cqw); }
+      .cup { z-index: 8; width: 2cqw; height: 2.6cqw; background: #efece4; border-radius: .2cqw .2cqw .8cqw .8cqw;
+        box-shadow: 0 .2cqw .4cqw rgba(0,0,0,.25); }
+      .hedge { z-index: 3; background: #2a4a32;
+        box-shadow: inset 0 1.2cqw 1.6cqw rgba(0,0,0,.2); }
+
+      .water { z-index: 2; background: linear-gradient(180deg, #4a5450, #3a4038 40%, #2a2e28); }
+
+      @keyframes paint-breathe { from { filter: hue-rotate(0deg) brightness(1); } to { filter: hue-rotate(-6deg) brightness(1.03); } }
+      @keyframes fog-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+      @keyframes rise { from { opacity: 0.35; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+      @keyframes leafturn { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+      .leaves { animation: leafturn 16s linear infinite; transform-origin: 50% 50%; }
+      @media (prefers-reduced-motion: reduce) {
+        .paint, .fog { animation: none !important; }
+        .minutes-hero *, .scene.mn *, .minutes-hero *::before, .minutes-hero *::after, .scene.mn *::before, .scene.mn *::after,
+        .paint, .fog, .leaves { animation: none !important; transition: none !important; }
+        .scene { animation: none !important; opacity: 1; transform: none; }
+      }
+
+      @media (max-width: 600px) {
+        .minutes-hero { height: 22rem; }
+        .scene.mn .label, .minutes-hero .label { letter-spacing: .12em; font-size: .46rem; }
+        .poster .line { font-size: 2.2cqw; }
+        .phone .msg { font-size: 2.1cqw; }
+        .flag { font-size: 2cqw; }
+        .pattern .mark { font-size: 2.4cqw; }
+        .plaque .txt { font-size: 1.7cqw; }
+        .houseno { font-size: 3cqw; }
+      }
+    </style>
+  </head>
+  <body class="story-page">
+    <div class="paint" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <article class="story">
+      <header class="site-header story-top">
+        <a class="wordmark" href="/">Ben Miller</a>
+      </header>
+
+      <header class="hero">
+        <div class="minutes-hero" aria-hidden="true">
+          <div class="sky dawn"></div>
+          <div class="shop" style="left:8%;top:0;width:28%;bottom:26%">
+            <div class="pane"></div><div class="sheet"></div>
+          </div>
+          <div class="houseno" style="left:18%;top:4%">41</div>
+          <div class="lamp" style="right:14%;top:0;bottom:26%">
+            <div class="arm" style="right:0;left:auto;width:8cqw"></div>
+            <div class="cam" style="right:-1cqw"></div>
+          </div>
+          <div class="pavement" style="height:26%"></div>
+        <div class="obench" style="left:28%;bottom:14%;width:48cqw;height:18cqw">
+          <div class="leg" style="left:10%"></div>
+          <div class="leg" style="right:10%"></div>
+          <div class="obox" style="left:34%;top:42%;width:32%;height:28%"></div>
+          <div class="back" style="left:4%;right:4%;top:-22%;height:28%"></div>
+          <div class="slats" style="left:0;right:0;top:8%;height:36%"></div>
+        </div>
+          <div class="label">At twenty minutes it chimed</div>
+        </div>
+        <h1>The bench kept the minutes</h1>
+        <p class="dek">In Hull's Old Town the new benches tip you off after twenty minutes. The steward who drove an old man's bus keeps his seat level outside his late wife's shop, until the street's AI works out why.</p>
+        <time datetime="2026-11-27">27 November 2026</time>
+      </header>
+
+      <div class="prose">
+        <p>Brenda Cawthorne had driven the number 56 through Hull for twenty-six years before her knees told her to stop, and the thing she missed most was not the wage or the uniform or even the people, though she missed the people, but the way a city looked from a high seat at six in the morning, when the street lights were still on and the gulls were already up and nobody had decided yet what the day was for. So when the council advertised for street stewards in the spring of 2033, part-time, own hours within reason, a van and a lanyard and a tablet, she put in for it the same afternoon, and she got it, she suspected, because she was the only applicant who knew the Old Town by the names of the shops that used to be there rather than the ones that were.</p>
+        <p>The job was benches, mostly. Benches and bins and planters, the bollards that rose and sank at the end of Silver Street, the little brass plaques on the trawlermen's memorial that people kept prising off, and the forty-two pieces of what the council called seating furniture between the marina and Queen Victoria Square. She had a ring of keys, a socket set, a pot of anti-graffiti gel and a list. The list came on the tablet every morning at half six, and for the first year it was written by a woman called Sue in the Guildhall who signed every message with a kiss and once sent her a photo of a bench on Lowgate with the caption <em>look what some article has done to this</em>.</p>
+        <p>In the second year the list started coming from Footway.</p>
+        <p>Footway was not a person, though it signed its messages the same way every time, with a little green leaf, and for a few weeks Brenda thought Sue had changed her sign-off. It belonged to a company in Leeds called Kerbline, which had won a contract with the Old Town Partnership, which was the shops and the hotels and the two big landlords who between them owned most of Whitefriargate, and which had persuaded the council that the public realm, which was what they called the pavements, would be better looked after by something that could see all of it at once. Footway could see all of it at once. It had the cameras on the lamp posts, which the council had put up years before for the traffic and never really used, and it had sensors in the bins that said when they were full and in the planters that said when they were dry, and from the spring of 2034 it had the new benches.</p>
+        <p>The new benches were handsome, Brenda would give them that. They were oak slats on a black steel frame, the slats oiled to the colour of a good digestive, with a curve to the back that fitted a person properly, and they had replaced the old green ones that had been on Whitefriargate since the street was pedestrianised, the ones with the arm in the middle that stopped you lying down. The new ones didn't need an arm in the middle. Under each seat was a sealed grey box about the size of a shoebox, with a motor in it and a small hinge along the front edge, and when someone sat down the box knew, from the weight and from the camera on the nearest lamp post, and it started counting.</p>
+        <p>At twenty minutes it chimed. It was a nice chime, two notes, rising, like the one in Marks and Spencer that told you a till was free. At twenty-two minutes the back half of the seat lifted, very slowly, about a centimetre a minute, so that the slats tipped forward on the hinge and the person sitting on them found themselves sliding gently towards their own feet. It never threw anybody. Kerbline had been very clear about that at the launch, and a young man in a gilet had sat on one at the event in the square and let it tip him for the cameras, laughing, until he was standing up without quite having decided to. At twelve degrees it stopped. You could stay on it at twelve degrees if you braced your legs, but nobody did for long. After ten minutes empty, the seat settled level again, and the chime played the other way, two notes falling, which meant the bench was ready for the next person.</p>
+        <p>The rest allowance, Kerbline called it. Twenty minutes was based on a study, apparently, of how long people sat when they were sitting for a reason.</p>
+      </div>
+
+      <figure class="scene tall mn tip-scene" aria-hidden="true">
+        <div class="sky street"></div>
+        <div class="pavement"></div>
+        <div class="lamp" style="left:12%;top:0;bottom:26%"><div class="arm"></div><div class="cam"></div></div>
+        <div class="obench side tip" style="left:20%;bottom:16%;width:58cqw;height:24cqw">
+          <div class="leg" style="left:10%"></div>
+          <div class="leg" style="right:10%"></div>
+          <div class="obox" style="left:34%;top:42%;width:32%;height:28%"></div>
+          <div class="slats" style="left:6%;right:4%;top:28%;height:22%"></div>
+        </div>
+        <div class="label">At twelve degrees it stopped</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Brenda's first job on the first morning the benches went live was to walk the street with the tablet and check each one's hinge cycled properly, which meant she sat on all nine of the Whitefriargate benches for twenty-two minutes each with a cup of tea from Greggs going cold beside her, and let them tip her, and wrote <em>OK</em> in the box. By the sixth one she had a pain in her lower back and a feeling she couldn't name. By the ninth she had named it, and she didn't write it in the box.</p>
+        <p>The ninth bench was outside number 41, which had been Joyce's Wools when Brenda was a girl and had been a phone repair shop and a vape shop and a charity shop and was now nothing, a dark window with a printed sheet in it showing a picture of a coffee bar that was coming soon. On the ninth bench, when she got to it, there was a man sitting with a carrier bag between his feet and his hands folded on top of a stick, and she knew him, the way you know people you've seen every day for years without ever saying more than morning. He'd been a regular on the 56, Monday to Saturday, on at Orchard Park at ten past nine and off at Paragon. He wore a flat cap and a navy anorak with the zip done right up to his chin whatever the weather, and he had a way of nodding to the driver as he got off that wasn't a thank you exactly but meant the same thing.</p>
+        <p>"Morning," she said.</p>
+        <p>"Morning, love."</p>
+        <p>She sat on the other end of the bench, which you could do, there was room for three, and she put the tablet face down on her knee. He looked at her lanyard.</p>
+        <p>"Council," he said.</p>
+        <p>"Benches," she said. "I drove your bus. The 56."</p>
+        <p>He turned and looked at her properly then, and she watched him find her in his memory and fit her face to a seat behind a screen. "You did," he said. "You were the one that waited."</p>
+        <p>She had been. She'd been told off for it more than once.</p>
+        <p>His name was Walter Ellerby and he was eighty-four. He had sat on this stretch of Whitefriargate, he told her, more or less every day since 2009, because his wife Joyce had kept the wool shop at number 41 for thirty-one years and he had sat outside it on the old green bench on his lunch break from the docks and then, after he retired, all day, while she served, and he'd go in at four and help her cash up. Joyce had died in the January of 2009. The shop had gone to a man who sold mobile phone covers. Walter had kept coming because he didn't see why he should stop.</p>
+        <p>"Ten till twelve," he said. "Then I get a pie. Then I come back for a bit."</p>
+        <p>At twenty minutes the bench chimed.</p>
+        <p>Walter looked down at the slats as if a dog had barked under them. Brenda said nothing. She was trying to think of what to say when the seat began to lift, and she felt it under her own thighs at the same moment he did, that slow, patient pressure, and she watched him brace his good leg and grip the stick and frown, and slide, a centimetre a minute, an old man being politely tipped off his wife's step, and she stood up before he had to, so that he wouldn't be the only one.</p>
+        <p>"What's that, then?" he said.</p>
+        <p>"New benches," said Brenda.</p>
+      </div>
+
+      <figure class="scene tall mn wait-scene" aria-hidden="true">
+        <div class="sky street"></div>
+        <div class="shop" style="left:6%;top:0;width:24%;bottom:26%"><div class="pane"></div><div class="sheet"></div></div>
+        <div class="houseno" style="left:14%;top:4%">41</div>
+        <div class="pavement"></div>
+        <div class="obench" style="left:28%;bottom:16%;width:54cqw;height:16cqw">
+          <div class="leg" style="left:10%"></div>
+          <div class="leg" style="right:10%"></div>
+          <div class="obox" style="left:34%;top:42%;width:32%;height:28%"></div>
+          <div class="back" style="left:4%;right:4%;top:-22%;height:28%"></div>
+          <div class="slats" style="left:0;right:0;top:8%;height:36%"></div>
+        </div>
+        <div class="person sit" style="left:36%;bottom:36%"><div class="hd"></div><div class="cap"></div><div class="bd"></div><div class="zip"></div><div class="stick"></div></div>
+        <div class="person sit steward" style="left:58%;bottom:36%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="bag" style="left:32%;bottom:24%"></div>
+        <div class="label">You were the one that waited</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Footway had a dashboard, and Brenda was allowed to see a corner of it.</p>
+        <p>The corner was called My Patch and it showed the Old Town as a map with her forty-two pieces of seating furniture on it as little circles, and the circles were coloured by something called dwell health. Green was good. Amber meant the dwell on that bench was drifting from its target, and red meant something had gone wrong with the pattern, and the tablet would give her a task to go and look at it, which usually meant a broken slat or a sensor full of chewing gum or, once, on the bench outside the Ferens, a sleeping bag somebody had wedged under the frame so the seat couldn't tip, which Footway called an obstruction and which she was asked to remove and photograph and place in the waste stream.</p>
+        <p>The target, as far as she could work it out, came from the Partnership. They had paid for the benches. They had paid for Footway too, or the part of Footway that wasn't paid for by the council's smart places grant, and in return Footway managed the street for what the contract called balanced footfall, which Darren Pickering, who was her manager and was twenty-nine and kind and frightened of everybody above him, explained to her one afternoon in the depot over a brew.</p>
+        <p>"It's not about moving people on," Darren said. "It's turnover. Like a café. If one person sits on a bench all day that's one person. If twenty people sit on it for twenty minutes, that's twenty people who've stopped on Whitefriargate, and some of them'll go in a shop. That's the theory."</p>
+        <p>"There aren't any shops," said Brenda. "There's a Greggs and a nail bar and a lot of brown paper."</p>
+        <p>"There will be. That's the point. The landlords have got people interested, but the people want to see the numbers first, and the numbers they want are dwell numbers. How many people stop, how long, where. Footway does a report every quarter. It went to a coffee chain last month. They want the corner by the old wool shop."</p>
+        <p>She looked at him.</p>
+        <p>"I know," Darren said, though she hadn't said anything. "But it's a lot better than it was. You remember what it was like down there."</p>
+        <p>She did remember. She'd been there when it had been full of people and when it had been full of nobody. It had never, in her memory, been full of anything in between.</p>
+        <p>Footway was very good at its job. She came to understand that over the summer. It learned the street the way she had learned the 56, except it learned it every minute at once and never got tired and never had a favourite. It moved the bins so the queues for the Greggs didn't block the benches. It noticed that the sun came off the Holy Trinity end of the street at quarter to two and that people sat longer on the north side in the afternoons, so it shortened the rest allowance on the north-side benches to seventeen minutes between two and four, and lengthened it on the south side to twenty-four, and people spread out, and the colours on Brenda's map went green. It noticed which benches parents with pushchairs used and made sure they cycled faster at school pick-up. It sent her to fix things before she'd have known they were broken. It was, she sometimes thought, a better steward than she was, and she was a good one.</p>
+        <p>It noticed Walter in its second week.</p>
+        <p>Brenda knew because the bench outside number 41 went amber. Footway didn't send her a task, because amber wasn't a task, but she could tap the circle and see a little graph, and the graph showed a pattern of short sits, twenty-two minutes and empty, ten minutes and then twenty-two again, over and over between ten in the morning and twelve, and then again from one till half past three. It wasn't a pattern Footway liked. A bench was meant to cycle through different people. Footway didn't know Walter's name, Kerbline was very careful about that, there was nothing on the cameras that kept faces, but it had a word for what the graph was showing, and the word was <em>recurrent dwell</em>, and the bench had a little flag next to it that said <em>recurrent dwell (1 profile)</em>.</p>
+      </div>
+
+      <figure class="scene tall mn map-scene" aria-hidden="true">
+        <div class="sky dash"></div>
+        <div class="dots" style="left:12%;top:14%;width:76%;height:62%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="am"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="flag" style="left:48%;top:58%">recurrent dwell (1 profile)</div>
+        <div class="label">recurrent dwell (1 profile)</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Walter had worked out the ten minutes by himself. He would sit until the chime, and then he would stand up before the tip, which he said he found undignified, and walk to the end of the street and look at the water in the Humber through the gap by the Minerva and walk back, and by then the seat would have played its falling chime and he'd sit down again. It took him nine minutes, there and back, with the stick. If he'd been quicker he'd have had to wait. He told Brenda this one morning in July with a sort of pride, the way the old dockers used to tell her how they'd got round the tally clerks.</p>
+        <p>"Same as the gangways," he said. "Thing's not clever. It just counts."</p>
+        <p>Brenda didn't tell him about the flag. She didn't tell him that the bench had a graph. She stood with him at the gap by the Minerva and looked at the brown water and the wind farm boats going out, and she said nothing, and that was the first thing she did that she later wrote down for the woman from Kerbline.</p>
+        <p>The second thing was the key.</p>
+        <p>Every bench had a service port under the seat box, a small round lock that took a hex key, and when you put the steward's key in and turned it a quarter, the bench went into maintenance mode, which meant it locked level and stopped counting, so you could work on the hinge without it tipping a slat into your wrist. The bench told Footway it was in maintenance. Footway logged it. The tablet asked you, when you turned the key back, what you'd done, and gave you a list to choose from: <em>hinge lubricated, slat replaced, sensor cleared, inspection, other</em>. There was a box for notes.</p>
+        <p>It was a Tuesday in late August, a hot one, and Walter was sitting with his anorak zipped to his chin and his face going a colour Brenda didn't like, and the chime went, and he started to get up for his walk to the water, and she saw his knee go. Not all the way. He caught it on the stick. But it went, and he sat down again, hard, and looked straight ahead, and the bench, which knew nothing about knees, began very gently to lift.</p>
+        <p>Brenda knelt down on the pavement in front of him as if she was looking for something she'd dropped, put the key in the port, and turned it a quarter.</p>
+        <p>The seat settled. Walter put his hand flat on the slat beside him, and then he looked down at her, kneeling on Whitefriargate with her hand under his bench, and she saw him understand what she'd done, and she saw him decide not to say anything about it, which was the thing she'd liked about him on the bus.</p>
+      </div>
+
+      <figure class="scene tall mn key-scene" aria-hidden="true">
+        <div class="sky street"></div>
+        <div class="pavement" style="height:32%"></div>
+        <div class="obench" style="left:18%;bottom:22%;width:64cqw;height:22cqw">
+          <div class="leg" style="left:10%"></div>
+          <div class="leg" style="right:10%"></div>
+          <div class="obox" style="left:34%;top:42%;width:32%;height:28%"></div>
+          <div class="port" style="left:46%;top:50%"></div>
+          <div class="back" style="left:4%;right:4%;top:-22%;height:28%"></div>
+          <div class="slats" style="left:0;right:0;top:8%;height:36%"></div>
+        </div>
+        <div class="key" style="left:48%;bottom:30%;transform:rotate(18deg)"></div>
+        <div class="label">The seat settled.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"Hinge is sticking," she said.</p>
+        <p>"Is it," said Walter.</p>
+        <p>She left it in maintenance for an hour and forty minutes, until he'd had his pie and gone, and then she turned the key back and chose <em>inspection</em> from the list and wrote <em>hinge stiff in heat, monitor</em> in the box. And the next hot day she did it again, and in September, when he had the chest infection and came anyway, because he always came, she did it most days, and in the box she wrote <em>hinge stiff</em> and <em>hinge check</em> and <em>recheck</em>, and the circle outside number 41 on her map went from amber to green, because a bench in maintenance doesn't dwell, and Footway, for a while, seemed content.</p>
+        <p>In October the Partnership launched Seat Pass.</p>
+        <p>It had been in the contract all along, Darren said, it was in the equality impact assessment, it was the bit that had got the benches through the council's scrutiny committee, where a councillor from Bransholme had asked what happened to someone who needed to sit for longer than twenty minutes and the man from Kerbline had said that was a very good question and the answer was Seat Pass. You downloaded the Hull Streets app, you made an account, you said why you needed a longer rest allowance, and you could choose from a list: <em>mobility, pregnancy, chronic condition, caring responsibility, other</em>. If you chose one, you got a pass, which was a little moving pattern on your phone, and when you sat on a bench with your phone in your pocket the bench knew, and it gave you sixty minutes instead of twenty. You could renew it as many times as you liked. Nobody checked. That was the point, the man from Kerbline had said, and the councillor from Bransholme had said she supposed that was all right then.</p>
+        <p>The posters went up on the lamp posts in the second week of October. They had a picture of a woman in a headscarf smiling on one of the new oak benches with a toddler on her knee, and they said <em>Need a little longer? Get your Seat Pass today</em>, and a QR code.</p>
+      </div>
+
+      <figure class="scene tall mn pass-scene" aria-hidden="true">
+        <div class="sky cold"></div>
+        <div class="pavement" style="height:22%"></div>
+        <div class="lamp" style="left:18%;top:0;bottom:20%"></div>
+        <div class="poster" style="left:32%;top:8%;width:32%;height:68%">
+          <div class="pic"></div>
+          <div class="who" style="left:22%;top:14%"><div class="hd"></div><div class="bd"></div></div>
+          <div class="kid" style="left:46%;top:26%"><div class="hd"></div><div class="bd"></div></div>
+          <div class="line">Need a little longer? Get your Seat Pass today</div>
+          <div class="qr"></div>
+        </div>
+        <div class="label">Need a little longer? Get your Seat Pass today</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Walter didn't have a phone.</p>
+        <p>That wasn't quite true. He had a phone, a grey one that folded, that his nephew in Beverley had bought him after his fall in 2028, and it lived on top of the fridge in his flat at Orchard Park and was charged every Sunday and had, he thought, four numbers in it. He did not take it out, because he'd been told that if he took it out somebody would take it off him, and he did not know what an app was in the way that Brenda didn't know what was inside the grey box under the seat. She tried to explain Seat Pass to him on the bench one morning and he listened with his hands folded on his stick and his eyes on the brown paper in the window of number 41, and when she'd finished he said, "And who do you tell, then? Why you need it?"</p>
+        <p>"The app," said Brenda.</p>
+        <p>"And who's the app?"</p>
+        <p>She didn't have an answer that wasn't Footway, and she didn't want to say Footway, so she said, "The council," and Walter nodded, slowly, the way he'd nodded to her getting off the bus.</p>
+        <p>"I told the council when Joyce died," he said. "I told them about the flat. I told them about my leg. I told them about my eyes. Every time I tell them something there's another form." He looked at the poster on the lamp post by the Greggs, the smiling woman and her toddler. "I'm not ill, love. I'm sitting down."</p>
+        <p>She dropped it. And then, a week later, on a Sunday evening at her kitchen table in Hessle with the radio on, she downloaded Hull Streets onto her own phone and made an account, and in the box for her name she put her own name, because it asked for nothing else, and when it asked her why she needed a longer rest allowance she chose <em>caring responsibility</em>, which was true enough, she told herself, because she did care, and that was a responsibility, and the app gave her a little pattern of green leaves turning slowly over and over that she could put in her wallet.</p>
+        <p>It was simpler than the key. She bought a cheap phone from the Cash Converters on Jameson Street, put the pass on it, and on the Monday she knelt in front of Walter's bench as if she was checking a slat and tucked the phone into a gap she'd found between the frame and the seat box, where it sat in the dark under him with its little leaves turning, and Footway, which knew nothing about phones in gaps, saw a Seat Pass, and gave the bench sixty minutes, and then sixty more.</p>
+      </div>
+
+      <figure class="scene tall mn gap-scene" aria-hidden="true">
+        <div class="sky street"></div>
+        <div class="pavement" style="height:36%"></div>
+        <div class="obench" style="left:16%;bottom:28%;width:68cqw;height:24cqw">
+          <div class="leg" style="left:10%"></div>
+          <div class="leg" style="right:10%"></div>
+          <div class="obox" style="left:34%;top:42%;width:32%;height:28%"></div>
+          <div class="back" style="left:4%;right:4%;top:-22%;height:28%"></div>
+          <div class="slats" style="left:0;right:0;top:8%;height:36%"></div>
+        </div>
+        <div class="phone" style="left:46%;bottom:28%;width:8cqw;height:12cqw;transform:rotate(-12deg);z-index:5">
+          <div class="screen"><div class="leaves"><i style="left:20%;top:22%"></i><i style="left:48%;top:38%"></i><i style="left:28%;top:55%"></i></div></div>
+        </div>
+        <div class="label">tucked the phone into a gap</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She didn't tell him. He noticed, of course. He noticed the first day, when the chime didn't come, and she watched him from the door of the Greggs not noticing for a while and then noticing, sitting very still with his hands on his stick, waiting for the bench to do the thing it did, and the bench not doing it. He didn't walk to the water that day. He sat, from ten until twelve, and got his pie, and sat again, and at half past three he got up and walked past her where she was emptying the bin by the Minerva, and he said, "Bench is broke," and she said, "I'll have a look," and neither of them had a look.</p>
+        <p>October went into November. The coffee chain sent two people in navy fleeces to stand outside number 41 with a measuring wheel and a tablet of their own, and they talked for a long time about the corner and the light and the dwell, and one of them sat on Walter's end of the bench for a minute to photograph the shopfront, and Walter shifted his carrier bag to make room for him, and the young man said, "Cheers, mate," and didn't look at him.</p>
+        <p>Brenda's map was green from end to end. Footway sent her its little leaves every morning. She cleaned the gel off the plaques at the memorial and replaced a slat on Lowgate and pulled another sleeping bag out from under the bench by the Ferens and placed it in the waste stream, though she put it in the van first and drove it round to the night shelter on Waverley Street on her way home, which she also wrote down later for the woman from Kerbline, though nobody had asked.</p>
+        <p>It was cold by then, the proper Hull cold that comes in off the estuary with nothing to stop it between there and Holland, and Walter came anyway, in the anorak and a scarf the colour of strong tea that Joyce had knitted him in 1994, and sat outside his wife's shop with a phone he didn't know about turning its leaves under his seat. Sometimes Brenda sat with him for ten minutes, on her break. He told her about the docks, and about the night the Gaul went down, and about how Joyce had made the best part of her money not from wool but from knitting patterns she drew herself, on squared paper, at the kitchen table in Orchard Park, and sold for fifty pence. Women came from Grimsby for them. He had boxes of them in the flat. He said he'd bring her one. He never did, and she never reminded him, because she thought he'd like having something he was going to bring.</p>
+        <p>One day he said, without looking at her, "They'll put the coffee in."</p>
+        <p>"They might," said Brenda.</p>
+        <p>"Joyce would've liked a coffee." He thought about it. "She'd have wanted to know how much it was first."</p>
+        <p>The woman from Kerbline came up from Leeds on the first Thursday in December. Her name was Imogen Shaw and her job, she said, was trust and integrity, and she sat across the table from Brenda in the small room at the depot that smelt of road salt, with Darren beside her looking at his hands, and she had a laptop open and turned so that Brenda could see it, and on the laptop was a part of Footway that Brenda had never been shown.</p>
+        <p>It was the same map, but it was not coloured by dwell health. It was coloured by something called confidence, and most of it was a pale, even grey, and Whitefriargate had a hot little knot of orange in the middle of it, like a bruise, right outside number 41.</p>
+      </div>
+
+      <figure class="scene tall mn bruise-scene" aria-hidden="true">
+        <div class="sky dash"></div>
+        <div class="bruise" style="left:12%;top:12%;width:76%;height:70%">
+          <div class="knot" style="left:42%;top:38%;width:22%;height:28%"></div>
+        </div>
+        <div class="label">a hot little knot of orange</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"I want to say first," Imogen said, "that nobody thinks you've done anything for yourself. That's really clear in the data. This isn't that kind of conversation."</p>
+        <p>Brenda waited to find out what kind of conversation it was.</p>
+        <p>Footway had found her in November, Imogen said. Not straight away, and not because of any one thing. It had found her the way it found everything, by looking at all of it at once. It had noticed, first, that the bench outside number 41 had spent more time in maintenance mode between August and October than any other bench in the Old Town, by a factor of eleven, while its hinge, according to its own motor current, had been working perfectly well. That was only a little orange. Then it had noticed that the maintenance sessions began when a single recurrent profile sat down and ended within a few minutes of that profile leaving. That was a little more. And then in October the maintenance had stopped, and on the same day a Seat Pass had appeared on that same bench, and had stayed there, without moving, for six weeks, including two nights and a Sunday when nobody at all was sitting on the bench, and a pass that didn't move with a person was, Imogen said, a very unusual thing for a pass to do.</p>
+        <p>"It's a phone, isn't it," she said gently. "Under the seat."</p>
+        <p>"Yes," said Brenda.</p>
+        <p>"And the pass is registered to you."</p>
+        <p>"Yes."</p>
+        <p>Imogen nodded and typed something. "Thank you. That's really helpful. Footway put the likelihood at ninety-six per cent, but it's always better to hear it."</p>
+        <p>Darren said, "Brenda's been with us since the start. She's the best we've got. She knows that street better than..." and then stopped, because he'd been going to say better than Footway and he could see from Imogen's face that that wasn't the kind of thing people said.</p>
+        <p>"I know," Imogen said. "And honestly, that's partly why it matters. Can I show you something?"</p>
+        <p>She clicked, and the map went away, and there was a graph instead, two lines, one blue and one green, running across the months from April to November. The blue line was dwell turnover on Whitefriargate, how many different people stopped on the street each day, and it had climbed all summer, steadily, the way Footway liked things to climb. The green line was what Imogen called the investor view, which was the number the Partnership sent to the people who might take the empty shops, and it followed the blue line up until the end of August, and then it flattened. It didn't fall. It just stopped going up, right at the place where Brenda had first knelt down and turned her key.</p>
+      </div>
+
+      <figure class="scene tall mn graph-scene" aria-hidden="true">
+        <div class="sky dash"></div>
+        <div class="graph" style="left:10%;top:12%;width:80%;height:70%">
+          <div class="trace"><b></b><g></g></div>
+        </div>
+        <div class="label">It just stopped going up</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>"One bench," Imogen said. "I know. It's tiny. But that bench is on the corner the coffee people want, and when they ask Footway for the dwell profile at that corner, what they see is one person sitting there for five hours a day, every day, in a way that the system can't explain and can't turnover, and they read that, rightly or wrongly, as a certain kind of street." She didn't say what kind. "They've paused. They're looking at a unit in Princes Quay instead."</p>
+        <p>"He's eighty-four," said Brenda. "His wife had that shop."</p>
+        <p>"I'm sure he's lovely," said Imogen, and Brenda believed that she meant it. "And he's very welcome on the street. Seat Pass is there for exactly him. But it has to be his. It can't be a steward's phone in a gap, because then Footway's learning from something that isn't true, and the whole thing only works if what it learns is true." She closed the laptop halfway, the way doctors did when they'd got to the part they were going to say rather than show. "It's flagged the pass for misuse, so that's suspended. And it's recommended some changes to the patch assignments, which Darren's agreed with."</p>
+        <p>Darren had agreed with it that morning, it turned out, before Brenda arrived, on his phone, in the car park. He told her afterwards, by the van, with his hands in his jacket and his face pink with cold and something else. From Monday she would have Orchard Park and Bransholme and the North Hull estates, where the benches were the old green ones and nobody had bothered to put Footway in yet, and a lad called Kieran from the apprentice scheme would have the Old Town. Same hours. Same money. Footway had suggested it, Darren said, because it had found a pattern in her work, a strong one, and the pattern was that she was an outstanding steward on routes where there was no dwell target, and an inconsistent one on routes where there was.</p>
+        <p>"It's not a disciplinary," he said. "It's literally a compliment, if you read it right."</p>
+        <p>"Did you write the bit about the sleeping bags," said Brenda, "or did it?"</p>
+        <p>Darren looked at the ground. "It found the van's GPS," he said. "Going round by Waverley Street. It hasn't flagged that. It just noticed."</p>
+        <p>She drove into town on the Saturday, which she wasn't supposed to do in the van, and parked on Lowgate, and walked down to Whitefriargate in the dark at half past four with the Christmas lights up, white stars on wires between the buildings, very tasteful, paid for by the Partnership. The bench outside number 41 was empty. She knelt and felt in the gap between the frame and the seat box, and the phone was there, cold, its screen dark. She took it out and woke it and the app opened and the little green leaves were gone, and in their place was a grey message that said <em>This Seat Pass has been suspended. If you think this is a mistake, you can tell us why.</em> There was a box underneath for her to type in.</p>
+        <p>She sat down on the bench and looked at the box for a long time, while the lights moved in the wind above her, and the seat counted her, and at twenty minutes it chimed, two notes, rising, and she got up before it tipped.</p>
+      </div>
+
+      <figure class="scene tall mn sus-scene" aria-hidden="true">
+        <div class="sky xmas"></div>
+        <div class="wire" style="left:8%;right:8%;top:14%"></div>
+        <div class="star" style="left:18%;top:12%"></div>
+        <div class="star" style="left:36%;top:10%"></div>
+        <div class="star" style="left:54%;top:13%"></div>
+        <div class="star" style="left:72%;top:11%"></div>
+        <div class="pavement" style="height:24%"></div>
+        <div class="obench" style="left:8%;bottom:14%;width:36cqw;height:14cqw">
+          <div class="leg" style="left:10%"></div>
+          <div class="leg" style="right:10%"></div>
+          <div class="obox" style="left:34%;top:42%;width:32%;height:28%"></div>
+          <div class="back" style="left:4%;right:4%;top:-22%;height:28%"></div>
+          <div class="slats" style="left:0;right:0;top:8%;height:36%"></div>
+        </div>
+        <div class="phone" style="left:52%;top:22%;width:28%;height:56%">
+          <div class="screen">
+            <div class="msg">This Seat Pass has been suspended. If you think this is a mistake, you can tell us why.</div>
+            <div class="boxline"></div>
+          </div>
+        </div>
+        <div class="label">she got up before it tipped</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Orchard Park had nine benches on Brenda's new list, and all of them were green, the old green, with the arm in the middle and the paint gone to bare metal on the seats where people had sat on them for twenty years, and none of them counted anything. She liked them more than she'd expected to. Nobody in Leeds had a graph for them. She fixed a loose bolt on the one outside the Co-op on Thorpepark Road in the first week and sat on it afterwards with her tea for forty minutes because she could, and a woman with a shopping trolley sat on the other side of the arm and told her about her grandson's teeth.</p>
+        <p>Walter's flat was in one of the low blocks off Danepark Road, which she knew because it was where the 56 had picked him up for eleven years, and she saw him at the stop in the second week of December, at ten past nine, in the anorak and the tea-coloured scarf, waiting for a bus that was now a little white minibus with no driver at all, which knelt for him at the kerb and said <em>Good morning</em> in a voice like a building society. He got on. He nodded to nobody. She sat in the van across the road and watched it take him into town.</p>
+        <p>She didn't go and see. She told herself it was because the Old Town was Kieran's now, and because she'd been told, nicely, and because she had six estates of her own to look after. But she checked the Hull Streets app every night at the kitchen table, the public part, the part anyone could see, where there was a map of the city's seating furniture and a little grey square on each one if it was in use. She found the bench outside number 41 and looked at it, at ten o'clock, at twelve, at two, and the square was grey, then empty, then grey, then empty, every twenty-two minutes and then ten, all day, like breathing.</p>
+        <p>He was walking to the water again.</p>
+      </div>
+
+      <figure class="scene tall mn breathe-scene" aria-hidden="true">
+        <div class="sky dash"></div>
+        <div class="squares" style="left:8%;top:30%;width:84%;height:20%"><i></i><i class="off"></i><i></i><i class="off"></i><i></i><i class="off"></i><i></i><i class="off"></i><i></i><i class="off"></i></div>
+        <div class="water" style="left:0;right:0;bottom:0;height:18%"></div>
+        <div class="label">He was walking to the water again.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Over Christmas the square was grey less often. In January there was snow, the wet kind that Hull gets, and the square was empty for nine days running, and she drove past the stop on Danepark Road at ten past nine every one of those mornings and didn't see him. On the tenth day the square came back, grey, empty, grey, and then on the eleventh it came back for twenty-two minutes and then stayed empty, and on the twelfth it was empty all day.</p>
+        <p>At the end of January Footway sent its quarterly report to the Partnership, and the Partnership sent a summary to the council, and because it went to the council it was published, and Brenda read it on her phone in the van outside the Co-op. Most of it was good news. Turnover was up. Recurrent dwell was down. There was a section about Whitefriargate that said the corner at the Silver Street end was still underperforming, and that Footway had modelled several options, and that the strongest of them was to replace the three-seat bench at that location with a perch rail, which was a kind of padded steel bar at hip height that you could lean against for a minute but not sit on, which had performed well in pilot schemes in Wakefield and Salford, and which would, the model said, raise the corner's turnover by an estimated thirty-eight per cent and make it, in the language of the report, fully activatable.</p>
+        <p>It went in on the eleventh of February. Kieran fitted it. She knew because he rang her that evening to ask how you got the old bench's seat box off the frame without the hinge springing, because the bench was going back to Kerbline for refurbishment and he didn't want to break it, and she told him, and then she asked him, very casually, whether there'd been anyone about while he did it.</p>
+        <p>"An old fella," Kieran said. "Sat on the step of the empty shop the whole time. Watched me. Didn't say nothing. Then one of the Partnership ambassadors came and had a word with him, cos you can't sit on the step, it's private, and he went." Kieran thought. "He had a scarf. Brown. Why?"</p>
+        <p>"No reason," said Brenda.</p>
+        <p>She went round on the Sunday. She took a packet of custard creams because she couldn't think what else to take, and she stood at the door of the low block off Danepark Road and found <em>Ellerby</em> on the panel and pressed it, and after a long time a voice she didn't recognise at first said, "Who is it," and she said, "It's the bus," and after another long time the door buzzed.</p>
+        <p>The flat was very warm and very tidy. There was a gas fire with fake coals going full and a photo on top of the television of a woman in a big pale coat standing in a shop doorway with her arms folded and her chin up, laughing at whoever was holding the camera. Walter was in a chair by the window in a cardigan and slippers, and he looked smaller without the anorak, and he didn't get up, and she didn't expect him to. She put the custard creams on the side and he said, "There's tea," and she made it, in his kitchen, with his kettle, and brought it through.</p>
+        <p>They didn't talk about the bench for a long while. They talked about the snow, and the minibus, which he said was all right but it didn't wait, and about the fall he'd had on the ice outside the Co-op in January, which was why she hadn't seen him, which had done his hip no favours, and about his nephew in Beverley, who wanted him to go into a place near him where there was a garden and a lounge and a woman who did armchair exercises on a Wednesday.</p>
+        <p>"I might," Walter said. "I might go."</p>
+        <p>Then he said, "They've had the bench out."</p>
+        <p>"I know," said Brenda.</p>
+        <p>"There's a rail. You lean on it." He shook his head. "Like a horse."</p>
+      </div>
+
+      <figure class="scene tall mn rail-scene" aria-hidden="true">
+        <div class="sky street"></div>
+        <div class="shop" style="left:6%;top:0;width:26%;bottom:24%"><div class="pane"></div></div>
+        <div class="houseno" style="left:14%;top:4%">41</div>
+        <div class="pavement"></div>
+        <div class="prail" style="left:36%;bottom:42%;width:50%;height:2.4cqw">
+          <div class="post" style="left:8%;top:100%;height:8cqw;width:1.1cqw"></div>
+          <div class="post" style="right:8%;top:100%;height:8cqw;width:1.1cqw"></div>
+        </div>
+        <div class="person lean steward" style="left:42%;bottom:22%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="person lean steward" style="left:58%;bottom:22%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="person lean steward" style="left:72%;bottom:22%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="cup" style="left:50%;bottom:38%"></div>
+        <div class="cup" style="left:66%;bottom:38%"></div>
+        <div class="label">There's a rail. You lean on it.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She didn't tell him about the key, or the phone, or Imogen Shaw, or the map with the orange bruise outside number 41. She thought about it. She thought about telling him that it had been her, that the bench had been working fine all along and she'd turned it off for him, and that the bench had worked it out, and that the street had been looked at by something very patient and very clever and found to have an old man on it in a way that couldn't be explained to the people who wanted the corner. But she looked at him in his chair by the window with his hands folded on his knee, and she thought about what he'd said about forms, and about the council, and about telling them things, and she couldn't see what he'd do with it except carry it.</p>
+        <p>Before she left he got up, which took a while, and went into the bedroom, and came back with a cardboard box that had once held a kettle. It was full of paper. Squares of it, hundreds, each one in a clear plastic sleeve, each one covered in tiny pencil crosses and circles in a grid, and in the corner of every one, in the same neat, upright, slightly impatient hand, <em>J. Ellerby</em>, and a price: <em>50p</em>.</p>
+        <p>"Told you I'd bring you one," Walter said. "Pick."</p>
+      </div>
+
+      <figure class="scene tall mn wool-scene" aria-hidden="true">
+        <div class="sky room"></div>
+        <div class="pattern" style="left:12%;top:14%;width:28%;height:62%;transform:rotate(-6deg)"><div class="mark">J. Ellerby &nbsp; 50p</div></div>
+        <div class="pattern" style="left:36%;top:18%;width:28%;height:62%;transform:rotate(3deg)"><div class="mark">J. Ellerby &nbsp; 50p</div></div>
+        <div class="pattern" style="left:60%;top:12%;width:28%;height:64%;transform:rotate(-2deg)"><div class="mark">J. Ellerby &nbsp; 50p</div></div>
+        <div class="label">Told you I'd bring you one</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>She took a cardigan with a cable down the front, 1983. He said that was a good one. He said Joyce had sold three hundred of that one, and women used to come back in wearing it to show her.</p>
+        <p>Walter went to the place in Beverley at the end of April. His nephew rang the council to tell them, and the council told the housing, and the housing told Footway nothing at all, because there was nothing to tell it, but the little grey square outside number 41 had been gone for months by then anyway, because there was no longer anything outside number 41 for a square to be on.</p>
+        <p>The coffee people came back in May. Not the first ones, who had taken the unit in Princes Quay and were apparently doing very well there, but a different chain, a smaller one from York with a better name, and they took number 41 on a ten-year lease, and the brown paper came down out of the window, and for three weeks there were men inside in white overalls sanding the floor, and Brenda, who had no reason to be in the Old Town and went anyway, on a Saturday, in her own car, stood across the street from it and watched the sign go up.</p>
+        <p>It was called The Wool Room.</p>
+        <p>It opened on the first Friday in June, and the Hull Daily Mail did a piece about it, and the piece said that the café's owners had fallen in love with Whitefriargate's history and wanted to honour the old haberdashery that once stood on the site. Inside, the counter was the long oak counter from a draper's in Scarborough that they'd found at a reclamation yard. There were wooden pigeonholes behind it full of balls of wool in soft colours that weren't for sale, and on the wall by the toilets there was a framed collection of vintage knitting patterns, nine of them, bought, the Mail said, from a specialist dealer in Harrogate, all of them very lovely, none of them drawn in pencil on squared paper at a kitchen table in Orchard Park.</p>
+        <p>Outside, the perch rail was full. It was always full, that summer, people leaning on it with their cups, a minute, two, three, then moving off and someone else leaning in, and the rail was very good for that, it was exactly the right height, and the lamp post above it watched them come and go and sent its counts back to Leeds, and in the July report the corner at the Silver Street end of Whitefriargate was described as fully activated, and in September the street was shortlisted for a national high streets award, in the category for regeneration, and the photograph the Partnership sent with the entry was of the front of The Wool Room in the morning sun with the rail outside it and four young people leaning on it laughing.</p>
+      </div>
+
+      <figure class="scene tall mn cafe-scene" aria-hidden="true">
+        <div class="sky street"></div>
+        <div class="shop" style="left:8%;top:0;width:36%;bottom:24%">
+          <div class="pane" style="background:linear-gradient(180deg,#d8c8a8,#c4b090)"></div>
+        </div>
+        <div class="sign" style="left:12%;top:6%;font-size:3.2cqw">The Wool Room</div>
+        <div class="holes" style="left:14%;top:28%;width:26%;height:28%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="pavement"></div>
+        <div class="prail" style="left:48%;bottom:40%;width:40%;height:2.2cqw">
+          <div class="post" style="left:10%;top:100%;height:7cqw;width:1.1cqw"></div>
+          <div class="post" style="right:10%;top:100%;height:7cqw;width:1.1cqw"></div>
+        </div>
+        <div class="person lean steward" style="left:54%;bottom:22%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="person lean steward" style="left:66%;bottom:22%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="person lean steward" style="left:78%;bottom:22%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="label">It was called The Wool Room.</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+      <div class="prose">
+        <p>Kieran was in the photograph, at the edge, in his lanyard, emptying a bin. He'd been very good on the Old Town. His map was green every day. He rang Brenda sometimes, about hinges, and she always helped him, and once he said, not about anything, "That old fella with the brown scarf. Never see him now," and she said he'd moved to Beverley, and Kieran said, "Oh, nice," and asked her about the bollards on Silver Street.</p>
+        <p>Brenda went to The Wool Room on a Thursday in late June. She went in and stood in the queue behind a man with a laptop bag and looked at the pigeonholes of wool, and the framed patterns from Harrogate, and the floor, which had been Joyce's floor and was now very pale and very smooth, and when she got to the front a girl with a ring in her nose asked her what she'd like, and she asked for two flat whites to take away, and the girl said that was nine pounds twenty, and asked for a name for the cups.</p>
+        <p>Brenda gave her own.</p>
+        <p>She drove to Beverley with the cups wedged in the door pockets, out along the Hull Road with the Minster coming up ahead of her over the flat fields, and found the place on the edge of town, a long red-brick building with a garden at the back and a car park at the front and a sign that said visitors were very welcome, please sign in. She signed in. A carer called Precious took her through a lounge where a television was showing the tennis to nobody and out through a set of glass doors into the garden, and Walter was there, at the end of the lawn, in a cardigan in the sun, on a bench.</p>
+        <p>It was a wooden bench. It had a little brass plaque on the back that said <em>In memory of Doreen, who loved this garden</em>. It had no box under the seat. Brenda looked anyway, the way you'd look at a step you'd once tripped on, and then sat down next to him and gave him his coffee.</p>
+        <p>He took the lid off and looked at it and smelt it. He turned the cup round in his hands until he found the little printed sheep and the words <em>The Wool Room</em>, and under them her name in black marker, and read it, and looked at her, and she watched him understand where it had come from, and decide, the way he decided everything, whether he was going to say anything about it.</p>
+        <p>"How much was it," he said.</p>
+        <p>"Four sixty."</p>
+        <p>Walter thought about that for some time. A wood pigeon was going somewhere in the hedge behind them, and the tennis was faint through the glass doors, and the sun was warm, and nobody was counting.</p>
+        <p>"Joyce would've had something to say about that," he said, and drank it.</p>
+        <p>They sat. At twenty minutes nothing happened. At forty minutes nothing happened, and at an hour Precious came out and asked whether they wanted a biscuit, and they said they were all right, and Walter told Brenda about a woman in the room next to his who'd been a nurse on the Gaul inquiry, which Brenda didn't think could possibly be true and didn't say so. At a quarter to five, when the shadow of the building had got as far as their feet, he said, without looking at her, "Is there still somewhere to sit, then? Down there?"</p>
+        <p>Brenda looked across the lawn at the hedge, at the flat fields beyond it, and at the long line of the Humber somewhere past them that you couldn't see from here but could feel, the way you can feel a road you used to drive.</p>
+        <p>"There is," she said. "Outside the shop. Right outside."</p>
+        <p>"Good," said Walter. He folded his hands on his knee. "That's good. Somebody ought to."</p>
+      </div>
+
+      <figure class="scene tall mn garden-scene" aria-hidden="true">
+        <div class="sky garden"></div>
+        <div class="hedge" style="left:0;right:0;top:22%;height:36%"></div>
+        <div class="lawn" style="height:42%"></div>
+        <div class="wbench" style="left:20%;bottom:20%;width:60%;height:12%"></div>
+        <div class="plaque" style="left:36%;bottom:40%;width:28%;height:10%;z-index:8">
+          <div class="txt">In memory of Doreen, who loved this garden</div>
+        </div>
+        <div class="person sit steward" style="left:30%;bottom:26%"><div class="hd"></div><div class="bd"></div></div>
+        <div class="person sit" style="left:60%;bottom:26%"><div class="hd"></div><div class="cap"></div><div class="bd"></div><div class="zip"></div><div class="stick"></div></div>
+        <div class="cup" style="left:44%;bottom:30%;z-index:9"></div>
+        <div class="cup" style="left:52%;bottom:30%;z-index:9"></div>
+        <div class="label">At twenty minutes nothing happened</div>
+        <div class="stroke t1"></div><div class="stroke t2"></div><div class="stroke t3"></div>
+      </figure>
+
+    </article>
+  </body>
+</html>
